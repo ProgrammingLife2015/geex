@@ -1,4 +1,4 @@
-package Contextproject;
+package nl.tudelft.context;
 
 /**
  * Hello world!

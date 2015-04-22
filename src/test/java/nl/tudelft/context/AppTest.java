@@ -1,4 +1,4 @@
-package Contextproject;
+package nl.tudelft.context;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
