@@ -99,7 +99,7 @@
   <!-- List the core committers -->
   <developers>
     <developer>
-      <id>Gerben Oolbekkink, qurben</id>
+      <id>qurben</id>
       <name>Gerben Oolbekkink</name>
       <email>g.j.w.oolbekkink@gmail.com</email>
       <roles>
@@ -107,7 +107,7 @@
       </roles>
     </developer>
     <developer>
-      <id>René Vennik</id>
+      <id>Vennik</id>
       <name>René Vennik</name>
       <email>renevennik@gmail.com</email>
       <roles>
@@ -115,7 +115,7 @@
       </roles>
     </developer>
     <developer>
-      <id>Jasper Nieuwdorp</id>
+      <id>jnieuwdorp</id>
       <name>Jasper Nieuwdorp</name>
       <email>nieuwdorp.jasper@gmail.com</email>
       <roles>
@@ -123,7 +123,7 @@
       </roles>
     </developer>
     <developer>
-      <id>Jasper Boot</id>
+      <id>jboot</id>
       <name>Jasper Boot</name>
       <email>mrjasperboot@gmail.com</email>
       <roles>
@@ -131,9 +131,9 @@
       </roles>
     </developer>
     <developer>
-      <id>Jim Hommes</id>
+      <id>jimhommes</id>
       <name>Jim Hommes</name>
-      <email></email>
+      <email>jim@homm.es</email>
       <roles>
         <role>developer</role>
       </roles>
