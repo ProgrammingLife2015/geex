@@ -84,7 +84,7 @@ public class GraphFactory {
         Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(edgeFile))));
 
         while (sc.hasNext()) {
-            graph.addEdge(nodeList.get(sc.nextInt() - 1), nodeList.get(sc.nextInt() - 1));
+            graph.addEdge(nodeList.get(sc.nextInt()), nodeList.get(sc.nextInt()));
         }
 
         sc.close();
