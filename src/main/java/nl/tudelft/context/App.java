@@ -1,10 +1,25 @@
 package nl.tudelft.context;
 
+import nl.tudelft.context.graph.GraphFactory;
+import org.jgrapht.UndirectedGraph;
+
+import java.io.FileNotFoundException;
+
 /**
- * Hello world!
+ * App
  */
 public class App {
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+
+    /**
+     * @param args ignored.
+     * @throws FileNotFoundException
+     */
+    public static void main(String[] args) throws FileNotFoundException {
+
+        GraphFactory graphFactory = new GraphFactory();
+        UndirectedGraph graph = graphFactory.getGraph("/10_strains_graph/simple_graph.node.graph", "/10_strains_graph/simple_graph.edge.graph");
+
     }
+
 }
