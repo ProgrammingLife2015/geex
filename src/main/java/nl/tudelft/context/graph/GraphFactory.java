@@ -1,9 +1,5 @@
 package nl.tudelft.context.graph;
 
-import org.jgrapht.UndirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
@@ -60,7 +56,7 @@ public class GraphFactory {
      * @param graph    graph to add nodes to
      * @return nodes added to graph
      */
-    protected List<Node> parseNodes(String nodeFile, UndirectedGraph<Node, DefaultEdge> graph) {
+    protected List<Node> parseNodes(String nodeFile, Graph graph) {
 
         Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(nodeFile))));
         List<Node> nodes = new ArrayList<>();
@@ -83,7 +79,7 @@ public class GraphFactory {
      * @param graph    graph to add edges to
      * @param nodeList nodes used to get edges from
      */
-    protected void parseEdges(String edgeFile, UndirectedGraph<Node, DefaultEdge> graph, List<Node> nodeList) {
+    protected void parseEdges(String edgeFile, Graph graph, List<Node> nodeList) {
 
         Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(edgeFile))));
 
@@ -103,9 +99,9 @@ public class GraphFactory {
      * @return a graph based on Node objects
      * @throws FileNotFoundException
      */
-    public UndirectedGraph<Node, DefaultEdge> getGraph(String nodeFile, String edgeFile) throws FileNotFoundException {
+    public Graph getGraph(String nodeFile, String edgeFile) throws FileNotFoundException {
 
-        UndirectedGraph<Node, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+        Graph graph = new Graph();
 
         List<Node> nodeList = parseNodes(nodeFile, graph);
         parseEdges(edgeFile, graph, nodeList);

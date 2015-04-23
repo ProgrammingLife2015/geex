@@ -1,8 +1,8 @@
 package nl.tudelft.context;
 
 import junit.framework.TestCase;
+import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.GraphFactory;
-import org.jgrapht.UndirectedGraph;
 
 import java.io.FileNotFoundException;
 
@@ -23,7 +23,7 @@ public class GraphTest extends TestCase {
     public void testSimpleGraph() throws FileNotFoundException {
 
         GraphFactory graphFactory = new GraphFactory();
-        UndirectedGraph graph = graphFactory.getGraph("/graph/node.graph", "/graph/edge.graph");
+        Graph graph = graphFactory.getGraph("/graph/node.graph", "/graph/edge.graph");
 
         assertEquals("([A, C, G, T], [{A,C}, {A,G}, {C,T}, {G,T}])", graph.toString());
 
