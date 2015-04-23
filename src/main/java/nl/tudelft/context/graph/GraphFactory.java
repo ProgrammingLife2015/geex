@@ -83,16 +83,16 @@ public class GraphFactory {
      * @param graph    graph to add edges to
      * @param nodeList nodes used to get edges from
      */
-    public void parseEdges(String edgeFile, UndirectedGraph<Node, DefaultEdge> graph, List<Node> nodeList) {
+    protected void parseEdges(String edgeFile, UndirectedGraph<Node, DefaultEdge> graph, List<Node> nodeList) {
 
         Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(edgeFile))));
 
-        while(sc.hasNext()) {
+        while (sc.hasNext()) {
             graph.addEdge(nodeList.get(sc.nextInt() - 1), nodeList.get(sc.nextInt() - 1));
         }
 
         sc.close();
-        
+
     }
 
     /**
