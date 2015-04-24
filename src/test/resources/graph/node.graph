@@ -1,8 +1,8 @@
->1 | Cat,Dog | 5 | 7
+>0 | Cat,Dog | 5 | 7
 A
->2 | Dog | 8 | 10
+>1 | Dog | 8 | 10
 C
->3 | Cat | 8 | 10
+>2 | Cat | 8 | 10
 G
->4 | Cat,Dog | 10 | 13
+>3 | Cat,Dog | 10 | 13
 T
