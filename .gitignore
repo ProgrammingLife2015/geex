@@ -18,4 +18,4 @@ hs_err_pid*
 target/
 
 # Sensitive files #
-main/resources/graph/*
+*/main/resources/graph/*
