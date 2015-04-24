@@ -13,6 +13,7 @@
             <item name="Project Team" href="/team-list.html"/>
         </menu>
         <menu name="Reports">
+            <item name="CheckStyle" href="/checkstyle.html"/>
             <item name="JaCoCo Coverage" href="/jacoco/index.html"/>
             <item name="Cobertura Coverage" href="/cobertura/index.html"/>
         </menu>
