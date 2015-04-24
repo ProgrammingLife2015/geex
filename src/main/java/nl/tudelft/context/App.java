@@ -18,7 +18,7 @@ public class App {
     public static void main(String[] args) throws FileNotFoundException {
 
         GraphFactory graphFactory = new GraphFactory();
-        Graph graph = graphFactory.getGraph("/10_strains_graph/simple_graph.node.graph", "/10_strains_graph/simple_graph.edge.graph");
+        Graph graph = graphFactory.getGraph("/graph/10_strains_graph/simple_graph.node.graph", "/graph/10_strains_graph/simple_graph.edge.graph");
 
     }
 
