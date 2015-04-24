@@ -7,12 +7,15 @@ import java.io.FileNotFoundException;
 
 /**
  * App
+ *
+ * @author René Vennik <renevennik@gmail.com>
+ * @version 1.0
+ * @since 23-4-2015
  */
 public class App {
 
-
     /**
-     * @param args ignored.
+     * @param args ignored
      * @throws FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException {
