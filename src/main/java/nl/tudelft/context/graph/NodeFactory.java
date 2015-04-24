@@ -30,7 +30,7 @@ public class NodeFactory {
      * @param sc scanner
      * @return node
      */
-    protected Node getNode(Scanner sc) {
+    public Node getNode(Scanner sc) {
 
         final int id = getNodeId(sc);
         sc.next(); // Skip pipe
