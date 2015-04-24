@@ -39,7 +39,7 @@ public class GraphTest extends TestCase {
     }
 
     /**
-     * Test if node 1 is parsed correct.
+     * Test if node1 1 is parsed correct.
      */
     public void testNode1() {
 
@@ -53,7 +53,7 @@ public class GraphTest extends TestCase {
     }
 
     /**
-     * Test if node 2 is parsed correct.
+     * Test if node1 2 is parsed correct.
      */
     public void testNode2() {
 
@@ -67,7 +67,7 @@ public class GraphTest extends TestCase {
     }
 
     /**
-     * Test if node 3 is parsed correct.
+     * Test if node1 3 is parsed correct.
      */
     public void testNode3() {
 
@@ -81,7 +81,7 @@ public class GraphTest extends TestCase {
     }
 
     /**
-     * Test if node 4 is parsed correct.
+     * Test if node1 4 is parsed correct.
      */
     public void testNode4() {
 
