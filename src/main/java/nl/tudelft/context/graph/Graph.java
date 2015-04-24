@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class Graph extends SimpleGraph<Node, DefaultEdge> {
 
-    Map<Integer, Node> vertexes;
+    Map<Integer, Node> vertexes = new HashMap<>();
 
     /**
      * Create a Graph with default edges.
@@ -23,8 +23,6 @@ public class Graph extends SimpleGraph<Node, DefaultEdge> {
     public Graph() {
 
         super(DefaultEdge.class);
-
-        vertexes = new HashMap<>();
 
     }
 
