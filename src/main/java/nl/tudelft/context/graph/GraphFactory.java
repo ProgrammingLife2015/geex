@@ -3,9 +3,7 @@ package nl.tudelft.context.graph;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * GraphFactory
@@ -17,39 +15,6 @@ import java.util.Scanner;
 public class GraphFactory {
 
     /**
-     * Parses the node id from the scanner.
-     *
-     * @param sc scanner
-     * @return node id
-     */
-    protected int getNodeId(Scanner sc) {
-
-        return Integer.parseInt(sc.next().substring(1));
-
-    }
-
-    /**
-     * Parses the node from the scanner.
-     *
-     * @param sc scanner
-     * @return node
-     */
-    protected Node getNode(Scanner sc) {
-
-        int id = getNodeId(sc);
-        sc.next(); // Skip pipe
-        sc.next(); // Skip source for now
-        sc.next(); // Skip pipe
-        int refStartPosition = sc.nextInt();
-        sc.next(); // Skip pipe
-        int refEndPosition = sc.nextInt();
-        String content = sc.next();
-
-        return new Node(id, refStartPosition, refEndPosition, content);
-
-    }
-
-    /**
      * Parse the nodes from the node file.
      *
      * @param nodeFile location of node file
@@ -59,10 +24,11 @@ public class GraphFactory {
     protected List<Node> parseNodes(String nodeFile, Graph graph) {
 
         Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(nodeFile))));
+        NodeFactory nodeFactory = new NodeFactory();
         List<Node> nodes = new ArrayList<>();
 
         while (sc.hasNext()) {
-            Node n = getNode(sc);
+            Node n = nodeFactory.getNode(sc);
             nodes.add(n);
             graph.addVertex(n);
         }
