@@ -2,7 +2,7 @@
 
 <?import javafx.scene.layout.GridPane?>
 <?import java.net.URL?>
-<fx:root type="javafx.scene.layout.GridPane" xmlns:fx="http://javafx.com/fxml">
+<fx:root type="javafx.scene.control.ScrollPane" xmlns:fx="http://javafx.com/fxml">
 
     <GridPane fx:id="ruler">
 

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 25-4-2015
  */
-public class Controller extends GridPane implements Initializable {
+public class Controller extends ScrollPane implements Initializable {
 
     @FXML
     protected GridPane ruler;
@@ -54,7 +55,20 @@ public class Controller extends GridPane implements Initializable {
 
         }
 
-        this.setOnScroll(event -> ruler.setTranslateX(Math.min(0, ruler.getTranslateX() + event.getDeltaY())));
+        reverseScroll();
 
     }
+
+    /**
+     * On vertical scroll, make it horizontal.
+     */
+    protected void reverseScroll() {
+
+        this.setOnScroll(event -> {
+            final double displacement = event.getDeltaY() / this.getContent().getBoundsInLocal().getWidth();
+            this.setHvalue(this.getHvalue() - displacement);
+        });
+
+    }
+
 }

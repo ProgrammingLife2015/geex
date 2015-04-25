@@ -2,6 +2,33 @@
     -fx-background-color: #2b2b2b;
 }
 
+/* Scroll Pane */
+.scroll-pane {
+    -fx-padding: 0;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Scroll Bar */
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar > .thumb {
+    -fx-opacity: 0.5;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button,
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+}
+
 /* Ruler */
 #ruler {
     -fx-padding: 0 0 0 1.5cm;
