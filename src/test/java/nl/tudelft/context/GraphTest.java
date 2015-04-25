@@ -1,14 +1,18 @@
 package nl.tudelft.context;
 
-import junit.framework.TestCase;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.GraphFactory;
 import nl.tudelft.context.graph.Node;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for Graph.
@@ -17,21 +21,22 @@ import java.util.HashSet;
  * @version 1.1
  * @since 23-4-2015
  */
-public class GraphTest extends TestCase {
+public class GraphTest {
 
-    protected Graph graph;
+    protected static Graph graph;
 
-    protected Node node1 = new Node(0, new HashSet<>(Arrays.asList("Cat", "Dog")), 5, 7, "A");
-    protected Node node2 = new Node(1, new HashSet<>(Collections.singletonList("Dog")), 7, 10, "C");
-    protected Node node3 = new Node(2, new HashSet<>(Collections.singletonList("Cat")), 7, 10, "G");
-    protected Node node4 = new Node(3, new HashSet<>(Arrays.asList("Cat", "Dog")), 10, 13, "T");
+    protected static Node node1 = new Node(0, new HashSet<>(Arrays.asList("Cat", "Dog")), 5, 7, "A");
+    protected static Node node2 = new Node(1, new HashSet<>(Collections.singletonList("Dog")), 7, 10, "C");
+    protected static Node node3 = new Node(2, new HashSet<>(Collections.singletonList("Cat")), 7, 10, "G");
+    protected static Node node4 = new Node(3, new HashSet<>(Arrays.asList("Cat", "Dog")), 10, 13, "T");
 
     /**
      * Set up the graph.
      *
      * @throws FileNotFoundException
      */
-    public void setUp() throws FileNotFoundException {
+    @BeforeClass
+    public static void beforeClass() throws FileNotFoundException {
 
         GraphFactory graphFactory = new GraphFactory();
         graph = graphFactory.getGraph("/graph/node.graph", "/graph/edge.graph");
@@ -41,6 +46,7 @@ public class GraphTest extends TestCase {
     /**
      * Test if node1 1 is parsed correct.
      */
+    @Test
     public void testNode1() {
 
         Node node = graph.getVertexById(0);
@@ -55,6 +61,7 @@ public class GraphTest extends TestCase {
     /**
      * Test if node1 2 is parsed correct.
      */
+    @Test
     public void testNode2() {
 
         Node node = graph.getVertexById(1);
@@ -69,6 +76,7 @@ public class GraphTest extends TestCase {
     /**
      * Test if node1 3 is parsed correct.
      */
+    @Test
     public void testNode3() {
 
         Node node = graph.getVertexById(2);
@@ -83,6 +91,7 @@ public class GraphTest extends TestCase {
     /**
      * Test if node1 4 is parsed correct.
      */
+    @Test
     public void testNode4() {
 
         Node node = graph.getVertexById(3);
@@ -97,6 +106,7 @@ public class GraphTest extends TestCase {
     /**
      * Test if edges are parsed correct.
      */
+    @Test
     public void testEdges() {
 
         assertTrue(graph.containsEdge(node1, node2));
@@ -109,6 +119,7 @@ public class GraphTest extends TestCase {
     /**
      * Test reference points.
      */
+    @Test
     public void testReferencePoints() {
 
         assertTrue(graph.getReferencePoints().equals(new HashSet<>(Arrays.asList(5, 7, 10, 13))));
@@ -118,6 +129,7 @@ public class GraphTest extends TestCase {
     /**
      * Test start positions.
      */
+    @Test
     public void testStartPositions() {
 
         assertTrue(graph.getVertexesByStartPosition(5).equals(new HashSet<>(Collections.singletonList(node1))));
@@ -129,6 +141,7 @@ public class GraphTest extends TestCase {
     /**
      * Test end positions.
      */
+    @Test
     public void testEndPositions() {
 
         assertTrue(graph.getVertexesByEndPosition(7).equals(new HashSet<>(Collections.singletonList(node1))));
