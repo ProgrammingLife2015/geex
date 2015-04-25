@@ -77,13 +77,19 @@ public class MainController extends ScrollPane implements Initializable {
         int row = 0;
         for (int referencePoint : graph.getReferencePoints()) {
 
-            final Label label = new Label(Integer.toString(referencePoint));
-            ruler.getChildren().add(label);
+            Set<Node> nodes = graph.getVertexesByStartPosition(referencePoint);
 
-            showNodes(graph.getVertexesByStartPosition(referencePoint), row);
-            row++;
+            if (nodes != null) {
 
-            if (row >= 200) break; // Only show first 100 for now
+                final Label label = new Label(Integer.toString(referencePoint));
+                ruler.getChildren().add(label);
+
+                showNodes(nodes, row);
+                row++;
+
+                if (row >= 200) break; // Only show first 100 for now
+
+            }
 
         }
 
@@ -96,8 +102,6 @@ public class MainController extends ScrollPane implements Initializable {
      * @param row row at start position
      */
     protected void showNodes(Set<Node> nodes, int row) {
-
-        if (nodes == null) return;
 
         int col = 1;
         for (Node node : nodes) {

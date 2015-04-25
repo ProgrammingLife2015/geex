@@ -49,6 +49,7 @@
 #sequences {
     -fx-padding: 0.75cm;
     -fx-hgap: 1.5cm;
+    -fx-vgap: 1.5cm;
 }
 
 #sequences .label {
