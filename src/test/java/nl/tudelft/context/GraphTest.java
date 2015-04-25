@@ -120,9 +120,9 @@ public class GraphTest extends TestCase {
      */
     public void testStartPositions() {
 
-        assertTrue(graph.getVertexByStartPosition(5).equals(new HashSet<>(Collections.singletonList(node1))));
-        assertTrue(graph.getVertexByStartPosition(7).equals(new HashSet<>(Arrays.asList(node2, node3))));
-        assertTrue(graph.getVertexByStartPosition(10).equals(new HashSet<>(Collections.singletonList(node4))));
+        assertTrue(graph.getVertexesByStartPosition(5).equals(new HashSet<>(Collections.singletonList(node1))));
+        assertTrue(graph.getVertexesByStartPosition(7).equals(new HashSet<>(Arrays.asList(node2, node3))));
+        assertTrue(graph.getVertexesByStartPosition(10).equals(new HashSet<>(Collections.singletonList(node4))));
 
     }
 
@@ -131,9 +131,9 @@ public class GraphTest extends TestCase {
      */
     public void testEndPositions() {
 
-        assertTrue(graph.getVertexByEndPosition(7).equals(new HashSet<>(Collections.singletonList(node1))));
-        assertTrue(graph.getVertexByEndPosition(10).equals(new HashSet<>(Arrays.asList(node2, node3))));
-        assertTrue(graph.getVertexByEndPosition(13).equals(new HashSet<>(Collections.singletonList(node4))));
+        assertTrue(graph.getVertexesByEndPosition(7).equals(new HashSet<>(Collections.singletonList(node1))));
+        assertTrue(graph.getVertexesByEndPosition(10).equals(new HashSet<>(Arrays.asList(node2, node3))));
+        assertTrue(graph.getVertexesByEndPosition(13).equals(new HashSet<>(Collections.singletonList(node4))));
 
     }
 

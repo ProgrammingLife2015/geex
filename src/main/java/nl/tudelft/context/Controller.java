@@ -7,10 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import nl.tudelft.context.graph.Graph;
+import nl.tudelft.context.graph.Node;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -28,7 +30,7 @@ public class Controller extends ScrollPane implements Initializable {
      * Init a controller at main.fxml.
      *
      * @throws IOException
-     * @param graph
+     * @param graph graph to display in view
      */
     public Controller(Graph graph) throws IOException {
 
@@ -67,9 +69,27 @@ public class Controller extends ScrollPane implements Initializable {
 
         int row = 0;
         for (int referencePoint : graph.getReferencePoints()) {
+
             final Label label = new Label(Integer.toString(referencePoint));
             ruler.add(label, row, 0);
+            showNodes(graph.getVertexesByStartPosition(referencePoint), row);
             row++;
+
+            if (row >= 100) break; // Only show first 100 for now
+
+        }
+
+    }
+
+    protected void showNodes(Set<Node> nodes, int row) {
+
+        if (nodes == null) return;
+
+        int col = 1;
+        for (Node node : nodes) {
+            final Label label = new Label("id: " + Integer.toString(node.getId()));
+            ruler.add(label, row, col);
+            col++;
         }
 
     }

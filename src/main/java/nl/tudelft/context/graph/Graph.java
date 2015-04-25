@@ -82,7 +82,7 @@ public class Graph extends SimpleGraph<Node, DefaultEdge> {
      *
      * @param startPosition start position of nodes
      */
-    public Set<Node> getVertexByStartPosition(int startPosition) {
+    public Set<Node> getVertexesByStartPosition(int startPosition) {
 
         return nodeStartAt.get(startPosition);
 
@@ -93,7 +93,7 @@ public class Graph extends SimpleGraph<Node, DefaultEdge> {
      *
      * @param endPosition end position of nodes
      */
-    public Set<Node> getVertexByEndPosition(int endPosition) {
+    public Set<Node> getVertexesByEndPosition(int endPosition) {
 
         return nodeEndAt.get(endPosition);
 
