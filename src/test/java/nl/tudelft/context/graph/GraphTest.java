@@ -1,8 +1,5 @@
-package nl.tudelft.context;
+package nl.tudelft.context.graph;
 
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.GraphFactory;
-import nl.tudelft.context.graph.Node;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -25,13 +22,13 @@ public class GraphTest {
 
     protected static Graph graph;
 
-    protected static Node node1 = new Node(0, new HashSet<>(Arrays.asList("Cat", "Dog")), 5, 7, "A");
-    protected static Node node2 = new Node(1, new HashSet<>(Collections.singletonList("Dog")), 7, 10, "C");
-    protected static Node node3 = new Node(2, new HashSet<>(Collections.singletonList("Cat")), 7, 10, "G");
-    protected static Node node4 = new Node(3, new HashSet<>(Arrays.asList("Cat", "Dog")), 10, 13, "T");
+    protected static final Node node1 = new Node(0, new HashSet<>(Arrays.asList("Cat", "Dog")), 5, 7, "A");
+    protected static final Node node2 = new Node(1, new HashSet<>(Collections.singletonList("Dog")), 7, 10, "C");
+    protected static final Node node3 = new Node(2, new HashSet<>(Collections.singletonList("Cat")), 7, 10, "G");
+    protected static final Node node4 = new Node(3, new HashSet<>(Arrays.asList("Cat", "Dog")), 10, 13, "T");
 
     /**
-     * Set up the graph.
+     * Set up the graphFromFactory.
      *
      * @throws FileNotFoundException
      */

@@ -32,6 +32,12 @@
             <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>de.saxsys</groupId>
+            <artifactId>jfx-testrunner</artifactId>
+            <version>1.1</version>
+            <scope>test</scope>
+        </dependency>
         <!-- JGraphT -->
         <dependency>
             <groupId>org.jgrapht</groupId>

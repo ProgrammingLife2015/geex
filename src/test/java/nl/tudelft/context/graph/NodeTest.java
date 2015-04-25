@@ -1,7 +1,5 @@
-package nl.tudelft.context;
+package nl.tudelft.context.graph;
 
-import nl.tudelft.context.graph.Node;
-import nl.tudelft.context.graph.NodeFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
