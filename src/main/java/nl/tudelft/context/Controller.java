@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import nl.tudelft.context.graph.Graph;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,12 +22,17 @@ public class Controller extends ScrollPane implements Initializable {
     @FXML
     protected GridPane ruler;
 
+    protected Graph graph;
+
     /**
      * Init a controller at main.fxml.
      *
      * @throws IOException
+     * @param graph
      */
-    public Controller() throws IOException {
+    public Controller(Graph graph) throws IOException {
+
+        this.graph = graph;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/main.fxml"));
 
@@ -48,14 +54,23 @@ public class Controller extends ScrollPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        for (int i = 0; i < 100; i++) {
-
-            final Label label = new Label(Integer.toString(i));
-            ruler.add(label, i, 0);
-
-        }
+        initRuler();
 
         reverseScroll();
+
+    }
+
+    /**
+     * Init ruler with reference points.
+     */
+    protected void initRuler() {
+
+        int row = 0;
+        for (int referencePoint : graph.getReferencePoints()) {
+            final Label label = new Label(Integer.toString(referencePoint));
+            ruler.add(label, row, 0);
+            row++;
+        }
 
     }
 

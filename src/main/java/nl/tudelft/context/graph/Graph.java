@@ -5,6 +5,8 @@ import org.jgrapht.graph.SimpleGraph;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Graph
@@ -16,6 +18,7 @@ import java.util.Map;
 public class Graph extends SimpleGraph<Node, DefaultEdge> {
 
     Map<Integer, Node> vertexes = new HashMap<>();
+    Set<Integer> referencePoints = new TreeSet<>();
 
     /**
      * Create a Graph with default edges.
@@ -36,6 +39,10 @@ public class Graph extends SimpleGraph<Node, DefaultEdge> {
     public boolean addVertex(Node vertex) {
 
         vertexes.put(vertex.getId(), vertex);
+
+        referencePoints.add(vertex.getRefStartPosition());
+        referencePoints.add(vertex.getRefEndPosition());
+
         return super.addVertex(vertex);
 
     }
@@ -49,6 +56,15 @@ public class Graph extends SimpleGraph<Node, DefaultEdge> {
     public Node getVertexById(int id) {
 
         return vertexes.get(id);
+
+    }
+
+    /**
+     * Get all reference points
+     */
+    public Set<Integer> getReferencePoints() {
+
+        return referencePoints;
 
     }
 
