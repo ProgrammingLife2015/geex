@@ -1,9 +1,8 @@
-package nl.tudelft.context;
+package nl.tudelft.context.controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import nl.tudelft.context.graph.Node;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,21 +13,21 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 25-4-2015
  */
-public class SequenceController extends Label implements Initializable {
+public class PositionController extends Label implements Initializable {
 
-    Node node;
+    int position;
 
     /**
-     * Init a controller at sequence.fxml.
+     * Init a controller at position.fxml.
      *
-     * @param node node to show in view
+     * @param position position to display
      * @throws RuntimeException
      */
-    public SequenceController(Node node) {
+    public PositionController(int position) {
 
-        this.node = node;
+        this.position = position;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/sequence.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/position.fxml"));
 
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -52,7 +51,7 @@ public class SequenceController extends Label implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        this.setText("id: " + node.getId());
+        this.setText(Integer.toString(position));
 
     }
 

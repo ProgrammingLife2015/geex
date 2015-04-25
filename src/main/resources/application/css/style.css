@@ -34,7 +34,7 @@
     -fx-padding: 0 0 0 1.5cm;
 }
 
-#ruler .label {
+.position {
     -fx-padding: 0.2cm;
     -fx-border-color: #e6e6e6;
     -fx-border-width: 0 0 0 0.05cm;
@@ -43,4 +43,11 @@
     -fx-max-width: 3cm;
     -fx-font: 0.4cm 'Arial';
     -fx-text-fill: #e6e6e6;
+}
+
+/* Sequence */
+.sequence {
+    -fx-border-radius: 1cm;
+    -fx-pref-width: 2cm;
+    -fx-background-color: #e6b43a;
 }

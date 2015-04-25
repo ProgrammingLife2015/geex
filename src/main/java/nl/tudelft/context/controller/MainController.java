@@ -1,9 +1,8 @@
-package nl.tudelft.context;
+package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import nl.tudelft.context.graph.Graph;
@@ -19,7 +18,7 @@ import java.util.Set;
  * @version 1.0
  * @since 25-4-2015
  */
-public class Controller extends ScrollPane implements Initializable {
+public class MainController extends ScrollPane implements Initializable {
 
     @FXML
     protected GridPane ruler;
@@ -32,7 +31,7 @@ public class Controller extends ScrollPane implements Initializable {
      * @param graph graph to display in view
      * @throws RuntimeException
      */
-    public Controller(Graph graph) {
+    public MainController(Graph graph) {
 
         this.graph = graph;
 
@@ -75,8 +74,7 @@ public class Controller extends ScrollPane implements Initializable {
         int row = 0;
         for (int referencePoint : graph.getReferencePoints()) {
 
-            final Label label = new Label(Integer.toString(referencePoint));
-            ruler.add(label, row, 0);
+            ruler.add(new PositionController(referencePoint), row, 0);
             showNodes(graph.getVertexesByStartPosition(referencePoint), row);
             row++;
 

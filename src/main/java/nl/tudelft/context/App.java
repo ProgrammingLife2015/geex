@@ -3,6 +3,7 @@ package nl.tudelft.context;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.GraphFactory;
 
@@ -47,7 +48,7 @@ public class App extends Application {
         GraphFactory graphFactory = new GraphFactory();
         Graph graph = graphFactory.getGraph("/graph/10_strains_graph/simple_graph.node.graph", "/graph/10_strains_graph/simple_graph.edge.graph");
 
-        Controller controller = new Controller(graph);
+        MainController controller = new MainController(graph);
         Scene scene = new Scene(controller);
 
         stage.setTitle("Programming Life");
