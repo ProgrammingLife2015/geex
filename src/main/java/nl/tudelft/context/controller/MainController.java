@@ -3,8 +3,10 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 
@@ -21,7 +23,9 @@ import java.util.Set;
 public class MainController extends ScrollPane implements Initializable {
 
     @FXML
-    protected GridPane ruler;
+    protected HBox ruler;
+    @FXML
+    public GridPane sequences;
 
     protected Graph graph;
 
@@ -61,7 +65,6 @@ public class MainController extends ScrollPane implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         initRuler();
-
         reverseScroll();
 
     }
@@ -74,24 +77,36 @@ public class MainController extends ScrollPane implements Initializable {
         int row = 0;
         for (int referencePoint : graph.getReferencePoints()) {
 
-            ruler.add(new PositionController(referencePoint), row, 0);
+            final Label label = new Label(Integer.toString(referencePoint));
+            ruler.getChildren().add(label);
+
             showNodes(graph.getVertexesByStartPosition(referencePoint), row);
             row++;
 
-            if (row >= 100) break; // Only show first 100 for now
+            if (row >= 200) break; // Only show first 100 for now
 
         }
 
     }
 
+    /**
+     * Show all nodes at a start position.
+     *
+     * @param nodes nodes to show
+     * @param row row at start position
+     */
     protected void showNodes(Set<Node> nodes, int row) {
 
         if (nodes == null) return;
 
         int col = 1;
         for (Node node : nodes) {
-            ruler.add(new SequenceController(node), row, col);
+
+            final Label label = new Label(Integer.toString(node.getId()));
+            sequences.add(label, row, col);
+
             col++;
+
         }
 
     }
