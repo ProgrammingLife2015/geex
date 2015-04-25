@@ -22,8 +22,8 @@ public class GraphTest extends TestCase {
     protected Graph graph;
 
     protected Node node1 = new Node(0, new HashSet<>(Arrays.asList("Cat", "Dog")), 5, 7, "A");
-    protected Node node2 = new Node(1, new HashSet<>(Collections.singletonList("Dog")), 8, 10, "C");
-    protected Node node3 = new Node(2, new HashSet<>(Collections.singletonList("Cat")), 8, 10, "G");
+    protected Node node2 = new Node(1, new HashSet<>(Collections.singletonList("Dog")), 7, 10, "C");
+    protected Node node3 = new Node(2, new HashSet<>(Collections.singletonList("Cat")), 7, 10, "G");
     protected Node node4 = new Node(3, new HashSet<>(Arrays.asList("Cat", "Dog")), 10, 13, "T");
 
     /**
@@ -103,6 +103,15 @@ public class GraphTest extends TestCase {
         assertTrue(graph.containsEdge(node1, node3));
         assertTrue(graph.containsEdge(node2, node4));
         assertTrue(graph.containsEdge(node3, node4));
+
+    }
+
+    /**
+     * Test reference points.
+     */
+    public void testReferencePoints() {
+
+        assertTrue(graph.getReferencePoints().equals(new HashSet<>(Arrays.asList(5, 7, 10, 13))));
 
     }
 
