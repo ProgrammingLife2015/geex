@@ -4,8 +4,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nl.tudelft.context.controller.MainController;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.GraphFactory;
 
 import java.io.FileNotFoundException;
 
@@ -45,10 +43,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws FileNotFoundException {
 
-        GraphFactory graphFactory = new GraphFactory();
-        Graph graph = graphFactory.getGraph("/graph/10_strains_graph/simple_graph.node.graph", "/graph/10_strains_graph/simple_graph.edge.graph");
-
-        MainController controller = new MainController(graph);
+        MainController controller = new MainController();
         Scene scene = new Scene(controller);
 
         stage.setTitle("Programming Life");

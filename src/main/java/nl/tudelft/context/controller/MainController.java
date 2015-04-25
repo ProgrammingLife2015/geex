@@ -4,11 +4,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
+import nl.tudelft.context.service.LoadGraphService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +25,8 @@ import java.util.Set;
 public class MainController extends ScrollPane implements Initializable {
 
     @FXML
+    ProgressIndicator progressIndicator;
+    @FXML
     protected HBox ruler;
     @FXML
     public GridPane sequences;
@@ -32,12 +36,9 @@ public class MainController extends ScrollPane implements Initializable {
     /**
      * Init a controller at main.fxml.
      *
-     * @param graph graph to display in view
      * @throws RuntimeException
      */
-    public MainController(Graph graph) {
-
-        this.graph = graph;
+    public MainController() {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/main.fxml"));
 
@@ -64,15 +65,32 @@ public class MainController extends ScrollPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        initRuler();
+        loadGraph();
         reverseScroll();
 
     }
 
     /**
-     * Init ruler with reference points.
+     * Load graph with service, show progress indicator meanwhile.
      */
-    protected void initRuler() {
+    protected void loadGraph() {
+
+        final LoadGraphService loadGraphService = new LoadGraphService();
+        progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
+
+        loadGraphService.setOnSucceeded(event -> {
+            graph = loadGraphService.getValue();
+            showGraph();
+        });
+
+        loadGraphService.restart();
+
+    }
+
+    /**
+     * Show graph with reference points.
+     */
+    protected void showGraph() {
 
         int row = 0;
         for (int referencePoint : graph.getReferencePoints()) {
