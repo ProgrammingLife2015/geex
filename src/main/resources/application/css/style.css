@@ -8,13 +8,15 @@
 
 /* Progress Indicator */
 .progress-indicator {
-    -fx-min-height: 150px;
-    -fx-min-width: 150px;
+    -fx-max-height: 150px;
+    -fx-max-width: 150px;
 }
 
 /* Scroll Pane */
 .scroll-pane {
     -fx-padding: 0;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
 }
 
 .scroll-pane > .viewport {
