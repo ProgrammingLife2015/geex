@@ -75,7 +75,7 @@ public class MainController extends ScrollPane implements Initializable {
      */
     protected void loadGraph() {
 
-        final LoadGraphService loadGraphService = new LoadGraphService();
+        final LoadGraphService loadGraphService = new LoadGraphService("/graph/10_strains_graph/simple_graph.node.graph", "/graph/10_strains_graph/simple_graph.edge.graph");
         progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
 
         loadGraphService.setOnSucceeded(event -> {

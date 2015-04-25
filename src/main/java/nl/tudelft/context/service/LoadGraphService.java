@@ -12,6 +12,16 @@ import nl.tudelft.context.graph.GraphFactory;
  */
 public class LoadGraphService extends Service<Graph> {
 
+    String nodeFile;
+    String edgeFile;
+
+    public LoadGraphService(String nodeFile, String edgeFile) {
+
+        this.nodeFile = nodeFile;
+        this.edgeFile = edgeFile;
+
+    }
+
     /**
      * Create a task that loads the graph.
      *
@@ -24,7 +34,7 @@ public class LoadGraphService extends Service<Graph> {
             @Override
             protected Graph call() throws Exception {
                 GraphFactory graphFactory = new GraphFactory();
-                return graphFactory.getGraph("/graph/10_strains_graph/simple_graph.node.graph", "/graph/10_strains_graph/simple_graph.edge.graph");
+                return graphFactory.getGraph(nodeFile, edgeFile);
             }
         };
 
