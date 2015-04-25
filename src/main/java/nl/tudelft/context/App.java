@@ -6,6 +6,8 @@ import javafx.stage.Stage;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.GraphFactory;
 
+import java.io.FileNotFoundException;
+
 /**
  * App
  *
@@ -40,7 +42,7 @@ public class App extends Application {
      *                     primary stages and will not be embedded in the browser.
      */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws FileNotFoundException {
 
         GraphFactory graphFactory = new GraphFactory();
         Graph graph = graphFactory.getGraph("/graph/10_strains_graph/simple_graph.node.graph", "/graph/10_strains_graph/simple_graph.edge.graph");

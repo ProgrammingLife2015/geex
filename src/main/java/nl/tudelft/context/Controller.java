@@ -29,10 +29,10 @@ public class Controller extends ScrollPane implements Initializable {
     /**
      * Init a controller at main.fxml.
      *
-     * @throws IOException
      * @param graph graph to display in view
+     * @throws RuntimeException
      */
-    public Controller(Graph graph) throws IOException {
+    public Controller(Graph graph) {
 
         this.graph = graph;
 
@@ -40,7 +40,12 @@ public class Controller extends ScrollPane implements Initializable {
 
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-        fxmlLoader.load();
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -87,8 +92,7 @@ public class Controller extends ScrollPane implements Initializable {
 
         int col = 1;
         for (Node node : nodes) {
-            final Label label = new Label("id: " + Integer.toString(node.getId()));
-            ruler.add(label, row, col);
+            ruler.add(new SequenceController(node), row, col);
             col++;
         }
 
