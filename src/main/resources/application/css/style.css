@@ -47,7 +47,7 @@
 
 /* Sequences */
 #sequences {
-    -fx-padding: 0.75cm;
+    -fx-padding: 0 0.75cm;
     -fx-hgap: 1.5cm;
     -fx-vgap: 1.5cm;
 }
