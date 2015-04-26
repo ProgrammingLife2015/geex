@@ -119,7 +119,7 @@ public class GraphTest {
     @Test
     public void testReferencePoints() {
 
-        assertTrue(graph.getReferencePoints().equals(new HashSet<>(Arrays.asList(5, 7, 10, 13))));
+        assertTrue(graph.getReferencePoints().equals(new HashSet<>(Arrays.asList(5, 7, 10))));
 
     }
 

@@ -14,8 +14,10 @@ import nl.tudelft.context.service.LoadGraphService;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -25,11 +27,11 @@ import java.util.Set;
 public class MainController extends ScrollPane implements Initializable {
 
     @FXML
-    ProgressIndicator progressIndicator;
+    protected ProgressIndicator progressIndicator;
     @FXML
     protected HBox ruler;
     @FXML
-    public GridPane sequences;
+    protected GridPane sequences;
 
     protected LoadGraphService loadGraphService;
     protected Graph graph;
@@ -89,23 +91,18 @@ public class MainController extends ScrollPane implements Initializable {
      */
     protected void showGraph() {
 
+        List<Set<Node>> nodeSets = graph.getReferencePoints()
+                .stream()
+                .limit(200)
+                .map(referencePoint -> {
+                    ruler.getChildren().add(new Label(Integer.toString(referencePoint)));
+                    return graph.getVertexesByStartPosition(referencePoint);
+                }).collect(Collectors.toList());
+
         int row = 0;
-        for (int referencePoint : graph.getReferencePoints()) {
-
-            Set<Node> nodes = graph.getVertexesByStartPosition(referencePoint);
-
-            if (nodes != null) {
-
-                final Label label = new Label(Integer.toString(referencePoint));
-                ruler.getChildren().add(label);
-
-                showNodes(nodes, row);
-                row++;
-
-                if (row >= 200) break; // Only show first 100 for now
-
-            }
-
+        for (Set<Node> nodes : nodeSets) {
+            showNodes(nodes, row);
+            row++;
         }
 
     }
@@ -114,7 +111,7 @@ public class MainController extends ScrollPane implements Initializable {
      * Show all nodes at a start position.
      *
      * @param nodes nodes to show
-     * @param row row at start position
+     * @param row   row at start position
      */
     protected void showNodes(Set<Node> nodes, int row) {
 

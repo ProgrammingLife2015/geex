@@ -41,7 +41,6 @@ public class Graph extends SimpleGraph<Node, DefaultEdge> {
         vertexes.put(vertex.getId(), vertex);
 
         referencePoints.add(vertex.getRefStartPosition());
-        referencePoints.add(vertex.getRefEndPosition());
 
         addVertexToMap(vertex, vertex.getRefStartPosition(), nodeStartAt);
         addVertexToMap(vertex, vertex.getRefEndPosition(), nodeEndAt);
