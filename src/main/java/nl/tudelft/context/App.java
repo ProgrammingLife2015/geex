@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 import nl.tudelft.context.controller.MainController;
 
 import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * App
@@ -16,8 +15,6 @@ import java.util.concurrent.CountDownLatch;
  * @since 23-4-2015
  */
 public class App extends Application {
-
-    final static CountDownLatch started = new CountDownLatch(1);
 
     /**
      * @param args arguments
@@ -55,8 +52,6 @@ public class App extends Application {
         stage.setMinWidth(800);
         stage.setMaximized(true);
         stage.show();
-
-        started.countDown();
 
     }
 
