@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import nl.tudelft.context.controller.MainController;
 
 import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * App
@@ -16,10 +17,12 @@ import java.io.IOException;
  */
 public class App extends Application {
 
+    final static CountDownLatch started = new CountDownLatch(1);
+
     /**
      * @param args arguments
      */
-    public static void main(String[] args) {
+    public static void main(String... args) {
 
         launch(args);
 
@@ -35,10 +38,10 @@ public class App extends Application {
      * </p>
      *
      * @param stage the primary stage for this application, onto which
-     *                     the application scene can be set. The primary stage will be embedded in
-     *                     the browser if the application was launched as an applet.
-     *                     Applications may create other stages, if needed, but they will not be
-     *                     primary stages and will not be embedded in the browser.
+     *              the application scene can be set. The primary stage will be embedded in
+     *              the browser if the application was launched as an applet.
+     *              Applications may create other stages, if needed, but they will not be
+     *              primary stages and will not be embedded in the browser.
      */
     @Override
     public void start(Stage stage) throws IOException {
@@ -52,6 +55,8 @@ public class App extends Application {
         stage.setMinWidth(800);
         stage.setMaximized(true);
         stage.show();
+
+        started.countDown();
 
     }
 
