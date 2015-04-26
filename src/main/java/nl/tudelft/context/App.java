@@ -42,7 +42,7 @@ public class App extends Application {
     public void start(Stage stage) {
 
         MainController controller = new MainController();
-        Scene scene = new Scene(controller);
+        Scene scene = new Scene(controller.getRoot());
 
         stage.setTitle("Programming Life");
         stage.setScene(scene);

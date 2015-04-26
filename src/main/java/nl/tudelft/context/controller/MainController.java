@@ -1,7 +1,6 @@
 package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
@@ -10,7 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import nl.tudelft.context.graph.Graph;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,7 +17,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 25-4-2015
  */
-public class MainController extends BorderPane implements Initializable {
+public class MainController extends DefaultController<BorderPane> implements Initializable {
 
     @FXML
     protected ScrollPane scrollPane;
@@ -39,15 +37,9 @@ public class MainController extends BorderPane implements Initializable {
      */
     public MainController() {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/main.fxml"));
+        super(new BorderPane(), "/application/main.fxml");
 
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        loadFXML();
 
     }
 
@@ -63,7 +55,7 @@ public class MainController extends BorderPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        this.setLeft(new LoadGraphController(progressIndicator, ruler, sequences));
+        root.setLeft(new LoadGraphController(progressIndicator, ruler, sequences).getRoot());
         reverseScroll();
 
     }
@@ -73,7 +65,7 @@ public class MainController extends BorderPane implements Initializable {
      */
     protected void reverseScroll() {
 
-        this.setOnScroll(event -> {
+        root.setOnScroll(event -> {
             final double displacement = event.getDeltaY() / scrollPane.getContent().getBoundsInLocal().getWidth();
             scrollPane.setHvalue(scrollPane.getHvalue() - displacement);
         });

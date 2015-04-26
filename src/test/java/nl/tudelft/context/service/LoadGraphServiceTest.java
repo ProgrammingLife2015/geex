@@ -41,7 +41,7 @@ public class LoadGraphServiceTest {
     }
 
     /**
-     * Test if the graphFromFactory load succeeds.
+     * Test if the graphFromFactory loadFXML succeeds.
      */
     @Test
     public void testGraphLoadSucceeds() throws Exception {

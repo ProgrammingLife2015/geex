@@ -1,7 +1,6 @@
 package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,7 +14,6 @@ import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,7 +25,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 26-4-2015
  */
-public class LoadGraphController extends GridPane implements Initializable {
+public class LoadGraphController extends DefaultController<GridPane> implements Initializable {
 
     @FXML
     protected Button
@@ -55,19 +53,13 @@ public class LoadGraphController extends GridPane implements Initializable {
      */
     public LoadGraphController(ProgressIndicator progressIndicator, HBox ruler, GridPane sequences) {
 
+        super(new GridPane(), "/application/load_graph.fxml");
+
         this.progressIndicator = progressIndicator;
         this.ruler = ruler;
         this.sequences = sequences;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/load_graph.fxml"));
-
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        loadFXML();
 
     }
 
@@ -105,7 +97,7 @@ public class LoadGraphController extends GridPane implements Initializable {
      */
     protected File loadFile(FileChooser fileChooser, TextField source) {
 
-        File file = fileChooser.showOpenDialog(this.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(root.getScene().getWindow());
 
         if (file != null)
             source.setText(file.getName());
