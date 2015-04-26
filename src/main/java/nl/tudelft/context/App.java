@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import nl.tudelft.context.controller.MainController;
 
 /**
- * App
+ * Entry point of the App.
  *
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
@@ -14,10 +14,13 @@ import nl.tudelft.context.controller.MainController;
  */
 public class App extends Application {
 
+    protected static final int FRAME_WIDTH = 800;
+    protected static final int FRAME_HEIGHT = 600;
+
     /**
      * @param args arguments
      */
-    public static void main(String... args) {
+    public static void main(final String... args) {
 
         launch(args);
 
@@ -28,26 +31,21 @@ public class App extends Application {
      * The start method is called after the init method has returned,
      * and after the system is ready for the application to begin running.
      * <p>
-     * <p>
      * NOTE: This method is called on the JavaFX Application Thread.
      * </p>
      *
-     * @param stage the primary stage for this application, onto which
-     *              the application scene can be set. The primary stage will be embedded in
-     *              the browser if the application was launched as an applet.
-     *              Applications may create other stages, if needed, but they will not be
-     *              primary stages and will not be embedded in the browser.
+     * @param stage the primary stage for this application.
      */
     @Override
-    public void start(Stage stage) {
+    final public void start(final Stage stage) {
 
         MainController controller = new MainController();
         Scene scene = new Scene(controller.getRoot());
 
         stage.setTitle("Programming Life");
         stage.setScene(scene);
-        stage.setMinHeight(600);
-        stage.setMinWidth(800);
+        stage.setMinHeight(FRAME_HEIGHT);
+        stage.setMinWidth(FRAME_WIDTH);
         stage.setMaximized(true);
         stage.show();
 

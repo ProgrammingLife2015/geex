@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import java.io.IOException;
 
 /**
+ * @param <T> fxml root type
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 26-4-2015

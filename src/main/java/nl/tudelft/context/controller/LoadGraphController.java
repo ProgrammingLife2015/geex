@@ -99,10 +99,11 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
 
         File file = fileChooser.showOpenDialog(root.getScene().getWindow());
 
-        if (file != null)
+        if (file != null) {
             source.setText(file.getName());
-        else
+        } else {
             source.setText("");
+        }
 
         return file;
 
