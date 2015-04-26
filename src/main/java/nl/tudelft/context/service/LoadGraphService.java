@@ -12,8 +12,8 @@ import nl.tudelft.context.graph.GraphFactory;
  */
 public class LoadGraphService extends Service<Graph> {
 
-    String nodeFile;
-    String edgeFile;
+    protected String nodeFile;
+    protected String edgeFile;
 
     public LoadGraphService(String nodeFile, String edgeFile) {
 
