@@ -36,7 +36,7 @@ public abstract class DefaultController<T extends Parent> {
      */
     protected void loadFXML() {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource(fxmlFile));
+        FXMLLoader fxmlLoader = new FXMLLoader(DefaultController.class.getResource(fxmlFile));
 
         fxmlLoader.setRoot(root);
         fxmlLoader.setController(this);
