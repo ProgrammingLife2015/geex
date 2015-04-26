@@ -5,6 +5,8 @@ import javafx.concurrent.Task;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.GraphFactory;
 
+import java.io.File;
+
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
@@ -12,12 +14,27 @@ import nl.tudelft.context.graph.GraphFactory;
  */
 public class LoadGraphService extends Service<Graph> {
 
-    protected String nodeFile;
-    protected String edgeFile;
+    protected File nodeFile;
+    protected File edgeFile;
 
-    public LoadGraphService(String nodeFile, String edgeFile) {
+    /**
+     * Set node file.
+     *
+     * @param nodeFile node file location
+     */
+    public void setNodeFile(File nodeFile) {
 
         this.nodeFile = nodeFile;
+
+    }
+
+    /**
+     * Set edge file.
+     *
+     * @param edgeFile edge file location
+     */
+    public void setEdgeFile(File edgeFile) {
+
         this.edgeFile = edgeFile;
 
     }

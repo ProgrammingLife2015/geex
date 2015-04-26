@@ -3,29 +3,26 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.Node;
-import nl.tudelft.context.service.LoadGraphService;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 25-4-2015
  */
-public class MainController extends ScrollPane implements Initializable {
+public class MainController extends BorderPane implements Initializable {
 
+    @FXML
+    protected ScrollPane scrollPane;
     @FXML
     protected ProgressIndicator progressIndicator;
     @FXML
@@ -33,7 +30,6 @@ public class MainController extends ScrollPane implements Initializable {
     @FXML
     protected GridPane sequences;
 
-    protected LoadGraphService loadGraphService;
     protected Graph graph;
 
     /**
@@ -41,15 +37,17 @@ public class MainController extends ScrollPane implements Initializable {
      *
      * @throws RuntimeException
      */
-    public MainController(String nodeFile, String edgeFile) throws IOException {
-
-        loadGraphService = new LoadGraphService(nodeFile, edgeFile);
+    public MainController() {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/main.fxml"));
 
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-        fxmlLoader.load();
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -65,65 +63,8 @@ public class MainController extends ScrollPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        loadGraph();
+        this.setLeft(new LoadGraphController(progressIndicator, ruler, sequences));
         reverseScroll();
-
-    }
-
-    /**
-     * Load graph with service, show progress indicator meanwhile.
-     */
-    protected void loadGraph() {
-
-        progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
-
-        loadGraphService.setOnSucceeded(event -> {
-            graph = loadGraphService.getValue();
-            showGraph();
-        });
-
-        loadGraphService.restart();
-
-    }
-
-    /**
-     * Show graph with reference points.
-     */
-    protected void showGraph() {
-
-        List<Set<Node>> nodeSets = graph.getReferencePoints()
-                .stream()
-                .limit(200)
-                .map(referencePoint -> {
-                    ruler.getChildren().add(new Label(Integer.toString(referencePoint)));
-                    return graph.getVertexesByStartPosition(referencePoint);
-                }).collect(Collectors.toList());
-
-        int row = 0;
-        for (Set<Node> nodes : nodeSets) {
-            showNodes(nodes, row);
-            row++;
-        }
-
-    }
-
-    /**
-     * Show all nodes at a start position.
-     *
-     * @param nodes nodes to show
-     * @param row   row at start position
-     */
-    protected void showNodes(Set<Node> nodes, int row) {
-
-        int col = 1;
-        for (Node node : nodes) {
-
-            final Label label = new Label(Integer.toString(node.getId()));
-            sequences.add(label, row, col);
-
-            col++;
-
-        }
 
     }
 
@@ -133,8 +74,8 @@ public class MainController extends ScrollPane implements Initializable {
     protected void reverseScroll() {
 
         this.setOnScroll(event -> {
-            final double displacement = event.getDeltaY() / this.getContent().getBoundsInLocal().getWidth();
-            this.setHvalue(this.getHvalue() - displacement);
+            final double displacement = event.getDeltaY() / scrollPane.getContent().getBoundsInLocal().getWidth();
+            scrollPane.setHvalue(scrollPane.getHvalue() - displacement);
         });
 
     }

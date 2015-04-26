@@ -5,8 +5,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nl.tudelft.context.controller.MainController;
 
-import java.io.IOException;
-
 /**
  * App
  *
@@ -41,9 +39,9 @@ public class App extends Application {
      *              primary stages and will not be embedded in the browser.
      */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
 
-        MainController controller = new MainController("/graph/10_strains_graph/simple_graph.node.graph", "/graph/10_strains_graph/simple_graph.edge.graph");
+        MainController controller = new MainController();
         Scene scene = new Scene(controller);
 
         stage.setTitle("Programming Life");

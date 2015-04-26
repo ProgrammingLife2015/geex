@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -23,8 +24,8 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(JfxRunner.class)
 public class LoadGraphServiceTest {
 
-    protected final static String nodeFile = "/graph/node.graph";
-    protected final static String edgeFile = "/graph/edge.graph";
+    protected final static File nodeFile = new File(LoadGraphServiceTest.class.getResource("/graph/node.graph").getPath());
+    protected final static File edgeFile = new File(LoadGraphServiceTest.class.getResource("/graph/edge.graph").getPath());
 
     protected static Graph graphFromFactory;
 
@@ -45,7 +46,9 @@ public class LoadGraphServiceTest {
     @Test
     public void testGraphLoadSucceeds() throws Exception {
 
-        final LoadGraphService loadGraphService = new LoadGraphService(nodeFile, edgeFile);
+        final LoadGraphService loadGraphService = new LoadGraphService();
+        loadGraphService.setNodeFile(nodeFile);
+        loadGraphService.setEdgeFile(edgeFile);
 
         CompletableFuture<Graph> completableFuture = new CompletableFuture<>();
 
