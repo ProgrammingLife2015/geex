@@ -31,7 +31,7 @@ public class MainControllerTest {
     /**
      * Setup Main Controller.
      */
-    @Test(timeout=2000)
+    @Test(timeout=5000)
     public void test() throws Exception {
 
         MainController mainController = new MainController(nodeFile, edgeFile);
@@ -54,10 +54,10 @@ public class MainControllerTest {
         mainController.sequences = mock(GridPane.class);
 
         // Verify ruler
-        assertEquals(true, rulerChildrenAdded.get(2000, TimeUnit.MILLISECONDS));
+        assertEquals(true, rulerChildrenAdded.get(5000, TimeUnit.MILLISECONDS));
 
         // Verify sequences
-        assertEquals(true, sequencesAdded.get(2000, TimeUnit.MILLISECONDS));
+        assertEquals(true, sequencesAdded.get(5000, TimeUnit.MILLISECONDS));
 
         // Verify progress indicator
         verify(mainController.progressIndicator, times(1)).visibleProperty();
