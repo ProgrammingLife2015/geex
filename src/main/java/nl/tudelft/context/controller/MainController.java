@@ -7,7 +7,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import nl.tudelft.context.graph.Graph;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,8 +26,6 @@ public class MainController extends DefaultController<BorderPane> implements Ini
     protected HBox ruler;
     @FXML
     protected GridPane sequences;
-
-    protected Graph graph;
 
     /**
      * Init a controller at main.fxml.
