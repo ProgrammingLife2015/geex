@@ -16,7 +16,10 @@ public abstract class DefaultController<T extends Parent> {
     protected final String fxmlFile;
 
     /**
-     * Create a generic controller.
+     * Create a generic controller with T as root.
+     * <p>
+     * T must be a possible root for fxml so T must extend Parent.
+     * </p>
      *
      * @param root     the root of fxml
      * @param fxmlFile the fxml file
@@ -29,7 +32,7 @@ public abstract class DefaultController<T extends Parent> {
     }
 
     /**
-     * Create a separate loadFXML method to call at the end of the parent class constructor to prevent uninitialized Objects.
+     * Separate loadFXML method to call at the end of the parent class constructor to prevent uninitialized Objects.
      */
     protected void loadFXML() {
 
