@@ -1,13 +1,11 @@
 package nl.tudelft.context;
 
-import com.jogamp.newt.opengl.GLWindow;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.util.FPSAnimator;
-import nl.tudelft.context.window.Main;
-import nl.tudelft.context.window.WindowFactory;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import nl.tudelft.context.controller.MainController;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * App
@@ -16,28 +14,44 @@ import java.io.FileNotFoundException;
  * @version 1.0
  * @since 23-4-2015
  */
-public class App {
+public class App extends Application {
 
-    static {
-        GLProfile.initSingleton();
+    /**
+     * @param args arguments
+     */
+    public static void main(String... args) {
+
+        launch(args);
+
     }
 
     /**
-     * @param args ignored
-     * @throws FileNotFoundException
+     * The main entry point for all JavaFX applications.
+     * The start method is called after the init method has returned,
+     * and after the system is ready for the application to begin running.
+     * <p>
+     * <p>
+     * NOTE: This method is called on the JavaFX Application Thread.
+     * </p>
+     *
+     * @param stage the primary stage for this application, onto which
+     *              the application scene can be set. The primary stage will be embedded in
+     *              the browser if the application was launched as an applet.
+     *              Applications may create other stages, if needed, but they will not be
+     *              primary stages and will not be embedded in the browser.
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    @Override
+    public void start(Stage stage) throws IOException {
 
-        GLProfile glp = GLProfile.getDefault();
-        GLCapabilities caps = new GLCapabilities(glp);
+        MainController controller = new MainController("/graph/10_strains_graph/simple_graph.node.graph", "/graph/10_strains_graph/simple_graph.edge.graph");
+        Scene scene = new Scene(controller);
 
-        WindowFactory windowFactory = new WindowFactory();
-        GLWindow window = windowFactory.getWindow(caps);
-
-        window.addGLEventListener(new Main());
-
-        FPSAnimator animator = new FPSAnimator(window, 30);
-        animator.start();
+        stage.setTitle("Programming Life");
+        stage.setScene(scene);
+        stage.setMinHeight(600);
+        stage.setMinWidth(800);
+        stage.setMaximized(true);
+        stage.show();
 
     }
 
