@@ -31,6 +31,7 @@ public class MainController extends ScrollPane implements Initializable {
     @FXML
     public GridPane sequences;
 
+    protected LoadGraphService loadGraphService;
     protected Graph graph;
 
     /**
@@ -38,18 +39,15 @@ public class MainController extends ScrollPane implements Initializable {
      *
      * @throws RuntimeException
      */
-    public MainController() {
+    public MainController(String nodeFile, String edgeFile) throws IOException {
+
+        loadGraphService = new LoadGraphService(nodeFile, edgeFile);
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/main.fxml"));
 
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        fxmlLoader.load();
 
     }
 
@@ -75,7 +73,6 @@ public class MainController extends ScrollPane implements Initializable {
      */
     protected void loadGraph() {
 
-        final LoadGraphService loadGraphService = new LoadGraphService("/graph/10_strains_graph/simple_graph.node.graph", "/graph/10_strains_graph/simple_graph.edge.graph");
         progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
 
         loadGraphService.setOnSucceeded(event -> {

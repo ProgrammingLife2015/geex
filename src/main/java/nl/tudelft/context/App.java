@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nl.tudelft.context.controller.MainController;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * App
@@ -41,9 +41,9 @@ public class App extends Application {
      *                     primary stages and will not be embedded in the browser.
      */
     @Override
-    public void start(Stage stage) throws FileNotFoundException {
+    public void start(Stage stage) throws IOException {
 
-        MainController controller = new MainController();
+        MainController controller = new MainController("/graph/10_strains_graph/simple_graph.node.graph", "/graph/10_strains_graph/simple_graph.edge.graph");
         Scene scene = new Scene(controller);
 
         stage.setTitle("Programming Life");
