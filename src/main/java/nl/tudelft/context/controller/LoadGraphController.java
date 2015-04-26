@@ -83,7 +83,9 @@ public class LoadGraphController extends GridPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        loadGraphService =  new LoadGraphService();
+        loadGraphService = new LoadGraphService();
+        loadGraphService.setOnSucceeded(event -> showGraph(loadGraphService.getValue()));
+
         progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
 
         FileChooser nodeFileChooser = new FileChooser();
@@ -105,7 +107,7 @@ public class LoadGraphController extends GridPane implements Initializable {
 
         File file = fileChooser.showOpenDialog(this.getScene().getWindow());
 
-        if(file != null)
+        if (file != null)
             source.setText(file.getName());
         else
             source.setText("");
@@ -123,7 +125,6 @@ public class LoadGraphController extends GridPane implements Initializable {
         ruler.getChildren().clear();
         sequences.getChildren().clear();
 
-        loadGraphService.setOnSucceeded(e -> showGraph(loadGraphService.getValue()));
         loadGraphService.restart();
 
     }
