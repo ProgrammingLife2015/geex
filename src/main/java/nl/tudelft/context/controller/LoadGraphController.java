@@ -53,13 +53,13 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
      */
     public LoadGraphController(ProgressIndicator progressIndicator, HBox ruler, GridPane sequences) {
 
-        super(new GridPane(), "/application/load_graph.fxml");
+        super(new GridPane());
 
         this.progressIndicator = progressIndicator;
         this.ruler = ruler;
         this.sequences = sequences;
 
-        loadFXML();
+        loadFXML("/application/load_graph.fxml");
 
     }
 

@@ -14,7 +14,6 @@ import java.io.IOException;
 public abstract class DefaultController<T extends Parent> {
 
     protected final T root;
-    protected final String fxmlFile;
 
     /**
      * Create a generic controller with T as root.
@@ -23,19 +22,19 @@ public abstract class DefaultController<T extends Parent> {
      * </p>
      *
      * @param root     the root of fxml
-     * @param fxmlFile the fxml file
      */
-    public DefaultController(T root, String fxmlFile) {
+    public DefaultController(T root) {
 
         this.root = root;
-        this.fxmlFile = fxmlFile;
 
     }
 
     /**
      * Separate loadFXML method to call at the end of the parent class constructor to prevent uninitialized Objects.
+     *
+     * @param fxmlFile the fxml file
      */
-    protected void loadFXML() {
+    protected void loadFXML(String fxmlFile) {
 
         FXMLLoader fxmlLoader = new FXMLLoader(DefaultController.class.getResource(fxmlFile));
 

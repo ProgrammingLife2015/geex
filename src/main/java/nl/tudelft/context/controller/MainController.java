@@ -34,9 +34,9 @@ public class MainController extends DefaultController<BorderPane> implements Ini
      */
     public MainController() {
 
-        super(new BorderPane(), "/application/main.fxml");
+        super(new BorderPane());
 
-        loadFXML();
+        loadFXML("/application/main.fxml");
 
     }
 
