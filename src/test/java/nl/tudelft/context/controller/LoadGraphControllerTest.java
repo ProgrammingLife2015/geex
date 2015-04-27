@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.FileChooser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,9 +15,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -50,6 +46,16 @@ public class LoadGraphControllerTest {
 
         loadGraphController.loadGraphService.setNodeFile(nodeFile);
         loadGraphController.loadGraphService.setEdgeFile(edgeFile);
+
+    }
+
+    /**
+     * Test RuntimeException on wrong FXML file.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testWrongFXMLFile() {
+
+        loadGraphController.loadFXML("");
 
     }
 

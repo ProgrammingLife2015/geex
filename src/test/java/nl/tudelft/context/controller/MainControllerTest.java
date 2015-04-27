@@ -1,8 +1,13 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.scene.layout.GridPane;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -12,15 +17,32 @@ import org.junit.runner.RunWith;
 @RunWith(JfxRunner.class)
 public class MainControllerTest {
 
+    protected static MainController mainController;
+
     /**
      * Setup Main Controller.
      */
+    @BeforeClass
+    public static void beforeClass() throws InterruptedException {
+
+        mainController = new MainController();
+
+    }
+
     @Test
-    public void testSmoke() throws InterruptedException {
+    public void testLeft() {
 
-        new MainController();
+        assertThat(mainController.root.getLeft(), instanceOf(GridPane.class));
 
-        Thread.sleep(3000);
+    }
+
+    /**
+     * Test RuntimeException on wrong FXML file.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testWrongFXMLFile() {
+
+        mainController.loadFXML("");
 
     }
 
