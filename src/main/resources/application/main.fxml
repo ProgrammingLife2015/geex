@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<fx:root type="javafx.scene.control.ScrollPane" xmlns:fx="http://javafx.com/fxml">
+
+    <StackPane>
+        <children>
+            <GridPane>
+                <HBox fx:id="ruler" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <GridPane fx:id="sequences" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            </GridPane>
+            <ProgressIndicator fx:id="progressIndicator"/>
+        </children>
+    </StackPane>
+
+    <stylesheets>
+        <URL value="@css/style.css"/>
+    </stylesheets>
+
+</fx:root>

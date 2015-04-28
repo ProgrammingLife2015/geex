@@ -1,27 +1,29 @@
-package nl.tudelft.context;
+package nl.tudelft.context.graph;
 
-import junit.framework.TestCase;
-import nl.tudelft.context.graph.Node;
-import nl.tudelft.context.graph.NodeFactory;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 24-4-2015
  */
-public class NodeTest extends TestCase {
+public class NodeTest {
 
-    Node node1, node2;
+    protected static Node node1, node2;
 
     /**
      * Set up by parsing a single node1
      */
-    public void setUp() {
+    @BeforeClass
+    public static void beforeClass() {
 
         NodeFactory nodeFactory = new NodeFactory();
 
@@ -33,6 +35,7 @@ public class NodeTest extends TestCase {
     /**
      * Test node1 id.
      */
+    @Test
     public void testId() {
 
         assertEquals(0, node1.getId());
@@ -43,6 +46,7 @@ public class NodeTest extends TestCase {
     /**
      * Test node1 sources.
      */
+    @Test
     public void testSources() {
 
         assertEquals(new HashSet<>(Arrays.asList("Cat", "Dog")), node1.getSources());
@@ -53,6 +57,7 @@ public class NodeTest extends TestCase {
     /**
      * Test node1 ref start position.
      */
+    @Test
     public void testRefStartPosition() {
 
         assertEquals(5, node1.getRefStartPosition());
@@ -63,6 +68,7 @@ public class NodeTest extends TestCase {
     /**
      * Test node1 ref end position.
      */
+    @Test
     public void testRefEndPosition() {
 
         assertEquals(7, node1.getRefEndPosition());
@@ -73,6 +79,7 @@ public class NodeTest extends TestCase {
     /**
      * Test node1 content.
      */
+    @Test
     public void testContent() {
 
         assertEquals("A", node1.getContent());
