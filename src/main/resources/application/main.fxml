@@ -6,15 +6,13 @@
 <fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
 
     <center>
-        <ScrollPane fx:id="scrollPane">
+        <ScrollPane>
             <StackPane>
-                <children>
-                    <GridPane>
-                        <HBox fx:id="ruler" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                        <GridPane fx:id="sequences" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                    </GridPane>
-                    <ProgressIndicator fx:id="progressIndicator"/>
-                </children>
+                <GridPane>
+                    <HBox fx:id="ruler" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <GridPane fx:id="sequences" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                </GridPane>
+                <ProgressIndicator fx:id="progressIndicator"/>
             </StackPane>
         </ScrollPane>
     </center>

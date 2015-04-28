@@ -3,7 +3,6 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -18,8 +17,6 @@ import java.util.ResourceBundle;
  */
 public class MainController extends DefaultController<BorderPane> implements Initializable {
 
-    @FXML
-    protected ScrollPane scrollPane;
     @FXML
     protected ProgressIndicator progressIndicator;
     @FXML
@@ -53,19 +50,6 @@ public class MainController extends DefaultController<BorderPane> implements Ini
     public void initialize(URL location, ResourceBundle resources) {
 
         root.setLeft(new LoadGraphController(progressIndicator, ruler, sequences).getRoot());
-        reverseScroll();
-
-    }
-
-    /**
-     * On vertical scroll, make it horizontal.
-     */
-    protected void reverseScroll() {
-
-        root.setOnScroll(event -> {
-            final double displacement = event.getDeltaY() / scrollPane.getContent().getBoundsInLocal().getWidth();
-            scrollPane.setHvalue(scrollPane.getHvalue() - displacement);
-        });
 
     }
 
