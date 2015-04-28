@@ -16,6 +16,3 @@ hs_err_pid*
 
 # Maven #
 target/
-
-# Sensitive files #
-*/main/resources/graph/*
