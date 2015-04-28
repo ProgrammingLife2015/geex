@@ -3,6 +3,7 @@ package nl.tudelft.context.graph;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,8 +36,11 @@ public class GraphTest {
     @BeforeClass
     public static void beforeClass() throws FileNotFoundException {
 
+        File nodeFile = new File(GraphTest.class.getResource("/graph/node.graph").getPath());
+        File edgeFile = new File(GraphTest.class.getResource("/graph/edge.graph").getPath());
+
         GraphFactory graphFactory = new GraphFactory();
-        graph = graphFactory.getGraph("/graph/node.graph", "/graph/edge.graph");
+        graph = graphFactory.getGraph(nodeFile, edgeFile);
 
     }
 

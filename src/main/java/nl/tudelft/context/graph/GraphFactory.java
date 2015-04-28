@@ -1,9 +1,9 @@
 package nl.tudelft.context.graph;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * GraphFactory
@@ -21,9 +21,9 @@ public class GraphFactory {
      * @param graph    graph to add nodes to
      * @return nodes added to graph
      */
-    protected List<Node> parseNodes(String nodeFile, Graph graph) {
+    protected List<Node> parseNodes(File nodeFile, Graph graph) throws FileNotFoundException {
 
-        Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(nodeFile))));
+        Scanner sc = new Scanner(new BufferedReader(new FileReader(nodeFile)));
         NodeFactory nodeFactory = new NodeFactory();
         List<Node> nodes = new ArrayList<>();
 
@@ -45,9 +45,9 @@ public class GraphFactory {
      * @param graph    graph to add edges to
      * @param nodeList nodes used to get edges from
      */
-    protected void parseEdges(String edgeFile, Graph graph, List<Node> nodeList) {
+    protected void parseEdges(File edgeFile, Graph graph, List<Node> nodeList) throws FileNotFoundException {
 
-        Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(edgeFile))));
+        Scanner sc = new Scanner(new BufferedReader(new FileReader(edgeFile)));
 
         while (sc.hasNext()) {
             graph.addEdge(nodeList.get(sc.nextInt()), nodeList.get(sc.nextInt()));
@@ -65,7 +65,7 @@ public class GraphFactory {
      * @return a graph based on Node objects
      * @throws FileNotFoundException
      */
-    public Graph getGraph(String nodeFile, String edgeFile) throws FileNotFoundException {
+    public Graph getGraph(File nodeFile, File edgeFile) throws FileNotFoundException {
 
         Graph graph = new Graph();
 
