@@ -9,9 +9,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
+import nl.tudelft.context.service.LoadTreeService;
 
 import java.io.File;
 import java.net.URL;
@@ -31,14 +33,18 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
     protected Button
             loadNodes,
             loadEdges,
-            load;
+            loadNewick,
+            load,
+            treeload;
 
     @FXML
     protected TextField
             nodeSource,
-            edgeSource;
+            edgeSource,
+            nwkSource;
 
     protected LoadGraphService loadGraphService;
+    protected LoadTreeService loadTreeService;
     protected ProgressIndicator progressIndicator;
     protected HBox ruler;
     protected GridPane sequences;
@@ -90,6 +96,16 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
 
         load.setOnAction(event -> loadGraph());
 
+
+        loadTreeService = new LoadTreeService();
+        loadTreeService.setOnSucceeded(event -> showTree(loadTreeService.getValue()));
+
+        FileChooser nwkFileChooser = new FileChooser();
+        nwkFileChooser.setTitle("Open Newick file");
+        loadNewick.setOnAction(event -> loadTreeService.setNwkFile(loadFile(nwkFileChooser, nwkSource)));
+
+        treeload.setOnAction(event -> loadTree());
+
     }
 
     /**
@@ -123,6 +139,13 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
     }
 
     /**
+     * Load tree from source.
+     */
+    protected void loadTree() {
+        loadTreeService.restart();
+    }
+
+    /**
      * Show graph with reference points.
      */
     protected void showGraph(Graph graph) {
@@ -141,6 +164,10 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
             row++;
         }
 
+    }
+
+    protected void showTree(Tree tree) {
+        System.out.println("check: " + tree);
     }
 
     /**

@@ -44,6 +44,14 @@
             <artifactId>jgrapht-core</artifactId>
             <version>0.9.1</version>
         </dependency>
+        <!-- Newick Parser -->
+        <dependency>
+            <groupId>libnewicktree</groupId>
+            <artifactId>libnewicktree</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}/src/lib/libnewicktree.jar</systemPath>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
