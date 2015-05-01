@@ -17,8 +17,6 @@ public class Node extends DrawableNode {
     protected int refEndPosition;
     protected String content;
 
-    protected int currentIncoming = 0;
-
     /**
      * Create a node.
      *

@@ -130,11 +130,7 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
 
         // Bind edges
         graph.edgeSet().stream().forEach(edge -> {
-            final DrawableEdge line = new DrawableEdge();
-            line.startXProperty().bind(graph.getEdgeSource(edge).translateXProperty());
-            line.endXProperty().bind(graph.getEdgeTarget(edge).translateXProperty());
-            line.startYProperty().bind(graph.getEdgeSource(edge).translateYProperty());
-            line.endYProperty().bind(graph.getEdgeTarget(edge).translateYProperty());
+            final DrawableEdge line = new DrawableEdge(graph, edge);
             sequences.getChildren().add(line);
         });
 
@@ -193,11 +189,12 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
      */
     protected void showNodes(List<Node> nodes, int column) {
 
+        int shift = nodes.size() * 50;
         int row = 0;
         for (Node node : nodes) {
 
             node.setTranslateX(column * 100);
-            node.setTranslateY(row * 100);
+            node.setTranslateY(row * 100 - shift);
 
             row++;
 
