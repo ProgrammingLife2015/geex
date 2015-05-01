@@ -15,6 +15,8 @@ public class Node {
     protected int refEndPosition;
     protected String content;
 
+    protected int currentIncoming = 0;
+
     /**
      * Create a node.
      *
@@ -118,6 +120,24 @@ public class Node {
     public int hashCode() {
 
         return this.id;
+
+    }
+
+    /**
+     * Increment current incoming.
+     */
+    public void incrementIncoming() {
+
+        currentIncoming++;
+
+    }
+
+    /**
+     * Get current incoming.
+     */
+    public int getCurrentIncoming() {
+
+        return currentIncoming;
 
     }
 

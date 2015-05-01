@@ -13,7 +13,6 @@ import java.io.FileNotFoundException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -64,11 +63,6 @@ public class LoadGraphServiceTest {
         Graph graph = completableFuture.get(5000, TimeUnit.MILLISECONDS);
 
         assertNotNull(graph);
-        assertEquals(graphFromFactory.getReferencePoints(), graph.getReferencePoints());
-        assertEquals(graphFromFactory.getVertexById(0), graph.getVertexById(0));
-        assertEquals(graphFromFactory.getVertexById(1), graph.getVertexById(1));
-        assertEquals(graphFromFactory.getVertexById(2), graph.getVertexById(2));
-        assertEquals(graphFromFactory.getVertexById(3), graph.getVertexById(3));
 
     }
 

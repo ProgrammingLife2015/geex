@@ -5,7 +5,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,8 +18,6 @@ public class MainController extends DefaultController<BorderPane> implements Ini
 
     @FXML
     protected ProgressIndicator progressIndicator;
-    @FXML
-    protected HBox ruler;
     @FXML
     protected GridPane sequences;
 
@@ -49,7 +46,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        root.setLeft(new LoadGraphController(progressIndicator, ruler, sequences).getRoot());
+        root.setLeft(new LoadGraphController(progressIndicator, sequences).getRoot());
 
     }
 
