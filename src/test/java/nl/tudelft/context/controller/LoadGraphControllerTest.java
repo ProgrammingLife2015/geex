@@ -2,9 +2,9 @@ package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.collections.ListChangeListener;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.layout.GridPane;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,13 +26,12 @@ public class LoadGraphControllerTest {
     protected final static File nodeFile = new File(LoadGraphControllerTest.class.getResource("/graph/node.graph").getPath());
     protected final static File edgeFile = new File(LoadGraphControllerTest.class.getResource("/graph/edge.graph").getPath());
 
-    protected static final int rulerPoints = 3;
     protected static final int sequencesAmount = 4;
 
     protected static LoadGraphController loadGraphController;
 
     protected static final ProgressIndicator progressIndicator = new ProgressIndicator();
-    protected static final GridPane sequence = new GridPane();
+    protected static final Group sequence = new Group();
 
     /**
      * Setup Load Graph Controller.

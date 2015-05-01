@@ -2,6 +2,7 @@ package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -40,7 +41,7 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
 
     protected LoadGraphService loadGraphService;
     protected ProgressIndicator progressIndicator;
-    protected GridPane sequences;
+    protected Group sequences;
 
     /**
      * Init a controller at load_graph.fxml.
@@ -49,7 +50,7 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
      * @param sequences         grid to display graph
      * @throws RuntimeException
      */
-    public LoadGraphController(ProgressIndicator progressIndicator, GridPane sequences) {
+    public LoadGraphController(ProgressIndicator progressIndicator, Group sequences) {
 
         super(new GridPane());
 
@@ -162,7 +163,8 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
         for (Node node : nodes) {
 
             final Label label = new Label(Integer.toString(node.getId()));
-            sequences.add(label, column, row);
+            label.relocate(column * 100, row * 100);
+            sequences.getChildren().add(label);
 
             row++;
 

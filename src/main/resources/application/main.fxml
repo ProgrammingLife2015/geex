@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import java.net.URL?>
 <fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
 
     <center>
         <ScrollPane>
             <StackPane>
-                <GridPane fx:id="sequences"/>
+                <StackPane styleClass="margin">
+                    <Group fx:id="sequences"/>
+                </StackPane>
                 <ProgressIndicator fx:id="progressIndicator"/>
             </StackPane>
         </ScrollPane>

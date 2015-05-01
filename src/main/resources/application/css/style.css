@@ -2,8 +2,8 @@
     -fx-background-color: #2b2b2b;
 }
 
-.grid-pane {
-    -fx-alignment: center;
+.margin {
+    -fx-padding: 50px;
 }
 
 /* Control */
@@ -50,7 +50,8 @@
 .scroll-bar .increment-button,
 .scroll-bar .decrement-button,
 .scroll-bar .increment-arrow,
-.scroll-bar .decrement-arrow {
+.scroll-bar .decrement-arrow,
+.scroll-pane .corner {
     -fx-background-color: transparent;
     -fx-background-radius: 0;
     -fx-padding: 0;
@@ -58,9 +59,7 @@
 
 /* Sequences */
 #sequences {
-    -fx-padding: 0.75cm;
-    -fx-hgap: 0.75cm;
-    -fx-vgap: 0.75cm;
+    -fx-min-height: 100%;
 }
 
 #sequences .label {
