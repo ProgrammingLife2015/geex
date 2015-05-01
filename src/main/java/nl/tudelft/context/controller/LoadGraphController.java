@@ -2,6 +2,7 @@ package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -10,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
+import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
@@ -47,7 +49,7 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
     protected LoadGraphService loadGraphService;
     protected LoadTreeService loadTreeService;
     protected ProgressIndicator progressIndicator;
-    protected GridPane sequences;
+    protected Group sequences;
 
     /**
      * Init a controller at load_graph.fxml.
@@ -56,7 +58,7 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
      * @param sequences         grid to display graph
      * @throws RuntimeException
      */
-    public LoadGraphController(ProgressIndicator progressIndicator, GridPane sequences) {
+    public LoadGraphController(ProgressIndicator progressIndicator, Group sequences) {
 
         super(new GridPane());
 
@@ -149,10 +151,24 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
         List<Node> start = new ArrayList<>(Collections.singletonList(graph.getFirstNode()));
         showColumn(graph, start, 0);
 
+        // Bind edges
+        graph.edgeSet().stream().forEach(edge -> {
+            final DrawableEdge line = new DrawableEdge(graph, edge);
+            sequences.getChildren().add(line);
+        });
+
+        // Bind nodes
+        graph.vertexSet().stream().forEach(node -> {
+            final Label label = new Label(Integer.toString(node.getId()));
+            label.translateXProperty().bind(node.translateXProperty());
+            label.translateYProperty().bind(node.translateYProperty());
+            sequences.getChildren().add(label);
+        });
+
     }
 
     /**
-     * Show the column of the graph and call next column.
+     * Show the columns of the graph recursive.
      *
      * @param graph  containing the nodes
      * @param nodes  nodes to display
@@ -164,11 +180,12 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
 
         showNodes(nodes, column);
 
-        List<Node> nextNodes = nodes.stream().map(node -> graph.outgoingEdgesOf(node).stream().map(x -> {
-            Node temp = graph.getEdgeTarget(x);
-            temp.incrementIncoming();
-            return temp;
-        }).filter(x -> x.getCurrentIncoming() == graph.inDegreeOf(x))).flatMap(l -> l).collect(Collectors.toList());
+        List<Node> nextNodes = nodes.stream()
+                .map(node -> graph.outgoingEdgesOf(node).stream()
+                        .map(graph::getEdgeTarget)
+                        .filter(x -> x.incrementIncoming() == graph.inDegreeOf(x)))
+                .flatMap(l -> l)
+                .collect(Collectors.toList());
 
         showColumn(graph, nextNodes, column + 1);
 
@@ -211,11 +228,12 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
      */
     protected void showNodes(List<Node> nodes, int column) {
 
+        int shift = nodes.size() * 50;
         int row = 0;
         for (Node node : nodes) {
 
-            final Label label = new Label(Integer.toString(node.getId()));
-            sequences.add(label, column, row);
+            node.setTranslateX(column * 100);
+            node.setTranslateY(row * 100 - shift);
 
             row++;
 
