@@ -169,19 +169,6 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
     }
 
     /**
-     * Bind line to edge.
-     *
-     * @param graph graph that contains edge
-     * @param edge  edge to bind
-     * @return edge target
-     */
-    protected Node bindEdge(Graph graph, DefaultEdge edge) {
-
-        return graph.getEdgeTarget(edge);
-
-    }
-
-    /**
      * Show all nodes at a start position.
      *
      * @param nodes  nodes to draw
