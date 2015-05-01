@@ -8,7 +8,7 @@
     <center>
         <ScrollPane>
             <StackPane>
-                <GridPane fx:id="sequences" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <GridPane fx:id="sequences"/>
                 <ProgressIndicator fx:id="progressIndicator"/>
             </StackPane>
         </ScrollPane>

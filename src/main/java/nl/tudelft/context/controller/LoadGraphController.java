@@ -11,11 +11,13 @@ import javafx.stage.FileChooser;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
-import org.jgrapht.graph.DefaultEdge;
 
 import java.io.File;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
@@ -120,7 +122,7 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
      */
     protected void showGraph(Graph graph) {
 
-        Set<Node> start = new HashSet<>(Collections.singletonList(graph.getFirstNode()));
+        List<Node> start = new ArrayList<>(Collections.singletonList(graph.getFirstNode()));
         showColumn(graph, start, 0);
 
     }
@@ -132,21 +134,18 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
      * @param nodes  nodes to display
      * @param column column index
      */
-    protected void showColumn(Graph graph, Set<Node> nodes, int column) {
+    protected void showColumn(Graph graph, List<Node> nodes, int column) {
 
-        if(nodes.isEmpty()) return;
+        if (nodes.isEmpty()) return;
 
         showNodes(nodes, column);
 
-        Set<Node> nextNodes = new HashSet<>();
-        for (Node node : nodes) {
-            Set<DefaultEdge> nextEdges = graph.outgoingEdgesOf(node);
-            nextNodes.addAll(nextEdges.stream().map(x -> {
-                Node temp = graph.getEdgeTarget(x);
-                temp.incrementIncoming();
-                return temp;
-            }).filter(x -> x.getCurrentIncoming() == graph.inDegreeOf(x)).collect(Collectors.toList()));
-        }
+        List<Node> nextNodes = nodes.stream().map(node -> graph.outgoingEdgesOf(node).stream().map(x -> {
+            Node temp = graph.getEdgeTarget(x);
+            temp.incrementIncoming();
+            return temp;
+        }).filter(x -> x.getCurrentIncoming() == graph.inDegreeOf(x))).flatMap(l -> l).collect(Collectors.toList());
+
         showColumn(graph, nextNodes, column + 1);
 
     }
@@ -157,7 +156,7 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
      * @param nodes  nodes to draw
      * @param column column to draw at
      */
-    protected void showNodes(Set<Node> nodes, int column) {
+    protected void showNodes(List<Node> nodes, int column) {
 
         int row = 0;
         for (Node node : nodes) {
