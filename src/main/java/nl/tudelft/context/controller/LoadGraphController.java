@@ -13,7 +13,6 @@ import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
-import org.jgrapht.graph.DefaultEdge;
 
 import java.io.File;
 import java.net.URL;
