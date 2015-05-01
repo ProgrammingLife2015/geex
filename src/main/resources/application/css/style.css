@@ -56,32 +56,17 @@
     -fx-padding: 0;
 }
 
-/* Ruler */
-#ruler {
-    -fx-padding: 0 0 0 1.5cm;
-}
-
-#ruler .label {
-    -fx-padding: 0.2cm;
-    -fx-border-color: #e6e6e6;
-    -fx-border-width: 0 0 0 0.05cm;
-    -fx-pref-width: 3cm;
-    -fx-min-width: 3cm;
-    -fx-max-width: 3cm;
-    -fx-font: 0.4cm 'Arial';
-    -fx-text-fill: #e6e6e6;
-}
-
 /* Sequences */
 #sequences {
-    -fx-padding: 0 0.75cm;
-    -fx-hgap: 1.5cm;
-    -fx-vgap: 1.5cm;
+    -fx-padding: 0.75cm;
+    -fx-hgap: 0.75cm;
+    -fx-vgap: 0.75cm;
 }
 
 #sequences .label {
     -fx-background-color: #e6b43a;
-    -fx-background-radius: 0.75cm;
+    -fx-min-width: 1.5cm;
+    -fx-min-height: 1.5cm;
     -fx-pref-width: 1.5cm;
     -fx-pref-height: 1.5cm;
     -fx-alignment: center;

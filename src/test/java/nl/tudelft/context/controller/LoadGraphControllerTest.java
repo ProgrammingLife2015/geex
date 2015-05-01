@@ -5,7 +5,6 @@ import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +32,6 @@ public class LoadGraphControllerTest {
     protected static LoadGraphController loadGraphController;
 
     protected static final ProgressIndicator progressIndicator = new ProgressIndicator();
-    protected static final HBox ruler = new HBox();
     protected static final GridPane sequence = new GridPane();
 
     /**
@@ -42,7 +40,7 @@ public class LoadGraphControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        loadGraphController = new LoadGraphController(progressIndicator, ruler, sequence);
+        loadGraphController = new LoadGraphController(progressIndicator, sequence);
 
         loadGraphController.loadGraphService.setNodeFile(nodeFile);
         loadGraphController.loadGraphService.setEdgeFile(edgeFile);
@@ -65,14 +63,6 @@ public class LoadGraphControllerTest {
     @Test
     public void testGraph() throws Exception {
 
-        CompletableFuture<Boolean> rulerChildrenAdded = new CompletableFuture<>();
-
-        loadGraphController.ruler.getChildren().addListener((ListChangeListener<? super Node>) event -> {
-            if (loadGraphController.ruler.getChildren().size() == rulerPoints) {
-                rulerChildrenAdded.complete(true);
-            }
-        });
-
         CompletableFuture<Boolean> sequencesAdded = new CompletableFuture<>();
 
         loadGraphController.sequences.getChildren().addListener((ListChangeListener<? super Node>) event -> {
@@ -83,7 +73,6 @@ public class LoadGraphControllerTest {
 
         loadGraphController.loadGraph();
 
-        assertEquals(true, rulerChildrenAdded.get(5000, TimeUnit.MILLISECONDS));
         assertEquals(true, sequencesAdded.get(5000, TimeUnit.MILLISECONDS));
 
     }

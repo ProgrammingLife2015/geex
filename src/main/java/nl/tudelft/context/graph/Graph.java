@@ -1,9 +1,11 @@
 package nl.tudelft.context.graph;
 
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Graph
@@ -12,13 +14,9 @@ import java.util.*;
  * @version 1.0
  * @since 23-4-2015
  */
-public class Graph extends SimpleGraph<Node, DefaultEdge> {
+public class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
 
-    Map<Integer, Node> vertexes = new HashMap<>();
-    Set<Integer> referencePoints = new TreeSet<>();
-
-    Map<Integer, Set<Node>> nodeStartAt = new HashMap<>();
-    Map<Integer, Set<Node>> nodeEndAt = new HashMap<>();
+    Set<Node> nodeList = new HashSet<>();
 
     /**
      * Create a Graph with default edges.
@@ -30,80 +28,28 @@ public class Graph extends SimpleGraph<Node, DefaultEdge> {
     }
 
     /**
-     * Add vertex to graph.
+     * Add node to graph and nodeList
      *
-     * @param vertex vertex to add
-     * @return if graph already contained vertex
+     * @param node node to add
+     * @return true if graph contained specified edge
      */
     @Override
-    public boolean addVertex(Node vertex) {
+    public boolean addVertex(Node node) {
 
-        vertexes.put(vertex.getId(), vertex);
-
-        referencePoints.add(vertex.getRefStartPosition());
-
-        addVertexToMap(vertex, vertex.getRefStartPosition(), nodeStartAt);
-        addVertexToMap(vertex, vertex.getRefEndPosition(), nodeEndAt);
-
-        return super.addVertex(vertex);
+        nodeList.add(node);
+        return super.addVertex(node);
 
     }
 
     /**
-     * Add node to start and end map depending on ref points.
+     * Get the first node, with no incoming edges.
      *
-     * @param vertex node to add
+     * @return first node
      */
-    protected void addVertexToMap(Node vertex, int position, Map<Integer, Set<Node>> map) {
+    public Node getFirstNode() {
 
-        if (!map.containsKey(position)) {
-            map.put(position, new HashSet<>());
-        }
-
-        map.get(position).add(vertex);
-
-    }
-
-    /**
-     * Get vertex by id.
-     *
-     * @param id vertex id
-     * @return vertex if found or null
-     */
-    public Node getVertexById(int id) {
-
-        return vertexes.get(id);
-
-    }
-
-    /**
-     * Get vertexes by reference start position.
-     *
-     * @param startPosition start position of nodes
-     */
-    public Set<Node> getVertexesByStartPosition(int startPosition) {
-
-        return nodeStartAt.get(startPosition);
-
-    }
-
-    /**
-     * Get vertexes by reference end position.
-     *
-     * @param endPosition end position of nodes
-     */
-    public Set<Node> getVertexesByEndPosition(int endPosition) {
-
-        return nodeEndAt.get(endPosition);
-
-    }
-
-    /**
-     * Get all reference points
-     */
-    public Set<Integer> getReferencePoints() {
-
-        return referencePoints;
+        Optional<Node> node = nodeList.stream().filter(x -> this.inDegreeOf(x) == 0).findFirst();
+        return node.orElseGet(null);
 
     }
 
