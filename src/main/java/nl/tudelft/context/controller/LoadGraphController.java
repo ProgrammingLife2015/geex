@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
+import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
@@ -167,7 +168,21 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
     }
 
     protected void showTree(Tree tree) {
-        System.out.println("check: " + tree);
+        System.out.println("check: " + tree.getName());
+        printTree(tree.getRoot(), .0);
+    }
+
+    protected void printTree(TreeNode node, double prev_w) {
+        for (int i = 0; i < node.numberLeaves; i += 1) {
+            if (node.getChild(i) != null) {
+                double w = prev_w + node.getChild(i).getWeight() * .5e4;
+                for (int h = 0; h < w; h += 1) {
+                    System.out.print("  ");
+                }
+                System.out.println(node.getChild(i).getName());
+                printTree(node.getChild(i), w);
+            }
+        }
     }
 
     /**
