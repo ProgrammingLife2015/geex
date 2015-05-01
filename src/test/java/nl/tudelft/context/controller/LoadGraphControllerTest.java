@@ -27,7 +27,6 @@ public class LoadGraphControllerTest {
     protected final static File edgeFile = new File(LoadGraphControllerTest.class.getResource("/graph/edge.graph").getPath());
     protected final static File nwkFile = new File(LoadGraphControllerTest.class.getResource("/graph/10strains.nwk").getPath());
 
-    protected static final int rulerPoints = 3;
     protected static final int sequencesAmount = 4;
 
     protected static LoadGraphController loadGraphController;
@@ -61,7 +60,7 @@ public class LoadGraphControllerTest {
     }
 
     /**
-     * Test ruler points and sequences added.
+     * Test sequences added.
      */
     @Test
     public void testGraph() throws Exception {
@@ -81,12 +80,11 @@ public class LoadGraphControllerTest {
     }
 
     /**
-     * Test ruler points and sequences added.
+     * Test tree loading will not result in failure.
      */
     @Test
     public void testTree() {
 
-        CompletableFuture<Boolean> sequencesAdded = new CompletableFuture<>();
         loadGraphController.loadTree();
 
     }

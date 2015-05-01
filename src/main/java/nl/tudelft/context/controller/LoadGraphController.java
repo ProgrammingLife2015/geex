@@ -174,11 +174,22 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
 
     }
 
+    /**
+     * Show the tree in console.
+     *
+     * @param tree tree to show
+     */
     protected void showTree(Tree tree) {
         System.out.println("check: " + tree.getName());
         printTree(tree.getRoot(), .0);
     }
 
+    /**
+     * Print tree recursive to console.
+     *
+     * @param node   current node
+     * @param prev_w previous position
+     */
     protected void printTree(TreeNode node, double prev_w) {
         for (int i = 0; i < node.numberLeaves; i += 1) {
             if (node.getChild(i) != null) {
