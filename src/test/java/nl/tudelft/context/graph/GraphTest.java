@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -50,11 +49,6 @@ public class GraphTest {
     @Test
     public void testNode1() {
 
-        Node node = graph.getVertexById(0);
-        assertEquals(node1.getSources(), node.getSources());
-        assertEquals(node1.getRefStartPosition(), node.getRefStartPosition());
-        assertEquals(node1.getRefEndPosition(), node.getRefEndPosition());
-        assertEquals(node1.getContent(), node.getContent());
         assertTrue(graph.containsVertex(node1));
 
     }
@@ -65,11 +59,6 @@ public class GraphTest {
     @Test
     public void testNode2() {
 
-        Node node = graph.getVertexById(1);
-        assertEquals(node2.getSources(), node.getSources());
-        assertEquals(node2.getRefStartPosition(), node.getRefStartPosition());
-        assertEquals(node2.getRefEndPosition(), node.getRefEndPosition());
-        assertEquals(node2.getContent(), node.getContent());
         assertTrue(graph.containsVertex(node2));
 
     }
@@ -80,11 +69,6 @@ public class GraphTest {
     @Test
     public void testNode3() {
 
-        Node node = graph.getVertexById(2);
-        assertEquals(node3.getSources(), node.getSources());
-        assertEquals(node3.getRefStartPosition(), node.getRefStartPosition());
-        assertEquals(node3.getRefEndPosition(), node.getRefEndPosition());
-        assertEquals(node3.getContent(), node.getContent());
         assertTrue(graph.containsVertex(node3));
 
     }
@@ -95,11 +79,6 @@ public class GraphTest {
     @Test
     public void testNode4() {
 
-        Node node = graph.getVertexById(3);
-        assertEquals(node4.getSources(), node.getSources());
-        assertEquals(node4.getRefStartPosition(), node.getRefStartPosition());
-        assertEquals(node4.getRefEndPosition(), node.getRefEndPosition());
-        assertEquals(node4.getContent(), node.getContent());
         assertTrue(graph.containsVertex(node4));
 
     }
@@ -114,40 +93,6 @@ public class GraphTest {
         assertTrue(graph.containsEdge(node1, node3));
         assertTrue(graph.containsEdge(node2, node4));
         assertTrue(graph.containsEdge(node3, node4));
-
-    }
-
-    /**
-     * Test reference points.
-     */
-    @Test
-    public void testReferencePoints() {
-
-        assertTrue(graph.getReferencePoints().equals(new HashSet<>(Arrays.asList(5, 7, 10))));
-
-    }
-
-    /**
-     * Test start positions.
-     */
-    @Test
-    public void testStartPositions() {
-
-        assertTrue(graph.getVertexesByStartPosition(5).equals(new HashSet<>(Collections.singletonList(node1))));
-        assertTrue(graph.getVertexesByStartPosition(7).equals(new HashSet<>(Arrays.asList(node2, node3))));
-        assertTrue(graph.getVertexesByStartPosition(10).equals(new HashSet<>(Collections.singletonList(node4))));
-
-    }
-
-    /**
-     * Test end positions.
-     */
-    @Test
-    public void testEndPositions() {
-
-        assertTrue(graph.getVertexesByEndPosition(7).equals(new HashSet<>(Collections.singletonList(node1))));
-        assertTrue(graph.getVertexesByEndPosition(10).equals(new HashSet<>(Arrays.asList(node2, node3))));
-        assertTrue(graph.getVertexesByEndPosition(13).equals(new HashSet<>(Collections.singletonList(node4))));
 
     }
 

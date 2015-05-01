@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
@@ -18,9 +17,10 @@ import nl.tudelft.context.service.LoadTreeService;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -47,23 +47,20 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
     protected LoadGraphService loadGraphService;
     protected LoadTreeService loadTreeService;
     protected ProgressIndicator progressIndicator;
-    protected HBox ruler;
     protected GridPane sequences;
 
     /**
      * Init a controller at load_graph.fxml.
      *
      * @param progressIndicator progress indicator of graph loading
-     * @param ruler             ruler to display reference points
      * @param sequences         grid to display graph
      * @throws RuntimeException
      */
-    public LoadGraphController(ProgressIndicator progressIndicator, HBox ruler, GridPane sequences) {
+    public LoadGraphController(ProgressIndicator progressIndicator, GridPane sequences) {
 
         super(new GridPane());
 
         this.progressIndicator = progressIndicator;
-        this.ruler = ruler;
         this.sequences = sequences;
 
         loadFXML("/application/load_graph.fxml");
@@ -132,9 +129,7 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
      */
     protected void loadGraph() {
 
-        ruler.getChildren().clear();
         sequences.getChildren().clear();
-
         loadGraphService.restart();
 
     }
@@ -151,19 +146,31 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
      */
     protected void showGraph(Graph graph) {
 
-        List<Set<Node>> nodeSets = graph.getReferencePoints()
-                .stream()
-                .limit(200)
-                .map(referencePoint -> {
-                    ruler.getChildren().add(new Label(Integer.toString(referencePoint)));
-                    return graph.getVertexesByStartPosition(referencePoint);
-                }).collect(Collectors.toList());
+        List<Node> start = new ArrayList<>(Collections.singletonList(graph.getFirstNode()));
+        showColumn(graph, start, 0);
 
-        int row = 0;
-        for (Set<Node> nodes : nodeSets) {
-            showNodes(nodes, row);
-            row++;
-        }
+    }
+
+    /**
+     * Show the column of the graph and call next column.
+     *
+     * @param graph  containing the nodes
+     * @param nodes  nodes to display
+     * @param column column index
+     */
+    protected void showColumn(Graph graph, List<Node> nodes, int column) {
+
+        if (nodes.isEmpty()) return;
+
+        showNodes(nodes, column);
+
+        List<Node> nextNodes = nodes.stream().map(node -> graph.outgoingEdgesOf(node).stream().map(x -> {
+            Node temp = graph.getEdgeTarget(x);
+            temp.incrementIncoming();
+            return temp;
+        }).filter(x -> x.getCurrentIncoming() == graph.inDegreeOf(x))).flatMap(l -> l).collect(Collectors.toList());
+
+        showColumn(graph, nextNodes, column + 1);
 
     }
 
@@ -188,18 +195,18 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
     /**
      * Show all nodes at a start position.
      *
-     * @param nodes nodes to show
-     * @param row   row at start position
+     * @param nodes  nodes to draw
+     * @param column column to draw at
      */
-    protected void showNodes(Set<Node> nodes, int row) {
+    protected void showNodes(List<Node> nodes, int column) {
 
-        int col = 1;
+        int row = 0;
         for (Node node : nodes) {
 
             final Label label = new Label(Integer.toString(node.getId()));
-            sequences.add(label, row, col);
+            sequences.add(label, column, row);
 
-            col++;
+            row++;
 
         }
 

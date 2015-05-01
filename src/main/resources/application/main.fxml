@@ -8,10 +8,7 @@
     <center>
         <ScrollPane>
             <StackPane>
-                <GridPane>
-                    <HBox fx:id="ruler" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                    <GridPane fx:id="sequences" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                </GridPane>
+                <GridPane fx:id="sequences"/>
                 <ProgressIndicator fx:id="progressIndicator"/>
             </StackPane>
         </ScrollPane>
