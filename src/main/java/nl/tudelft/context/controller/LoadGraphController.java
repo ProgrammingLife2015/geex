@@ -9,9 +9,11 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
+import org.jgrapht.graph.DefaultEdge;
 
 import java.io.File;
 import java.net.URL;
@@ -126,10 +128,28 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
         List<Node> start = new ArrayList<>(Collections.singletonList(graph.getFirstNode()));
         showColumn(graph, start, 0);
 
+        // Bind edges
+        graph.edgeSet().stream().forEach(edge -> {
+            final DrawableEdge line = new DrawableEdge();
+            line.startXProperty().bind(graph.getEdgeSource(edge).translateXProperty());
+            line.endXProperty().bind(graph.getEdgeTarget(edge).translateXProperty());
+            line.startYProperty().bind(graph.getEdgeSource(edge).translateYProperty());
+            line.endYProperty().bind(graph.getEdgeTarget(edge).translateYProperty());
+            sequences.getChildren().add(line);
+        });
+
+        // Bind nodes
+        graph.vertexSet().stream().forEach(node -> {
+            final Label label = new Label(Integer.toString(node.getId()));
+            label.translateXProperty().bind(node.translateXProperty());
+            label.translateYProperty().bind(node.translateYProperty());
+            sequences.getChildren().add(label);
+        });
+
     }
 
     /**
-     * Show the column of the graph and call next column.
+     * Show the columns of the graph recursive.
      *
      * @param graph  containing the nodes
      * @param nodes  nodes to display
@@ -141,13 +161,27 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
 
         showNodes(nodes, column);
 
-        List<Node> nextNodes = nodes.stream().map(node -> graph.outgoingEdgesOf(node).stream().map(x -> {
-            Node temp = graph.getEdgeTarget(x);
-            temp.incrementIncoming();
-            return temp;
-        }).filter(x -> x.getCurrentIncoming() == graph.inDegreeOf(x))).flatMap(l -> l).collect(Collectors.toList());
+        List<Node> nextNodes = nodes.stream()
+                .map(node -> graph.outgoingEdgesOf(node).stream()
+                        .map(graph::getEdgeTarget)
+                        .filter(x -> x.incrementIncoming() == graph.inDegreeOf(x)))
+                .flatMap(l -> l)
+                .collect(Collectors.toList());
 
         showColumn(graph, nextNodes, column + 1);
+
+    }
+
+    /**
+     * Bind line to edge.
+     *
+     * @param graph graph that contains edge
+     * @param edge  edge to bind
+     * @return edge target
+     */
+    protected Node bindEdge(Graph graph, DefaultEdge edge) {
+
+        return graph.getEdgeTarget(edge);
 
     }
 
@@ -162,9 +196,8 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
         int row = 0;
         for (Node node : nodes) {
 
-            final Label label = new Label(Integer.toString(node.getId()));
-            label.relocate(column * 100, row * 100);
-            sequences.getChildren().add(label);
+            node.setTranslateX(column * 100);
+            node.setTranslateY(row * 100);
 
             row++;
 
