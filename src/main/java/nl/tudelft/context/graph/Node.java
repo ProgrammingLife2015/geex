@@ -1,5 +1,7 @@
 package nl.tudelft.context.graph;
 
+import nl.tudelft.context.drawable.DrawableNode;
+
 import java.util.Set;
 
 /**
@@ -7,15 +9,13 @@ import java.util.Set;
  * @version 1.1
  * @since 23-4-2015
  */
-public class Node {
+public class Node extends DrawableNode {
 
     protected int id;
     protected Set<String> sources;
     protected int refStartPosition;
     protected int refEndPosition;
     protected String content;
-
-    protected int currentIncoming = 0;
 
     /**
      * Create a node.
@@ -120,24 +120,6 @@ public class Node {
     public int hashCode() {
 
         return this.id;
-
-    }
-
-    /**
-     * Increment current incoming.
-     */
-    public void incrementIncoming() {
-
-        currentIncoming++;
-
-    }
-
-    /**
-     * Get current incoming.
-     */
-    public int getCurrentIncoming() {
-
-        return currentIncoming;
 
     }
 
