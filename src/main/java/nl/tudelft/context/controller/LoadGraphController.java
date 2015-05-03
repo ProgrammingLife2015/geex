@@ -9,13 +9,10 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
-import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
-import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
-import nl.tudelft.context.service.LoadTreeService;
 
 import java.io.File;
 import java.net.URL;
