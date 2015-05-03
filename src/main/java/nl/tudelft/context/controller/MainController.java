@@ -46,7 +46,8 @@ public class MainController extends DefaultController<BorderPane> implements Ini
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        root.setLeft(new LoadGraphController(progressIndicator, sequences).getRoot());
+//        root.setLeft(new LoadGraphController(progressIndicator, sequences).getRoot());
+        root.setLeft(new LoadTreeController(progressIndicator, sequences).getRoot());
 
     }
 

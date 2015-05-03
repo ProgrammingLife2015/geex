@@ -3,14 +3,10 @@ package nl.tudelft.context.service;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.concurrent.Worker;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.GraphFactory;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(JfxRunner.class)
 public class LoadTreeServiceTest {
 
-    protected final static File nwkFile = new File(LoadTreeServiceTest.class.getResource("/graph/10strains.nwk").getPath());
+    protected final static File nwkFile = new File(LoadTreeServiceTest.class.getResource("/tree/10strains.nwk").getPath());
 
     /**
      * Test if the graphFromFactory loadFXML succeeds.

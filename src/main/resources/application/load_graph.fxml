@@ -11,10 +11,4 @@
     <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2">
         <Button fx:id="load" text="Load"/>
     </HBox>
-
-    <Button fx:id="loadNewick" text="Load Newick" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-    <TextField fx:id="nwkSource" GridPane.columnIndex="1" GridPane.rowIndex="5" editable="false"/>
-    <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2">
-        <Button fx:id="treeload" text="Load"/>
-    </HBox>
 </fx:root>

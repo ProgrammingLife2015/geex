@@ -36,18 +36,14 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
     protected Button
             loadNodes,
             loadEdges,
-            loadNewick,
-            load,
-            treeload;
+            load;
 
     @FXML
     protected TextField
             nodeSource,
-            edgeSource,
-            nwkSource;
+            edgeSource;
 
     protected LoadGraphService loadGraphService;
-    protected LoadTreeService loadTreeService;
     protected ProgressIndicator progressIndicator;
     protected Group sequences;
 
@@ -96,16 +92,6 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
 
         load.setOnAction(event -> loadGraph());
 
-
-        loadTreeService = new LoadTreeService();
-        loadTreeService.setOnSucceeded(event -> showTree(loadTreeService.getValue()));
-
-        FileChooser nwkFileChooser = new FileChooser();
-        nwkFileChooser.setTitle("Open Newick file");
-        loadNewick.setOnAction(event -> loadTreeService.setNwkFile(loadFile(nwkFileChooser, nwkSource)));
-
-        treeload.setOnAction(event -> loadTree());
-
     }
 
     /**
@@ -134,13 +120,6 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
         sequences.getChildren().clear();
         loadGraphService.restart();
 
-    }
-
-    /**
-     * Load tree from source.
-     */
-    protected void loadTree() {
-        loadTreeService.restart();
     }
 
     /**
@@ -189,35 +168,6 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
 
         showColumn(graph, nextNodes, column + 1);
 
-    }
-
-    /**
-     * Show the tree in console.
-     *
-     * @param tree tree to show
-     */
-    protected void showTree(Tree tree) {
-        System.out.println("check: " + tree.getName());
-        printTree(tree.getRoot(), .0);
-    }
-
-    /**
-     * Print tree recursive to console.
-     *
-     * @param node   current node
-     * @param prev_w previous position
-     */
-    protected void printTree(TreeNode node, double prev_w) {
-        for (int i = 0; i < node.numberLeaves; i += 1) {
-            if (node.getChild(i) != null) {
-                double w = prev_w + node.getChild(i).getWeight() * .5e4;
-                for (int h = 0; h < w; h += 1) {
-                    System.out.print("  ");
-                }
-                System.out.println(node.getChild(i).getName());
-                printTree(node.getChild(i), w);
-            }
-        }
     }
 
     /**
