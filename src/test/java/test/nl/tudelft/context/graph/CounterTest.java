@@ -138,22 +138,22 @@ public class CounterTest extends TestCase {
 
     @Test
     public void testGetPercStringRoundNumber() throws Exception {
-        assertEquals("20.0",Counter5.getPercString('A'));
-        assertEquals("20.0",Counter5.getPercString('T'));
-        assertEquals("20.0",Counter5.getPercString('C'));
-        assertEquals("20.0",Counter5.getPercString('G'));
-        assertEquals("20.0",Counter5.getPercString('N'));
-        assertEquals("0.0",Counter5.getPercString('Z'));
+        assertEquals("20.00",Counter5.getPercString('A'));
+        assertEquals("20.00",Counter5.getPercString('T'));
+        assertEquals("20.00",Counter5.getPercString('C'));
+        assertEquals("20.00",Counter5.getPercString('G'));
+        assertEquals("20.00",Counter5.getPercString('N'));
+        assertEquals("0.00",Counter5.getPercString('Z'));
     }
 
     @Test
     public void testGetPercStringRounding() throws Exception {
-        assertEquals("13.513514",Counter3.getPercString('A'));
-        assertEquals("18.918919",Counter3.getPercString('T'));
-        assertEquals("27.027027",Counter3.getPercString('C'));
-        assertEquals("5.4054055",Counter3.getPercString('G'));
-        assertEquals("35.135136",Counter3.getPercString('N'));
-        assertEquals("0.0",Counter3.getPercString('Z'));
+        assertEquals("13.51",Counter3.getPercString('A'));
+        assertEquals("18.92",Counter3.getPercString('T'));
+        assertEquals("27.03",Counter3.getPercString('C'));
+        assertEquals("5.41",Counter3.getPercString('G'));
+        assertEquals("35.14",Counter3.getPercString('N'));
+        assertEquals("0.00",Counter3.getPercString('Z'));
     }
 
 }

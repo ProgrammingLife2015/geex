@@ -2,6 +2,8 @@ package nl.tudelft.context.graph;
 
 import nl.tudelft.context.service.MutableInt;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 
 /**
@@ -64,9 +66,9 @@ public class Counter extends HashMap<Character, MutableInt> {
      * @return string string representing thev alue with the percentage of the base in the initial string
      */
     public String getPercString(char c){
-       String result = Float.toString(getPercentage(c));
-        System.out.println(result);
-        return result;
+       BigDecimal rounded = new BigDecimal(getPercentage(c)).setScale(2, RoundingMode.HALF_UP);
+       String result = rounded.toString();
+       return result;
     }
 
 }
