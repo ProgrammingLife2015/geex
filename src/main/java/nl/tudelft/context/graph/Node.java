@@ -16,6 +16,7 @@ public class Node extends DrawableNode {
     protected int refStartPosition;
     protected int refEndPosition;
     protected String content;
+    protected Counter counter;
 
     /**
      * Create a node.
@@ -33,6 +34,7 @@ public class Node extends DrawableNode {
         this.refStartPosition = refStartPosition;
         this.refEndPosition = refEndPosition;
         this.content = content;
+        this.counter = new Counter(content);
 
     }
 
