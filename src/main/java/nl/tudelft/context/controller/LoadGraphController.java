@@ -249,11 +249,11 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
     protected String getPercentages(Node node){
         String result = "";
         if (node != null){
-            String pA = node.getCounter().getPercString('A');
-            String pT = node.getCounter().getPercString('T');
-            String pC = node.getCounter().getPercString('C');
-            String pG = node.getCounter().getPercString('G');
-            String pN = node.getCounter().getPercString('N');
+            String pA = node.getBaseCounter().getPercString('A');
+            String pT = node.getBaseCounter().getPercString('T');
+            String pC = node.getBaseCounter().getPercString('C');
+            String pG = node.getBaseCounter().getPercString('G');
+            String pN = node.getBaseCounter().getPercString('N');
             result = "A: "+pA+"%, T: "+pT+ " %, C: "+pC+ " %, G: "+pG+ " %, N: "+pN;
         }
         return result;

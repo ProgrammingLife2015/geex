@@ -1,6 +1,7 @@
-package nl.tudelft.context.service;
+package nl.tudelft.context.supporting;
 
-import org.junit.Test; 
+import nl.tudelft.context.supporting.MutableInt;
+import org.junit.Test;
 import org.junit.Before;
 
 import static org.junit.Assert.assertEquals;
@@ -26,17 +27,17 @@ public void before() throws Exception {
 
 @Test
 public void testGet() throws Exception {
-    assertEquals(0,mutableint1.get());
+    assertEquals(0, mutableint1.get());
 } 
 
 @Test
 public void testIncrement() throws Exception {
-    assertEquals(0,mutableint2.get());
+    assertEquals(0, mutableint2.get());
     mutableint2.increment();
-    assertEquals(1,mutableint2.get());
+    assertEquals(1, mutableint2.get());
     mutableint2.increment();
     mutableint2.increment();
-    assertEquals(3,mutableint2.get());
+    assertEquals(3, mutableint2.get());
 } 
 
 

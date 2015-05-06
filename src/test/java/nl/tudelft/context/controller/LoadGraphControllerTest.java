@@ -107,8 +107,8 @@ public class LoadGraphControllerTest {
         nl.tudelft.context.graph.Node node2 = nodeFactory.getNode(new Scanner(">1 | Dog | 8 | 10\nATC\n"));
         nl.tudelft.context.graph.Node node3 = null;
 
-        assertEquals("A: 100.00%, T: 0.00 %, C: 0.00 %, G: 0.00 %, N: 0.00",loadGraphController.getPercentages(node1));
-        assertEquals("A: 33.33%, T: 33.33 %, C: 33.33 %, G: 0.00 %, N: 0.00",loadGraphController.getPercentages(node2));
+        assertEquals("A: 100.0%, T: 0.0 %, C: 0.0 %, G: 0.0 %, N: 0.0",loadGraphController.getPercentages(node1));
+        assertEquals("A: 33.33%, T: 33.33 %, C: 33.33 %, G: 0.0 %, N: 0.0",loadGraphController.getPercentages(node2));
         assertEquals("",loadGraphController.getPercentages(node3));
 
     }

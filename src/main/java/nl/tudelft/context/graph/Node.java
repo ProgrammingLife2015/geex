@@ -16,7 +16,7 @@ public class Node extends DrawableNode {
     protected int refStartPosition;
     protected int refEndPosition;
     protected String content;
-    protected Counter counter;
+    protected BaseCounter baseCounter;
 
     /**
      * Create a node.
@@ -34,7 +34,7 @@ public class Node extends DrawableNode {
         this.refStartPosition = refStartPosition;
         this.refEndPosition = refEndPosition;
         this.content = content;
-        this.counter = new Counter(content);
+        this.baseCounter = new BaseCounter(content);
 
     }
 
@@ -95,12 +95,12 @@ public class Node extends DrawableNode {
 
 
     /**
-     * Getter for counter
+     * Getter for baseCounter
      *
-     * @return counter
+     * @return baseCounter
      */
-    public Counter getCounter() {
-        return counter;
+    public BaseCounter getBaseCounter() {
+        return baseCounter;
     }
 
     /**
@@ -113,14 +113,11 @@ public class Node extends DrawableNode {
      */
     @Override
     public boolean equals(Object other) {
-
         if (other instanceof Node) {
             Node that = (Node) other;
             return id == that.id;
         }
-
         return false;
-
     }
 
     /**
@@ -130,9 +127,7 @@ public class Node extends DrawableNode {
      */
     @Override
     public int hashCode() {
-
         return this.id;
-
     }
 
 }

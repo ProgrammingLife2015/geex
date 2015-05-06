@@ -1,9 +1,7 @@
 package nl.tudelft.context.graph;
 
-import nl.tudelft.context.service.MutableInt;
+import nl.tudelft.context.supporting.MutableInt;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.HashMap;
 
 /**
@@ -11,13 +9,13 @@ import java.util.HashMap;
  * @version 1.0
  * @since 06-05-2015
  */
-public class Counter extends HashMap<Character, MutableInt> {
+public class BaseCounter extends HashMap<Character, MutableInt> {
 
     /**
-     * Constructor for the counter
+     * Constructor for the baseCounter
      * @param s String with the dna sequence
      */
-    public Counter(String s){
+    public BaseCounter(String s){
         put('A', new MutableInt());
         put('T', new MutableInt());
         put('C', new MutableInt());
@@ -39,9 +37,7 @@ public class Counter extends HashMap<Character, MutableInt> {
         if (containsKey(c)){
             return get(c).get();
         }
-        else{
             return 0;
-        }
     }
 
     /**
@@ -56,9 +52,7 @@ public class Counter extends HashMap<Character, MutableInt> {
         if (containsKey(c)){
             return (float) (getInt(c)*100)/total;
         }
-        else{
-            return 0f;
-        }
+        return 0f;
     }
 
     /**
@@ -66,9 +60,8 @@ public class Counter extends HashMap<Character, MutableInt> {
      * @return string string representing thev alue with the percentage of the base in the initial string
      */
     public String getPercString(char c){
-       BigDecimal rounded = new BigDecimal(getPercentage(c)).setScale(2, RoundingMode.HALF_UP);
-       String result = rounded.toString();
-       return result;
+       double rounded = Math.round(getPercentage(c)*100)/100.00d;
+       return Double.toString(rounded);
     }
 
 }
