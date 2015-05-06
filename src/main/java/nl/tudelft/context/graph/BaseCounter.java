@@ -1,6 +1,6 @@
 package nl.tudelft.context.graph;
 
-import nl.tudelft.context.data.MutableInt;
+import org.apache.commons.lang.mutable.MutableInt;
 
 import java.util.HashMap;
 
@@ -37,7 +37,7 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
      */
     public int getInt(char c) {
         if (containsKey(c)) {
-            return get(c).get();
+            return get(c).intValue();
         }
         return 0;
     }
@@ -48,7 +48,7 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
      * @return float value with the percentage of the base in the initial string
      */
     public float getPercentage(char c) {
-        int total = values().stream().mapToInt(MutableInt::get).sum();
+        int total = values().stream().mapToInt(MutableInt::intValue).sum();
         if (total == 0) {
             return 0f;
         }
