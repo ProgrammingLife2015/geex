@@ -5,11 +5,13 @@ import javafx.collections.ListChangeListener;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressIndicator;
+import nl.tudelft.context.graph.NodeFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +36,8 @@ public class LoadGraphControllerTest {
     protected static final ProgressIndicator progressIndicator = new ProgressIndicator();
     protected static final Group sequence = new Group();
 
+
+
     /**
      * Setup Load Graph Controller.
      */
@@ -46,6 +50,8 @@ public class LoadGraphControllerTest {
         loadGraphController.loadGraphService.setEdgeFile(edgeFile);
 
         loadGraphController.loadTreeService.setNwkFile(nwkFile);
+
+
 
     }
 
@@ -86,6 +92,24 @@ public class LoadGraphControllerTest {
     public void testTree() {
 
         loadGraphController.loadTree();
+
+    }
+
+    /**
+     * Test getPercentages
+     */
+    @Test
+    public void testGetPercentages() {
+
+        NodeFactory nodeFactory = new NodeFactory();
+
+        nl.tudelft.context.graph.Node node1 = nodeFactory.getNode(new Scanner(">0 | Cat,Dog | 5 | 7\nA\n"));
+        nl.tudelft.context.graph.Node node2 = nodeFactory.getNode(new Scanner(">1 | Dog | 8 | 10\nATC\n"));
+        nl.tudelft.context.graph.Node node3 = null;
+
+        assertEquals("A: 100.00%, T: 0.00 %, C: 0.00 %, G: 0.00 %, N: 0.00",loadGraphController.getPercentages(node1));
+        assertEquals("A: 33.33%, T: 33.33 %, C: 33.33 %, G: 0.00 %, N: 0.00",loadGraphController.getPercentages(node2));
+        assertEquals("",loadGraphController.getPercentages(node3));
 
     }
 

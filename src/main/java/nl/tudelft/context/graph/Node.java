@@ -93,6 +93,16 @@ public class Node extends DrawableNode {
 
     }
 
+
+    /**
+     * Getter for counter
+     *
+     * @return counter
+     */
+    public Counter getCounter() {
+        return counter;
+    }
+
     /**
      * Checks if node is equal to an other node.
      * <p>
