@@ -1,6 +1,5 @@
-package nl.tudelft.context.supporting;
+package nl.tudelft.context.data;
 
-import nl.tudelft.context.supporting.MutableInt;
 import org.junit.Test;
 import org.junit.Before;
 

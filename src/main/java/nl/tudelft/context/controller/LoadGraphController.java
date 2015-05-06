@@ -159,7 +159,7 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
             final Label label = new Label(Integer.toString(node.getId()));
             label.translateXProperty().bind(node.translateXProperty());
             label.translateYProperty().bind(node.translateYProperty());
-            final Tooltip percentages = new Tooltip(getPercentages(node));
+            final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
             label.setTooltip(percentages);
             sequences.getChildren().add(label);
 
@@ -239,24 +239,6 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
 
         }
 
-    }
-
-    /**
-     * return a string reprecentation of the percentages of the bases in an node with a certain ID>
-     *
-     * @param node that we want the precentages of.
-     */
-    protected String getPercentages(Node node){
-        String result = "";
-        if (node != null){
-            String pA = node.getBaseCounter().getPercString('A');
-            String pT = node.getBaseCounter().getPercString('T');
-            String pC = node.getBaseCounter().getPercString('C');
-            String pG = node.getBaseCounter().getPercString('G');
-            String pN = node.getBaseCounter().getPercString('N');
-            result = "A: "+pA+"%, T: "+pT+ " %, C: "+pC+ " %, G: "+pG+ " %, N: "+pN;
-        }
-        return result;
     }
 
 }
