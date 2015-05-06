@@ -82,20 +82,7 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
     @Override
     public String toString() {
 
-        StringBuilder result = new StringBuilder(5);
-        result.append("A: ");
-        result.append(getPercentageString('A'));
-        result.append("%, T: ");
-        result.append(getPercentageString('T'));
-        result.append("%, C: ");
-        result.append(getPercentageString('C'));
-        result.append("%, G: ");
-        result.append(getPercentageString('G'));
-        result.append("%, N: ");
-        result.append(getPercentageString('N'));
-        result.append("%");
-
-        return result.toString();
+        return "A: " + getPercentageString('A') + "%, T: " + getPercentageString('T') + "%, C: " + getPercentageString('C') + "%, G: " + getPercentageString('G') + "%, N: " + getPercentageString('N') + "%";
 
     }
 
