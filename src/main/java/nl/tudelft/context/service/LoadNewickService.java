@@ -14,7 +14,7 @@ import java.io.FileReader;
  * @version 1.0
  * @since 28-4-2015
  */
-public class LoadTreeService extends Service<Tree> {
+public class LoadNewickService extends Service<Tree> {
 
     protected File nwkFile;
 
@@ -24,7 +24,9 @@ public class LoadTreeService extends Service<Tree> {
      * @param nwkFile nwk file location
      */
     public void setNwkFile(File nwkFile) {
+
         this.nwkFile = nwkFile;
+
     }
 
     /**

@@ -29,10 +29,14 @@ public class MainControllerTest {
 
     }
 
+    /**
+     * Check if controllers are added.
+     */
     @Test
     public void testLeft() {
 
-        assertThat(mainController.root.getLeft(), instanceOf(GridPane.class));
+        assertThat(mainController.control.getChildren().get(0), instanceOf(GridPane.class));
+        assertThat(mainController.control.getChildren().get(1), instanceOf(GridPane.class));
 
     }
 
