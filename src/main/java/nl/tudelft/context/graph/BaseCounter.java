@@ -61,7 +61,7 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
     /**
      * Get a string representation of the percentage of a certain base, with n for an unknown base
      *
-     * @return string string representing thev alue with the percentage of the base in the initial string
+     * @return string string representing the value with the percentage of the base in the initial string
      */
     public String getPercentageString(char c) {
         double rounded = Math.round(getPercentage(c) * 100) / 100.00d;
@@ -69,18 +69,27 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
     }
 
     /**
-     * return a string reprecentation of the percentages of the bases in an node with a certain ID>
+     * return a string reprecentation of the percentages of all the bases in an node with a certain ID.
+     *
+     * @return string representation of all occurrence-rates of the bases in the BaseCounter.
      */
     @Override
     public String toString() {
 
-        String pA = getPercentageString('A');
-        String pT = getPercentageString('T');
-        String pC = getPercentageString('C');
-        String pG = getPercentageString('G');
-        String pN = getPercentageString('N');
+        StringBuilder result = new StringBuilder(5);
+        result.append("A: ");
+        result.append(getPercentageString('A'));
+        result.append("%, T: ");
+        result.append(getPercentageString('T'));
+        result.append("%, C: ");
+        result.append(getPercentageString('C'));
+        result.append("%, G: ");
+        result.append(getPercentageString('G'));
+        result.append("%, N: ");
+        result.append(getPercentageString('N'));
+        result.append("%");
 
-        return "A: " + pA + "%, T: " + pT + " %, C: " + pC + " %, G: " + pG + " %, N: " + pN;
+        return result.toString();
 
     }
 

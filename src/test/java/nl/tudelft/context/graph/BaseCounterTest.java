@@ -170,8 +170,8 @@ public class BaseCounterTest {
         nl.tudelft.context.graph.Node node1 = nodeFactory.getNode(new Scanner(">0 | Cat,Dog | 5 | 7\nA\n"));
         nl.tudelft.context.graph.Node node2 = nodeFactory.getNode(new Scanner(">1 | Dog | 8 | 10\nATC\n"));
 
-        assertEquals("A: 100.0%, T: 0.0 %, C: 0.0 %, G: 0.0 %, N: 0.0", node1.getBaseCounter().toString());
-        assertEquals("A: 33.33%, T: 33.33 %, C: 33.33 %, G: 0.0 %, N: 0.0", node2.getBaseCounter().toString());
+        assertEquals("A: 100.0%, T: 0.0%, C: 0.0%, G: 0.0%, N: 0.0%", node1.getBaseCounter().toString());
+        assertEquals("A: 33.33%, T: 33.33%, C: 33.33%, G: 0.0%, N: 0.0%", node2.getBaseCounter().toString());
 
     }
 
