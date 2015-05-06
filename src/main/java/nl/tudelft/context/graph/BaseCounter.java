@@ -63,7 +63,7 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
      *
      * @return string string representing thev alue with the percentage of the base in the initial string
      */
-    public String getPercString(char c) {
+    public String getPercentageString(char c) {
         double rounded = Math.round(getPercentage(c) * 100) / 100.00d;
         return Double.toString(rounded);
     }
@@ -74,11 +74,11 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
     @Override
     public String toString() {
 
-        String pA = getPercString('A');
-        String pT = getPercString('T');
-        String pC = getPercString('C');
-        String pG = getPercString('G');
-        String pN = getPercString('N');
+        String pA = getPercentageString('A');
+        String pT = getPercentageString('T');
+        String pC = getPercentageString('C');
+        String pG = getPercentageString('G');
+        String pN = getPercentageString('N');
 
         return "A: " + pA + "%, T: " + pT + " %, C: " + pC + " %, G: " + pG + " %, N: " + pN;
 
