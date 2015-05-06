@@ -140,23 +140,23 @@ public class BaseCounterTest {
     }
 
     @Test
-    public void testGetPercStringRoundNumber() throws Exception {
-        assertEquals("20.0", baseCounter5.getPercString('A'));
-        assertEquals("20.0", baseCounter5.getPercString('T'));
-        assertEquals("20.0", baseCounter5.getPercString('C'));
-        assertEquals("20.0", baseCounter5.getPercString('G'));
-        assertEquals("20.0", baseCounter5.getPercString('N'));
-        assertEquals("0.0", baseCounter5.getPercString('Z'));
+    public void testGetPercentageStringRoundNumber() throws Exception {
+        assertEquals("20.0", baseCounter5.getPercentageString('A'));
+        assertEquals("20.0", baseCounter5.getPercentageString('T'));
+        assertEquals("20.0", baseCounter5.getPercentageString('C'));
+        assertEquals("20.0", baseCounter5.getPercentageString('G'));
+        assertEquals("20.0", baseCounter5.getPercentageString('N'));
+        assertEquals("0.0", baseCounter5.getPercentageString('Z'));
     }
 
     @Test
-    public void testGetPercStringRounding() throws Exception {
-        assertEquals("13.51", baseCounter3.getPercString('A'));
-        assertEquals("18.92", baseCounter3.getPercString('T'));
-        assertEquals("27.03", baseCounter3.getPercString('C'));
-        assertEquals("5.41", baseCounter3.getPercString('G'));
-        assertEquals("35.14", baseCounter3.getPercString('N'));
-        assertEquals("0.0", baseCounter3.getPercString('Z'));
+    public void testGetPercentageStringRounding() throws Exception {
+        assertEquals("13.51", baseCounter3.getPercentageString('A'));
+        assertEquals("18.92", baseCounter3.getPercentageString('T'));
+        assertEquals("27.03", baseCounter3.getPercentageString('C'));
+        assertEquals("5.41", baseCounter3.getPercentageString('G'));
+        assertEquals("35.14", baseCounter3.getPercentageString('N'));
+        assertEquals("0.0", baseCounter3.getPercentageString('Z'));
     }
 
     /**
@@ -170,8 +170,8 @@ public class BaseCounterTest {
         nl.tudelft.context.graph.Node node1 = nodeFactory.getNode(new Scanner(">0 | Cat,Dog | 5 | 7\nA\n"));
         nl.tudelft.context.graph.Node node2 = nodeFactory.getNode(new Scanner(">1 | Dog | 8 | 10\nATC\n"));
 
-        assertEquals("A: 100.0%, T: 0.0 %, C: 0.0 %, G: 0.0 %, N: 0.0", node1.getBaseCounter().toString());
-        assertEquals("A: 33.33%, T: 33.33 %, C: 33.33 %, G: 0.0 %, N: 0.0", node2.getBaseCounter().toString());
+        assertEquals("A: 100.0%, T: 0.0%, C: 0.0%, G: 0.0%, N: 0.0%", node1.getBaseCounter().toString());
+        assertEquals("A: 33.33%, T: 33.33%, C: 33.33%, G: 0.0%, N: 0.0%", node2.getBaseCounter().toString());
 
     }
 
