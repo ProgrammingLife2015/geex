@@ -127,13 +127,33 @@ public class CounterTest extends TestCase {
     }
 
     @Test
-    public void testGetpERCENTAGEInvalidCharInDNA() throws Exception {
+    public void testGetPercentageInvalidCharInDNA() throws Exception {
         assertEquals(20f,Counter5.getPercentage('A'));
         assertEquals(20f,Counter5.getPercentage('T'));
         assertEquals(20f,Counter5.getPercentage('C'));
         assertEquals(20f,Counter5.getPercentage('G'));
         assertEquals(20f,Counter5.getPercentage('N'));
         assertEquals(0f,Counter5.getPercentage('Z'));
+    }
+
+    @Test
+    public void testGetPercStringRoundNumber() throws Exception {
+        assertEquals("20.0",Counter5.getPercString('A'));
+        assertEquals("20.0",Counter5.getPercString('T'));
+        assertEquals("20.0",Counter5.getPercString('C'));
+        assertEquals("20.0",Counter5.getPercString('G'));
+        assertEquals("20.0",Counter5.getPercString('N'));
+        assertEquals("0.0",Counter5.getPercString('Z'));
+    }
+
+    @Test
+    public void testGetPercStringRounding() throws Exception {
+        assertEquals("13.513514",Counter3.getPercString('A'));
+        assertEquals("18.918919",Counter3.getPercString('T'));
+        assertEquals("27.027027",Counter3.getPercString('C'));
+        assertEquals("5.4054055",Counter3.getPercString('G'));
+        assertEquals("35.135136",Counter3.getPercString('N'));
+        assertEquals("0.0",Counter3.getPercString('Z'));
     }
 
 }

@@ -59,4 +59,14 @@ public class Counter extends HashMap<Character, MutableInt> {
         }
     }
 
+    /**
+     * Get a string representation of the percentage of a certain base, with n for an unknown base
+     * @return string string representing thev alue with the percentage of the base in the initial string
+     */
+    public String getPercString(char c){
+       String result = Float.toString(getPercentage(c));
+        System.out.println(result);
+        return result;
+    }
+
 }
