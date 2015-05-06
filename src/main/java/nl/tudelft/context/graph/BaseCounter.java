@@ -15,6 +15,7 @@ import java.util.Locale;
 public class BaseCounter extends HashMap<Character, MutableInt> {
 
     static DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+
     /**
      * Constructor for the baseCounter
      *
@@ -70,11 +71,11 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
     public String getPercentageString(char c) {
         double rounded = Math.round(getPercentage(c) * 100) / 100.00d;
         Double result = Double.valueOf(df.format(rounded));
-        return  Double.toString(result);
+        return Double.toString(result);
     }
 
     /**
-     * return a string reprecentation of the percentages of all the bases in an node with a certain ID.
+     * return a string representation of the percentages of all the bases in an node with a certain ID.
      *
      * @return string representation of all occurrence-rates of the bases in the BaseCounter.
      */
