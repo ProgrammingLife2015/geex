@@ -23,21 +23,12 @@ public void before() throws Exception {
     mutableint4 = new MutableInt();
 }
 
-/** 
-* 
-* Method: get() 
-* 
-*/ 
+
 @Test
 public void testGet() throws Exception {
     assertEquals(0,mutableint1.get());
 } 
 
-/** 
-* 
-* Method: increment() 
-* 
-*/ 
 @Test
 public void testIncrement() throws Exception {
     assertEquals(0,mutableint2.get());
@@ -48,11 +39,7 @@ public void testIncrement() throws Exception {
     assertEquals(3,mutableint2.get());
 } 
 
-/** 
-* 
-* Method: decrement() 
-* 
-*/ 
+
 @Test
 public void testDecrement() throws Exception {
     assertEquals(0, mutableint3.get());
@@ -63,11 +50,7 @@ public void testDecrement() throws Exception {
     assertEquals(-3, mutableint3.get());
 } 
 
-/** 
-* 
-* Method: reset() 
-* 
-*/ 
+
 @Test
 public void testReset() throws Exception {
     assertEquals(0, mutableint4.get());
@@ -78,11 +61,7 @@ public void testReset() throws Exception {
 
 } 
 
-/** 
-* 
-* Method: toString() 
-* 
-*/ 
+
 @Test
 public void testToString() throws Exception {
     assertEquals(0, mutableint1.get());
