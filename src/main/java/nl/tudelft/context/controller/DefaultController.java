@@ -2,7 +2,10 @@ package nl.tudelft.context.controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -56,6 +59,23 @@ public abstract class DefaultController<T extends Parent> {
     public Parent getRoot() {
 
         return root;
+
+    }
+
+    /**
+     * Load file.
+     */
+    protected File loadFile(FileChooser fileChooser, TextField source) {
+
+        File file = fileChooser.showOpenDialog(root.getScene().getWindow());
+
+        if (file != null) {
+            source.setText(file.getName());
+        } else {
+            source.setText("");
+        }
+
+        return file;
 
     }
 

@@ -5,9 +5,14 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import java.net.URL?>
 <fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
 
+    <left>
+        <VBox fx:id="control"></VBox>
+    </left>
+    
     <center>
         <ScrollPane>
             <StackPane>

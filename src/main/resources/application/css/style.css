@@ -7,12 +7,15 @@
 }
 
 /* Control */
-.control {
+#control {
+    -fx-background-color: #848484;
     -fx-min-width: 250px;
+}
+
+.control {
     -fx-padding: 20px;
     -fx-hgap: 10px;
     -fx-vgap: 10px;
-    -fx-background-color: #848484;
 }
 
 .control .h2 {
