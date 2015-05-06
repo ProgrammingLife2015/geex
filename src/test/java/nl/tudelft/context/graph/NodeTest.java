@@ -87,4 +87,26 @@ public class NodeTest {
 
     }
 
+
+
+
+    /**
+     * Test node count.
+     */
+    @Test
+    public void testCount() {
+        assertEquals(1, node1.counter.getInt('A'));
+        assertEquals(1, node1.counter.getInt('T'));
+    }
+
+
+    /**
+     * Test node percentage.
+     */
+    @Test
+    public void testPercentage() {
+        assertEquals(100f, node1.counter.getPercentage('A'),0.0001);
+        assertEquals(33.33f, node2.counter.getPercentage('T'),0.01);
+    }
+
 }
