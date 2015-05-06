@@ -2,7 +2,10 @@ package nl.tudelft.context.graph;
 
 import nl.tudelft.context.data.MutableInt;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author Jasper Nieuwdorp <jaspernieuwdorp@hotmail.com>
@@ -11,6 +14,7 @@ import java.util.HashMap;
  */
 public class BaseCounter extends HashMap<Character, MutableInt> {
 
+    static DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
     /**
      * Constructor for the baseCounter
      *
@@ -65,7 +69,8 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
      */
     public String getPercentageString(char c) {
         double rounded = Math.round(getPercentage(c) * 100) / 100.00d;
-        return Double.toString(rounded);
+        Double result = Double.valueOf(df.format(rounded));
+        return  Double.toString(result);
     }
 
     /**
