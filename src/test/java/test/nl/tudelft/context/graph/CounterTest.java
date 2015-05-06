@@ -11,7 +11,7 @@ import org.junit.Test;
  */
 public class CounterTest extends TestCase {
 
-    protected Counter Counter1, Counter2, Counter3, Counter4;
+    protected Counter Counter1, Counter2, Counter3, Counter4, Counter5;
 
     public void setUp() throws Exception {
         super.setUp();
@@ -19,6 +19,7 @@ public class CounterTest extends TestCase {
         Counter2 = new Counter("ATCGATCGATCG");
         Counter3 = new Counter("ATTCGCTCACANNNNNNNNNNNNNATCCCTTTACCCG");
         Counter4 = new Counter("");
+        Counter5 = new Counter("ATCGNZ");
     }
 
     @Test
@@ -58,6 +59,16 @@ public class CounterTest extends TestCase {
         assertEquals(10,Counter3.getInt('C'));
         assertEquals(2,Counter3.getInt('G'));
         assertEquals(13,Counter3.getInt('N'));
+    }
+
+    @Test
+    public void testGetIntInvalidCharInDNA() throws Exception {
+        assertEquals(1, Counter5.getInt('A'));
+        assertEquals(1,Counter5.getInt('T'));
+        assertEquals(1,Counter5.getInt('C'));
+        assertEquals(1,Counter5.getInt('G'));
+        assertEquals(1,Counter5.getInt('N'));
+        assertEquals(0,Counter5.getInt('Z'));
     }
 
 
@@ -113,6 +124,16 @@ public class CounterTest extends TestCase {
     @Test
     public void testGetPercentageInNotExistingChar() throws Exception {
         assertEquals(0f,Counter3.getPercentage('H'));
+    }
+
+    @Test
+    public void testGetpERCENTAGEInvalidCharInDNA() throws Exception {
+        assertEquals(20f,Counter5.getPercentage('A'));
+        assertEquals(20f,Counter5.getPercentage('T'));
+        assertEquals(20f,Counter5.getPercentage('C'));
+        assertEquals(20f,Counter5.getPercentage('G'));
+        assertEquals(20f,Counter5.getPercentage('N'));
+        assertEquals(0f,Counter5.getPercentage('Z'));
     }
 
 }
