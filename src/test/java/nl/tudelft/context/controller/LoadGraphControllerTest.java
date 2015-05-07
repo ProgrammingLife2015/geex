@@ -33,6 +33,7 @@ public class LoadGraphControllerTest {
     protected static final ProgressIndicator progressIndicator = new ProgressIndicator();
     protected static final Group sequence = new Group();
 
+
     /**
      * Setup Load Graph Controller.
      */

@@ -3,10 +3,7 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import nl.tudelft.context.drawable.DrawableEdge;
@@ -119,7 +116,10 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
             final Label label = new Label(Integer.toString(node.getId()));
             label.translateXProperty().bind(node.translateXProperty());
             label.translateYProperty().bind(node.translateYProperty());
+            final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
+            label.setTooltip(percentages);
             sequences.getChildren().add(label);
+
         });
 
     }

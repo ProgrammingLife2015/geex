@@ -52,6 +52,12 @@
             <version>1.0</version>
             <systemPath>${basedir}/src/lib/libnewicktree.jar</systemPath>
         </dependency>
+        <!-- Commons Lang -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
