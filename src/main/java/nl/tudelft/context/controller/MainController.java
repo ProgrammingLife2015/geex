@@ -73,7 +73,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
      */
     public void previousView() {
 
-        if(viewList.size() > 0) {
+        if(viewList.size() > 1) {
             viewList.pop();
             root.setCenter(viewList.peek());
         }
