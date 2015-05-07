@@ -1,0 +1,134 @@
+@startuml
+class App extends javafx.application.Application {
+    {static} # FRAME_WIDTH : int
+    {static} # FRAME_HEIGHT : int
+
+    {static} +main(args : String...)
+}
+
+class DrawableEdge extends javafx.scene.shape.Line
+class DrawableNode {
+    # currentIncoming : int
+    # translateX : SimpleDoubleProperty
+    # translateY : SimpleDoubleProperty
+
+    +incrementIncoming() : int
+}
+
+abstract class DefaultController<T extends Parent> {
+    # root : T
+    #loadFXML(fxmlFile : String)
+    #loadFile(fileChooser : FileChooser, source : TextField)
+    #getRoot() : Parent
+}
+
+class MainController<BorderPane> extends DefaultController implements javafx.fxml.Initializable {
+}
+
+class LoadNewickController<GridPane> extends DefaultController implements javafx.fxml.Initializable {
+    # loadNewickService : LoadNewickService
+    # progressIndicator : ProgressIndicator
+
+    #loadTree()
+    #showTree(tree : Tree)
+    #printTree(node : TreeNode, prev_w : double)
+}
+
+class LoadGraphController<GridPane> Extends DefaultController implements javafx.fxml.Initializable {
+    # loadGraphService : LoadGraphService
+    # progressIndicator : ProgressIndicator
+    # sequences : Group
+
+    #loadGraph()
+    #loadTree()
+    #showGraph(graph : Graph)
+    #showColumn(graph : Graph, nodes List<Node>, int column)
+    #showNodes(nodes : List<Node>, column : int)
+}
+
+
+class Node extends DrawableNode {
+    # id : int
+    # sources : Set<String>
+    # refStartPosition : int
+    # refEndPosition : int
+    # content : String
+}
+class NodeFactory {
+    #getNodeId(sc : Scanner) : int
+    +getNode(sc : Scanner) : Node
+}
+
+class Graph<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
+    +getFirstNode()
+}
+class GraphFactory {
+    #parseNodes(nodeFile : File, graph : Graph) : List<Node>
+    #parseEdges(edgeFile : File, graph : Graph, nodeList : List<Node>)
+    +getGraph(nodeFile : File, edgeFile : File) : Graph
+}
+
+class LoadGraphService<Graph> extends javafx.concurrent.Service {
+    # nodeFile : File
+    # edgeFile : File
+}
+class LoadNewickService<Tree> extends javafx.concurrent.Service {
+    # nwkFile : File
+}
+
+'FXML
+class main << (F,orange) FXML >> {
+    + control : VBox
+    + progressIndicator : ProgressIndicator
+    + sequences : Group
+}
+
+class load_newick << (F, orange) FXML >> {
+    + loadNewick : Button
+    + load : Button
+    + nwkSource : TextField
+}
+
+class load_graph << (F, orange) FXML >> {
+    + loadNodes : Button
+    + loadEdges : Button
+    + load : Button
+    + nodeSource : TextField
+    + edgeSource : TextField
+}
+
+'Relations
+LoadGraphController "1" *-- "1" load_graph
+LoadNewickController "1" *-- "1" load_newick
+MainController "1" *-- "1" main
+
+GraphFactory ..> Graph : << create >>
+GraphFactory ..> NodeFactory
+
+NodeFactory ..> Node : << create >>
+
+App "1" *-- "1" MainController
+MainController o-- LoadGraphController
+MainController o-- LoadNewickController
+
+LoadGraphController "1" o-- "0..*" DrawableEdge
+LoadGraphController "1" -- "1" LoadGraphService
+LoadGraphController "1" -- "1" LoadNewickService
+
+LoadGraphService ..> GraphFactory
+
+'External classes
+abstract class javafx.concurrent.Service<V> {
+    +createTask() : Task<V>
+}
+
+abstract class javafx.application.Application {
+    +start(stage : Stage)
+}
+
+class org.jgrapht.graph.DefaultDirectedGraph<E, V>
+
+interface javafx.fxml.Initializable {
+    +initialize(location : URL, resources : ResourceBundle)
+}
+@enduml
