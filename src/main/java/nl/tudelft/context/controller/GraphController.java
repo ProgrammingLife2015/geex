@@ -31,6 +31,7 @@ public class GraphController extends DefaultController<ScrollPane> implements In
     @FXML
     protected Group sequences;
 
+    protected MainController mainController;
     protected LoadGraphService loadGraphService;
 
     /**
@@ -38,10 +39,11 @@ public class GraphController extends DefaultController<ScrollPane> implements In
      *
      * @param loadGraphService service with file locations
      */
-    public GraphController(LoadGraphService loadGraphService) {
+    public GraphController(MainController mainController, LoadGraphService loadGraphService) {
 
         super(new ScrollPane());
 
+        this.mainController = mainController;
         this.loadGraphService = loadGraphService;
 
         loadFXML("/application/graph.fxml");
@@ -98,8 +100,8 @@ public class GraphController extends DefaultController<ScrollPane> implements In
             label.translateYProperty().bind(node.translateYProperty());
             final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
             label.setTooltip(percentages);
+            label.setOnMouseClicked(event -> mainController.setView(new BaseController(node.getContent()).getRoot()));
             sequences.getChildren().add(label);
-
         });
 
     }

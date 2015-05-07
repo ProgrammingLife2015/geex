@@ -13,6 +13,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -36,7 +37,8 @@ public class GraphControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        graphController = new GraphController(new LoadGraphService(nodeFile, edgeFile));
+        MainController mainController = mock(MainController.class);
+        graphController = new GraphController(mainController, new LoadGraphService(nodeFile, edgeFile));
 
     }
 
