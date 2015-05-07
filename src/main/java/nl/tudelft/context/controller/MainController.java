@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -22,6 +23,8 @@ public class MainController extends DefaultController<BorderPane> implements Ini
 
     @FXML
     protected VBox control;
+
+    protected Stack<Node> viewList = new Stack<>();
 
     /**
      * Init a controller at main.fxml.
@@ -51,8 +54,14 @@ public class MainController extends DefaultController<BorderPane> implements Ini
 
     }
 
+    /**
+     * Set a new main view and push it on the view stack.
+     *
+     * @param node javaFX element
+     */
     public void setView(Node node) {
 
+        viewList.add(node);
         view.setContent(node);
 
     }
