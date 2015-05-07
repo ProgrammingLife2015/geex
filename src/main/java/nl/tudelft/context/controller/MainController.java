@@ -50,7 +50,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
         setView(graphController.getRoot());
 
         control.getChildren().add(new LoadGraphController(graphController.progressIndicator, graphController.sequences).getRoot());
-        control.getChildren().add(new LoadNewickController(graphController.progressIndicator).getRoot());
+        control.getChildren().add(new LoadNewickController().getRoot());
 
     }
 
