@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Jasper Nieuwdorp <jaspernieuwdorp@hotmail.com>
@@ -19,20 +20,19 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
     /**
      * Constructor for the baseCounter
      *
-     * @param s String with the dna sequence
+     * @param bases String with the dna sequence
      */
-    public BaseCounter(String s) {
+    public BaseCounter(String bases) {
         put('A', new MutableInt());
         put('T', new MutableInt());
         put('C', new MutableInt());
         put('G', new MutableInt());
         put('N', new MutableInt());
-        for (char i : s.toCharArray()) {
-            MutableInt count = get(i);
-            if (count != null) {
-                count.increment();
-            }
-        }
+        bases.chars()
+                .mapToObj(x -> get((char) x))
+                .filter(Objects::nonNull)
+                .forEach(MutableInt::increment);
+
     }
 
     /**
