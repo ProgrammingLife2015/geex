@@ -1,5 +1,4 @@
 @startuml
-package nl.tudelft.context {
     class App {
         {static} # FRAME_WIDTH : int
         {static} # FRAME_HEIGHT : int
@@ -7,8 +6,7 @@ package nl.tudelft.context {
         +main(args : String...)
         +start(stage : Stage)
     }
-}
-package nl.tudelft.context.drawable {
+
     class DrawableEdge extends javafx.scene.shape.Line {
         +DrawableEdge(graph : Graph, edge : DefaultEdge)
     }
@@ -21,8 +19,7 @@ package nl.tudelft.context.drawable {
         +setTranslateX(x : double)
         +setTranslateY(y : double)
     }
-}
-package nl.tudelft.context.controller {
+
     class DefaultController<T extends Parent> {
         # root : T
         #loadFXML(fxmlFile : String)
@@ -60,9 +57,8 @@ package nl.tudelft.context.controller {
         #printTree(node : TreeNode, prev_w : double)
         #showNodes(nodes : List<Node>, column : int)
     }
-}
 
-package nl.tudelft.context.graph {
+
     class Node extends DrawableNode {
         # id : int
         # sources : Set<String>
@@ -93,11 +89,6 @@ package nl.tudelft.context.graph {
         +getGraph(nodeFile : File, edgeFile : File) : Graph
     }
 
-    GraphFactory ..> Graph
-    NodeFactory ..> Node
-}
-
-package nl.tudelft.context.service {
     class LoadGraphService extends javafx.concurrent.Service {
         # nodeFile : File
         # edgeFile : File
@@ -112,5 +103,4 @@ package nl.tudelft.context.service {
         +setNwkFile(nwkFile : File)
         #createTask() : Task<Tree>
     }
-}
 @enduml
