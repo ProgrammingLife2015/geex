@@ -18,23 +18,11 @@ public class LoadGraphService extends Service<Graph> {
     protected File edgeFile;
 
     /**
-     * Set node file.
-     *
-     * @param nodeFile node file location
+     * Set node and edge file
      */
-    public void setNodeFile(File nodeFile) {
+    public LoadGraphService(File nodeFile, File edgeFile) {
 
         this.nodeFile = nodeFile;
-
-    }
-
-    /**
-     * Set edge file.
-     *
-     * @param edgeFile edge file location
-     */
-    public void setEdgeFile(File edgeFile) {
-
         this.edgeFile = edgeFile;
 
     }

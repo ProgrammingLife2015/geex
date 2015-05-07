@@ -46,10 +46,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        GraphController graphController = new GraphController();
-        setView(graphController.getRoot());
-
-        control.getChildren().add(new LoadGraphController(graphController.progressIndicator, graphController.sequences).getRoot());
+        control.getChildren().add(new LoadGraphController(this).getRoot());
         control.getChildren().add(new LoadNewickController().getRoot());
 
     }

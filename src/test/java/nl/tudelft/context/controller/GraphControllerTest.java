@@ -2,9 +2,8 @@ package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.collections.ListChangeListener;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.ProgressIndicator;
+import nl.tudelft.context.service.LoadGraphService;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,17 +20,14 @@ import static org.junit.Assert.assertEquals;
  * @since 26-4-2015
  */
 @RunWith(JfxRunner.class)
-public class LoadGraphControllerTest {
+public class GraphControllerTest {
 
-    protected final static File nodeFile = new File(LoadGraphControllerTest.class.getResource("/graph/node.graph").getPath());
-    protected final static File edgeFile = new File(LoadGraphControllerTest.class.getResource("/graph/edge.graph").getPath());
+    protected final static File nodeFile = new File(GraphControllerTest.class.getResource("/graph/node.graph").getPath());
+    protected final static File edgeFile = new File(GraphControllerTest.class.getResource("/graph/edge.graph").getPath());
 
     protected static final int sequencesAmount = 4;
 
-    protected static LoadGraphController loadGraphController;
-
-    protected static final ProgressIndicator progressIndicator = new ProgressIndicator();
-    protected static final Group sequence = new Group();
+    protected static GraphController graphController;
 
 
     /**
@@ -40,10 +36,7 @@ public class LoadGraphControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        loadGraphController = new LoadGraphController(progressIndicator, sequence);
-
-        loadGraphController.loadGraphService.setNodeFile(nodeFile);
-        loadGraphController.loadGraphService.setEdgeFile(edgeFile);
+        graphController = new GraphController(new LoadGraphService(nodeFile, edgeFile));
 
     }
 
@@ -53,7 +46,7 @@ public class LoadGraphControllerTest {
     @Test(expected = RuntimeException.class)
     public void testWrongFXMLFile() {
 
-        loadGraphController.loadFXML("");
+        graphController.loadFXML("");
 
     }
 
@@ -65,13 +58,11 @@ public class LoadGraphControllerTest {
 
         CompletableFuture<Boolean> sequencesAdded = new CompletableFuture<>();
 
-        loadGraphController.sequences.getChildren().addListener((ListChangeListener<? super Node>) event -> {
-            if (loadGraphController.sequences.getChildren().size() == sequencesAmount) {
+        graphController.sequences.getChildren().addListener((ListChangeListener<? super Node>) event -> {
+            if (graphController.sequences.getChildren().size() == sequencesAmount) {
                 sequencesAdded.complete(true);
             }
         });
-
-        loadGraphController.loadGraph();
 
         assertEquals(true, sequencesAdded.get(5000, TimeUnit.MILLISECONDS));
 
