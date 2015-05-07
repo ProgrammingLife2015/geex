@@ -94,4 +94,19 @@ LoadGraphController "1" -- "1" LoadGraphService
 LoadGraphController "1" -- "1" LoadTreeService
 
 LoadGraphService ..> GraphFactory
+
+'External classes
+abstract class javafx.concurrent.Service<V> {
+    +createTask() : Task<V>
+}
+
+abstract class javafx.application.Application {
+    +start(stage : Stage)
+}
+
+class org.jgrapht.graph.DefaultDirectedGraph<E, V>
+
+interface javafx.fxml.Initializable {
+    +initialize(location : URL, resources : ResourceBundle)
+}
 @enduml
