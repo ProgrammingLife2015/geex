@@ -4,20 +4,15 @@ class App {
     {static} # FRAME_HEIGHT : int
 
     {static} +main(args : String...)
-    +start(stage : Stage)
 }
 
-class DrawableEdge extends javafx.scene.shape.Line {
-    +DrawableEdge(graph : Graph, edge : DefaultEdge)
-}
+class DrawableEdge extends javafx.scene.shape.Line
 class DrawableNode {
     # currentIncoming : int
     # translateX : SimpleDoubleProperty
     # translateY : SimpleDoubleProperty
+
     +incrementIncoming() : int
-    +translateXProperty() : ObservableDoubleValue
-    +setTranslateX(x : double)
-    +setTranslateY(y : double)
 }
 
 abstract class DefaultController<T extends Parent> {
@@ -29,7 +24,6 @@ abstract class DefaultController<T extends Parent> {
 class MainController<BorderPane> extends DefaultController implements javafx.fxml.Initializable {
     # @FXML progressIndicator : ProgressIndicator
     # @FXML sequences : Group
-    +initialize(location : URL, resources : ResourceBundle)
 }
 
 class LoadGraphController<GridPane> Extends DefaultController implements javafx.fxml.Initializable {
@@ -47,7 +41,6 @@ class LoadGraphController<GridPane> Extends DefaultController implements javafx.
     # sequences : Group
 
     +LoadGraphController(progressIndicator : ProgressIndicator, sequences : Group)
-    +initialize(location : URL, resources : ResourceBundle)
     #loadFile(fileChooser : FileChooser, source TextField) : File
     #loadGraph()
     #loadTree()
@@ -65,15 +58,6 @@ class Node extends DrawableNode {
     # refStartPosition : int
     # refEndPosition : int
     # content : String
-
-    +Node(id : int, sources : Set<String>, refStartPosition : int, refEndPositino : int, content : String)
-    +getId() : int
-    +getSources() : Set<String>
-    +getRefStartPosition() : int
-    +getRefEndPositiono() : int
-    +getContent() : String
-    +equals(object : Object) : boolean
-    +hashCode() : int
 }
 class NodeFactory {
     #getNodeId(sc : Scanner) : int
@@ -92,16 +76,9 @@ class GraphFactory {
 class LoadGraphService<Graph> extends javafx.concurrent.Service {
     # nodeFile : File
     # edgeFile : File
-
-    +setNodeFile(nodeFile : File)
-    +setEdgeFile(edgeFile : File)
-    #createTask() : Task<Graph>
 }
 class LoadTreeService<Tree> extends javafx.concurrent.Service {
     # nwkFile : File
-
-    +setNwkFile(nwkFile : File)
-    #createTask() : Task<Tree>
 }
 
 GraphFactory ..> Graph : << create >>
