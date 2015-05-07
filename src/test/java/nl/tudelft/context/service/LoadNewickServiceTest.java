@@ -3,14 +3,10 @@ package nl.tudelft.context.service;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.concurrent.Worker;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.GraphFactory;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -22,9 +18,9 @@ import static org.junit.Assert.assertNotNull;
  * @since 1-5-2015
  */
 @RunWith(JfxRunner.class)
-public class LoadTreeServiceTest {
+public class LoadNewickServiceTest {
 
-    protected final static File nwkFile = new File(LoadTreeServiceTest.class.getResource("/graph/10strains.nwk").getPath());
+    protected final static File nwkFile = new File(LoadNewickServiceTest.class.getResource("/graph/10strains.nwk").getPath());
 
     /**
      * Test if the graphFromFactory loadFXML succeeds.
@@ -32,18 +28,18 @@ public class LoadTreeServiceTest {
     @Test
     public void testGraphLoadSucceeds() throws Exception {
 
-        final LoadTreeService loadTreeService = new LoadTreeService();
-        loadTreeService.setNwkFile(nwkFile);
+        final LoadNewickService loadNewickService = new LoadNewickService();
+        loadNewickService.setNwkFile(nwkFile);
 
         CompletableFuture<Tree> completableFuture = new CompletableFuture<>();
 
-        loadTreeService.stateProperty().addListener((observable, oldValue, newValue) -> {
+        loadNewickService.stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == Worker.State.SUCCEEDED) {
-                completableFuture.complete(loadTreeService.getValue());
+                completableFuture.complete(loadNewickService.getValue());
             }
         });
 
-        loadTreeService.restart();
+        loadNewickService.restart();
 
         // Wait for graphFromFactory service
         Tree tree = completableFuture.get(5000, TimeUnit.MILLISECONDS);

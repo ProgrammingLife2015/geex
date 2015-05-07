@@ -25,7 +25,6 @@ public class LoadGraphControllerTest {
 
     protected final static File nodeFile = new File(LoadGraphControllerTest.class.getResource("/graph/node.graph").getPath());
     protected final static File edgeFile = new File(LoadGraphControllerTest.class.getResource("/graph/edge.graph").getPath());
-    protected final static File nwkFile = new File(LoadGraphControllerTest.class.getResource("/graph/10strains.nwk").getPath());
 
     protected static final int sequencesAmount = 4;
 
@@ -33,7 +32,6 @@ public class LoadGraphControllerTest {
 
     protected static final ProgressIndicator progressIndicator = new ProgressIndicator();
     protected static final Group sequence = new Group();
-
 
 
     /**
@@ -46,9 +44,6 @@ public class LoadGraphControllerTest {
 
         loadGraphController.loadGraphService.setNodeFile(nodeFile);
         loadGraphController.loadGraphService.setEdgeFile(edgeFile);
-
-        loadGraphController.loadTreeService.setNwkFile(nwkFile);
-
 
     }
 
@@ -79,16 +74,6 @@ public class LoadGraphControllerTest {
         loadGraphController.loadGraph();
 
         assertEquals(true, sequencesAdded.get(5000, TimeUnit.MILLISECONDS));
-
-    }
-
-    /**
-     * Test tree loading will not result in failure.
-     */
-    @Test
-    public void testTree() {
-
-        loadGraphController.loadTree();
 
     }
 

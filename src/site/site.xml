@@ -20,5 +20,8 @@
             <item name="JaCoCo Coverage" href="/jacoco/index.html"/>
             <item name="Cobertura Coverage" href="/cobertura/index.html"/>
         </menu>
+        <menu name="Architecture">
+            <item name="UML Diagram" href="/architecture.html"/>
+        </menu>
     </body>
 </project>
