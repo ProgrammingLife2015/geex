@@ -32,7 +32,6 @@ public class GraphController extends DefaultController<StackPane> implements Ini
     @FXML
     protected Group sequences;
 
-    protected File nodeFile, edgeFile;
     protected LoadGraphService loadGraphService;
 
     /**
