@@ -37,7 +37,6 @@ public class LoadNewickController extends DefaultController<GridPane> implements
      * Init a controller at load_newick.fxml.
      *
      * @param progressIndicator progress indicator of Newick loading
-     * @throws RuntimeException
      */
     public LoadNewickController(ProgressIndicator progressIndicator) {
 

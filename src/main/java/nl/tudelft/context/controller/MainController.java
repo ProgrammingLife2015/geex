@@ -2,8 +2,8 @@ package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -18,16 +18,13 @@ import java.util.ResourceBundle;
 public class MainController extends DefaultController<BorderPane> implements Initializable {
 
     @FXML
+    protected ScrollPane view;
+
+    @FXML
     protected VBox control;
-    @FXML
-    protected ProgressIndicator progressIndicator;
-    @FXML
-    protected Group sequences;
 
     /**
      * Init a controller at main.fxml.
-     *
-     * @throws RuntimeException
      */
     public MainController() {
 
@@ -49,10 +46,17 @@ public class MainController extends DefaultController<BorderPane> implements Ini
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        progressIndicator.visibleProperty().setValue(false);
+        GraphController graphController = new GraphController();
+        setView(graphController.getRoot());
 
-        control.getChildren().add(new LoadGraphController(progressIndicator, sequences).getRoot());
-        control.getChildren().add(new LoadNewickController(progressIndicator).getRoot());
+        control.getChildren().add(new LoadGraphController(graphController.progressIndicator, graphController.sequences).getRoot());
+        control.getChildren().add(new LoadNewickController(graphController.progressIndicator).getRoot());
+
+    }
+
+    public void setView(Node node) {
+
+        view.setContent(node);
 
     }
 

@@ -45,7 +45,6 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
      *
      * @param progressIndicator progress indicator of graph loading
      * @param sequences         grid to display graph
-     * @throws RuntimeException
      */
     public LoadGraphController(ProgressIndicator progressIndicator, Group sequences) {
 

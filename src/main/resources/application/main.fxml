@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.Group?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import java.net.URL?>
 <fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
 
     <left>
-        <VBox fx:id="control"></VBox>
+        <VBox fx:id="control"/>
     </left>
     
     <center>
-        <ScrollPane>
-            <StackPane>
-                <StackPane styleClass="margin">
-                    <Group fx:id="sequences"/>
-                </StackPane>
-                <ProgressIndicator fx:id="progressIndicator"/>
-            </StackPane>
-        </ScrollPane>
+        <ScrollPane fx:id="view"/>
     </center>
 
     <stylesheets>

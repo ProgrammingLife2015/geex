@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.StackPane?>
+<fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml">
+
+    <StackPane styleClass="margin">
+        <Group fx:id="sequences"/>
+    </StackPane>
+    <ProgressIndicator fx:id="progressIndicator"/>
+
+</fx:root>
