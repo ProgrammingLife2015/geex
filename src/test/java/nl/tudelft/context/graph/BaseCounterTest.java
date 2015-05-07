@@ -14,25 +14,13 @@ import static org.junit.Assert.assertEquals;
  */
 public class BaseCounterTest {
 
-    protected static BaseCounter baseCounter1, baseCounter2, baseCounter3, baseCounter4, baseCounter5;
+    protected static BaseCounter baseCounter1, baseCounter2, baseCounter3;
 
     @BeforeClass
     public static void setUp() throws Exception {
         baseCounter1 = new BaseCounter("AAAAAAAAAA");
         baseCounter2 = new BaseCounter("ATCGATCGATCG");
         baseCounter3 = new BaseCounter("ATTCGCTCACANNNNNNNNNNNNNATCCCTTTACCCG");
-        baseCounter4 = new BaseCounter("");
-        baseCounter5 = new BaseCounter("ATCGNZ");
-    }
-
-    @Test
-    public void testGetIntEmptyString() throws Exception {
-        assertEquals(0, baseCounter4.getInt('A'));
-        assertEquals(0, baseCounter4.getInt('T'));
-        assertEquals(0, baseCounter4.getInt('C'));
-        assertEquals(0, baseCounter4.getInt('G'));
-        assertEquals(0, baseCounter4.getInt('N'));
-
     }
 
     @Test
@@ -62,32 +50,6 @@ public class BaseCounterTest {
         assertEquals(10, baseCounter3.getInt('C'));
         assertEquals(2, baseCounter3.getInt('G'));
         assertEquals(13, baseCounter3.getInt('N'));
-    }
-
-    @Test
-    public void testGetIntInvalidCharInDNA() throws Exception {
-        assertEquals(1, baseCounter5.getInt('A'));
-        assertEquals(1, baseCounter5.getInt('T'));
-        assertEquals(1, baseCounter5.getInt('C'));
-        assertEquals(1, baseCounter5.getInt('G'));
-        assertEquals(1, baseCounter5.getInt('N'));
-        assertEquals(0, baseCounter5.getInt('Z'));
-    }
-
-
-    @Test
-    public void testGetIntNotExistingChar() throws Exception {
-        assertEquals(0, baseCounter3.getInt('H'));
-    }
-
-    @Test
-    public void testgetPercentageEmptyString() throws Exception {
-        assertEquals(0f, baseCounter4.getPercentage('A'), 0.E-4f);
-        assertEquals(0f, baseCounter4.getPercentage('T'), 0.E-4f);
-        assertEquals(0f, baseCounter4.getPercentage('C'), 0.E-4f);
-        assertEquals(0f, baseCounter4.getPercentage('G'), 0.E-4f);
-        assertEquals(0f, baseCounter4.getPercentage('N'), 0.E-4f);
-
     }
 
     @Test
@@ -123,32 +85,6 @@ public class BaseCounterTest {
         assertEquals(35.135136f, baseCounter3.getPercentage('N'), 0.E-4f);
     }
 
-
-    @Test
-    public void testGetPercentageInNotExistingChar() throws Exception {
-        assertEquals(0f, baseCounter3.getPercentage('H'), 0.E-4f);
-    }
-
-    @Test
-    public void testGetPercentageInvalidCharInDNA() throws Exception {
-        assertEquals(20f, baseCounter5.getPercentage('A'), 0.E-4f);
-        assertEquals(20f, baseCounter5.getPercentage('T'), 0.E-4f);
-        assertEquals(20f, baseCounter5.getPercentage('C'), 0.E-4f);
-        assertEquals(20f, baseCounter5.getPercentage('G'), 0.E-4f);
-        assertEquals(20f, baseCounter5.getPercentage('N'), 0.E-4f);
-        assertEquals(0f, baseCounter5.getPercentage('Z'), 0.E-4f);
-    }
-
-    @Test
-    public void testGetPercentageStringRoundNumber() throws Exception {
-        assertEquals("20.0", baseCounter5.getPercentageString('A'));
-        assertEquals("20.0", baseCounter5.getPercentageString('T'));
-        assertEquals("20.0", baseCounter5.getPercentageString('C'));
-        assertEquals("20.0", baseCounter5.getPercentageString('G'));
-        assertEquals("20.0", baseCounter5.getPercentageString('N'));
-        assertEquals("0.0", baseCounter5.getPercentageString('Z'));
-    }
-
     @Test
     public void testGetPercentageStringRounding() throws Exception {
         assertEquals("13.51", baseCounter3.getPercentageString('A'));
@@ -156,7 +92,6 @@ public class BaseCounterTest {
         assertEquals("27.03", baseCounter3.getPercentageString('C'));
         assertEquals("5.41", baseCounter3.getPercentageString('G'));
         assertEquals("35.14", baseCounter3.getPercentageString('N'));
-        assertEquals("0.0", baseCounter3.getPercentageString('Z'));
     }
 
     /**
@@ -164,7 +99,6 @@ public class BaseCounterTest {
      */
     @Test
     public void testGetPercentages() {
-
         NodeFactory nodeFactory = new NodeFactory();
 
         nl.tudelft.context.graph.Node node1 = nodeFactory.getNode(new Scanner(">0 | Cat,Dog | 5 | 7\nA\n"));

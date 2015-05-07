@@ -10,12 +10,13 @@ import java.util.Objects;
 
 /**
  * @author Jasper Nieuwdorp <jaspernieuwdorp@hotmail.com>
- * @version 1.0
+ * @version 1.1
  * @since 06-05-2015
  */
 public class BaseCounter extends HashMap<Character, MutableInt> {
 
     static DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+    protected int baseSize;
 
     /**
      * Constructor for the baseCounter
@@ -23,6 +24,7 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
      * @param bases String with the dna sequence
      */
     public BaseCounter(String bases) {
+        baseSize = bases.length();
         put('A', new MutableInt());
         put('T', new MutableInt());
         put('C', new MutableInt());
@@ -32,7 +34,6 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
                 .mapToObj(x -> get((char) x))
                 .filter(Objects::nonNull)
                 .forEach(MutableInt::increment);
-
     }
 
     /**
@@ -41,10 +42,7 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
      * @return int value with the number of times the base occurs in the initial string
      */
     public int getInt(char c) {
-        if (containsKey(c)) {
-            return get(c).intValue();
-        }
-        return 0;
+        return get(c).intValue();
     }
 
     /**
@@ -53,14 +51,7 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
      * @return float value with the percentage of the base in the initial string
      */
     public float getPercentage(char c) {
-        int total = values().stream().mapToInt(MutableInt::intValue).sum();
-        if (total == 0) {
-            return 0f;
-        }
-        if (containsKey(c)) {
-            return (float) (getInt(c) * 100) / total;
-        }
-        return 0f;
+        return (float) (getInt(c) * 100) / baseSize;
     }
 
     /**
@@ -80,9 +71,7 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
      */
     @Override
     public String toString() {
-
         return "A: " + getPercentageString('A') + "%, T: " + getPercentageString('T') + "%, C: " + getPercentageString('C') + "%, G: " + getPercentageString('G') + "%, N: " + getPercentageString('N') + "%";
-
     }
 
 }
