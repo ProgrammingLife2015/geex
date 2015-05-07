@@ -6,3 +6,5 @@ For more details about this project, the team and the application, visit the [Wi
 
 ## Diagrams
 The diagrams are based on [PlantUML](http://plantuml.sourceforge.net/). Install the PlantUML Integration plugin from the IntelliJ plugin browser. The diagrams are also available in the Maven site.
+
+In order for the rendering of the graphs to work [GraphViz](http://www.graphviz.org/Download..php) is needed. This is an external dependeny which cannot be installed with maven.
