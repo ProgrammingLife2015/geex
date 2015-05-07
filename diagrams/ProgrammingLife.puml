@@ -104,17 +104,17 @@ class LoadTreeService<Tree> extends javafx.concurrent.Service {
     #createTask() : Task<Tree>
 }
 
-GraphFactory ..> Graph
+GraphFactory ..> Graph : << create >>
 GraphFactory ..> NodeFactory
 
-NodeFactory ..> Node
+NodeFactory ..> Node : << create >>
 
-App ..> MainController
-MainController ..> LoadGraphController
+App "1" *-- "1" MainController
+MainController o-- LoadGraphController
 
-LoadGraphController ..> DrawableEdge
-LoadGraphController ..> LoadGraphService
-LoadGraphController ..> LoadTreeService
+LoadGraphController "1" o-- "0..*" DrawableEdge
+LoadGraphController "1" -- "1" LoadGraphService
+LoadGraphController "1" -- "1" LoadTreeService
 
 LoadGraphService ..> GraphFactory
 @enduml
