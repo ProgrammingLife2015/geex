@@ -20,7 +20,7 @@ class DrawableNode {
     +setTranslateY(y : double)
 }
 
-class DefaultController<T extends Parent> {
+abstract class DefaultController<T extends Parent> {
     # root : T
     #loadFXML(fxmlFile : String)
     #getRoot() : Parent
