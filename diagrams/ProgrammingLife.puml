@@ -3,7 +3,7 @@ class App {
     {static} # FRAME_WIDTH : int
     {static} # FRAME_HEIGHT : int
 
-    +main(args : String...)
+    {static} +main(args : String...)
     +start(stage : Stage)
 }
 
