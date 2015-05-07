@@ -3,7 +3,6 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -18,9 +17,6 @@ import java.util.Stack;
  * @since 25-4-2015
  */
 public class MainController extends DefaultController<BorderPane> implements Initializable {
-
-    @FXML
-    protected ScrollPane view;
 
     @FXML
     protected VBox control;
@@ -68,7 +64,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
     public void setView(Node node) {
 
         viewList.add(node);
-        view.setContent(node);
+        root.setCenter(node);
 
     }
 
@@ -79,7 +75,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
 
         if(viewList.size() > 0) {
             viewList.pop();
-            view.setContent(viewList.peek());
+            root.setCenter(viewList.peek());
         }
 
     }

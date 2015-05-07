@@ -5,8 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.StackPane;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 7-5-2015
  */
-public class GraphController extends DefaultController<StackPane> implements Initializable {
+public class GraphController extends DefaultController<ScrollPane> implements Initializable {
 
     @FXML
     protected ProgressIndicator progressIndicator;
@@ -40,7 +40,7 @@ public class GraphController extends DefaultController<StackPane> implements Ini
      */
     public GraphController(LoadGraphService loadGraphService) {
 
-        super(new StackPane());
+        super(new ScrollPane());
 
         this.loadGraphService = loadGraphService;
 

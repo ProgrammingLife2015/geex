@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import java.net.URL?>
@@ -9,10 +8,6 @@
     <left>
         <VBox fx:id="control"/>
     </left>
-    
-    <center>
-        <ScrollPane fx:id="view"/>
-    </center>
 
     <stylesheets>
         <URL value="@css/style.css"/>
