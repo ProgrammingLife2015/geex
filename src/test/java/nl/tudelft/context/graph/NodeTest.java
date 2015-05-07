@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -85,6 +86,46 @@ public class NodeTest {
         assertEquals("A", node1.getContent());
         assertEquals("ATC", node2.getContent());
 
+    }
+
+
+
+    /**
+     * Test node count.
+     */
+    @Test
+    public void testCount() {
+        assertEquals(1, node1.baseCounter.getInt('A'));
+        assertEquals(1, node2.baseCounter.getInt('T'));
+    }
+
+
+    /**
+     * Test the equals method for object mismatch.
+     */
+    @Test
+    public void testEqualsNonNode() {
+        assertFalse(node1.equals("not a node:"));
+    }
+
+    /**
+     * Test node percentage.
+     */
+    @Test
+    public void testPercentage() {
+        assertEquals(100f, node1.baseCounter.getPercentage('A'),0.0001);
+        assertEquals(33.33f, node2.baseCounter.getPercentage('T'),0.01);
+    }
+
+    /**
+     * Test getBaseCounter.
+     */
+    @Test
+    public void testGetCounter() {
+        BaseCounter baseCounter1 = new BaseCounter("A");
+        BaseCounter baseCounter2 = new BaseCounter("ATC");
+        assertEquals(baseCounter1.getPercentage('A'), node1.getBaseCounter().getPercentage('A'),0.0001);
+        assertEquals(baseCounter2.getPercentage('T'), node2.getBaseCounter().getPercentage('T'),0.01);
     }
 
 }

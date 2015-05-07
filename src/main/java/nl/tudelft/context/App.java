@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nl.tudelft.context.controller.MainController;
 
+import java.util.Locale;
+
 /**
  * Entry point of the App.
  *
@@ -21,6 +23,7 @@ public class App extends Application {
      * @param args arguments
      */
     public static void main(final String... args) {
+        Locale.setDefault(new Locale("en", "US"));
 
         launch(args);
 

@@ -16,6 +16,7 @@ public class Node extends DrawableNode {
     protected int refStartPosition;
     protected int refEndPosition;
     protected String content;
+    protected BaseCounter baseCounter;
 
     /**
      * Create a node.
@@ -33,6 +34,7 @@ public class Node extends DrawableNode {
         this.refStartPosition = refStartPosition;
         this.refEndPosition = refEndPosition;
         this.content = content;
+        this.baseCounter = new BaseCounter(content);
 
     }
 
@@ -91,6 +93,16 @@ public class Node extends DrawableNode {
 
     }
 
+
+    /**
+     * Getter for baseCounter
+     *
+     * @return baseCounter
+     */
+    public BaseCounter getBaseCounter() {
+        return baseCounter;
+    }
+
     /**
      * Checks if node is equal to an other node.
      * <p>
@@ -101,14 +113,11 @@ public class Node extends DrawableNode {
      */
     @Override
     public boolean equals(Object other) {
-
         if (other instanceof Node) {
             Node that = (Node) other;
             return id == that.id;
         }
-
         return false;
-
     }
 
     /**
@@ -118,9 +127,7 @@ public class Node extends DrawableNode {
      */
     @Override
     public int hashCode() {
-
         return this.id;
-
     }
 
 }
