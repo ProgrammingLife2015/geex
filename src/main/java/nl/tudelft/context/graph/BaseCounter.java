@@ -69,8 +69,7 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
      * @return string string representing the value with the percentage of the base in the initial string
      */
     public String getPercentageString(char c) {
-        double rounded = Math.round(getPercentage(c) * 100) / 100.00d;
-        Double result = Double.valueOf(df.format(rounded));
+        double result = Double.valueOf(df.format(getPercentage(c)));
         return Double.toString(result);
     }
 
