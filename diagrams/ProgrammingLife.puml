@@ -26,13 +26,13 @@ abstract class DefaultController<T extends Parent> {
     #getRoot() : Parent
 }
 
-class MainController extends DefaultController implements javafx.fxml.Initializable {
+class MainController<BorderPane> extends DefaultController implements javafx.fxml.Initializable {
     # @FXML progressIndicator : ProgressIndicator
     # @FXML sequences : Group
     +initialize(location : URL, resources : ResourceBundle)
 }
 
-class LoadGraphController extends DefaultController implements javafx.fxml.Initializable {
+class LoadGraphController<GridPane> Extends DefaultController implements javafx.fxml.Initializable {
     # @FXML loadNodes : Button
     # @FXML loadEdges : Button
     # @FXML loadNewick : Button
@@ -80,7 +80,7 @@ class NodeFactory {
     +getNode(sc : Scanner) : Node
 }
 
-class Graph extends org.jgrapht.graph.DefaultDirectedGraph {
+class Graph<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
     +getFirstNode()
 }
 class GraphFactory {
@@ -89,7 +89,7 @@ class GraphFactory {
     +getGraph(nodeFile : File, edgeFile : File) : Graph
 }
 
-class LoadGraphService extends javafx.concurrent.Service {
+class LoadGraphService<Graph> extends javafx.concurrent.Service {
     # nodeFile : File
     # edgeFile : File
 
@@ -97,7 +97,7 @@ class LoadGraphService extends javafx.concurrent.Service {
     +setEdgeFile(edgeFile : File)
     #createTask() : Task<Graph>
 }
-class LoadTreeService extends javafx.concurrent.Service {
+class LoadTreeService<Tree> extends javafx.concurrent.Service {
     # nwkFile : File
 
     +setNwkFile(nwkFile : File)
