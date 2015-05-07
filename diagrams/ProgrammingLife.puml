@@ -18,26 +18,31 @@ class DrawableNode {
 abstract class DefaultController<T extends Parent> {
     # root : T
     #loadFXML(fxmlFile : String)
+    #loadFile(fileChooser : FileChooser, source : TextField)
     #getRoot() : Parent
 }
 
 class MainController<BorderPane> extends DefaultController implements javafx.fxml.Initializable {
 }
 
+class LoadNewickController<GridPane> extends DefaultController implements javafx.fxml.Initializable {
+    # loadNewickService : LoadNewickService
+    # progressIndicator : ProgressIndicator
+
+    #loadTree()
+    #showTree(tree : Tree)
+    #printTree(node : TreeNode, prev_w : double)
+}
+
 class LoadGraphController<GridPane> Extends DefaultController implements javafx.fxml.Initializable {
     # loadGraphService : LoadGraphService
-    # loadTreeService : LoadTreeService
     # progressIndicator : ProgressIndicator
     # sequences : Group
 
-    +LoadGraphController(progressIndicator : ProgressIndicator, sequences : Group)
-    #loadFile(fileChooser : FileChooser, source TextField) : File
     #loadGraph()
     #loadTree()
     #showGraph(graph : Graph)
     #showColumn(graph : Graph, nodes List<Node>, int column)
-    #showTree(tree : Tree)
-    #printTree(node : TreeNode, prev_w : double)
     #showNodes(nodes : List<Node>, column : int)
 }
 
@@ -67,31 +72,35 @@ class LoadGraphService<Graph> extends javafx.concurrent.Service {
     # nodeFile : File
     # edgeFile : File
 }
-class LoadTreeService<Tree> extends javafx.concurrent.Service {
+class LoadNewickService<Tree> extends javafx.concurrent.Service {
     # nwkFile : File
 }
 
 'FXML
 class main << (F,orange) FXML >> {
+    + control : VBox
     + progressIndicator : ProgressIndicator
     + sequences : Group
+}
+
+class load_newick << (F, orange) FXML >> {
+    + loadNewick : Button
+    + load : Button
+    + nwkSource : TextField
 }
 
 class load_graph << (F, orange) FXML >> {
     + loadNodes : Button
     + loadEdges : Button
-    + loadNewick : Button
     + load : Button
-    + treeload : Button
     + nodeSource : TextField
     + edgeSource : TextField
-    + nwkSource : TextField
-
 }
 
 'Relations
-LoadGraphController *-- load_graph
-MainController *-- main
+LoadGraphController "1" *-- "1" load_graph
+LoadNewickController "1" *-- "1" load_newick
+MainController "1" *-- "1" main
 
 GraphFactory ..> Graph : << create >>
 GraphFactory ..> NodeFactory
@@ -100,10 +109,11 @@ NodeFactory ..> Node : << create >>
 
 App "1" *-- "1" MainController
 MainController o-- LoadGraphController
+MainController o-- LoadNewickController
 
 LoadGraphController "1" o-- "0..*" DrawableEdge
 LoadGraphController "1" -- "1" LoadGraphService
-LoadGraphController "1" -- "1" LoadTreeService
+LoadGraphController "1" -- "1" LoadNewickService
 
 LoadGraphService ..> GraphFactory
 
