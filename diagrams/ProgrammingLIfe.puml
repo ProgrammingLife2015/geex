@@ -1,113 +1,116 @@
 @startuml
 package nl.tudelft.context {
-class App {
-    {static} # FRAME_WIDTH : int
-    {static} # FRAME_HEIGHT : int
+    class App {
+        {static} # FRAME_WIDTH : int
+        {static} # FRAME_HEIGHT : int
 
-    +main(args : String...)
-    +start(stage : Stage)
+        +main(args : String...)
+        +start(stage : Stage)
+    }
 }
+package nl.tudelft.context.drawable {
+    class DrawableEdge extends javafx.scene.shape.Line {
+        +DrawableEdge(graph : Graph, edge : DefaultEdge)
+    }
+    class DrawableNode {
+        # currentIncoming : int
+        # translateX : SimpleDoubleProperty
+        # translateY : SimpleDoubleProperty
+        +incrementIncoming() : int
+        +translateXProperty() : ObservableDoubleValue
+        +setTranslateX(x : double)
+        +setTranslateY(y : double)
+    }
+}
+package nl.tudelft.context.controller {
+    class DefaultController<T extends Parent> {
+        # root : T
+        #loadFXML(fxmlFile : String)
+        #getRoot() : Parent
+    }
 
-package drawable {
-class DrawableEdge
-class DrawableNode {
-    # currentIncoming : int
-    # translateX : SimpleDoubleProperty
-    # translateY : SimpleDoubleProperty
-    +incrementIncoming() : int
-    +translateXProperty() : ObservableDoubleValue
-    +setTranslateX(x : double)
-    +setTranslateY(y : double)
-}
-}
-package controller {
-class DefaultController<T extends Parent> {
-    # root : T
-    #loadFXML(fxmlFile : String)
-    #getRoot() : Parent
-}
+    class MainController extends DefaultController implements javafx.fxml.Initializable {
+        # @FXML progressIndicator : ProgressIndicator
+        # @FXML sequences : Group
+        +initialize(location : URL, resources : ResourceBundle)
+    }
 
-class MainController extends DefaultController implements javafx.fxml.Initializable {
-    # @FXML progressIndicator : ProgressIndicator
-    # @FXML sequences : Group
-    +initialize(location : URL, resources : ResourceBundle)
-}
+    class LoadGraphController extends DefaultController implements javafx.fxml.Initializable {
+        # @FXML loadNodes : Button
+        # @FXML loadEdges : Button
+        # @FXML loadNewick : Button
+        # @FXML load : Button
+        # @FXML treeload : Button
+        # @FXML nodeSource : TextField
+        # @FXML edgeSource : TextField
+        # @FXML nwkSource : TextField
+        # loadGraphService : LoadGraphService
+        # loadTreeService : LoadTreeService
+        # progressIndicator : ProgressIndicator
+        # sequences : Group
 
-class LoadGraphController extends DefaultController implements javafx.fxml.Initializable {
-    # @FXML loadNodes : Button
-    # @FXML loadEdges : Button
-    # @FXML loadNewick : Button
-    # @FXML load : Button
-    # @FXML treeload : Button
-    # @FXML nodeSource : TextField
-    # @FXML edgeSource : TextField
-    # @FXML nwkSource : TextField
-    # loadGraphService : LoadGraphService
-    # loadTreeService : LoadTreeService
-    # progressIndicator : ProgressIndicator
-    # sequences : Group
-
-    +LoadGraphController(progressIndicator : ProgressIndicator, sequences : Group)
-    +initialize(location : URL, resources : ResourceBundle)
-    #loadFile(fileChooser : FileChooser, source TextField) : File
-    #loadGraph()
-    #loadTree()
-    #showGraph(graph : Graph)
-    #showColumn(graph : Graph, nodes List<Node>, int column)
-    #showTree(tree : Tree)
-    #printTree(node : TreeNode, prev_w : double)
-    #showNodes(nodes : List<Node>, column : int)
-}
-}
-
-package graph {
-class Node extends DrawableNode {
-    # id : int
-    # sources : Set<String>
-    # refStartPosition : int
-    # refEndPosition : int
-    # content : String
-
-    +Node(id : int, sources : Set<String>, refStartPosition : int, refEndPositino : int, content : String)
-    +getId() : int
-    +getSources() : Set<String>
-    +getRefStartPosition() : int
-    +getRefEndPositiono() : int
-    +getContent() : String
-    +equals(object : Object) : boolean
-    +hashCode() : int
-}
-class NodeFactory {
-    #getNodeId(sc : Scanner) : int
-    +getNode(sc : Scanner) : Node
+        +LoadGraphController(progressIndicator : ProgressIndicator, sequences : Group)
+        +initialize(location : URL, resources : ResourceBundle)
+        #loadFile(fileChooser : FileChooser, source TextField) : File
+        #loadGraph()
+        #loadTree()
+        #showGraph(graph : Graph)
+        #showColumn(graph : Graph, nodes List<Node>, int column)
+        #showTree(tree : Tree)
+        #printTree(node : TreeNode, prev_w : double)
+        #showNodes(nodes : List<Node>, column : int)
+    }
 }
 
-class DefaultDirectedGraph << external >>
-class Graph extends org.jgrapht.graph.DefaultDirectedGraph {
-    +getFirstNode()
-}
-class GraphFactory {
-    #parseNodes(nodeFile : File, graph : Graph) : List<Node>
-    #parseEdges(edgeFile : File, graph : Graph, nodeList : List<Node>)
-    +getGraph(nodeFile : File, edgeFile : File) : Graph
-}
-}
-package service {
-class LoadGraphService extends javafx.concurrent.Service {
-    # nodeFile : File
-    # edgeFile : File
+package nl.tudelft.context.graph {
+    class Node extends DrawableNode {
+        # id : int
+        # sources : Set<String>
+        # refStartPosition : int
+        # refEndPosition : int
+        # content : String
 
-    +setNodeFile(nodeFile : File)
-    +setEdgeFile(edgeFile : File)
-    #createTask() : Task<Graph>
-}
-class LoadTreeService extends javafx.concurrent.Service {
-    # nwkFile : File
+        +Node(id : int, sources : Set<String>, refStartPosition : int, refEndPositino : int, content : String)
+        +getId() : int
+        +getSources() : Set<String>
+        +getRefStartPosition() : int
+        +getRefEndPositiono() : int
+        +getContent() : String
+        +equals(object : Object) : boolean
+        +hashCode() : int
+    }
+    class NodeFactory {
+        #getNodeId(sc : Scanner) : int
+        +getNode(sc : Scanner) : Node
+    }
 
-    +setNwkFile(nwkFile : File)
-    #createTask() : Task<Tree>
-}
-}
+    class Graph extends org.jgrapht.graph.DefaultDirectedGraph {
+        +getFirstNode()
+    }
+    class GraphFactory {
+        #parseNodes(nodeFile : File, graph : Graph) : List<Node>
+        #parseEdges(edgeFile : File, graph : Graph, nodeList : List<Node>)
+        +getGraph(nodeFile : File, edgeFile : File) : Graph
+    }
+
+    GraphFactory ..> Graph
+    NodeFactory ..> Node
 }
 
+package nl.tudelft.context.service {
+    class LoadGraphService extends javafx.concurrent.Service {
+        # nodeFile : File
+        # edgeFile : File
+
+        +setNodeFile(nodeFile : File)
+        +setEdgeFile(edgeFile : File)
+        #createTask() : Task<Graph>
+    }
+    class LoadTreeService extends javafx.concurrent.Service {
+        # nwkFile : File
+
+        +setNwkFile(nwkFile : File)
+        #createTask() : Task<Tree>
+    }
+}
 @enduml
