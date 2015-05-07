@@ -22,19 +22,9 @@ abstract class DefaultController<T extends Parent> {
 }
 
 class MainController<BorderPane> extends DefaultController implements javafx.fxml.Initializable {
-    # @FXML progressIndicator : ProgressIndicator
-    # @FXML sequences : Group
 }
 
 class LoadGraphController<GridPane> Extends DefaultController implements javafx.fxml.Initializable {
-    # @FXML loadNodes : Button
-    # @FXML loadEdges : Button
-    # @FXML loadNewick : Button
-    # @FXML load : Button
-    # @FXML treeload : Button
-    # @FXML nodeSource : TextField
-    # @FXML edgeSource : TextField
-    # @FXML nwkSource : TextField
     # loadGraphService : LoadGraphService
     # loadTreeService : LoadTreeService
     # progressIndicator : ProgressIndicator
@@ -80,6 +70,28 @@ class LoadGraphService<Graph> extends javafx.concurrent.Service {
 class LoadTreeService<Tree> extends javafx.concurrent.Service {
     # nwkFile : File
 }
+
+'FXML
+class main << (F,orange) FXML >> {
+    + progressIndicator : ProgressIndicator
+    + sequences : Group
+}
+
+class load_graph << (F, orange) FXML >> {
+    + loadNodes : Button
+    + loadEdges : Button
+    + loadNewick : Button
+    + load : Button
+    + treeload : Button
+    + nodeSource : TextField
+    + edgeSource : TextField
+    + nwkSource : TextField
+
+}
+
+'Relations
+LoadGraphController *-- load_graph
+MainController *-- main
 
 GraphFactory ..> Graph : << create >>
 GraphFactory ..> NodeFactory
