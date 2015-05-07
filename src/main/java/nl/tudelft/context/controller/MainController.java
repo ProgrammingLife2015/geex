@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -52,6 +53,11 @@ public class MainController extends DefaultController<BorderPane> implements Ini
         control.getChildren().add(new LoadGraphController(this).getRoot());
         control.getChildren().add(new LoadNewickController().getRoot());
 
+        root.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE)
+                previousView();
+        });
+
     }
 
     /**
@@ -63,6 +69,18 @@ public class MainController extends DefaultController<BorderPane> implements Ini
 
         viewList.add(node);
         view.setContent(node);
+
+    }
+
+    /**
+     * Set the previous view as view.
+     */
+    public void previousView() {
+
+        if(viewList.size() > 0) {
+            viewList.pop();
+            view.setContent(viewList.peek());
+        }
 
     }
 
