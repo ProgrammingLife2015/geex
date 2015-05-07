@@ -103,4 +103,18 @@
         +setNwkFile(nwkFile : File)
         #createTask() : Task<Tree>
     }
+
+    GraphFactory ..> Graph
+    GraphFactory ..> NodeFactory
+
+    NodeFactory ..> Node
+
+    App ..> MainController
+    MainController ..> LoadGraphController
+
+    LoadGraphController ..> DrawableEdge
+    LoadGraphController ..> LoadGraphService
+    LoadGraphController ..> LoadTreeService
+
+    LoadGraphService ..> GraphFactory
 @enduml
