@@ -57,6 +57,18 @@ public class MainController extends DefaultController<BorderPane> implements Ini
     }
 
     /**
+     * Set a new base view (clear the stack).
+     *
+     * @param node javaFX element
+     */
+    public void setBaseView(Node node) {
+
+        viewList.clear();
+        setView(node);
+
+    }
+
+    /**
      * Set a new main view and push it on the view stack.
      *
      * @param node javaFX element

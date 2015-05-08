@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -47,6 +48,89 @@ public class MainControllerTest {
     public void testWrongFXMLFile() {
 
         mainController.loadFXML("");
+
+    }
+
+    /**
+     * Test view list.
+     */
+    @Test
+    public void testTopViewList() {
+
+        MainController mc = new MainController();
+
+        BaseController baseController = new BaseController("ATCG");
+        LoadGraphController loadGraphController = new LoadGraphController(mc);
+
+        mc.setView(baseController.getRoot());
+        assertEquals(baseController.getRoot(), mc.viewList.peek());
+        assertEquals(baseController.getRoot(), mc.root.getCenter());
+
+        mc.setView(loadGraphController.getRoot());
+        assertEquals(loadGraphController.getRoot(), mc.viewList.peek());
+        assertEquals(loadGraphController.getRoot(), mc.root.getCenter());
+
+    }
+
+    /**
+     * Test previous view.
+     */
+    @Test
+    public void testPreviousView() {
+
+        MainController mc = new MainController();
+
+        BaseController baseController = new BaseController("ATCG");
+        LoadGraphController loadGraphController = new LoadGraphController(mc);
+
+        mc.setView(baseController.getRoot());
+        mc.setView(loadGraphController.getRoot());
+
+        mc.previousView();
+
+        assertEquals(baseController.getRoot(), mc.viewList.peek());
+        assertEquals(baseController.getRoot(), mc.root.getCenter());
+
+    }
+
+    /**
+     * Test empty view list.
+     */
+    @Test
+    public void testEmptyViewList() {
+
+        MainController mc = new MainController();
+
+        BaseController baseController = new BaseController("ATCG");
+        LoadGraphController loadGraphController = new LoadGraphController(mc);
+
+        mc.setView(baseController.getRoot());
+        mc.setView(loadGraphController.getRoot());
+
+        mc.previousView();
+        mc.previousView();
+
+        assertEquals(baseController.getRoot(), mc.viewList.peek());
+        assertEquals(baseController.getRoot(), mc.root.getCenter());
+
+    }
+
+    /**
+     * Test base view size.
+     */
+    @Test
+    public void setBaseViewSize() {
+
+        MainController mc = new MainController();
+
+        BaseController baseController = new BaseController("ATCG");
+        LoadGraphController loadGraphController = new LoadGraphController(mc);
+
+        mc.setView(baseController.getRoot());
+        mc.setView(loadGraphController.getRoot());
+        mc.setBaseView(baseController.getRoot());
+
+        assertEquals(1, mc.viewList.size());
 
     }
 

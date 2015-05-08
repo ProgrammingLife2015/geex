@@ -73,7 +73,7 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
 
         load.setOnAction(event -> {
             GraphController graphController = new GraphController(mainController, new LoadGraphService(nodeFile, edgeFile));
-            mainController.setView(graphController.getRoot());
+            mainController.setBaseView(graphController.getRoot());
         });
 
     }
