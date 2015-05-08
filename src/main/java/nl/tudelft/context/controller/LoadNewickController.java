@@ -3,7 +3,6 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
@@ -31,19 +30,13 @@ public class LoadNewickController extends DefaultController<GridPane> implements
             nwkSource;
 
     protected LoadNewickService loadNewickService;
-    protected ProgressIndicator progressIndicator;
 
     /**
      * Init a controller at load_newick.fxml.
-     *
-     * @param progressIndicator progress indicator of Newick loading
-     * @throws RuntimeException
      */
-    public LoadNewickController(ProgressIndicator progressIndicator) {
+    public LoadNewickController() {
 
         super(new GridPane());
-
-        this.progressIndicator = progressIndicator;
 
         loadFXML("/application/load_newick.fxml");
 

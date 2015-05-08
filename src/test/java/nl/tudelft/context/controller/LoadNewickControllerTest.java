@@ -1,14 +1,11 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
-import javafx.scene.control.ProgressIndicator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -22,15 +19,13 @@ public class LoadNewickControllerTest {
 
     protected static LoadNewickController loadNewickController;
 
-    protected static final ProgressIndicator progressIndicator = new ProgressIndicator();
-
     /**
      * Setup Load Newick Controller.
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        loadNewickController = new LoadNewickController(progressIndicator);
+        loadNewickController = new LoadNewickController();
 
         loadNewickController.loadNewickService.setNwkFile(nwkFile);
 
