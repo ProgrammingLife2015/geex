@@ -54,6 +54,8 @@ public class MainController extends DefaultController<BorderPane> implements Ini
                 previousView();
         });
 
+        root.setTop(new MenuController(this));
+
     }
 
     /**
@@ -90,6 +92,13 @@ public class MainController extends DefaultController<BorderPane> implements Ini
             root.setCenter(viewList.peek());
         }
 
+    }
+
+    /**
+     * Exits the program.
+     */
+    public void exitProgram() {
+        System.exit(0);
     }
 
 }

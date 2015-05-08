@@ -23,7 +23,6 @@ public class App extends Application {
      * @param args arguments
      */
     public static void main(final String... args) {
-        Locale.setDefault(new Locale("en", "US"));
 
         launch(args);
 
