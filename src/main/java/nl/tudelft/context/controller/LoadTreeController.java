@@ -8,9 +8,8 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
-import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
-import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
-import nl.tudelft.context.service.LoadTreeService;
+import nl.tudelft.context.service.LoadNewickService;
+import nl.tudelft.context.newick.Tree;
 
 import java.io.File;
 import java.net.URL;
@@ -31,15 +30,15 @@ public class LoadTreeController extends DefaultController<GridPane> implements I
     @FXML
     protected TextField treeSource;
 
-    protected LoadTreeService loadTreeService;
+    protected LoadNewickService loadNewickService;
     protected ProgressIndicator progressIndicator;
     protected Group sequences;
 
     /**
      * Init a controller at load_tree.fxml.
      *
-     * @param progressIndicator progress indicator of tree loading
-     * @param sequences         grid to display tree
+     * @param progressIndicator progress indicator of newick loading
+     * @param sequences         grid to display newick
      * @throws RuntimeException
      */
     public LoadTreeController(ProgressIndicator progressIndicator, Group sequences) {
@@ -65,14 +64,14 @@ public class LoadTreeController extends DefaultController<GridPane> implements I
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        loadTreeService = new LoadTreeService();
-        loadTreeService.setOnSucceeded(event -> showTree(loadTreeService.getValue()));
+        loadNewickService = new LoadNewickService();
+        loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
 
-        progressIndicator.visibleProperty().bind(loadTreeService.runningProperty());
+        progressIndicator.visibleProperty().bind(loadNewickService.runningProperty());
 
         FileChooser nwkFileChooser = new FileChooser();
         nwkFileChooser.setTitle("Open Newick file");
-        loadTree.setOnAction(event -> loadTreeService.setNwkFile(loadFile(nwkFileChooser, treeSource)));
+        loadTree.setOnAction(event -> loadNewickService.setNwkFile(loadFile(nwkFileChooser, treeSource)));
 
         load.setOnAction(event -> loadTree());
 
@@ -96,38 +95,18 @@ public class LoadTreeController extends DefaultController<GridPane> implements I
     }
 
     /**
-     * Load tree from source.
+     * Load newick from source.
      */
     protected void loadTree() {
-        loadTreeService.restart();
+        loadNewickService.restart();
     }
 
     /**
-     * Show the tree in console.
+     * Show the newick in console.
      *
-     * @param tree tree to show
+     * @param tree newick to show
      */
     protected void showTree(Tree tree) {
-        System.out.println("check: " + tree.getName());
-        printTree(tree.getRoot(), .0);
-    }
-
-    /**
-     * Print tree recursive to console.
-     *
-     * @param node   current node
-     * @param prev_w previous position
-     */
-    protected void printTree(TreeNode node, double prev_w) {
-        for (int i = 0; i < node.numberLeaves; i += 1) {
-            if (node.getChild(i) != null) {
-                double w = prev_w + node.getChild(i).getWeight() * .5e4;
-                for (int h = 0; h < w; h += 1) {
-                    System.out.print("  ");
-                }
-                System.out.println(node.getChild(i).getName());
-                printTree(node.getChild(i), w);
-            }
-        }
+        System.out.println(tree);
     }
 }

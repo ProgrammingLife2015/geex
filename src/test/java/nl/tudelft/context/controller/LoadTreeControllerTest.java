@@ -17,7 +17,7 @@ import java.io.File;
 @RunWith(JfxRunner.class)
 public class LoadTreeControllerTest {
 
-    protected final static File nwkFile = new File(LoadTreeControllerTest.class.getResource("/tree/10strains.nwk").getPath());
+    protected final static File nwkFile = new File(LoadTreeControllerTest.class.getResource("/newick/10strains.nwk").getPath());
 
     protected static LoadTreeController loadTreeController;
 
@@ -32,7 +32,7 @@ public class LoadTreeControllerTest {
 
         loadTreeController = new LoadTreeController(progressIndicator, sequence);
 
-        loadTreeController.loadTreeService.setNwkFile(nwkFile);
+        loadTreeController.loadNewickService.setNwkFile(nwkFile);
 
     }
 
@@ -47,7 +47,7 @@ public class LoadTreeControllerTest {
     }
 
     /**
-     * Test tree loading will not result in failure.
+     * Test newick loading will not result in failure.
      */
     @Test
     public void testTree() {
