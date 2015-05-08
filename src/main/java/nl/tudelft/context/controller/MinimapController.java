@@ -45,7 +45,7 @@ public class MinimapController extends DefaultController<BorderPane> implements 
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Rectangle rectangle = new Rectangle(100, 100, Color.web("white"));
+        Rectangle rectangle = new Rectangle(80, 80, Color.web("white"));
         rectangle.setOnMouseClicked(event -> mainController.cycleViews());
         minimap.getChildren().add(rectangle);
     }
