@@ -44,6 +44,7 @@ public class MenuController extends MenuBar {
             Window window = mainController.getRoot().getScene().getWindow();
             File workspaceDirectory = directoryChooser.showDialog(window);
             mainController.setWorkspace(new Workspace(workspaceDirectory));
+            initWorkspaceMenu();
         });
 
         MenuItem exit = new MenuItem("Exit");
@@ -62,6 +63,16 @@ public class MenuController extends MenuBar {
         final Menu menuHelp = new Menu("Help");
         getMenus().add(menuHelp);
 
+    }
+
+    public void initWorkspaceMenu() {
+        final Menu menuWorkspace = new Menu("Workspace");
+        MenuItem loadGraph = new MenuItem("Load first graph");
+        loadGraph.setOnAction(event -> mainController.setBaseView(new GraphController(mainController, mainController.getWorkspace().getActiveGraph()).getRoot()));
+        MenuItem loadNewick = new MenuItem("Load first newick");
+        loadNewick.setOnAction(event -> mainController.setBaseView(new NewickController(mainController, mainController.getWorkspace().getActiveTree()).getRoot()));
+        menuWorkspace.getItems().addAll(loadGraph, loadNewick);
+        getMenus().add(menuWorkspace);
     }
 
 }
