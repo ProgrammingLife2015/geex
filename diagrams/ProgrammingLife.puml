@@ -47,22 +47,22 @@ class LoadGraphController<GridPane> Extends DefaultController implements javafx.
 }
 
 
-class Node extends DrawableNode {
+class graph.Node extends DrawableNode {
     # id : int
     # sources : Set<String>
     # refStartPosition : int
     # refEndPosition : int
     # content : String
 }
-class NodeFactory {
+class graph.NodeFactory {
     #getNodeId(sc : Scanner) : int
     +getNode(sc : Scanner) : Node
 }
 
-class Graph<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
+class graph.Graph<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
     +getFirstNode()
 }
-class GraphFactory {
+class graph.GraphFactory {
     #parseNodes(nodeFile : File, graph : Graph) : List<Node>
     #parseEdges(edgeFile : File, graph : Graph, nodeList : List<Node>)
     +getGraph(nodeFile : File, edgeFile : File) : Graph
@@ -102,10 +102,10 @@ LoadGraphController "1" *-- "1" load_graph
 LoadNewickController "1" *-- "1" load_newick
 MainController "1" *-- "1" main
 
-GraphFactory ..> Graph : << create >>
-GraphFactory ..> NodeFactory
+graph.GraphFactory ..> graph.Graph : << create >>
+graph.GraphFactory ..> graph.NodeFactory
 
-NodeFactory ..> Node : << create >>
+graph.NodeFactory ..> graph.Node : << create >>
 
 App "1" *-- "1" MainController
 MainController o-- LoadGraphController
@@ -115,7 +115,7 @@ LoadGraphController "1" o-- "0..*" DrawableEdge
 LoadGraphController "1" -- "1" LoadGraphService
 LoadGraphController "1" -- "1" LoadNewickService
 
-LoadGraphService ..> GraphFactory
+LoadGraphService ..> graph.GraphFactory
 
 'External classes
 abstract class javafx.concurrent.Service<V> {
