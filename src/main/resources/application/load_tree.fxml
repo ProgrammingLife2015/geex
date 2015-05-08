@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<fx:root type="javafx.scene.layout.GridPane" xmlns:fx="http://javafx.com/fxml" styleClass="control" alignment="top_center">
+    <Button fx:id="loadTree" text="Load Newick" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <TextField fx:id="treeSource" GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false"/>
+    <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2">
+    <Button fx:id="load" text="Load"/>
+    </HBox>
+</fx:root>

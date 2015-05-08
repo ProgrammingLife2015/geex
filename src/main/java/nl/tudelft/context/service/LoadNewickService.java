@@ -2,12 +2,10 @@ package nl.tudelft.context.service;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
-import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
+import nl.tudelft.context.newick.Tree;
+import nl.tudelft.context.newick.TreeFactory;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -23,14 +21,14 @@ public class LoadNewickService extends Service<Tree> {
      *
      * @param nwkFile nwk file location
      */
-    public void setNwkFile(File nwkFile) {
+    public LoadNewickService(File nwkFile) {
 
         this.nwkFile = nwkFile;
 
     }
 
     /**
-     * Create a task that loads the tree.
+     * Create a task that loads the newick.
      *
      * @return the Task to execute
      */
@@ -40,9 +38,8 @@ public class LoadNewickService extends Service<Tree> {
         return new Task<Tree>() {
             @Override
             protected Tree call() throws Exception {
-                BufferedReader r = new BufferedReader(new FileReader(nwkFile));
-                TreeParser tp = new TreeParser(r);
-                return tp.tokenize(1, "ieuw, bacillen", null);
+                TreeFactory treeFactory = new TreeFactory();
+                return treeFactory.getTree(nwkFile);
             }
         };
 

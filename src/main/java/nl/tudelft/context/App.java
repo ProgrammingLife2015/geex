@@ -5,8 +5,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nl.tudelft.context.controller.MainController;
 
-import java.util.Locale;
-
 /**
  * Entry point of the App.
  *

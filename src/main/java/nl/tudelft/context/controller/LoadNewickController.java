@@ -6,10 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
-import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
-import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import nl.tudelft.context.service.LoadNewickService;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,14 +28,20 @@ public class LoadNewickController extends DefaultController<GridPane> implements
     protected TextField
             nwkSource;
 
+    protected MainController mainController;
     protected LoadNewickService loadNewickService;
+
+    protected File
+            nwkFile;
 
     /**
      * Init a controller at load_newick.fxml.
      */
-    public LoadNewickController() {
+    public LoadNewickController(MainController mainController) {
 
         super(new GridPane());
+
+        this.mainController = mainController;
 
         loadFXML("/application/load_newick.fxml");
 
@@ -55,53 +60,15 @@ public class LoadNewickController extends DefaultController<GridPane> implements
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        loadNewickService = new LoadNewickService();
-        loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
-
         FileChooser nwkFileChooser = new FileChooser();
         nwkFileChooser.setTitle("Open Newick file");
-        loadNewick.setOnAction(event -> loadNewickService.setNwkFile(loadFile(nwkFileChooser, nwkSource)));
+        loadNewick.setOnAction(event -> nwkFile = loadFile(nwkFileChooser, nwkSource));
 
-        load.setOnAction(event -> loadTree());
+        load.setOnAction(event -> {
+            NewickController newickController = new NewickController(mainController, new LoadNewickService(nwkFile));
+            mainController.setBaseView(newickController.getRoot());
+        });
 
-    }
-
-    /**
-     * Load tree from source.
-     */
-    protected void loadTree() {
-
-        loadNewickService.restart();
-
-    }
-
-    /**
-     * Show the tree in console.
-     *
-     * @param tree tree to show
-     */
-    protected void showTree(Tree tree) {
-        System.out.println("check: " + tree.getName());
-        printTree(tree.getRoot(), .0);
-    }
-
-    /**
-     * Print tree recursive to console.
-     *
-     * @param node   current node
-     * @param prev_w previous position
-     */
-    protected void printTree(TreeNode node, double prev_w) {
-        for (int i = 0; i < node.numberLeaves; i += 1) {
-            if (node.getChild(i) != null) {
-                double w = prev_w + node.getChild(i).getWeight() * .5e4;
-                for (int h = 0; h < w; h += 1) {
-                    System.out.print("  ");
-                }
-                System.out.println(node.getChild(i).getName());
-                printTree(node.getChild(i), w);
-            }
-        }
     }
 
 }

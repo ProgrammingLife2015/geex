@@ -47,7 +47,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
     public void initialize(URL location, ResourceBundle resources) {
 
         control.getChildren().add(new LoadGraphController(this).getRoot());
-        control.getChildren().add(new LoadNewickController().getRoot());
+        control.getChildren().add(new LoadNewickController(this).getRoot());
 
         root.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE)

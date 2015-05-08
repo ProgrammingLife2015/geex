@@ -1,11 +1,14 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
+import nl.tudelft.context.service.LoadNewickService;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+
+import static org.mockito.Mockito.mock;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -13,11 +16,11 @@ import java.io.File;
  * @since 26-4-2015
  */
 @RunWith(JfxRunner.class)
-public class LoadNewickControllerTest {
+public class NewickControllerTest {
 
-    protected final static File nwkFile = new File(LoadNewickControllerTest.class.getResource("/graph/10strains.nwk").getPath());
+    protected final static File nwkFile = new File(NewickControllerTest.class.getResource("/newick/10strains.nwk").getPath());
 
-    protected static LoadNewickController loadNewickController;
+    protected static NewickController newickController;
 
     /**
      * Setup Load Newick Controller.
@@ -25,9 +28,8 @@ public class LoadNewickControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        loadNewickController = new LoadNewickController();
-
-        loadNewickController.loadNewickService.setNwkFile(nwkFile);
+        MainController mainController = mock(MainController.class);
+        newickController = new NewickController(mainController, new LoadNewickService(nwkFile));
 
     }
 
@@ -37,17 +39,7 @@ public class LoadNewickControllerTest {
     @Test(expected = RuntimeException.class)
     public void testWrongFXMLFile() {
 
-        loadNewickController.loadFXML("");
-
-    }
-
-    /**
-     * Test tree loading will not result in failure.
-     */
-    @Test
-    public void testTree() {
-
-        loadNewickController.loadTree();
+        newickController.loadFXML("");
 
     }
 

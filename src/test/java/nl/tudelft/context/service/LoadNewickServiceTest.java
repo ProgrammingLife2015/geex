@@ -2,7 +2,7 @@ package nl.tudelft.context.service;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.concurrent.Worker;
-import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
+import nl.tudelft.context.newick.Tree;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,16 +20,15 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(JfxRunner.class)
 public class LoadNewickServiceTest {
 
-    protected final static File nwkFile = new File(LoadNewickServiceTest.class.getResource("/graph/10strains.nwk").getPath());
+    protected final static File nwkFile = new File(LoadNewickServiceTest.class.getResource("/newick/10strains.nwk").getPath());
 
     /**
      * Test if the graphFromFactory loadFXML succeeds.
      */
     @Test
-    public void testGraphLoadSucceeds() throws Exception {
+    public void testNewickLoadSucceeds() throws Exception {
 
-        final LoadNewickService loadNewickService = new LoadNewickService();
-        loadNewickService.setNwkFile(nwkFile);
+        final LoadNewickService loadNewickService = new LoadNewickService(nwkFile);
 
         CompletableFuture<Tree> completableFuture = new CompletableFuture<>();
 
