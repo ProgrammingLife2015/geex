@@ -92,3 +92,8 @@
 #base {
     -fx-fill: #fff;
 }
+
+/* Minimap */
+#minimap {
+    -fx-cursor: hand;
+}

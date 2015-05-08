@@ -3,11 +3,14 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
@@ -22,6 +25,8 @@ public class MainController extends DefaultController<BorderPane> implements Ini
     protected VBox control;
 
     protected Stack<Node> viewList = new Stack<>();
+    protected DefaultController<ScrollPane> currentView;
+    protected Queue<Node> baseViews = new LinkedList<Node>();
 
     /**
      * Init a controller at main.fxml.
@@ -56,6 +61,8 @@ public class MainController extends DefaultController<BorderPane> implements Ini
 
         root.setTop(new MenuController(this));
 
+        root.setBottom(new MinimapController(this).getRoot());
+
     }
 
     /**
@@ -67,6 +74,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
 
         viewList.clear();
         setView(node);
+        baseViews.add(node);
 
     }
 
@@ -101,4 +109,11 @@ public class MainController extends DefaultController<BorderPane> implements Ini
         System.exit(0);
     }
 
+
+    public void cycleViews() {
+        if (!baseViews.isEmpty()) {
+            Node n = baseViews.remove();
+            setBaseView(n);
+        }
+    }
 }
