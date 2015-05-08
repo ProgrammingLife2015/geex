@@ -26,7 +26,7 @@ public class NewickController extends DefaultController<ScrollPane> implements I
     protected LoadNewickService loadNewickService;
 
     /**
-     * Init a controller at graph.fxml.
+     * Init a controller at newick.fxml.
      *
      * @param loadNewickService service with file locations
      */
