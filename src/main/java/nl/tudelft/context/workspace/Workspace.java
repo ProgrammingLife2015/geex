@@ -45,35 +45,40 @@ public class Workspace {
 
         Files.walkFileTree(this.directory.toPath(), finder);
 
-        Stream<Path> edges = finder.files().stream()
+        Stream<File> edges = finder.files().stream()
+                .map(Path::toFile)
                 .filter(path -> path.toString()
                         .toLowerCase()
                         .endsWith(".edge.graph"));
-        List<Path> nodes = finder.files().stream()
+        List<File> nodes = finder.files().stream()
+                .map(Path::toFile)
                 .filter(path -> path.toString()
                         .toLowerCase()
                         .endsWith(".node.graph"))
                 .collect(Collectors.toList());
 
-        graphList = edges.map(edgePath -> {
-            String absoluteEdgePath = edgePath.toAbsolutePath().toString();
-            Path nodePath = nodes.stream()
-                    .filter(path ->
-                            path.toAbsolutePath().toString()
-                                    .replaceFirst("\\.node\\.graph$", "")
-                                    .equals(absoluteEdgePath.replaceFirst("\\.edge\\.graph$", "")))
-                    .findFirst().orElse(null);
+        graphList = edges.map(
+                edgeFile -> {
+                    File nodeFile = nodes.stream()
+                            .filter(file ->
+                                    file.getAbsolutePath()
+                                            .replaceFirst("\\.node\\.graph$", "")
+                                            .equals(edgeFile.getAbsolutePath()
+                                                    .replaceFirst("\\.edge\\.graph$", "")))
+                            .findFirst().orElse(null);
 
-            if (nodePath == null)
-                return null;
+                    if (nodeFile == null)
+                        return null;
 
-            return new LoadGraphService(nodePath.toFile(), edgePath.toFile());
-        })
+                    return new LoadGraphService(nodeFile, edgeFile);
+                })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
         nwkList = finder.files().stream()
-                .filter(path -> path.toString().toLowerCase().endsWith(".nwk")).map(path -> new LoadNewickService(path.toFile())).collect(Collectors.toList());
+                .filter(path -> path.toString().toLowerCase().endsWith(".nwk"))
+                .map(path -> new LoadNewickService(path.toFile()))
+                .collect(Collectors.toList());
     }
 
     public LoadGraphService getActiveGraph() {
