@@ -4,6 +4,9 @@
 ## Programming Life (group 2)
 For more details about this project, the team and the application, visit the [Wiki pages](https://github.com/Vennik/contextproject/wiki).
 
+## Known issues
+If you get a StackOverflow, then upgrade to the latest Java 8.
+
 ## Diagrams
 The diagrams are based on [PlantUML](http://plantuml.sourceforge.net/). Install the PlantUML Integration plugin from the IntelliJ plugin browser. The diagrams are also available in the Maven site.
 
