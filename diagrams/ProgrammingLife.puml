@@ -63,51 +63,12 @@ class NewickController<ScrollPane> extends DefaultController {
     #showTree(tree : Tree)
 }
 
-
-class graph.BaseCounter<Character, MutableInt> extends java.util.HashMap {
-    {static} df : DecimalFormat
-    # baseSize : int
-
-    +getPercentage(c : char)
-    +getPercentageString(c : char)
-}
-class graph.Node extends DrawableNode {
-    # id : int
-    # sources : Set<String>
-    # refStartPosition : int
-    # refEndPosition : int
-    # content : String
-    # baseCounter : BaseCounter
-}
-class graph.NodeFactory {
-    #getNodeId(sc : Scanner) : int
-    +getNode(sc : Scanner) : Node
-}
-
-class graph.Graph<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
-    +getFirstNode() : Node
-}
 class graph.GraphFactory {
-    #parseNodes(nodeFile : File, graph : Graph) : List<Node>
-    #parseEdges(edgeFile : File, graph : Graph, nodeList : List<Node>)
-    +getGraph(nodeFile : File, edgeFile : File) : Graph
+    ...
 }
 
-class newick.Node extends DrawableNode {
-    - name : String
-    weight : double
-    children : List<Node>
-}
-class newick.NodeFactory
-class newick.Tree<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
-    +getFirstNode() : Node
-}
 class newick.TreeFactory {
-    + nodeFactory : NodeFactory
-
-    +getTree(nwkFile : File) : Tree
-    +parseTree(nwkFile : File, tree : Tree)
-    +getOffspring(node : TreeNode, parent : Node, tree : Tree) : int
+    ...
 }
 
 class LoadGraphService<Graph> extends javafx.concurrent.Service {
@@ -152,16 +113,6 @@ LoadGraphController "1" *-- "1" load_graph
 LoadNewickController "1" *-- "1" load_newick
 MainController "1" *-- "1" main
 NewickController "1" *-- "1" newick
-
-graph.GraphFactory ..> graph.Graph : << create >>
-graph.GraphFactory ..> graph.NodeFactory
-
-graph.NodeFactory ..> graph.Node : << create >>
-graph.Node *-- graph.BaseCounter
-
-newick.TreeFactory ..> newick.Tree : << create >>
-newick.TreeFactory ..> newick.NodeFactory
-newick.NodeFactory ..> newick.Node : << create >>
 
 App "1" *-- "1" MainController
 MainController o-- LoadGraphController
