@@ -25,31 +25,31 @@ public class BaseCounterTest {
 
     @Test
     public void testGetIntOnOnlyThisBaseInDna() throws Exception {
-        assertEquals(10, baseCounter1.getInt('A'));
+        assertEquals(10, baseCounter1.getCount('A'));
     }
 
     @Test
     public void testGetIntNotOccuringInDna() throws Exception {
-        assertEquals(0, baseCounter1.getInt('T'));
+        assertEquals(0, baseCounter1.getCount('T'));
     }
 
     @Test
     public void testGetIntCombinedButNotN() throws Exception {
-        assertEquals(3, baseCounter2.getInt('A'));
-        assertEquals(3, baseCounter2.getInt('T'));
-        assertEquals(3, baseCounter2.getInt('C'));
-        assertEquals(3, baseCounter2.getInt('G'));
-        assertEquals(0, baseCounter2.getInt('N'));
+        assertEquals(3, baseCounter2.getCount('A'));
+        assertEquals(3, baseCounter2.getCount('T'));
+        assertEquals(3, baseCounter2.getCount('C'));
+        assertEquals(3, baseCounter2.getCount('G'));
+        assertEquals(0, baseCounter2.getCount('N'));
 
     }
 
     @Test
     public void testGetIntAllCombined() throws Exception {
-        assertEquals(5, baseCounter3.getInt('A'));
-        assertEquals(7, baseCounter3.getInt('T'));
-        assertEquals(10, baseCounter3.getInt('C'));
-        assertEquals(2, baseCounter3.getInt('G'));
-        assertEquals(13, baseCounter3.getInt('N'));
+        assertEquals(5, baseCounter3.getCount('A'));
+        assertEquals(7, baseCounter3.getCount('T'));
+        assertEquals(10, baseCounter3.getCount('C'));
+        assertEquals(2, baseCounter3.getCount('G'));
+        assertEquals(13, baseCounter3.getCount('N'));
     }
 
     @Test
