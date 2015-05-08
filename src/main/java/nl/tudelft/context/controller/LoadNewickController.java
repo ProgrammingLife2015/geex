@@ -2,13 +2,15 @@ package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
-import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
-import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
+import nl.tudelft.context.drawable.DrawableEdge;
+import nl.tudelft.context.newick.Tree;
 import nl.tudelft.context.service.LoadNewickService;
 
 import java.net.URL;
@@ -32,6 +34,7 @@ public class LoadNewickController extends DefaultController<GridPane> implements
 
     protected LoadNewickService loadNewickService;
     protected ProgressIndicator progressIndicator;
+    protected Group sequences;
 
     /**
      * Init a controller at load_newick.fxml.
@@ -39,11 +42,12 @@ public class LoadNewickController extends DefaultController<GridPane> implements
      * @param progressIndicator progress indicator of Newick loading
      * @throws RuntimeException
      */
-    public LoadNewickController(ProgressIndicator progressIndicator) {
+    public LoadNewickController(ProgressIndicator progressIndicator, Group sequences) {
 
         super(new GridPane());
 
         this.progressIndicator = progressIndicator;
+        this.sequences = sequences;
 
         loadFXML("/application/load_newick.fxml");
 
@@ -77,7 +81,10 @@ public class LoadNewickController extends DefaultController<GridPane> implements
      * Load newick from source.
      */
     protected void loadTree() {
+
+        sequences.getChildren().clear();
         loadNewickService.restart();
+
     }
 
     /**
@@ -85,8 +92,21 @@ public class LoadNewickController extends DefaultController<GridPane> implements
      *
      * @param tree newick to show
      */
-    protected void showTree(nl.tudelft.context.newick.Tree tree) {
-        System.out.println(tree);
+    protected void showTree(Tree tree) {
+
+        // Bind edges
+        tree.edgeSet().stream().forEach(edge -> {
+            final DrawableEdge line = new DrawableEdge(tree, edge);
+            sequences.getChildren().add(line);
+        });
+
+        // Bind nodes
+        tree.vertexSet().stream().forEach(node -> {
+            final Label label = new Label(node.getName());
+            label.translateXProperty().bind(node.translateXProperty());
+            label.translateYProperty().bind(node.translateYProperty());
+            sequences.getChildren().add(label);
+        });
     }
 
 }

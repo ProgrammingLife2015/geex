@@ -52,7 +52,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
         progressIndicator.visibleProperty().setValue(false);
 
         control.getChildren().add(new LoadGraphController(progressIndicator, sequences).getRoot());
-        control.getChildren().add(new LoadNewickController(progressIndicator).getRoot());
+        control.getChildren().add(new LoadNewickController(progressIndicator, sequences).getRoot());
 
     }
 

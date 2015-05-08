@@ -49,12 +49,6 @@ public class Node extends DrawableNode {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder("Node<" + getName() + "," + getWeight() + ">\n");
-
-        for (Node n : getChildren()) {
-            res.append(n.toString());
-        }
-
-        return res.toString();
+        return "Node<" + getName() + "," + getWeight() + ">";
     }
 }

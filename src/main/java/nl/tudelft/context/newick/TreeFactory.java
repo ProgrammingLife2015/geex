@@ -28,17 +28,33 @@ public class TreeFactory {
         TreeParser tp = new TreeParser(new BufferedReader(new FileReader(nwkFile)));
         net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize(1, "", null);
         Node root = nodeFactory.getNode(nwkTree.getRoot());
-        getOffspring(nwkTree.getRoot(), root, tree);
+        root.setTranslateX(0);
+        root.setTranslateY(0);
+        getOffspring(nwkTree.getRoot(), root, tree, 0);
     }
 
-    public void getOffspring(TreeNode node, Node parent, Tree tree) {
+    public int getOffspring(TreeNode node, Node parent, Tree tree, int row) {
         tree.addVertex(parent);
+
+        boolean hasChildren = false;
         for (int i = 0; i < node.numberLeaves; i += 1) {
-            if (node.getChild(i) != null) {
-                Node n = nodeFactory.getNode(node.getChild(i));
-                getOffspring(node.getChild(i), n, tree);
+            TreeNode child = node.getChild(i);
+            if (child != null) {
+                hasChildren = true;
+                Node n = nodeFactory.getNode(child);
+                n.setTranslateX(parent.translateXProperty().doubleValue() + 100 + 10000 * n.getWeight());
+                n.setTranslateY(row * 80);
+                row = getOffspring(child, n, tree, row);
                 parent.addChild(n);
+                tree.addEdge(parent, n);
             }
+        }
+
+        if (hasChildren) {
+            
+            return row;
+        } else {
+            return row + 1;
         }
     }
 }

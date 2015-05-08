@@ -2,7 +2,7 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import nl.tudelft.context.graph.Graph;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 /**
@@ -18,7 +18,7 @@ public class DrawableEdge extends Line {
      * @param graph graph that contains edge
      * @param edge  edge to bind and display
      */
-    public DrawableEdge(Graph graph, DefaultEdge edge) {
+    public DrawableEdge(DefaultDirectedGraph<? extends DrawableNode, DefaultEdge> graph, DefaultEdge edge) {
 
         startXProperty().bind(graph.getEdgeSource(edge).translateXProperty());
         endXProperty().bind(graph.getEdgeTarget(edge).translateXProperty());

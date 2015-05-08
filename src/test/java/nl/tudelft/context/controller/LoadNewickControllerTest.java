@@ -1,6 +1,7 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,6 +24,7 @@ public class LoadNewickControllerTest {
     protected static LoadNewickController loadNewickController;
 
     protected static final ProgressIndicator progressIndicator = new ProgressIndicator();
+    protected static Group sequences;
 
     /**
      * Setup Load Newick Controller.
@@ -30,7 +32,7 @@ public class LoadNewickControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        loadNewickController = new LoadNewickController(progressIndicator);
+        loadNewickController = new LoadNewickController(progressIndicator, sequences);
 
         loadNewickController.loadNewickService.setNwkFile(nwkFile);
 

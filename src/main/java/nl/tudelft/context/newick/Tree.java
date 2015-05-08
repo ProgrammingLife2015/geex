@@ -29,11 +29,23 @@ public class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     @Override
     public String toString() {
-        Node n = getFirstNode();
-        if (n != null) {
-            return n.toString();
+        StringBuilder res = new StringBuilder("");
+        Node root = getFirstNode();
+        if (root != null) {
+            return toString(root, 0);
         } else {
             return "";
         }
+    }
+    public String toString(Node node, int level) {
+        StringBuilder res = new StringBuilder();
+        res.append(new String(new char[level]).replace("\0", "\t"));
+        res.append(node.toString() + "\n");
+
+        for (Node child : node.getChildren()) {
+            res.append(toString(child, level + 1));
+        }
+
+        return res.toString();
     }
 }
