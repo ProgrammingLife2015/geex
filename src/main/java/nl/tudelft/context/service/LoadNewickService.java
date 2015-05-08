@@ -22,7 +22,9 @@ public class LoadNewickService extends Service<Tree> {
      * @param nwkFile nwk file location
      */
     public void setNwkFile(File nwkFile) {
+
         this.nwkFile = nwkFile;
+
     }
 
     /**

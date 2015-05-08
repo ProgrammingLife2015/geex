@@ -2,53 +2,51 @@ package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
+import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import nl.tudelft.context.service.LoadNewickService;
-import nl.tudelft.context.newick.Tree;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * @author Jasper Boot <mrjasperboot@gmail.com>
+ * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
- * @since 3-5-2015
+ * @since 1-5-2015
  */
-public class LoadTreeController extends DefaultController<GridPane> implements Initializable {
+public class LoadNewickController extends DefaultController<GridPane> implements Initializable {
 
     @FXML
     protected Button
-            loadTree,
+            loadNewick,
             load;
 
     @FXML
-    protected TextField treeSource;
+    protected TextField
+            nwkSource;
 
     protected LoadNewickService loadNewickService;
     protected ProgressIndicator progressIndicator;
-    protected Group sequences;
 
     /**
-     * Init a controller at load_tree.fxml.
+     * Init a controller at load_newick.fxml.
      *
-     * @param progressIndicator progress indicator of newick loading
-     * @param sequences         grid to display newick
+     * @param progressIndicator progress indicator of Newick loading
      * @throws RuntimeException
      */
-    public LoadTreeController(ProgressIndicator progressIndicator, Group sequences) {
+    public LoadNewickController(ProgressIndicator progressIndicator) {
 
         super(new GridPane());
 
         this.progressIndicator = progressIndicator;
-        this.sequences = sequences;
 
-        loadFXML("/application/load_tree.fxml");
+        loadFXML("/application/load_newick.fxml");
+
 
     }
 
@@ -67,30 +65,11 @@ public class LoadTreeController extends DefaultController<GridPane> implements I
         loadNewickService = new LoadNewickService();
         loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
 
-        progressIndicator.visibleProperty().bind(loadNewickService.runningProperty());
-
         FileChooser nwkFileChooser = new FileChooser();
         nwkFileChooser.setTitle("Open Newick file");
-        loadTree.setOnAction(event -> loadNewickService.setNwkFile(loadFile(nwkFileChooser, treeSource)));
+        loadNewick.setOnAction(event -> loadNewickService.setNwkFile(loadFile(nwkFileChooser, nwkSource)));
 
         load.setOnAction(event -> loadTree());
-
-    }
-
-    /**
-     * Load file.
-     */
-    protected File loadFile(FileChooser fileChooser, TextField source) {
-
-        File file = fileChooser.showOpenDialog(root.getScene().getWindow());
-
-        if (file != null) {
-            source.setText(file.getName());
-        } else {
-            source.setText("");
-        }
-
-        return file;
 
     }
 
@@ -106,7 +85,8 @@ public class LoadTreeController extends DefaultController<GridPane> implements I
      *
      * @param tree newick to show
      */
-    protected void showTree(Tree tree) {
+    protected void showTree(nl.tudelft.context.newick.Tree tree) {
         System.out.println(tree);
     }
+
 }

@@ -14,7 +14,6 @@ import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,24 +89,6 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
         load.setOnAction(event -> loadGraph());
 
     }
-
-    /**
-     * Load file.
-     */
-    protected File loadFile(FileChooser fileChooser, TextField source) {
-
-        File file = fileChooser.showOpenDialog(root.getScene().getWindow());
-
-        if (file != null) {
-            source.setText(file.getName());
-        } else {
-            source.setText("");
-        }
-
-        return file;
-
-    }
-
 
     /**
      * Load graph from source.

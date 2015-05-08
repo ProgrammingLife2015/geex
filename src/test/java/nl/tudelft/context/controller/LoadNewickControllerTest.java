@@ -1,7 +1,6 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
-import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -9,30 +8,31 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
+import static org.junit.Assert.assertEquals;
+
 /**
- * @author Jasper Boot <mrjasperboot@gmail.com>
+ * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
- * @since 3-5-2015
+ * @since 26-4-2015
  */
 @RunWith(JfxRunner.class)
-public class LoadTreeControllerTest {
+public class LoadNewickControllerTest {
 
-    protected final static File nwkFile = new File(LoadTreeControllerTest.class.getResource("/newick/10strains.nwk").getPath());
+    protected final static File nwkFile = new File(LoadNewickControllerTest.class.getResource("/newick/10strains.nwk").getPath());
 
-    protected static LoadTreeController loadTreeController;
+    protected static LoadNewickController loadNewickController;
 
     protected static final ProgressIndicator progressIndicator = new ProgressIndicator();
-    protected static final Group sequence = new Group();
 
     /**
-     * Setup Load Tree Controller.
+     * Setup Load Newick Controller.
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        loadTreeController = new LoadTreeController(progressIndicator, sequence);
+        loadNewickController = new LoadNewickController(progressIndicator);
 
-        loadTreeController.loadNewickService.setNwkFile(nwkFile);
+        loadNewickController.loadNewickService.setNwkFile(nwkFile);
 
     }
 
@@ -42,17 +42,17 @@ public class LoadTreeControllerTest {
     @Test(expected = RuntimeException.class)
     public void testWrongFXMLFile() {
 
-        loadTreeController.loadFXML("");
+        loadNewickController.loadFXML("");
 
     }
 
     /**
-     * Test newick loading will not result in failure.
+     * Test tree loading will not result in failure.
      */
     @Test
     public void testTree() {
 
-        loadTreeController.loadTree();
+        loadNewickController.loadTree();
 
     }
 
