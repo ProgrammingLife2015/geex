@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 8-5-2015
  */
-public class BaseController extends DefaultController<StackPane>  implements Initializable {
+public class BaseController extends DefaultController<StackPane> {
 
     @FXML
     protected Text base;
