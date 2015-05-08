@@ -1,7 +1,6 @@
 package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
@@ -87,7 +86,7 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public void previousView() {
 
-        if(viewList.size() > 1) {
+        if (viewList.size() > 1) {
             viewList.pop();
             root.setCenter(viewList.peek());
         }
