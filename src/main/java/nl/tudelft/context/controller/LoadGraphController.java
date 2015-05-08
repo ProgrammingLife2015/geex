@@ -2,24 +2,15 @@ package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
-import nl.tudelft.context.drawable.DrawableEdge;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
 
+import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -39,23 +30,22 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
             nodeSource,
             edgeSource;
 
-    protected LoadGraphService loadGraphService;
-    protected ProgressIndicator progressIndicator;
-    protected Group sequences;
+    protected MainController mainController;
+
+    protected File
+            nodeFile,
+            edgeFile;
 
     /**
      * Init a controller at load_graph.fxml.
      *
-     * @param progressIndicator progress indicator of graph loading
-     * @param sequences         grid to display graph
-     * @throws RuntimeException
+     * @param mainController    main controller to set view
      */
-    public LoadGraphController(ProgressIndicator progressIndicator, Group sequences) {
+    public LoadGraphController(MainController mainController) {
 
         super(new GridPane());
 
-        this.progressIndicator = progressIndicator;
-        this.sequences = sequences;
+        this.mainController = mainController;
 
         loadFXML("/application/load_graph.fxml");
 
@@ -73,99 +63,18 @@ public class LoadGraphController extends DefaultController<GridPane> implements 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        loadGraphService = new LoadGraphService();
-        loadGraphService.setOnSucceeded(event -> showGraph(loadGraphService.getValue()));
-
-        progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
-
         FileChooser nodeFileChooser = new FileChooser();
         nodeFileChooser.setTitle("Open node file");
-        loadNodes.setOnAction(event -> loadGraphService.setNodeFile(loadFile(nodeFileChooser, nodeSource)));
+        loadNodes.setOnAction(event -> nodeFile = loadFile(nodeFileChooser, nodeSource));
 
         FileChooser edgeFileChooser = new FileChooser();
         edgeFileChooser.setTitle("Open edge file");
-        loadEdges.setOnAction(event -> loadGraphService.setEdgeFile(loadFile(edgeFileChooser, edgeSource)));
+        loadEdges.setOnAction(event -> edgeFile = loadFile(edgeFileChooser, edgeSource));
 
-        load.setOnAction(event -> loadGraph());
-
-    }
-
-    /**
-     * Load graph from source.
-     */
-    protected void loadGraph() {
-
-        sequences.getChildren().clear();
-        loadGraphService.restart();
-
-    }
-
-    /**
-     * Show graph with reference points.
-     */
-    protected void showGraph(Graph graph) {
-
-        List<Node> start = new ArrayList<>(Collections.singletonList(graph.getFirstNode()));
-        showColumn(graph, start, 0);
-
-        // Bind edges
-        graph.edgeSet().stream().forEach(edge -> {
-            final DrawableEdge line = new DrawableEdge(graph, edge);
-            sequences.getChildren().add(line);
+        load.setOnAction(event -> {
+            GraphController graphController = new GraphController(mainController, new LoadGraphService(nodeFile, edgeFile));
+            mainController.setBaseView(graphController.getRoot());
         });
-
-        // Bind nodes
-        graph.vertexSet().stream().forEach(node -> {
-            final Label label = new Label(Integer.toString(node.getId()));
-            label.translateXProperty().bind(node.translateXProperty());
-            label.translateYProperty().bind(node.translateYProperty());
-            sequences.getChildren().add(label);
-        });
-
-    }
-
-    /**
-     * Show the columns of the graph recursive.
-     *
-     * @param graph  containing the nodes
-     * @param nodes  nodes to display
-     * @param column column index
-     */
-    protected void showColumn(Graph graph, List<Node> nodes, int column) {
-
-        if (nodes.isEmpty()) return;
-
-        showNodes(nodes, column);
-
-        List<Node> nextNodes = nodes.stream()
-                .map(node -> graph.outgoingEdgesOf(node).stream()
-                        .map(graph::getEdgeTarget)
-                        .filter(x -> x.incrementIncoming() == graph.inDegreeOf(x)))
-                .flatMap(l -> l)
-                .collect(Collectors.toList());
-
-        showColumn(graph, nextNodes, column + 1);
-
-    }
-
-    /**
-     * Show all nodes at a start position.
-     *
-     * @param nodes  nodes to draw
-     * @param column column to draw at
-     */
-    protected void showNodes(List<Node> nodes, int column) {
-
-        int shift = nodes.size() * 50;
-        int row = 0;
-        for (Node node : nodes) {
-
-            node.setTranslateX(column * 100);
-            node.setTranslateY(row * 100 - shift);
-
-            row++;
-
-        }
 
     }
 

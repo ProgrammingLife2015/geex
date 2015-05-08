@@ -2,17 +2,13 @@ package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
-import nl.tudelft.context.drawable.DrawableEdge;
-import nl.tudelft.context.newick.Tree;
 import nl.tudelft.context.service.LoadNewickService;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,22 +28,20 @@ public class LoadNewickController extends DefaultController<GridPane> implements
     protected TextField
             nwkSource;
 
+    protected MainController mainController;
     protected LoadNewickService loadNewickService;
-    protected ProgressIndicator progressIndicator;
-    protected Group sequences;
+
+    protected File
+            nwkFile;
 
     /**
      * Init a controller at load_newick.fxml.
-     *
-     * @param progressIndicator progress indicator of Newick loading
-     * @throws RuntimeException
      */
-    public LoadNewickController(ProgressIndicator progressIndicator, Group sequences) {
+    public LoadNewickController(MainController mainController) {
 
         super(new GridPane());
 
-        this.progressIndicator = progressIndicator;
-        this.sequences = sequences;
+        this.mainController = mainController;
 
         loadFXML("/application/load_newick.fxml");
 
@@ -66,47 +60,15 @@ public class LoadNewickController extends DefaultController<GridPane> implements
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        loadNewickService = new LoadNewickService();
-        loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
-
         FileChooser nwkFileChooser = new FileChooser();
         nwkFileChooser.setTitle("Open Newick file");
-        loadNewick.setOnAction(event -> loadNewickService.setNwkFile(loadFile(nwkFileChooser, nwkSource)));
+        loadNewick.setOnAction(event -> nwkFile = loadFile(nwkFileChooser, nwkSource));
 
-        load.setOnAction(event -> loadTree());
-
-    }
-
-    /**
-     * Load newick from source.
-     */
-    protected void loadTree() {
-
-        sequences.getChildren().clear();
-        loadNewickService.restart();
-
-    }
-
-    /**
-     * Show the newick in console.
-     *
-     * @param tree newick to show
-     */
-    protected void showTree(Tree tree) {
-
-        // Bind edges
-        tree.edgeSet().stream().forEach(edge -> {
-            final DrawableEdge line = new DrawableEdge(tree, edge);
-            sequences.getChildren().add(line);
+        load.setOnAction(event -> {
+            NewickController newickController = new NewickController(mainController, new LoadNewickService(nwkFile));
+            mainController.setBaseView(newickController.getRoot());
         });
 
-        // Bind nodes
-        tree.vertexSet().stream().forEach(node -> {
-            final Label label = new Label(node.getName());
-            label.translateXProperty().bind(node.translateXProperty());
-            label.translateYProperty().bind(node.translateYProperty());
-            sequences.getChildren().add(label);
-        });
     }
 
 }

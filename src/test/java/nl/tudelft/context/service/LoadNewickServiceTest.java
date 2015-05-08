@@ -28,8 +28,7 @@ public class LoadNewickServiceTest {
     @Test
     public void testNewickLoadSucceeds() throws Exception {
 
-        final LoadNewickService loadNewickService = new LoadNewickService();
-        loadNewickService.setNwkFile(nwkFile);
+        final LoadNewickService loadNewickService = new LoadNewickService(nwkFile);
 
         CompletableFuture<Tree> completableFuture = new CompletableFuture<>();
 

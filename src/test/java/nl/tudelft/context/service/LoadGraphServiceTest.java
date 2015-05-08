@@ -45,9 +45,7 @@ public class LoadGraphServiceTest {
     @Test
     public void testGraphLoadSucceeds() throws Exception {
 
-        final LoadGraphService loadGraphService = new LoadGraphService();
-        loadGraphService.setNodeFile(nodeFile);
-        loadGraphService.setEdgeFile(edgeFile);
+        final LoadGraphService loadGraphService = new LoadGraphService(nodeFile, edgeFile);
 
         CompletableFuture<Graph> completableFuture = new CompletableFuture<>();
 
