@@ -16,6 +16,14 @@ public class LoadNewickService extends Service<Tree> {
 
     protected File nwkFile;
 
+    public LoadNewickService() {
+
+    }
+
+    public LoadNewickService(File nwkFile) {
+        this.nwkFile = nwkFile;
+    }
+
     /**
      * Set nwk file.
      *
