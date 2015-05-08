@@ -5,7 +5,9 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import nl.tudelft.context.workspace.Workspace;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Stack;
@@ -21,6 +23,8 @@ public class MainController extends DefaultController<BorderPane> {
     protected VBox control;
 
     protected Stack<Node> viewList = new Stack<>();
+
+    protected Workspace workspace;
 
     /**
      * Init a controller at main.fxml.
@@ -100,4 +104,11 @@ public class MainController extends DefaultController<BorderPane> {
         System.exit(0);
     }
 
+    public Workspace getWorkspace() {
+        return workspace;
+    }
+
+    public void setWorkspace(Workspace workspace) {
+        this.workspace = workspace;
+    }
 }
