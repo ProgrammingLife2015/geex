@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 1-5-2015
  */
-public class LoadNewickController extends DefaultController<GridPane> implements Initializable {
+public class LoadNewickController extends DefaultController<GridPane> {
 
     @FXML
     protected Button
@@ -29,7 +29,6 @@ public class LoadNewickController extends DefaultController<GridPane> implements
             nwkSource;
 
     protected MainController mainController;
-    protected LoadNewickService loadNewickService;
 
     protected File
             nwkFile;

@@ -1,6 +1,7 @@
 package nl.tudelft.context.controller;
 
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -14,7 +15,7 @@ import java.io.IOException;
  * @version 1.0
  * @since 26-4-2015
  */
-public abstract class DefaultController<T extends Parent> {
+public abstract class DefaultController<T extends Parent> implements Initializable {
 
     protected final T root;
 

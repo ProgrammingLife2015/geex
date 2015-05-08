@@ -1,0 +1,40 @@
+@startuml
+
+class graph.BaseCounter<Character, MutableInt> extends java.util.HashMap {
+    {static} df : DecimalFormat
+    # baseSize : int
+
+    +getPercentage(c : char)
+    +getPercentageString(c : char)
+}
+class graph.Node extends DrawableNode {
+    # id : int
+    # sources : Set<String>
+    # refStartPosition : int
+    # refEndPosition : int
+    # content : String
+    # baseCounter : BaseCounter
+}
+class graph.NodeFactory {
+    #getNodeId(sc : Scanner) : int
+    +getNode(sc : Scanner) : Node
+}
+
+class graph.Graph<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
+    +getFirstNode() : Node
+}
+class graph.GraphFactory {
+    #parseNodes(nodeFile : File, graph : Graph) : List<Node>
+    #parseEdges(edgeFile : File, graph : Graph, nodeList : List<Node>)
+    +getGraph(nodeFile : File, edgeFile : File) : Graph
+}
+
+'Relations
+graph.GraphFactory ..> graph.Graph : << create >>
+graph.GraphFactory ..> graph.NodeFactory
+
+graph.NodeFactory ..> graph.Node : << create >>
+graph.Node *-- graph.BaseCounter
+
+
+@enduml

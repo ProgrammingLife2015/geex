@@ -1,7 +1,6 @@
 package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
@@ -16,7 +15,7 @@ import java.util.Stack;
  * @version 1.0
  * @since 25-4-2015
  */
-public class MainController extends DefaultController<BorderPane> implements Initializable {
+public class MainController extends DefaultController<BorderPane> {
 
     @FXML
     protected VBox control;
@@ -87,7 +86,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
      */
     public void previousView() {
 
-        if(viewList.size() > 1) {
+        if (viewList.size() > 1) {
             viewList.pop();
             root.setCenter(viewList.peek());
         }

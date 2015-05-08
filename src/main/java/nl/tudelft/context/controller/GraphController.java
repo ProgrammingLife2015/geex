@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 7-5-2015
  */
-public class GraphController extends DefaultController<ScrollPane> implements Initializable {
+public class GraphController extends DefaultController<ScrollPane> {
 
     @FXML
     protected ProgressIndicator progressIndicator;

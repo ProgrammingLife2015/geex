@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 26-4-2015
  */
-public class LoadGraphController extends DefaultController<GridPane> implements Initializable {
+public class LoadGraphController extends DefaultController<GridPane> {
 
     @FXML
     protected Button

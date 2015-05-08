@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 8-5-2015
  */
-public class NewickController extends DefaultController<ScrollPane> implements Initializable {
+public class NewickController extends DefaultController<ScrollPane> {
 
     @FXML
     protected Group newick;
