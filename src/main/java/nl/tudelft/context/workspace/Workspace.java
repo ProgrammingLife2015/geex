@@ -26,6 +26,9 @@ public class Workspace {
     private List<LoadNewickService> nwkList;
 
     public Workspace(File directory) {
+        if (directory == null) {
+            return;
+        }
         this.directory = directory;
         try {
             load();
@@ -64,7 +67,7 @@ public class Workspace {
             if (nodePath == null)
                 return null;
 
-            return new LoadGraphService(edgePath.toFile(), nodePath.toFile());
+            return new LoadGraphService(nodePath.toFile(), edgePath.toFile());
         })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
