@@ -7,6 +7,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
@@ -21,6 +23,7 @@ public class MainController extends DefaultController<BorderPane> {
     protected VBox control;
 
     protected Stack<Node> viewList = new Stack<>();
+    protected Queue<Node> baseViews = new LinkedList<>();
 
     /**
      * Init a controller at main.fxml.
@@ -55,6 +58,8 @@ public class MainController extends DefaultController<BorderPane> {
 
         root.setTop(new MenuController(this));
 
+        root.setBottom(new MinimapController(this).getRoot());
+
     }
 
     /**
@@ -66,6 +71,7 @@ public class MainController extends DefaultController<BorderPane> {
 
         viewList.clear();
         setView(node);
+        baseViews.add(node);
 
     }
 
@@ -100,4 +106,13 @@ public class MainController extends DefaultController<BorderPane> {
         System.exit(0);
     }
 
+    /**
+     * Cycles the baseViews that the MainController has seen as a queue.
+     */
+    public void cycleViews() {
+        if (!baseViews.isEmpty()) {
+            Node n = baseViews.remove();
+            setBaseView(n);
+        }
+    }
 }
