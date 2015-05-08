@@ -134,4 +134,14 @@ public class MainControllerTest {
 
     }
 
+    /**
+     * Test that cycling succeeds when empty and when not empty
+     */
+    @Test
+    public void testCycleBaseViews() {
+        mainController.cycleViews();
+        mainController.setBaseView(new BaseController("ATCG").getRoot());
+        mainController.cycleViews();
+    }
+
 }
