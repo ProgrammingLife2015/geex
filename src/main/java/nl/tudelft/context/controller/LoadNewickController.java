@@ -29,7 +29,6 @@ public class LoadNewickController extends DefaultController<GridPane> {
             nwkSource;
 
     protected MainController mainController;
-    protected LoadNewickService loadNewickService;
 
     protected File
             nwkFile;
