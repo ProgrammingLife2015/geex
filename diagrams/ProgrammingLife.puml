@@ -14,45 +14,70 @@ class DrawableNode {
 
     +incrementIncoming() : int
 }
-
-abstract class DefaultController<T extends Parent> {
+class BaseController<StackPane> extends DefaultController {
+    # sequence : String
+}
+abstract class DefaultController<T extends Parent> implements javafx.fxml.Initializable {
     # root : T
     #loadFXML(fxmlFile : String)
     #loadFile(fileChooser : FileChooser, source : TextField)
     #getRoot() : Parent
 }
-
-class MainController<BorderPane> extends DefaultController implements javafx.fxml.Initializable {
-}
-
-class LoadNewickController<GridPane> extends DefaultController implements javafx.fxml.Initializable {
-    # loadNewickService : LoadNewickService
-    # progressIndicator : ProgressIndicator
-
-    #loadTree()
-    #showTree(tree : Tree)
-    #printTree(node : TreeNode, prev_w : double)
-}
-
-class LoadGraphController<GridPane> Extends DefaultController implements javafx.fxml.Initializable {
+class GraphController<ScrollPane> extends DefaultController {
+    # mainController : MainController
     # loadGraphService : LoadGraphService
-    # progressIndicator : ProgressIndicator
-    # sequences : Group
 
     #loadGraph()
-    #loadTree()
     #showGraph(graph : Graph)
-    #showColumn(graph : Graph, nodes List<Node>, int column)
+    #showColumn(graph : Graph, nodes : List<Node>)
     #showNodes(nodes : List<Node>, column : int)
+}
+class LoadGraphController<GridPane> extends DefaultController {
+    # mainController : MainController
+    # nodeFile : File
+    # edgeFile : File
+}
+class LoadNewickController<GridPane> extends DefaultController {
+    # mainController : MainController
+    # nwkFile : File
+}
+class MainController<BorderPane> extends DefaultController {
+    # viewList : Stack<Node>
+
+    +setBaseView(node : Node)
+    +setView(node : Node)
+    +previousView()
+    +exitProgram()
+}
+class MenuController extends javafx.scene.control.MenuBar {
+    # mainController : MainController
+
+    +initFileMenu()
+    +initHelpMenu()
+}
+class NewickController<ScrollPane> extends DefaultController {
+    # mainController : MainController
+    # loadNewickService : LoadNewickService
+
+    +loadTree()
+    #showTree(tree : Tree)
 }
 
 
+class graph.BaseCounter<Character, MutableInt> extends java.util.HashMap {
+    {static} df : DecimalFormat
+    # baseSize : int
+
+    +getPercentage(c : char)
+    +getPercentageString(c : char)
+}
 class graph.Node extends DrawableNode {
     # id : int
     # sources : Set<String>
     # refStartPosition : int
     # refEndPosition : int
     # content : String
+    # baseCounter : BaseCounter
 }
 class graph.NodeFactory {
     #getNodeId(sc : Scanner) : int
@@ -60,12 +85,29 @@ class graph.NodeFactory {
 }
 
 class graph.Graph<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
-    +getFirstNode()
+    +getFirstNode() : Node
 }
 class graph.GraphFactory {
     #parseNodes(nodeFile : File, graph : Graph) : List<Node>
     #parseEdges(edgeFile : File, graph : Graph, nodeList : List<Node>)
     +getGraph(nodeFile : File, edgeFile : File) : Graph
+}
+
+class newick.Node extends DrawableNode {
+    - name : String
+    weight : double
+    children : List<Node>
+}
+class newick.NodeFactory
+class newick.Tree<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
+    +getFirstNode() : Node
+}
+class newick.TreeFactory {
+    + nodeFactory : NodeFactory
+
+    +getTree(nwkFile : File) : Tree
+    +parseTree(nwkFile : File, tree : Tree)
+    +getOffspring(node : TreeNode, parent : Node, tree : Tree) : int
 }
 
 class LoadGraphService<Graph> extends javafx.concurrent.Service {
@@ -77,45 +119,67 @@ class LoadNewickService<Tree> extends javafx.concurrent.Service {
 }
 
 'FXML
-class main << (F,orange) FXML >> {
-    + control : VBox
+class base << (F,orange) FXML >> {
+    + base : Text
+}
+class graph << (F,orange) FXML >> {
     + progressIndicator : ProgressIndicator
     + sequences : Group
 }
-
-class load_newick << (F, orange) FXML >> {
-    + loadNewick : Button
-    + load : Button
-    + nwkSource : TextField
-}
-
-class load_graph << (F, orange) FXML >> {
+class load_graph << (F,orange) FXML >> {
     + loadNodes : Button
     + loadEdges : Button
     + load : Button
     + nodeSource : TextField
     + edgeSource : TextField
 }
+class load_newick << (F,orange) FXML >> {
+    + loadNewick : Button
+    + load : Button
+    + nwkSource : TextField
+}
+class main << (F,orange) FXML >> {
+    + control : VBox
+}
+class newick << (F,orange) FXML >> {
+    + newick : Group
+}
 
 'Relations
+BaseController "1" *-- "1" base
+GraphController "1" *-- "1" graph
 LoadGraphController "1" *-- "1" load_graph
 LoadNewickController "1" *-- "1" load_newick
 MainController "1" *-- "1" main
+NewickController "1" *-- "1" newick
 
 graph.GraphFactory ..> graph.Graph : << create >>
 graph.GraphFactory ..> graph.NodeFactory
 
 graph.NodeFactory ..> graph.Node : << create >>
+graph.Node *-- graph.BaseCounter
+
+newick.TreeFactory ..> newick.Tree : << create >>
+newick.TreeFactory ..> newick.NodeFactory
+newick.NodeFactory ..> newick.Node : << create >>
 
 App "1" *-- "1" MainController
 MainController o-- LoadGraphController
 MainController o-- LoadNewickController
+MainController o-- MenuController
 
-LoadGraphController "1" o-- "0..*" DrawableEdge
-LoadGraphController "1" -- "1" LoadGraphService
-LoadGraphController "1" -- "1" LoadNewickService
+LoadNewickController o-- NewickController
+LoadGraphController o-- GraphController
+
+NewickController -- LoadNewickService
+NewickController -- DrawableEdge
+
+GraphController ..> BaseController
+GraphController -- DrawableEdge
+GraphController -- LoadGraphService
 
 LoadGraphService ..> graph.GraphFactory
+LoadNewickService ..> newick.TreeFactory
 
 'External classes
 abstract class javafx.concurrent.Service<V> {
