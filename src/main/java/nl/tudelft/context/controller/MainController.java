@@ -3,9 +3,6 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -57,25 +54,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
                 previousView();
         });
 
-        //MenuBar
-        MenuBar menubar = new MenuBar();
-
-        //The options in the menu
-        final Menu menuFile = new Menu("File");
-        final Menu menuHelp = new Menu("Help");
-
-        //The items within the options
-        MenuItem load = new MenuItem("Load...");
-
-        MenuItem exit = new MenuItem("Exit");
-        exit.setOnAction(event -> exitProgram());
-
-        //Set all the items and menus
-        menuFile.getItems().addAll(load, exit);
-        menubar.getMenus().addAll(menuFile, menuHelp);
-
-        //Set the menubar in place
-        root.setTop(menubar);
+        root.setTop(new MenuController(this));
 
     }
 
@@ -118,7 +97,7 @@ public class MainController extends DefaultController<BorderPane> implements Ini
     /**
      * Exits the program.
      */
-    private void exitProgram() {
+    public void exitProgram() {
         System.exit(0);
     }
 
