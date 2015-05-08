@@ -24,7 +24,7 @@ public class LoadNewickControllerTest {
     protected static LoadNewickController loadNewickController;
 
     protected static final ProgressIndicator progressIndicator = new ProgressIndicator();
-    protected static Group sequences;
+    protected static Group sequences = new Group();;
 
     /**
      * Setup Load Newick Controller.

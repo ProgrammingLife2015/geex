@@ -51,7 +51,7 @@ public class TreeFactory {
         }
 
         if (hasChildren) {
-            
+
             return row;
         } else {
             return row + 1;
