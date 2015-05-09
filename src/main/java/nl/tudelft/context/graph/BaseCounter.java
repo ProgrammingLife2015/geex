@@ -1,22 +1,19 @@
 package nl.tudelft.context.graph;
 
-import org.apache.commons.lang.mutable.MutableInt;
+import org.apache.commons.collections.bag.HashBag;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author Jasper Nieuwdorp <jaspernieuwdorp@hotmail.com>
- * @version 1.1
+ * @version 1.2
  * @since 06-05-2015
  */
-public class BaseCounter extends HashMap<Character, MutableInt> {
+public class BaseCounter extends HashBag {
 
     static DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
-    protected int baseSize;
 
     /**
      * Constructor for the baseCounter
@@ -24,34 +21,18 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
      * @param bases String with the dna sequence
      */
     public BaseCounter(String bases) {
-        baseSize = bases.length();
-        put('A', new MutableInt());
-        put('T', new MutableInt());
-        put('C', new MutableInt());
-        put('G', new MutableInt());
-        put('N', new MutableInt());
         bases.chars()
-                .mapToObj(x -> get((char) x))
-                .filter(Objects::nonNull)
-                .forEach(MutableInt::increment);
+                .mapToObj(x -> (char) x)
+                .forEach(this::add);
     }
 
     /**
-     * Get the count of a certain base, with n for an unknown base
-     *
-     * @return int value with the number of times the base occurs in the initial string
-     */
-    public int getInt(char c) {
-        return get(c).intValue();
-    }
-
-    /**
-     * Get the percentage of a certain base, with n for an unknown base
+     * Get the percentage of a certain base, with N for an unknown base
      *
      * @return float value with the percentage of the base in the initial string
      */
     public float getPercentage(char c) {
-        return (float) (getInt(c) * 100) / baseSize;
+        return (float) (getCount(c) * 100) / size();
     }
 
     /**
@@ -60,8 +41,8 @@ public class BaseCounter extends HashMap<Character, MutableInt> {
      * @return string string representing the value with the percentage of the base in the initial string
      */
     public String getPercentageString(char c) {
-        double result = Double.valueOf(df.format(getPercentage(c)));
-        return Double.toString(result);
+        float result = Float.valueOf(df.format(getPercentage(c)));
+        return Float.toString(result);
     }
 
     /**

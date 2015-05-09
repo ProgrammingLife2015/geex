@@ -1,7 +1,6 @@
 package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
