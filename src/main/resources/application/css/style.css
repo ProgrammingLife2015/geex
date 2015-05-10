@@ -52,16 +52,19 @@
     -fx-background-radius: 0em;
 }
 
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button,
+.scroll-bar .increment-button:hover,
+.scroll-bar .decrement-button:hover {
+    -fx-padding: 3px;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0, 0, 0;
+}
 
-/*.scroll-bar .increment-button,*/
-/*.scroll-bar .decrement-button,*/
-/*.scroll-bar .increment-arrow,*/
-/*.scroll-bar .decrement-arrow,*/
-/*.scroll-pane .corner {*/
-    /*-fx-background-color: transparent;*/
-    /*-fx-background-radius: 0;*/
-    /*-fx-padding: 0;*/
-/*}*/
+.scroll-bar .increment-button:pressed,
+.scroll-bar .decrement-button:pressed {
+    -fx-background-color: gray;
+}
 
 /* Sequences */
 #sequences {
