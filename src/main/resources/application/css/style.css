@@ -48,17 +48,20 @@
 
 .scroll-bar > .thumb {
     -fx-opacity: 0.5;
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0em;
 }
 
-.scroll-bar .increment-button,
-.scroll-bar .decrement-button,
-.scroll-bar .increment-arrow,
-.scroll-bar .decrement-arrow,
-.scroll-pane .corner {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0;
-    -fx-padding: 0;
-}
+
+/*.scroll-bar .increment-button,*/
+/*.scroll-bar .decrement-button,*/
+/*.scroll-bar .increment-arrow,*/
+/*.scroll-bar .decrement-arrow,*/
+/*.scroll-pane .corner {*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-background-radius: 0;*/
+    /*-fx-padding: 0;*/
+/*}*/
 
 /* Sequences */
 #sequences {
