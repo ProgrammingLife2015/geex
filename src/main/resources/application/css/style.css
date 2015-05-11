@@ -49,6 +49,14 @@
     -fx-border-color: #757575;
 }
 
+.scroll-bar:horizontal {
+    -fx-border-width: 1px 0 0;
+}
+
+.scroll-bar:vertical {
+    -fx-border-width: 0 0 0 1px;
+}
+
 .scroll-bar:hover,
 .scroll-bar:pressed {
     -fx-background-color: #414141;
