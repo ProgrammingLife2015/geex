@@ -44,6 +44,12 @@
 /* Scroll Bar */
 .scroll-bar {
     -fx-background-color: transparent;
+    -fx-background-insets: 0, 0, 0;
+}
+
+.scroll-bar:hover,
+.scroll-bar:pressed {
+    -fx-background-color: #757575;
 }
 
 .scroll-bar > .thumb {
