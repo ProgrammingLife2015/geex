@@ -54,6 +54,7 @@ class MenuController extends javafx.scene.control.MenuBar {
 
     +initFileMenu()
     +initHelpMenu()
+    -initWorkspaceMenu()
 }
 class NewickController<ScrollPane> extends DefaultController {
     # mainController : MainController
@@ -77,6 +78,22 @@ class LoadGraphService<Graph> extends javafx.concurrent.Service {
 }
 class LoadNewickService<Tree> extends javafx.concurrent.Service {
     # nwkFile : File
+}
+
+class Finder<Path> extends java.nio.file.SimpleFileVisitor {
+    - matcher : PathMatcher
+    - matches : List<Path>
+
+    find()
+}
+class Workspace {
+    - directory : File
+    - graphList : List<LoadGraphService>
+    - nwkList : List<LoadNewickService>
+
+    -load()
+    +getGraphList() : List<LoadGraphService>
+    +getNewickList() : List<LoadNewickService>
 }
 
 'FXML
@@ -131,6 +148,9 @@ GraphController -- LoadGraphService
 
 LoadGraphService ..> graph.GraphFactory
 LoadNewickService ..> newick.TreeFactory
+
+MainController ..> Workspace
+Workspace ..> Finder
 
 'External classes
 abstract class javafx.concurrent.Service<V> {
