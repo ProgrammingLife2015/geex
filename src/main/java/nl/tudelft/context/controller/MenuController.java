@@ -43,7 +43,10 @@ public class MenuController extends MenuBar {
         load.setOnAction(event -> {
             Window window = mainController.getRoot().getScene().getWindow();
             File workspaceDirectory = directoryChooser.showDialog(window);
-            mainController.setWorkspace(new Workspace(workspaceDirectory));
+            Workspace workspace = new Workspace(workspaceDirectory);
+            workspace.walk();
+            workspace.load();
+            mainController.setWorkspace(workspace);
             initWorkspaceMenu();
         });
 
@@ -65,12 +68,12 @@ public class MenuController extends MenuBar {
 
     }
 
-    public void initWorkspaceMenu() {
+    private void initWorkspaceMenu() {
         final Menu menuWorkspace = new Menu("Workspace");
         MenuItem loadGraph = new MenuItem("Load first graph");
-        loadGraph.setOnAction(event -> mainController.setBaseView(new GraphController(mainController, mainController.getWorkspace().getActiveGraph()).getRoot()));
+        loadGraph.setOnAction(event -> mainController.setBaseView(new GraphController(mainController, mainController.getWorkspace().getGraphList().get(0)).getRoot()));
         MenuItem loadNewick = new MenuItem("Load first newick");
-        loadNewick.setOnAction(event -> mainController.setBaseView(new NewickController(mainController, mainController.getWorkspace().getActiveTree()).getRoot()));
+        loadNewick.setOnAction(event -> mainController.setBaseView(new NewickController(mainController, mainController.getWorkspace().getNewickList().get(0)).getRoot()));
         menuWorkspace.getItems().addAll(loadGraph, loadNewick);
         getMenus().add(menuWorkspace);
     }

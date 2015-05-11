@@ -5,10 +5,8 @@ import nl.tudelft.context.service.LoadNewickService;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.PathMatcher;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -20,37 +18,45 @@ import java.util.stream.Stream;
  * @since 8-5-2015
  */
 public class Workspace {
-    private File directory;
+    File directory;
 
     private List<LoadGraphService> graphList;
     private List<LoadNewickService> nwkList;
+
+    List<Path> matches;
 
     public Workspace(File directory) {
         if (directory == null) {
             return;
         }
         this.directory = directory;
-        try {
-            load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
-     * Loop over the directory
+     * Walk the workspace directory.
      */
-    private void load() throws IOException {
+    public void walk() {
         Finder finder = new Finder("*.{edge.graph,node.graph,nwk}");
 
-        Files.walkFileTree(this.directory.toPath(), finder);
+        try {
+            Files.walkFileTree(this.directory.toPath(), finder);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
-        Stream<File> edges = finder.files().stream()
+        this.matches = finder.getMatches();
+    }
+
+    /**
+     * Load graphs and newick files from the loaded directory.
+     */
+    public void load() {
+        Stream<File> edges = matches.stream()
                 .map(Path::toFile)
                 .filter(path -> path.toString()
                         .toLowerCase()
                         .endsWith(".edge.graph"));
-        List<File> nodes = finder.files().stream()
+        List<File> nodes = matches.stream()
                 .map(Path::toFile)
                 .filter(path -> path.toString()
                         .toLowerCase()
@@ -75,17 +81,17 @@ public class Workspace {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
-        nwkList = finder.files().stream()
+        nwkList = matches.stream()
                 .filter(path -> path.toString().toLowerCase().endsWith(".nwk"))
                 .map(path -> new LoadNewickService(path.toFile()))
                 .collect(Collectors.toList());
     }
 
-    public LoadGraphService getActiveGraph() {
-        return graphList.get(0);
+    public List<LoadGraphService> getGraphList() {
+        return graphList;
     }
 
-    public LoadNewickService getActiveTree() {
-        return nwkList.get(0);
+    public List<LoadNewickService> getNewickList() {
+        return nwkList;
     }
 }
