@@ -42,21 +42,7 @@ public class Finder extends SimpleFileVisitor<Path> {
         return CONTINUE;
     }
 
-    @Override
-    public FileVisitResult preVisitDirectory(Path dir,
-                                             BasicFileAttributes attrs) {
-        find(dir);
-        return CONTINUE;
-    }
-
-    @Override
-    public FileVisitResult visitFileFailed(Path file,
-                                           IOException exc) {
-        System.err.println(exc);
-        return CONTINUE;
-    }
-
-    public List<Path> files() {
+    public List<Path> getMatches() {
         return matches;
     }
 }
