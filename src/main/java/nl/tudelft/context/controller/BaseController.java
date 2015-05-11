@@ -14,15 +14,23 @@ import java.util.ResourceBundle;
  */
 public class BaseController extends DefaultController<StackPane> {
 
+    /**
+     * JavaFX Text holder.
+     */
     @FXML
-    protected Text base;
+    Text base;
 
-    protected String sequence;
+    /**
+     * line of bases that is displayed.
+     */
+    private String sequence;
 
     /**
      * Init a controller at graph.fxml.
+     *
+     * @param sequence line of bases to display
      */
-    public BaseController(String sequence) {
+    public BaseController(final String sequence) {
 
         super(new StackPane());
 
@@ -36,13 +44,14 @@ public class BaseController extends DefaultController<StackPane> {
      * Called to initialize a controller after its root element has been
      * completely processed.
      *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  <tt>null</tt> if the location is not known.
-     * @param resources The resources used to localize the root object, or <tt>null</tt> if
-     *                  the root object was not localized.
+     * @param location  The location used to resolve relative paths for the root
+     *                  object, or <tt>null</tt> if the location is not known.
+     * @param resources The resources used to localize the root object, or
+     *                  <tt>null</tt> if the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public final void initialize(final URL location,
+                                 final ResourceBundle resources) {
 
         base.setText(sequence);
 
