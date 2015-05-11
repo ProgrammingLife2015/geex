@@ -18,14 +18,30 @@ import java.util.stream.Stream;
  * @since 8-5-2015
  */
 public class Workspace {
+    /**
+     * The workspace directory.
+     */
     File directory;
 
+    /**
+     * The list of graphs in the workspace.
+     */
     private List<LoadGraphService> graphList;
+    /**
+     * The list of Newick graphs in the workspace.
+     */
     private List<LoadNewickService> nwkList;
 
+    /**
+     * The results of the finder.
+     */
     List<Path> matches;
 
-    public Workspace(File directory) {
+    /**
+     * Create a new workspace on the directory.
+     * @param directory The workspace root
+     */
+    public Workspace(final File directory) {
         if (directory == null) {
             return;
         }
@@ -35,7 +51,7 @@ public class Workspace {
     /**
      * Walk the workspace directory.
      */
-    public void walk() {
+    public final void walk() {
         Finder finder = new Finder("*.{edge.graph,node.graph,nwk}");
 
         try {
@@ -50,7 +66,7 @@ public class Workspace {
     /**
      * Load graphs and newick files from the loaded directory.
      */
-    public void load() {
+    public final void load() {
         Stream<File> edges = matches.stream()
                 .map(Path::toFile)
                 .filter(path -> path.toString()
@@ -73,8 +89,9 @@ public class Workspace {
                                                     .replaceFirst("\\.edge\\.graph$", "")))
                             .findFirst().orElse(null);
 
-                    if (nodeFile == null)
+                    if (nodeFile == null) {
                         return null;
+                    }
 
                     return new LoadGraphService(nodeFile, edgeFile);
                 })
@@ -87,11 +104,19 @@ public class Workspace {
                 .collect(Collectors.toList());
     }
 
-    public List<LoadGraphService> getGraphList() {
+    /**
+     * Get the list of graphs in the workspace.
+     * @return List of graphs
+     */
+    public final List<LoadGraphService> getGraphList() {
         return graphList;
     }
 
-    public List<LoadNewickService> getNewickList() {
+    /**
+     * Get the list of newick graphs in the workspace.
+     * @return List of Newick graphs
+     */
+    public final List<LoadNewickService> getNewickList() {
         return nwkList;
     }
 }
