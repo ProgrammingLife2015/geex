@@ -44,20 +44,34 @@
 /* Scroll Bar */
 .scroll-bar {
     -fx-background-color: transparent;
+    -fx-background-insets: 0, 0, 0;
+    -fx-border-width: 1px 0 0;
+    -fx-border-color: #757575;
+}
+
+.scroll-bar:hover,
+.scroll-bar:pressed {
+    -fx-background-color: #414141;
 }
 
 .scroll-bar > .thumb {
     -fx-opacity: 0.5;
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0;
 }
 
 .scroll-bar .increment-button,
 .scroll-bar .decrement-button,
-.scroll-bar .increment-arrow,
-.scroll-bar .decrement-arrow,
-.scroll-pane .corner {
+.scroll-bar .increment-button:hover,
+.scroll-bar .decrement-button:hover {
+    -fx-padding: 3px;
     -fx-background-color: transparent;
-    -fx-background-radius: 0;
-    -fx-padding: 0;
+    -fx-background-insets: 0, 0, 0;
+}
+
+.scroll-bar .increment-button:pressed,
+.scroll-bar .decrement-button:pressed {
+    -fx-background-color: gray;
 }
 
 /* Sequences */
