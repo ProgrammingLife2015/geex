@@ -45,17 +45,19 @@
 .scroll-bar {
     -fx-background-color: transparent;
     -fx-background-insets: 0, 0, 0;
+    -fx-border-width: 1px 0 0;
+    -fx-border-color: #757575;
 }
 
 .scroll-bar:hover,
 .scroll-bar:pressed {
-    -fx-background-color: #757575;
+    -fx-background-color: #414141;
 }
 
 .scroll-bar > .thumb {
     -fx-opacity: 0.5;
     -fx-background-insets: 0, 0, 0;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 0;
 }
 
 .scroll-bar .increment-button,
