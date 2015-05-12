@@ -89,21 +89,25 @@ public class GraphController extends DefaultController<ScrollPane> {
         }
 
         // Bind edges
-        graph.edgeSet().stream().forEach(edge -> {
-            final DrawableEdge line = new DrawableEdge(graph, edge);
-            sequences.getChildren().add(line);
-        });
+        List<DrawableEdge> edgeList = graph.edgeSet().stream()
+                .map(edge -> new DrawableEdge(graph, edge))
+                .collect(Collectors.toList());
 
         // Bind nodes
-        graph.vertexSet().stream().forEach(node -> {
-            final Label label = new Label(Integer.toString(node.getId()));
-            label.translateXProperty().bind(node.translateXProperty());
-            label.translateYProperty().bind(node.translateYProperty());
-            final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
-            label.setTooltip(percentages);
-            label.setOnMouseClicked(event -> mainController.setView(new BaseController(node.getContent()).getRoot()));
-            sequences.getChildren().add(label);
-        });
+        List<Label> nodeList = graph.vertexSet().stream()
+                .map(node -> {
+                    final Label label = new Label(Integer.toString(node.getId()));
+                    label.setCache(true);
+                    label.translateXProperty().bind(node.translateXProperty());
+                    label.translateYProperty().bind(node.translateYProperty());
+                    final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
+                    label.setTooltip(percentages);
+                    label.setOnMouseClicked(event -> mainController.setView(new BaseController(node.getContent()).getRoot()));
+                    return label;
+                }).collect(Collectors.toList());
+
+        sequences.getChildren().addAll(edgeList);
+        sequences.getChildren().addAll(nodeList);
 
     }
 

@@ -9,7 +9,9 @@ import nl.tudelft.context.newick.Tree;
 import nl.tudelft.context.service.LoadNewickService;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -76,18 +78,22 @@ public class NewickController extends DefaultController<ScrollPane> {
     protected void showTree(Tree tree) {
 
         // Bind edges
-        tree.edgeSet().stream().forEach(edge -> {
-            final DrawableEdge line = new DrawableEdge(tree, edge);
-            newick.getChildren().add(line);
-        });
+        List<DrawableEdge> edgeList = tree.edgeSet().stream()
+                .map(edge -> new DrawableEdge(tree, edge))
+                .collect(Collectors.toList());
 
         // Bind nodes
-        tree.vertexSet().stream().forEach(node -> {
-            final Label label = new Label(node.getName());
-            label.translateXProperty().bind(node.translateXProperty());
-            label.translateYProperty().bind(node.translateYProperty());
-            newick.getChildren().add(label);
-        });
+        List<Label> nodeList = tree.vertexSet().stream()
+                .map(node -> {
+                    final Label label = new Label(node.getName());
+                    label.setCache(true);
+                    label.translateXProperty().bind(node.translateXProperty());
+                    label.translateYProperty().bind(node.translateYProperty());
+                    return label;
+                }).collect(Collectors.toList());
+
+        newick.getChildren().addAll(edgeList);
+        newick.getChildren().addAll(nodeList);
     }
 
 }

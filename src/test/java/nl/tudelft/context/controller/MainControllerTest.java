@@ -64,11 +64,11 @@ public class MainControllerTest {
 
         mc.setView(baseController.getRoot());
         assertEquals(baseController.getRoot(), mc.viewList.peek());
-        assertEquals(baseController.getRoot(), mc.root.getCenter());
+        assertEquals(baseController.getRoot(), mc.view.getChildren().get(0));
 
         mc.setView(loadGraphController.getRoot());
         assertEquals(loadGraphController.getRoot(), mc.viewList.peek());
-        assertEquals(loadGraphController.getRoot(), mc.root.getCenter());
+        assertEquals(loadGraphController.getRoot(), mc.view.getChildren().get(1));
 
     }
 
@@ -89,7 +89,7 @@ public class MainControllerTest {
         mc.previousView();
 
         assertEquals(baseController.getRoot(), mc.viewList.peek());
-        assertEquals(baseController.getRoot(), mc.root.getCenter());
+        assertEquals(baseController.getRoot(), mc.view.getChildren().get(0));
 
     }
 
@@ -111,7 +111,7 @@ public class MainControllerTest {
         mc.previousView();
 
         assertEquals(baseController.getRoot(), mc.viewList.peek());
-        assertEquals(baseController.getRoot(), mc.root.getCenter());
+        assertEquals(baseController.getRoot(), mc.view.getChildren().get(0));
 
     }
 

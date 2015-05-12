@@ -4,10 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import nl.tudelft.context.workspace.Workspace;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Stack;
@@ -21,6 +21,9 @@ public class MainController extends DefaultController<BorderPane> {
 
     @FXML
     protected VBox control;
+
+    @FXML
+    protected StackPane view;
 
     protected Stack<Node> viewList = new Stack<>();
 
@@ -68,6 +71,7 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public void setBaseView(Node node) {
 
+        view.getChildren().clear();
         viewList.clear();
         setView(node);
 
@@ -81,7 +85,7 @@ public class MainController extends DefaultController<BorderPane> {
     public void setView(Node node) {
 
         viewList.add(node);
-        root.setCenter(node);
+        view.getChildren().add(node);
 
     }
 
@@ -92,7 +96,7 @@ public class MainController extends DefaultController<BorderPane> {
 
         if (viewList.size() > 1) {
             viewList.pop();
-            root.setCenter(viewList.peek());
+            view.getChildren().retainAll(viewList);
         }
 
     }
