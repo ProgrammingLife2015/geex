@@ -1,6 +1,11 @@
 package nl.tudelft.context.graph;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,11 +20,33 @@ import java.util.Scanner;
 public class GraphFactory {
 
     /**
+     * Creates an undirected graph based on Node objects that represents a genome.
+     *
+     * @param nodeFile location of node file
+     * @param edgeFile location of edge file
+     * @return a graph based on Node objects
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException
+     */
+    public final Graph getGraph(final File nodeFile, final File edgeFile) throws FileNotFoundException, UnsupportedEncodingException {
+
+        Graph graph = new Graph();
+
+        List<Node> nodeList = parseNodes(nodeFile, graph);
+        parseEdges(edgeFile, graph, nodeList);
+
+        return graph;
+
+    }
+
+    /**
      * Parse the nodes from the node file.
      *
      * @param nodeFile location of node file
      * @param graph    graph to add nodes to
      * @return nodes added to graph
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException
      */
     private List<Node> parseNodes(final File nodeFile, final Graph graph)
             throws FileNotFoundException, UnsupportedEncodingException {
@@ -45,6 +72,8 @@ public class GraphFactory {
      * @param edgeFile location of edge file
      * @param graph    graph to add edges to
      * @param nodeList nodes used to get edges from
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException
      */
     private void parseEdges(final File edgeFile, final Graph graph, final List<Node> nodeList)
             throws FileNotFoundException, UnsupportedEncodingException {
@@ -59,23 +88,6 @@ public class GraphFactory {
 
     }
 
-    /**
-     * Creates an undirected graph based on Node objects that represents a genome.
-     *
-     * @param nodeFile location of node file
-     * @param edgeFile location of edge file
-     * @return a graph based on Node objects
-     * @throws FileNotFoundException
-     */
-    public Graph getGraph(File nodeFile, File edgeFile) throws FileNotFoundException, UnsupportedEncodingException {
 
-        Graph graph = new Graph();
-
-        List<Node> nodeList = parseNodes(nodeFile, graph);
-        parseEdges(edgeFile, graph, nodeList);
-
-        return graph;
-
-    }
 
 }

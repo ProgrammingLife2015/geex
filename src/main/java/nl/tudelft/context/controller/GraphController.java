@@ -24,19 +24,20 @@ import java.util.stream.Collectors;
 public class GraphController extends DefaultController<ScrollPane> {
 
     @FXML
-    protected ProgressIndicator progressIndicator;
+    ProgressIndicator progressIndicator;
     @FXML
-    protected Group sequences;
+    Group sequences;
 
-    protected MainController mainController;
-    protected LoadGraphService loadGraphService;
+    MainController mainController;
+    LoadGraphService loadGraphService;
 
     /**
      * Init a controller at graph.fxml.
      *
+     * @param mainController MainController for the application
      * @param loadGraphService service with file locations
      */
-    public GraphController(MainController mainController, LoadGraphService loadGraphService) {
+    public GraphController(final MainController mainController, final LoadGraphService loadGraphService) {
 
         super(new ScrollPane());
 
@@ -57,7 +58,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public final void initialize(final URL location, final ResourceBundle resources) {
 
         progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
         loadGraphService.setOnSucceeded(event -> showGraph(loadGraphService.getValue()));
@@ -78,6 +79,8 @@ public class GraphController extends DefaultController<ScrollPane> {
 
     /**
      * Show graph with reference points.
+     *
+     * @param graph Graph to show
      */
     private void showGraph(final Graph graph) {
 
@@ -102,7 +105,8 @@ public class GraphController extends DefaultController<ScrollPane> {
                     label.translateYProperty().bind(node.translateYProperty());
                     final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
                     label.setTooltip(percentages);
-                    label.setOnMouseClicked(event -> mainController.setView(new BaseController(node.getContent()).getRoot()));
+                    label.setOnMouseClicked(event ->
+                            mainController.setView(new BaseController(node.getContent()).getRoot()));
                     return label;
                 }).collect(Collectors.toList());
 

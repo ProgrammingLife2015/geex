@@ -18,7 +18,10 @@ import java.io.IOException;
 public abstract class DefaultController<T extends Parent>
         implements Initializable {
 
-    protected final T root;
+    /**
+     * The root of the controller, a javafx element which extends Parent.
+     */
+    final T root;
 
     /**
      * Create a generic controller with T as root.
@@ -28,7 +31,7 @@ public abstract class DefaultController<T extends Parent>
      *
      * @param root     the root of fxml
      */
-    public DefaultController(T root) {
+    public DefaultController(final T root) {
 
         this.root = root;
 
@@ -40,7 +43,7 @@ public abstract class DefaultController<T extends Parent>
      *
      * @param fxmlFile the fxml file
      */
-    protected final void loadFXML(String fxmlFile) {
+    protected final void loadFXML(final String fxmlFile) {
 
         FXMLLoader fxmlLoader =
                 new FXMLLoader(DefaultController.class.getResource(fxmlFile));
@@ -60,7 +63,7 @@ public abstract class DefaultController<T extends Parent>
      *
      * @return root of fxml
      */
-    public Parent getRoot() {
+    public final Parent getRoot() {
 
         return root;
 
@@ -68,8 +71,12 @@ public abstract class DefaultController<T extends Parent>
 
     /**
      * Load file.
+     *
+     * @param fileChooser fileChooser for loading
+     * @param source source Textfield, to update when finished
+     * @return The selected file
      */
-    protected File loadFile(FileChooser fileChooser, TextField source) {
+    protected final File loadFile(final FileChooser fileChooser, final TextField source) {
 
         File file = fileChooser.showOpenDialog(root.getScene().getWindow());
 
