@@ -84,7 +84,11 @@ public class GraphController extends DefaultController<ScrollPane> {
     protected void showGraph(Graph graph) {
 
         List<Node> start = new ArrayList<>(Collections.singletonList(graph.getFirstNode()));
-        showColumn(graph, start, 0);
+
+        int i = 0;
+        while (!start.isEmpty()) {
+            start = showColumn(graph, start, i++);
+        }
 
         // Bind edges
         graph.edgeSet().stream().forEach(edge -> {
@@ -111,21 +115,18 @@ public class GraphController extends DefaultController<ScrollPane> {
      * @param graph  containing the nodes
      * @param nodes  nodes to display
      * @param column column index
+     * @return next column
      */
-    protected void showColumn(Graph graph, List<Node> nodes, int column) {
-
-        if (nodes.isEmpty()) return;
+    protected List<Node> showColumn(Graph graph, List<Node> nodes, int column) {
 
         showNodes(nodes, column);
 
-        List<Node> nextNodes = nodes.stream()
+        return nodes.stream()
                 .map(node -> graph.outgoingEdgesOf(node).stream()
                         .map(graph::getEdgeTarget)
                         .filter(x -> x.incrementIncoming() == graph.inDegreeOf(x)))
                 .flatMap(l -> l)
                 .collect(Collectors.toList());
-
-        showColumn(graph, nextNodes, column + 1);
 
     }
 
