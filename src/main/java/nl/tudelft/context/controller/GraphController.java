@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
+import javafx.scene.shape.Rectangle;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
@@ -96,8 +97,9 @@ public class GraphController extends DefaultController<ScrollPane> {
         // Bind nodes
         List<Label> nodeList = graph.vertexSet().stream()
                 .map(node -> {
-                    final Label label = new Label(Integer.toString(node.getId()));
-                    label.setCache(true);
+                    final Rectangle label = new Rectangle(20.0,20.0,COLOR.blue);
+                    //final Label label = new Label(Integer.toString(node.getId()));
+                    //label.setCache(true);
                     label.translateXProperty().bind(node.translateXProperty());
                     label.translateYProperty().bind(node.translateYProperty());
                     final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
