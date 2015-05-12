@@ -13,34 +13,39 @@ import java.util.Locale;
  */
 public class BaseCounter extends HashBag {
 
+    /**
+     * DecimalFormatter to format a float to 2 numbers after the period.
+     */
     static DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
 
     /**
-     * Constructor for the baseCounter
+     * Constructor for the baseCounter.
      *
      * @param bases String with the dna sequence
      */
-    public BaseCounter(String bases) {
+    public BaseCounter(final String bases) {
         bases.chars()
                 .mapToObj(x -> (char) x)
                 .forEach(this::add);
     }
 
     /**
-     * Get the percentage of a certain base, with N for an unknown base
+     * Get the percentage of a certain base, with N for an unknown base.
      *
+     * @param c CATG char
      * @return float value with the percentage of the base in the initial string
      */
-    public float getPercentage(char c) {
+    public final float getPercentage(final char c) {
         return (float) (getCount(c) * 100) / size();
     }
 
     /**
-     * Get a string representation of the percentage of a certain base, with n for an unknown base
+     * Get a string representation of the percentage of a certain base, with n for an unknown base.
      *
+     * @param c CATG char
      * @return string string representing the value with the percentage of the base in the initial string
      */
-    public String getPercentageString(char c) {
+    public final String getPercentageString(final char c) {
         float result = Float.valueOf(df.format(getPercentage(c)));
         return Float.toString(result);
     }

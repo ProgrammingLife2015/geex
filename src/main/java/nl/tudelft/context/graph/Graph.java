@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Graph
+ * Graph.
  *
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
@@ -29,7 +29,7 @@ public class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
      *
      * @return all first node
      */
-    public List<Node> getFirstNodes() {
+    public final List<Node> getFirstNodes() {
 
         return vertexSet().stream().filter(x -> this.inDegreeOf(x) == 0).collect(Collectors.toList());
 
