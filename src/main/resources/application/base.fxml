@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Text?>
 <fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml">
 
-    <StackPane styleClass="margin">
+    <StackPane styleClass="transparent-margin">
         <TextFlow>
             <Text fx:id="base"/>
         </TextFlow>

@@ -2,8 +2,13 @@
     -fx-background-color: #2b2b2b;
 }
 
-.margin {
+.margin,
+.transparent-margin {
     -fx-padding: 50px;
+}
+
+.transparent-margin {
+    -fx-background-color: rgba(43, 43, 43, 0.8);
 }
 
 /* Control */
