@@ -5,17 +5,13 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - "[ \"$BUILD_PR_BRANCH\" = \"true\" ] && git checkout HEAD^2 && echo \"OCTOPULL_SHA=$(git rev-parse HEAD)\"; true"
-script: mvn test -B
+script: mvn $TARGET -B
 notifications:
   webhooks:
     - http://octopull.rmhartog.me/api/travis/webhook
 env:
-  - BUILD_PR_BRANCH=true
-  - BUILD_PR_BRANCH=false
-matrix:
-  include:
-    - env: BUILD_PR_BRANCH=true
-      script: mvn site -B
+  - BUILD_PR_BRANCH=true && TARGET=site
+  - BUILD_PR_BRANCH=false && TARGET=test
 after_script:
   - echo "== CHECKSTYLE_RESULT ==" && cat "target/checkstyle-result.xml" && echo "== END_CHECKSTYLE_RESULT =="
   - echo "== PMD_RESULT ==" && cat "target/pmd.xml" && echo "== END_PMD_RESULT =="
