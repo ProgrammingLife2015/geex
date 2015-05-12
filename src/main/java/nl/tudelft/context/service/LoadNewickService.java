@@ -9,6 +9,7 @@ import java.io.File;
 
 /**
  * Service for loading a Newick tree.
+ *
  * @author Jasper Boot <mrjasperboot@gmail.com>
  * @version 1.0
  * @since 28-4-2015
@@ -18,9 +19,6 @@ public final class LoadNewickService extends Service<Tree> {
     /**
      * The file containing the newick tree.
      */
-
-    public LoadNewickService() {
-    }
     File nwkFile;
 
     /**
