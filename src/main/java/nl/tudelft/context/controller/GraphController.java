@@ -12,8 +12,6 @@ import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -83,7 +81,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      */
     protected void showGraph(Graph graph) {
 
-        List<Node> start = new ArrayList<>(Collections.singletonList(graph.getFirstNode()));
+        List<Node> start = graph.getFirstNodes();
 
         int i = 0;
         while (!start.isEmpty()) {
