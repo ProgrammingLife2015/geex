@@ -11,12 +11,12 @@ import java.util.Set;
  */
 public final class Node extends DrawableNode {
 
-    protected int id;
-    protected Set<String> sources;
-    protected int refStartPosition;
-    protected int refEndPosition;
-    protected String content;
-    protected BaseCounter baseCounter;
+    int id;
+    Set<String> sources;
+    int refStartPosition;
+    int refEndPosition;
+    String content;
+    BaseCounter baseCounter;
 
     /**
      * Create a node.

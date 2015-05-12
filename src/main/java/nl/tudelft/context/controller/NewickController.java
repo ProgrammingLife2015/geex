@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 public final class NewickController extends DefaultController<ScrollPane> {
 
     @FXML
-    protected Group newick;
+    Group newick;
 
-    protected LoadNewickService loadNewickService;
+    LoadNewickService loadNewickService;
 
     /**
      * Init a controller at newick.fxml.

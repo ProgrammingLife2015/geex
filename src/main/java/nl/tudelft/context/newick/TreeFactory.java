@@ -11,7 +11,7 @@ import java.io.*;
  * @since 3-5-2015
  */
 public final class TreeFactory {
-    public NodeFactory nodeFactory = new NodeFactory();
+    NodeFactory nodeFactory = new NodeFactory();
 
     public Tree getTree(final File nwkFile) throws FileNotFoundException, UnsupportedEncodingException {
         Tree tree = new Tree();

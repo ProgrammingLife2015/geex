@@ -14,10 +14,10 @@ import java.io.File;
  */
 public final class LoadNewickService extends Service<Tree> {
 
-    protected File nwkFile;
 
     public LoadNewickService() {
     }
+    File nwkFile;
 
     /**
      * Set nwk file.

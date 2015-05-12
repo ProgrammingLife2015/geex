@@ -19,17 +19,17 @@ import java.util.ResourceBundle;
 public final class LoadNewickController extends DefaultController<GridPane> {
 
     @FXML
-    protected Button
+    Button
             loadNewick,
             load;
 
     @FXML
-    protected TextField
+    TextField
             nwkSource;
 
-    protected MainController mainController;
+    MainController mainController;
 
-    protected File
+    File
             nwkFile;
 
     /**

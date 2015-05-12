@@ -20,14 +20,14 @@ import java.util.Stack;
 public final class MainController extends DefaultController<BorderPane> {
 
     @FXML
-    protected VBox control;
+    VBox control;
 
     @FXML
-    protected StackPane view;
+    StackPane view;
 
-    protected Stack<Node> viewList = new Stack<>();
+    Stack<Node> viewList;
 
-    protected Workspace workspace;
+    Workspace workspace;
 
     /**
      * Init a controller at main.fxml.
@@ -38,6 +38,7 @@ public final class MainController extends DefaultController<BorderPane> {
 
         loadFXML("/application/main.fxml");
 
+        viewList = new Stack<>();
     }
 
     /**

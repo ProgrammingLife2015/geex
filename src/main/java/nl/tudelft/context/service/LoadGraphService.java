@@ -14,8 +14,8 @@ import java.io.File;
  */
 public final class LoadGraphService extends Service<Graph> {
 
-    protected File nodeFile;
-    protected File edgeFile;
+    File nodeFile;
+    File edgeFile;
 
     /**
      * Set node and edge file

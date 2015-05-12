@@ -19,19 +19,19 @@ import java.util.ResourceBundle;
 public final class LoadGraphController extends DefaultController<GridPane> {
 
     @FXML
-    protected Button
+    Button
             loadNodes,
             loadEdges,
             load;
 
     @FXML
-    protected TextField
+    TextField
             nodeSource,
             edgeSource;
 
-    protected MainController mainController;
+    MainController mainController;
 
-    protected File
+    File
             nodeFile,
             edgeFile;
 

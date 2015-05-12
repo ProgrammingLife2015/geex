@@ -16,7 +16,7 @@ import java.io.File;
  */
 public final class MenuController extends MenuBar {
 
-    protected MainController mainController;
+    MainController mainController;
 
     /**
      * Create a new menu.
