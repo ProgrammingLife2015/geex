@@ -69,7 +69,7 @@ public class GraphController extends DefaultController<ScrollPane> {
     /**
      * Load graph from source.
      */
-    protected void loadGraph() {
+    private void loadGraph() {
 
         sequences.getChildren().clear();
         loadGraphService.restart();
@@ -79,7 +79,7 @@ public class GraphController extends DefaultController<ScrollPane> {
     /**
      * Show graph with reference points.
      */
-    protected void showGraph(Graph graph) {
+    private void showGraph(final Graph graph) {
 
         List<Node> start = graph.getFirstNodes();
 
@@ -119,7 +119,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      * @param column column index
      * @return next column
      */
-    protected List<Node> showColumn(Graph graph, List<Node> nodes, int column) {
+    private List<Node> showColumn(final Graph graph, final List<Node> nodes, final int column) {
 
         showNodes(nodes, column);
 
@@ -138,7 +138,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      * @param nodes  nodes to draw
      * @param column column to draw at
      */
-    protected void showNodes(List<Node> nodes, int column) {
+    private void showNodes(final List<Node> nodes, final int column) {
 
         int shift = nodes.size() * 50;
         int row = 0;

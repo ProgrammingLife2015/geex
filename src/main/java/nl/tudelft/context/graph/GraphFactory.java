@@ -21,7 +21,7 @@ public class GraphFactory {
      * @param graph    graph to add nodes to
      * @return nodes added to graph
      */
-    protected List<Node> parseNodes(File nodeFile, Graph graph)
+    private List<Node> parseNodes(final File nodeFile, final Graph graph)
             throws FileNotFoundException, UnsupportedEncodingException {
 
         Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(new FileInputStream(nodeFile), "UTF-8")));
@@ -46,7 +46,7 @@ public class GraphFactory {
      * @param graph    graph to add edges to
      * @param nodeList nodes used to get edges from
      */
-    protected void parseEdges(File edgeFile, Graph graph, List<Node> nodeList)
+    private void parseEdges(final File edgeFile, final Graph graph, final List<Node> nodeList)
             throws FileNotFoundException, UnsupportedEncodingException {
 
         Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(new FileInputStream(edgeFile), "UTF-8")));
