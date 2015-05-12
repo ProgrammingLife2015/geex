@@ -51,8 +51,18 @@ public class BaseCounter extends HashBag {
      * @return string representation of all occurrence-rates of the bases in the BaseCounter.
      */
     @Override
-    public String toString() {
-        return "A: " + getPercentageString('A') + "%, T: " + getPercentageString('T') + "%, C: " + getPercentageString('C') + "%, G: " + getPercentageString('G') + "%, N: " + getPercentageString('N') + "%";
+    public final String toString() {
+        return "A: "
+                + getPercentageString('A')
+                + "%, T: "
+                + getPercentageString('T')
+                + "%, C: "
+                + getPercentageString('C')
+                + "%, G: "
+                + getPercentageString('G')
+                + "%, N: "
+                + getPercentageString('N')
+                + "%";
     }
 
 }
