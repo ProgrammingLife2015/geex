@@ -8,7 +8,9 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -93,6 +95,19 @@ public class GraphTest {
         assertTrue(graph.containsEdge(node1, node3));
         assertTrue(graph.containsEdge(node2, node4));
         assertTrue(graph.containsEdge(node3, node4));
+
+    }
+
+    /**
+     * Test if start nodes are correct.
+     */
+    @Test
+    public void testStartNodes() {
+
+        List<Node> nodeList = graph.getFirstNodes();
+
+        assertEquals(1, nodeList.size());
+        assertTrue(nodeList.contains(node1));
 
     }
 

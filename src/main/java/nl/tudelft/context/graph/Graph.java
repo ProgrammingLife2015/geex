@@ -3,7 +3,8 @@ package nl.tudelft.context.graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Graph
@@ -24,14 +25,13 @@ public class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
     }
 
     /**
-     * Get the first node, with no incoming edges.
+     * Get the first nodes, with no incoming edges.
      *
-     * @return first node
+     * @return all first node
      */
-    public Node getFirstNode() {
+    public List<Node> getFirstNodes() {
 
-        Optional<Node> node = vertexSet().stream().filter(x -> this.inDegreeOf(x) == 0).findFirst();
-        return node.orElseGet(null);
+        return vertexSet().stream().filter(x -> this.inDegreeOf(x) == 0).collect(Collectors.toList());
 
     }
 
