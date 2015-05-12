@@ -97,6 +97,7 @@ public class GraphController extends DefaultController<ScrollPane> {
         // Bind nodes
         graph.vertexSet().stream().forEach(node -> {
             final Label label = new Label(Integer.toString(node.getId()));
+            label.setCache(true);
             label.translateXProperty().bind(node.translateXProperty());
             label.translateYProperty().bind(node.translateYProperty());
             final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
