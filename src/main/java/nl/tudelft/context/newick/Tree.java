@@ -29,7 +29,6 @@ public class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder("");
         Node root = getFirstNode();
         if (root != null) {
             return toString(root, 0);

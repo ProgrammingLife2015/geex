@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class Node extends DrawableNode {
     private final String name;
-    double weight;
-    List<Node> children;
+    private final double weight;
+    private List<Node> children;
 
     public Node(String name, double weight) {
         this.name = name;
@@ -45,6 +45,16 @@ public class Node extends DrawableNode {
         Node that = (Node)other;
         return getName().equals(that.getName()) &&
                 getWeight() == that.getWeight();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+
+        result = 37 * result + getName().hashCode();
+        long c = Double.doubleToLongBits(getWeight());
+
+        return 37 * result + (int)(c ^ (c >>> 32));
     }
 
     @Override

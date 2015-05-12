@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -35,7 +36,7 @@ public class GraphTest {
      * @throws FileNotFoundException
      */
     @BeforeClass
-    public static void beforeClass() throws FileNotFoundException {
+    public static void beforeClass() throws FileNotFoundException, UnsupportedEncodingException {
 
         File nodeFile = new File(GraphTest.class.getResource("/graph/node.graph").getPath());
         File edgeFile = new File(GraphTest.class.getResource("/graph/edge.graph").getPath());

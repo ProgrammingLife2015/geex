@@ -3,10 +3,7 @@ package nl.tudelft.context.newick;
 import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -16,7 +13,7 @@ import java.io.FileReader;
 public class TreeFactory {
     public NodeFactory nodeFactory = new NodeFactory();
 
-    public Tree getTree(File nwkFile) throws FileNotFoundException {
+    public Tree getTree(File nwkFile) throws FileNotFoundException, UnsupportedEncodingException {
         Tree tree = new Tree();
 
         parseTree(nwkFile, tree);
@@ -24,8 +21,8 @@ public class TreeFactory {
         return tree;
     }
 
-    public void parseTree(File nwkFile, Tree tree) throws FileNotFoundException {
-        TreeParser tp = new TreeParser(new BufferedReader(new FileReader(nwkFile)));
+    public void parseTree(File nwkFile, Tree tree) throws FileNotFoundException, UnsupportedEncodingException {
+        TreeParser tp = new TreeParser(new BufferedReader(new InputStreamReader(new FileInputStream(nwkFile), "UTF-8")));
         net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize(1, "", null);
         Node root = nodeFactory.getNode(nwkTree.getRoot());
         root.setTranslateX(0);

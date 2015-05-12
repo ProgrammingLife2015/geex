@@ -21,9 +21,10 @@ public class GraphFactory {
      * @param graph    graph to add nodes to
      * @return nodes added to graph
      */
-    protected List<Node> parseNodes(File nodeFile, Graph graph) throws FileNotFoundException {
+    protected List<Node> parseNodes(File nodeFile, Graph graph)
+            throws FileNotFoundException, UnsupportedEncodingException {
 
-        Scanner sc = new Scanner(new BufferedReader(new FileReader(nodeFile)));
+        Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(new FileInputStream(nodeFile), "UTF-8")));
         NodeFactory nodeFactory = new NodeFactory();
         List<Node> nodes = new ArrayList<>();
 
@@ -45,9 +46,10 @@ public class GraphFactory {
      * @param graph    graph to add edges to
      * @param nodeList nodes used to get edges from
      */
-    protected void parseEdges(File edgeFile, Graph graph, List<Node> nodeList) throws FileNotFoundException {
+    protected void parseEdges(File edgeFile, Graph graph, List<Node> nodeList)
+            throws FileNotFoundException, UnsupportedEncodingException {
 
-        Scanner sc = new Scanner(new BufferedReader(new FileReader(edgeFile)));
+        Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(new FileInputStream(edgeFile), "UTF-8")));
 
         while (sc.hasNext()) {
             graph.addEdge(nodeList.get(sc.nextInt()), nodeList.get(sc.nextInt()));
@@ -65,7 +67,7 @@ public class GraphFactory {
      * @return a graph based on Node objects
      * @throws FileNotFoundException
      */
-    public Graph getGraph(File nodeFile, File edgeFile) throws FileNotFoundException {
+    public Graph getGraph(File nodeFile, File edgeFile) throws FileNotFoundException, UnsupportedEncodingException {
 
         Graph graph = new Graph();
 

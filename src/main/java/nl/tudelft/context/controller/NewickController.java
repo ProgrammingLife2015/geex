@@ -23,7 +23,6 @@ public class NewickController extends DefaultController<ScrollPane> {
     @FXML
     protected Group newick;
 
-    protected MainController mainController;
     protected LoadNewickService loadNewickService;
 
     /**
@@ -31,11 +30,9 @@ public class NewickController extends DefaultController<ScrollPane> {
      *
      * @param loadNewickService service with file locations
      */
-    public NewickController(MainController mainController, LoadNewickService loadNewickService) {
+    public NewickController(LoadNewickService loadNewickService) {
 
         super(new ScrollPane());
-
-        this.mainController = mainController;
         this.loadNewickService = loadNewickService;
 
         loadFXML("/application/newick.fxml");

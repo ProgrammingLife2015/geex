@@ -15,7 +15,8 @@ import java.io.IOException;
  * @version 1.0
  * @since 26-4-2015
  */
-public abstract class DefaultController<T extends Parent> implements Initializable {
+public abstract class DefaultController<T extends Parent>
+        implements Initializable {
 
     protected final T root;
 
@@ -34,13 +35,15 @@ public abstract class DefaultController<T extends Parent> implements Initializab
     }
 
     /**
-     * Separate loadFXML method to call at the end of the parent class constructor to prevent uninitialized Objects.
+     * Separate loadFXML method to call at the end of the parent class
+     * constructor to prevent uninitialized Objects.
      *
      * @param fxmlFile the fxml file
      */
-    protected void loadFXML(String fxmlFile) {
+    protected final void loadFXML(String fxmlFile) {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(DefaultController.class.getResource(fxmlFile));
+        FXMLLoader fxmlLoader =
+                new FXMLLoader(DefaultController.class.getResource(fxmlFile));
 
         fxmlLoader.setRoot(root);
         fxmlLoader.setController(this);

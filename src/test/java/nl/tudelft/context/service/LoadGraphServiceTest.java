@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -32,7 +33,7 @@ public class LoadGraphServiceTest {
      * Set up comparing graphFromFactory.
      */
     @BeforeClass
-    public static void beforeClass() throws FileNotFoundException {
+    public static void beforeClass() throws FileNotFoundException, UnsupportedEncodingException {
 
         GraphFactory graphFactory = new GraphFactory();
         graphFromFactory = graphFactory.getGraph(nodeFile, edgeFile);

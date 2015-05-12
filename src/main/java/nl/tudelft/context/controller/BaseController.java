@@ -18,7 +18,7 @@ public class BaseController extends DefaultController<StackPane> {
      * JavaFX Text holder.
      */
     @FXML
-    Text base;
+    protected Text base;
 
     /**
      * line of bases that is displayed.

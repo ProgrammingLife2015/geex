@@ -63,7 +63,7 @@ public class LoadNewickController extends DefaultController<GridPane> {
         loadNewick.setOnAction(event -> nwkFile = loadFile(nwkFileChooser, nwkSource));
 
         load.setOnAction(event -> {
-            NewickController newickController = new NewickController(mainController, new LoadNewickService(nwkFile));
+            NewickController newickController = new NewickController(new LoadNewickService(nwkFile));
             mainController.setBaseView(newickController.getRoot());
         });
 
