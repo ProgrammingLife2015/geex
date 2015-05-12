@@ -10,7 +10,7 @@ import java.util.Optional;
  * @version 1.0
  * @since 3-5-2015
  */
-public class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
+public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
     public Tree() {
         super(DefaultEdge.class);
     }

@@ -12,7 +12,7 @@ import java.io.File;
  * @version 1.0
  * @since 28-4-2015
  */
-public class LoadNewickService extends Service<Tree> {
+public final class LoadNewickService extends Service<Tree> {
 
     protected File nwkFile;
 

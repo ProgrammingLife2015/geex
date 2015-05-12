@@ -12,7 +12,7 @@ import java.io.File;
  * @version 1.0
  * @since 25-4-2015
  */
-public class LoadGraphService extends Service<Graph> {
+public final class LoadGraphService extends Service<Graph> {
 
     protected File nodeFile;
     protected File edgeFile;

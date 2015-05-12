@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 8-5-2015
  */
-public class NewickController extends DefaultController<ScrollPane> {
+public final class NewickController extends DefaultController<ScrollPane> {
 
     @FXML
     protected Group newick;

@@ -17,7 +17,7 @@ import java.util.Stack;
  * @version 1.0
  * @since 25-4-2015
  */
-public class MainController extends DefaultController<BorderPane> {
+public final class MainController extends DefaultController<BorderPane> {
 
     @FXML
     protected VBox control;

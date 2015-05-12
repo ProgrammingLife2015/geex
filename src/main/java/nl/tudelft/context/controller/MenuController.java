@@ -14,7 +14,7 @@ import java.io.File;
  * @version 1.0
  * @since 8-5-2015
  */
-public class MenuController extends MenuBar {
+public final class MenuController extends MenuBar {
 
     protected MainController mainController;
 

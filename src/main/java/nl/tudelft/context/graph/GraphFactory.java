@@ -17,7 +17,7 @@ import java.util.Scanner;
  * @version 1.0
  * @since 23-4-2015
  */
-public class GraphFactory {
+public final class GraphFactory {
 
     /**
      * Creates an undirected graph based on Node objects that represents a genome.

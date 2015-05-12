@@ -9,7 +9,7 @@ import java.util.Set;
  * @version 1.1
  * @since 23-4-2015
  */
-public class Node extends DrawableNode {
+public final class Node extends DrawableNode {
 
     protected int id;
     protected Set<String> sources;

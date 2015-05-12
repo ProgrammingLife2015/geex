@@ -10,7 +10,7 @@ import java.util.List;
  * @version 1.0
  * @since 3-5-2015
  */
-public class Node extends DrawableNode {
+public final class Node extends DrawableNode {
     private final String name;
     private final double weight;
     private List<Node> children;
