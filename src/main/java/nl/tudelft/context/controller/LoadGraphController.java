@@ -83,7 +83,9 @@ public final class LoadGraphController extends DefaultController<GridPane> {
         loadEdges.setOnAction(event -> edgeFile = loadFile(edgeFileChooser, edgeSource));
 
         load.setOnAction(event -> {
-            GraphController graphController = new GraphController(mainController, new LoadGraphService(nodeFile, edgeFile));
+            GraphController graphController = new GraphController(
+                    mainController,
+                    new LoadGraphService(nodeFile, edgeFile));
             mainController.setBaseView(graphController.getRoot());
         });
 

@@ -69,8 +69,9 @@ public final class MainController extends DefaultController<BorderPane> {
         control.getChildren().add(new LoadNewickController(this).getRoot());
 
         root.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ESCAPE)
+            if (event.getCode() == KeyCode.ESCAPE) {
                 previousView();
+            }
         });
 
         root.setTop(new MenuController(this));

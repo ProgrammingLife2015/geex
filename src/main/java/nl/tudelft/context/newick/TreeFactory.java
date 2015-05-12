@@ -47,6 +47,8 @@ public final class TreeFactory {
      */
     public void parseTree(final File nwkFile, final Tree tree)
             throws FileNotFoundException, UnsupportedEncodingException {
+        BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(nwkFile), "UTF-8"));
+        TreeParser tp = new TreeParser(fileReader);
         net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize(1, "", null);
         Node root = nodeFactory.getNode(nwkTree.getRoot());
         root.setTranslateX(0);
