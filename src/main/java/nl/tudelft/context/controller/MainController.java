@@ -7,7 +7,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import nl.tudelft.context.workspace.Workspace;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Stack;
