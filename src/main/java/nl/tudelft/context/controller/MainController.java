@@ -17,7 +17,7 @@ import java.util.Stack;
  * @version 1.0
  * @since 25-4-2015
  */
-public final class MainController extends DefaultController<BorderPane> {
+public class MainController extends DefaultController<BorderPane> {
 
     /**
      * The main container of the controller.
@@ -63,7 +63,7 @@ public final class MainController extends DefaultController<BorderPane> {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(final URL location, final ResourceBundle resources) {
+    public final void initialize(final URL location, final ResourceBundle resources) {
 
         control.getChildren().add(new LoadGraphController(this).getRoot());
         control.getChildren().add(new LoadNewickController(this).getRoot());
@@ -83,7 +83,7 @@ public final class MainController extends DefaultController<BorderPane> {
      *
      * @param node javaFX element
      */
-    public void setBaseView(final Node node) {
+    public final void setBaseView(final Node node) {
 
         view.getChildren().clear();
         viewList.clear();
@@ -96,7 +96,7 @@ public final class MainController extends DefaultController<BorderPane> {
      *
      * @param node javaFX element
      */
-    public void setView(final Node node) {
+    public final void setView(final Node node) {
 
         viewList.add(node);
         view.getChildren().add(node);
@@ -106,7 +106,7 @@ public final class MainController extends DefaultController<BorderPane> {
     /**
      * Set the previous view as view.
      */
-    public void previousView() {
+    public final void previousView() {
 
         if (viewList.size() > 1) {
             viewList.pop();
@@ -118,7 +118,7 @@ public final class MainController extends DefaultController<BorderPane> {
     /**
      * Exits the program.
      */
-    public void exitProgram() {
+    public final void exitProgram() {
         System.exit(0);
     }
 
@@ -127,7 +127,7 @@ public final class MainController extends DefaultController<BorderPane> {
      *
      * @return The current workspace
      */
-    public Workspace getWorkspace() {
+    public final Workspace getWorkspace() {
         return workspace;
     }
 
@@ -136,7 +136,7 @@ public final class MainController extends DefaultController<BorderPane> {
      *
      * @param workspace The new workspace
      */
-    public void setWorkspace(final Workspace workspace) {
+    public final void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
 
         // TODO: don't do this, for testing purposes only.
