@@ -68,6 +68,8 @@ public final class TreeFactory {
     public int getOffspring(final TreeNode node, final Node parent, final Tree tree, final int row) {
         tree.addVertex(parent);
 
+        int ret = 0;
+
         boolean hasChildren = false;
         for (int i = 0; i < node.numberLeaves; i += 1) {
             TreeNode child = node.getChild(i);
@@ -76,7 +78,7 @@ public final class TreeFactory {
                 Node n = nodeFactory.getNode(child);
                 n.setTranslateX(parent.translateXProperty().doubleValue() + 100 + 10000 * n.getWeight());
                 n.setTranslateY(row * 80);
-                row = getOffspring(child, n, tree, row);
+                ret = getOffspring(child, n, tree, row);
                 parent.addChild(n);
                 tree.addEdge(parent, n);
             }
@@ -84,9 +86,9 @@ public final class TreeFactory {
 
         if (hasChildren) {
 
-            return row;
+            return ret;
         } else {
-            return row + 1;
+            return ret + 1;
         }
     }
 }
