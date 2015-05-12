@@ -16,8 +16,19 @@ import java.io.UnsupportedEncodingException;
  * @since 3-5-2015
  */
 public final class TreeFactory {
+    /**
+     * The nodefactory for the Tree.
+     */
     NodeFactory nodeFactory = new NodeFactory();
 
+    /**
+     * Gets the Newick tree from the File.
+     *
+     * @param nwkFile The file with the Newick tree
+     * @return A Newick Tree
+     * @throws FileNotFoundException When nwkFile is not found
+     * @throws UnsupportedEncodingException When nwkFile has an unsupported encoding
+     */
     public Tree getTree(final File nwkFile) throws FileNotFoundException, UnsupportedEncodingException {
         Tree tree = new Tree();
 
@@ -26,6 +37,14 @@ public final class TreeFactory {
         return tree;
     }
 
+    /**
+     * Parse the nwkFile file.
+     *
+     * @param nwkFile The newick tree source file.
+     * @param tree The object to construct a tree on.
+     * @throws FileNotFoundException When the nwkFile is not found
+     * @throws UnsupportedEncodingException When the nwkFile has an unsupported encoding
+     */
     public void parseTree(final File nwkFile, final Tree tree)
             throws FileNotFoundException, UnsupportedEncodingException {
         net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize(1, "", null);
@@ -35,6 +54,15 @@ public final class TreeFactory {
         getOffspring(nwkTree.getRoot(), root, tree, 0);
     }
 
+    /**
+     * Get the offspring of a node in a tree.
+     *
+     * @param node The node of the tree
+     * @param parent The parent of the node
+     * @param tree The tree
+     * @param row The current row
+     * @return The offspring of the Node
+     */
     public int getOffspring(final TreeNode node, final Node parent, final Tree tree, final int row) {
         tree.addVertex(parent);
 

@@ -12,28 +12,43 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
+ * Controller for loading a Newick tree.
+ *
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 1-5-2015
  */
 public final class LoadNewickController extends DefaultController<GridPane> {
 
+    /**
+     * Buttons for loading the newick file.
+     */
     @FXML
     Button
             loadNewick,
             load;
 
+    /**
+     * The textfield for the filename.
+     */
     @FXML
     TextField
             nwkSource;
 
+    /**
+     * Reference to the MainController of the application.
+     */
     MainController mainController;
 
+    /**
+     * The newick file containing the tree.
+     */
     File
             nwkFile;
 
     /**
      * Init a controller at load_newick.fxml.
+     * @param mainController The MainController of the application
      */
     public LoadNewickController(final MainController mainController) {
 
@@ -42,7 +57,6 @@ public final class LoadNewickController extends DefaultController<GridPane> {
         this.mainController = mainController;
 
         loadFXML("/application/load_newick.fxml");
-
 
     }
 

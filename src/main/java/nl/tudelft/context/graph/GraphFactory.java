@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * GraphFactory
+ * GraphFactory.
  *
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
@@ -25,8 +25,8 @@ public final class GraphFactory {
      * @param nodeFile location of node file
      * @param edgeFile location of edge file
      * @return a graph based on Node objects
-     * @throws FileNotFoundException
-     * @throws UnsupportedEncodingException
+     * @throws FileNotFoundException if nodeFile or edgeFile not found
+     * @throws UnsupportedEncodingException if the encoding of nodeFile or edgeFile is not supported
      */
     public Graph getGraph(final File nodeFile, final File edgeFile)
             throws FileNotFoundException, UnsupportedEncodingException {
@@ -46,8 +46,8 @@ public final class GraphFactory {
      * @param nodeFile location of node file
      * @param graph    graph to add nodes to
      * @return nodes added to graph
-     * @throws FileNotFoundException
-     * @throws UnsupportedEncodingException
+     * @throws FileNotFoundException if nodeFile or edgeFile not found
+     * @throws UnsupportedEncodingException if the encoding of nodeFile or edgeFile is not supported
      */
     private List<Node> parseNodes(final File nodeFile, final Graph graph)
             throws FileNotFoundException, UnsupportedEncodingException {
@@ -73,8 +73,8 @@ public final class GraphFactory {
      * @param edgeFile location of edge file
      * @param graph    graph to add edges to
      * @param nodeList nodes used to get edges from
-     * @throws FileNotFoundException
-     * @throws UnsupportedEncodingException
+     * @throws FileNotFoundException if nodeFile or edgeFile not found
+     * @throws UnsupportedEncodingException if the encoding of nodeFile or edgeFile is not supported
      */
     private void parseEdges(final File edgeFile, final Graph graph, final List<Node> nodeList)
             throws FileNotFoundException, UnsupportedEncodingException {

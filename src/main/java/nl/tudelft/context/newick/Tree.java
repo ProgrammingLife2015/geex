@@ -11,6 +11,9 @@ import java.util.Optional;
  * @since 3-5-2015
  */
 public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
+    /**
+     * Create a new Tree, with default edges.
+     */
     public Tree() {
         super(DefaultEdge.class);
     }
@@ -36,6 +39,13 @@ public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
             return "";
         }
     }
+
+    /**
+     * Create a String representation of the Tree.
+     * @param node The start node
+     * @param level The current level
+     * @return a String representation
+     */
     public String toString(final Node node, final int level) {
         StringBuilder res = new StringBuilder();
         res.append(new String(new char[level]).replace("\0", "\t"));

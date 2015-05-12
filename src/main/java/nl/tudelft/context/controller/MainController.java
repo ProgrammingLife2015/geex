@@ -19,14 +19,26 @@ import java.util.Stack;
  */
 public final class MainController extends DefaultController<BorderPane> {
 
+    /**
+     * The main container of the controller.
+     */
     @FXML
     VBox control;
 
+    /**
+     * The container of all views after this one.
+     */
     @FXML
     StackPane view;
 
+    /**
+     * A stack of the current views.
+     */
     Stack<Node> viewList;
 
+    /**
+     * The current workspace.
+     */
     Workspace workspace;
 
     /**
@@ -109,10 +121,20 @@ public final class MainController extends DefaultController<BorderPane> {
         System.exit(0);
     }
 
+    /**
+     * Get the current workspace.
+     *
+     * @return The current workspace
+     */
     public Workspace getWorkspace() {
         return workspace;
     }
 
+    /**
+     * Set the current workspace.
+     *
+     * @param workspace The new workspace
+     */
     public void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
 

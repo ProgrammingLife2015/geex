@@ -23,12 +23,24 @@ import java.util.stream.Collectors;
  */
 public class GraphController extends DefaultController<ScrollPane> {
 
+    /**
+     * ProgressIndicator to show when the graph is loading.
+     */
     @FXML
     ProgressIndicator progressIndicator;
+    /**
+     * The container for the graph.
+     */
     @FXML
     Group sequences;
 
+    /**
+     * Reference to the MainController of the app.
+     */
     MainController mainController;
+    /**
+     * The service for loading the Graph.
+     */
     LoadGraphService loadGraphService;
 
     /**

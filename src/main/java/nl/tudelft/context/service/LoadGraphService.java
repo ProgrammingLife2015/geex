@@ -8,17 +8,28 @@ import nl.tudelft.context.graph.GraphFactory;
 import java.io.File;
 
 /**
+ * Service for loading a Graph.
+ *
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 25-4-2015
  */
 public final class LoadGraphService extends Service<Graph> {
 
+    /**
+     * File containing node information.
+     */
     File nodeFile;
+    /**
+     * File containing edge information.
+     */
     File edgeFile;
 
     /**
-     * Set node and edge file
+     * Set node and edge file.
+     *
+     * @param nodeFile File containing the nodes
+     * @param edgeFile File containing the edges
      */
     public LoadGraphService(final File nodeFile, final File edgeFile) {
 

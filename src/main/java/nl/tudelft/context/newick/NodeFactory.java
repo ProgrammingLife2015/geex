@@ -8,6 +8,12 @@ import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
  * @since 3-5-2015
  */
 public final class NodeFactory {
+    /**
+     * Constructs the Node from a TreeNode.
+     *
+     * @param node A TreeNode from treejuxtaposer
+     * @return A nl.tudelft.context.newick.Node
+     */
     public Node getNode(final TreeNode node) {
         return new Node(node.getName(), node.getWeight());
     }

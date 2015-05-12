@@ -11,11 +11,29 @@ import java.util.Set;
  */
 public final class Node extends DrawableNode {
 
+    /**
+     * The identifier of the current Node.
+     */
     int id;
+    /**
+     * Set of genomes that contain this Node.
+     */
     Set<String> sources;
+    /**
+     * Start position in reference genome.
+     */
     int refStartPosition;
+    /**
+     * End position in reference genome.
+     */
     int refEndPosition;
+    /**
+     * The content of the current Node.
+     */
     String content;
+    /**
+     * The Counter for the number of ACTG.
+     */
     BaseCounter baseCounter;
 
     /**
@@ -99,7 +117,7 @@ public final class Node extends DrawableNode {
 
 
     /**
-     * Getter for baseCounter
+     * Getter for baseCounter.
      *
      * @return baseCounter
      */

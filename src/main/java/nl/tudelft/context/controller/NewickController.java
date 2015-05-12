@@ -20,9 +20,15 @@ import java.util.stream.Collectors;
  */
 public final class NewickController extends DefaultController<ScrollPane> {
 
+    /**
+     * The container of the newick tree.
+     */
     @FXML
     Group newick;
 
+    /**
+     * The service used for loading the newick tree.
+     */
     LoadNewickService loadNewickService;
 
     /**

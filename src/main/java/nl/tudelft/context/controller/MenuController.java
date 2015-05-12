@@ -15,11 +15,15 @@ import java.io.File;
  * @since 8-5-2015
  */
 public final class MenuController extends MenuBar {
-
+    /**
+     * Reference to the MainController of the application.
+     */
     MainController mainController;
 
     /**
      * Create a new menu.
+     *
+     * @param mainController The MainController of the application.
      */
     public MenuController(final MainController mainController) {
 
@@ -68,6 +72,9 @@ public final class MenuController extends MenuBar {
 
     }
 
+    /**
+     * Create the workspace menu in the top menu.
+     */
     private void initWorkspaceMenu() {
         final Menu menuWorkspace = new Menu("Workspace");
         MenuItem loadGraph = new MenuItem("Load first graph");

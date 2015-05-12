@@ -18,19 +18,31 @@ import java.util.ResourceBundle;
  */
 public final class LoadGraphController extends DefaultController<GridPane> {
 
+    /**
+     * Buttons for showing filechoosers and loading the graph.
+     */
     @FXML
     Button
             loadNodes,
             loadEdges,
             load;
 
+    /**
+     * Textfields pointing to the source files.
+     */
     @FXML
     TextField
             nodeSource,
             edgeSource;
 
+    /**
+     * Reference to the MainController of the application.
+     */
     MainController mainController;
 
+    /**
+     * Files containing graph information.
+     */
     File
             nodeFile,
             edgeFile;
