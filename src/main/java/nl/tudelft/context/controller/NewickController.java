@@ -21,7 +21,6 @@ public class NewickController extends DefaultController<ScrollPane> {
     @FXML
     protected Group newick;
 
-    protected MainController mainController;
     protected LoadNewickService loadNewickService;
 
     /**
