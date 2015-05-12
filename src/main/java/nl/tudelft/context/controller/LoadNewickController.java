@@ -35,7 +35,7 @@ public class LoadNewickController extends DefaultController<GridPane> {
     /**
      * Init a controller at load_newick.fxml.
      */
-    public LoadNewickController(MainController mainController) {
+    public LoadNewickController(final MainController mainController) {
 
         super(new GridPane());
 
@@ -56,7 +56,7 @@ public class LoadNewickController extends DefaultController<GridPane> {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
 
         FileChooser nwkFileChooser = new FileChooser();
         nwkFileChooser.setTitle("Open Newick file");

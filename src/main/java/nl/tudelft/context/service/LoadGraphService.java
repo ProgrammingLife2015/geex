@@ -20,7 +20,7 @@ public class LoadGraphService extends Service<Graph> {
     /**
      * Set node and edge file
      */
-    public LoadGraphService(File nodeFile, File edgeFile) {
+    public LoadGraphService(final File nodeFile, final File edgeFile) {
 
         this.nodeFile = nodeFile;
         this.edgeFile = edgeFile;

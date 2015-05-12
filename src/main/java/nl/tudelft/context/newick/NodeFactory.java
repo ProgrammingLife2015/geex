@@ -8,7 +8,7 @@ import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
  * @since 3-5-2015
  */
 public class NodeFactory {
-    public Node getNode(TreeNode node) {
+    public Node getNode(final TreeNode node) {
         return new Node(node.getName(), node.getWeight());
     }
 }

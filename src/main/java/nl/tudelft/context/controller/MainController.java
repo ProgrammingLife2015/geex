@@ -50,7 +50,7 @@ public class MainController extends DefaultController<BorderPane> {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
 
         control.getChildren().add(new LoadGraphController(this).getRoot());
         control.getChildren().add(new LoadNewickController(this).getRoot());
@@ -69,7 +69,7 @@ public class MainController extends DefaultController<BorderPane> {
      *
      * @param node javaFX element
      */
-    public void setBaseView(Node node) {
+    public void setBaseView(final Node node) {
 
         view.getChildren().clear();
         viewList.clear();
@@ -82,7 +82,7 @@ public class MainController extends DefaultController<BorderPane> {
      *
      * @param node javaFX element
      */
-    public void setView(Node node) {
+    public void setView(final Node node) {
 
         viewList.add(node);
         view.getChildren().add(node);
@@ -112,7 +112,7 @@ public class MainController extends DefaultController<BorderPane> {
         return workspace;
     }
 
-    public void setWorkspace(Workspace workspace) {
+    public void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
 
         // TODO: don't do this, for testing purposes only.

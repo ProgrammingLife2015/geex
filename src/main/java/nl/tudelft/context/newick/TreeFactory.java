@@ -13,7 +13,7 @@ import java.io.*;
 public class TreeFactory {
     public NodeFactory nodeFactory = new NodeFactory();
 
-    public Tree getTree(File nwkFile) throws FileNotFoundException, UnsupportedEncodingException {
+    public Tree getTree(final File nwkFile) throws FileNotFoundException, UnsupportedEncodingException {
         Tree tree = new Tree();
 
         parseTree(nwkFile, tree);
@@ -21,8 +21,8 @@ public class TreeFactory {
         return tree;
     }
 
-    public void parseTree(File nwkFile, Tree tree) throws FileNotFoundException, UnsupportedEncodingException {
-        TreeParser tp = new TreeParser(new BufferedReader(new InputStreamReader(new FileInputStream(nwkFile), "UTF-8")));
+    public void parseTree(final File nwkFile, final Tree tree)
+            throws FileNotFoundException, UnsupportedEncodingException {
         net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize(1, "", null);
         Node root = nodeFactory.getNode(nwkTree.getRoot());
         root.setTranslateX(0);
@@ -30,7 +30,7 @@ public class TreeFactory {
         getOffspring(nwkTree.getRoot(), root, tree, 0);
     }
 
-    public int getOffspring(TreeNode node, Node parent, Tree tree, int row) {
+    public int getOffspring(final TreeNode node, final Node parent, final Tree tree, final int row) {
         tree.addVertex(parent);
 
         boolean hasChildren = false;

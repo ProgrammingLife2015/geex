@@ -21,7 +21,7 @@ public class MenuController extends MenuBar {
     /**
      * Create a new menu.
      */
-    public MenuController(MainController mainController) {
+    public MenuController(final MainController mainController) {
 
         this.mainController = mainController;
 

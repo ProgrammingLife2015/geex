@@ -50,7 +50,7 @@ public class BaseController extends DefaultController<StackPane> {
      *                  <tt>null</tt> if the root object was not localized.
      */
     @Override
-    public final void initialize(final URL location,
+    public void initialize(final URL location,
                                  final ResourceBundle resources) {
 
         base.setText(sequence);

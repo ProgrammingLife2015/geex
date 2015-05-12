@@ -24,7 +24,7 @@ public class LoadNewickService extends Service<Tree> {
      *
      * @param nwkFile nwk file location
      */
-    public LoadNewickService(File nwkFile) {
+    public LoadNewickService(final File nwkFile) {
 
         this.nwkFile = nwkFile;
 

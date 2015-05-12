@@ -27,7 +27,11 @@ public class Node extends DrawableNode {
      * @param refEndPosition   end position in reference genome
      * @param content          DNA sequence
      */
-    public Node(int id, Set<String> sources, int refStartPosition, int refEndPosition, String content) {
+    public Node(final int id,
+                final Set<String> sources,
+                final int refStartPosition,
+                final int refEndPosition,
+                final String content) {
 
         this.id = id;
         this.sources = sources;
@@ -112,7 +116,7 @@ public class Node extends DrawableNode {
      * @return if node is equal to an other node
      */
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (other instanceof Node) {
             Node that = (Node) other;
             return id == that.id;

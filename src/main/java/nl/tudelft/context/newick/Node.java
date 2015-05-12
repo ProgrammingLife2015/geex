@@ -15,13 +15,13 @@ public class Node extends DrawableNode {
     private final double weight;
     private List<Node> children;
 
-    public Node(String name, double weight) {
+    public Node(final String name, final double weight) {
         this.name = name;
         this.weight = weight;
         children = new ArrayList<>(2);
     }
 
-    public void addChild(Node n) {
+    public void addChild(final Node n) {
         this.children.add(n);
     }
 
@@ -38,7 +38,7 @@ public class Node extends DrawableNode {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (other == null || !(other instanceof Node)) {
             return false;
         }

@@ -29,7 +29,7 @@ public class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
      *
      * @return all first node
      */
-    public final List<Node> getFirstNodes() {
+    public List<Node> getFirstNodes() {
 
         return vertexSet().stream().filter(x -> this.inDegreeOf(x) == 0).collect(Collectors.toList());
 

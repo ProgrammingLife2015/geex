@@ -28,7 +28,8 @@ public class GraphFactory {
      * @throws FileNotFoundException
      * @throws UnsupportedEncodingException
      */
-    public final Graph getGraph(final File nodeFile, final File edgeFile) throws FileNotFoundException, UnsupportedEncodingException {
+    public Graph getGraph(final File nodeFile, final File edgeFile)
+            throws FileNotFoundException, UnsupportedEncodingException {
 
         Graph graph = new Graph();
 

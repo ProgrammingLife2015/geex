@@ -40,7 +40,7 @@ public class LoadGraphController extends DefaultController<GridPane> {
      *
      * @param mainController    main controller to set view
      */
-    public LoadGraphController(MainController mainController) {
+    public LoadGraphController(final MainController mainController) {
 
         super(new GridPane());
 
@@ -60,7 +60,7 @@ public class LoadGraphController extends DefaultController<GridPane> {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
 
         FileChooser nodeFileChooser = new FileChooser();
         nodeFileChooser.setTitle("Open node file");
