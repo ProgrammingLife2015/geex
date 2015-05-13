@@ -11,7 +11,7 @@ import javafx.beans.value.ObservableDoubleValue;
 public class DrawableNode {
 
     /**
-     * The current number of incoming nodes. set to 0.
+     * The current number of incoming nodes.
      */
     int currentIncoming = 0;
 

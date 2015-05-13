@@ -27,12 +27,12 @@ public class DrawableEdge extends Line {
     /**
      * Define the X translation of the graph nodes.
      */
-    public static final int X_OFFSET_TREE = 30;
+    public static final int X_OFFSET_TREE = 10;
 
     /**
      * Define the Y translation of the graph nodes.
      */
-    public static final int Y_OFFSET_TREE = 30;
+    public static final int Y_OFFSET_TREE = 10;
 
     /**
      * Creates edge for graph and bind it to nodes.
