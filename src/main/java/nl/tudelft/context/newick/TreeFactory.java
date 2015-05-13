@@ -83,11 +83,11 @@ public final class TreeFactory {
 
         int ret = row;
 
-        int addRow = 0;
+        int addRow = 1;
         for (int i = 0; i < node.numberLeaves; i += 1) {
             TreeNode child = node.getChild(i);
             if (child != null) {
-                addRow = 1;
+                addRow = 0;
                 Node n = createNode(child, parent, ret);
                 ret = getOffspring(child, n, tree, ret);
                 parent.addChild(n);
