@@ -40,7 +40,7 @@ public abstract class DefaultController<T extends Parent>
     /**
      * Separate loadFXML method to call at the end of the parent class
      * constructor to prevent uninitialized Objects.
-     *
+     *+
      * @param fxmlFile the fxml file
      */
     protected final void loadFXML(final String fxmlFile) {
