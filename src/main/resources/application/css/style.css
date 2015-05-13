@@ -132,6 +132,10 @@
     -fx-text-fill: #ffffff;
     -fx-border-color: transparent;
     -fx-cursor: hand;
+    -fx-padding: 0px 5px;
+}
+#newick .label:hover {
+    -fx-background-color: rgba(255, 255, 255, .1);
 }
 
 /* Base */
