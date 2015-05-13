@@ -53,8 +53,8 @@ public class BaseCounterTest {
     }
 
     @Test
-    public void testGetPercentageOnOnlyThisBaseInDna() throws Exception {
-        assertEquals(100f, baseCounter1.getRatio('A'), 0.E-4f);
+    public void testGetRatioOnOnlyThisBaseInDna() throws Exception {
+        assertEquals(1f, baseCounter1.getRatio('A'), 0.E-4f);
         assertEquals(0f, baseCounter1.getRatio('T'), 0.E-4f);
         assertEquals(0f, baseCounter1.getRatio('C'), 0.E-4f);
         assertEquals(0f, baseCounter1.getRatio('G'), 0.E-4f);
@@ -62,27 +62,27 @@ public class BaseCounterTest {
     }
 
     @Test
-    public void testGetPercentageNotOccuringInDna() throws Exception {
+    public void testGetRatioNotOccuringInDna() throws Exception {
         assertEquals(0f, baseCounter1.getRatio('T'), 0.E-4f);
     }
 
     @Test
-    public void testGetPercentageCombinedButNotN() throws Exception {
-        assertEquals(25f, baseCounter2.getRatio('A'), 0.E-4f);
-        assertEquals(25f, baseCounter2.getRatio('T'), 0.E-4f);
-        assertEquals(25f, baseCounter2.getRatio('C'), 0.E-4f);
-        assertEquals(25f, baseCounter2.getRatio('G'), 0.E-4f);
+    public void testGetRatioCombinedButNotN() throws Exception {
+        assertEquals(0.25f, baseCounter2.getRatio('A'), 0.E-4f);
+        assertEquals(0.25f, baseCounter2.getRatio('T'), 0.E-4f);
+        assertEquals(0.25f, baseCounter2.getRatio('C'), 0.E-4f);
+        assertEquals(0.25f, baseCounter2.getRatio('G'), 0.E-4f);
         assertEquals(0f, baseCounter2.getRatio('N'), 0.E-4f);
 
     }
 
     @Test
-    public void testGetPercentageAllCombined() throws Exception {
-        assertEquals(13.513514f, baseCounter3.getRatio('A'), 0.E-4f);
-        assertEquals(18.918919f, baseCounter3.getRatio('T'), 0.E-4f);
-        assertEquals(27.027027f, baseCounter3.getRatio('C'), 0.E-4f);
-        assertEquals(5.4054055f, baseCounter3.getRatio('G'), 0.E-4f);
-        assertEquals(35.135136f, baseCounter3.getRatio('N'), 0.E-4f);
+    public void testGetRatioAllCombined() throws Exception {
+        assertEquals(0.13513513f, baseCounter3.getRatio('A'), 0.E-4f);
+        assertEquals(0.18918919f, baseCounter3.getRatio('T'), 0.E-4f);
+        assertEquals(0.27027027f, baseCounter3.getRatio('C'), 0.E-4f);
+        assertEquals(0.054054055f, baseCounter3.getRatio('G'), 0.E-4f);
+        assertEquals(0.35135136f, baseCounter3.getRatio('N'), 0.E-4f);
     }
 
     @Test

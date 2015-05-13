@@ -110,8 +110,8 @@ public class NodeTest {
      */
     @Test
     public void testPercentage() {
-        assertEquals(100f, node1.baseCounter.getRatio('A'), 0.0001);
-        assertEquals(33.33f, node2.baseCounter.getRatio('T'), 0.01);
+        assertEquals(1f, node1.baseCounter.getRatio('A'), 0.0001);
+        assertEquals(0.3333f, node2.baseCounter.getRatio('T'), 0.01);
     }
 
     /**
