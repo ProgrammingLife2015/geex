@@ -121,3 +121,10 @@
 #base {
     -fx-fill: #fff;
 }
+
+/* Node labels */
+.node-label-A{ -fx-fill: #e41a1c; }
+.node-label-T{ -fx-fill: #377eb8; }
+.node-label-C{ -fx-fill: #4daf4a; }
+.node-label-G{ -fx-fill: #984ea3; }
+.node-label-N{ -fx-fill: #ff7f00; }

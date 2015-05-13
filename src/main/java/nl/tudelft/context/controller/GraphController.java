@@ -8,20 +8,18 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.graph.BaseCounter;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
+import nl.tudelft.context.graph.NodeLabel;
 import nl.tudelft.context.service.LoadGraphService;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
-import static javafx.scene.layout.Priority.ALWAYS;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -38,7 +36,7 @@ public class GraphController extends DefaultController<ScrollPane> {
     protected MainController mainController;
     protected LoadGraphService loadGraphService;
 
-    protected static final int NODE_WIDTH = 60;
+    public static final int NODE_WIDTH = 60;
 
     /**
      * Init a controller at graph.fxml.
@@ -106,26 +104,21 @@ public class GraphController extends DefaultController<ScrollPane> {
         // Bind nodes
         List<VBox> nodeList = graph.vertexSet().stream()
                 .map(node -> {
-                    final VBox vbox = new VBox(0);
-                    final HBox hbox = new HBox(0);
-                    BaseCounter basecounter = node.getBaseCounter();
+                    final VBox vbox = new VBox();
+                    final HBox hbox = new HBox();
+                    final BaseCounter basecounter = node.getBaseCounter();
 
-                    double widthA = Math.floor(basecounter.getPercentage('A') * NODE_WIDTH);
-                    double widthT = Math.floor(basecounter.getPercentage('T') * NODE_WIDTH);
-                    double widthC = Math.floor(basecounter.getPercentage('C') * NODE_WIDTH);
-                    double widthG = Math.floor(basecounter.getPercentage('G') * NODE_WIDTH);
-                    double widthN = Math.floor(basecounter.getPercentage('N') * NODE_WIDTH);
+                    List<NodeLabel> nodeLabels = Arrays.asList('A', 'T', 'C', 'G', 'N').stream()
+                            .map(base -> new NodeLabel(base, basecounter.getRatio(base)))
+                            .collect(Collectors.toList());
 
-                    final Rectangle rectangleA = new Rectangle(widthA, 5, Color.web("#e41a1c"));
-                    final Rectangle rectangleT = new Rectangle(widthT, 5, Color.web("#377eb8"));
-                    final Rectangle rectangleC = new Rectangle(widthC, 5, Color.web("#4daf4a"));
-                    final Rectangle rectangleG = new Rectangle(widthG, 5, Color.web("#984ea3"));
-                    final Rectangle rectangleN = new Rectangle(widthN, 5, Color.web("#ff7f00"));
+                    nodeLabels.get(0).setWidth(
+                            nodeLabels.get(0).getWidth() + NODE_WIDTH - nodeLabels.stream().mapToInt(nodeLabel -> (int) nodeLabel.getWidth()).sum()
+                    );
+
+                    hbox.getChildren().addAll(nodeLabels);
+
                     final Label label = new Label(Integer.toString(node.getId()));
-                    hbox.setPrefWidth(NODE_WIDTH);
-                    HBox.setHgrow(rectangleN, ALWAYS);
-                    hbox.getChildren().addAll(rectangleA, rectangleT, rectangleC, rectangleG, rectangleN);
-
                     label.setCache(true);
                     label.setMaxWidth(NODE_WIDTH);
                     label.prefWidth(NODE_WIDTH);

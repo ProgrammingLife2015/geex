@@ -110,8 +110,8 @@ public class NodeTest {
      */
     @Test
     public void testPercentage() {
-        assertEquals(100f, node1.baseCounter.getPercentage('A'), 0.0001);
-        assertEquals(33.33f, node2.baseCounter.getPercentage('T'), 0.01);
+        assertEquals(100f, node1.baseCounter.getRatio('A'), 0.0001);
+        assertEquals(33.33f, node2.baseCounter.getRatio('T'), 0.01);
     }
 
     /**
@@ -121,8 +121,8 @@ public class NodeTest {
     public void testGetCounter() {
         BaseCounter baseCounter1 = new BaseCounter("A");
         BaseCounter baseCounter2 = new BaseCounter("ATC");
-        assertEquals(baseCounter1.getPercentage('A'), node1.getBaseCounter().getPercentage('A'), 0.0001);
-        assertEquals(baseCounter2.getPercentage('T'), node2.getBaseCounter().getPercentage('T'), 0.01);
+        assertEquals(baseCounter1.getRatio('A'), node1.getBaseCounter().getRatio('A'), 0.0001);
+        assertEquals(baseCounter2.getRatio('T'), node2.getBaseCounter().getRatio('T'), 0.01);
     }
 
 }
