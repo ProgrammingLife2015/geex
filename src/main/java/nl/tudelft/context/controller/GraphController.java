@@ -57,8 +57,6 @@ public class GraphController extends DefaultController<ScrollPane> {
      */
     public static final int NODE_SPACING = 50;
 
-    public static final int NODE_WIDTH = 60;
-
     /**
      * Init a controller at graph.fxml.
      *

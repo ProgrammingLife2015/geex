@@ -1,7 +1,6 @@
 package nl.tudelft.context.drawable;
 
 import javafx.scene.shape.Rectangle;
-import nl.tudelft.context.controller.GraphController;
 
 /**
  * @author Jasper on 13-5-2015.
@@ -14,7 +13,7 @@ public class BaseLabel extends Rectangle {
 
     public BaseLabel(char base, float ratio) {
 
-        super(Math.round(ratio * GraphController.NODE_WIDTH), BASE_HEIGHT);
+        super(Math.round(ratio * InfoLabel.LABEL_WIDTH), BASE_HEIGHT);
         getStyleClass().add("node-label-" + base);
 
     }
