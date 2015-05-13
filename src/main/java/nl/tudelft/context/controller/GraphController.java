@@ -2,11 +2,11 @@ package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tooltip;
+import javafx.scene.layout.VBox;
 import nl.tudelft.context.drawable.DrawableEdge;
+import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
@@ -151,18 +151,9 @@ public class GraphController extends DefaultController<ScrollPane> {
                 .collect(Collectors.toList());
 
         // Bind nodes
-        List<Label> nodeList = graph.vertexSet().stream()
-                .map(node -> {
-                    final Label label = new Label(Integer.toString(node.getId()));
-                    label.setCache(true);
-                    label.translateXProperty().bind(node.translateXProperty());
-                    label.translateYProperty().bind(node.translateYProperty());
-                    final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
-                    label.setTooltip(percentages);
-                    label.setOnMouseClicked(event ->
-                            mainController.setView(new BaseController(node.getContent()).getRoot()));
-                    return label;
-                }).collect(Collectors.toList());
+        List<VBox> nodeList = graph.vertexSet().stream()
+                .map(node -> new InfoLabel(mainController, node))
+                .collect(Collectors.toList());
 
         sequences.getChildren().addAll(edgeList);
         sequences.getChildren().addAll(nodeList);

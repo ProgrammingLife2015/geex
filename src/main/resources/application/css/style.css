@@ -112,9 +112,9 @@
     -fx-background-color: #e6b43a;
     -fx-cursor: hand;
     -fx-min-width: 60px;
-    -fx-min-height: 60px;
+    -fx-min-height: 55px;
     -fx-pref-width: 60px;
-    -fx-pref-height: 60px;
+    -fx-pref-height: 55px;
     -fx-alignment: center;
     -fx-font: 0.3cm 'Arial';
     -fx-text-fill: #2b2b2b;
@@ -154,3 +154,10 @@
 #base {
     -fx-fill: #fff;
 }
+
+/* Node labels */
+.node-label-A{ -fx-fill: #e41a1c; }
+.node-label-T{ -fx-fill: #377eb8; }
+.node-label-C{ -fx-fill: #4daf4a; }
+.node-label-G{ -fx-fill: #984ea3; }
+.node-label-N{ -fx-fill: #ff7f00; }
