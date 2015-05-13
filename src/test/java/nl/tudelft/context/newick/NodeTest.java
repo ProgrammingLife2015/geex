@@ -1,10 +1,7 @@
 package nl.tudelft.context.newick;
 
-import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
 import java.util.Collections;
 
 import static org.junit.Assert.*;
@@ -15,27 +12,6 @@ import static org.junit.Assert.*;
  * @since 06-05-2015
  */
 public class NodeTest {
-    public static NodeFactory nodeFactory;
-
-    /**
-     * Set up NodeFactory
-     */
-    @BeforeClass
-    public static void beforeClass() throws FileNotFoundException {
-        nodeFactory = new NodeFactory();
-    }
-
-    /**
-     * Test if a node is successfully created from a parserNode
-     */
-    @Test
-    public void testNodeCreation() {
-        TreeNode parserNode = new TreeNode();
-        parserNode.setName("");
-        parserNode.setWeight(1);
-        Node node = new Node("", 1);
-        assertEquals(node, nodeFactory.getNode(parserNode));
-    }
 
     /**
      * Test if a child is successfully set
@@ -53,7 +29,6 @@ public class NodeTest {
      */
     @Test
     public void testNotEqualsNull() {
-        //noinspection ObjectEqualsNull
         assertFalse(new Node("", 0).equals(null));
     }
 
@@ -62,7 +37,6 @@ public class NodeTest {
      */
     @Test
     public void testNotEqualsOtherObject() {
-        //noinspection EqualsBetweenInconvertibleTypes
         assertFalse(new Node("", 0).equals(""));
     }
 
