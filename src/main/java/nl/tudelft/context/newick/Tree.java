@@ -3,14 +3,18 @@ package nl.tudelft.context.newick;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import java.util.Optional;
-
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
  * @version 1.0
  * @since 3-5-2015
  */
 public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
+
+    /**
+     * The root of the tree.
+     */
+    private Node root;
+
     /**
      * Create a new Tree, with default edges.
      */
@@ -19,32 +23,36 @@ public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
     }
 
     /**
-     * Get the first node, with no incoming edges.
+     * Sets a node as the root of the tree.
      *
-     * @return first node
+     * @param n the root
      */
-    public Node getFirstNode() {
+    public void setRoot(final Node n) {
+        root = n;
+    }
 
-        Optional<Node> node = vertexSet().stream().filter(x -> this.inDegreeOf(x) == 0).findFirst();
-        return node.orElse(null);
-
+    /**
+     * Gets the root of the tree.
+     *
+     * @return the root
+     */
+    public Node getRoot() {
+        return root;
     }
 
     @Override
     public String toString() {
-        Node root = getFirstNode();
-        if (root != null) {
-            return toString(root, 0);
-        } else {
+        if (getRoot() == null) {
             return "";
         }
+        return toString(getRoot(), 0);
     }
 
     /**
-     * Create a String representation of the Tree.
-     * @param node The start node
-     * @param level The current level
-     * @return a String representation
+     * Recursive toString helper for the tree.
+     * @param node  the current node
+     * @param level the level of the tree
+     * @return      a string representation of the node
      */
     public String toString(final Node node, final int level) {
         StringBuilder res = new StringBuilder();

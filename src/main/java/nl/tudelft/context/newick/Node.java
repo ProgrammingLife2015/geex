@@ -2,6 +2,7 @@ package nl.tudelft.context.newick;
 
 import nl.tudelft.context.drawable.DrawableNode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @version 1.0
  * @since 3-5-2015
  */
-public final class Node extends DrawableNode {
+public final class Node extends DrawableNode implements Serializable {
     /**
      * The name of the Node.
      */
@@ -25,10 +26,19 @@ public final class Node extends DrawableNode {
     private List<Node> children;
 
     /**
-     * Create a new Node.
+     * Number used for a good hashCode value.
+     */
+    public static final int HASH_CONS = 37;
+    /**
+     * Number used for a good hashCode representation of longs.
+     */
+    public static final int LONG_CONS = 32;
+
+    /**
+     * Builds a new node with the corresponding name and weight.
      *
-     * @param name The name of the Node
-     * @param weight The weight of the Node
+     * @param name   the name of the node
+     * @param weight the weight (distance from parent) of the node
      */
     public Node(final String name, final double weight) {
         this.name = name;
@@ -37,35 +47,47 @@ public final class Node extends DrawableNode {
     }
 
     /**
-     * Add a new child to the Node.
-     * @param n The new child
+     * Adds a child to the node.
+     *
+     * @param n the node to add as a child
      */
     public void addChild(final Node n) {
         this.children.add(n);
     }
 
     /**
-     * Get the children of the Node.
-     * @return Children of the Node
+     * Gets all the children inside this node.
+     *
+     * @return the children
      */
     public List<Node> getChildren() {
         return children;
     }
 
     /**
-     * Get the name of the Node.
-     * @return Name of the Node
+     * Gets the name of this node.
+     *
+     * @return the name of this node
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Get the weight of the Node.
-     * @return Weight of the Node
+     * Gets the weight of this node.
+     *
+     * @return the weight of this node.
      */
     public double getWeight() {
         return weight;
+    }
+
+    /**
+     * Tells whether this node is an unknown ancestor or not.
+     * @return true if the node is an unknown ancestor; otherwise false
+     */
+    public boolean isUnknown() {
+        return this.name.equals("");
     }
 
     @Override
@@ -80,12 +102,12 @@ public final class Node extends DrawableNode {
 
     @Override
     public int hashCode() {
-        int result = 7;
+        int result = HASH_CONS;
 
-        result = 37 * result + getName().hashCode();
+        result = HASH_CONS * result + getName().hashCode();
         long c = Double.doubleToLongBits(getWeight());
 
-        return 37 * result + (int) (c ^ (c >>> 32));
+        return HASH_CONS * result + (int) (c ^ (c >>> LONG_CONS));
     }
 
     @Override
