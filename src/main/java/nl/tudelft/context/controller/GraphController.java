@@ -88,7 +88,7 @@ public class GraphController extends DefaultController<ScrollPane> {
     public final void initialize(final URL location, final ResourceBundle resources) {
 
         progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
-        loadGraphService.setOnSucceeded(event -> showGraph(loadGraphService.getValue()));
+        loadGraphService.setOnSucceeded(event -> showGraph(cleanGraph(loadGraphService.getValue())));
 
         loadGraph();
 
@@ -105,11 +105,12 @@ public class GraphController extends DefaultController<ScrollPane> {
     }
 
     /**
-     * Show graph with reference points.
+     * Clean the graph from sources that aren't shown.
      *
      * @param graph Graph to show
+     * @return Cleaned up graph
      */
-    private void showGraph(final Graph graph) {
+    private Graph cleanGraph(final Graph graph) {
 
         // Remove unnecessary edges
         graph.removeAllEdges(graph.edgeSet().stream()
@@ -125,6 +126,17 @@ public class GraphController extends DefaultController<ScrollPane> {
         graph.removeAllVertices(graph.vertexSet().stream()
                 .filter(vertex -> !CollectionUtils.containsAny(vertex.getSources(), sources))
                 .collect(Collectors.toList()));
+
+        return graph;
+
+    }
+
+    /**
+     * Show graph with reference points.
+     *
+     * @param graph Graph to show
+     */
+    private void showGraph(final Graph graph) {
 
         List<Node> start = graph.getFirstNodes();
 
