@@ -10,8 +10,19 @@ import javafx.beans.value.ObservableDoubleValue;
  */
 public class DrawableNode {
 
+    /**
+     * The current number of incoming nodes. set to 0.
+     */
     int currentIncoming = 0;
+
+    /**
+     * Translation in the direction of the X axis.
+     */
     SimpleDoubleProperty translateX = new SimpleDoubleProperty(0);
+
+    /**
+     * Translation in the direction of the Y axis.
+     */
     SimpleDoubleProperty translateY = new SimpleDoubleProperty(0);
 
     /**
