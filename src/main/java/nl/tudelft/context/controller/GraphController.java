@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import static javafx.scene.layout.Priority.ALWAYS;
+
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
@@ -108,11 +110,11 @@ public class GraphController extends DefaultController<ScrollPane> {
                     final HBox hbox = new HBox(0);
                     BaseCounter basecounter = node.getBaseCounter();
 
-                    double widthA = Math.round(basecounter.getPercentage('A') * NODE_WIDTH);
-                    double widthT = Math.round(basecounter.getPercentage('T') * NODE_WIDTH);
-                    double widthC = Math.round(basecounter.getPercentage('C') * NODE_WIDTH);
-                    double widthG = Math.round(basecounter.getPercentage('G') * NODE_WIDTH);
-                    double widthN = Math.round(basecounter.getPercentage('N') * NODE_WIDTH);
+                    double widthA = Math.floor(basecounter.getPercentage('A') * NODE_WIDTH);
+                    double widthT = Math.floor(basecounter.getPercentage('T') * NODE_WIDTH);
+                    double widthC = Math.floor(basecounter.getPercentage('C') * NODE_WIDTH);
+                    double widthG = Math.floor(basecounter.getPercentage('G') * NODE_WIDTH);
+                    double widthN = Math.floor(basecounter.getPercentage('N') * NODE_WIDTH);
 
                     final Rectangle rectangleA = new Rectangle(widthA, 5, Color.web("#e41a1c"));
                     final Rectangle rectangleT = new Rectangle(widthT, 5, Color.web("#377eb8"));
@@ -120,9 +122,11 @@ public class GraphController extends DefaultController<ScrollPane> {
                     final Rectangle rectangleG = new Rectangle(widthG, 5, Color.web("#984ea3"));
                     final Rectangle rectangleN = new Rectangle(widthN, 5, Color.web("#ff7f00"));
                     final Label label = new Label(Integer.toString(node.getId()));
+                    hbox.setPrefWidth(NODE_WIDTH);
+                    HBox.setHgrow(rectangleN, ALWAYS);
                     hbox.getChildren().addAll(rectangleA, rectangleT, rectangleC, rectangleG, rectangleN);
+
                     label.setCache(true);
-                    label.setMinWidth(NODE_WIDTH);
                     label.setMaxWidth(NODE_WIDTH);
                     label.prefWidth(NODE_WIDTH);
                     vbox.setCache(true);
