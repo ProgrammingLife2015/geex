@@ -22,7 +22,7 @@ public class BaseLabel extends Rectangle {
      */
     public  BaseLabel(final char base, final float ratio) {
 
-        super(Math.round(ratio * InfoLabel.LABEL_WIDTH), BASE_HEIGHT);
+        super(ratio * InfoLabel.LABEL_WIDTH, BASE_HEIGHT);
         getStyleClass().add("node-label-" + base);
 
     }

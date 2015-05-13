@@ -156,6 +156,14 @@
 }
 
 /* Node labels */
+.node-label-A,
+.node-label-T,
+.node-label-C,
+.node-label-G,
+.node-label-N {
+    -fx-cursor: hand;
+}
+
 .node-label-A{ -fx-fill: #e41a1c; }
 .node-label-T{ -fx-fill: #377eb8; }
 .node-label-C{ -fx-fill: #4daf4a; }
