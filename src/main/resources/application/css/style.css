@@ -110,12 +110,12 @@
 
 #newick .label {
     -fx-background-color: transparent;
-    -fx-min-width: 60px;
-    -fx-min-height: 60px;
+    -fx-min-height: 20px;
     -fx-alignment: center;
     -fx-font: 0.3cm 'Arial';
     -fx-text-fill: #ffffff;
     -fx-border-color: transparent;
+    -fx-cursor: hand;
 }
 
 /* Base */

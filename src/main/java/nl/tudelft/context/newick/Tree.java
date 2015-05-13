@@ -37,6 +37,13 @@ public class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
             return "";
         }
     }
+
+    /**
+     * Recursive toString helper for the tree.
+     * @param node  the current node
+     * @param level the level of the tree
+     * @return      a string representation of the node
+     */
     public String toString(Node node, int level) {
         StringBuilder res = new StringBuilder();
         res.append(new String(new char[level]).replace("\0", "\t"));
