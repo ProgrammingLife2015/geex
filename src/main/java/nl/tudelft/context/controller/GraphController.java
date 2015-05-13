@@ -2,21 +2,16 @@ package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.tudelft.context.drawable.DrawableEdge;
-import nl.tudelft.context.graph.BaseCounter;
+import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
-import nl.tudelft.context.graph.NodeLabel;
 import nl.tudelft.context.service.LoadGraphService;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -100,37 +95,10 @@ public class GraphController extends DefaultController<ScrollPane> {
                 .map(edge -> new DrawableEdge(graph, edge))
                 .collect(Collectors.toList());
 
-
         // Bind nodes
         List<VBox> nodeList = graph.vertexSet().stream()
-                .map(node -> {
-                    final VBox vbox = new VBox();
-                    final HBox hbox = new HBox();
-                    final BaseCounter basecounter = node.getBaseCounter();
-
-                    List<NodeLabel> nodeLabels = Arrays.asList('A', 'T', 'C', 'G', 'N').stream()
-                            .map(base -> new NodeLabel(base, basecounter.getRatio(base)))
-                            .collect(Collectors.toList());
-
-                    nodeLabels.get(0).setWidth(
-                            nodeLabels.get(0).getWidth() + NODE_WIDTH - nodeLabels.stream().mapToInt(nodeLabel -> (int) nodeLabel.getWidth()).sum()
-                    );
-
-                    hbox.getChildren().addAll(nodeLabels);
-
-                    final Label label = new Label(Integer.toString(node.getId()));
-                    label.setCache(true);
-                    label.setMaxWidth(NODE_WIDTH);
-                    label.prefWidth(NODE_WIDTH);
-                    vbox.setCache(true);
-                    vbox.getChildren().addAll(label, hbox);
-                    vbox.translateXProperty().bind(node.translateXProperty());
-                    vbox.translateYProperty().bind(node.translateYProperty());
-                    final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
-                    label.setTooltip(percentages);
-                    label.setOnMouseClicked(event -> mainController.setView(new BaseController(node.getContent()).getRoot()));
-                    return vbox;
-                }).collect(Collectors.toList());
+                .map(node -> new InfoLabel(mainController, node))
+                .collect(Collectors.toList());
 
 
         sequences.getChildren().addAll(edgeList);
