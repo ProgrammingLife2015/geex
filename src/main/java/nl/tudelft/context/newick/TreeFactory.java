@@ -31,7 +31,7 @@ public final class TreeFactory {
     /**
      * Child nodes are at least MIN_WEIGHT pixels moved from their parent.
      */
-    public static final int MIN_WEIGHT = 20;
+    public static final int MIN_WEIGHT = 30;
 
     /**
      * Creates a new phylogenetic tree, based on the information in the Newick file.
