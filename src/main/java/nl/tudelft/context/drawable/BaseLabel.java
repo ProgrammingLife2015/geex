@@ -9,9 +9,18 @@ import javafx.scene.shape.Rectangle;
  */
 public class BaseLabel extends Rectangle {
 
+    /**
+     * Set the height of a base label.
+     */
     public static final int BASE_HEIGHT = 5;
 
-    public BaseLabel(char base, float ratio) {
+    /**
+     * Constructor for the BaseLabel.
+     *
+     * @param base char indicating the applicable base.
+     * @param ratio the ratio of the representation of base in the total.
+     */
+    public  BaseLabel(final char base, final float ratio) {
 
         super(Math.round(ratio * InfoLabel.LABEL_WIDTH), BASE_HEIGHT);
         getStyleClass().add("node-label-" + base);

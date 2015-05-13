@@ -19,12 +19,22 @@ import java.util.stream.Collectors;
  * @since 13-5-2015
  */
 public class InfoLabel extends VBox {
-
+    /**
+     * The node the InfoLabel belongs to.
+     */
     Node node;
 
+    /**
+     * The width of the InfoLabel.
+     */
     public static final int LABEL_WIDTH = 60;
 
-    public InfoLabel(MainController mainController, Node node) {
+    /**
+     * Constructor for the InfoLabel.
+     * @param mainController MainController indicating the controller.
+     * @param node Node indicating the node.
+     */
+    public InfoLabel(final MainController mainController, final Node node) {
 
         this.node = node;
 
@@ -39,6 +49,9 @@ public class InfoLabel extends VBox {
 
     }
 
+    /**
+     * Initialise the Label without the BaseLabels shown.
+     */
     private void initMainLabel() {
 
         final Label label = new Label(Integer.toString(node.getId()));
@@ -51,6 +64,9 @@ public class InfoLabel extends VBox {
 
     }
 
+    /**
+     * Initialise the BaseLabels.
+     */
     private void initBaseLabels() {
 
         final HBox hbox = new HBox();
