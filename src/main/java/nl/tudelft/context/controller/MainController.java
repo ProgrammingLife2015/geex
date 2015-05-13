@@ -138,8 +138,6 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
-
-        // TODO: don't do this, for testing purposes only.
-        this.setBaseView(new GraphController(this, workspace.getGraphList().get(0)).getRoot());
     }
+    
 }
