@@ -51,6 +51,7 @@ public final class MenuController extends MenuBar {
             workspace.walk();
             workspace.load();
             mainController.setWorkspace(workspace);
+            mainController.setBaseView(new NewickController(mainController).getRoot());
         });
 
         MenuItem exit = new MenuItem("Exit");
