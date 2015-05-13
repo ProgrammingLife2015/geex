@@ -10,9 +10,18 @@ import java.util.List;
  * @version 1.0
  * @since 3-5-2015
  */
-public class Node extends DrawableNode {
+public final class Node extends DrawableNode {
+    /**
+     * The name of the Node.
+     */
     private final String name;
-    private double weight;
+    /**
+     * The weight of the Node.
+     */
+    private final double weight;
+    /**
+     * The children of the Node.
+     */
     private List<Node> children;
 
     /**
@@ -21,7 +30,7 @@ public class Node extends DrawableNode {
      * @param name   the name of the node
      * @param weight the weight (distance from parent) of the node
      */
-    public Node(String name, double weight) {
+    public Node(final String name, final double weight) {
         this.name = name;
         this.weight = weight;
         children = new ArrayList<>(2);
@@ -32,7 +41,7 @@ public class Node extends DrawableNode {
      *
      * @param n the node to add as a child
      */
-    public void addChild(Node n) {
+    public void addChild(final Node n) {
         this.children.add(n);
     }
 
@@ -72,13 +81,23 @@ public class Node extends DrawableNode {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (other == null || !(other instanceof Node)) {
             return false;
         }
-        Node that = (Node)other;
-        return getName().equals(that.getName()) &&
-                getWeight() == that.getWeight();
+        Node that = (Node) other;
+        return getName().equals(that.getName())
+                && getWeight() == that.getWeight();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 7;
+
+        result = 37 * result + getName().hashCode();
+        long c = Double.doubleToLongBits(getWeight());
+
+        return 37 * result + (int) (c ^ (c >>> 32));
     }
 
     @Override

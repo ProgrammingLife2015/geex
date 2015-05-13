@@ -14,14 +14,18 @@ import java.io.File;
  * @version 1.0
  * @since 8-5-2015
  */
-public class MenuController extends MenuBar {
-
-    protected MainController mainController;
+public final class MenuController extends MenuBar {
+    /**
+     * Reference to the MainController of the application.
+     */
+    MainController mainController;
 
     /**
      * Create a new menu.
+     *
+     * @param mainController The MainController of the application.
      */
-    public MenuController(MainController mainController) {
+    public MenuController(final MainController mainController) {
 
         this.mainController = mainController;
 
@@ -68,12 +72,21 @@ public class MenuController extends MenuBar {
 
     }
 
+    /**
+     * Create the workspace menu in the top menu.
+     */
     private void initWorkspaceMenu() {
         final Menu menuWorkspace = new Menu("Workspace");
         MenuItem loadGraph = new MenuItem("Load first graph");
-        loadGraph.setOnAction(event -> mainController.setBaseView(new GraphController(mainController, mainController.getWorkspace().getGraphList().get(0)).getRoot()));
+        loadGraph.setOnAction(event ->
+                mainController.setBaseView(
+                        new GraphController(
+                                mainController,
+                                mainController.getWorkspace().getGraphList().get(0)).getRoot()));
         MenuItem loadNewick = new MenuItem("Load first newick");
-        loadNewick.setOnAction(event -> mainController.setBaseView(new NewickController(mainController, mainController.getWorkspace().getNewickList().get(0)).getRoot()));
+        loadNewick.setOnAction(
+                event -> mainController.setBaseView(
+                        new NewickController(mainController.getWorkspace().getNewickList().get(0)).getRoot()));
         menuWorkspace.getItems().addAll(loadGraph, loadNewick);
         getMenus().add(menuWorkspace);
     }

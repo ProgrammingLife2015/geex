@@ -16,22 +16,34 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 26-4-2015
  */
-public class LoadGraphController extends DefaultController<GridPane> {
+public final class LoadGraphController extends DefaultController<GridPane> {
 
+    /**
+     * Buttons for showing filechoosers and loading the graph.
+     */
     @FXML
-    protected Button
+    Button
             loadNodes,
             loadEdges,
             load;
 
+    /**
+     * Textfields pointing to the source files.
+     */
     @FXML
-    protected TextField
+    TextField
             nodeSource,
             edgeSource;
 
-    protected MainController mainController;
+    /**
+     * Reference to the MainController of the application.
+     */
+    MainController mainController;
 
-    protected File
+    /**
+     * Files containing graph information.
+     */
+    File
             nodeFile,
             edgeFile;
 
@@ -40,7 +52,7 @@ public class LoadGraphController extends DefaultController<GridPane> {
      *
      * @param mainController    main controller to set view
      */
-    public LoadGraphController(MainController mainController) {
+    public LoadGraphController(final MainController mainController) {
 
         super(new GridPane());
 
@@ -60,7 +72,7 @@ public class LoadGraphController extends DefaultController<GridPane> {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
 
         FileChooser nodeFileChooser = new FileChooser();
         nodeFileChooser.setTitle("Open node file");
@@ -71,7 +83,9 @@ public class LoadGraphController extends DefaultController<GridPane> {
         loadEdges.setOnAction(event -> edgeFile = loadFile(edgeFileChooser, edgeSource));
 
         load.setOnAction(event -> {
-            GraphController graphController = new GraphController(mainController, new LoadGraphService(nodeFile, edgeFile));
+            GraphController graphController = new GraphController(
+                    mainController,
+                    new LoadGraphService(nodeFile, edgeFile));
             mainController.setBaseView(graphController.getRoot());
         });
 

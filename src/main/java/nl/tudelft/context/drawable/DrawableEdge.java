@@ -20,7 +20,7 @@ public class DrawableEdge extends Line {
      * @param graph graph that contains edge
      * @param edge  edge to bind and display
      */
-    public DrawableEdge(Graph graph, DefaultEdge edge) {
+    public DrawableEdge(final Graph graph, final DefaultEdge edge) {
 
         initialize(graph, edge);
 
@@ -35,7 +35,7 @@ public class DrawableEdge extends Line {
      * @param tree graph that contains edge
      * @param edge edge to bind and display
      */
-    public DrawableEdge(Tree tree, DefaultEdge edge) {
+    public DrawableEdge(final Tree tree, final DefaultEdge edge) {
 
         initialize(tree, edge);
 

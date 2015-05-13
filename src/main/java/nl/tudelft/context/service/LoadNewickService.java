@@ -8,23 +8,25 @@ import nl.tudelft.context.newick.TreeFactory;
 import java.io.File;
 
 /**
+ * Service for loading a Newick tree.
+ *
  * @author Jasper Boot <mrjasperboot@gmail.com>
  * @version 1.0
  * @since 28-4-2015
  */
-public class LoadNewickService extends Service<Tree> {
+public final class LoadNewickService extends Service<Tree> {
 
-    protected File nwkFile;
-
-    public LoadNewickService() {
-    }
+    /**
+     * The file containing the newick tree.
+     */
+    File nwkFile;
 
     /**
      * Set nwk file.
      *
      * @param nwkFile nwk file location
      */
-    public LoadNewickService(File nwkFile) {
+    public LoadNewickService(final File nwkFile) {
 
         this.nwkFile = nwkFile;
 

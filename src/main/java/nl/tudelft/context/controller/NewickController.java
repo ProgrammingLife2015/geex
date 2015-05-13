@@ -18,24 +18,27 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 8-5-2015
  */
-public class NewickController extends DefaultController<ScrollPane> {
+public final class NewickController extends DefaultController<ScrollPane> {
 
+    /**
+     * The container of the newick tree.
+     */
     @FXML
-    protected Group newick;
+    Group newick;
 
-    protected MainController mainController;
-    protected LoadNewickService loadNewickService;
+    /**
+     * The service used for loading the newick tree.
+     */
+    LoadNewickService loadNewickService;
 
     /**
      * Init a controller at newick.fxml.
      *
      * @param loadNewickService service with file locations
      */
-    public NewickController(MainController mainController, LoadNewickService loadNewickService) {
+    public NewickController(final LoadNewickService loadNewickService) {
 
         super(new ScrollPane());
-
-        this.mainController = mainController;
         this.loadNewickService = loadNewickService;
 
         loadFXML("/application/newick.fxml");
@@ -52,7 +55,7 @@ public class NewickController extends DefaultController<ScrollPane> {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
 
         loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
 
@@ -75,7 +78,7 @@ public class NewickController extends DefaultController<ScrollPane> {
      *
      * @param tree newick to show
      */
-    protected void showTree(Tree tree) {
+    protected void showTree(final Tree tree) {
 
         // Bind edges
         List<DrawableEdge> edgeList = tree.edgeSet().stream()

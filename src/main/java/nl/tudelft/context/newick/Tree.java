@@ -10,7 +10,10 @@ import java.util.Optional;
  * @version 1.0
  * @since 3-5-2015
  */
-public class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
+public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
+    /**
+     * Create a new Tree, with default edges.
+     */
     public Tree() {
         super(DefaultEdge.class);
     }
@@ -29,7 +32,6 @@ public class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder("");
         Node root = getFirstNode();
         if (root != null) {
             return toString(root, 0);
