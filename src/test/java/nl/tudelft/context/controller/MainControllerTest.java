@@ -1,14 +1,18 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
-import javafx.scene.layout.GridPane;
+import nl.tudelft.context.service.LoadGraphService;
+import nl.tudelft.context.service.LoadNewickService;
+import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
+import java.util.Collections;
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -19,6 +23,7 @@ import static org.junit.Assert.assertThat;
 public class MainControllerTest {
 
     protected static MainController mainController;
+    protected static Workspace workspace;
 
     /**
      * Setup Main Controller.
@@ -28,16 +33,10 @@ public class MainControllerTest {
 
         mainController = new MainController();
 
-    }
+        workspace = mock(Workspace.class);
 
-    /**
-     * Check if controllers are added.
-     */
-    @Test
-    public void testLeft() {
-
-        assertThat(mainController.control.getChildren().get(0), instanceOf(GridPane.class));
-        assertThat(mainController.control.getChildren().get(1), instanceOf(GridPane.class));
+        when(workspace.getGraphList()).thenReturn(Collections.singletonList(mock(LoadGraphService.class)));
+        when(workspace.getNewickList()).thenReturn(Collections.singletonList(mock(LoadNewickService.class)));
 
     }
 
@@ -58,17 +57,18 @@ public class MainControllerTest {
     public void testTopViewList() {
 
         MainController mc = new MainController();
+        mc.setWorkspace(workspace);
 
         BaseController baseController = new BaseController("ATCG");
-        LoadGraphController loadGraphController = new LoadGraphController(mc);
+        NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());
         assertEquals(baseController.getRoot(), mc.viewList.peek());
         assertEquals(baseController.getRoot(), mc.view.getChildren().get(0));
 
-        mc.setView(loadGraphController.getRoot());
-        assertEquals(loadGraphController.getRoot(), mc.viewList.peek());
-        assertEquals(loadGraphController.getRoot(), mc.view.getChildren().get(1));
+        mc.setView(newickController.getRoot());
+        assertEquals(newickController.getRoot(), mc.viewList.peek());
+        assertEquals(newickController.getRoot(), mc.view.getChildren().get(1));
 
     }
 
@@ -79,12 +79,14 @@ public class MainControllerTest {
     public void testPreviousView() {
 
         MainController mc = new MainController();
+        mc.setWorkspace(workspace);
+
 
         BaseController baseController = new BaseController("ATCG");
-        LoadGraphController loadGraphController = new LoadGraphController(mc);
+        NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());
-        mc.setView(loadGraphController.getRoot());
+        mc.setView(newickController.getRoot());
 
         mc.previousView();
 
@@ -100,12 +102,14 @@ public class MainControllerTest {
     public void testEmptyViewList() {
 
         MainController mc = new MainController();
+        mc.setWorkspace(workspace);
+
 
         BaseController baseController = new BaseController("ATCG");
-        LoadGraphController loadGraphController = new LoadGraphController(mc);
+        NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());
-        mc.setView(loadGraphController.getRoot());
+        mc.setView(newickController.getRoot());
 
         mc.previousView();
         mc.previousView();
@@ -122,12 +126,13 @@ public class MainControllerTest {
     public void setBaseViewSize() {
 
         MainController mc = new MainController();
+        mc.setWorkspace(workspace);
 
         BaseController baseController = new BaseController("ATCG");
-        LoadGraphController loadGraphController = new LoadGraphController(mc);
+        NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());
-        mc.setView(loadGraphController.getRoot());
+        mc.setView(newickController.getRoot());
         mc.setBaseView(baseController.getRoot());
 
         assertEquals(1, mc.viewList.size());

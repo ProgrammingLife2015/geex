@@ -4,7 +4,9 @@ import nl.tudelft.context.drawable.DrawableNode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -24,15 +26,6 @@ public final class Node extends DrawableNode implements Serializable {
      * The children of the Node.
      */
     private List<Node> children;
-
-    /**
-     * Number used for a good hashCode value.
-     */
-    public static final int HASH_CONS = 37;
-    /**
-     * Number used for a good hashCode representation of longs.
-     */
-    public static final int LONG_CONS = 32;
 
     /**
      * Builds a new node with the corresponding name and weight.
@@ -90,28 +83,43 @@ public final class Node extends DrawableNode implements Serializable {
         return this.name.equals("");
     }
 
+    /**
+     * Gets the sources for the graph from this node and its children.
+     *
+     * @return name of this node and it's children
+     */
+    public Set<String> getSources() {
+
+        Set<String> sources = new HashSet<>();
+
+        if (!name.isEmpty()) {
+            sources.add(name);
+        }
+
+        children.forEach(node -> sources.addAll(node.getSources()));
+
+        return sources;
+
+    }
+
     @Override
     public boolean equals(final Object other) {
         if (other == null || !(other instanceof Node)) {
             return false;
         }
         Node that = (Node) other;
-        return getName().equals(that.getName())
-                && getWeight() == that.getWeight();
+        return name.equals(that.name)
+                && weight == that.weight;
     }
 
     @Override
     public int hashCode() {
-        int result = HASH_CONS;
-
-        result = HASH_CONS * result + getName().hashCode();
-        long c = Double.doubleToLongBits(getWeight());
-
-        return HASH_CONS * result + (int) (c ^ (c >>> LONG_CONS));
+        long c = Double.doubleToLongBits(weight);
+        return 37 * name.hashCode() + (int) (c ^ (c >>> 32));
     }
 
     @Override
     public String toString() {
-        return "Node<" + getName() + "," + getWeight() + ">";
+        return "Node<" + name + "," + weight + ">";
     }
 }

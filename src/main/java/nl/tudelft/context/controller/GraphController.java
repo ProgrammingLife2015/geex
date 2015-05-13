@@ -10,10 +10,12 @@ import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -28,6 +30,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      */
     @FXML
     ProgressIndicator progressIndicator;
+
     /**
      * The container for the graph.
      */
@@ -38,28 +41,35 @@ public class GraphController extends DefaultController<ScrollPane> {
      * Reference to the MainController of the app.
      */
     MainController mainController;
+
     /**
      * The service for loading the Graph.
      */
     LoadGraphService loadGraphService;
 
     /**
+     * Sources that are displayed in the graph.
+     */
+    Set<String> sources;
+
+    /**
      * Define the amount of the shift.
      */
-    public static final int SHIFT_AMOUNT = 50;
+    public static final int NODE_SPACING = 50;
 
     /**
      * Init a controller at graph.fxml.
      *
-     * @param mainController   MainController for the application
-     * @param loadGraphService service with file locations
+     * @param mainController MainController for the application
+     * @param sources        Sources to display
      */
-    public GraphController(final MainController mainController, final LoadGraphService loadGraphService) {
+    public GraphController(final MainController mainController, final Set<String> sources) {
 
         super(new ScrollPane());
 
         this.mainController = mainController;
-        this.loadGraphService = loadGraphService;
+        this.sources = sources;
+        this.loadGraphService = mainController.getWorkspace().getGraphList().get(0);
 
         loadFXML("/application/graph.fxml");
 
@@ -78,7 +88,7 @@ public class GraphController extends DefaultController<ScrollPane> {
     public final void initialize(final URL location, final ResourceBundle resources) {
 
         progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
-        loadGraphService.setOnSucceeded(event -> showGraph(loadGraphService.getValue()));
+        loadGraphService.setOnSucceeded(event -> showGraph(cleanGraph(loadGraphService.getValue())));
 
         loadGraph();
 
@@ -91,6 +101,33 @@ public class GraphController extends DefaultController<ScrollPane> {
 
         sequences.getChildren().clear();
         loadGraphService.restart();
+
+    }
+
+    /**
+     * Clean the graph from sources that aren't shown.
+     *
+     * @param graph Graph to show
+     * @return Cleaned up graph
+     */
+    private Graph cleanGraph(final Graph graph) {
+
+        // Remove unnecessary edges
+        graph.removeAllEdges(graph.edgeSet().stream()
+                .filter(edge -> {
+                    Node source = graph.getEdgeSource(edge);
+                    Node target = graph.getEdgeTarget(edge);
+                    return !CollectionUtils.containsAny(source.getSources(), sources)
+                            || !CollectionUtils.containsAny(target.getSources(), sources);
+                })
+                .collect(Collectors.toList()));
+
+        // Remove unnecessary nodes
+        graph.removeAllVertices(graph.vertexSet().stream()
+                .filter(vertex -> !CollectionUtils.containsAny(vertex.getSources(), sources))
+                .collect(Collectors.toList()));
+
+        return graph;
 
     }
 
@@ -160,7 +197,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      * @param column column to draw at
      */
     private void showNodes(final List<Node> nodes, final int column) {
-        int shift = nodes.size() * SHIFT_AMOUNT;
+        int shift = nodes.size() * NODE_SPACING;
         int row = 0;
         for (Node node : nodes) {
 

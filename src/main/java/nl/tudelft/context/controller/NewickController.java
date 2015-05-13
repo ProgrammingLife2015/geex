@@ -27,6 +27,11 @@ public final class NewickController extends DefaultController<ScrollPane> {
     Group newick;
 
     /**
+     * The main controller used to set views.
+     */
+    MainController mainController;
+
+    /**
      * The service used for loading the newick tree.
      */
     LoadNewickService loadNewickService;
@@ -34,12 +39,14 @@ public final class NewickController extends DefaultController<ScrollPane> {
     /**
      * Init a controller at newick.fxml.
      *
-     * @param loadNewickService service with file locations
+     * @param mainController   MainController for the application
      */
-    public NewickController(final LoadNewickService loadNewickService) {
+    public NewickController(final MainController mainController) {
 
         super(new ScrollPane());
-        this.loadNewickService = loadNewickService;
+
+        this.mainController = mainController;
+        this.loadNewickService = mainController.getWorkspace().getNewickList().get(0);
 
         loadFXML("/application/newick.fxml");
 
@@ -95,6 +102,8 @@ public final class NewickController extends DefaultController<ScrollPane> {
                     if (node.isUnknown()) {
                         label.getStyleClass().add("ancestor");
                     }
+                    label.setOnMouseClicked(event ->
+                            mainController.setView(new GraphController(mainController, node.getSources()).getRoot()));
                     return label;
                 }).collect(Collectors.toList());
 

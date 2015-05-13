@@ -14,7 +14,7 @@ import java.io.File;
  * @version 1.0
  * @since 25-4-2015
  */
-public final class LoadGraphService extends Service<Graph> {
+public class LoadGraphService extends Service<Graph> {
 
     /**
      * File containing node information.
@@ -44,7 +44,7 @@ public final class LoadGraphService extends Service<Graph> {
      * @return the Task to execute
      */
     @Override
-    protected Task<Graph> createTask() {
+    protected final Task<Graph> createTask() {
 
         return new Task<Graph>() {
             @Override
