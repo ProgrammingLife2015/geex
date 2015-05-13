@@ -3,8 +3,6 @@ package nl.tudelft.context.newick;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import java.util.Optional;
-
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
  * @version 1.0
@@ -12,6 +10,9 @@ import java.util.Optional;
  */
 public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
 
+    /**
+     * The root of the tree.
+     */
     private Node root;
 
     /**
@@ -26,7 +27,7 @@ public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
      *
      * @param n the root
      */
-    public void setRoot(Node n) {
+    public void setRoot(final Node n) {
         root = n;
     }
 
@@ -41,12 +42,10 @@ public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     @Override
     public String toString() {
-        Node root = getRoot();
-        if (root != null) {
-            return toString(root, 0);
-        } else {
+        if (getRoot() == null) {
             return "";
         }
+        return toString(getRoot(), 0);
     }
 
     /**
@@ -55,7 +54,7 @@ public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
      * @param level the level of the tree
      * @return      a string representation of the node
      */
-    public String toString(Node node, int level) {
+    public String toString(final Node node, final int level) {
         StringBuilder res = new StringBuilder();
         res.append(new String(new char[level]).replace("\0", "\t"));
         res.append(node.toString() + "\n");

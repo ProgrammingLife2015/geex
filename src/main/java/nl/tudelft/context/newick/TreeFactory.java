@@ -16,10 +16,22 @@ import java.io.UnsupportedEncodingException;
  * @since 3-5-2015
  */
 public final class TreeFactory {
-    public NodeFactory nodeFactory = new NodeFactory();
-    final int ROW_HEIGHT = 20;
-    final double WEIGHT_SCALE = 5e4;
-    final int MIN_WEIGHT = 20;
+    /**
+     * The node factory.
+     */
+    private NodeFactory nodeFactory = new NodeFactory();
+    /**
+     * The vertical distances between nodes.
+     */
+    public static final int ROW_HEIGHT = 20;
+    /**
+     * The weights are scaled with this factor to make relative weights noticeable.
+     */
+    public static final double WEIGHT_SCALE = 5e4;
+    /**
+     * Child nodes are at least MIN_WEIGHT pixels moved from their parent.
+     */
+    public static final int MIN_WEIGHT = 20;
 
     /**
      * Creates a new phylogenetic tree, based on the information in the Newick file.
@@ -71,11 +83,11 @@ public final class TreeFactory {
 
         int ret = row;
 
-        boolean hasChildren = false;
+        int addRow = 0;
         for (int i = 0; i < node.numberLeaves; i += 1) {
             TreeNode child = node.getChild(i);
             if (child != null) {
-                hasChildren = true;
+                addRow = 1;
                 Node n = createNode(child, parent, ret);
                 ret = getOffspring(child, n, tree, ret);
                 parent.addChild(n);
@@ -87,7 +99,7 @@ public final class TreeFactory {
             }
         }
 
-        return ret + (hasChildren ? 0 : 1);
+        return ret + addRow;
     }
 
     /**
@@ -98,7 +110,7 @@ public final class TreeFactory {
      * @param row    the current row (depth) of the node
      * @return       the node as a Node
      */
-    public Node createNode(TreeNode child, Node parent, int row) {
+    public Node createNode(final TreeNode child, final Node parent, final int row) {
         Node n = nodeFactory.getNode(child);
         double x = parent.translateXProperty().doubleValue() + MIN_WEIGHT + WEIGHT_SCALE * n.getWeight();
         n.setTranslateX(x);
@@ -114,7 +126,7 @@ public final class TreeFactory {
      * @param n      the node
      * @param tree   the tree to add the dummy to
      */
-    public void addDummy(Node parent, Node n, Tree tree) {
+    public void addDummy(final Node parent, final Node n, final Tree tree) {
         Node dummy = new Node("", 0);
         dummy.setTranslateX(parent.translateXProperty().doubleValue());
         dummy.setTranslateY(n.translateYProperty().doubleValue());

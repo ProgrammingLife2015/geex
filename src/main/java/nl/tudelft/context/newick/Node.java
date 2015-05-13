@@ -2,6 +2,7 @@ package nl.tudelft.context.newick;
 
 import nl.tudelft.context.drawable.DrawableNode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @version 1.0
  * @since 3-5-2015
  */
-public final class Node extends DrawableNode {
+public final class Node extends DrawableNode implements Serializable {
     /**
      * The name of the Node.
      */
@@ -23,6 +24,15 @@ public final class Node extends DrawableNode {
      * The children of the Node.
      */
     private List<Node> children;
+
+    /**
+     * Number used for a good hashCode value.
+     */
+    public static final int HASH_CONS = 37;
+    /**
+     * Number used for a good hashCode representation of longs.
+     */
+    public static final int LONG_CONS = 32;
 
     /**
      * Builds a new node with the corresponding name and weight.
@@ -92,12 +102,12 @@ public final class Node extends DrawableNode {
 
     @Override
     public int hashCode() {
-        int result = 7;
+        int result = HASH_CONS;
 
-        result = 37 * result + getName().hashCode();
+        result = HASH_CONS * result + getName().hashCode();
         long c = Double.doubleToLongBits(getWeight());
 
-        return 37 * result + (int) (c ^ (c >>> 32));
+        return HASH_CONS * result + (int) (c ^ (c >>> LONG_CONS));
     }
 
     @Override

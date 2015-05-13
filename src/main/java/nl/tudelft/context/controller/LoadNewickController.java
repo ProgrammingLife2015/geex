@@ -43,8 +43,7 @@ public final class LoadNewickController extends DefaultController<GridPane> {
     /**
      * The newick file containing the tree.
      */
-    File
-            nwkFile;
+    File nwkFile;
 
     /**
      * Init a controller at load_newick.fxml.
@@ -74,7 +73,7 @@ public final class LoadNewickController extends DefaultController<GridPane> {
 
         FileChooser nwkFileChooser = new FileChooser();
         nwkFileChooser.setTitle("Open Newick file");
-        loadNewick.setOnAction(event -> nwkFile = loadFile(nwkFileChooser, nwkSource));
+        loadNewick.setOnAction(event -> { nwkFile = loadFile(nwkFileChooser, nwkSource); });
 
         load.setOnAction(event -> {
             NewickController newickController = new NewickController(new LoadNewickService(nwkFile));
