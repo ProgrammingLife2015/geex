@@ -11,7 +11,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -49,7 +51,7 @@ public class GraphControllerTest {
         when(workspace.getNewickList()).thenReturn(Collections.singletonList(new LoadNewickService(nwkFile)));
         when(mainController.getWorkspace()).thenReturn(workspace);
 
-        graphController = new GraphController(mainController);
+        graphController = new GraphController(mainController, new HashSet<>(Arrays.asList("Cat", "Dog")));
 
     }
 

@@ -14,6 +14,7 @@ import nl.tudelft.context.service.LoadGraphService;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -28,6 +29,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      */
     @FXML
     ProgressIndicator progressIndicator;
+
     /**
      * The container for the graph.
      */
@@ -38,26 +40,34 @@ public class GraphController extends DefaultController<ScrollPane> {
      * Reference to the MainController of the app.
      */
     MainController mainController;
+
     /**
      * The service for loading the Graph.
      */
     LoadGraphService loadGraphService;
 
     /**
+     * Sources that are displayed in the graph.
+     */
+    Set<String> sources;
+
+    /**
      * Define the amount of the shift.
      */
-    public static final int SHIFT_AMOUNT = 50;
+    public static final int NODE_SPACING = 50;
 
     /**
      * Init a controller at graph.fxml.
      *
-     * @param mainController   MainController for the application
+     * @param mainController MainController for the application
+     * @param sources        Sources to display
      */
-    public GraphController(final MainController mainController) {
+    public GraphController(final MainController mainController, final Set<String> sources) {
 
         super(new ScrollPane());
 
         this.mainController = mainController;
+        this.sources = sources;
         this.loadGraphService = mainController.getWorkspace().getGraphList().get(0);
 
         loadFXML("/application/graph.fxml");
@@ -159,7 +169,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      * @param column column to draw at
      */
     private void showNodes(final List<Node> nodes, final int column) {
-        int shift = nodes.size() * SHIFT_AMOUNT;
+        int shift = nodes.size() * NODE_SPACING;
         int row = 0;
         for (Node node : nodes) {
 

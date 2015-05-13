@@ -4,7 +4,9 @@ import nl.tudelft.context.drawable.DrawableNode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -79,6 +81,25 @@ public final class Node extends DrawableNode implements Serializable {
      */
     public boolean isUnknown() {
         return this.name.equals("");
+    }
+
+    /**
+     * Gets the sources for the graph from this node and its children.
+     *
+     * @return name of this node and it's children
+     */
+    public Set<String> getSources() {
+
+        Set<String> sources = new HashSet<>();
+
+        if (!name.isEmpty()) {
+            sources.add(name);
+        }
+
+        children.forEach(node -> sources.addAll(node.getSources()));
+
+        return sources;
+
     }
 
     @Override
