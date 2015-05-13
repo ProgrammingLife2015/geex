@@ -110,6 +110,7 @@
 
 #sequences .label {
     -fx-background-color: #e6b43a;
+    -fx-cursor: hand;
     -fx-min-width: 60px;
     -fx-min-height: 60px;
     -fx-pref-width: 60px;
