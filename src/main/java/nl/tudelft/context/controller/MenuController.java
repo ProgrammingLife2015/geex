@@ -47,11 +47,13 @@ public final class MenuController extends MenuBar {
         load.setOnAction(event -> {
             Window window = mainController.getRoot().getScene().getWindow();
             File workspaceDirectory = directoryChooser.showDialog(window);
-            Workspace workspace = new Workspace(workspaceDirectory);
-            workspace.walk();
-            workspace.load();
-            mainController.setWorkspace(workspace);
-            mainController.setBaseView(new NewickController(mainController).getRoot());
+            if (workspaceDirectory != null) {
+                Workspace workspace = new Workspace(workspaceDirectory);
+                workspace.walk();
+                workspace.load();
+                mainController.setWorkspace(workspace);
+                mainController.setBaseView(new NewickController(mainController).getRoot());
+            }
         });
 
         MenuItem exit = new MenuItem("Exit");

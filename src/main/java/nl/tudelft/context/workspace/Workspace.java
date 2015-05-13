@@ -43,9 +43,6 @@ public class Workspace {
      * @param directory The workspace root
      */
     public Workspace(final File directory) {
-        if (directory == null) {
-            return;
-        }
         this.directory = directory;
     }
 
@@ -57,8 +54,8 @@ public class Workspace {
 
         try {
             Files.walkFileTree(this.directory.toPath(), finder);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         this.matches = finder.getMatches();
@@ -73,16 +70,15 @@ public class Workspace {
                 .filter(path -> path.toString()
                         .toLowerCase()
                         .endsWith(".edge.graph"));
-        List<File> nodes = matches.stream()
+        Stream<File> nodes = matches.stream()
                 .map(Path::toFile)
                 .filter(path -> path.toString()
                         .toLowerCase()
-                        .endsWith(".node.graph"))
-                .collect(Collectors.toList());
+                        .endsWith(".node.graph"));
 
         graphList = edges.map(
                 edgeFile -> {
-                    File nodeFile = nodes.stream()
+                    File nodeFile = nodes
                             .filter(file ->
                                     file.getAbsolutePath()
                                             .replaceFirst("\\.node\\.graph$", "")
