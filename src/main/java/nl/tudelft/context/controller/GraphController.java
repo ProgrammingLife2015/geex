@@ -6,8 +6,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import nl.tudelft.context.drawable.DrawableEdge;
+import nl.tudelft.context.graph.BaseCounter;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
@@ -31,6 +35,8 @@ public class GraphController extends DefaultController<ScrollPane> {
 
     protected MainController mainController;
     protected LoadGraphService loadGraphService;
+
+    protected static final int NODE_WIDTH = 60;
 
     /**
      * Init a controller at graph.fxml.
@@ -94,19 +100,41 @@ public class GraphController extends DefaultController<ScrollPane> {
                 .map(edge -> new DrawableEdge(graph, edge))
                 .collect(Collectors.toList());
 
+
         // Bind nodes
-        List<Label> nodeList = graph.vertexSet().stream()
+        List<VBox> nodeList = graph.vertexSet().stream()
                 .map(node -> {
-                    final Rectangle label = new Rectangle(20.0,20.0,COLOR.blue);
-                    //final Label label = new Label(Integer.toString(node.getId()));
-                    //label.setCache(true);
-                    label.translateXProperty().bind(node.translateXProperty());
-                    label.translateYProperty().bind(node.translateYProperty());
+                    final VBox vbox = new VBox(0);
+                    final HBox hbox = new HBox(0);
+                    BaseCounter basecounter = node.getBaseCounter();
+
+                    double widthA = Math.round(basecounter.getPercentage('A') * NODE_WIDTH);
+                    double widthT = Math.round(basecounter.getPercentage('T') * NODE_WIDTH);
+                    double widthC = Math.round(basecounter.getPercentage('C') * NODE_WIDTH);
+                    double widthG = Math.round(basecounter.getPercentage('G') * NODE_WIDTH);
+                    double widthN = Math.round(basecounter.getPercentage('N') * NODE_WIDTH);
+
+                    final Rectangle rectangleA = new Rectangle(widthA, 5, Color.web("#e41a1c"));
+                    final Rectangle rectangleT = new Rectangle(widthT, 5, Color.web("#377eb8"));
+                    final Rectangle rectangleC = new Rectangle(widthC, 5, Color.web("#4daf4a"));
+                    final Rectangle rectangleG = new Rectangle(widthG, 5, Color.web("#984ea3"));
+                    final Rectangle rectangleN = new Rectangle(widthN, 5, Color.web("#ff7f00"));
+                    final Label label = new Label(Integer.toString(node.getId()));
+                    hbox.getChildren().addAll(rectangleA, rectangleT, rectangleC, rectangleG, rectangleN);
+                    label.setCache(true);
+                    label.setMinWidth(NODE_WIDTH);
+                    label.setMaxWidth(NODE_WIDTH);
+                    label.prefWidth(NODE_WIDTH);
+                    vbox.setCache(true);
+                    vbox.getChildren().addAll(label, hbox);
+                    vbox.translateXProperty().bind(node.translateXProperty());
+                    vbox.translateYProperty().bind(node.translateYProperty());
                     final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
                     label.setTooltip(percentages);
                     label.setOnMouseClicked(event -> mainController.setView(new BaseController(node.getContent()).getRoot()));
-                    return label;
+                    return vbox;
                 }).collect(Collectors.toList());
+
 
         sequences.getChildren().addAll(edgeList);
         sequences.getChildren().addAll(nodeList);

@@ -95,9 +95,9 @@
 #sequences .label {
     -fx-background-color: #e6b43a;
     -fx-min-width: 60px;
-    -fx-min-height: 60px;
+    -fx-min-height: 55px;
     -fx-pref-width: 60px;
-    -fx-pref-height: 60px;
+    -fx-pref-height: 55px;
     -fx-alignment: center;
     -fx-font: 0.3cm 'Arial';
     -fx-text-fill: #2b2b2b;

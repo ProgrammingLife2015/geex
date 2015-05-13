@@ -32,7 +32,7 @@ public class BaseCounter extends HashBag {
      * @return float value with the percentage of the base in the initial string
      */
     public float getPercentage(char c) {
-        return (float) (getCount(c) * 100) / size();
+        return (float) getCount(c) / size();
     }
 
     /**
@@ -41,7 +41,7 @@ public class BaseCounter extends HashBag {
      * @return string string representing the value with the percentage of the base in the initial string
      */
     public String getPercentageString(char c) {
-        float result = Float.valueOf(df.format(getPercentage(c)));
+        float result = Float.valueOf(df.format(getPercentage(c) * 100));
         return Float.toString(result);
     }
 
