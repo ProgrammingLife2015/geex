@@ -66,6 +66,15 @@ public class NodeTest {
         assertFalse(new Node("", 0).equals(""));
     }
 
+    @Test
+    public void testIsUnknown() {
+        Node n1 = new Node("", 1);
+        Node n2 = new Node("abc", 9);
+
+        assertTrue(n1.isUnknown());
+        assertFalse(n2.isUnknown());
+    }
+
     /**
      * Node shouldn't equals nodes with other names or weights
      */
