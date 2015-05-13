@@ -23,7 +23,7 @@ public final class TreeFactory {
     /**
      * The vertical distances between nodes.
      */
-    public static final int ROW_HEIGHT = 20;
+    public static final int ROW_HEIGHT = 25;
     /**
      * The weights are scaled with this factor to make relative weights noticeable.
      */
