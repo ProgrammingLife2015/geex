@@ -109,12 +109,13 @@
 }
 
 #newick .label {
-    -fx-background-color: #e6b43a;
+    -fx-background-color: transparent;
     -fx-min-width: 60px;
     -fx-min-height: 60px;
     -fx-alignment: center;
     -fx-font: 0.3cm 'Arial';
-    -fx-text-fill: #2b2b2b;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: transparent;
 }
 
 /* Base */

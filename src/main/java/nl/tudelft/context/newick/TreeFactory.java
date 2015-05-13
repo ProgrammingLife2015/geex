@@ -43,7 +43,7 @@ public class TreeFactory {
                 hasChildren = true;
                 Node n = nodeFactory.getNode(child);
                 n.setTranslateX(parent.translateXProperty().doubleValue() + 100 + 10000 * n.getWeight());
-                n.setTranslateY(row * 80);
+                n.setTranslateY(row * 40);
                 row = getOffspring(child, n, tree, row);
                 parent.addChild(n);
                 tree.addEdge(parent, n);
