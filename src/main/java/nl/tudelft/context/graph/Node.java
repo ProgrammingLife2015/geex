@@ -9,14 +9,32 @@ import java.util.Set;
  * @version 1.1
  * @since 23-4-2015
  */
-public class Node extends DrawableNode {
+public final class Node extends DrawableNode {
 
-    protected int id;
-    protected Set<String> sources;
-    protected int refStartPosition;
-    protected int refEndPosition;
-    protected String content;
-    protected BaseCounter baseCounter;
+    /**
+     * The identifier of the current Node.
+     */
+    int id;
+    /**
+     * Set of genomes that contain this Node.
+     */
+    Set<String> sources;
+    /**
+     * Start position in reference genome.
+     */
+    int refStartPosition;
+    /**
+     * End position in reference genome.
+     */
+    int refEndPosition;
+    /**
+     * The content of the current Node.
+     */
+    String content;
+    /**
+     * The Counter for the number of ACTG.
+     */
+    BaseCounter baseCounter;
 
     /**
      * Create a node.
@@ -27,7 +45,11 @@ public class Node extends DrawableNode {
      * @param refEndPosition   end position in reference genome
      * @param content          DNA sequence
      */
-    public Node(int id, Set<String> sources, int refStartPosition, int refEndPosition, String content) {
+    public Node(final int id,
+                final Set<String> sources,
+                final int refStartPosition,
+                final int refEndPosition,
+                final String content) {
 
         this.id = id;
         this.sources = sources;
@@ -95,7 +117,7 @@ public class Node extends DrawableNode {
 
 
     /**
-     * Getter for baseCounter
+     * Getter for baseCounter.
      *
      * @return baseCounter
      */
@@ -112,7 +134,7 @@ public class Node extends DrawableNode {
      * @return if node is equal to an other node
      */
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (other instanceof Node) {
             Node that = (Node) other;
             return id == that.id;

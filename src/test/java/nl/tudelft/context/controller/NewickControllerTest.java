@@ -8,8 +8,6 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
-import static org.mockito.Mockito.mock;
-
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
@@ -28,8 +26,7 @@ public class NewickControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        MainController mainController = mock(MainController.class);
-        newickController = new NewickController(mainController, new LoadNewickService(nwkFile));
+        newickController = new NewickController(new LoadNewickService(nwkFile));
 
     }
 

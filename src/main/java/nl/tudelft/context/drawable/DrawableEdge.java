@@ -18,7 +18,7 @@ public class DrawableEdge extends Line {
      * @param graph graph that contains edge
      * @param edge  edge to bind and display
      */
-    public DrawableEdge(DefaultDirectedGraph<? extends DrawableNode, DefaultEdge> graph, DefaultEdge edge) {
+    public DrawableEdge(final DefaultDirectedGraph<? extends DrawableNode, DefaultEdge> graph, final DefaultEdge edge) {
 
         startXProperty().bind(graph.getEdgeSource(edge).translateXProperty());
         endXProperty().bind(graph.getEdgeTarget(edge).translateXProperty());

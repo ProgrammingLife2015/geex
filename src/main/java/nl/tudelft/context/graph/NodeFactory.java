@@ -10,7 +10,7 @@ import java.util.Set;
  * @version 1.0
  * @since 24-4-2015
  */
-public class NodeFactory {
+public final class NodeFactory {
 
     /**
      * Parses the node id from the scanner.
@@ -18,7 +18,7 @@ public class NodeFactory {
      * @param sc scanner
      * @return node id
      */
-    protected int getNodeId(Scanner sc) {
+    private int getNodeId(final Scanner sc) {
 
         return Integer.parseInt(sc.next().substring(1));
 
@@ -30,7 +30,7 @@ public class NodeFactory {
      * @param sc scanner
      * @return node
      */
-    public Node getNode(Scanner sc) {
+    public Node getNode(final Scanner sc) {
 
         final int id = getNodeId(sc);
         sc.next(); // Skip pipe

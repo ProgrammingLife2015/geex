@@ -23,20 +23,33 @@ import java.util.stream.Collectors;
  */
 public class GraphController extends DefaultController<ScrollPane> {
 
+    /**
+     * ProgressIndicator to show when the graph is loading.
+     */
     @FXML
-    protected ProgressIndicator progressIndicator;
+    ProgressIndicator progressIndicator;
+    /**
+     * The container for the graph.
+     */
     @FXML
-    protected Group sequences;
+    Group sequences;
 
-    protected MainController mainController;
-    protected LoadGraphService loadGraphService;
+    /**
+     * Reference to the MainController of the app.
+     */
+    MainController mainController;
+    /**
+     * The service for loading the Graph.
+     */
+    LoadGraphService loadGraphService;
 
     /**
      * Init a controller at graph.fxml.
      *
+     * @param mainController MainController for the application
      * @param loadGraphService service with file locations
      */
-    public GraphController(MainController mainController, LoadGraphService loadGraphService) {
+    public GraphController(final MainController mainController, final LoadGraphService loadGraphService) {
 
         super(new ScrollPane());
 
@@ -57,7 +70,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public final void initialize(final URL location, final ResourceBundle resources) {
 
         progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
         loadGraphService.setOnSucceeded(event -> showGraph(loadGraphService.getValue()));
@@ -69,7 +82,7 @@ public class GraphController extends DefaultController<ScrollPane> {
     /**
      * Load graph from source.
      */
-    protected void loadGraph() {
+    private void loadGraph() {
 
         sequences.getChildren().clear();
         loadGraphService.restart();
@@ -78,8 +91,10 @@ public class GraphController extends DefaultController<ScrollPane> {
 
     /**
      * Show graph with reference points.
+     *
+     * @param graph Graph to show
      */
-    protected void showGraph(Graph graph) {
+    private void showGraph(final Graph graph) {
 
         List<Node> start = graph.getFirstNodes();
 
@@ -102,7 +117,8 @@ public class GraphController extends DefaultController<ScrollPane> {
                     label.translateYProperty().bind(node.translateYProperty());
                     final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
                     label.setTooltip(percentages);
-                    label.setOnMouseClicked(event -> mainController.setView(new BaseController(node.getContent()).getRoot()));
+                    label.setOnMouseClicked(event ->
+                            mainController.setView(new BaseController(node.getContent()).getRoot()));
                     return label;
                 }).collect(Collectors.toList());
 
@@ -119,7 +135,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      * @param column column index
      * @return next column
      */
-    protected List<Node> showColumn(Graph graph, List<Node> nodes, int column) {
+    private List<Node> showColumn(final Graph graph, final List<Node> nodes, final int column) {
 
         showNodes(nodes, column);
 
@@ -138,7 +154,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      * @param nodes  nodes to draw
      * @param column column to draw at
      */
-    protected void showNodes(List<Node> nodes, int column) {
+    private void showNodes(final List<Node> nodes, final int column) {
 
         int shift = nodes.size() * 50;
         int row = 0;

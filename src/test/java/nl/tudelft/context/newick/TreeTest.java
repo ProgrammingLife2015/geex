@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.*;
 
@@ -35,6 +36,8 @@ public class TreeTest {
         try {
             tree = treeFactory.getTree(file);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         root = tree.getFirstNode();

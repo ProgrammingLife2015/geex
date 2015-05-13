@@ -19,15 +19,27 @@ import java.util.Stack;
  */
 public class MainController extends DefaultController<BorderPane> {
 
+    /**
+     * The main container of the controller.
+     */
     @FXML
-    protected VBox control;
+    VBox control;
 
+    /**
+     * The container of all views after this one.
+     */
     @FXML
-    protected StackPane view;
+    StackPane view;
 
-    protected Stack<Node> viewList = new Stack<>();
+    /**
+     * A stack of the current views.
+     */
+    Stack<Node> viewList;
 
-    protected Workspace workspace;
+    /**
+     * The current workspace.
+     */
+    Workspace workspace;
 
     /**
      * Init a controller at main.fxml.
@@ -38,6 +50,7 @@ public class MainController extends DefaultController<BorderPane> {
 
         loadFXML("/application/main.fxml");
 
+        viewList = new Stack<>();
     }
 
     /**
@@ -50,14 +63,15 @@ public class MainController extends DefaultController<BorderPane> {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public final void initialize(final URL location, final ResourceBundle resources) {
 
         control.getChildren().add(new LoadGraphController(this).getRoot());
         control.getChildren().add(new LoadNewickController(this).getRoot());
 
         root.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ESCAPE)
+            if (event.getCode() == KeyCode.ESCAPE) {
                 previousView();
+            }
         });
 
         root.setTop(new MenuController(this));
@@ -69,7 +83,7 @@ public class MainController extends DefaultController<BorderPane> {
      *
      * @param node javaFX element
      */
-    public void setBaseView(Node node) {
+    public final void setBaseView(final Node node) {
 
         view.getChildren().clear();
         viewList.clear();
@@ -82,7 +96,7 @@ public class MainController extends DefaultController<BorderPane> {
      *
      * @param node javaFX element
      */
-    public void setView(Node node) {
+    public final void setView(final Node node) {
 
         viewList.add(node);
         view.getChildren().add(node);
@@ -92,7 +106,7 @@ public class MainController extends DefaultController<BorderPane> {
     /**
      * Set the previous view as view.
      */
-    public void previousView() {
+    public final void previousView() {
 
         if (viewList.size() > 1) {
             viewList.pop();
@@ -104,15 +118,25 @@ public class MainController extends DefaultController<BorderPane> {
     /**
      * Exits the program.
      */
-    public void exitProgram() {
+    public final void exitProgram() {
         System.exit(0);
     }
 
-    public Workspace getWorkspace() {
+    /**
+     * Get the current workspace.
+     *
+     * @return The current workspace
+     */
+    public final Workspace getWorkspace() {
         return workspace;
     }
 
-    public void setWorkspace(Workspace workspace) {
+    /**
+     * Set the current workspace.
+     *
+     * @param workspace The new workspace
+     */
+    public final void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
 
         // TODO: don't do this, for testing purposes only.

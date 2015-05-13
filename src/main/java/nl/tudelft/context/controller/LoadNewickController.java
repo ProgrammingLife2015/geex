@@ -12,37 +12,51 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
+ * Controller for loading a Newick tree.
+ *
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 1-5-2015
  */
-public class LoadNewickController extends DefaultController<GridPane> {
+public final class LoadNewickController extends DefaultController<GridPane> {
 
+    /**
+     * Buttons for loading the newick file.
+     */
     @FXML
-    protected Button
+    Button
             loadNewick,
             load;
 
+    /**
+     * The textfield for the filename.
+     */
     @FXML
-    protected TextField
+    TextField
             nwkSource;
 
-    protected MainController mainController;
+    /**
+     * Reference to the MainController of the application.
+     */
+    MainController mainController;
 
-    protected File
+    /**
+     * The newick file containing the tree.
+     */
+    File
             nwkFile;
 
     /**
      * Init a controller at load_newick.fxml.
+     * @param mainController The MainController of the application
      */
-    public LoadNewickController(MainController mainController) {
+    public LoadNewickController(final MainController mainController) {
 
         super(new GridPane());
 
         this.mainController = mainController;
 
         loadFXML("/application/load_newick.fxml");
-
 
     }
 
@@ -56,14 +70,14 @@ public class LoadNewickController extends DefaultController<GridPane> {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
 
         FileChooser nwkFileChooser = new FileChooser();
         nwkFileChooser.setTitle("Open Newick file");
         loadNewick.setOnAction(event -> nwkFile = loadFile(nwkFileChooser, nwkSource));
 
         load.setOnAction(event -> {
-            NewickController newickController = new NewickController(mainController, new LoadNewickService(nwkFile));
+            NewickController newickController = new NewickController(new LoadNewickService(nwkFile));
             mainController.setBaseView(newickController.getRoot());
         });
 
