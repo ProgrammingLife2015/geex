@@ -36,11 +36,13 @@ public class TreeTest {
         try {
             tree = treeFactory.getTree(file);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            fail("File not found");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            fail("Unsupported encoding");
         }
-        root = tree.getFirstNode();
+        assertTrue(tree.vertexSet().size() > 0);
+        root = tree.getRoot();
+        assertNotNull(root);
     }
 
     /**
@@ -50,11 +52,10 @@ public class TreeTest {
     @Test
     public void testFirstNode() {
         tree = new Tree();
-        assertNull(tree.getFirstNode());
+        assertNull(tree.getRoot());
         root = new Node("A", 1.39);
-        tree.addVertex(root);
-        root.addChild(new Node("B", .123));
-        assertEquals(root, tree.getFirstNode());
+        tree.setRoot(root);
+        assertEquals(root, tree.getRoot());
     }
 
     /**

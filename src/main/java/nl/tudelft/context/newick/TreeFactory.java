@@ -53,6 +53,7 @@ public final class TreeFactory {
         root.setTranslateX(0);
         root.setTranslateY(0);
         getOffspring(nwkTree.getRoot(), root, tree, 0);
+        tree.setRoot(root);
     }
 
     /**
@@ -74,8 +75,8 @@ public final class TreeFactory {
             TreeNode child = node.getChild(i);
             if (child != null) {
                 hasChildren = true;
-                Node n = createNode(child, parent, row);
-                ret = getOffspring(child, n, tree, row);
+                Node n = createNode(child, parent, ret);
+                ret = getOffspring(child, n, tree, ret);
                 parent.addChild(n);
                 if (i > 0) {
                     addDummy(parent, n, tree);

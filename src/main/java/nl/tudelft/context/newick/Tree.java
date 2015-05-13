@@ -11,6 +11,9 @@ import java.util.Optional;
  * @since 3-5-2015
  */
 public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
+
+    private Node root;
+
     /**
      * Create a new Tree, with default edges.
      */
@@ -19,20 +22,26 @@ public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
     }
 
     /**
-     * Get the first node, with no incoming edges.
+     * Sets a node as the root of the tree.
      *
-     * @return first node
+     * @param n the root
      */
-    public Node getFirstNode() {
+    public void setRoot(Node n) {
+        root = n;
+    }
 
-        Optional<Node> node = vertexSet().stream().filter(x -> this.inDegreeOf(x) == 0).findFirst();
-        return node.orElse(null);
-
+    /**
+     * Gets the root of the tree.
+     *
+     * @return the root
+     */
+    public Node getRoot() {
+        return root;
     }
 
     @Override
     public String toString() {
-        Node root = getFirstNode();
+        Node root = getRoot();
         if (root != null) {
             return toString(root, 0);
         } else {
