@@ -52,14 +52,13 @@ public class GraphController extends DefaultController<ScrollPane> {
      * Init a controller at graph.fxml.
      *
      * @param mainController   MainController for the application
-     * @param loadGraphService service with file locations
      */
-    public GraphController(final MainController mainController, final LoadGraphService loadGraphService) {
+    public GraphController(final MainController mainController) {
 
         super(new ScrollPane());
 
         this.mainController = mainController;
-        this.loadGraphService = loadGraphService;
+        this.loadGraphService = mainController.getWorkspace().getGraphList().get(0);
 
         loadFXML("/application/graph.fxml");
 

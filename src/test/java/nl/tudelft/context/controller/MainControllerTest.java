@@ -1,15 +1,19 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
+import nl.tudelft.context.service.LoadGraphService;
 import nl.tudelft.context.service.LoadNewickService;
-import nl.tudelft.context.service.LoadNewickServiceTest;
+import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -19,9 +23,12 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JfxRunner.class)
 public class MainControllerTest {
 
-    protected final static File nwkFile = new File(LoadNewickServiceTest.class.getResource("/newick/10strains.nwk").getPath());
+    protected final static File nodeFile = new File(MainControllerTest.class.getResource("/graph/node.graph").getPath());
+    protected final static File edgeFile = new File(MainControllerTest.class.getResource("/graph/edge.graph").getPath());
+    protected final static File nwkFile = new File(MainControllerTest.class.getResource("/newick/10strains.nwk").getPath());
 
     protected static MainController mainController;
+    protected static Workspace workspace;
 
     /**
      * Setup Main Controller.
@@ -30,6 +37,11 @@ public class MainControllerTest {
     public static void beforeClass() throws InterruptedException {
 
         mainController = new MainController();
+
+        workspace = mock(Workspace.class);
+
+        when(workspace.getGraphList()).thenReturn(Collections.singletonList(new LoadGraphService(nodeFile, edgeFile)));
+        when(workspace.getNewickList()).thenReturn(Collections.singletonList(new LoadNewickService(nwkFile)));
 
     }
 
@@ -50,9 +62,11 @@ public class MainControllerTest {
     public void testTopViewList() {
 
         MainController mc = new MainController();
+        mc.setWorkspace(workspace);
+
 
         BaseController baseController = new BaseController("ATCG");
-        NewickController newickController = new NewickController(mc, new LoadNewickService(nwkFile));
+        NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());
         assertEquals(baseController.getRoot(), mc.viewList.peek());
@@ -71,9 +85,11 @@ public class MainControllerTest {
     public void testPreviousView() {
 
         MainController mc = new MainController();
+        mc.setWorkspace(workspace);
+
 
         BaseController baseController = new BaseController("ATCG");
-        NewickController newickController = new NewickController(mc, new LoadNewickService(nwkFile));
+        NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());
         mc.setView(newickController.getRoot());
@@ -92,9 +108,11 @@ public class MainControllerTest {
     public void testEmptyViewList() {
 
         MainController mc = new MainController();
+        mc.setWorkspace(workspace);
+
 
         BaseController baseController = new BaseController("ATCG");
-        NewickController newickController = new NewickController(mc, new LoadNewickService(nwkFile));
+        NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());
         mc.setView(newickController.getRoot());
@@ -114,9 +132,10 @@ public class MainControllerTest {
     public void setBaseViewSize() {
 
         MainController mc = new MainController();
+        mc.setWorkspace(workspace);
 
         BaseController baseController = new BaseController("ATCG");
-        NewickController newickController = new NewickController(mc, new LoadNewickService(nwkFile));
+        NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());
         mc.setView(newickController.getRoot());

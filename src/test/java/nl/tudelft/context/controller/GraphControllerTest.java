@@ -4,16 +4,20 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import nl.tudelft.context.service.LoadGraphService;
+import nl.tudelft.context.service.LoadNewickService;
+import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -25,6 +29,7 @@ public class GraphControllerTest {
 
     protected final static File nodeFile = new File(GraphControllerTest.class.getResource("/graph/node.graph").getPath());
     protected final static File edgeFile = new File(GraphControllerTest.class.getResource("/graph/edge.graph").getPath());
+    protected final static File nwkFile = new File(GraphControllerTest.class.getResource("/newick/10strains.nwk").getPath());
 
     protected static final int sequencesAmount = 4;
 
@@ -38,7 +43,13 @@ public class GraphControllerTest {
     public static void beforeClass() throws Exception {
 
         MainController mainController = mock(MainController.class);
-        graphController = new GraphController(mainController, new LoadGraphService(nodeFile, edgeFile));
+        Workspace workspace = mock(Workspace.class);
+
+        when(workspace.getGraphList()).thenReturn(Collections.singletonList(new LoadGraphService(nodeFile, edgeFile)));
+        when(workspace.getNewickList()).thenReturn(Collections.singletonList(new LoadNewickService(nwkFile)));
+        when(mainController.getWorkspace()).thenReturn(workspace);
+
+        graphController = new GraphController(mainController);
 
     }
 

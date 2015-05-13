@@ -117,7 +117,7 @@ public class MainController extends DefaultController<BorderPane> {
      *
      * @return The current workspace
      */
-    public final Workspace getWorkspace() {
+    public Workspace getWorkspace() {
         return workspace;
     }
 
@@ -128,7 +128,7 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
-        this.setBaseView(new NewickController(this, workspace.getNewickList().get(0)).getRoot());
+        this.setBaseView(new NewickController(this).getRoot());
     }
 
 }

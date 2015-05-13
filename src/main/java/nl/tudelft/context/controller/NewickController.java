@@ -39,14 +39,14 @@ public final class NewickController extends DefaultController<ScrollPane> {
     /**
      * Init a controller at newick.fxml.
      *
-     * @param loadNewickService service with file locations
+     * @param mainController   MainController for the application
      */
-    public NewickController(final MainController mainController, final LoadNewickService loadNewickService) {
+    public NewickController(final MainController mainController) {
 
         super(new ScrollPane());
 
         this.mainController = mainController;
-        this.loadNewickService = loadNewickService;
+        this.loadNewickService = mainController.getWorkspace().getNewickList().get(0);
 
         loadFXML("/application/newick.fxml");
 
@@ -102,6 +102,7 @@ public final class NewickController extends DefaultController<ScrollPane> {
                     if (node.isUnknown()) {
                         label.getStyleClass().add("ancestor");
                     }
+                    label.setOnMouseClicked(event -> mainController.setView(new GraphController(mainController).getRoot()));
                     return label;
                 }).collect(Collectors.toList());
 

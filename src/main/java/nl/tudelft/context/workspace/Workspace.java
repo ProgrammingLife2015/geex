@@ -108,7 +108,7 @@ public class Workspace {
      * Get the list of graphs in the workspace.
      * @return List of graphs
      */
-    public final List<LoadGraphService> getGraphList() {
+    public List<LoadGraphService> getGraphList() {
         return graphList;
     }
 
@@ -116,7 +116,7 @@ public class Workspace {
      * Get the list of newick graphs in the workspace.
      * @return List of Newick graphs
      */
-    public final List<LoadNewickService> getNewickList() {
+    public List<LoadNewickService> getNewickList() {
         return nwkList;
     }
 }

@@ -80,13 +80,11 @@ public final class MenuController extends MenuBar {
         MenuItem loadGraph = new MenuItem("Load first graph");
         loadGraph.setOnAction(event ->
                 mainController.setBaseView(
-                        new GraphController(
-                                mainController,
-                                mainController.getWorkspace().getGraphList().get(0)).getRoot()));
+                        new GraphController(mainController).getRoot()));
         MenuItem loadNewick = new MenuItem("Load first newick");
         loadNewick.setOnAction(
                 event -> mainController.setBaseView(
-                        new NewickController(mainController, mainController.getWorkspace().getNewickList().get(0)).getRoot()));
+                        new NewickController(mainController).getRoot()));
         menuWorkspace.getItems().addAll(loadGraph, loadNewick);
         getMenus().add(menuWorkspace);
     }
