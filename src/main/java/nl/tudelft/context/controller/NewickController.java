@@ -92,6 +92,9 @@ public final class NewickController extends DefaultController<ScrollPane> {
                     label.setCache(true);
                     label.translateXProperty().bind(node.translateXProperty());
                     label.translateYProperty().bind(node.translateYProperty());
+                    if (node.isUnknown()) {
+                        label.getStyleClass().add("ancestor");
+                    }
                     return label;
                 }).collect(Collectors.toList());
 

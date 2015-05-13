@@ -19,7 +19,7 @@ public final class TreeFactory {
     public NodeFactory nodeFactory = new NodeFactory();
     final int ROW_HEIGHT = 20;
     final double WEIGHT_SCALE = 5e4;
-    final int MIN_WEIGHT = 10;
+    final int MIN_WEIGHT = 20;
 
     /**
      * Creates a new phylogenetic tree, based on the information in the Newick file.
@@ -100,7 +100,8 @@ public final class TreeFactory {
      */
     public Node createNode(TreeNode child, Node parent, int row) {
         Node n = nodeFactory.getNode(child);
-        n.setTranslateX(parent.translateXProperty().doubleValue() + MIN_WEIGHT + WEIGHT_SCALE * n.getWeight());
+        double x = parent.translateXProperty().doubleValue() + MIN_WEIGHT + WEIGHT_SCALE * n.getWeight();
+        n.setTranslateX(x);
         n.setTranslateY(row * ROW_HEIGHT);
 
         return n;

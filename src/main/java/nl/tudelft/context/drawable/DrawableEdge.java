@@ -39,6 +39,7 @@ public class DrawableEdge extends Line {
 
         initialize(tree, edge);
 
+        setTranslateX(10);
         setTranslateY(10);
 
     }
