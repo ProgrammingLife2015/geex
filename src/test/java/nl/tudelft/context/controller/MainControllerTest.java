@@ -8,7 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.File;
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
@@ -23,10 +22,6 @@ import static org.mockito.Mockito.when;
 @RunWith(JfxRunner.class)
 public class MainControllerTest {
 
-    protected final static File nodeFile = new File(MainControllerTest.class.getResource("/graph/node.graph").getPath());
-    protected final static File edgeFile = new File(MainControllerTest.class.getResource("/graph/edge.graph").getPath());
-    protected final static File nwkFile = new File(MainControllerTest.class.getResource("/newick/10strains.nwk").getPath());
-
     protected static MainController mainController;
     protected static Workspace workspace;
 
@@ -40,8 +35,8 @@ public class MainControllerTest {
 
         workspace = mock(Workspace.class);
 
-        when(workspace.getGraphList()).thenReturn(Collections.singletonList(new LoadGraphService(nodeFile, edgeFile)));
-        when(workspace.getNewickList()).thenReturn(Collections.singletonList(new LoadNewickService(nwkFile)));
+        when(workspace.getGraphList()).thenReturn(Collections.singletonList(mock(LoadGraphService.class)));
+        when(workspace.getNewickList()).thenReturn(Collections.singletonList(mock(LoadNewickService.class)));
 
     }
 
@@ -63,7 +58,6 @@ public class MainControllerTest {
 
         MainController mc = new MainController();
         mc.setWorkspace(workspace);
-
 
         BaseController baseController = new BaseController("ATCG");
         NewickController newickController = new NewickController(mc);

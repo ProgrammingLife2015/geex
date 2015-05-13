@@ -102,7 +102,8 @@ public final class NewickController extends DefaultController<ScrollPane> {
                     if (node.isUnknown()) {
                         label.getStyleClass().add("ancestor");
                     }
-                    label.setOnMouseClicked(event -> mainController.setView(new GraphController(mainController).getRoot()));
+                    label.setOnMouseClicked(event ->
+                            mainController.setView(new GraphController(mainController).getRoot()));
                     return label;
                 }).collect(Collectors.toList());
 

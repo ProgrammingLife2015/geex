@@ -14,7 +14,7 @@ import java.io.File;
  * @version 1.0
  * @since 28-4-2015
  */
-public final class LoadNewickService extends Service<Tree> {
+public class LoadNewickService extends Service<Tree> {
 
     /**
      * The file containing the newick tree.
@@ -38,7 +38,7 @@ public final class LoadNewickService extends Service<Tree> {
      * @return the Task to execute
      */
     @Override
-    protected Task<Tree> createTask() {
+    protected final Task<Tree> createTask() {
 
         return new Task<Tree>() {
             @Override

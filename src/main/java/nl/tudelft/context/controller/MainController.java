@@ -32,7 +32,7 @@ public class MainController extends DefaultController<BorderPane> {
     /**
      * The current workspace.
      */
-    Workspace workspace;
+    private Workspace workspace;
 
     /**
      * Init a controller at main.fxml.
@@ -128,7 +128,6 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
-        this.setBaseView(new NewickController(this).getRoot());
     }
 
 }

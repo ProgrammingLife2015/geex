@@ -26,11 +26,12 @@ public class Workspace {
     /**
      * The list of graphs in the workspace.
      */
-    private List<LoadGraphService> graphList;
+    List<LoadGraphService> graphList;
+
     /**
      * The list of Newick graphs in the workspace.
      */
-    private List<LoadNewickService> nwkList;
+    List<LoadNewickService> nwkList;
 
     /**
      * The results of the finder.
