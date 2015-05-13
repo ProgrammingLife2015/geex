@@ -51,7 +51,6 @@ public final class MenuController extends MenuBar {
             workspace.walk();
             workspace.load();
             mainController.setWorkspace(workspace);
-            initWorkspaceMenu();
         });
 
         MenuItem exit = new MenuItem("Exit");
@@ -70,23 +69,6 @@ public final class MenuController extends MenuBar {
         final Menu menuHelp = new Menu("Help");
         getMenus().add(menuHelp);
 
-    }
-
-    /**
-     * Create the workspace menu in the top menu.
-     */
-    private void initWorkspaceMenu() {
-        final Menu menuWorkspace = new Menu("Workspace");
-        MenuItem loadGraph = new MenuItem("Load first graph");
-        loadGraph.setOnAction(event ->
-                mainController.setBaseView(
-                        new GraphController(mainController).getRoot()));
-        MenuItem loadNewick = new MenuItem("Load first newick");
-        loadNewick.setOnAction(
-                event -> mainController.setBaseView(
-                        new NewickController(mainController).getRoot()));
-        menuWorkspace.getItems().addAll(loadGraph, loadNewick);
-        getMenus().add(menuWorkspace);
     }
 
 }
