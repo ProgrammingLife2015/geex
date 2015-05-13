@@ -18,7 +18,8 @@ import java.io.UnsupportedEncodingException;
 public final class TreeFactory {
     public NodeFactory nodeFactory = new NodeFactory();
     final int ROW_HEIGHT = 20;
-    final double WEIGHT_SCALE = 1e5;
+    final double WEIGHT_SCALE = 5e4;
+    final int MIN_WEIGHT = 10;
 
     /**
      * Creates a new phylogenetic tree, based on the information in the Newick file.
@@ -99,7 +100,7 @@ public final class TreeFactory {
      */
     public Node createNode(TreeNode child, Node parent, int row) {
         Node n = nodeFactory.getNode(child);
-        n.setTranslateX(parent.translateXProperty().doubleValue() + WEIGHT_SCALE * n.getWeight());
+        n.setTranslateX(parent.translateXProperty().doubleValue() + MIN_WEIGHT + WEIGHT_SCALE * n.getWeight());
         n.setTranslateY(row * ROW_HEIGHT);
 
         return n;
