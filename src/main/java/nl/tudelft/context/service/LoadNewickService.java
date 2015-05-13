@@ -19,7 +19,7 @@ public final class LoadNewickService extends Service<Tree> {
     /**
      * The file containing the newick tree.
      */
-    final private File nwkFile;
+    File nwkFile;
 
     /**
      * Set nwk file.

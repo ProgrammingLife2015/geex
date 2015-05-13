@@ -15,6 +15,26 @@ import org.jgrapht.graph.DefaultEdge;
 public class DrawableEdge extends Line {
 
     /**
+     * Define the X translation of the graph nodes.
+     */
+    public static final int X_OFFSET_GRAPH = 30;
+
+    /**
+     * Define the Y translation of the graph nodes.
+     */
+    public static final int Y_OFFSET_GRAPH = 30;
+
+    /**
+     * Define the X translation of the graph nodes.
+     */
+    public static final int X_OFFSET_TREE = 10;
+
+    /**
+     * Define the Y translation of the graph nodes.
+     */
+    public static final int Y_OFFSET_TREE = 10;
+
+    /**
      * Creates edge for graph and bind it to nodes.
      *
      * @param graph graph that contains edge
@@ -24,8 +44,8 @@ public class DrawableEdge extends Line {
 
         initialize(graph, edge);
 
-        setTranslateX(30);
-        setTranslateY(30);
+        setTranslateX(X_OFFSET_GRAPH);
+        setTranslateY(Y_OFFSET_GRAPH);
 
     }
 
@@ -39,13 +59,14 @@ public class DrawableEdge extends Line {
 
         initialize(tree, edge);
 
-        setTranslateX(10);
-        setTranslateY(10);
+        setTranslateX(X_OFFSET_TREE);
+        setTranslateY(Y_OFFSET_TREE);
 
     }
 
     /**
      * Creates an edge for a given graph and sets the color to white.
+     *
      * @param graph the graph of the edge
      * @param edge  the edge
      */

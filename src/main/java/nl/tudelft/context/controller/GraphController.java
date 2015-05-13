@@ -44,9 +44,14 @@ public class GraphController extends DefaultController<ScrollPane> {
     LoadGraphService loadGraphService;
 
     /**
+     * Define the amount of the shift.
+     */
+    public static final int SHIFT_AMOUNT = 50;
+
+    /**
      * Init a controller at graph.fxml.
      *
-     * @param mainController MainController for the application
+     * @param mainController   MainController for the application
      * @param loadGraphService service with file locations
      */
     public GraphController(final MainController mainController, final LoadGraphService loadGraphService) {
@@ -155,8 +160,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      * @param column column to draw at
      */
     private void showNodes(final List<Node> nodes, final int column) {
-
-        int shift = nodes.size() * 50;
+        int shift = nodes.size() * SHIFT_AMOUNT;
         int row = 0;
         for (Node node : nodes) {
 
