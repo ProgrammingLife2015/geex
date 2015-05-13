@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 8-5-2015
  */
-public class BaseController extends DefaultController<StackPane> {
+public final class BaseController extends DefaultController<StackPane> {
 
     /**
      * JavaFX Text holder.
@@ -50,7 +50,7 @@ public class BaseController extends DefaultController<StackPane> {
      *                  <tt>null</tt> if the root object was not localized.
      */
     @Override
-    public final void initialize(final URL location,
+    public void initialize(final URL location,
                                  final ResourceBundle resources) {
 
         base.setText(sequence);

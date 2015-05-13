@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Graph
+ * Graph.
  *
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 23-4-2015
  */
-public class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
+public final class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     /**
      * Create a Graph with default edges.

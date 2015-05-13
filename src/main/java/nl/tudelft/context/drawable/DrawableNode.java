@@ -10,16 +10,27 @@ import javafx.beans.value.ObservableDoubleValue;
  */
 public class DrawableNode {
 
-    protected int currentIncoming = 0;
-    protected SimpleDoubleProperty translateX = new SimpleDoubleProperty(0);
-    protected SimpleDoubleProperty translateY = new SimpleDoubleProperty(0);
+    /**
+     * The current number of incoming nodes.
+     */
+    int currentIncoming = 0;
+
+    /**
+     * Translation in the direction of the X axis.
+     */
+    SimpleDoubleProperty translateX = new SimpleDoubleProperty(0);
+
+    /**
+     * Translation in the direction of the Y axis.
+     */
+    SimpleDoubleProperty translateY = new SimpleDoubleProperty(0);
 
     /**
      * Increment current incoming and return.
      *
      * @return current incoming
      */
-    public int incrementIncoming() {
+    public final int incrementIncoming() {
 
         return ++currentIncoming;
 
@@ -28,7 +39,7 @@ public class DrawableNode {
     /**
      * @return translateX property
      */
-    public ObservableDoubleValue translateXProperty() {
+    public final ObservableDoubleValue translateXProperty() {
 
         return translateX;
 
@@ -37,7 +48,7 @@ public class DrawableNode {
     /**
      * @return translateY property
      */
-    public ObservableDoubleValue translateYProperty() {
+    public final ObservableDoubleValue translateYProperty() {
 
         return translateY;
 
@@ -48,7 +59,7 @@ public class DrawableNode {
      *
      * @param x new x
      */
-    public void setTranslateX(double x) {
+    public final void setTranslateX(final double x) {
 
         translateX.set(x);
 
@@ -59,7 +70,7 @@ public class DrawableNode {
      *
      * @param y new y
      */
-    public void setTranslateY(double y) {
+    public final void setTranslateY(final double y) {
 
         translateY.set(y);
 

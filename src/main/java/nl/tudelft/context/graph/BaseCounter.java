@@ -13,22 +13,26 @@ import java.util.Locale;
  */
 public class BaseCounter extends HashBag {
 
+    /**
+     * DecimalFormatter to format a float to 2 numbers after the period.
+     */
     static DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
 
     /**
-     * Constructor for the baseCounter
+     * Constructor for the baseCounter.
      *
      * @param bases String with the dna sequence
      */
-    public BaseCounter(String bases) {
+    public BaseCounter(final String bases) {
         bases.chars()
                 .mapToObj(x -> (char) x)
                 .forEach(this::add);
     }
 
     /**
-     * Get the percentage of a certain base, with N for an unknown base
+     * Get the percentage of a certain base, with N for an unknown base.
      *
+     * @param c CATG char
      * @return float value with the percentage of the base in the initial string
      */
     public float getRatio(char c) {
@@ -36,8 +40,9 @@ public class BaseCounter extends HashBag {
     }
 
     /**
-     * Get a string representation of the percentage of a certain base, with n for an unknown base
+     * Get a string representation of the percentage of a certain base, with n for an unknown base.
      *
+     * @param c CATG char
      * @return string string representing the value with the percentage of the base in the initial string
      */
     public String getPercentageString(char c) {
@@ -51,8 +56,18 @@ public class BaseCounter extends HashBag {
      * @return string representation of all occurrence-rates of the bases in the BaseCounter.
      */
     @Override
-    public String toString() {
-        return "A: " + getPercentageString('A') + "%, T: " + getPercentageString('T') + "%, C: " + getPercentageString('C') + "%, G: " + getPercentageString('G') + "%, N: " + getPercentageString('N') + "%";
+    public final String toString() {
+        return "A: "
+                + getPercentageString('A')
+                + "%, T: "
+                + getPercentageString('T')
+                + "%, C: "
+                + getPercentageString('C')
+                + "%, G: "
+                + getPercentageString('G')
+                + "%, N: "
+                + getPercentageString('N')
+                + "%";
     }
 
 }

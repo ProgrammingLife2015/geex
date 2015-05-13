@@ -18,25 +18,35 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 8-5-2015
  */
-public class NewickController extends DefaultController<ScrollPane> {
+public final class NewickController extends DefaultController<ScrollPane> {
 
+    /**
+     * The container of the newick tree.
+     */
     @FXML
-    protected Group newick;
+    Group newick;
 
-    protected MainController mainController;
-    protected LoadNewickService loadNewickService;
+    /**
+     * The main controller used to set views.
+     */
+    MainController mainController;
+
+    /**
+     * The service used for loading the newick tree.
+     */
+    LoadNewickService loadNewickService;
 
     /**
      * Init a controller at newick.fxml.
      *
-     * @param loadNewickService service with file locations
+     * @param mainController   MainController for the application
      */
-    public NewickController(MainController mainController, LoadNewickService loadNewickService) {
+    public NewickController(final MainController mainController) {
 
         super(new ScrollPane());
 
         this.mainController = mainController;
-        this.loadNewickService = loadNewickService;
+        this.loadNewickService = mainController.getWorkspace().getNewickList().get(0);
 
         loadFXML("/application/newick.fxml");
 
@@ -52,7 +62,7 @@ public class NewickController extends DefaultController<ScrollPane> {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
 
         loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
 
@@ -75,7 +85,7 @@ public class NewickController extends DefaultController<ScrollPane> {
      *
      * @param tree newick to show
      */
-    protected void showTree(Tree tree) {
+    protected void showTree(final Tree tree) {
 
         // Bind edges
         List<DrawableEdge> edgeList = tree.edgeSet().stream()
@@ -89,6 +99,11 @@ public class NewickController extends DefaultController<ScrollPane> {
                     label.setCache(true);
                     label.translateXProperty().bind(node.translateXProperty());
                     label.translateYProperty().bind(node.translateYProperty());
+                    if (node.isUnknown()) {
+                        label.getStyleClass().add("ancestor");
+                    }
+                    label.setOnMouseClicked(event ->
+                            mainController.setView(new GraphController(mainController, node.getSources()).getRoot()));
                     return label;
                 }).collect(Collectors.toList());
 

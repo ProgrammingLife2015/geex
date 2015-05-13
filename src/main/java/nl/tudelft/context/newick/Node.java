@@ -2,53 +2,124 @@ package nl.tudelft.context.newick;
 
 import nl.tudelft.context.drawable.DrawableNode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
  * @version 1.0
  * @since 3-5-2015
  */
-public class Node extends DrawableNode {
+public final class Node extends DrawableNode implements Serializable {
+    /**
+     * The name of the Node.
+     */
     private final String name;
-    double weight;
-    List<Node> children;
+    /**
+     * The weight of the Node.
+     */
+    private final double weight;
+    /**
+     * The children of the Node.
+     */
+    private List<Node> children;
 
-    public Node(String name, double weight) {
+    /**
+     * Builds a new node with the corresponding name and weight.
+     *
+     * @param name   the name of the node
+     * @param weight the weight (distance from parent) of the node
+     */
+    public Node(final String name, final double weight) {
         this.name = name;
         this.weight = weight;
         children = new ArrayList<>(2);
     }
 
-    public void addChild(Node n) {
+    /**
+     * Adds a child to the node.
+     *
+     * @param n the node to add as a child
+     */
+    public void addChild(final Node n) {
         this.children.add(n);
     }
 
+    /**
+     * Gets all the children inside this node.
+     *
+     * @return the children
+     */
     public List<Node> getChildren() {
         return children;
     }
 
+    /**
+     * Gets the name of this node.
+     *
+     * @return the name of this node
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets the weight of this node.
+     *
+     * @return the weight of this node.
+     */
     public double getWeight() {
         return weight;
     }
 
+    /**
+     * Tells whether this node is an unknown ancestor or not.
+     * @return true if the node is an unknown ancestor; otherwise false
+     */
+    public boolean isUnknown() {
+        return this.name.equals("");
+    }
+
+    /**
+     * Gets the sources for the graph from this node and its children.
+     *
+     * @return name of this node and it's children
+     */
+    public Set<String> getSources() {
+
+        Set<String> sources = new HashSet<>();
+
+        if (!name.isEmpty()) {
+            sources.add(name);
+        }
+
+        children.forEach(node -> sources.addAll(node.getSources()));
+
+        return sources;
+
+    }
+
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (other == null || !(other instanceof Node)) {
             return false;
         }
-        Node that = (Node)other;
-        return getName().equals(that.getName()) &&
-                getWeight() == that.getWeight();
+        Node that = (Node) other;
+        return name.equals(that.name)
+                && weight == that.weight;
+    }
+
+    @Override
+    public int hashCode() {
+        long c = Double.doubleToLongBits(weight);
+        return 37 * name.hashCode() + (int) (c ^ (c >>> 32));
     }
 
     @Override
     public String toString() {
-        return "Node<" + getName() + "," + getWeight() + ">";
+        return "Node<" + name + "," + weight + ">";
     }
 }

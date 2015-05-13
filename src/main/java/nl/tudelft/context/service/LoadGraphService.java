@@ -8,19 +8,30 @@ import nl.tudelft.context.graph.GraphFactory;
 import java.io.File;
 
 /**
+ * Service for loading a Graph.
+ *
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 25-4-2015
  */
 public class LoadGraphService extends Service<Graph> {
 
-    protected File nodeFile;
-    protected File edgeFile;
+    /**
+     * File containing node information.
+     */
+    File nodeFile;
+    /**
+     * File containing edge information.
+     */
+    File edgeFile;
 
     /**
-     * Set node and edge file
+     * Set node and edge file.
+     *
+     * @param nodeFile File containing the nodes
+     * @param edgeFile File containing the edges
      */
-    public LoadGraphService(File nodeFile, File edgeFile) {
+    public LoadGraphService(final File nodeFile, final File edgeFile) {
 
         this.nodeFile = nodeFile;
         this.edgeFile = edgeFile;
@@ -33,7 +44,7 @@ public class LoadGraphService extends Service<Graph> {
      * @return the Task to execute
      */
     @Override
-    protected Task<Graph> createTask() {
+    protected final Task<Graph> createTask() {
 
         return new Task<Graph>() {
             @Override
