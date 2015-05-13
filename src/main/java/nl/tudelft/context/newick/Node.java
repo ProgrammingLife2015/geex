@@ -26,15 +26,6 @@ public final class Node extends DrawableNode implements Serializable {
     private List<Node> children;
 
     /**
-     * Number used for a good hashCode value.
-     */
-    public static final int HASH_CONS = 37;
-    /**
-     * Number used for a good hashCode representation of longs.
-     */
-    public static final int LONG_CONS = 32;
-
-    /**
      * Builds a new node with the corresponding name and weight.
      *
      * @param name   the name of the node
@@ -96,22 +87,18 @@ public final class Node extends DrawableNode implements Serializable {
             return false;
         }
         Node that = (Node) other;
-        return getName().equals(that.getName())
-                && getWeight() == that.getWeight();
+        return name.equals(that.name)
+                && weight == that.weight;
     }
 
     @Override
     public int hashCode() {
-        int result = HASH_CONS;
-
-        result = HASH_CONS * result + getName().hashCode();
-        long c = Double.doubleToLongBits(getWeight());
-
-        return HASH_CONS * result + (int) (c ^ (c >>> LONG_CONS));
+        long c = Double.doubleToLongBits(weight);
+        return 37 * name.hashCode() + (int) (c ^ (c >>> 32));
     }
 
     @Override
     public String toString() {
-        return "Node<" + getName() + "," + getWeight() + ">";
+        return "Node<" + name + "," + weight + ">";
     }
 }

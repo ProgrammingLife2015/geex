@@ -27,6 +27,11 @@ public final class NewickController extends DefaultController<ScrollPane> {
     Group newick;
 
     /**
+     * The main controller used to set views.
+     */
+    MainController mainController;
+
+    /**
      * The service used for loading the newick tree.
      */
     LoadNewickService loadNewickService;
@@ -36,9 +41,11 @@ public final class NewickController extends DefaultController<ScrollPane> {
      *
      * @param loadNewickService service with file locations
      */
-    public NewickController(final LoadNewickService loadNewickService) {
+    public NewickController(final MainController mainController, final LoadNewickService loadNewickService) {
 
         super(new ScrollPane());
+
+        this.mainController = mainController;
         this.loadNewickService = loadNewickService;
 
         loadFXML("/application/newick.fxml");
