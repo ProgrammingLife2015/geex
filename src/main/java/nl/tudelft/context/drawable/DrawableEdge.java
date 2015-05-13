@@ -13,6 +13,16 @@ import org.jgrapht.graph.DefaultEdge;
 public class DrawableEdge extends Line {
 
     /**
+     * Define the X translation.
+     */
+    public static final int X_OFFSET = 30;
+
+    /**
+     * Define the Y translation.
+     */
+    public static final int Y_OFFSET = 30;
+
+    /**
      * Create edge and bind it to nodes.
      *
      * @param graph graph that contains edge
@@ -25,8 +35,8 @@ public class DrawableEdge extends Line {
         startYProperty().bind(graph.getEdgeSource(edge).translateYProperty());
         endYProperty().bind(graph.getEdgeTarget(edge).translateYProperty());
 
-        setTranslateX(30);
-        setTranslateY(30);
+        setTranslateX(X_OFFSET);
+        setTranslateY(Y_OFFSET);
         setStroke(Color.WHITE);
 
     }
