@@ -5,7 +5,6 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
@@ -18,12 +17,6 @@ import java.util.Stack;
  * @since 25-4-2015
  */
 public class MainController extends DefaultController<BorderPane> {
-
-    /**
-     * The main container of the controller.
-     */
-    @FXML
-    VBox control;
 
     /**
      * The container of all views after this one.
@@ -64,9 +57,6 @@ public class MainController extends DefaultController<BorderPane> {
      */
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
-
-        control.getChildren().add(new LoadGraphController(this).getRoot());
-        control.getChildren().add(new LoadNewickController(this).getRoot());
 
         root.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {

@@ -4,10 +4,16 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
 <fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
 
     <left>
-        <VBox fx:id="control"/>
+        <VBox fx:id="control">
+            <GridPane styleClass="control">
+                <Label styleClass="h2" GridPane.columnIndex="0" GridPane.rowIndex="0">Controls</Label>
+            </GridPane>
+        </VBox>
     </left>
 
     <center>
