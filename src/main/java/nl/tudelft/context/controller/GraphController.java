@@ -10,6 +10,7 @@ import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.net.URL;
 import java.util.List;
@@ -109,6 +110,21 @@ public class GraphController extends DefaultController<ScrollPane> {
      * @param graph Graph to show
      */
     private void showGraph(final Graph graph) {
+
+        // Remove unnecessary edges
+        graph.removeAllEdges(graph.edgeSet().stream()
+                .filter(edge -> {
+                    Node source = graph.getEdgeSource(edge);
+                    Node target = graph.getEdgeTarget(edge);
+                    return !CollectionUtils.containsAny(source.getSources(), sources)
+                            || !CollectionUtils.containsAny(target.getSources(), sources);
+                })
+                .collect(Collectors.toList()));
+
+        // Remove unnecessary nodes
+        graph.removeAllVertices(graph.vertexSet().stream()
+                .filter(vertex -> !CollectionUtils.containsAny(vertex.getSources(), sources))
+                .collect(Collectors.toList()));
 
         List<Node> start = graph.getFirstNodes();
 
