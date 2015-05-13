@@ -66,7 +66,7 @@ public abstract class DefaultController<T extends Parent> implements Initializab
     /**
      * Load file.
      */
-    protected File loadFile(FileChooser fileChooser, TextField source) {
+    protected File loadFile(final FileChooser fileChooser, TextField source) {
 
         File file = fileChooser.showOpenDialog(root.getScene().getWindow());
 
