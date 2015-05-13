@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.GridPane?>
 <fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
 
     <left>
         <VBox fx:id="control">
             <GridPane styleClass="control">
-                <Label styleClass="h2" GridPane.columnIndex="0" GridPane.rowIndex="0">Controls</Label>
+                <Label styleClass="h2" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">Temporary
+                    example
+                </Label>
+                <Button text="Load something" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false"/>
+                <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="0" GridPane.rowIndex="2"
+                      GridPane.columnSpan="2">
+                    <Button text="Load"/>
+                </HBox>
             </GridPane>
         </VBox>
     </left>
