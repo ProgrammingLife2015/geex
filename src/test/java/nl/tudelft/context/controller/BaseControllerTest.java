@@ -1,10 +1,12 @@
 package nl.tudelft.context.controller;
 
+import de.saxsys.javafx.test.JfxRunner;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.GraphFactory;
 import nl.tudelft.context.graph.Node;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.util.Arrays;
@@ -17,6 +19,7 @@ import static org.junit.Assert.assertEquals;
  * @version 1.0
  * @since 8-5-2015
  */
+@RunWith(JfxRunner.class)
 public class BaseControllerTest {
 
     protected static BaseController baseController;
