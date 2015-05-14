@@ -7,17 +7,15 @@
 <?import javafx.scene.text.TextFlow?>
 <fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml">
 
-    <StackPane styleClass="transparent-margin">
-        <VBox>
-            <Label styleClass="h2">Bases</Label>
-            <TextFlow>
-                <Text fx:id="bases"/>
-            </TextFlow>
-            <Label styleClass="h2">Other occurrences</Label>
-            <TextFlow>
-                <Text fx:id="occurrences"/>
-            </TextFlow>
-        </VBox>
-    </StackPane>
+    <VBox styleClass="transparent-margin">
+        <Label styleClass="h2">Bases</Label>
+        <TextFlow>
+            <Text fx:id="bases"/>
+        </TextFlow>
+        <Label styleClass="h2">Other occurrences</Label>
+        <TextFlow>
+            <Text fx:id="occurrences"/>
+        </TextFlow>
+    </VBox>
 
 </fx:root>
