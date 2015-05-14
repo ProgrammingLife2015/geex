@@ -16,7 +16,7 @@
             <ProgressIndicator fx:id="progressIndicator"/>
         </StackPane>
     </ScrollPane>
-    <VBox styleClass="legend" AnchorPane.topAnchor="50" AnchorPane.rightAnchor="50">
+    <VBox styleClass="legend" AnchorPane.topAnchor="30" AnchorPane.rightAnchor="40">
         <Label styleClass="base-A">A base</Label>
         <Label styleClass="base-T">T base</Label>
         <Label styleClass="base-C">C base</Label>
