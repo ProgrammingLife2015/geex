@@ -35,7 +35,8 @@ public class InfoLabel extends VBox {
      * Constructor for the InfoLabel.
      *
      * @param mainController MainController indicating the controller.
-     * @param node           Node indicating the node.
+     * @param graph          Graph containing the node
+     * @param node           Node indicating the node
      */
     public InfoLabel(final MainController mainController, final Graph graph, final Node node) {
 
