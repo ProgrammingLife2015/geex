@@ -1,11 +1,11 @@
 package nl.tudelft.context.controller;
 
-import com.sun.deploy.util.StringUtils;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
+import org.apache.commons.lang.StringUtils;
 
 import java.net.URL;
 import java.util.List;
