@@ -1,8 +1,8 @@
 package nl.tudelft.context.drawable;
 
+import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.MainController;
@@ -31,8 +31,9 @@ public class InfoLabel extends VBox {
 
     /**
      * Constructor for the InfoLabel.
+     *
      * @param mainController MainController indicating the controller.
-     * @param node Node indicating the node.
+     * @param node           Node indicating the node.
      */
     public InfoLabel(final MainController mainController, final Node node) {
 
@@ -69,20 +70,21 @@ public class InfoLabel extends VBox {
      */
     private void initBaseLabels() {
 
-        final HBox hbox = new HBox();
+        final Group group = new Group();
 
-        final BaseCounter basecounter = node.getBaseCounter();
+        final BaseCounter baseCounter = node.getBaseCounter();
         List<BaseLabel> baseLabels = Arrays.asList('A', 'T', 'C', 'G', 'N').stream()
-                .map(base -> new BaseLabel(base, basecounter.getRatio(base)))
+                .map(base -> new BaseLabel(base, baseCounter.getRatio(base)))
                 .collect(Collectors.toList());
 
-        baseLabels.get(0).setWidth(
-                baseLabels.get(0).getWidth() + LABEL_WIDTH - baseLabels.stream()
-                        .mapToInt(nodeLabel -> (int) nodeLabel.getWidth()).sum()
-        );
+        double left = 0;
+        for (BaseLabel baseLabel : baseLabels) {
+            baseLabel.setTranslateX(left);
+            left += baseLabel.widthProperty().get();
+        }
 
-        hbox.getChildren().addAll(baseLabels);
-        getChildren().add(hbox);
+        group.getChildren().addAll(baseLabels);
+        getChildren().add(group);
 
     }
 
