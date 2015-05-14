@@ -2,12 +2,16 @@
     -fx-background-color: #2b2b2b;
 }
 
-.margin,
-.transparent-margin {
-    -fx-padding: 30px 50px 50px;
+.transparent {
+    -fx-background-color: transparent;
 }
 
-.transparent-margin {
+.margin {
+    -fx-padding: 50px;
+}
+
+.transparent .margin {
+    -fx-padding: 30px 50px 50px;
     -fx-background-color: rgba(43, 43, 43, 0.8);
 }
 
@@ -24,7 +28,7 @@
 }
 
 .control .h2,
-.transparent-margin .h2 {
+.transparent .margin .h2 {
     -fx-font: bold 0.4cm 'Arial';
 }
 
@@ -33,7 +37,7 @@
     -fx-text-fill: #2b2b2b;
 }
 
-.transparent-margin .h2 {
+.transparent .margin .h2 {
     -fx-padding: 20px 0 10px;
     -fx-text-fill: #fff;
 }
