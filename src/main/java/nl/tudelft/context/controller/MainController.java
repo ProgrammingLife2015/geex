@@ -5,11 +5,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.breadcrumb.Breadcrumb;
+import nl.tudelft.context.breadcrumb.ViewStack;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
@@ -34,7 +34,7 @@ public class MainController extends DefaultController<BorderPane> {
     /**
      * A stack of the current views.
      */
-    Stack<ViewController> viewList;
+    ViewStack viewStack;
 
     /**
      * The current workspace.
@@ -48,9 +48,10 @@ public class MainController extends DefaultController<BorderPane> {
 
         super(new BorderPane());
 
+        viewStack = new ViewStack();
+
         loadFXML("/application/main.fxml");
 
-        viewList = new Stack<>();
     }
 
     /**
@@ -65,14 +66,14 @@ public class MainController extends DefaultController<BorderPane> {
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
 
+        main.setTop(new Breadcrumb(this, viewStack));
+        root.setTop(new MenuController(this));
+
         root.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 previousView();
             }
         });
-
-        root.setTop(new MenuController(this));
-        main.setTop(new Breadcrumb());
 
     }
 
@@ -84,7 +85,7 @@ public class MainController extends DefaultController<BorderPane> {
     public final void setBaseView(final ViewController viewController) {
 
         view.getChildren().clear();
-        viewList.clear();
+        viewStack.clear();
         setView(viewController);
 
     }
@@ -96,7 +97,7 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void setView(final ViewController viewController) {
 
-        viewList.add(viewController);
+        viewStack.add(viewController);
         view.getChildren().add(viewController.getRoot());
 
     }
@@ -106,10 +107,23 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void previousView() {
 
-        if (viewList.size() > 1) {
-            viewList.pop();
+        if (viewStack.size() > 1) {
+            viewStack.pop();
             view.getChildren().retainAll(
-                    viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
+                    viewStack.stream().map(ViewController::getRoot).collect(Collectors.toList()));
+        }
+
+    }
+
+    /**
+     * Go back to the given view.
+     *
+     * @param viewController View to go back to
+     */
+    public void backToView(final ViewController viewController) {
+
+        while (!viewStack.peek().equals(viewController)) {
+            previousView();
         }
 
     }
@@ -138,5 +152,4 @@ public class MainController extends DefaultController<BorderPane> {
     public final void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
     }
-
 }

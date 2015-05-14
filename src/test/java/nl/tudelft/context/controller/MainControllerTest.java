@@ -79,11 +79,11 @@ public class MainControllerTest {
         NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController);
-        assertEquals(baseController, mc.viewList.peek());
+        assertEquals(baseController, mc.viewStack.peek());
         assertEquals(baseController.getRoot(), mc.view.getChildren().get(0));
 
         mc.setView(newickController);
-        assertEquals(newickController, mc.viewList.peek());
+        assertEquals(newickController, mc.viewStack.peek());
         assertEquals(newickController.getRoot(), mc.view.getChildren().get(1));
 
     }
@@ -106,7 +106,7 @@ public class MainControllerTest {
 
         mc.previousView();
 
-        assertEquals(baseController, mc.viewList.peek());
+        assertEquals(baseController, mc.viewStack.peek());
         assertEquals(baseController.getRoot(), mc.view.getChildren().get(0));
 
     }
@@ -130,7 +130,7 @@ public class MainControllerTest {
         mc.previousView();
         mc.previousView();
 
-        assertEquals(baseController, mc.viewList.peek());
+        assertEquals(baseController, mc.viewStack.peek());
         assertEquals(baseController.getRoot(), mc.view.getChildren().get(0));
 
     }
@@ -151,7 +151,7 @@ public class MainControllerTest {
         mc.setView(newickController);
         mc.setBaseView(baseController);
 
-        assertEquals(1, mc.viewList.size());
+        assertEquals(1, mc.viewStack.size());
 
     }
 
