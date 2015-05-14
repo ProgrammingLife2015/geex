@@ -22,11 +22,6 @@ import java.util.stream.Collectors;
 public class InfoLabel extends VBox {
 
     /**
-     * The graph containing the node.
-     */
-    Graph graph;
-
-    /**
      * The node the InfoLabel belongs to.
      */
     Node node;
@@ -44,7 +39,6 @@ public class InfoLabel extends VBox {
      */
     public InfoLabel(final MainController mainController, final Graph graph, final Node node) {
 
-        this.graph = graph;
         this.node = node;
 
         setCache(true);
