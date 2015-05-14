@@ -1,7 +1,7 @@
 package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.text.Text;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 8-5-2015
  */
-public final class BaseController extends DefaultController<StackPane> {
+public final class BaseController extends DefaultController<ScrollPane> {
 
     /**
      * JavaFX Text holder for bases.
@@ -48,7 +48,7 @@ public final class BaseController extends DefaultController<StackPane> {
      */
     public BaseController(final Graph graph, final Node node) {
 
-        super(new StackPane());
+        super(new ScrollPane());
 
         this.graph = graph;
         this.node = node;

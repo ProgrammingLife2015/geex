@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
-<fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml">
+<fx:root styleClass="transparent" type="javafx.scene.control.ScrollPane" xmlns:fx="http://javafx.com/fxml">
 
-    <VBox styleClass="transparent-margin">
+    <VBox styleClass="margin">
         <Label styleClass="h2">Bases</Label>
         <TextFlow>
             <Text fx:id="bases"/>
