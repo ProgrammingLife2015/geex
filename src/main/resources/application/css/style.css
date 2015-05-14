@@ -184,3 +184,22 @@
 .node-label-C{ -fx-fill: #4daf4a; }
 .node-label-G{ -fx-fill: #984ea3; }
 .node-label-N{ -fx-fill: #ff7f00; }
+
+/* Legend */
+.legend Label {
+    -fx-font: 0.3cm 'Arial';
+    -fx-text-fill: #fff;
+    -fx-padding: 0 0 0 10px;
+    -fx-border-width: 0 0 0 5px;
+}
+
+.legend .base-A { -fx-border-color: #e41a1c; }
+.legend .base-T { -fx-border-color: #377eb8; }
+.legend .base-C { -fx-border-color: #4daf4a; }
+.legend .base-G { -fx-border-color: #984ea3; }
+.legend .base-N { -fx-border-color: #ff7f00; }
+
+.legend{
+    -fx-background-color : rgba(43, 43, 43, .8);
+    -fx-padding: 10px;
+}

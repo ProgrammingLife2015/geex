@@ -3,7 +3,7 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 7-5-2015
  */
-public class GraphController extends DefaultController<ScrollPane> {
+public class GraphController extends DefaultController<AnchorPane> {
 
     /**
      * ProgressIndicator to show when the graph is loading.
@@ -65,7 +65,7 @@ public class GraphController extends DefaultController<ScrollPane> {
      */
     public GraphController(final MainController mainController, final Set<String> sources) {
 
-        super(new ScrollPane());
+        super(new AnchorPane());
 
         this.mainController = mainController;
         this.sources = sources;
