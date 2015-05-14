@@ -20,10 +20,17 @@ import java.util.stream.Collectors;
 public final class BaseController extends ViewController<ScrollPane> {
 
     /**
+     * JavaFX Text holder for sources.
+     */
+    @FXML
+    Text sources;
+
+    /**
      * JavaFX Text holder for bases.
      */
     @FXML
     Text bases;
+
     /**
      * JavaFX Text holder for occurrences.
      */
@@ -72,6 +79,8 @@ public final class BaseController extends ViewController<ScrollPane> {
 
         String content = node.getContent();
         bases.setText(content);
+
+        sources.setText(StringUtils.join(node.getSources(), ", "));
 
         List<String> otherOccurrences = graph.vertexSet().stream()
                 .filter(vertex -> vertex.getContent().equals(content) && !vertex.equals(node))

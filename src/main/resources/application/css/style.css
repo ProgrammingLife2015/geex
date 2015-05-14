@@ -169,7 +169,7 @@
     -fx-fill: #fff;
 }
 
-#occurrences {
+#occurrences, #sources {
     -fx-fill: #fff;
     -fx-font: 0.3cm 'Arial';
 }
