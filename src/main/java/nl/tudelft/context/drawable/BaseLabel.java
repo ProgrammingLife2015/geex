@@ -17,12 +17,12 @@ public class BaseLabel extends Rectangle {
     /**
      * Constructor for the BaseLabel.
      *
-     * @param base char indicating the applicable base.
-     * @param ratio the ratio of the representation of base in the total.
+     * @param base  char indicating the applicable base
+     * @param width the width of the label
      */
-    public  BaseLabel(final char base, final float ratio) {
+    public BaseLabel(final char base, final double width) {
 
-        super(ratio * InfoLabel.LABEL_WIDTH, BASE_HEIGHT);
+        super(width, BASE_HEIGHT);
         getStyleClass().add("node-label-" + base);
 
     }

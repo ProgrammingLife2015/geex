@@ -82,7 +82,7 @@ public class InfoLabel extends VBox {
 
         final BaseCounter baseCounter = node.getBaseCounter();
         List<BaseLabel> baseLabels = Arrays.asList('A', 'T', 'C', 'G', 'N').stream()
-                .map(base -> new BaseLabel(base, baseCounter.getRatio(base)))
+                .map(base -> new BaseLabel(base, baseCounter.getRatio(base) * LABEL_WIDTH))
                 .collect(Collectors.toList());
 
         double left = 0;
