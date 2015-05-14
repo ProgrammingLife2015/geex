@@ -1,6 +1,9 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
+import nl.tudelft.context.graph.Graph;
+import nl.tudelft.context.graph.GraphFactory;
+import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
 import nl.tudelft.context.service.LoadNewickService;
 import nl.tudelft.context.workspace.Workspace;
@@ -8,7 +11,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -22,6 +28,10 @@ import static org.mockito.Mockito.when;
 @RunWith(JfxRunner.class)
 public class MainControllerTest {
 
+    protected static Graph graph;
+
+    protected static final Node node1 = new Node(0, new HashSet<>(Arrays.asList("Cat", "Dog")), 5, 7, "A");
+
     protected static MainController mainController;
     protected static Workspace workspace;
 
@@ -29,7 +39,13 @@ public class MainControllerTest {
      * Setup Main Controller.
      */
     @BeforeClass
-    public static void beforeClass() throws InterruptedException {
+    public static void beforeClass() throws Exception {
+
+        File nodeFile = new File(BaseControllerTest.class.getResource("/graph/node.graph").getPath());
+        File edgeFile = new File(BaseControllerTest.class.getResource("/graph/edge.graph").getPath());
+
+        GraphFactory graphFactory = new GraphFactory();
+        graph = graphFactory.getGraph(nodeFile, edgeFile);
 
         mainController = new MainController();
 
@@ -59,7 +75,7 @@ public class MainControllerTest {
         MainController mc = new MainController();
         mc.setWorkspace(workspace);
 
-        BaseController baseController = new BaseController("ATCG");
+        BaseController baseController = new BaseController(graph, node1);
         NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());
@@ -82,7 +98,7 @@ public class MainControllerTest {
         mc.setWorkspace(workspace);
 
 
-        BaseController baseController = new BaseController("ATCG");
+        BaseController baseController = new BaseController(graph, node1);
         NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());
@@ -105,7 +121,7 @@ public class MainControllerTest {
         mc.setWorkspace(workspace);
 
 
-        BaseController baseController = new BaseController("ATCG");
+        BaseController baseController = new BaseController(graph, node1);
         NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());
@@ -128,7 +144,7 @@ public class MainControllerTest {
         MainController mc = new MainController();
         mc.setWorkspace(workspace);
 
-        BaseController baseController = new BaseController("ATCG");
+        BaseController baseController = new BaseController(graph, node1);
         NewickController newickController = new NewickController(mc);
 
         mc.setView(baseController.getRoot());

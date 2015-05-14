@@ -152,7 +152,7 @@ public class GraphController extends DefaultController<ScrollPane> {
 
         // Bind nodes
         List<VBox> nodeList = graph.vertexSet().stream()
-                .map(node -> new InfoLabel(mainController, node))
+                .map(node -> new InfoLabel(mainController, graph, node))
                 .collect(Collectors.toList());
 
         sequences.getChildren().addAll(edgeList);

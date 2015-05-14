@@ -4,7 +4,7 @@
 
 .margin,
 .transparent-margin {
-    -fx-padding: 50px;
+    -fx-padding: 30px 50px 50px;
 }
 
 .transparent-margin {
@@ -23,10 +23,19 @@
     -fx-vgap: 10px;
 }
 
+.control .h2,
+.transparent-margin .h2 {
+    -fx-font: bold 0.4cm 'Arial';
+}
+
 .control .h2 {
     -fx-padding: 5px 0;
-    -fx-font: bold 0.4cm 'Arial';
     -fx-text-fill: #2b2b2b;
+}
+
+.transparent-margin .h2 {
+    -fx-padding: 20px 0 10px;
+    -fx-text-fill: #fff;
 }
 
 /* Progress Indicator */
@@ -152,6 +161,7 @@
 
 /* Base */
 #base {
+    -fx-font: 0.4cm 'Courier New';
     -fx-fill: #fff;
 }
 
