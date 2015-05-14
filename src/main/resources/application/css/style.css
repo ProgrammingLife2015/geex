@@ -207,3 +207,16 @@
     -fx-background-color : rgba(43, 43, 43, .8);
     -fx-padding: 10px;
 }
+
+/* Breadcrumb */
+#breadcrumb {
+    -fx-border-width: 0 0 1px;
+    -fx-background-color: #1d1d1d;
+    -fx-border-color: #848484;
+}
+
+#breadcrumb Label {
+    -fx-padding: 10px 20px;
+    -fx-font: 0.3cm 'Arial';
+    -fx-text-fill: #fff;
+}

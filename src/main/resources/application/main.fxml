@@ -24,7 +24,21 @@
     </left>
 
     <center>
-        <StackPane fx:id="view"/>
+        <BorderPane>
+
+            <top>
+                <HBox fx:id="breadcrumb">
+                    <Label>Newick tree</Label>
+                    <Label>Genome graph</Label>
+                    <Label>Base: 123</Label>
+                </HBox>
+            </top>
+
+            <center>
+                <StackPane fx:id="view"/>
+            </center>
+
+        </BorderPane>
     </center>
 
     <stylesheets>
