@@ -3,6 +3,7 @@ package nl.tudelft.context.controller;
 import javafx.scene.Parent;
 
 /**
+ * @param <T> fxml root type
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 14-5-2015
@@ -17,7 +18,7 @@ public abstract class ViewController<T extends Parent> extends DefaultController
      *
      * @param root the root of fxml
      */
-    public ViewController(T root) {
+    public ViewController(final T root) {
 
         super(root);
 

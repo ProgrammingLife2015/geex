@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 7-5-2015
  */
-public class GraphController extends ViewController<AnchorPane> {
+public final class GraphController extends ViewController<AnchorPane> {
 
     /**
      * ProgressIndicator to show when the graph is loading.
@@ -85,7 +85,7 @@ public class GraphController extends ViewController<AnchorPane> {
      *                  the root object was not localized.
      */
     @Override
-    public final void initialize(final URL location, final ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
 
         progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
         loadGraphService.setOnSucceeded(event -> showGraph(cleanGraph(loadGraphService.getValue())));

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import nl.tudelft.context.breadcrumb.Breadcrumb;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
@@ -23,6 +24,12 @@ public class MainController extends DefaultController<BorderPane> {
      */
     @FXML
     StackPane view;
+
+    /**
+     * FXML pointer for right BorderPane.
+     */
+    @FXML
+    BorderPane main;
 
     /**
      * A stack of the current views.
@@ -65,6 +72,7 @@ public class MainController extends DefaultController<BorderPane> {
         });
 
         root.setTop(new MenuController(this));
+        main.setTop(new Breadcrumb());
 
     }
 

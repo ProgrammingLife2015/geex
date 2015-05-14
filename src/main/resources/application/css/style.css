@@ -209,27 +209,30 @@
 }
 
 /* Breadcrumb */
-#breadcrumb {
+.breadcrumb {
     -fx-border-width: 0 0 1px;
     -fx-background-color: #1d1d1d;
     -fx-border-color: #848484;
 }
 
-#breadcrumb HBox {
-    -fx-padding: 5px 20px;
+.breadcrumb HBox {
+    -fx-padding: 5px 20px 5px 13px;
     -fx-background-image: url("../images/arrow.png");
     -fx-background-repeat: no-repeat;
-    -fx-background-position: 0 50%;
+    -fx-background-position: 100% 50%;
 }
 
-#breadcrumb HBox.first {
+.breadcrumb HBox.last {
     -fx-background-image: none;
-    -fx-padding: 5px 20px 5px 13px;
 }
 
-#breadcrumb HBox Label {
+.breadcrumb HBox Label {
     -fx-text-fill: #fff;
     -fx-cursor: hand;
     -fx-padding: 5px;
     -fx-font: 0.3cm 'Arial';
+}
+
+.breadcrumb HBox.last Label {
+    -fx-cursor: default;
 }
