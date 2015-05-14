@@ -1,7 +1,16 @@
 package nl.tudelft.context.controller;
 
+import de.saxsys.javafx.test.JfxRunner;
+import nl.tudelft.context.graph.Graph;
+import nl.tudelft.context.graph.GraphFactory;
+import nl.tudelft.context.graph.Node;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,9 +19,14 @@ import static org.junit.Assert.assertEquals;
  * @version 1.0
  * @since 8-5-2015
  */
+@RunWith(JfxRunner.class)
 public class BaseControllerTest {
 
     protected static BaseController baseController;
+
+    protected static Graph graph;
+
+    protected static final Node node1 = new Node(0, new HashSet<>(Arrays.asList("Cat", "Dog")), 5, 7, "A");
 
     /**
      * Setup Base Controller.
@@ -20,7 +34,13 @@ public class BaseControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        baseController = new BaseController("ATCGATCGACG");
+        File nodeFile = new File(BaseControllerTest.class.getResource("/graph/node.graph").getPath());
+        File edgeFile = new File(BaseControllerTest.class.getResource("/graph/edge.graph").getPath());
+
+        GraphFactory graphFactory = new GraphFactory();
+        graph = graphFactory.getGraph(nodeFile, edgeFile);
+
+        baseController = new BaseController(graph, node1);
 
     }
 
@@ -40,7 +60,7 @@ public class BaseControllerTest {
     @Test
     public void testBaseContent() {
 
-        assertEquals("ATCGATCGACG", baseController.base.getText());
+        assertEquals("A", baseController.bases.getText());
 
     }
 

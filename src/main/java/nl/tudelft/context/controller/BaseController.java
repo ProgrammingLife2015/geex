@@ -3,9 +3,14 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import nl.tudelft.context.graph.Graph;
+import nl.tudelft.context.graph.Node;
+import org.apache.commons.lang.StringUtils;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -15,26 +20,38 @@ import java.util.ResourceBundle;
 public final class BaseController extends DefaultController<StackPane> {
 
     /**
-     * JavaFX Text holder.
+     * JavaFX Text holder for bases.
      */
     @FXML
-    Text base;
+    Text bases;
+    /**
+     * JavaFX Text holder for occurrences.
+     */
+    @FXML
+    Text occurrences;
 
     /**
-     * line of bases that is displayed.
+     * Graph containing the node to display.
      */
-    private String sequence;
+    private Graph graph;
+
+    /**
+     * Node that is displayed.
+     */
+    private Node node;
 
     /**
      * Init a controller at graph.fxml.
      *
-     * @param sequence line of bases to display
+     * @param graph Graph containing the node
+     * @param node  Node to display
      */
-    public BaseController(final String sequence) {
+    public BaseController(final Graph graph, final Node node) {
 
         super(new StackPane());
 
-        this.sequence = sequence;
+        this.graph = graph;
+        this.node = node;
 
         loadFXML("/application/base.fxml");
 
@@ -51,9 +68,22 @@ public final class BaseController extends DefaultController<StackPane> {
      */
     @Override
     public void initialize(final URL location,
-                                 final ResourceBundle resources) {
+                           final ResourceBundle resources) {
 
-        base.setText(sequence);
+        String content = node.getContent();
+        bases.setText(content);
+
+        List<String> otherOccurrences = graph.vertexSet().stream()
+                .filter(vertex -> vertex.getContent().equals(content) && !vertex.equals(node))
+                .map(Node::getId)
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+
+        if (otherOccurrences.size() > 0) {
+            occurrences.setText(StringUtils.join(otherOccurrences, ", "));
+        } else {
+            occurrences.setText("None");
+        }
 
     }
 

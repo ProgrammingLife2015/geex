@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.graph.BaseCounter;
+import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  * @since 13-5-2015
  */
 public class InfoLabel extends VBox {
+
     /**
      * The node the InfoLabel belongs to.
      */
@@ -33,9 +35,10 @@ public class InfoLabel extends VBox {
      * Constructor for the InfoLabel.
      *
      * @param mainController MainController indicating the controller.
-     * @param node           Node indicating the node.
+     * @param graph          Graph containing the node
+     * @param node           Node indicating the node
      */
-    public InfoLabel(final MainController mainController, final Node node) {
+    public InfoLabel(final MainController mainController, final Graph graph, final Node node) {
 
         this.node = node;
 
@@ -43,7 +46,7 @@ public class InfoLabel extends VBox {
         translateXProperty().bind(node.translateXProperty());
         translateYProperty().bind(node.translateYProperty());
 
-        setOnMouseClicked(event -> mainController.setView(new BaseController(node.getContent()).getRoot()));
+        setOnMouseClicked(event -> mainController.setView(new BaseController(graph, node).getRoot()));
 
         initMainLabel();
         initBaseLabels();
@@ -74,7 +77,7 @@ public class InfoLabel extends VBox {
 
         final BaseCounter baseCounter = node.getBaseCounter();
         List<BaseLabel> baseLabels = Arrays.asList('A', 'T', 'C', 'G', 'N').stream()
-                .map(base -> new BaseLabel(base, baseCounter.getRatio(base)))
+                .map(base -> new BaseLabel(base, baseCounter.getRatio(base) * LABEL_WIDTH))
                 .collect(Collectors.toList());
 
         double left = 0;
