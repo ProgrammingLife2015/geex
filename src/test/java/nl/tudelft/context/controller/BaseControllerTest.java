@@ -60,7 +60,7 @@ public class BaseControllerTest {
     @Test
     public void testBaseContent() {
 
-        assertEquals("A", baseController.base.getText());
+        assertEquals("A", baseController.bases.getText());
 
     }
 

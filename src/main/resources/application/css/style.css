@@ -160,9 +160,14 @@
 }
 
 /* Base */
-#base {
+#bases {
     -fx-font: 0.4cm 'Courier New';
     -fx-fill: #fff;
+}
+
+#occurrences {
+    -fx-fill: #fff;
+    -fx-font: 0.3cm 'Arial';
 }
 
 /* Node labels */

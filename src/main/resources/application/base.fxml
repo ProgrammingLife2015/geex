@@ -11,9 +11,12 @@
         <VBox>
             <Label styleClass="h2">Bases</Label>
             <TextFlow>
-                <Text fx:id="base"/>
+                <Text fx:id="bases"/>
             </TextFlow>
             <Label styleClass="h2">Other occurrences</Label>
+            <TextFlow>
+                <Text fx:id="occurrences"/>
+            </TextFlow>
         </VBox>
     </StackPane>
 

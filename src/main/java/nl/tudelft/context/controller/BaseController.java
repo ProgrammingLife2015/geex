@@ -1,5 +1,6 @@
 package nl.tudelft.context.controller;
 
+import com.sun.deploy.util.StringUtils;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -19,10 +20,15 @@ import java.util.stream.Collectors;
 public final class BaseController extends DefaultController<StackPane> {
 
     /**
-     * JavaFX Text holder.
+     * JavaFX Text holder for bases.
      */
     @FXML
-    Text base;
+    Text bases;
+    /**
+     * JavaFX Text holder for occurrences.
+     */
+    @FXML
+    Text occurrences;
 
     /**
      * Graph containing the node to display.
@@ -65,11 +71,19 @@ public final class BaseController extends DefaultController<StackPane> {
                            final ResourceBundle resources) {
 
         String content = node.getContent();
-        base.setText(content);
+        bases.setText(content);
 
-        List<Node> otherOccurrences = graph.vertexSet().stream()
+        List<String> otherOccurrences = graph.vertexSet().stream()
                 .filter(vertex -> vertex.getContent().equals(content) && !vertex.equals(node))
+                .map(Node::getId)
+                .map(String::valueOf)
                 .collect(Collectors.toList());
+
+        if (otherOccurrences.size() > 0) {
+            occurrences.setText(StringUtils.join(otherOccurrences, ", "));
+        } else {
+            occurrences.setText("None");
+        }
 
     }
 
