@@ -78,12 +78,12 @@ public class MainControllerTest {
         BaseController baseController = new BaseController(graph, node1);
         NewickController newickController = new NewickController(mc);
 
-        mc.setView(baseController.getRoot());
-        assertEquals(baseController.getRoot(), mc.viewList.peek());
+        mc.setView(baseController);
+        assertEquals(baseController, mc.viewList.peek());
         assertEquals(baseController.getRoot(), mc.view.getChildren().get(0));
 
-        mc.setView(newickController.getRoot());
-        assertEquals(newickController.getRoot(), mc.viewList.peek());
+        mc.setView(newickController);
+        assertEquals(newickController, mc.viewList.peek());
         assertEquals(newickController.getRoot(), mc.view.getChildren().get(1));
 
     }
@@ -101,12 +101,12 @@ public class MainControllerTest {
         BaseController baseController = new BaseController(graph, node1);
         NewickController newickController = new NewickController(mc);
 
-        mc.setView(baseController.getRoot());
-        mc.setView(newickController.getRoot());
+        mc.setView(baseController);
+        mc.setView(newickController);
 
         mc.previousView();
 
-        assertEquals(baseController.getRoot(), mc.viewList.peek());
+        assertEquals(baseController, mc.viewList.peek());
         assertEquals(baseController.getRoot(), mc.view.getChildren().get(0));
 
     }
@@ -124,13 +124,13 @@ public class MainControllerTest {
         BaseController baseController = new BaseController(graph, node1);
         NewickController newickController = new NewickController(mc);
 
-        mc.setView(baseController.getRoot());
-        mc.setView(newickController.getRoot());
+        mc.setView(baseController);
+        mc.setView(newickController);
 
         mc.previousView();
         mc.previousView();
 
-        assertEquals(baseController.getRoot(), mc.viewList.peek());
+        assertEquals(baseController, mc.viewList.peek());
         assertEquals(baseController.getRoot(), mc.view.getChildren().get(0));
 
     }
@@ -147,9 +147,9 @@ public class MainControllerTest {
         BaseController baseController = new BaseController(graph, node1);
         NewickController newickController = new NewickController(mc);
 
-        mc.setView(baseController.getRoot());
-        mc.setView(newickController.getRoot());
-        mc.setBaseView(baseController.getRoot());
+        mc.setView(baseController);
+        mc.setView(newickController);
+        mc.setBaseView(baseController);
 
         assertEquals(1, mc.viewList.size());
 

@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 7-5-2015
  */
-public class GraphController extends DefaultController<AnchorPane> {
+public class GraphController extends ViewController<AnchorPane> {
 
     /**
      * ProgressIndicator to show when the graph is loading.
@@ -199,6 +199,11 @@ public class GraphController extends DefaultController<AnchorPane> {
 
         }
 
+    }
+
+    @Override
+    public String getBreadcrumbName() {
+        return "Genome graph";
     }
 
 }

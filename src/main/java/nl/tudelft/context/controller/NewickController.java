@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 8-5-2015
  */
-public final class NewickController extends DefaultController<ScrollPane> {
+public final class NewickController extends ViewController<ScrollPane> {
 
     /**
      * The container of the newick tree.
@@ -103,12 +103,17 @@ public final class NewickController extends DefaultController<ScrollPane> {
                         label.getStyleClass().add("ancestor");
                     }
                     label.setOnMouseClicked(event ->
-                            mainController.setView(new GraphController(mainController, node.getSources()).getRoot()));
+                            mainController.setView(new GraphController(mainController, node.getSources())));
                     return label;
                 }).collect(Collectors.toList());
 
         newick.getChildren().addAll(edgeList);
         newick.getChildren().addAll(nodeList);
+    }
+
+    @Override
+    public String getBreadcrumbName() {
+        return "Newick tree";
     }
 
 }

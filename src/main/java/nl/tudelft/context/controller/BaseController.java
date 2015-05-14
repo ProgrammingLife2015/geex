@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 8-5-2015
  */
-public final class BaseController extends DefaultController<ScrollPane> {
+public final class BaseController extends ViewController<ScrollPane> {
 
     /**
      * JavaFX Text holder for bases.
@@ -85,6 +85,11 @@ public final class BaseController extends DefaultController<ScrollPane> {
             occurrences.setText("None");
         }
 
+    }
+
+    @Override
+    public String getBreadcrumbName() {
+        return "Sequence: " + node.getId();
     }
 
 }

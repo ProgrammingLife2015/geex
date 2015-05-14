@@ -1,7 +1,6 @@
 package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -10,6 +9,7 @@ import nl.tudelft.context.workspace.Workspace;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -27,7 +27,7 @@ public class MainController extends DefaultController<BorderPane> {
     /**
      * A stack of the current views.
      */
-    Stack<Node> viewList;
+    Stack<ViewController> viewList;
 
     /**
      * The current workspace.
@@ -71,25 +71,25 @@ public class MainController extends DefaultController<BorderPane> {
     /**
      * Set a new base view (clear the stack).
      *
-     * @param node javaFX element
+     * @param viewController Controller containing JavaFX root
      */
-    public final void setBaseView(final Node node) {
+    public final void setBaseView(final ViewController viewController) {
 
         view.getChildren().clear();
         viewList.clear();
-        setView(node);
+        setView(viewController);
 
     }
 
     /**
      * Set a new main view and push it on the view stack.
      *
-     * @param node javaFX element
+     * @param viewController Controller containing JavaFX root
      */
-    public final void setView(final Node node) {
+    public final void setView(final ViewController viewController) {
 
-        viewList.add(node);
-        view.getChildren().add(node);
+        viewList.add(viewController);
+        view.getChildren().add(viewController.getRoot());
 
     }
 
@@ -100,7 +100,8 @@ public class MainController extends DefaultController<BorderPane> {
 
         if (viewList.size() > 1) {
             viewList.pop();
-            view.getChildren().retainAll(viewList);
+            view.getChildren().retainAll(
+                    viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
         }
 
     }
