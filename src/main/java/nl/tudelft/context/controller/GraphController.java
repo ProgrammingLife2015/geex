@@ -203,7 +203,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
     @Override
     public String getBreadcrumbName() {
-        return "Genome graph";
+        return "Genome graph (" + sources.size() + ")";
     }
 
 }
