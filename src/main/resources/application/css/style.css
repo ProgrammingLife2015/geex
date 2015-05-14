@@ -215,8 +215,21 @@
     -fx-border-color: #848484;
 }
 
-#breadcrumb Label {
-    -fx-padding: 10px 20px;
-    -fx-font: 0.3cm 'Arial';
+#breadcrumb HBox {
+    -fx-padding: 5px 20px;
+    -fx-background-image: url("../images/arrow.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 0 50%;
+}
+
+#breadcrumb HBox.first {
+    -fx-background-image: none;
+    -fx-padding: 5px 20px 5px 13px;
+}
+
+#breadcrumb HBox Label {
     -fx-text-fill: #fff;
+    -fx-cursor: hand;
+    -fx-padding: 5px;
+    -fx-font: 0.3cm 'Arial';
 }
