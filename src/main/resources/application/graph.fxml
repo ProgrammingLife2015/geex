@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.Group?>
-<?import javafx.scene.layout.StackPane?>
-<fx:root type="javafx.scene.control.ScrollPane" xmlns:fx="http://javafx.com/fxml">
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
 
-    <StackPane>
-        <StackPane styleClass="margin">
-            <Group fx:id="sequences"/>
+    <ScrollPane AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0">
+        <StackPane>
+            <StackPane styleClass="margin">
+                <Group fx:id="sequences"/>
+            </StackPane>
+            <ProgressIndicator fx:id="progressIndicator"/>
         </StackPane>
-        <ProgressIndicator fx:id="progressIndicator"/>
-    </StackPane>
+    </ScrollPane>
+    <VBox styleClass="legend" AnchorPane.topAnchor="50" AnchorPane.rightAnchor="50">
+        <Label styleClass="base-A">A base</Label>
+        <Label styleClass="base-T">T base</Label>
+        <Label styleClass="base-C">C base</Label>
+        <Label styleClass="base-G">G base</Label>
+        <Label styleClass="base-N">Unknown base</Label>
+    </VBox>
 
 </fx:root>
