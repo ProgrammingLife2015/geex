@@ -182,19 +182,29 @@ public final class GraphController extends ViewController<AnchorPane> {
             map.get(index).add(infoLabel);
         });
 
-        scroll.hvalueProperty().addListener(event -> {
-            double width = scroll.getWidth();
-            double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
-                    * scroll.getHvalue();
-            int indexFrom = (int) Math.round(left / 100) - 1;
-            int indexTo = indexFrom + (int) Math.ceil(width / 100) + 2;
-            for (int index = indexFrom; index <= indexTo; index++) {
-                List<InfoLabel> temp = map.remove(index);
-                if (temp != null) {
-                    temp.stream().forEach(InfoLabel::init);
-                }
+        showCurrentLabels(map);
+        scroll.hvalueProperty().addListener(event -> showCurrentLabels(map));
+
+    }
+
+    /**
+     * Show all the labels on current position.
+     *
+     * @param map Containing the labels indexed by position
+     */
+    private void showCurrentLabels(final HashMap<Integer, List<InfoLabel>> map) {
+
+        double width = scroll.getWidth();
+        double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
+                * scroll.getHvalue();
+        int indexFrom = (int) Math.round(left / 100) - 1;
+        int indexTo = indexFrom + (int) Math.ceil(width / 100) + 1;
+        for (int index = indexFrom; index <= indexTo; index++) {
+            List<InfoLabel> temp = map.remove(index);
+            if (temp != null) {
+                temp.stream().forEach(InfoLabel::init);
             }
-        });
+        }
 
     }
 
