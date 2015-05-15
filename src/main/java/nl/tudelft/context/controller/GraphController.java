@@ -67,6 +67,11 @@ public final class GraphController extends ViewController<AnchorPane> {
     public static final int NODE_SPACING = 50;
 
     /**
+     * Define the amount of spacing for the nodes.
+     */
+    public static final int LABEL_SPACING = 100;
+
+    /**
      * Init a controller at graph.fxml.
      *
      * @param mainController MainController for the application
@@ -180,7 +185,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         HashMap<Integer, List<InfoLabel>> map = new HashMap<>();
         nodeList.stream().forEach(infoLabel -> {
-            int index = (int) infoLabel.translateXProperty().get() / 100;
+            int index = (int) infoLabel.translateXProperty().get() / LABEL_SPACING;
             if (!map.containsKey(index)) {
                 map.put(index, new ArrayList<>());
             }
@@ -202,8 +207,8 @@ public final class GraphController extends ViewController<AnchorPane> {
         double width = scroll.getWidth();
         double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
                 * scroll.getHvalue();
-        int indexFrom = (int) Math.round(left / 100) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(width / 100) + 1;
+        int indexFrom = (int) Math.round(left / LABEL_SPACING) - 1;
+        int indexTo = indexFrom + (int) Math.ceil(width / LABEL_SPACING) + 1;
         for (int index = indexFrom; index <= indexTo; index++) {
             List<InfoLabel> temp = map.remove(index);
             if (temp != null) {
@@ -245,8 +250,8 @@ public final class GraphController extends ViewController<AnchorPane> {
         int row = 0;
         for (Node node : nodes) {
 
-            node.setTranslateX(column * 100);
-            node.setTranslateY(row * 100 - shift);
+            node.setTranslateX(column * LABEL_SPACING);
+            node.setTranslateY(row * LABEL_SPACING - shift);
 
             row++;
 
