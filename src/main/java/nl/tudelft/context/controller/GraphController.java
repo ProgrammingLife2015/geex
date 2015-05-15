@@ -58,8 +58,6 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     public static final int NODE_SPACING = 50;
 
-    HashMap<Integer, List<InfoLabel>> map = new HashMap<>();
-
     /**
      * Init a controller at graph.fxml.
      *
@@ -161,6 +159,18 @@ public final class GraphController extends ViewController<AnchorPane> {
         sequences.getChildren().addAll(edgeList);
         sequences.getChildren().addAll(nodeList);
 
+        initOnTheFlyLoading(nodeList);
+
+    }
+
+    /**
+     * Listen to position and load on the fly.
+     *
+     * @param nodeList Labels to to load on the fly
+     */
+    private void initOnTheFlyLoading(List<InfoLabel> nodeList) {
+
+        HashMap<Integer, List<InfoLabel>> map = new HashMap<>();
         nodeList.stream().forEach(infoLabel -> {
             int index = (int) infoLabel.translateXProperty().get() / 100;
             if (!map.containsKey(index)) {
@@ -170,7 +180,6 @@ public final class GraphController extends ViewController<AnchorPane> {
         });
 
         scroll.hvalueProperty().addListener(event -> {
-            System.out.println(map.size());
             double width = scroll.getWidth();
             double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width) * scroll.getHvalue();
             int indexFrom = (int) Math.round(left / 100) - 1;
