@@ -3,8 +3,8 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
@@ -13,9 +13,7 @@ import nl.tudelft.context.service.LoadGraphService;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +35,9 @@ public final class GraphController extends ViewController<AnchorPane> {
     @FXML
     Group sequences;
 
+    @FXML
+    ScrollPane scroll;
+
     /**
      * Reference to the MainController of the app.
      */
@@ -56,6 +57,8 @@ public final class GraphController extends ViewController<AnchorPane> {
      * Define the amount of the shift.
      */
     public static final int NODE_SPACING = 50;
+
+    HashMap<Integer, List<InfoLabel>> map = new HashMap<>();
 
     /**
      * Init a controller at graph.fxml.
@@ -151,12 +154,34 @@ public final class GraphController extends ViewController<AnchorPane> {
                 .collect(Collectors.toList());
 
         // Bind nodes
-        List<VBox> nodeList = graph.vertexSet().stream()
+        List<InfoLabel> nodeList = graph.vertexSet().stream()
                 .map(node -> new InfoLabel(mainController, graph, node))
                 .collect(Collectors.toList());
 
         sequences.getChildren().addAll(edgeList);
         sequences.getChildren().addAll(nodeList);
+
+        nodeList.stream().forEach(infoLabel -> {
+            int index = (int) infoLabel.translateXProperty().get() / 100;
+            if (!map.containsKey(index)) {
+                map.put(index, new ArrayList<>());
+            }
+            map.get(index).add(infoLabel);
+        });
+
+        scroll.hvalueProperty().addListener(event -> {
+            System.out.println(map.size());
+            double width = scroll.getWidth();
+            double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width) * scroll.getHvalue();
+            int indexFrom = (int) Math.round(left / 100) - 1;
+            int indexTo = indexFrom + (int) Math.ceil(width / 100) + 2;
+            for (int index = indexFrom; index <= indexTo; index++) {
+                List<InfoLabel> temp = map.remove(index);
+                if (temp != null) {
+                    temp.stream().forEach(InfoLabel::init);
+                }
+            }
+        });
 
     }
 

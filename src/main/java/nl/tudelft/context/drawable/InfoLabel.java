@@ -48,13 +48,20 @@ public class InfoLabel extends VBox {
 
         setOnMouseClicked(event -> mainController.setView(new BaseController(graph, node)));
 
+    }
+
+    /**
+     * Draw sub elements when needed.
+     */
+    public void init() {
+
         initMainLabel();
         initBaseLabels();
 
     }
 
     /**
-     * Initialise the Label without the BaseLabels shown.
+     * Initialize the Label without the BaseLabels shown.
      */
     private void initMainLabel() {
 
@@ -69,7 +76,7 @@ public class InfoLabel extends VBox {
     }
 
     /**
-     * Initialise the BaseLabels.
+     * Initialize the BaseLabels.
      */
     private void initBaseLabels() {
 
