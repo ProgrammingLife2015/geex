@@ -121,7 +121,7 @@ public final class NewickController extends ViewController<ScrollPane> {
 
     @Override
     public String getBreadcrumbName() {
-        return "Newick tree";
+        return "Phylogenetic  tree";
     }
 
 }
