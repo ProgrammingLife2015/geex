@@ -120,7 +120,7 @@ public class MainController extends DefaultController<BorderPane> {
      *
      * @param viewController View to go back to
      */
-    public void backToView(final ViewController viewController) {
+    public final void backToView(final ViewController viewController) {
 
         while (!viewStack.peek().equals(viewController)) {
             previousView();
