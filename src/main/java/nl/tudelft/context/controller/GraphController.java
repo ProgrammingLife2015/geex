@@ -62,11 +62,6 @@ public final class GraphController extends ViewController<AnchorPane> {
     Set<String> sources;
 
     /**
-     * Define the amount of the shift.
-     */
-    public static final int NODE_SPACING = 50;
-
-    /**
      * Define the amount of spacing for the nodes.
      */
     public static final int LABEL_SPACING = 100;
@@ -246,7 +241,7 @@ public final class GraphController extends ViewController<AnchorPane> {
      * @param column column to draw at
      */
     private void showNodes(final List<Node> nodes, final int column) {
-        int shift = nodes.size() * NODE_SPACING;
+        int shift = nodes.size() * LABEL_SPACING / 2;
         int row = 0;
         for (Node node : nodes) {
 
