@@ -24,7 +24,13 @@
     </left>
 
     <center>
-        <StackPane fx:id="view"/>
+        <BorderPane fx:id="main">
+
+            <center>
+                <StackPane fx:id="view"/>
+            </center>
+
+        </BorderPane>
     </center>
 
     <stylesheets>

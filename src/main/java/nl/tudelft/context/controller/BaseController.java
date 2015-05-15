@@ -17,13 +17,20 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 8-5-2015
  */
-public final class BaseController extends DefaultController<ScrollPane> {
+public final class BaseController extends ViewController<ScrollPane> {
+
+    /**
+     * JavaFX Text holder for sources.
+     */
+    @FXML
+    Text sources;
 
     /**
      * JavaFX Text holder for bases.
      */
     @FXML
     Text bases;
+
     /**
      * JavaFX Text holder for occurrences.
      */
@@ -73,6 +80,8 @@ public final class BaseController extends DefaultController<ScrollPane> {
         String content = node.getContent();
         bases.setText(content);
 
+        sources.setText(StringUtils.join(node.getSources(), ", "));
+
         List<String> otherOccurrences = graph.vertexSet().stream()
                 .filter(vertex -> vertex.getContent().equals(content) && !vertex.equals(node))
                 .map(Node::getId)
@@ -85,6 +94,11 @@ public final class BaseController extends DefaultController<ScrollPane> {
             occurrences.setText("None");
         }
 
+    }
+
+    @Override
+    public String getBreadcrumbName() {
+        return "Sequence: " + node.getId();
     }
 
 }

@@ -46,7 +46,7 @@ public class InfoLabel extends VBox {
         translateXProperty().bind(node.translateXProperty());
         translateYProperty().bind(node.translateYProperty());
 
-        setOnMouseClicked(event -> mainController.setView(new BaseController(graph, node).getRoot()));
+        setOnMouseClicked(event -> mainController.setView(new BaseController(graph, node)));
 
         initMainLabel();
         initBaseLabels();

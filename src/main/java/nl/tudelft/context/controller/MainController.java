@@ -1,15 +1,16 @@
 package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import nl.tudelft.context.breadcrumb.Breadcrumb;
+import nl.tudelft.context.breadcrumb.ViewStack;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Stack;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -25,9 +26,15 @@ public class MainController extends DefaultController<BorderPane> {
     StackPane view;
 
     /**
+     * FXML pointer for right BorderPane.
+     */
+    @FXML
+    BorderPane main;
+
+    /**
      * A stack of the current views.
      */
-    Stack<Node> viewList;
+    ViewStack viewStack;
 
     /**
      * The current workspace.
@@ -41,9 +48,10 @@ public class MainController extends DefaultController<BorderPane> {
 
         super(new BorderPane());
 
+        viewStack = new ViewStack();
+
         loadFXML("/application/main.fxml");
 
-        viewList = new Stack<>();
     }
 
     /**
@@ -58,38 +66,39 @@ public class MainController extends DefaultController<BorderPane> {
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
 
+        main.setTop(new Breadcrumb(this, viewStack));
+        root.setTop(new MenuController(this));
+
         root.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 previousView();
             }
         });
 
-        root.setTop(new MenuController(this));
-
     }
 
     /**
      * Set a new base view (clear the stack).
      *
-     * @param node javaFX element
+     * @param viewController Controller containing JavaFX root
      */
-    public final void setBaseView(final Node node) {
+    public final void setBaseView(final ViewController viewController) {
 
         view.getChildren().clear();
-        viewList.clear();
-        setView(node);
+        viewStack.clear();
+        setView(viewController);
 
     }
 
     /**
      * Set a new main view and push it on the view stack.
      *
-     * @param node javaFX element
+     * @param viewController Controller containing JavaFX root
      */
-    public final void setView(final Node node) {
+    public final void setView(final ViewController viewController) {
 
-        viewList.add(node);
-        view.getChildren().add(node);
+        viewStack.add(viewController);
+        view.getChildren().add(viewController.getRoot());
 
     }
 
@@ -98,9 +107,23 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void previousView() {
 
-        if (viewList.size() > 1) {
-            viewList.pop();
-            view.getChildren().retainAll(viewList);
+        if (viewStack.size() > 1) {
+            viewStack.pop();
+            view.getChildren().retainAll(
+                    viewStack.stream().map(ViewController::getRoot).collect(Collectors.toList()));
+        }
+
+    }
+
+    /**
+     * Go back to the given view.
+     *
+     * @param viewController View to go back to
+     */
+    public void backToView(final ViewController viewController) {
+
+        while (!viewStack.peek().equals(viewController)) {
+            previousView();
         }
 
     }
@@ -129,5 +152,4 @@ public class MainController extends DefaultController<BorderPane> {
     public final void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
     }
-
 }
