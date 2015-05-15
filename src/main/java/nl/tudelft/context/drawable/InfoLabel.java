@@ -53,7 +53,7 @@ public class InfoLabel extends VBox {
     /**
      * Draw sub elements when needed.
      */
-    public void init() {
+    public final void init() {
 
         initMainLabel();
         initBaseLabels();

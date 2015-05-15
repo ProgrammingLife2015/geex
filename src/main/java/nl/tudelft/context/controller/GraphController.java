@@ -35,6 +35,9 @@ public final class GraphController extends ViewController<AnchorPane> {
     @FXML
     Group sequences;
 
+    /**
+     * Scroll pane to monitor.
+     */
     @FXML
     ScrollPane scroll;
 
@@ -168,7 +171,7 @@ public final class GraphController extends ViewController<AnchorPane> {
      *
      * @param nodeList Labels to to load on the fly
      */
-    private void initOnTheFlyLoading(List<InfoLabel> nodeList) {
+    private void initOnTheFlyLoading(final List<InfoLabel> nodeList) {
 
         HashMap<Integer, List<InfoLabel>> map = new HashMap<>();
         nodeList.stream().forEach(infoLabel -> {
@@ -181,7 +184,8 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         scroll.hvalueProperty().addListener(event -> {
             double width = scroll.getWidth();
-            double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width) * scroll.getHvalue();
+            double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
+                    * scroll.getHvalue();
             int indexFrom = (int) Math.round(left / 100) - 1;
             int indexTo = indexFrom + (int) Math.ceil(width / 100) + 2;
             for (int index = indexFrom; index <= indexTo; index++) {
