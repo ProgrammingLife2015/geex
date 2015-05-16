@@ -18,6 +18,11 @@ import java.util.stream.Collectors;
 public final class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     /**
+     * Define the amount of spacing for the nodes.
+     */
+    public static final int LABEL_SPACING = 100;
+
+    /**
      * Create a Graph with default edges.
      */
     public Graph() {
@@ -58,6 +63,57 @@ public final class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
         removeAllVertices(vertexSet().stream()
                 .filter(vertex -> !CollectionUtils.containsAny(vertex.getSources(), sources))
                 .collect(Collectors.toList()));
+
+    }
+
+    /**
+     * Calculate all the position of the graph elements.
+     */
+    public void position() {
+
+        List<Node> start = getFirstNodes();
+
+        int i = 0;
+        while (!start.isEmpty()) {
+            positionNodes(start, i++);
+            start = nextColumn(start);
+        }
+
+    }
+
+    /**
+     * Determine the next column of the graph.
+     *
+     * @param nodes  nodes to display
+     * @return next column
+     */
+    private List<Node> nextColumn(final List<Node> nodes) {
+
+        return nodes.stream()
+                .map(node -> outgoingEdgesOf(node).stream()
+                        .map(this::getEdgeTarget)
+                        .filter(x -> x.incrementIncoming() == inDegreeOf(x)))
+                .flatMap(l -> l)
+                .collect(Collectors.toList());
+
+    }
+
+    /**
+     * Positions the nodes of a column.
+     *
+     * @param nodes  nodes to draw
+     * @param column column to draw at
+     */
+    private void positionNodes(final List<Node> nodes, final int column) {
+
+        int shift = nodes.size() * LABEL_SPACING / 2;
+
+        int row = 0;
+        for (Node node : nodes) {
+            node.setTranslateX(column * LABEL_SPACING);
+            node.setTranslateY(row * LABEL_SPACING - shift);
+            row++;
+        }
 
     }
 

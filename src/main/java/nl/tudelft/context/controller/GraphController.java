@@ -8,7 +8,6 @@ import javafx.scene.layout.AnchorPane;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
 
 import java.net.URL;
@@ -56,11 +55,6 @@ public final class GraphController extends ViewController<AnchorPane> {
     Set<String> sources;
 
     /**
-     * Define the amount of spacing for the nodes.
-     */
-    public static final int LABEL_SPACING = 100;
-
-    /**
      * Init a controller at graph.fxml.
      *
      * @param mainController MainController for the application
@@ -104,6 +98,7 @@ public final class GraphController extends ViewController<AnchorPane> {
         loadGraphService.setOnSucceeded(event -> {
             Graph graph = loadGraphService.getValue();
             graph.cleanGraph(sources);
+            graph.position();
             showGraph(graph);
         });
         loadGraphService.restart();
@@ -116,13 +111,6 @@ public final class GraphController extends ViewController<AnchorPane> {
      * @param graph Graph to show
      */
     private void showGraph(final Graph graph) {
-
-        List<Node> start = graph.getFirstNodes();
-
-        int i = 0;
-        while (!start.isEmpty()) {
-            start = showColumn(graph, start, i++);
-        }
 
         // Bind edges
         List<DrawableEdge> edgeList = graph.edgeSet().stream()
@@ -150,7 +138,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         HashMap<Integer, List<InfoLabel>> map = new HashMap<>();
         nodeList.stream().forEach(infoLabel -> {
-            int index = (int) infoLabel.translateXProperty().get() / LABEL_SPACING;
+            int index = (int) infoLabel.translateXProperty().get() / Graph.LABEL_SPACING;
             if (!map.containsKey(index)) {
                 map.put(index, new ArrayList<>());
             }
@@ -172,53 +160,13 @@ public final class GraphController extends ViewController<AnchorPane> {
         double width = scroll.getWidth();
         double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
                 * scroll.getHvalue();
-        int indexFrom = (int) Math.round(left / LABEL_SPACING) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(width / LABEL_SPACING) + 1;
+        int indexFrom = (int) Math.round(left / Graph.LABEL_SPACING) - 1;
+        int indexTo = indexFrom + (int) Math.ceil(width / Graph.LABEL_SPACING) + 1;
         for (int index = indexFrom; index <= indexTo; index++) {
             List<InfoLabel> temp = map.remove(index);
             if (temp != null) {
                 temp.stream().forEach(InfoLabel::init);
             }
-        }
-
-    }
-
-    /**
-     * Show the columns of the graph recursive.
-     *
-     * @param graph  containing the nodes
-     * @param nodes  nodes to display
-     * @param column column index
-     * @return next column
-     */
-    private List<Node> showColumn(final Graph graph, final List<Node> nodes, final int column) {
-
-        showNodes(nodes, column);
-
-        return nodes.stream()
-                .map(node -> graph.outgoingEdgesOf(node).stream()
-                        .map(graph::getEdgeTarget)
-                        .filter(x -> x.incrementIncoming() == graph.inDegreeOf(x)))
-                .flatMap(l -> l)
-                .collect(Collectors.toList());
-
-    }
-
-    /**
-     * Show all nodes at a start position.
-     *
-     * @param nodes  nodes to draw
-     * @param column column to draw at
-     */
-    private void showNodes(final List<Node> nodes, final int column) {
-
-        int shift = nodes.size() * LABEL_SPACING / 2;
-
-        int row = 0;
-        for (Node node : nodes) {
-            node.setTranslateX(column * LABEL_SPACING);
-            node.setTranslateY(row * LABEL_SPACING - shift);
-            row++;
         }
 
     }
