@@ -72,7 +72,6 @@ public final class NewickController extends ViewController<ScrollPane> {
     public void initialize(final URL location, final ResourceBundle resources) {
 
         progressIndicator.visibleProperty().bind(loadNewickService.runningProperty());
-        loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
 
         loadTree();
 
@@ -83,6 +82,7 @@ public final class NewickController extends ViewController<ScrollPane> {
      */
     public void loadTree() {
 
+        loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
         loadNewickService.restart();
 
     }

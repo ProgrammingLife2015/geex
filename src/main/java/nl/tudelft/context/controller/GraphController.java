@@ -10,15 +10,9 @@ import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
-import org.apache.commons.collections.CollectionUtils;
 
 import java.net.URL;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -97,7 +91,6 @@ public final class GraphController extends ViewController<AnchorPane> {
     public void initialize(final URL location, final ResourceBundle resources) {
 
         progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
-        loadGraphService.setOnSucceeded(event -> showGraph(cleanGraph(loadGraphService.getValue())));
 
         loadGraph();
 
@@ -108,34 +101,12 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void loadGraph() {
 
+        loadGraphService.setOnSucceeded(event -> {
+            Graph graph = loadGraphService.getValue();
+            graph.cleanGraph(sources);
+            showGraph(graph);
+        });
         loadGraphService.restart();
-
-    }
-
-    /**
-     * Clean the graph from sources that aren't shown.
-     *
-     * @param graph Graph to show
-     * @return Cleaned up graph
-     */
-    private Graph cleanGraph(final Graph graph) {
-
-        // Remove unnecessary edges
-        graph.removeAllEdges(graph.edgeSet().stream()
-                .filter(edge -> {
-                    Node source = graph.getEdgeSource(edge);
-                    Node target = graph.getEdgeTarget(edge);
-                    return !CollectionUtils.containsAny(source.getSources(), sources)
-                            || !CollectionUtils.containsAny(target.getSources(), sources);
-                })
-                .collect(Collectors.toList()));
-
-        // Remove unnecessary nodes
-        graph.removeAllVertices(graph.vertexSet().stream()
-                .filter(vertex -> !CollectionUtils.containsAny(vertex.getSources(), sources))
-                .collect(Collectors.toList()));
-
-        return graph;
 
     }
 
@@ -240,15 +211,14 @@ public final class GraphController extends ViewController<AnchorPane> {
      * @param column column to draw at
      */
     private void showNodes(final List<Node> nodes, final int column) {
+
         int shift = nodes.size() * LABEL_SPACING / 2;
+
         int row = 0;
         for (Node node : nodes) {
-
             node.setTranslateX(column * LABEL_SPACING);
             node.setTranslateY(row * LABEL_SPACING - shift);
-
             row++;
-
         }
 
     }
