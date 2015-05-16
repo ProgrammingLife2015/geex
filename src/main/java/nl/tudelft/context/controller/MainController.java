@@ -110,7 +110,7 @@ public class MainController extends DefaultController<BorderPane> {
         if (viewStack.size() > 1) {
             viewStack.pop();
             view.getChildren().retainAll(
-                    viewStack.stream().map(ViewController::getRoot).collect(Collectors.toList()));
+                    viewStack.stream().map(ViewController::getRoot).collect(Collectors.toSet()));
         }
 
     }
