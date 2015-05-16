@@ -6,7 +6,9 @@ import org.jgrapht.graph.DefaultEdge;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Graph.
@@ -93,7 +95,7 @@ public final class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
                 .map(node -> outgoingEdgesOf(node).stream()
                         .map(this::getEdgeTarget)
                         .filter(x -> x.incrementIncoming() == inDegreeOf(x)))
-                .flatMap(l -> l)
+                .flatMap(Function.identity())
                 .collect(Collectors.toList());
 
     }

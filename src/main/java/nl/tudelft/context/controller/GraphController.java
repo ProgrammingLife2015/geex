@@ -12,6 +12,7 @@ import nl.tudelft.context.service.LoadGraphService;
 
 import java.net.URL;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -136,14 +137,12 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void initOnTheFlyLoading(final List<InfoLabel> nodeList) {
 
-        HashMap<Integer, List<InfoLabel>> map = new HashMap<>();
-        nodeList.stream().forEach(infoLabel -> {
-            int index = (int) infoLabel.translateXProperty().get() / Graph.LABEL_SPACING;
-            if (!map.containsKey(index)) {
-                map.put(index, new ArrayList<>());
-            }
-            map.get(index).add(infoLabel);
-        });
+        Map<Integer, List<InfoLabel>> map = nodeList.stream().collect(
+                Collectors.groupingBy(
+                        infoLabel -> (int) infoLabel.translateXProperty().get() / Graph.LABEL_SPACING,
+                        Collectors.mapping(Function.identity(), Collectors.toList())
+                )
+        );
 
         showCurrentLabels(map);
         scroll.hvalueProperty().addListener(event -> showCurrentLabels(map));
@@ -155,7 +154,7 @@ public final class GraphController extends ViewController<AnchorPane> {
      *
      * @param map Containing the labels indexed by position
      */
-    private void showCurrentLabels(final HashMap<Integer, List<InfoLabel>> map) {
+    private void showCurrentLabels(final Map<Integer, List<InfoLabel>> map) {
 
         double width = scroll.getWidth();
         double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
