@@ -164,7 +164,7 @@ public final class GraphController extends ViewController<AnchorPane> {
         for (int index = indexFrom; index <= indexTo; index++) {
             List<InfoLabel> temp = map.remove(index);
             if (temp != null) {
-                temp.stream().forEach(InfoLabel::init);
+                temp.forEach(InfoLabel::init);
             }
         }
 
