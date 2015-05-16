@@ -64,6 +64,8 @@ public class InfoLabel extends VBox {
 
     /**
      * Initialize the Label without the BaseLabels shown.
+     *
+     * @return Initialized Upper label
      */
     private Label initMainLabel() {
 
@@ -79,6 +81,8 @@ public class InfoLabel extends VBox {
 
     /**
      * Initialize the BaseLabels.
+     *
+     * @return Initialized base labels
      */
     private Group initBaseLabels() {
 
