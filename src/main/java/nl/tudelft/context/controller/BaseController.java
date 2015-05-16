@@ -88,7 +88,7 @@ public final class BaseController extends ViewController<ScrollPane> {
                 .map(String::valueOf)
                 .collect(Collectors.toList());
 
-        if (otherOccurrences.size() > 0) {
+        if (!otherOccurrences.isEmpty()) {
             occurrences.setText(StringUtils.join(otherOccurrences, ", "));
         } else {
             occurrences.setText("None");
