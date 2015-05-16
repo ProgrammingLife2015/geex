@@ -108,7 +108,6 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void loadGraph() {
 
-        sequences.getChildren().clear();
         loadGraphService.restart();
 
     }

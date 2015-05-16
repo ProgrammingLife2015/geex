@@ -83,7 +83,6 @@ public final class NewickController extends ViewController<ScrollPane> {
      */
     public void loadTree() {
 
-        newick.getChildren().clear();
         loadNewickService.restart();
 
     }
