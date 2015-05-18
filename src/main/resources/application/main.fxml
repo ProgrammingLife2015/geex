@@ -33,6 +33,10 @@
         </BorderPane>
     </center>
 
+    <bottom>
+        <VBox fx:id="footer"/>
+    </bottom>
+
     <stylesheets>
         <URL value="@css/style.css"/>
     </stylesheets>

@@ -68,6 +68,7 @@ public class MainController extends DefaultController<BorderPane> {
 
         main.setTop(new Breadcrumb(this, viewStack));
         root.setTop(new MenuController(this));
+        root.setBottom(new FooterController(this));
 
         root.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {

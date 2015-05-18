@@ -116,6 +116,12 @@
     -fx-background-color: gray;
 }
 
+/* Footer */
+#footer {
+    -fx-background-color: black;
+    -fx-min-height: 10px;
+}
+
 /* Sequences */
 #sequences {
     -fx-min-height: 100%;

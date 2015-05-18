@@ -105,6 +105,9 @@ public final class GraphController extends ViewController<AnchorPane> {
             graph.position();
             showGraph(graph);
         });
+        loadGraphService.setOnFailed(event -> {
+
+        });
         loadGraphService.restart();
 
     }
