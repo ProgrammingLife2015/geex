@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>nl.tudelft.context</groupId>
-    <artifactId>ProgrammingLife</artifactId>
+    <artifactId>geex</artifactId>
     <version>0.1</version>
     <packaging>jar</packaging>
 
-    <name>ProgrammingLife</name>
+    <name>Geex</name>
     <url>http://maven.apache.org</url>
 
     <properties>
