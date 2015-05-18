@@ -3,6 +3,8 @@ package nl.tudelft.context.workspace;
 import java.io.File;
 import java.util.Arrays;
 
+import static java.util.stream.Collectors.*;
+
 /**
  * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
  * @version 1.0
