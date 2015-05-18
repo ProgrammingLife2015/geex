@@ -223,7 +223,7 @@
 }
 
 .breadcrumb HBox.last {
-    -fx-background-image: none;
+    -fx-background-image: inherit;
 }
 
 .breadcrumb HBox Label {
