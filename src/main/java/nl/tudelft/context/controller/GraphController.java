@@ -165,6 +165,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         IntStream.rangeClosed(indexFrom, indexTo)
                 .mapToObj(map::remove)
+                .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
                 .forEach(InfoLabel::init);
 
