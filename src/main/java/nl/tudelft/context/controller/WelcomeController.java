@@ -7,7 +7,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Gerben on 17/05/2015.
+ * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @version 1.0
+ * @since 18-5-2015
  */
 public class WelcomeController extends ViewController<GridPane> {
     /**
@@ -22,12 +24,12 @@ public class WelcomeController extends ViewController<GridPane> {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
 
     }
 
     @Override
-    public String getBreadcrumbName() {
+    public final String getBreadcrumbName() {
         return "Welcome";
     }
 }
