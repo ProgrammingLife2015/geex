@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/Vennik/contextproject.svg?branch=master)](https://travis-ci.org/Vennik/contextproject)
-# Contextproject 2015
+
+![Geex](https://lh3.googleusercontent.com/mF9Xbi8wJo8lXnHBN-QBVcJsbrgtvuzKaNVA7YkheQaPWYkTBzS-jY8vTtdmS5cCMKPcHMPSYN1c_A=w1896-h859)
 
 ## Programming Life (group 2)
 For more details about this project, the team and the application, visit the [Wiki pages](https://github.com/Vennik/contextproject/wiki).
