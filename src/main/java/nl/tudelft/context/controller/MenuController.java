@@ -53,6 +53,7 @@ public final class MenuController extends MenuBar {
                 workspace.load();
                 mainController.setWorkspace(workspace);
                 mainController.setBaseView(new NewickController(mainController));
+                this.setUseSystemMenuBar(true);
             }
         });
 
