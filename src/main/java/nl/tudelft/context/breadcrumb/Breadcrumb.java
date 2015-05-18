@@ -62,7 +62,7 @@ public final class Breadcrumb extends HBox implements Observer {
                 })
                 .collect(Collectors.toList());
 
-        if (items.size() > 0) {
+        if (!items.isEmpty()) {
             items.get(items.size() - 1).getStyleClass().add("last");
         }
         getChildren().setAll(items);
