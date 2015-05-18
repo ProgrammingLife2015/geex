@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
+<?import nl.tudelft.context.controller.FooterController?>
 <fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
 
     <left>
@@ -32,10 +33,6 @@
 
         </BorderPane>
     </center>
-
-    <bottom>
-        <VBox fx:id="footer"/>
-    </bottom>
 
     <stylesheets>
         <URL value="@css/style.css"/>
