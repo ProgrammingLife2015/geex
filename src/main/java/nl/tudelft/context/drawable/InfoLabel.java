@@ -55,15 +55,19 @@ public class InfoLabel extends VBox {
      */
     public final void init() {
 
-        initMainLabel();
-        initBaseLabels();
+        getChildren().addAll(
+                initMainLabel(),
+                initBaseLabels()
+        );
 
     }
 
     /**
      * Initialize the Label without the BaseLabels shown.
+     *
+     * @return Initialized Upper label
      */
-    private void initMainLabel() {
+    private Label initMainLabel() {
 
         final Label label = new Label(Integer.toString(node.getId()));
         label.setCache(true);
@@ -71,14 +75,16 @@ public class InfoLabel extends VBox {
         final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
         label.setTooltip(percentages);
 
-        getChildren().add(label);
+        return label;
 
     }
 
     /**
      * Initialize the BaseLabels.
+     *
+     * @return Initialized base labels
      */
-    private void initBaseLabels() {
+    private Group initBaseLabels() {
 
         final Group group = new Group();
 
@@ -94,7 +100,7 @@ public class InfoLabel extends VBox {
         }
 
         group.getChildren().addAll(baseLabels);
-        getChildren().add(group);
+        return group;
 
     }
 

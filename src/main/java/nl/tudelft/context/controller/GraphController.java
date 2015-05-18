@@ -8,17 +8,14 @@ import javafx.scene.layout.AnchorPane;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
-import org.apache.commons.collections.CollectionUtils;
 
 import java.net.URL;
-
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.ArrayList;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -62,11 +59,6 @@ public final class GraphController extends ViewController<AnchorPane> {
     Set<String> sources;
 
     /**
-     * Define the amount of spacing for the nodes.
-     */
-    public static final int LABEL_SPACING = 100;
-
-    /**
      * Init a controller at graph.fxml.
      *
      * @param mainController MainController for the application
@@ -97,7 +89,6 @@ public final class GraphController extends ViewController<AnchorPane> {
     public void initialize(final URL location, final ResourceBundle resources) {
 
         progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
-        loadGraphService.setOnSucceeded(event -> showGraph(cleanGraph(loadGraphService.getValue())));
 
         loadGraph();
 
@@ -108,35 +99,13 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void loadGraph() {
 
-        sequences.getChildren().clear();
+        loadGraphService.setOnSucceeded(event -> {
+            Graph graph = loadGraphService.getValue();
+            graph.cleanGraph(sources);
+            graph.position();
+            showGraph(graph);
+        });
         loadGraphService.restart();
-
-    }
-
-    /**
-     * Clean the graph from sources that aren't shown.
-     *
-     * @param graph Graph to show
-     * @return Cleaned up graph
-     */
-    private Graph cleanGraph(final Graph graph) {
-
-        // Remove unnecessary edges
-        graph.removeAllEdges(graph.edgeSet().stream()
-                .filter(edge -> {
-                    Node source = graph.getEdgeSource(edge);
-                    Node target = graph.getEdgeTarget(edge);
-                    return !CollectionUtils.containsAny(source.getSources(), sources)
-                            || !CollectionUtils.containsAny(target.getSources(), sources);
-                })
-                .collect(Collectors.toList()));
-
-        // Remove unnecessary nodes
-        graph.removeAllVertices(graph.vertexSet().stream()
-                .filter(vertex -> !CollectionUtils.containsAny(vertex.getSources(), sources))
-                .collect(Collectors.toList()));
-
-        return graph;
 
     }
 
@@ -146,13 +115,6 @@ public final class GraphController extends ViewController<AnchorPane> {
      * @param graph Graph to show
      */
     private void showGraph(final Graph graph) {
-
-        List<Node> start = graph.getFirstNodes();
-
-        int i = 0;
-        while (!start.isEmpty()) {
-            start = showColumn(graph, start, i++);
-        }
 
         // Bind edges
         List<DrawableEdge> edgeList = graph.edgeSet().stream()
@@ -178,14 +140,12 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void initOnTheFlyLoading(final List<InfoLabel> nodeList) {
 
-        HashMap<Integer, List<InfoLabel>> map = new HashMap<>();
-        nodeList.stream().forEach(infoLabel -> {
-            int index = (int) infoLabel.translateXProperty().get() / LABEL_SPACING;
-            if (!map.containsKey(index)) {
-                map.put(index, new ArrayList<>());
-            }
-            map.get(index).add(infoLabel);
-        });
+        Map<Integer, List<InfoLabel>> map = nodeList.stream().collect(
+                Collectors.groupingBy(
+                        infoLabel -> (int) infoLabel.translateXProperty().get() / Graph.LABEL_SPACING,
+                        Collectors.mapping(Function.identity(), Collectors.toList())
+                )
+        );
 
         showCurrentLabels(map);
         scroll.hvalueProperty().addListener(event -> showCurrentLabels(map));
@@ -197,59 +157,18 @@ public final class GraphController extends ViewController<AnchorPane> {
      *
      * @param map Containing the labels indexed by position
      */
-    private void showCurrentLabels(final HashMap<Integer, List<InfoLabel>> map) {
+    private void showCurrentLabels(final Map<Integer, List<InfoLabel>> map) {
 
         double width = scroll.getWidth();
         double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
                 * scroll.getHvalue();
-        int indexFrom = (int) Math.round(left / LABEL_SPACING) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(width / LABEL_SPACING) + 1;
+        int indexFrom = (int) Math.round(left / Graph.LABEL_SPACING) - 1;
+        int indexTo = indexFrom + (int) Math.ceil(width / Graph.LABEL_SPACING) + 1;
         for (int index = indexFrom; index <= indexTo; index++) {
             List<InfoLabel> temp = map.remove(index);
             if (temp != null) {
-                temp.stream().forEach(InfoLabel::init);
+                temp.forEach(InfoLabel::init);
             }
-        }
-
-    }
-
-    /**
-     * Show the columns of the graph recursive.
-     *
-     * @param graph  containing the nodes
-     * @param nodes  nodes to display
-     * @param column column index
-     * @return next column
-     */
-    private List<Node> showColumn(final Graph graph, final List<Node> nodes, final int column) {
-
-        showNodes(nodes, column);
-
-        return nodes.stream()
-                .map(node -> graph.outgoingEdgesOf(node).stream()
-                        .map(graph::getEdgeTarget)
-                        .filter(x -> x.incrementIncoming() == graph.inDegreeOf(x)))
-                .flatMap(l -> l)
-                .collect(Collectors.toList());
-
-    }
-
-    /**
-     * Show all nodes at a start position.
-     *
-     * @param nodes  nodes to draw
-     * @param column column to draw at
-     */
-    private void showNodes(final List<Node> nodes, final int column) {
-        int shift = nodes.size() * LABEL_SPACING / 2;
-        int row = 0;
-        for (Node node : nodes) {
-
-            node.setTranslateX(column * LABEL_SPACING);
-            node.setTranslateY(row * LABEL_SPACING - shift);
-
-            row++;
-
         }
 
     }
