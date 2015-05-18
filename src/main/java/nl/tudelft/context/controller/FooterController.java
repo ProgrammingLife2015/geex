@@ -17,7 +17,14 @@ import javafx.scene.text.Text;
  */
 public class FooterController extends VBox {
 
+    /**
+     * A reference to the main controller.
+     */
     MainController mainController;
+
+    /**
+     * The Hbox that will display the text.
+     */
     HBox hbox;
 
     /**

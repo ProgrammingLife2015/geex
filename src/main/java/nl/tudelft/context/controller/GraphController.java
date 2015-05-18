@@ -106,7 +106,7 @@ public final class GraphController extends ViewController<AnchorPane> {
             showGraph(graph);
         });
         loadGraphService.setOnFailed(event -> {
-
+            mainController.displayMessage("Error loading the graph.");
         });
         loadGraphService.restart();
 
