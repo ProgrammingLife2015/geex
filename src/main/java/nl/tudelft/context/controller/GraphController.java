@@ -11,12 +11,10 @@ import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.service.LoadGraphService;
 
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -164,12 +162,11 @@ public final class GraphController extends ViewController<AnchorPane> {
                 * scroll.getHvalue();
         int indexFrom = (int) Math.round(left / Graph.LABEL_SPACING) - 1;
         int indexTo = indexFrom + (int) Math.ceil(width / Graph.LABEL_SPACING) + 1;
-        for (int index = indexFrom; index <= indexTo; index++) {
-            List<InfoLabel> temp = map.remove(index);
-            if (temp != null) {
-                temp.forEach(InfoLabel::init);
-            }
-        }
+
+        IntStream.rangeClosed(indexFrom, indexTo)
+                .mapToObj(map::remove)
+                .flatMap(Collection::stream)
+                .forEach(InfoLabel::init);
 
     }
 
