@@ -2,6 +2,7 @@ package nl.tudelft.context;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.context.controller.MainController;
 
@@ -50,6 +51,14 @@ public class App extends Application {
         Scene scene = new Scene(controller.getRoot());
 
         stage.setTitle("Geex");
+        stage.getIcons().addAll(
+                new Image(App.class.getResourceAsStream("/application/images/icon_16.png")),
+                new Image(App.class.getResourceAsStream("/application/images/icon_32.png")),
+                new Image(App.class.getResourceAsStream("/application/images/icon_48.png")),
+                new Image(App.class.getResourceAsStream("/application/images/icon_64.png")),
+                new Image(App.class.getResourceAsStream("/application/images/icon_128.png")),
+                new Image(App.class.getResourceAsStream("/application/images/icon_256.png"))
+        );
         stage.setScene(scene);
         stage.setMinHeight(FRAME_HEIGHT);
         stage.setMinWidth(FRAME_WIDTH);
