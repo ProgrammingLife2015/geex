@@ -49,7 +49,7 @@ public class App extends Application {
         MainController controller = new MainController();
         Scene scene = new Scene(controller.getRoot());
 
-        stage.setTitle("Programming Life");
+        stage.setTitle("Geex");
         stage.setScene(scene);
         stage.setMinHeight(FRAME_HEIGHT);
         stage.setMinWidth(FRAME_WIDTH);
