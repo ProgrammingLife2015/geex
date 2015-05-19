@@ -48,6 +48,7 @@ public class Workspace {
 
     /**
      * Walk the workspace directory.
+     * @return Returns an integer. 0 for success and 1 for failure.
      */
     public final int walk() {
         Finder finder = new Finder("*.{edge.graph,node.graph,nwk}");

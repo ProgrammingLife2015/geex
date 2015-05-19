@@ -47,6 +47,12 @@ public class MainController extends DefaultController<BorderPane> {
     FooterController footerController;
 
     /**
+     * The breadcrumb that is needed to display the viewStack.
+     */
+    Breadcrumb breadCrumb;
+
+
+    /**
      * Init a controller at main.fxml.
      */
     public MainController() {
@@ -71,7 +77,9 @@ public class MainController extends DefaultController<BorderPane> {
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
 
-        main.setTop(new Breadcrumb(this, viewStack));
+        breadCrumb = new Breadcrumb(this, viewStack);
+        main.setTop(breadCrumb);
+
         root.setTop(new MenuController(this));
         footerController = new FooterController();
         root.setBottom(footerController);

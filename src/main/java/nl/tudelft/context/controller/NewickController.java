@@ -52,10 +52,16 @@ public final class NewickController extends ViewController<ScrollPane> {
 
         super(new ScrollPane());
 
-        this.mainController = mainController;
+        try {
+            this.mainController = mainController;
 
-        this.loadNewickService = mainController.getWorkspace().getNewickList().get(0);
-        loadFXML("/application/newick.fxml");
+            this.loadNewickService = mainController.getWorkspace().getNewickList().get(0);
+            loadFXML("/application/newick.fxml");
+        } catch (IndexOutOfBoundsException e) {
+            mainController.displayMessage("Error loading the tree.");
+            mainController.breadCrumb.setOpacity(0);
+        }
+
 
 
     }
@@ -83,7 +89,10 @@ public final class NewickController extends ViewController<ScrollPane> {
      */
     public void loadTree() {
 
-        loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
+        loadNewickService.setOnSucceeded(event -> {
+            showTree(loadNewickService.getValue());
+            mainController.breadCrumb.setOpacity(1);
+        });
         loadNewickService.setOnFailed(event -> mainController.displayMessage("Error loading the tree."));
         loadNewickService.restart();
 
