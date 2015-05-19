@@ -63,8 +63,6 @@ public final class TreeFactory {
         TreeParser tp = new TreeParser(fileReader);
         net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize(1, "", null);
         Node root = nodeFactory.getNode(nwkTree.getRoot());
-        root.setTranslateX(0);
-        root.setTranslateY(0);
         getOffspring(nwkTree.getRoot(), root, tree, 0);
         tree.setRoot(root);
     }

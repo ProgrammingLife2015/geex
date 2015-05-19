@@ -57,7 +57,7 @@ public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
     public String toString(final Node node, final int level) {
         StringBuilder res = new StringBuilder();
         res.append(new String(new char[level]).replace("\0", "\t"));
-        res.append(node.toString() + "\n");
+        res.append(node.toString()).append("\n");
 
         for (Node child : node.getChildren()) {
             res.append(toString(child, level + 1));
