@@ -73,7 +73,7 @@ public class MainController extends DefaultController<BorderPane> {
 
         main.setTop(new Breadcrumb(this, viewStack));
         root.setTop(new MenuController(this));
-        footerController = new FooterController(this);
+        footerController = new FooterController();
         root.setBottom(footerController);
 
         root.setOnKeyPressed(event -> {
@@ -160,7 +160,12 @@ public class MainController extends DefaultController<BorderPane> {
         this.workspace = workspace;
     }
 
-    public final void displayMessage(String text) {
+
+    /**
+     * The function that is used to display a message in the footer.
+     * @param text The text that will be displayed.
+     */
+    public final void displayMessage(final String text) {
         footerController.displayMessage(text);
     }
 }

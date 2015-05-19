@@ -12,15 +12,9 @@ import javafx.scene.text.Text;
 /**
  * @author Jim Hommes
  * @version 1.0
- * @date 19-05-2015
- *
+ * @since 19-05-2015
  */
 public class FooterController extends VBox {
-
-    /**
-     * A reference to the main controller.
-     */
-    MainController mainController;
 
     /**
      * The Hbox that will display the text.
@@ -32,13 +26,11 @@ public class FooterController extends VBox {
      * <p>
      * T must be a possible root for fxml so T must extend Parent.
      * </p>
-     * @param mainController
      * A reference to the main controller.
      */
-    public FooterController(MainController mainController) {
+    public FooterController() {
 
         super(new BorderPane());
-        this.mainController = mainController;
 
         hbox = new HBox();
         this.getChildren().addAll(new Separator(), hbox);
@@ -52,9 +44,10 @@ public class FooterController extends VBox {
      * The function used to display a message and remove the previous one.
      * @param text The string to display.
      */
-    public void displayMessage(String text) {
-        if(hbox.getChildren().size() > 0)
+    public void displayMessage(final String text) {
+        if (hbox.getChildren().size() > 0) {
             hbox.getChildren().remove(0);
+        }
         Text ntext = new Text(text);
         ntext.setFill(Paint.valueOf("#868686"));
         hbox.getChildren().addAll(ntext);
