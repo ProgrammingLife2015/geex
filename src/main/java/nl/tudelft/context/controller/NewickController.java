@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import nl.tudelft.context.drawable.DrawableEdge;
+import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.newick.Tree;
 import nl.tudelft.context.service.LoadNewickService;
 
@@ -101,18 +102,8 @@ public final class NewickController extends ViewController<ScrollPane> {
 
         // Bind nodes
         List<Label> nodeList = tree.vertexSet().stream()
-                .map(node -> {
-                    final Label label = new Label(node.getName());
-                    label.setCache(true);
-                    label.translateXProperty().bind(node.translateXProperty());
-                    label.translateYProperty().bind(node.translateYProperty());
-                    if (node.isUnknown()) {
-                        label.getStyleClass().add("ancestor");
-                    }
-                    label.setOnMouseClicked(event ->
-                            mainController.setView(new GraphController(mainController, node.getSources())));
-                    return label;
-                }).collect(Collectors.toList());
+                .map(node -> new NewickLabel(node, mainController))
+                .collect(Collectors.toList());
 
         newick.getChildren().addAll(edgeList);
         newick.getChildren().addAll(nodeList);
