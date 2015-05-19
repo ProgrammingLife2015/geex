@@ -108,6 +108,7 @@ public final class GraphController extends ViewController<AnchorPane> {
             graph.cleanGraph(sources);
             graph.position();
             showGraph(graph);
+            mainController.displayMessage("Successfully loaded the graph.");
         });
         loadGraphService.setOnFailed(event -> {
             mainController.displayMessage("Error loading the graph.");

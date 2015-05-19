@@ -92,6 +92,7 @@ public final class NewickController extends ViewController<ScrollPane> {
         loadNewickService.setOnSucceeded(event -> {
             showTree(loadNewickService.getValue());
             mainController.breadCrumb.setOpacity(1);
+            mainController.displayMessage("Successfully loaded the tree.");
         });
         loadNewickService.setOnFailed(event -> mainController.displayMessage("Error loading the tree."));
         loadNewickService.restart();
