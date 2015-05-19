@@ -83,6 +83,7 @@ public final class NewickController extends ViewController<ScrollPane> {
     public void loadTree() {
 
         loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
+        loadNewickService.setOnSucceeded(event -> mainController.displayMessage("Error during loading Tree"));
         loadNewickService.restart();
 
     }
