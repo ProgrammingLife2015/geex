@@ -49,7 +49,7 @@ public class Workspace {
     /**
      * Walk the workspace directory.
      */
-    public final void walk() {
+    public final int walk() {
         Finder finder = new Finder("*.{edge.graph,node.graph,nwk}");
 
         try {
@@ -59,6 +59,10 @@ public class Workspace {
         }
 
         this.matches = finder.getMatches();
+        if (this.matches.size() < 1) {
+            return 1;
+        }
+        return 0;
     }
 
     /**
