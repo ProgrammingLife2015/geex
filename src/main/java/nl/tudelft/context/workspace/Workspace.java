@@ -39,6 +39,11 @@ public class Workspace {
     List<Path> matches;
 
     /**
+     * Amount of files to load.
+     */
+    final int amountFilesToLoad = 3;
+
+    /**
      * Create a new workspace on the directory.
      * @param directory The workspace root
      */
@@ -60,7 +65,7 @@ public class Workspace {
         }
 
         this.matches = finder.getMatches();
-        if (this.matches.size() < 1) {
+        if (this.matches.size() < amountFilesToLoad) {
             return 1;
         }
         return 0;
