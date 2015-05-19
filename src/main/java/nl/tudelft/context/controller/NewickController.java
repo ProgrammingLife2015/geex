@@ -58,7 +58,7 @@ public final class NewickController extends ViewController<ScrollPane> {
             this.loadNewickService = mainController.getWorkspace().getNewickList().get(0);
             loadFXML("/application/newick.fxml");
         } catch (IndexOutOfBoundsException e) {
-            mainController.displayMessage("Error loading the tree.");
+            mainController.displayMessage("Could not load phylogenetic tree.");
             mainController.breadCrumb.setOpacity(0);
         }
 
@@ -92,9 +92,9 @@ public final class NewickController extends ViewController<ScrollPane> {
         loadNewickService.setOnSucceeded(event -> {
             showTree(loadNewickService.getValue());
             mainController.breadCrumb.setOpacity(1);
-            mainController.displayMessage("Successfully loaded the tree.");
+            mainController.displayMessage("Phylogenetic tree loaded successfully.");
         });
-        loadNewickService.setOnFailed(event -> mainController.displayMessage("Error loading the tree."));
+        loadNewickService.setOnFailed(event -> mainController.displayMessage("Could not load phylogenetic tree."));
         loadNewickService.restart();
 
     }

@@ -108,10 +108,10 @@ public final class GraphController extends ViewController<AnchorPane> {
             graph.cleanGraph(sources);
             graph.position();
             showGraph(graph);
-            mainController.displayMessage("Successfully loaded the graph.");
+            mainController.displayMessage("Genome graph loaded successfully.");
         });
         loadGraphService.setOnFailed(event -> {
-            mainController.displayMessage("Error loading the graph.");
+            mainController.displayMessage("Could not load genome graph.");
         });
         loadGraphService.restart();
 
