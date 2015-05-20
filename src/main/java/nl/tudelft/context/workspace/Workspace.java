@@ -1,9 +1,7 @@
 package nl.tudelft.context.workspace;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
@@ -16,6 +14,9 @@ public class Workspace {
      */
     File directory;
 
+    /**
+     * Files in the directory.
+     */
     File[] files;
 
     /**
@@ -32,11 +33,6 @@ public class Workspace {
      * The Newick file in the workspace.
      */
     File nwkFile;
-
-    /**
-     * The results of the finder.
-     */
-    List<Path> matches;
 
     /**
      * Create a new workspace on the directory.
