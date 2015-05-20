@@ -12,18 +12,18 @@ import static org.junit.Assert.assertEquals;
  */
 public class NodeFactoryTest {
 
-    public static NodeFactory nodeFactory;
+    public static NodeParser nodeParser;
 
     /**
      * Test if a node is successfully created from a parserNode
      */
     @Test
     public void testNodeCreation() {
-        nodeFactory = new NodeFactory();
+        nodeParser = new NodeParser();
         TreeNode parserNode = new TreeNode();
         parserNode.setName("");
         parserNode.setWeight(1);
         Node node = new Node("", 1);
-        assertEquals(node, nodeFactory.getNode(parserNode));
+        assertEquals(node, nodeParser.getNode(parserNode));
     }
 }

@@ -41,8 +41,8 @@ public class GraphTest {
         File nodeFile = new File(GraphTest.class.getResource("/graph/node.graph").getPath());
         File edgeFile = new File(GraphTest.class.getResource("/graph/edge.graph").getPath());
 
-        GraphFactory graphFactory = new GraphFactory();
-        graph = graphFactory.getGraph(nodeFile, edgeFile);
+        GraphParser graphParser = new GraphParser();
+        graph = graphParser.getGraphMap(nodeFile, edgeFile).flat(new HashSet<>(Arrays.asList("Cat", "Dog")));
 
     }
 
