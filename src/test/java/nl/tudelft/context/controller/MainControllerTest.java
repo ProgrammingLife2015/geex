@@ -1,6 +1,7 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.scene.text.Text;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.GraphParser;
 import nl.tudelft.context.graph.Node;
@@ -154,6 +155,20 @@ public class MainControllerTest {
 
         assertEquals(1, mc.viewStack.size());
 
+    }
+
+    /**
+     * Test viewing text.
+     */
+    @Test
+    public void testFooterText() {
+        MainController mc = new MainController();
+        mc.setWorkspace(workspace);
+
+        String text = "This is a test.";
+        mc.displayMessage(text);
+
+        assertEquals(mc.messageController.message.getText(), text);
     }
 
 }

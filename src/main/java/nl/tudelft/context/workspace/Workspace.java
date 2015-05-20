@@ -39,6 +39,11 @@ public class Workspace {
     List<Path> matches;
 
     /**
+     * Amount of files to load.
+     */
+    static final int AMOUNTFILESTOLOAD = 3;
+
+    /**
      * Create a new workspace on the directory.
      * @param directory The workspace root
      */
@@ -48,8 +53,9 @@ public class Workspace {
 
     /**
      * Walk the workspace directory.
+     * @return Returns an integer. 0 for success and 1 for failure.
      */
-    public final void walk() {
+    public final int walk() {
         Finder finder = new Finder("*.{edge.graph,node.graph,nwk}");
 
         try {
@@ -59,6 +65,10 @@ public class Workspace {
         }
 
         this.matches = finder.getMatches();
+        if (this.matches.size() < AMOUNTFILESTOLOAD) {
+            return 1;
+        }
+        return 0;
     }
 
     /**

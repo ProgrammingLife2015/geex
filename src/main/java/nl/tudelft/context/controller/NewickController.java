@@ -53,9 +53,12 @@ public final class NewickController extends ViewController<ScrollPane> {
         super(new ScrollPane());
 
         this.mainController = mainController;
-        this.loadNewickService = mainController.getWorkspace().getNewickList().get(0);
 
+        this.loadNewickService = mainController.getWorkspace().getNewickList().get(0);
         loadFXML("/application/newick.fxml");
+
+
+
 
     }
 
@@ -82,7 +85,11 @@ public final class NewickController extends ViewController<ScrollPane> {
      */
     public void loadTree() {
 
-        loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
+        loadNewickService.setOnSucceeded(event -> {
+            showTree(loadNewickService.getValue());
+            mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
+        });
+        loadNewickService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_TREE));
         loadNewickService.restart();
 
     }
