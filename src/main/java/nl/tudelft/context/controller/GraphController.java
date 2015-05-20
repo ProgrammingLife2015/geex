@@ -9,6 +9,7 @@ import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.service.LoadGraphService;
+import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
 import java.util.Collection;
@@ -73,7 +74,8 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         this.mainController = mainController;
         this.sources = sources;
-        this.loadGraphService = mainController.getWorkspace().getGraphList().get(0);
+        Workspace workspace = mainController.getWorkspace();
+        this.loadGraphService = new LoadGraphService(workspace.getNodeFile(), workspace.getEdgeFile());
 
         loadFXML("/application/graph.fxml");
 

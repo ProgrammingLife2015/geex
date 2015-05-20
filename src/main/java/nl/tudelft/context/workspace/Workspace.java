@@ -1,16 +1,7 @@
 package nl.tudelft.context.workspace;
 
-import nl.tudelft.context.service.LoadGraphService;
-import nl.tudelft.context.service.LoadNewickService;
-
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 /**
  * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
@@ -24,106 +15,94 @@ public class Workspace {
     File directory;
 
     /**
-     * The list of graphs in the workspace.
+     * Files in the directory.
      */
-    List<LoadGraphService> graphList;
+    File[] files;
 
     /**
-     * The list of Newick graphs in the workspace.
+     * The edge file in the workspace.
      */
-    List<LoadNewickService> nwkList;
+    File edgeFile;
 
     /**
-     * The results of the finder.
+     * The node file in the workspace.
      */
-    List<Path> matches;
+    File nodeFile;
 
     /**
-     * Amount of files to load.
+     * The Newick file in the workspace.
      */
-    static final int AMOUNTFILESTOLOAD = 3;
+    File nwkFile;
 
     /**
      * Create a new workspace on the directory.
+     *
      * @param directory The workspace root
      */
     public Workspace(final File directory) {
         this.directory = directory;
+        if (this.directory == null) {
+            files = new File[0];
+
+            return;
+        }
+        files = this.directory.listFiles();
     }
 
     /**
-     * Walk the workspace directory.
-     * @return Returns an integer. 0 for success and 1 for failure.
+     * Find a file in files with a certain extension.
+     *
+     * @param files     Files to search in
+     * @param extension Extension to end with
+     * @return The found file, null if no file is found.
      */
-    public final int walk() {
-        Finder finder = new Finder("*.{edge.graph,node.graph,nwk}");
-
-        try {
-            Files.walkFileTree(this.directory.toPath(), finder);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        this.matches = finder.getMatches();
-        if (this.matches.size() < AMOUNTFILESTOLOAD) {
-            return 1;
-        }
-        return 0;
+    private File findFile(final File[] files, final String extension) {
+        return Arrays.stream(files)
+                .filter(file -> file
+                        .toString()
+                        .toLowerCase()
+                        .endsWith(extension))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
      * Load graphs and newick files from the loaded directory.
+     *
+     * @return If all files are loaded.
      */
-    public final void load() {
-        Stream<File> edges = matches.stream()
-                .map(Path::toFile)
-                .filter(path -> path.toString()
-                        .toLowerCase()
-                        .endsWith(".edge.graph"));
-        Stream<File> nodes = matches.stream()
-                .map(Path::toFile)
-                .filter(path -> path.toString()
-                        .toLowerCase()
-                        .endsWith(".node.graph"));
+    public final boolean load() {
+        edgeFile = findFile(files, ".edge.graph");
+        nodeFile = findFile(files, ".node.graph");
+        nwkFile = findFile(files, ".nwk");
 
-        graphList = edges.map(
-                edgeFile -> {
-                    File nodeFile = nodes
-                            .filter(file ->
-                                    file.getAbsolutePath()
-                                            .replaceFirst("\\.node\\.graph$", "")
-                                            .equals(edgeFile.getAbsolutePath()
-                                                    .replaceFirst("\\.edge\\.graph$", "")))
-                            .findFirst().orElse(null);
-
-                    if (nodeFile == null) {
-                        return null;
-                    }
-
-                    return new LoadGraphService(nodeFile, edgeFile);
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-
-        nwkList = matches.stream()
-                .filter(path -> path.toString().toLowerCase().endsWith(".nwk"))
-                .map(path -> new LoadNewickService(path.toFile()))
-                .collect(Collectors.toList());
+        return edgeFile != null && nodeFile != null && nwkFile != null;
     }
 
     /**
-     * Get the list of graphs in the workspace.
-     * @return List of graphs
+     * Get Node file in the workspace.
+     *
+     * @return Node file
      */
-    public List<LoadGraphService> getGraphList() {
-        return graphList;
+    public File getNodeFile() {
+        return nodeFile;
     }
 
     /**
-     * Get the list of newick graphs in the workspace.
-     * @return List of Newick graphs
+     * Get the Edge file in the workspace.
+     *
+     * @return Edge file
      */
-    public List<LoadNewickService> getNewickList() {
-        return nwkList;
+    public File getEdgeFile() {
+        return edgeFile;
+    }
+
+    /**
+     * Get the newick graph in the workspace.
+     *
+     * @return Newick file
+     */
+    public File getNwkFile() {
+        return nwkFile;
     }
 }

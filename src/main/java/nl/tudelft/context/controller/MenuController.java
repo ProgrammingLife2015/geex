@@ -50,14 +50,13 @@ public final class MenuController extends MenuBar {
             File workspaceDirectory = directoryChooser.showDialog(window);
             if (workspaceDirectory != null) {
                 Workspace workspace = new Workspace(workspaceDirectory);
-                if (workspace.walk() == 1) {
-                    mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
-                } else {
-                    workspace.load();
-                    mainController.setWorkspace(workspace);
-                    mainController.setBaseView(new NewickController(mainController));
+                if (workspace.load()) {
                     mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
+                } else {
+                    mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
                 }
+                mainController.setWorkspace(workspace);
+                mainController.setBaseView(new NewickController(mainController));
             }
         });
 

@@ -1,15 +1,11 @@
 package nl.tudelft.context.workspace;
 
 import junit.framework.TestCase;
-import nl.tudelft.context.service.LoadGraphService;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 /**
  * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
@@ -33,50 +29,30 @@ public class WorkspaceTest extends TestCase {
 
     public void testOneGraph() throws Exception {
         Workspace workspace = new Workspace(null);
-        List<Path> pathList = new ArrayList<>();
+        File[] pathList = new File[3];
 
-        Path edgePath = new File("mygraph.edge.graph").toPath();
-        Path nodePath = new File("mygraph.node.graph").toPath();
+        File edgePath = new File("mygraph.edge.graph");
+        File nodePath = new File("mygraph.node.graph");
+        File nwkPath = new File("mygraph.nwk");
 
-        pathList.add(edgePath);
-        pathList.add(nodePath);
+        pathList[0] = edgePath;
+        pathList[1] = nodePath;
+        pathList[2] = nwkPath;
 
-        workspace.matches = pathList;
+        workspace.files = pathList;
 
         workspace.load();
 
-        assertEquals(1, workspace.getGraphList().size());
+        assertEquals(nodePath, workspace.getNodeFile());
+        assertEquals(edgePath, workspace.getEdgeFile());
+        assertEquals(nwkPath, workspace.getNwkFile());
     }
 
-    public void testZeroGraph() throws Exception {
+    public void testNotFound() throws Exception {
         Workspace workspace = new Workspace(null);
-        List<Path> pathList = new ArrayList<>();
-
-        Path edgePath = new File("mygraph.edge.graph").toPath();
-        Path nodePath = new File("mygraph2.node.graph").toPath();
-
-        pathList.add(edgePath);
-        pathList.add(nodePath);
-
-        workspace.matches = pathList;
 
         workspace.load();
 
-        assertEquals(0, workspace.getGraphList().size());
-    }
-
-    public void testNewick() throws Exception {
-        Workspace workspace = new Workspace(null);
-        List<Path> pathList = new ArrayList<>();
-
-        Path edgePath = new File("mygraph.nwk").toPath();
-
-        pathList.add(edgePath);
-
-        workspace.matches = pathList;
-
-        workspace.load();
-
-        assertEquals(1, workspace.getNewickList().size());
+        assertEquals(null, workspace.getNodeFile());
     }
 }

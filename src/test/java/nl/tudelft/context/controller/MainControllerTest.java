@@ -1,12 +1,9 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
-import javafx.scene.text.Text;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.GraphParser;
 import nl.tudelft.context.graph.Node;
-import nl.tudelft.context.service.LoadGraphService;
-import nl.tudelft.context.service.LoadNewickService;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -53,8 +50,9 @@ public class MainControllerTest {
 
         workspace = mock(Workspace.class);
 
-        when(workspace.getGraphList()).thenReturn(Collections.singletonList(mock(LoadGraphService.class)));
-        when(workspace.getNewickList()).thenReturn(Collections.singletonList(mock(LoadNewickService.class)));
+        when(workspace.getNodeFile()).thenReturn(mock(File.class));
+        when(workspace.getEdgeFile()).thenReturn(mock(File.class));
+        when(workspace.getNodeFile()).thenReturn(mock(File.class));
 
     }
 
