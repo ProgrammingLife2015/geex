@@ -59,7 +59,8 @@ public final class TreeParser {
     public void parseTree(final File nwkFile, final Tree tree)
             throws FileNotFoundException, UnsupportedEncodingException {
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(nwkFile), "UTF-8"));
-        net.sourceforge.olduvai.treejuxtaposer.TreeParser tp = new net.sourceforge.olduvai.treejuxtaposer.TreeParser(fileReader);
+        net.sourceforge.olduvai.treejuxtaposer.TreeParser tp =
+                new net.sourceforge.olduvai.treejuxtaposer.TreeParser(fileReader);
         net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize(1, "", null);
         Node root = nodeParser.getNode(nwkTree.getRoot());
         getOffspring(nwkTree.getRoot(), root, tree, 0);

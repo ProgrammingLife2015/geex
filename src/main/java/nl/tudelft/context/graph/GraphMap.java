@@ -18,7 +18,7 @@ public class GraphMap extends HashMap<String, Graph> {
      * @param sources Sources to flat
      * @return Flatten graph from sources
      */
-    public Graph flat(Set<String> sources) {
+    public final Graph flat(final Set<String> sources) {
 
         Graph graph = new Graph();
 
@@ -53,7 +53,7 @@ public class GraphMap extends HashMap<String, Graph> {
      *
      * @param node Node to add
      */
-    public void addVertex(final Node node) {
+    public final void addVertex(final Node node) {
 
         node.getSources().stream()
                 .map(this::getGraph)
@@ -67,7 +67,7 @@ public class GraphMap extends HashMap<String, Graph> {
      * @param source Source node
      * @param target Target node
      */
-    public void addEdge(final Node source, final Node target) {
+    public final void addEdge(final Node source, final Node target) {
 
         source.getSources().stream()
                 .filter(s -> target.getSources().contains(s))
