@@ -163,15 +163,6 @@
     -fx-text-fill: #2b2b2b;
 }
 
-/* Footer */
-#messageBox {
-    -fx-padding: 1 0 2 7;
-}
-
-#message {
-    -fx-fill: #848484;
-}
-
 /* Base */
 #bases {
     -fx-font: 0.4cm 'Courier New';
@@ -215,6 +206,18 @@
 .legend{
     -fx-background-color : rgba(43, 43, 43, .8);
     -fx-padding: 10px;
+}
+
+/* Messages */
+#messageBox {
+    -fx-padding: 2px 7px;
+    -fx-border-width: 1px 0 0;
+    -fx-border-color: #848484;
+}
+
+#message {
+    -fx-font: 0.3cm 'Arial';
+    -fx-fill: #848484;
 }
 
 /* Breadcrumb */

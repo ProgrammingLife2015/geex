@@ -47,12 +47,6 @@ public class MainController extends DefaultController<BorderPane> {
     MessageController messageController;
 
     /**
-     * The breadcrumb that is needed to display the viewStack.
-     */
-    Breadcrumb breadCrumb;
-
-
-    /**
      * Init a controller at main.fxml.
      */
     public MainController() {
@@ -77,12 +71,11 @@ public class MainController extends DefaultController<BorderPane> {
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
 
-        breadCrumb = new Breadcrumb(this, viewStack);
-        main.setTop(breadCrumb);
-
+        main.setTop(new Breadcrumb(this, viewStack));
         root.setTop(new MenuController(this));
+
         messageController = new MessageController();
-        root.setBottom(messageController.getRoot());
+        main.setBottom(messageController.getRoot());
 
         root.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {

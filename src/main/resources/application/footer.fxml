@@ -3,15 +3,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import java.net.URL?>
-<?import javafx.scene.control.Separator?>
 <fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml">
 
-
-    <Separator/>
     <VBox fx:id="messageBox">
         <Text fx:id="message"/>
     </VBox>
-
 
     <stylesheets>
         <URL value="@css/style.css"/>
