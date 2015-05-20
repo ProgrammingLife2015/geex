@@ -17,17 +17,17 @@ import static org.junit.Assert.assertNotNull;
  */
 public class TreeFactoryTest {
     protected static File file;
-    protected static TreeFactory treeFactory;
+    protected static TreeParser treeParser;
     protected static Tree tree;
     protected static Node root;
 
     /**
-     * Set up TreeFactory
+     * Set up TreeParser
      */
     @BeforeClass
     public static void beforeClass() {
         file = new File(TreeTest.class.getResource("/newick/10strains.nwk").getPath());
-        treeFactory = new TreeFactory();
+        treeParser = new TreeParser();
     }
 
     /**
@@ -35,7 +35,7 @@ public class TreeFactoryTest {
      */
     public static void loadFile() {
         try {
-            tree = treeFactory.getTree(file);
+            tree = treeParser.getTree(file);
         } catch (FileNotFoundException e) {
             fail("File not found");
         } catch (UnsupportedEncodingException e) {

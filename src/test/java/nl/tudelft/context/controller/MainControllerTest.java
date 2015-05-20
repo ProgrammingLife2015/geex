@@ -3,7 +3,7 @@ package nl.tudelft.context.controller;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.scene.text.Text;
 import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.GraphFactory;
+import nl.tudelft.context.graph.GraphParser;
 import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadGraphService;
 import nl.tudelft.context.service.LoadNewickService;
@@ -46,8 +46,8 @@ public class MainControllerTest {
         File nodeFile = new File(BaseControllerTest.class.getResource("/graph/node.graph").getPath());
         File edgeFile = new File(BaseControllerTest.class.getResource("/graph/edge.graph").getPath());
 
-        GraphFactory graphFactory = new GraphFactory();
-        graph = graphFactory.getGraph(nodeFile, edgeFile);
+        GraphParser graphParser = new GraphParser();
+        graph = graphParser.getGraphMap(nodeFile, edgeFile).flat(new HashSet<>(Arrays.asList("Cat", "Dog")));
 
         mainController = new MainController();
 
