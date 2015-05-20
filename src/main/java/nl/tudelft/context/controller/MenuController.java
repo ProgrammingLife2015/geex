@@ -50,7 +50,6 @@ public final class MenuController extends MenuBar {
             File workspaceDirectory = directoryChooser.showDialog(window);
             if (workspaceDirectory != null) {
                 Workspace workspace = new Workspace(workspaceDirectory);
-                workspace.walk();
                 workspace.load();
                 mainController.setWorkspace(workspace);
                 mainController.setBaseView(new NewickController(mainController));

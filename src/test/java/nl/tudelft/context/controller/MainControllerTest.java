@@ -52,8 +52,9 @@ public class MainControllerTest {
 
         workspace = mock(Workspace.class);
 
-        when(workspace.getGraphList()).thenReturn(Collections.singletonList(mock(LoadGraphService.class)));
-        when(workspace.getNewickList()).thenReturn(Collections.singletonList(mock(LoadNewickService.class)));
+        when(workspace.getNodeFile()).thenReturn(mock(File.class));
+        when(workspace.getEdgeFile()).thenReturn(mock(File.class));
+        when(workspace.getNodeFile()).thenReturn(mock(File.class));
 
     }
 

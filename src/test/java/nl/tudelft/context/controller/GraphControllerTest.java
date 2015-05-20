@@ -47,8 +47,9 @@ public class GraphControllerTest {
         MainController mainController = mock(MainController.class);
         Workspace workspace = mock(Workspace.class);
 
-        when(workspace.getGraphList()).thenReturn(Collections.singletonList(new LoadGraphService(nodeFile, edgeFile)));
-        when(workspace.getNewickList()).thenReturn(Collections.singletonList(new LoadNewickService(nwkFile)));
+        when(workspace.getEdgeFile()).thenReturn(edgeFile);
+        when(workspace.getNodeFile()).thenReturn(nodeFile);
+        when(workspace.getNwkFile()).thenReturn(nwkFile);
         when(mainController.getWorkspace()).thenReturn(workspace);
 
         graphController = new GraphController(mainController, new HashSet<>(Arrays.asList("Cat", "Dog")));
