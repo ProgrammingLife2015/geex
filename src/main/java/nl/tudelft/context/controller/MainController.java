@@ -42,9 +42,9 @@ public class MainController extends DefaultController<BorderPane> {
     private Workspace workspace;
 
     /**
-     * The FooterController that is needed to display error messages.
+     * The MessageController that is needed to display error messages.
      */
-    FooterController footerController;
+    MessageController messageController;
 
     /**
      * The breadcrumb that is needed to display the viewStack.
@@ -81,8 +81,8 @@ public class MainController extends DefaultController<BorderPane> {
         main.setTop(breadCrumb);
 
         root.setTop(new MenuController(this));
-        footerController = new FooterController();
-        root.setBottom(footerController.getRoot());
+        messageController = new MessageController();
+        root.setBottom(messageController.getRoot());
 
         root.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
@@ -174,6 +174,6 @@ public class MainController extends DefaultController<BorderPane> {
      * @param text The text that will be displayed.
      */
     public final void displayMessage(final String text) {
-        footerController.displayMessage(text);
+        messageController.displayMessage(text);
     }
 }

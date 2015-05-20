@@ -51,14 +51,13 @@ public final class MenuController extends MenuBar {
             if (workspaceDirectory != null) {
                 Workspace workspace = new Workspace(workspaceDirectory);
                 if (workspace.walk() == 1) {
-                    mainController.displayMessage("Could not load workspace.");
+                    mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
                 } else {
                     workspace.load();
                     mainController.setWorkspace(workspace);
                     mainController.setBaseView(new NewickController(mainController));
-                    mainController.displayMessage("Workspace loaded successfully.");
+                    mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
                 }
-
             }
         });
 

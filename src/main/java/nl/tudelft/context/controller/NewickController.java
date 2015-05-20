@@ -88,11 +88,11 @@ public final class NewickController extends ViewController<ScrollPane> {
         loadNewickService.setOnSucceeded(event -> {
             showTree(loadNewickService.getValue());
             mainController.breadCrumb.setOpacity(1);
-            mainController.displayMessage("Phylogenetic tree loaded successfully.");
+            mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
         });
         loadNewickService.setOnFailed(event -> {
             mainController.breadCrumb.setOpacity(0);
-            mainController.displayMessage("Could not load phylogenetic tree.");
+            mainController.displayMessage(MessageController.FAIL_LOAD_TREE);
         });
         loadNewickService.restart();
 

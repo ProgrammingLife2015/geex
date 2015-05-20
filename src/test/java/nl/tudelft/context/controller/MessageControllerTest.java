@@ -13,18 +13,19 @@ import static org.junit.Assert.assertEquals;
  * @since 19-05-2015
  */
 @RunWith(JfxRunner.class)
-public class FooterControllerTest {
+public class MessageControllerTest {
 
     /**
      * Test for displaying the text.
      */
     @Test
     public void testDisplayText() {
-        FooterController fc = new FooterController();
+        MessageController mc = new MessageController();
         String text = "Display Test";
 
-        fc.displayMessage(text);
-        assertEquals(fc.message.getText(), text);
+        mc.displayMessage(text);
+
+        assertEquals(mc.message.getText(), text);
     }
 
 
