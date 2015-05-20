@@ -186,6 +186,7 @@
                 <version>2.15</version>
                 <configuration>
                     <configLocation>src/site/checkstyle.xml</configLocation>
+                    <linkXRef>false</linkXRef>
                 </configuration>
                 <reportSets>
                     <reportSet>
