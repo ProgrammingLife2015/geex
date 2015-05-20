@@ -80,7 +80,7 @@ public final class Node extends DrawableNode implements Serializable {
      * @return true if the node is an unknown ancestor; otherwise false
      */
     public boolean isUnknown() {
-        return this.name.equals("");
+        return this.name.isEmpty();
     }
 
     /**
@@ -92,7 +92,7 @@ public final class Node extends DrawableNode implements Serializable {
 
         Set<String> sources = new HashSet<>();
 
-        if (!name.isEmpty()) {
+        if (!isUnknown()) {
             sources.add(name);
         }
 
