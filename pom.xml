@@ -177,6 +177,7 @@
                 <version>3.4</version>
                 <configuration>
                     <skipEmptyReport>false</skipEmptyReport>
+                    <linkXRef>false</linkXRef>
                 </configuration>
             </plugin>
             <plugin>
