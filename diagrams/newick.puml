@@ -10,7 +10,7 @@ class newick.Tree<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGr
     +getFirstNode() : Node
 }
 class newick.TreeFactory {
-    + nodeFactory : NodeFactory
+    + nodeParser : NodeFactory
 
     +getTree(nwkFile : File) : Tree
     +parseTree(nwkFile : File, tree : Tree)

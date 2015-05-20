@@ -51,7 +51,8 @@ public class Workspace {
 
     /**
      * Find a file in files with a certain extension.
-     * @param files Files to search in
+     *
+     * @param files     Files to search in
      * @param extension Extension to end with
      * @return The found file, null if no file is found.
      */
@@ -67,11 +68,15 @@ public class Workspace {
 
     /**
      * Load graphs and newick files from the loaded directory.
+     *
+     * @return If all files are loaded.
      */
-    public final void load() {
+    public final boolean load() {
         edgeFile = findFile(files, ".edge.graph");
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
+
+        return edgeFile != null && nodeFile != null && nwkFile != null;
     }
 
     /**

@@ -7,7 +7,7 @@ import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
  * @version 1.0
  * @since 3-5-2015
  */
-public final class NodeFactory {
+public final class NodeParser {
     /**
      * Constructs the Node from a TreeNode.
      *

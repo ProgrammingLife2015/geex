@@ -2,8 +2,8 @@ package nl.tudelft.context.service;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.GraphFactory;
+import nl.tudelft.context.graph.GraphMap;
+import nl.tudelft.context.graph.GraphParser;
 
 import java.io.File;
 
@@ -14,7 +14,7 @@ import java.io.File;
  * @version 1.0
  * @since 25-4-2015
  */
-public class LoadGraphService extends Service<Graph> {
+public class LoadGraphService extends Service<GraphMap> {
 
     /**
      * File containing node information.
@@ -44,13 +44,13 @@ public class LoadGraphService extends Service<Graph> {
      * @return the Task to execute
      */
     @Override
-    protected final Task<Graph> createTask() {
+    protected final Task<GraphMap> createTask() {
 
-        return new Task<Graph>() {
+        return new Task<GraphMap>() {
             @Override
-            protected Graph call() throws Exception {
-                GraphFactory graphFactory = new GraphFactory();
-                return graphFactory.getGraph(nodeFile, edgeFile);
+            protected GraphMap call() throws Exception {
+                GraphParser graphParser = new GraphParser();
+                return graphParser.getGraphMap(nodeFile, edgeFile);
             }
         };
 

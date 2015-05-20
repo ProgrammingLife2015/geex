@@ -1,15 +1,12 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.service.LoadGraphService;
-import nl.tudelft.context.service.LoadNewickService;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.util.Collections;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -32,6 +29,7 @@ public class NewickControllerTest {
 
         MainController mainController = mock(MainController.class);
         Workspace workspace = mock(Workspace.class);
+        mainController.messageController = new MessageController();
 
         when(workspace.getNwkFile()).thenReturn(mock(File.class));
         when(mainController.getWorkspace()).thenReturn(workspace);
