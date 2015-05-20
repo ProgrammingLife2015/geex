@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
-<?import nl.tudelft.context.controller.FooterController?>
 <fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
 
     <left>

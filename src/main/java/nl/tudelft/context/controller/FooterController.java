@@ -1,12 +1,11 @@
 package nl.tudelft.context.controller;
 
-import javafx.geometry.Insets;
-import javafx.scene.control.Separator;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
 /**
@@ -14,12 +13,13 @@ import javafx.scene.text.Text;
  * @version 1.0
  * @since 19-05-2015
  */
-public class FooterController extends VBox {
+public class FooterController extends DefaultController<VBox> {
 
     /**
-     * The Hbox that will display the text.
+     * The text that is shown.
      */
-    HBox hbox;
+    @FXML
+    Text message;
 
     /**
      * Create a generic controller with T as root.
@@ -30,13 +30,9 @@ public class FooterController extends VBox {
      */
     public FooterController() {
 
-        super(new BorderPane());
+        super(new VBox());
 
-        hbox = new HBox();
-        this.getChildren().addAll(new Separator(), hbox);
-        hbox.setPadding(new Insets(2));
-
-        displayMessage("Ready");
+        loadFXML("/application/footer.fxml");
     }
 
 
@@ -45,13 +41,12 @@ public class FooterController extends VBox {
      * @param text The string to display.
      */
     public void displayMessage(final String text) {
-        if (hbox.getChildren().size() > 0) {
-            hbox.getChildren().remove(0);
-        }
-        Text ntext = new Text(text);
-        ntext.setFill(Paint.valueOf("#868686"));
-        hbox.getChildren().addAll(ntext);
+        message.setText(text);
     }
 
 
+    @Override
+    public void initialize(final URL location, final ResourceBundle resources) {
+        displayMessage("Ready");
+    }
 }

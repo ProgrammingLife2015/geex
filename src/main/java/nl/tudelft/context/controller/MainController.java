@@ -82,7 +82,7 @@ public class MainController extends DefaultController<BorderPane> {
 
         root.setTop(new MenuController(this));
         footerController = new FooterController();
-        root.setBottom(footerController);
+        root.setBottom(footerController.getRoot());
 
         root.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {

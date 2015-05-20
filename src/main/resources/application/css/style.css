@@ -163,6 +163,15 @@
     -fx-text-fill: #2b2b2b;
 }
 
+/* Footer */
+#footer {
+    -padding: 1;
+}
+
+#message {
+    -fx-fill: #848484;
+}
+
 /* Base */
 #bases {
     -fx-font: 0.4cm 'Courier New';

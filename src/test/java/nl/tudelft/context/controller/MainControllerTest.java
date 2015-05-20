@@ -168,7 +168,7 @@ public class MainControllerTest {
         String text = "This is a test.";
         mc.displayMessage(text);
 
-        assertEquals(((Text) mc.footerController.hbox.getChildren().get(0)).getText(), text);
+        assertEquals(mc.footerController.message.getText(), text);
     }
 
 }

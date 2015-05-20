@@ -24,7 +24,7 @@ public class FooterControllerTest {
         String text = "Display Test";
 
         fc.displayMessage(text);
-        assertEquals(((Text) fc.hbox.getChildren().get(0)).getText(), text);
+        assertEquals(fc.message.getText(), text);
     }
 
 

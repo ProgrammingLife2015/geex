@@ -41,7 +41,7 @@ public class Workspace {
     /**
      * Amount of files to load.
      */
-    final int amountFilesToLoad = 3;
+    static final int AmountFilesToLoad = 3;
 
     /**
      * Create a new workspace on the directory.
@@ -65,7 +65,7 @@ public class Workspace {
         }
 
         this.matches = finder.getMatches();
-        if (this.matches.size() < amountFilesToLoad) {
+        if (this.matches.size() < AmountFilesToLoad) {
             return 1;
         }
         return 0;
