@@ -10,7 +10,7 @@ import java.util.Set;
  * @version 1.0
  * @since 24-4-2015
  */
-public final class NodeFactory {
+public final class NodeParser {
 
     /**
      * Parses the node id from the scanner.

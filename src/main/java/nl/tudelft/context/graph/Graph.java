@@ -1,11 +1,9 @@
 package nl.tudelft.context.graph;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -42,30 +40,6 @@ public final class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
         return vertexSet().stream()
                 .filter(x -> this.inDegreeOf(x) == 0)
                 .collect(Collectors.toList());
-
-    }
-
-    /**
-     * Clean the graph from sources that aren't shown.
-     *
-     * @param sources Source to keep.
-     */
-    public void cleanGraph(final Set<String> sources) {
-
-        // Remove unnecessary edges
-        removeAllEdges(edgeSet().stream()
-                .filter(edge -> {
-                    Node source = getEdgeSource(edge);
-                    Node target = getEdgeTarget(edge);
-                    return !CollectionUtils.containsAny(source.getSources(), sources)
-                            || !CollectionUtils.containsAny(target.getSources(), sources);
-                })
-                .collect(Collectors.toList()));
-
-        // Remove unnecessary nodes
-        removeAllVertices(vertexSet().stream()
-                .filter(vertex -> !CollectionUtils.containsAny(vertex.getSources(), sources))
-                .collect(Collectors.toList()));
 
     }
 

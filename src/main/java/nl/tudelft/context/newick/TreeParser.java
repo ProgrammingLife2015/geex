@@ -1,6 +1,5 @@
 package nl.tudelft.context.newick;
 
-import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
 import java.io.BufferedReader;
@@ -15,11 +14,11 @@ import java.io.UnsupportedEncodingException;
  * @version 1.0
  * @since 3-5-2015
  */
-public final class TreeFactory {
+public final class TreeParser {
     /**
      * The node factory.
      */
-    private NodeFactory nodeFactory = new NodeFactory();
+    private NodeParser nodeParser = new NodeParser();
     /**
      * The vertical distances between nodes.
      */
@@ -60,9 +59,9 @@ public final class TreeFactory {
     public void parseTree(final File nwkFile, final Tree tree)
             throws FileNotFoundException, UnsupportedEncodingException {
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(nwkFile), "UTF-8"));
-        TreeParser tp = new TreeParser(fileReader);
+        net.sourceforge.olduvai.treejuxtaposer.TreeParser tp = new net.sourceforge.olduvai.treejuxtaposer.TreeParser(fileReader);
         net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize(1, "", null);
-        Node root = nodeFactory.getNode(nwkTree.getRoot());
+        Node root = nodeParser.getNode(nwkTree.getRoot());
         getOffspring(nwkTree.getRoot(), root, tree, 0);
         tree.setRoot(root);
     }
@@ -109,7 +108,7 @@ public final class TreeFactory {
      * @return       the node as a Node
      */
     public Node createNode(final TreeNode child, final Node parent, final int row) {
-        Node n = nodeFactory.getNode(child);
+        Node n = nodeParser.getNode(child);
         double x = parent.translateXProperty().doubleValue() + MIN_WEIGHT + WEIGHT_SCALE * n.getWeight();
         n.setTranslateX(x);
         n.setTranslateY(row * ROW_HEIGHT);

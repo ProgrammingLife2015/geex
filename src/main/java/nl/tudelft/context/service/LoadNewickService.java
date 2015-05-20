@@ -3,7 +3,7 @@ package nl.tudelft.context.service;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import nl.tudelft.context.newick.Tree;
-import nl.tudelft.context.newick.TreeFactory;
+import nl.tudelft.context.newick.TreeParser;
 
 import java.io.File;
 
@@ -43,8 +43,8 @@ public class LoadNewickService extends Service<Tree> {
         return new Task<Tree>() {
             @Override
             protected Tree call() throws Exception {
-                TreeFactory treeFactory = new TreeFactory();
-                return treeFactory.getTree(nwkFile);
+                TreeParser treeParser = new TreeParser();
+                return treeParser.getTree(nwkFile);
             }
         };
 
