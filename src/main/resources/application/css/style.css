@@ -197,6 +197,13 @@
     -fx-border-width: 0 0 0 5px;
 }
 
+/* Legend */
+.legend .header {
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 5px 0;
+    -fx-border-width: 0;
+}
+
 .legend .base-A { -fx-border-color: #e41a1c; }
 .legend .base-T { -fx-border-color: #377eb8; }
 .legend .base-C { -fx-border-color: #4daf4a; }
