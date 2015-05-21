@@ -18,13 +18,6 @@
         <main.class>nl.tudelft.context.App</main.class>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>geex</id>
-            <url>file://${project.basedir}/lib</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <!-- Testing -->
         <dependency>
@@ -53,9 +46,9 @@
         </dependency>
         <!-- Newick Parser -->
         <dependency>
-            <groupId>libnewicktree</groupId>
+            <groupId>com.github.qurben</groupId>
             <artifactId>libnewicktree</artifactId>
-            <version>1.0</version>
+            <version>0.1</version>
         </dependency>
         <!-- Commons Lang -->
         <dependency>
