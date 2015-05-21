@@ -17,10 +17,11 @@
         </StackPane>
     </ScrollPane>
     <VBox styleClass="legend" AnchorPane.topAnchor="30" AnchorPane.rightAnchor="40">
-        <Label styleClass="base-A">A base</Label>
-        <Label styleClass="base-T">T base</Label>
-        <Label styleClass="base-C">C base</Label>
-        <Label styleClass="base-G">G base</Label>
+        <Label styleClass="header">Occurrence (in %)</Label>
+        <Label styleClass="base-A">Adenine</Label>
+        <Label styleClass="base-T">Thymine</Label>
+        <Label styleClass="base-C">Cytosine</Label>
+        <Label styleClass="base-G">Guanine</Label>
         <Label styleClass="base-N">Unknown base</Label>
     </VBox>
 

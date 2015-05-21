@@ -2,10 +2,8 @@ package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
 import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.GraphFactory;
+import nl.tudelft.context.graph.GraphParser;
 import nl.tudelft.context.graph.Node;
-import nl.tudelft.context.service.LoadGraphService;
-import nl.tudelft.context.service.LoadNewickService;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -45,15 +43,16 @@ public class MainControllerTest {
         File nodeFile = new File(BaseControllerTest.class.getResource("/graph/node.graph").getPath());
         File edgeFile = new File(BaseControllerTest.class.getResource("/graph/edge.graph").getPath());
 
-        GraphFactory graphFactory = new GraphFactory();
-        graph = graphFactory.getGraph(nodeFile, edgeFile);
+        GraphParser graphParser = new GraphParser();
+        graph = graphParser.getGraphMap(nodeFile, edgeFile).flat(new HashSet<>(Arrays.asList("Cat", "Dog")));
 
         mainController = new MainController();
 
         workspace = mock(Workspace.class);
 
-        when(workspace.getGraphList()).thenReturn(Collections.singletonList(mock(LoadGraphService.class)));
-        when(workspace.getNewickList()).thenReturn(Collections.singletonList(mock(LoadNewickService.class)));
+        when(workspace.getNodeFile()).thenReturn(mock(File.class));
+        when(workspace.getEdgeFile()).thenReturn(mock(File.class));
+        when(workspace.getNodeFile()).thenReturn(mock(File.class));
 
     }
 
@@ -154,6 +153,20 @@ public class MainControllerTest {
 
         assertEquals(1, mc.viewStack.size());
 
+    }
+
+    /**
+     * Test viewing text.
+     */
+    @Test
+    public void testFooterText() {
+        MainController mc = new MainController();
+        mc.setWorkspace(workspace);
+
+        String text = "This is a test.";
+        mc.displayMessage(text);
+
+        assertEquals(mc.messageController.message.getText(), text);
     }
 
 }

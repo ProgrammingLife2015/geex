@@ -9,6 +9,7 @@ import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.newick.Tree;
 import nl.tudelft.context.service.LoadNewickService;
+import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
 import java.util.List;
@@ -54,9 +55,14 @@ public final class NewickController extends ViewController<ScrollPane> {
         super(new ScrollPane());
 
         this.mainController = mainController;
-        this.loadNewickService = mainController.getWorkspace().getNewickList().get(0);
+
+        Workspace workspace = mainController.getWorkspace();
+        this.loadNewickService = new LoadNewickService(workspace.getNwkFile());
 
         loadFXML("/application/newick.fxml");
+
+
+
 
     }
 
@@ -83,7 +89,11 @@ public final class NewickController extends ViewController<ScrollPane> {
      */
     public void loadTree() {
 
-        loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
+        loadNewickService.setOnSucceeded(event -> {
+            showTree(loadNewickService.getValue());
+            mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
+        });
+        loadNewickService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_TREE));
         loadNewickService.restart();
 
     }

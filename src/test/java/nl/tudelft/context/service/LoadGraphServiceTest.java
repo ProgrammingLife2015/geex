@@ -3,7 +3,8 @@ package nl.tudelft.context.service;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.concurrent.Worker;
 import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.GraphFactory;
+import nl.tudelft.context.graph.GraphMap;
+import nl.tudelft.context.graph.GraphParser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,8 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +30,7 @@ public class LoadGraphServiceTest {
     protected final static File nodeFile = new File(LoadGraphServiceTest.class.getResource("/graph/node.graph").getPath());
     protected final static File edgeFile = new File(LoadGraphServiceTest.class.getResource("/graph/edge.graph").getPath());
 
-    protected static Graph graphFromFactory;
+    protected static GraphMap graphFromFactory;
 
     /**
      * Set up comparing graphFromFactory.
@@ -35,8 +38,8 @@ public class LoadGraphServiceTest {
     @BeforeClass
     public static void beforeClass() throws FileNotFoundException, UnsupportedEncodingException {
 
-        GraphFactory graphFactory = new GraphFactory();
-        graphFromFactory = graphFactory.getGraph(nodeFile, edgeFile);
+        GraphParser graphParser = new GraphParser();
+        graphFromFactory = graphParser.getGraphMap(nodeFile, edgeFile);
 
     }
 
@@ -52,7 +55,7 @@ public class LoadGraphServiceTest {
 
         loadGraphService.stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == Worker.State.SUCCEEDED) {
-                completableFuture.complete(loadGraphService.getValue());
+                completableFuture.complete(loadGraphService.getValue().flat(new HashSet<>(Arrays.asList("Dog", "Cat"))));
             }
         });
 

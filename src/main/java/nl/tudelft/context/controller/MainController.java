@@ -42,6 +42,11 @@ public class MainController extends DefaultController<BorderPane> {
     private Workspace workspace;
 
     /**
+     * The MessageController that is needed to display error messages.
+     */
+    MessageController messageController;
+
+    /**
      * Init a controller at main.fxml.
      */
     public MainController() {
@@ -68,6 +73,9 @@ public class MainController extends DefaultController<BorderPane> {
 
         main.setTop(new Breadcrumb(this, viewStack));
         root.setTop(new MenuController(this));
+
+        messageController = new MessageController();
+        main.setBottom(messageController.getRoot());
 
         root.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
@@ -151,5 +159,14 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
+    }
+
+
+    /**
+     * The function that is used to display a message in the footer.
+     * @param text The text that will be displayed.
+     */
+    public final void displayMessage(final String text) {
+        messageController.displayMessage(text);
     }
 }

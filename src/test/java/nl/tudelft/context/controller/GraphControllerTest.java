@@ -3,8 +3,6 @@ package nl.tudelft.context.controller;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
-import nl.tudelft.context.service.LoadGraphService;
-import nl.tudelft.context.service.LoadNewickService;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,7 +10,6 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -46,9 +43,11 @@ public class GraphControllerTest {
 
         MainController mainController = mock(MainController.class);
         Workspace workspace = mock(Workspace.class);
+        mainController.messageController = new MessageController();
 
-        when(workspace.getGraphList()).thenReturn(Collections.singletonList(new LoadGraphService(nodeFile, edgeFile)));
-        when(workspace.getNewickList()).thenReturn(Collections.singletonList(new LoadNewickService(nwkFile)));
+        when(workspace.getEdgeFile()).thenReturn(edgeFile);
+        when(workspace.getNodeFile()).thenReturn(nodeFile);
+        when(workspace.getNwkFile()).thenReturn(nwkFile);
         when(mainController.getWorkspace()).thenReturn(workspace);
 
         graphController = new GraphController(mainController, new HashSet<>(Arrays.asList("Cat", "Dog")));

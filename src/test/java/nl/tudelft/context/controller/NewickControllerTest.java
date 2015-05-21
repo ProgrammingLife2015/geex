@@ -1,15 +1,12 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.service.LoadGraphService;
-import nl.tudelft.context.service.LoadNewickService;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.util.Collections;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -22,10 +19,6 @@ import static org.mockito.Mockito.when;
 @RunWith(JfxRunner.class)
 public class NewickControllerTest {
 
-    protected final static File nodeFile = new File(NewickControllerTest.class.getResource("/graph/node.graph").getPath());
-    protected final static File edgeFile = new File(NewickControllerTest.class.getResource("/graph/edge.graph").getPath());
-    protected final static File nwkFile = new File(NewickControllerTest.class.getResource("/newick/10strains.nwk").getPath());
-
     protected static NewickController newickController;
 
     /**
@@ -36,9 +29,9 @@ public class NewickControllerTest {
 
         MainController mainController = mock(MainController.class);
         Workspace workspace = mock(Workspace.class);
+        mainController.messageController = new MessageController();
 
-        when(workspace.getGraphList()).thenReturn(Collections.singletonList(new LoadGraphService(nodeFile, edgeFile)));
-        when(workspace.getNewickList()).thenReturn(Collections.singletonList(new LoadNewickService(nwkFile)));
+        when(workspace.getNwkFile()).thenReturn(mock(File.class));
         when(mainController.getWorkspace()).thenReturn(workspace);
 
         newickController = new NewickController(mainController);

@@ -9,15 +9,15 @@ import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.service.LoadGraphService;
+import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
-
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.Collection;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -74,7 +74,8 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         this.mainController = mainController;
         this.sources = sources;
-        this.loadGraphService = mainController.getWorkspace().getGraphList().get(0);
+        Workspace workspace = mainController.getWorkspace();
+        this.loadGraphService = new LoadGraphService(workspace.getNodeFile(), workspace.getEdgeFile());
 
         loadFXML("/application/graph.fxml");
 
@@ -104,10 +105,13 @@ public final class GraphController extends ViewController<AnchorPane> {
     private void loadGraph() {
 
         loadGraphService.setOnSucceeded(event -> {
-            Graph graph = loadGraphService.getValue();
-            graph.cleanGraph(sources);
+            Graph graph = loadGraphService.getValue().flat(sources);
             graph.position();
             showGraph(graph);
+            mainController.displayMessage(MessageController.SUCCESS_LOAD_GRAPH);
+        });
+        loadGraphService.setOnFailed(event -> {
+            mainController.displayMessage(MessageController.FAIL_LOAD_GRAPH);
         });
         loadGraphService.restart();
 

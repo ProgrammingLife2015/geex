@@ -26,10 +26,10 @@ public class NodeTest {
     @BeforeClass
     public static void beforeClass() {
 
-        NodeFactory nodeFactory = new NodeFactory();
+        NodeParser nodeParser = new NodeParser();
 
-        node1 = nodeFactory.getNode(new Scanner(">0 | Cat,Dog | 5 | 7\nA\n"));
-        node2 = nodeFactory.getNode(new Scanner(">1 | Dog | 8 | 10\nATC\n"));
+        node1 = nodeParser.getNode(new Scanner(">0 | Cat,Dog | 5 | 7\nA\n"));
+        node2 = nodeParser.getNode(new Scanner(">1 | Dog | 8 | 10\nATC\n"));
 
     }
 

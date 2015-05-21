@@ -213,6 +213,13 @@
     -fx-border-width: 0 0 0 5px;
 }
 
+/* Legend */
+.legend .header {
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 5px 0;
+    -fx-border-width: 0;
+}
+
 .legend .base-A { -fx-border-color: #e41a1c; }
 .legend .base-T { -fx-border-color: #377eb8; }
 .legend .base-C { -fx-border-color: #4daf4a; }
@@ -222,6 +229,18 @@
 .legend{
     -fx-background-color : rgba(43, 43, 43, .8);
     -fx-padding: 10px;
+}
+
+/* Messages */
+#messageBox {
+    -fx-padding: 2px 7px;
+    -fx-border-width: 1px 0 0;
+    -fx-border-color: #848484;
+}
+
+#message {
+    -fx-font: 0.3cm 'Arial';
+    -fx-fill: #848484;
 }
 
 /* Breadcrumb */
