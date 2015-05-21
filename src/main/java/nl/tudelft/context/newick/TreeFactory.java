@@ -110,6 +110,7 @@ public final class TreeFactory {
      */
     public Node createNode(final TreeNode child, final Node parent, final int row) {
         Node n = nodeFactory.getNode(child);
+        n.setParent(parent);
         double x = parent.translateXProperty().doubleValue() + MIN_WEIGHT + WEIGHT_SCALE * n.getWeight();
         n.setTranslateX(x);
         n.setTranslateY(row * ROW_HEIGHT);

@@ -102,7 +102,7 @@ public final class NewickController extends ViewController<ScrollPane> {
 
         // Bind nodes
         List<Label> nodeList = tree.vertexSet().stream()
-                .map(node -> new NewickLabel(node, mainController))
+                .map(NewickLabel::new)
                 .collect(Collectors.toList());
 
         newick.getChildren().addAll(edgeList);
