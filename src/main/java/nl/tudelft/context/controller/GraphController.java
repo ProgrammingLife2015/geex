@@ -134,6 +134,8 @@ public final class GraphController extends ViewController<AnchorPane> {
         loadAnnotationService.setOnSucceeded(event -> {
             AnnotationMap annotationMap = loadAnnotationService.getValue();
             mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
+            System.out.println("annotationMap = " + annotationMap.toString());
+
         });
         loadAnnotationService.setOnFailed(event -> {
             mainController.displayMessage(MessageController.FAIL_LOAD_ANNOTATION);
