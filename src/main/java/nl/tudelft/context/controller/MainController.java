@@ -6,6 +6,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.breadcrumb.Breadcrumb;
 import nl.tudelft.context.breadcrumb.ViewStack;
+import nl.tudelft.context.controller.overlay.OverlayController;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
@@ -83,6 +84,11 @@ public class MainController extends DefaultController<BorderPane> {
             }
         });
 
+    }
+
+    public final void setOverlay(final OverlayController overlay) {
+        viewStack.add(null);
+        view.getChildren().add(overlay.getRoot());
     }
 
     /**

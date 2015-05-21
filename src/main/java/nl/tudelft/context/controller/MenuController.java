@@ -3,8 +3,10 @@ package nl.tudelft.context.controller;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
+import nl.tudelft.context.controller.overlay.ShortcutController;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.io.File;
@@ -43,6 +45,7 @@ public final class MenuController extends MenuBar {
         final Menu fileMenu = new Menu("File");
 
         MenuItem load = new MenuItem("Load Workspace...");
+        load.setAccelerator(KeyCombination.keyCombination("ctrl+o"));
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Workspace Folder");
         load.setOnAction(event -> {
@@ -74,6 +77,15 @@ public final class MenuController extends MenuBar {
     public void initHelpMenu() {
 
         final Menu menuHelp = new Menu("Help");
+
+        MenuItem shortcuts = new MenuItem("Shortcuts");
+        shortcuts.setAccelerator(KeyCombination.keyCombination("f1"));
+        shortcuts.setOnAction(event -> {
+            mainController.setOverlay(new ShortcutController());
+        });
+
+        menuHelp.getItems().addAll(shortcuts);
+
         getMenus().add(menuHelp);
 
     }
