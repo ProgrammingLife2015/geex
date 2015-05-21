@@ -1,2 +1,2 @@
-1,lorem,true,0,2,ipsum
-2,dolor,false,4,6,set
+1,lorem,+,0,2,ipsum
+2,dolor,-,4,6,set
