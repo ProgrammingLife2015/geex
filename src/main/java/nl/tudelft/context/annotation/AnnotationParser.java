@@ -3,10 +3,8 @@ package nl.tudelft.context.annotation;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 
 
 /**
@@ -21,15 +19,13 @@ public class AnnotationParser {
      *
      * @param annotationFile the file with the annotations
      * @return the annotationMap
-     * @throws FileNotFoundException        when the file does not exist.
-     * @throws UnsupportedEncodingException when the encoding is incorrect.
+     * @throws IOException when the file is not readable.
      */
     public final AnnotationMap getAnnotationMap(final File annotationFile)
             throws IOException {
         BufferedReader fileReader =
                 new BufferedReader(new InputStreamReader(new FileInputStream(annotationFile), "UTF-8"));
         return parseAnnotations(fileReader);
-
     }
 
     /**
@@ -37,15 +33,16 @@ public class AnnotationParser {
      *
      * @param bufferedReader the reader for the file
      * @return an annotationMap with the annotations
+     * @throws IOException when the file is not readable.
      */
     public final AnnotationMap parseAnnotations(final BufferedReader bufferedReader) throws IOException {
         AnnotationMap annotationMap = new AnnotationMap();
         String line = "";
         String cvsSplitBy = ",";
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] splitLine = line.split(cvsSplitBy);
-                annotationMap.put(splitLine[1], getAnnotation(splitLine));
-            }
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] splitLine = line.split(cvsSplitBy);
+            annotationMap.put(splitLine[1], getAnnotation(splitLine));
+        }
 
         return annotationMap;
     }
@@ -65,7 +62,6 @@ public class AnnotationParser {
         int end = Integer.parseInt(splitLine[4]);
         String proteinName = splitLine[5];
         Annotation annotation = new Annotation(id, name, strand, start, end, proteinName);
-        System.out.println("annotation = " + annotation.toString());
         return annotation;
     }
 }
