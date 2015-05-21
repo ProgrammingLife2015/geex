@@ -20,7 +20,7 @@ public class BaseLabel extends Rectangle {
      * @param base  char indicating the applicable base
      * @param width the width of the label
      */
-    public BaseLabel(final char base, final double width) {s
+    public BaseLabel(final char base, final double width) {
 
         super(width, BASE_HEIGHT);
         getStyleClass().add("node-label-" + base);
