@@ -160,7 +160,14 @@ public class Annotation {
     @Override
 
     public final String toString() {
-        return "("+this.getId()+", "+this.getName()+", "+this.getStrand()+", "+this.getStart()+", "+this.getEnd()+", "+this.getProteinName()+")";
+        return "("
+                + this.getId() + ", "
+                + this.getName() + ", "
+                + this.getStrand() + ", "
+                + this.getStart() + ", "
+                + this.getEnd() + ", "
+                + this.getProteinName()
+                + ")";
     }
 
     /**
