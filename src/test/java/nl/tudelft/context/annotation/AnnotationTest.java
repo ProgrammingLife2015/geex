@@ -14,20 +14,22 @@ import static org.junit.Assert.*;
  */
 public class AnnotationTest {
 
-    protected static Annotation annotation1, annotation2;
+    protected static Annotation annotation1, annotation2, annotation3, annotation4;
 
     /**
-     * Set up by creating two annotations
+     * Set up by creating two annotations.
      */
     @BeforeClass
     public static void BeforeClass() {
         annotation1 = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
         annotation2 = new Annotation(2, "Rv0002", true, 2051, 3260, "dnaN");
+        annotation3 = new Annotation(8, "Rv0008c", false, 11873, 12311, "none");
+        annotation4 = new Annotation(2, "Rv0002", false, 999, 9999, "other");
 
     }
 
     /**
-     * Test id
+     * Test id.
      *
      * @throws Exception
      */
@@ -39,7 +41,7 @@ public class AnnotationTest {
     }
 
     /**
-     * Test name
+     * Test name.
      *
      * @throws Exception
      */
@@ -51,7 +53,7 @@ public class AnnotationTest {
     }
 
     /**
-     * test strand
+     * test strand.
      *
      * @throws Exception
      */
@@ -62,7 +64,7 @@ public class AnnotationTest {
     }
 
     /**
-     * Test start
+     * Test start.
      *
      * @throws Exception
      */
@@ -74,7 +76,7 @@ public class AnnotationTest {
     }
 
     /**
-     * Test end
+     * Test end.
      *
      * @throws Exception
      */
@@ -86,7 +88,7 @@ public class AnnotationTest {
     }
 
     /**
-     * Test proteinName
+     * Test proteinName.
      *
      * @throws Exception
      */
@@ -98,7 +100,7 @@ public class AnnotationTest {
     }
 
     /**
-     * Test equals
+     * Test equals.
      *
      * @throws Exception
      */
@@ -106,10 +108,70 @@ public class AnnotationTest {
     public void testEquals() throws Exception {
         assertTrue(annotation1.equals(annotation1));
         assertFalse(annotation1.equals(annotation2));
+        assertFalse(annotation2.equals(annotation4));
     }
 
     /**
-     * Test equalsLoose
+     * Test equals extensive.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testEqualsExtensive() throws Exception {
+        Annotation annotationA = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
+        Annotation annotationB = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
+        assertTrue(annotationA.equals(annotationB));
+
+        //Start with only one item of B different.
+        annotationA = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
+        annotationB = new Annotation(2, "Rv0001", true, 0, 1524, "dnaA");
+        assertFalse(annotationA.equals(annotationB));
+
+        annotationA = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
+        annotationB = new Annotation(1, "Rv0002", true, 0, 1524, "dnaA");
+        assertFalse(annotationA.equals(annotationB));
+
+        annotationA = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
+        annotationB = new Annotation(1, "Rv0001", false, 0, 1524, "dnaA");
+        assertFalse(annotationA.equals(annotationB));
+
+        annotationA = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
+        annotationB = new Annotation(1, "Rv0001", true, 1, 1524, "dnaA");
+        assertFalse(annotationA.equals(annotationB));
+
+        annotationA = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
+        annotationB = new Annotation(1, "Rv0001", true, 0, 2, "dnaA");
+        assertFalse(annotationA.equals(annotationB));
+
+        annotationA = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
+        annotationB = new Annotation(1, "Rv0001", true, 0, 1524, "dnaB");
+        assertFalse(annotationA.equals(annotationB));
+
+    }
+
+    /**
+     * Test equals with a non-annotation object.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testEqualsWithOtherObject() throws Exception {
+        assertFalse(annotation1.equals("Not an annotation"));
+    }
+
+    /**
+     * Test equals with an anti sense annotation.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testEqualsWithAntiSenseAnnotation() throws Exception {
+        assertFalse(annotation1.equals(annotation3));
+
+    }
+
+    /**
+     * Test equalsLoose.
      *
      * @throws Exception
      */
@@ -121,14 +183,38 @@ public class AnnotationTest {
     }
 
     /**
+     * Test equalsLoose with other object.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testEqualsLoosWithOtherObject() throws Exception {
+        assertFalse(annotation1.equalsLoose("Not an annotation"));
+
+    }
+
+    /**
+     * Test toString.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testToString() throws Exception {
+        assertEquals("(1, Rv0001, true, 0, 1524, dnaA)", annotation1.toString());
+        assertEquals("(2, Rv0002, true, 2051, 3260, dnaN)", annotation2.toString());
+        assertEquals("(8, Rv0008c, false, 11873, 12311, none)", annotation3.toString());
+
+    }
+
+    /**
      * Test hashcode
      *
      * @throws Exception
      */
     @Test
     public void testHashCode() throws Exception {
-        assertEquals(1, annotation1.getId());
-        assertEquals(2, annotation2.getId());
+        assertEquals(1, annotation1.hashCode());
+        assertEquals(2, annotation2.hashCode());
 
     }
 }

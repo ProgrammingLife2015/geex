@@ -3,7 +3,7 @@ package nl.tudelft.context.drawable;
 import javafx.scene.shape.Rectangle;
 
 /**
- * @author Jasper on 13-5-2015.
+ * @author Jasper Nieuwdorp
  * @version 1.0
  * @since 13-5-2015
  */
@@ -20,7 +20,7 @@ public class BaseLabel extends Rectangle {
      * @param base  char indicating the applicable base
      * @param width the width of the label
      */
-    public BaseLabel(final char base, final double width) {
+    public BaseLabel(final char base, final double width) {s
 
         super(width, BASE_HEIGHT);
         getStyleClass().add("node-label-" + base);

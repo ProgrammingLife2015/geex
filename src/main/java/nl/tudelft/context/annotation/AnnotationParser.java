@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
 
 
 /**
- * @author Jasper on 21-5-2015.
+ * @author Jasper Nieuwdorp
  * @version 1.0
  * @since 21-5-2015
  */
@@ -63,7 +63,7 @@ public class AnnotationParser {
     public final Annotation getAnnotation(final String[] splitLine) throws NumberFormatException {
         int id = Integer.parseInt(splitLine[0]);
         String name = splitLine[1];
-        Boolean strand = splitLine[2].equals("-");
+        Boolean strand = splitLine[2].equals("+");
         int start = Integer.parseInt(splitLine[3]);
         int end = Integer.parseInt(splitLine[4]);
         String proteinName = splitLine[5];
