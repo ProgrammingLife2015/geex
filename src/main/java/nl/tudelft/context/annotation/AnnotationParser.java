@@ -25,7 +25,7 @@ public class AnnotationParser {
      * @throws UnsupportedEncodingException when the encoding is incorrect.
      */
     public final AnnotationMap getAnnotationMap(final File annotationFile)
-            throws FileNotFoundException, UnsupportedEncodingException {
+            throws IOException {
         BufferedReader fileReader =
                 new BufferedReader(new InputStreamReader(new FileInputStream(annotationFile), "UTF-8"));
         return parseAnnotations(fileReader);
@@ -38,18 +38,15 @@ public class AnnotationParser {
      * @param bufferedReader the reader for the file
      * @return an annotationMap with the annotations
      */
-    public final AnnotationMap parseAnnotations(final BufferedReader bufferedReader) {
+    public final AnnotationMap parseAnnotations(final BufferedReader bufferedReader) throws IOException {
         AnnotationMap annotationMap = new AnnotationMap();
         String line = "";
         String cvsSplitBy = ",";
-        try {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] splitLine = line.split(cvsSplitBy);
                 annotationMap.put(splitLine[1], getAnnotation(splitLine));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         return annotationMap;
     }
 

@@ -2,8 +2,14 @@ package nl.tudelft.context.annotation;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mockito;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 import static org.junit.Assert.*;
 
@@ -46,13 +52,11 @@ public class AnnotationParserTest {
 
     }
 
-    @Test
-    public void testParseAnnotations() throws Exception {
 
-    }
-
-    @Test
-    public void testGetAnnotation() throws Exception {
-
+    @Test (expected = IOException.class)
+    public void testParseAnnotationsException() throws Exception {
+        BufferedReader mockReader = Mockito.mock(BufferedReader.class);
+        Mockito.doThrow(new IOException()).when(mockReader).readLine();
+        annotationParser.parseAnnotations(mockReader);
     }
 }
