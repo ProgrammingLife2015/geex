@@ -24,14 +24,17 @@ public class AnnotationMapTest {
         annotation1 = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
         annotation2 = new Annotation(2, "Rv0002", true, 2051, 3260, "dnaN");
         annotationMap1 = new AnnotationMap();
-        annotationMap1.put("1",annotation1);
-       // annotationMap1.put("2",annotation2);
+        annotationMap1.put("1", annotation1);
+        annotationMap1.put("2", annotation2);
     }
 
     @Test
     public void testToString() throws Exception {
-       // assertEquals("(1, Rv0001, true, 0, 1524, dnaA)\r\n" +
-       //         "(2, Rv0002, true, 2051, 3260, dnaN)\r\n", annotationMap1.toString());
-        assertEquals("(1, Rv0001, true, 0, 1524, dnaA)"+System.getProperty("line.separator"), annotationMap1.toString());
+        assertEquals("(1, Rv0001, true, 0, 1524, dnaA)"
+                + System.getProperty("line.separator")
+                + "(2, Rv0002, true, 2051, 3260, dnaN)"
+                + System.getProperty("line.separator")
+                , annotationMap1.toString());
+
     }
 }
