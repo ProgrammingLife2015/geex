@@ -144,7 +144,6 @@ public class Annotation {
      * @param other the object that should be compared
      * @return if node is equal to an other node
      */
-
     public final boolean equalsLoose(final Object other) {
         if (other instanceof Annotation) {
             Annotation that = (Annotation) other;
@@ -154,11 +153,23 @@ public class Annotation {
     }
 
     /**
+     * Creates an toString for annotation.
+     *
+     * @return string representing the annotation
+     */
+    @Override
+
+    public final String toString() {
+        return "("+this.getId()+", "+this.getName()+", "+this.getStrand()+", "+this.getStart()+", "+this.getEnd()+", "+this.getProteinName()+")";
+    }
+
+    /**
      * Creates an hashCode for annotation.
      *
      * @return unique hashCode by id
      */
     @Override
+
     public final int hashCode() {
         return this.id;
     }
