@@ -67,7 +67,8 @@ public class AnnotationParser {
         int start = Integer.parseInt(splitLine[3]);
         int end = Integer.parseInt(splitLine[4]);
         String proteinName = splitLine[5];
-
-        return new Annotation(id, name, strand, start, end, proteinName);
+        Annotation annotation = new Annotation(id, name, strand, start, end, proteinName);
+        System.out.println("annotation = " + annotation.toString());
+        return annotation;
     }
 }

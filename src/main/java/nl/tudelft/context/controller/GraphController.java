@@ -5,9 +5,11 @@ import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import nl.tudelft.context.annotation.AnnotationMap;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
+import nl.tudelft.context.service.LoadAnnotationService;
 import nl.tudelft.context.service.LoadGraphService;
 import nl.tudelft.context.workspace.Workspace;
 
@@ -58,6 +60,11 @@ public final class GraphController extends ViewController<AnchorPane> {
     LoadGraphService loadGraphService;
 
     /**
+     * The service for loading the annotations.
+     */
+    LoadAnnotationService loadAnnotationService;
+
+    /**
      * Sources that are displayed in the graph.
      */
     Set<String> sources;
@@ -76,6 +83,7 @@ public final class GraphController extends ViewController<AnchorPane> {
         this.sources = sources;
         Workspace workspace = mainController.getWorkspace();
         this.loadGraphService = new LoadGraphService(workspace.getNodeFile(), workspace.getEdgeFile());
+        this.loadAnnotationService = new LoadAnnotationService(workspace.getAnnotationFile());
 
         loadFXML("/application/graph.fxml");
 
@@ -96,6 +104,7 @@ public final class GraphController extends ViewController<AnchorPane> {
         progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
 
         loadGraph();
+        loadAnnotation();
 
     }
 
@@ -116,6 +125,23 @@ public final class GraphController extends ViewController<AnchorPane> {
         loadGraphService.restart();
 
     }
+
+    /**
+     * Load annotation from source.
+     */
+    private void loadAnnotation() {
+
+        loadAnnotationService.setOnSucceeded(event -> {
+            AnnotationMap annotationMap = loadAnnotationService.getValue();
+            mainController.displayMessage("hooray");
+        });
+        loadAnnotationService.setOnFailed(event -> {
+            mainController.displayMessage("boo");
+        });
+        loadAnnotationService.restart();
+
+    }
+
 
     /**
      * Show graph with reference points.
