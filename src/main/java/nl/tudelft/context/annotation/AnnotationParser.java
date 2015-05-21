@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 
 
 /**
@@ -17,14 +16,30 @@ import java.util.HashMap;
  */
 public class AnnotationParser {
 
-    public HashMap<String, Annotation> getAnnotationMap(final File annotationFile) throws FileNotFoundException, UnsupportedEncodingException {
-        BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(annotationFile), "UTF-8"));
+    /**
+     * Create an AnnotationMap from a file.
+     *
+     * @param annotationFile the file with the annotations
+     * @return the annotationMap
+     * @throws FileNotFoundException        when the file does not exist.
+     * @throws UnsupportedEncodingException when the encoding is incorrect.
+     */
+    public final AnnotationMap getAnnotationMap(final File annotationFile)
+            throws FileNotFoundException, UnsupportedEncodingException {
+        BufferedReader fileReader =
+                new BufferedReader(new InputStreamReader(new FileInputStream(annotationFile), "UTF-8"));
         return parseAnnotations(fileReader);
 
     }
 
-    public HashMap<String, Annotation> parseAnnotations(final BufferedReader bufferedReader) {
-        HashMap<String, Annotation> annotationMap = new HashMap<String, Annotation>();
+    /**
+     * Parse the file and generate the annotations.
+     *
+     * @param bufferedReader the reader for the file
+     * @return an annotationMap with the annotations
+     */
+    public final AnnotationMap parseAnnotations(final BufferedReader bufferedReader) {
+        AnnotationMap annotationMap = new AnnotationMap();
         String line = "";
         String cvsSplitBy = ",";
         try {
@@ -38,7 +53,14 @@ public class AnnotationParser {
         return annotationMap;
     }
 
-    public Annotation getAnnotation(String[] splitLine) throws NumberFormatException {
+    /**
+     * Read a splitted line and generate an annotation.
+     *
+     * @param splitLine the line with information for the annotation
+     * @return Annotation
+     * @throws NumberFormatException when the data isn't correct
+     */
+    public final Annotation getAnnotation(final String[] splitLine) throws NumberFormatException {
         int id = Integer.parseInt(splitLine[0]);
         String name = splitLine[1];
         Boolean strand = splitLine[2].equals("-");

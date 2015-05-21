@@ -35,6 +35,11 @@ public class Workspace {
     File nwkFile;
 
     /**
+     * The annotation file in the workspace.
+     */
+    File annotationFile;
+
+    /**
      * Create a new workspace on the directory.
      *
      * @param directory The workspace root
@@ -75,8 +80,9 @@ public class Workspace {
         edgeFile = findFile(files, ".edge.graph");
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
+        annotationFile = findFile(files, ".ann.csv");
 
-        return edgeFile != null && nodeFile != null && nwkFile != null;
+        return edgeFile != null && nodeFile != null && nwkFile != null && annotationFile != null;
     }
 
     /**
@@ -105,4 +111,14 @@ public class Workspace {
     public File getNwkFile() {
         return nwkFile;
     }
+
+    /**
+     * Get the annotation file in the workspace.
+     *
+     * @return annotation file
+     */
+    public File getAnnotationFile() {
+        return annotationFile;
+    }
+
 }

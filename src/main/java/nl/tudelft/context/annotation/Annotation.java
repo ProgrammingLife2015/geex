@@ -20,7 +20,7 @@ public class Annotation {
     /**
      * Positve (true) or Negative (false) strand (Sense and Anti-Sense).
      */
-    Boolean strand;
+    boolean strand;
 
     /**
      * Transcription start position.
@@ -38,7 +38,7 @@ public class Annotation {
     String proteinName;
 
     /**
-     * Create an annotation
+     * Create an annotation.
      *
      * @param id          The id of the annotation (from Tabel Browser, wrongfully labeled score).
      * @param name        Name of the genome.
@@ -63,56 +63,56 @@ public class Annotation {
     }
 
     /**
-     * Getter for id
+     * Getter for id.
      *
      * @return id
      */
-    public int getId() {
+    public final int getId() {
         return id;
     }
 
     /**
-     * Getter for name
+     * Getter for name.
      *
      * @return name
      */
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
     /**
-     * Getter for strand
+     * Getter for strand.
      *
      * @return strand
      */
-    public Boolean getStrand() {
+    public final Boolean getStrand() {
         return strand;
     }
 
     /**
-     * Getter for start
+     * Getter for start.
      *
      * @return start
      */
-    public int getStart() {
+    public final int getStart() {
         return start;
     }
 
     /**
-     * Getter for end
+     * Getter for end.
      *
      * @return end
      */
-    public int getEnd() {
+    public final int getEnd() {
         return end;
     }
 
     /**
-     * Getter for proteinName
+     * Getter for proteinName.
      *
      * @return proteinName
      */
-    public String getProteinName() {
+    public final String getProteinName() {
         return proteinName;
     }
 
@@ -120,18 +120,19 @@ public class Annotation {
      * Checks if annotation is equal to an other annotation.
      * This is the strict equals, for only checking id use equalsLoose
      *
+     * @param other the object that should be compared
      * @return if node is equal to an other node
      */
     @Override
-    public boolean equals(final Object other) {
+    public final boolean equals(final Object other) {
         if (other instanceof Annotation) {
             Annotation that = (Annotation) other;
             return id == that.id
-                    && name == that.name
+                    && name.equals(that.name)
                     && strand == that.strand
                     && start == that.start
                     && end == that.end
-                    && proteinName == that.proteinName;
+                    && proteinName.equals(that.proteinName);
         }
         return false;
     }
@@ -140,9 +141,11 @@ public class Annotation {
      * Checks if annotation id is equal to an other annotation id.
      * Only checks id, for comprehensive comparison use equals
      *
+     * @param other the object that should be compared
      * @return if node is equal to an other node
      */
-    public boolean equalsLoose(final Object other) {
+
+    public final boolean equalsLoose(final Object other) {
         if (other instanceof Annotation) {
             Annotation that = (Annotation) other;
             return id == that.id;
@@ -156,7 +159,7 @@ public class Annotation {
      * @return unique hashCode by id
      */
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return this.id;
     }
 
