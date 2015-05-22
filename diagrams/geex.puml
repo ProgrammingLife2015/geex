@@ -36,16 +36,27 @@ abstract class ViewController<T extends Parent> extends DefaultController {
     +getBreadcrumbName() : String
 }
 class GraphController<AnchorPane> extends ViewController {
-    # mainController : MainController
-    # nwkFile : File
+    mainController : MainController
+    loadGraphService : LoadGraphService
+    sources : Set<String>
+
+    -loadGraph()
+    -showGraph(graph : Graph)
+    -initOnTheFlyLoading(nodeList : List<InfoLabel>)
+    -showCurrentLabels(map : Map<Integer, List<InfoLabel>>)
 }
 class MainController<BorderPane> extends DefaultController {
-    # viewList : Stack<Node>
+    viewstack : ViewStack
+    messageController : MessageController
 
     +setBaseView(node : Node)
     +setView(node : Node)
     +previousView()
+    +backToView(viewController : ViewController)
     +exitProgram()
+    +getWorkspace() : Workspace
+    +setWorkspace(workspace : Workspace)
+    +displayMessage(text : String)
 }
 class BaseController<ScrollPane> extends ViewController {
     -graph : Graph
@@ -59,7 +70,6 @@ class MenuController extends javafx.scene.control.MenuBar {
 
     +initFileMenu()
     +initHelpMenu()
-    -initWorkspaceMenu()
 }
 class NewickController<ScrollPane> extends ViewController {
     # mainController : MainController
