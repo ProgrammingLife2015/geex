@@ -144,12 +144,8 @@ public class Annotation {
      * @param other the object that should be compared
      * @return if node is equal to an other node
      */
-    public final boolean equalsLoose(final Object other) {
-        if (other instanceof Annotation) {
-            Annotation that = (Annotation) other;
-            return id == that.id;
-        }
-        return false;
+    public final boolean equalsLoose(final Annotation other) {
+        return id == other.id;
     }
 
     /**

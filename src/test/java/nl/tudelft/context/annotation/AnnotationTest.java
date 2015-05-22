@@ -182,16 +182,6 @@ public class AnnotationTest {
 
     }
 
-    /**
-     * Test equalsLoose with other object.
-     *
-     * @throws Exception
-     */
-    @Test
-    public void testEqualsLoosWithOtherObject() throws Exception {
-        assertFalse(annotation1.equalsLoose("Not an annotation"));
-
-    }
 
     /**
      * Test toString.
