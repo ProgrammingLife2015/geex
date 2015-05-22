@@ -2,15 +2,18 @@ package nl.tudelft.context.controller;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.breadcrumb.Breadcrumb;
-import nl.tudelft.context.breadcrumb.ViewStack;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -34,9 +37,9 @@ public class MainController extends DefaultController<BorderPane> {
     BorderPane main;
 
     /**
-     * A stack of the current views.
+     * A list of the current views.
      */
-    ViewStack viewStack;
+    ObservableList<ViewController> viewList = FXCollections.observableList(new ArrayList<>());
 
     /**
      * The current workspace.
@@ -60,8 +63,6 @@ public class MainController extends DefaultController<BorderPane> {
 
         super(new BorderPane());
 
-        viewStack = new ViewStack();
-
         loadFXML("/application/main.fxml");
 
     }
@@ -78,7 +79,7 @@ public class MainController extends DefaultController<BorderPane> {
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
 
-        main.setTop(new Breadcrumb(this, viewStack));
+        main.setTop(new Breadcrumb(this, viewList));
         root.setTop(new MenuController(this));
 
         messageController = new MessageController();
@@ -102,23 +103,26 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void setBaseView(final ViewController viewController) {
 
-        view.getChildren().clear();
-        viewStack.clear();
-        setView(viewController);
+        view.getChildren().setAll(viewController.getRoot());
+        viewList.setAll(viewController);
 
     }
 
     /**
      * Set a new main view and push it on the view stack.
      *
+     * @param on             Controller to stack this view on
      * @param viewController Controller containing JavaFX root
      */
-    public final void setView(final ViewController viewController) {
+    public final void setView(final ViewController on, final ViewController viewController) {
 
         if (newickLifted.getValue()) {
             toggleNewick();
         }
-        viewStack.add(viewController);
+
+        viewList.remove(viewList.indexOf(on) + 1, viewList.size());
+        viewList.add(viewController);
+        view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
         view.getChildren().add(viewController.getRoot());
 
     }
@@ -130,24 +134,34 @@ public class MainController extends DefaultController<BorderPane> {
 
         if (newickLifted.getValue()) {
             toggleNewick();
-        } else if (viewStack.size() > 1) {
-            viewStack.pop();
-            view.getChildren().retainAll(
-                    viewStack.stream().map(ViewController::getRoot).collect(Collectors.toSet()));
+        } else {
+            List<ViewController> visibleViews = viewList.filtered(viewController ->
+                    viewController.getVisibilityProperty().getValue());
+            if (visibleViews.size() > 1) {
+                visibleViews.get(visibleViews.size() - 1).setVisibility(false);
+            }
         }
 
     }
 
     /**
-     * Go back to the given view.
+     * Go the a certain view.
      *
-     * @param viewController View to go back to
+     * @param viewController View to go to
      */
-    public final void backToView(final ViewController viewController) {
+    public void toView(final ViewController viewController) {
 
-        while (!viewStack.peek().equals(viewController)) {
-            previousView();
+        if (newickLifted.getValue()) {
+            toggleNewick();
         }
+
+        int index = viewList.indexOf(viewController);
+        viewList.stream()
+                .skip(index + 1)
+                .forEach(vc -> vc.setVisibility(false));
+        viewList.stream()
+                .limit(index + 1)
+                .forEach(vc -> vc.setVisibility(true));
 
     }
 

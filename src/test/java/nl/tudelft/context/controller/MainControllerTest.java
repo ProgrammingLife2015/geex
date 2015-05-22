@@ -69,28 +69,6 @@ public class MainControllerTest {
     }
 
     /**
-     * Test view list.
-     */
-    @Test
-    public void testTopViewList() {
-
-        MainController mc = new MainController();
-        mc.setWorkspace(workspace);
-
-        BaseController baseController1 = new BaseController(graph, node1);
-        BaseController baseController2 = new BaseController(graph, node2);
-
-        mc.setView(baseController1);
-        assertEquals(baseController1, mc.viewStack.peek());
-        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(0));
-
-        mc.setView(baseController2);
-        assertEquals(baseController2, mc.viewStack.peek());
-        assertEquals(baseController2.getRoot(), mc.view.getChildren().get(1));
-
-    }
-
-    /**
      * Test previous view.
      */
     @Test
@@ -99,61 +77,66 @@ public class MainControllerTest {
         MainController mc = new MainController();
         mc.setWorkspace(workspace);
 
-
         BaseController baseController1 = new BaseController(graph, node1);
         BaseController baseController2 = new BaseController(graph, node2);
 
-        mc.setView(baseController1);
-        mc.setView(baseController2);
-
-        mc.previousView();
-
-        assertEquals(baseController1, mc.viewStack.peek());
-        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(0));
-
-    }
-
-    /**
-     * Test empty view list.
-     */
-    @Test
-    public void testEmptyViewList() {
-
-        MainController mc = new MainController();
-        mc.setWorkspace(workspace);
-
-
-        BaseController baseController1 = new BaseController(graph, node1);
-        BaseController baseController2 = new BaseController(graph, node2);
-
-        mc.setView(baseController1);
-        mc.setView(baseController2);
-
-        mc.previousView();
-        mc.previousView();
-
-        assertEquals(baseController1, mc.viewStack.peek());
-        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(0));
-
-    }
-
-    /**
-     * Test base view size.
-     */
-    @Test
-    public void setBaseViewSize() {
-
-        MainController mc = new MainController();
-        mc.setWorkspace(workspace);
-
-        BaseController baseController1 = new BaseController(graph, node1);
-        BaseController baseController2 = new BaseController(graph, node2);
-
-        mc.setView(baseController1);
-        mc.setView(baseController2);
         mc.setBaseView(baseController1);
+        mc.setView(baseController1, baseController2);
 
-        assertEquals(1, mc.viewStack.size());
+        mc.previousView();
+
+        assertEquals(baseController1, mc.viewList.get(0));
+        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(0));
+        assertFalse(baseController2.getVisibilityProperty().getValue());
+
+    }
+
+    /**
+     * Test to view.
+     */
+    public void testToView() {
+
+        MainController mc = new MainController();
+        mc.setWorkspace(workspace);
+
+        BaseController baseController1 = new BaseController(graph, node1);
+        BaseController baseController2 = new BaseController(graph, node2);
+
+        mc.setBaseView(baseController1);
+        mc.setView(baseController1, baseController2);
+
+        assertTrue(baseController1.getVisibilityProperty().getValue());
+        assertTrue(baseController2.getVisibilityProperty().getValue());
+
+        mc.toView(baseController1);
+
+        assertTrue(baseController1.getVisibilityProperty().getValue());
+        assertFalse(baseController2.getVisibilityProperty().getValue());
+
+    }
+
+    /**
+     * Test to view.
+     */
+    public void testToViewWithNewick() {
+
+        MainController mc = new MainController();
+        mc.setWorkspace(workspace);
+        mc.toggleNewick();
+
+        BaseController baseController1 = new BaseController(graph, node1);
+        BaseController baseController2 = new BaseController(graph, node2);
+
+        mc.setBaseView(baseController1);
+        mc.setView(baseController1, baseController2);
+
+        assertTrue(baseController1.getVisibilityProperty().getValue());
+        assertTrue(baseController2.getVisibilityProperty().getValue());
+
+        mc.toView(baseController1);
+
+        assertTrue(baseController1.getVisibilityProperty().getValue());
+        assertFalse(baseController2.getVisibilityProperty().getValue());
 
     }
 

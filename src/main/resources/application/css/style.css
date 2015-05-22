@@ -266,7 +266,3 @@
     -fx-padding: 5px;
     -fx-font: 0.3cm 'Arial';
 }
-
-.breadcrumb HBox.last Label {
-    -fx-cursor: default;
-}

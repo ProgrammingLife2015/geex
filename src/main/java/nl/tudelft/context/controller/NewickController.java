@@ -149,7 +149,7 @@ public final class NewickController extends ViewController<ScrollPane> {
     protected void loadGraph(final Tree tree) {
         Set<String> sources = tree.getRoot().getSources();
         if (!sources.isEmpty()) {
-            mainController.setView(new GraphController(mainController, sources));
+            mainController.setView(this, new GraphController(mainController, sources));
         }
     }
 

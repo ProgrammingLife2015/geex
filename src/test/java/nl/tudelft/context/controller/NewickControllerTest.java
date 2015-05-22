@@ -4,8 +4,8 @@ import com.sun.javafx.collections.ObservableListWrapper;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
 import javafx.scene.layout.StackPane;
-import nl.tudelft.context.breadcrumb.ViewStack;
 import nl.tudelft.context.newick.Node;
 import nl.tudelft.context.newick.Tree;
 import nl.tudelft.context.workspace.Workspace;
@@ -17,7 +17,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -40,7 +41,8 @@ public class NewickControllerTest {
     public static void beforeClass() throws Exception {
 
         mainController = mock(MainController.class);
-        mainController.viewStack = new ViewStack();
+
+        mainController.viewList = FXCollections.observableList(new ArrayList<>());
         mainController.view = mock(StackPane.class);
         Workspace workspace = mock(Workspace.class);
         mainController.messageController = new MessageController();

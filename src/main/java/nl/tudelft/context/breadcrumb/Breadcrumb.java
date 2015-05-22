@@ -1,12 +1,13 @@
 package nl.tudelft.context.breadcrumb;
 
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.controller.ViewController;
 
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.stream.Collectors;
 
 /**
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 14-5-2015
  */
-public final class Breadcrumb extends HBox implements Observer {
+public final class Breadcrumb extends HBox {
 
     /**
      * Main controller to set views.
@@ -22,42 +23,38 @@ public final class Breadcrumb extends HBox implements Observer {
     MainController mainController;
 
     /**
-     * View stack the breadcrumb displays.
+     * Property to keep track on view list.
      */
-    ViewStack viewStack;
+    SimpleListProperty<ViewController> viewProperty;
 
     /**
      * Create a breadcrumb that listen to a view stack.
      *
      * @param mainController Controller to set new views
-     * @param viewStack      Stack to listen to
+     * @param viewList       Stack to listen to
      */
-    public Breadcrumb(final MainController mainController, final ViewStack viewStack) {
+    public Breadcrumb(final MainController mainController, final ObservableList<ViewController> viewList) {
 
         this.mainController = mainController;
-        this.viewStack = viewStack;
 
-        viewStack.addObserver(this);
         getStyleClass().add("breadcrumb");
+
+        this.viewProperty = new SimpleListProperty<>(viewList);
+        this.viewProperty.addListener((observable, oldValue, newValue) -> update(newValue));
 
     }
 
     /**
-     * This method is called whenever the observed object is changed. An
-     * application calls an <tt>Observable</tt> object's
-     * <code>notifyObservers</code> method to have all the object's
-     * observers notified of the change.
+     * Update the breadcrumb.
      *
-     * @param o   the observable object.
-     * @param arg an argument passed to the <code>notifyObservers</code>
+     * @param viewList List to display
      */
-    @Override
-    public void update(final Observable o, final Object arg) {
+    public void update(final ObservableList<ViewController> viewList) {
 
-        List<HBox> items = viewStack.stream()
+        List<HBox> items = viewList.stream()
                 .map(viewController -> {
                     final Label label = new Label(viewController.getBreadcrumbName());
-                    label.setOnMouseClicked(event -> mainController.backToView(viewController));
+                    label.setOnMouseClicked(event -> mainController.toView(viewController));
                     return new HBox(label);
                 })
                 .collect(Collectors.toList());
