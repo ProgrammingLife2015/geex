@@ -23,8 +23,10 @@ abstract class DefaultController<T extends Parent> implements javafx.fxml.Initia
     #loadFile(fileChooser : FileChooser, source : TextField)
     #getRoot() : Parent
 }
+abstract class ViewController<T extends Parent> extends DefaultController {
+    +getBreadcrumbName() : String
 }
-class LoadNewickController<GridPane> extends DefaultController {
+class GraphController<AnchorPane> extends ViewController {
     # mainController : MainController
     # nwkFile : File
 }
@@ -43,7 +45,7 @@ class MenuController extends javafx.scene.control.MenuBar {
     +initHelpMenu()
     -initWorkspaceMenu()
 }
-class NewickController<ScrollPane> extends DefaultController {
+class NewickController<ScrollPane> extends ViewController {
     # mainController : MainController
     # loadNewickService : LoadNewickService
 
