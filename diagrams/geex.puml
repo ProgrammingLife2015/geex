@@ -38,6 +38,13 @@ class MainController<BorderPane> extends DefaultController {
     +previousView()
     +exitProgram()
 }
+class BaseController<ScrollPane> extends ViewController {
+    -graph : Graph
+    -node : Node
+}
+class MessageController<VBox> extends DefaultController {
+    +displayMessage(text : String)
+}
 class MenuController extends javafx.scene.control.MenuBar {
     # mainController : MainController
 
