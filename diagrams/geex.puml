@@ -135,25 +135,22 @@ NewickController "1" *-- "1" newick
 MessageController "1" *-- "1" footer
 
 App "1" *-- "1" MainController
-MainController o-- LoadGraphController
-MainController o-- LoadNewickController
 MainController o-- MenuController
-
-LoadNewickController o-- NewickController
-LoadGraphController o-- GraphController
 
 NewickController -- LoadNewickService
 NewickController -- DrawableEdge
 
 GraphController ..> BaseController
+GraphController ..> InfoLabel
 GraphController -- DrawableEdge
 GraphController -- LoadGraphService
+
+InfoLabel ..> BaseLabel
 
 LoadGraphService ..> graph.GraphFactory
 LoadNewickService ..> newick.TreeFactory
 
 MainController ..> Workspace
-Workspace ..> Finder
 
 'External classes
 abstract class javafx.concurrent.Service<V> {
