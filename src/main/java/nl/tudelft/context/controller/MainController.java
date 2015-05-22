@@ -36,7 +36,7 @@ public class MainController extends DefaultController<StackPane> {
      * FXML pointer for right BorderPane.
      */
     @FXML
-    BorderPane main, window, overlay;
+    BorderPane main, overlay;
 
     /**
      * A stack of the current views.
@@ -47,11 +47,6 @@ public class MainController extends DefaultController<StackPane> {
      * The current workspace.
      */
     private Workspace workspace;
-
-    /**
-     * Controller for the menu.
-     */
-    MenuController menuController;
 
     /**
      * The MessageController that is needed to display error messages.
@@ -82,7 +77,7 @@ public class MainController extends DefaultController<StackPane> {
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
         main.setTop(new Breadcrumb(this, viewStack));
-        menuController = new MenuController(this, menu);
+        new MenuController(this, menu);
 
         messageController = new MessageController();
         main.setBottom(messageController.getRoot());

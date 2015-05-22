@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import java.net.URL?>
 <fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml">
-    <BorderPane fx:id="window">
+    <BorderPane>
         <top>
             <MenuBar fx:id="menu"/>
         </top>
