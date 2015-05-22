@@ -3,7 +3,7 @@ package nl.tudelft.context.drawable;
 import javafx.scene.shape.Rectangle;
 
 /**
- * @author Jasper on 13-5-2015.
+ * @author Jasper Nieuwdorp
  * @version 1.0
  * @since 13-5-2015
  */

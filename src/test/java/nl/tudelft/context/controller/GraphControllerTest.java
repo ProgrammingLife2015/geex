@@ -64,6 +64,15 @@ public class GraphControllerTest {
 
     }
 
+
+    /**
+     * Test getBreadcrumbname on graphController
+     */
+    @Test
+    public void testGetBreadcrumbName() {
+        assertEquals("Genome graph (2)", graphController.getBreadcrumbName());
+    }
+
     /**
      * Test sequences added.
      */
