@@ -83,7 +83,7 @@ public class MainController extends DefaultController<BorderPane> {
             }
         });
 
-        setBaseView(new WelcomeController());
+        setBaseView(new WelcomeController(this));
 
     }
 

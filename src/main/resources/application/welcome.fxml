@@ -20,11 +20,7 @@
   <VBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
     <children>
       <ImageView fitWidth="250.0" styleClass="logo" />
-      <Button fx:id="load" graphicTextGap="4.0" maxWidth="+Infinity" prefWidth="-1.0" rotate="0.0" text="Load workspace...">
-        <rotationAxis>
-          <Point3D y="1.0" z="1.0" />
-        </rotationAxis>
-      </Button>
+      <Button fx:id="load" graphicTextGap="4.0" maxWidth="+Infinity" prefWidth="-1.0" rotate="0.0" text="Load workspace..."/>
     </children>
   </VBox>
   <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">

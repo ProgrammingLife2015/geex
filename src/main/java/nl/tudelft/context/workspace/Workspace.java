@@ -1,5 +1,11 @@
 package nl.tudelft.context.workspace;
 
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Window;
+import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.controller.MessageController;
+import nl.tudelft.context.controller.NewickController;
+
 import java.io.File;
 import java.util.Arrays;
 
@@ -54,6 +60,27 @@ public class Workspace {
             return;
         }
         files = this.directory.listFiles();
+    }
+
+    /**
+     * Choose a workspace with a directorychooser.
+     * @param mainController The application to choose a workspace for.
+     */
+    public static void chooseWorkspace(final MainController mainController) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Workspace Folder");
+        Window window = mainController.getRoot().getScene().getWindow();
+        File workspaceDirectory = directoryChooser.showDialog(window);
+        if (workspaceDirectory != null) {
+            Workspace workspace = new Workspace(workspaceDirectory);
+            if (workspace.load()) {
+                mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
+            } else {
+                mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
+            }
+            mainController.setWorkspace(workspace);
+            mainController.setBaseView(new NewickController(mainController));
+        }
     }
 
     /**

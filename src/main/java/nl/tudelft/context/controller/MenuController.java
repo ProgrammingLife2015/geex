@@ -3,11 +3,7 @@ package nl.tudelft.context.controller;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Window;
 import nl.tudelft.context.workspace.Workspace;
-
-import java.io.File;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -43,21 +39,9 @@ public final class MenuController extends MenuBar {
         final Menu fileMenu = new Menu("File");
 
         MenuItem load = new MenuItem("Load Workspace...");
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Select Workspace Folder");
         load.setOnAction(event -> {
-            Window window = mainController.getRoot().getScene().getWindow();
-            File workspaceDirectory = directoryChooser.showDialog(window);
-            if (workspaceDirectory != null) {
-                Workspace workspace = new Workspace(workspaceDirectory);
-                if (workspace.load()) {
-                    mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
-                } else {
-                    mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
-                }
-                mainController.setWorkspace(workspace);
-                mainController.setBaseView(new NewickController(mainController));
-            }
+            Workspace.chooseWorkspace(mainController);
+
         });
 
         MenuItem exit = new MenuItem("Exit");
