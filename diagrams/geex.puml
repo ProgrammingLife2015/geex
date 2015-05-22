@@ -85,38 +85,32 @@ class Workspace {
 
 'FXML
 class base << (F,orange) FXML >> {
-    + base : Text
+    + sources : Text
+    + bases : Text
+    + occurrences : Text
 }
 class graph << (F,orange) FXML >> {
     + progressIndicator : ProgressIndicator
     + sequences : Group
 }
-class load_graph << (F,orange) FXML >> {
-    + loadNodes : Button
-    + loadEdges : Button
-    + load : Button
-    + nodeSource : TextField
-    + edgeSource : TextField
-}
-class load_newick << (F,orange) FXML >> {
-    + loadNewick : Button
-    + load : Button
-    + nwkSource : TextField
-}
 class main << (F,orange) FXML >> {
-    + control : VBox
+    + view : StackPane
+    + main : BorderPane
 }
 class newick << (F,orange) FXML >> {
     + newick : Group
+    + progressIndicator : ProgressIndicator
+}
+class footer << (F,orange) FXML >> {
+    + message : Text
 }
 
 'Relations
 BaseController "1" *-- "1" base
 GraphController "1" *-- "1" graph
-LoadGraphController "1" *-- "1" load_graph
-LoadNewickController "1" *-- "1" load_newick
 MainController "1" *-- "1" main
 NewickController "1" *-- "1" newick
+MessageController "1" *-- "1" footer
 
 App "1" *-- "1" MainController
 MainController o-- LoadGraphController
