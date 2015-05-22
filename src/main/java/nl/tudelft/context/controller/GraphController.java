@@ -178,7 +178,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         Map<Integer, List<InfoLabel>> map = nodeList.stream().collect(
                 Collectors.groupingBy(
-                        infoLabel -> (int) infoLabel.translateXProperty().get() / Graph.LABEL_SPACING,
+                        InfoLabel::currentColumn,
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         );
