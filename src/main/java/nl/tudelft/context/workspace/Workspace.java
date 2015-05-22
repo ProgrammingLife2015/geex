@@ -9,8 +9,6 @@ import nl.tudelft.context.controller.NewickController;
 import java.io.File;
 import java.util.Arrays;
 
-import static java.util.stream.Collectors.*;
-
 /**
  * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
  * @version 1.0
