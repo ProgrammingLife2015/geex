@@ -2,6 +2,7 @@ package nl.tudelft.context.controller;
 
 import com.sun.javafx.collections.ObservableListWrapper;
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.breadcrumb.ViewStack;
 import nl.tudelft.context.newick.Node;
@@ -41,12 +42,24 @@ public class NewickControllerTest {
         mainController.view = mock(StackPane.class);
         Workspace workspace = mock(Workspace.class);
         mainController.messageController = new MessageController();
+        mainController.newickLifted = new SimpleBooleanProperty(false);
 
         when(workspace.getNwkFile()).thenReturn(nwkFile);
         when(mainController.getWorkspace()).thenReturn(workspace);
         when(mainController.view.getChildren()).thenReturn(new ObservableListWrapper<>(new ArrayList<>()));
 
         newickController = new NewickController(mainController);
+
+    }
+
+    /**
+     * Test toggle Newick.
+     */
+    @Test
+    public void toggleNewick() {
+
+        mainController.toggleNewick();
+        mainController.toggleNewick();
 
     }
 

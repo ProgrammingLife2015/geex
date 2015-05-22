@@ -1,5 +1,7 @@
 package nl.tudelft.context.controller;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
@@ -47,6 +49,11 @@ public class MainController extends DefaultController<BorderPane> {
     MessageController messageController;
 
     /**
+     * If Newick is lifted.
+     */
+    BooleanProperty newickLifted = new SimpleBooleanProperty(false);
+
+    /**
      * Init a controller at main.fxml.
      */
     public MainController() {
@@ -81,6 +88,9 @@ public class MainController extends DefaultController<BorderPane> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 previousView();
             }
+            if (event.getCode() == KeyCode.L) {
+                toggleNewick();
+            }
         });
 
     }
@@ -105,6 +115,9 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void setView(final ViewController viewController) {
 
+        if (newickLifted.getValue()) {
+            toggleNewick();
+        }
         viewStack.add(viewController);
         view.getChildren().add(viewController.getRoot());
 
@@ -115,7 +128,9 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void previousView() {
 
-        if (viewStack.size() > 1) {
+        if (newickLifted.getValue()) {
+            toggleNewick();
+        } else if (viewStack.size() > 1) {
             viewStack.pop();
             view.getChildren().retainAll(
                     viewStack.stream().map(ViewController::getRoot).collect(Collectors.toSet()));
@@ -133,6 +148,15 @@ public class MainController extends DefaultController<BorderPane> {
         while (!viewStack.peek().equals(viewController)) {
             previousView();
         }
+
+    }
+
+    /**
+     * Toggle the newick view on top of everything else.
+     */
+    public void toggleNewick() {
+
+        newickLifted.setValue(!newickLifted.getValue());
 
     }
 
@@ -164,6 +188,7 @@ public class MainController extends DefaultController<BorderPane> {
 
     /**
      * The function that is used to display a message in the footer.
+     *
      * @param text The text that will be displayed.
      */
     public final void displayMessage(final String text) {

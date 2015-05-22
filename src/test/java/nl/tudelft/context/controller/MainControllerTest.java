@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -52,7 +54,7 @@ public class MainControllerTest {
 
         when(workspace.getNodeFile()).thenReturn(mock(File.class));
         when(workspace.getEdgeFile()).thenReturn(mock(File.class));
-        when(workspace.getNodeFile()).thenReturn(mock(File.class));
+        when(workspace.getNwkFile()).thenReturn(mock(File.class));
 
     }
 
@@ -167,6 +169,24 @@ public class MainControllerTest {
         mc.displayMessage(text);
 
         assertEquals(mc.messageController.message.getText(), text);
+    }
+
+    /**
+     * Test toggle Newick.
+     */
+    @Test
+    public void toggleNewick() {
+
+        assertFalse(mainController.newickLifted.getValue());
+
+        mainController.toggleNewick();
+
+        assertTrue(mainController.newickLifted.getValue());
+
+        mainController.toggleNewick();
+
+        assertFalse(mainController.newickLifted.getValue());
+
     }
 
 }
