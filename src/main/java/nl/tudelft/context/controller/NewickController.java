@@ -138,7 +138,7 @@ public final class NewickController extends ViewController<ScrollPane> {
      *
      * @param tree the tree with the nodes to show.
      */
-    protected void loadGraph(Tree tree) {
+    protected void loadGraph(final Tree tree) {
         Set<String> sources = tree.getRoot().getSources();
         if (!sources.isEmpty()) {
             mainController.setView(new GraphController(mainController, sources));

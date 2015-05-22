@@ -1,7 +1,6 @@
 package nl.tudelft.context.drawable;
 
 import javafx.scene.control.Label;
-import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.newick.Node;
 
 /**
@@ -64,7 +63,7 @@ public class NewickLabel extends Label {
      */
     public void setSelectedClass(Node.Selection oldValue, Node.Selection newValue) {
         if (!oldValue.equals(newValue)) {
-            switch(newValue) {
+            switch (newValue) {
                 case NONE:
                     getStyleClass().remove("selected");
                     getStyleClass().remove("partial");
@@ -76,6 +75,8 @@ public class NewickLabel extends Label {
                 case ALL:
                     getStyleClass().add("selected");
                     getStyleClass().remove("partial");
+                    break;
+                default:
                     break;
             }
         }
