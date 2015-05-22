@@ -26,6 +26,10 @@ import java.util.stream.Collectors;
 public final class NewickController extends ViewController<ScrollPane> {
 
     /**
+     * This is the x disposition of the load button.
+     */
+    public static final double LOAD_BUTTON_OFFSET = -50;
+    /**
      * ProgressIndicator to show when the tree is loading.
      */
     @FXML
@@ -122,7 +126,7 @@ public final class NewickController extends ViewController<ScrollPane> {
         newick.getChildren().addAll(nodeList);
 
         Label button = new Label("Load");
-        button.setTranslateX(-50);
+        button.setTranslateX(LOAD_BUTTON_OFFSET);
         button.setOnMouseClicked(event -> loadGraph(tree));
         root.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) {
