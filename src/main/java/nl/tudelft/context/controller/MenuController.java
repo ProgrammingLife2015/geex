@@ -49,7 +49,7 @@ public final class MenuController {
      */
     public void initFileMenu() {
 
-        final Menu fileMenu = new Menu("File");
+        final Menu fileMenu = new Menu("_File");
 
         MenuItem load = new MenuItem("Load Workspace...");
         load.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
@@ -70,7 +70,7 @@ public final class MenuController {
      */
     public void initNavigateMenu() {
 
-        final Menu navigateMenu = new Menu("Navigate");
+        final Menu navigateMenu = new Menu("_Navigate");
 
         final MenuItem previous = new MenuItem("Previous");
         previous.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
@@ -90,7 +90,7 @@ public final class MenuController {
      */
     public void initHelpMenu() {
 
-        final Menu helpMenu = new Menu("Help");
+        final Menu helpMenu = new Menu("_Help");
 
         MenuItem shortcuts = new MenuItem("Shortcuts");
         shortcuts.setAccelerator(new KeyCodeCombination(KeyCode.F1));
