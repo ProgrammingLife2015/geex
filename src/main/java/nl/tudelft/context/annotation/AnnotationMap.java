@@ -17,7 +17,7 @@ public class AnnotationMap extends HashMap<String, Annotation> {
     @Override
     public final String toString() {
         StringBuilder result = new StringBuilder();
-        for (Annotation a : this.values()) {
+        for (Annotation a : values()) {
             result.append(a.toString());
             result.append(System.getProperty("line.separator"));
         }

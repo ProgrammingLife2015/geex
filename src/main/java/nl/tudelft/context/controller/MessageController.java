@@ -79,12 +79,12 @@ public class MessageController extends DefaultController<VBox> {
      * The function used to display a message and remove the previous one.
      * @param text The string to display.
      */
-    public void displayMessage(final String text) {
+    public final void displayMessage(final String text) {
         message.setText(text);
     }
 
     @Override
-    public void initialize(final URL location, final ResourceBundle resources) {
+    public final void initialize(final URL location, final ResourceBundle resources) {
         displayMessage("Ready");
     }
 }
