@@ -67,9 +67,6 @@ public final class NewickController extends ViewController<ScrollPane> {
 
         loadFXML("/application/newick.fxml");
 
-
-
-
     }
 
     /**
@@ -101,7 +98,6 @@ public final class NewickController extends ViewController<ScrollPane> {
         });
         loadNewickService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_TREE));
         loadNewickService.restart();
-
 
     }
 
