@@ -1,5 +1,7 @@
 package nl.tudelft.context.controller;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -21,6 +23,11 @@ public abstract class DefaultController<T extends Parent>
     final T root;
 
     /**
+     * Visibility property.
+     */
+    private BooleanProperty visibilityProperty = new SimpleBooleanProperty(true);
+
+    /**
      * Create a generic controller with T as root.
      * <p>
      * T must be a possible root for fxml so T must extend Parent.
@@ -31,6 +38,7 @@ public abstract class DefaultController<T extends Parent>
     public DefaultController(final T root) {
 
         this.root = root;
+        root.visibleProperty().bind(visibilityProperty);
 
     }
 
@@ -61,9 +69,25 @@ public abstract class DefaultController<T extends Parent>
      * @return root of fxml
      */
     public final Parent getRoot() {
-
         return root;
+    }
 
+    /**
+     * Set the visibility.
+     *
+     * @param visibility True if visible
+     */
+    public void setVisibility(final Boolean visibility) {
+        visibilityProperty.setValue(visibility);
+    }
+
+    /**
+     * Get the visibility property.
+     *
+     * @return Visibility property
+     */
+    public BooleanProperty getVisibilityProperty() {
+        return visibilityProperty;
     }
 
 }

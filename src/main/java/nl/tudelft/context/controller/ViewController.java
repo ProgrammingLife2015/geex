@@ -13,11 +13,6 @@ import javafx.scene.Parent;
 public abstract class ViewController<T extends Parent> extends DefaultController<T> {
 
     /**
-     * Visibility property.
-     */
-    private BooleanProperty visibilityProperty = new SimpleBooleanProperty(true);
-
-    /**
      * Create a generic controller with T as root.
      * <p>
      * T must be a possible root for fxml so T must extend Parent.
@@ -29,8 +24,6 @@ public abstract class ViewController<T extends Parent> extends DefaultController
 
         super(root);
 
-        root.visibleProperty().bind(visibilityProperty);
-
     }
 
     /**
@@ -39,23 +32,5 @@ public abstract class ViewController<T extends Parent> extends DefaultController
      * @return Name for the breadcrumb
      */
     public abstract String getBreadcrumbName();
-
-    /**
-     * Set the visibility.
-     *
-     * @param visibility True if visible
-     */
-    public void setVisibility(final Boolean visibility) {
-        visibilityProperty.setValue(visibility);
-    }
-
-    /**
-     * Get the visibility property.
-     *
-     * @return Visibility property
-     */
-    public BooleanProperty getVisibilityProperty() {
-        return visibilityProperty;
-    }
 
 }
