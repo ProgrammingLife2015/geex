@@ -5,7 +5,7 @@ package nl.tudelft.context.newick.selection;
  * @version 1.0
  * @since 22-5-2015
  */
-public class None extends Selection {
+public class None implements Selection {
 
     @Override
     public boolean useSources() {
