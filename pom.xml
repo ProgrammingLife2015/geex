@@ -48,7 +48,7 @@
         <dependency>
             <groupId>com.github.qurben</groupId>
             <artifactId>libnewicktree</artifactId>
-            <version>0.1</version>
+            <version>1.0</version>
         </dependency>
         <!-- Commons Lang -->
         <dependency>
