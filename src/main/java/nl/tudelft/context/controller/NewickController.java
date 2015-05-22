@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.newick.Tree;
@@ -14,6 +15,7 @@ import nl.tudelft.context.workspace.Workspace;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -96,6 +98,7 @@ public final class NewickController extends ViewController<ScrollPane> {
         loadNewickService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_TREE));
         loadNewickService.restart();
 
+
     }
 
     /**
@@ -117,6 +120,24 @@ public final class NewickController extends ViewController<ScrollPane> {
 
         newick.getChildren().addAll(edgeList);
         newick.getChildren().addAll(nodeList);
+
+        Label button = new Label("Load");
+        button.setTranslateX(-50);
+        button.setOnMouseClicked(event -> loadGraph(tree));
+        root.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                loadGraph(tree);
+            }
+        });
+
+        newick.getChildren().add(button);
+    }
+
+    protected void loadGraph(Tree tree) {
+        Set<String> sources = tree.getRoot().getSources();
+        if (!sources.isEmpty()) {
+            mainController.setView(new GraphController(mainController, sources));
+        }
     }
 
     @Override

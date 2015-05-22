@@ -150,7 +150,7 @@ public class Node extends DrawableNode implements Serializable {
 
         Set<String> sources = new HashSet<>();
 
-        if (!isUnknown()) {
+        if (!isUnknown() && getSelection().equals(Selection.ALL)) {
             sources.add(name);
         }
 
