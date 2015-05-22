@@ -35,8 +35,8 @@ public final class TreeParser {
     /**
      * Creates a new phylogenetic tree, based on the information in the Newick file.
      *
-     * @param nwkFile                       the Newick file
-     * @return                              a phylogenetic tree
+     * @param nwkFile the Newick file
+     * @return a phylogenetic tree
      * @throws FileNotFoundException        when nwkFile is not found
      * @throws UnsupportedEncodingException when nwkFile has an unsupported encoding
      */
@@ -51,8 +51,8 @@ public final class TreeParser {
     /**
      * Parses the file and creates the nodes to add to the tree.
      *
-     * @param nwkFile                       the Newick file
-     * @param tree                          the Tree to add the nodes to
+     * @param nwkFile the Newick file
+     * @param tree    the Tree to add the nodes to
      * @throws FileNotFoundException        when the nwkFile is not found
      * @throws UnsupportedEncodingException when the nwkFile has an unsupported encoding
      */
@@ -61,7 +61,7 @@ public final class TreeParser {
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(nwkFile), "UTF-8"));
         net.sourceforge.olduvai.treejuxtaposer.TreeParser tp =
                 new net.sourceforge.olduvai.treejuxtaposer.TreeParser(fileReader);
-        net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize(1, "", null);
+        net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize("");
         Node root = nodeParser.getNode(nwkTree.getRoot());
         getOffspring(nwkTree.getRoot(), root, tree, 0);
         tree.setRoot(root);
@@ -74,7 +74,7 @@ public final class TreeParser {
      * @param parent the parent node to add this node to as a child
      * @param tree   the tree to add the nodes and edges to
      * @param row    the current row (depth) of the node
-     * @return       the new row (depth) of the next node
+     * @return the new row (depth) of the next node
      */
     public int getOffspring(final TreeNode node, final Node parent, final Tree tree, final int row) {
         tree.addVertex(parent);
@@ -106,7 +106,7 @@ public final class TreeParser {
      * @param child  the node, read by the newick parser
      * @param parent the parent node to add the child to
      * @param row    the current row (depth) of the node
-     * @return       the node as a Node
+     * @return the node as a Node
      */
     public Node createNode(final TreeNode child, final Node parent, final int row) {
         Node n = nodeParser.getNode(child);
