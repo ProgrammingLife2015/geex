@@ -67,20 +67,14 @@ class LoadNewickService<Tree> extends javafx.concurrent.Service {
     # nwkFile : File
 }
 
-class Finder<Path> extends java.nio.file.SimpleFileVisitor {
-    - matcher : PathMatcher
-    - matches : List<Path>
-
-    find()
-}
 class Workspace {
-    - directory : File
-    - graphList : List<LoadGraphService>
-    - nwkList : List<LoadNewickService>
+    directory : File
+    files : File[]
+    edgeFile : File
+    nodeFile : File
+    nwkFile : File
 
-    -load()
-    +getGraphList() : List<LoadGraphService>
-    +getNewickList() : List<LoadNewickService>
+    -findFile(files : File[], extension : String)
 }
 
 'FXML
