@@ -3,16 +3,15 @@
 }
 
 .transparent {
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(43, 43, 43, 0.8);
 }
 
 .margin {
     -fx-padding: 50px;
 }
 
-.transparent .margin {
+.margin-top {
     -fx-padding: 30px 50px 50px;
-    -fx-background-color: rgba(43, 43, 43, 0.8);
 }
 
 /* Control */
@@ -28,7 +27,7 @@
 }
 
 .control .h2,
-.transparent .margin .h2 {
+.margin-top .h2 {
     -fx-font: bold 0.4cm 'Arial';
 }
 
@@ -37,7 +36,7 @@
     -fx-text-fill: #2b2b2b;
 }
 
-.transparent .margin .h2 {
+.margin-top .h2 {
     -fx-padding: 20px 0 10px;
     -fx-text-fill: #fff;
 }
@@ -268,6 +267,7 @@
     -fx-font: 0.3cm 'Arial';
 }
 
-.breadcrumb HBox.last Label {
-    -fx-cursor: default;
+
+.breadcrumb HBox Label.inactive {
+    -fx-text-fill: #bababa;
 }

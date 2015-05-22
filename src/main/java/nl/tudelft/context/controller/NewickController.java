@@ -83,6 +83,14 @@ public final class NewickController extends ViewController<ScrollPane> {
 
         progressIndicator.visibleProperty().bind(loadNewickService.runningProperty());
 
+        mainController.newickLifted.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                root.toFront();
+            } else {
+                root.toBack();
+            }
+        });
+
         loadTree();
 
     }
@@ -141,7 +149,7 @@ public final class NewickController extends ViewController<ScrollPane> {
     protected void loadGraph(final Tree tree) {
         Set<String> sources = tree.getRoot().getSources();
         if (!sources.isEmpty()) {
-            mainController.setView(new GraphController(mainController, sources));
+            mainController.setView(this, new GraphController(mainController, sources));
         }
     }
 
