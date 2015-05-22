@@ -10,7 +10,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
-import nl.tudelft.context.controller.overlay.ShortcutController;
+import nl.tudelft.context.controller.overlay.OverlayController;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.io.File;
@@ -36,10 +36,13 @@ public final class MenuController {
      */
     MenuItem previous;
 
+
+
     /**
      * Create a new menu.
      *
      * @param mainController The MainController of the application.
+     * @param menuBar The menubar this Menu should hook onto.
      */
     public MenuController(final MainController mainController, final MenuBar menuBar) {
         this.mainController = mainController;
@@ -98,7 +101,7 @@ public final class MenuController {
 
         MenuItem shortcuts = new MenuItem("Shortcuts");
         shortcuts.setAccelerator(KeyCombination.keyCombination("f1"));
-        shortcuts.setOnAction(event -> mainController.setOverlay(new ShortcutController()));
+        shortcuts.setOnAction(event -> mainController.setOverlay(new OverlayController()));
 
         menuHelp.getItems().addAll(shortcuts);
 
