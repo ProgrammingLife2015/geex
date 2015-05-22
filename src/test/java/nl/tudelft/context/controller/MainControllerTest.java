@@ -118,6 +118,7 @@ public class MainControllerTest {
     /**
      * Test to view.
      */
+    @Test
     public void testToViewWithNewick() {
 
         MainController mc = new MainController();
