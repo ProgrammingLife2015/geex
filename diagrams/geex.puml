@@ -14,9 +14,18 @@ class DrawableNode {
 
     +incrementIncoming() : int
 }
-class BaseController<StackPane> extends DefaultController {
-    # sequence : String
+class BaseLabel extends javafx.scene.shape.Rectangle {
+    {static}+BASE_HEIGHT : int
 }
+class InfoLabel extends javafx.scene.layout.VBox {
+    node : Node
+    {static}+LABEL_WIDTH : int
+
+    +init()
+    -initMainLabel() : Label
+    -initBaseLabels() : Group
+}
+
 abstract class DefaultController<T extends Parent> implements javafx.fxml.Initializable {
     # root : T
     #loadFXML(fxmlFile : String)
