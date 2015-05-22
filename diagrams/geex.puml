@@ -23,19 +23,6 @@ abstract class DefaultController<T extends Parent> implements javafx.fxml.Initia
     #loadFile(fileChooser : FileChooser, source : TextField)
     #getRoot() : Parent
 }
-class GraphController<ScrollPane> extends DefaultController {
-    # mainController : MainController
-    # loadGraphService : LoadGraphService
-
-    #loadGraph()
-    #showGraph(graph : Graph)
-    #showColumn(graph : Graph, nodes : List<Node>)
-    #showNodes(nodes : List<Node>, column : int)
-}
-class LoadGraphController<GridPane> extends DefaultController {
-    # mainController : MainController
-    # nodeFile : File
-    # edgeFile : File
 }
 class LoadNewickController<GridPane> extends DefaultController {
     # mainController : MainController
