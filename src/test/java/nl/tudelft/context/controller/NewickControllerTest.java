@@ -2,6 +2,7 @@ package nl.tudelft.context.controller;
 
 import com.sun.javafx.collections.ObservableListWrapper;
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.breadcrumb.ViewStack;
@@ -30,6 +31,7 @@ public class NewickControllerTest {
     protected static MainController mainController;
 
     protected final static File nwkFile = new File(GraphControllerTest.class.getResource("/newick/10strains.nwk").getPath());
+    protected static BooleanProperty bp = new SimpleBooleanProperty(false);
 
     /**
      * Setup Load Newick Controller.
@@ -42,7 +44,7 @@ public class NewickControllerTest {
         mainController.view = mock(StackPane.class);
         Workspace workspace = mock(Workspace.class);
         mainController.messageController = new MessageController();
-        mainController.newickLifted = new SimpleBooleanProperty(false);
+        mainController.newickLifted = bp;
 
         when(workspace.getNwkFile()).thenReturn(nwkFile);
         when(mainController.getWorkspace()).thenReturn(workspace);
@@ -58,8 +60,8 @@ public class NewickControllerTest {
     @Test
     public void toggleNewick() {
 
-        mainController.toggleNewick();
-        mainController.toggleNewick();
+        bp.setValue(true);
+        bp.setValue(false);
 
     }
 
