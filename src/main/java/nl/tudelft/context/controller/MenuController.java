@@ -1,8 +1,12 @@
 package nl.tudelft.context.controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
@@ -16,21 +20,31 @@ import java.io.File;
  * @version 1.0
  * @since 8-5-2015
  */
-public final class MenuController extends MenuBar {
+public final class MenuController {
     /**
      * Reference to the MainController of the application.
      */
     MainController mainController;
 
     /**
+     * Menubar used in this class.
+     */
+    MenuBar menuBar;
+
+    /**
+     * Menuitems used in other classes.
+     */
+    MenuItem previous;
+
+    /**
      * Create a new menu.
      *
      * @param mainController The MainController of the application.
      */
-    public MenuController(final MainController mainController) {
-
+    public MenuController(final MainController mainController, final MenuBar menuBar) {
         this.mainController = mainController;
-        this.setUseSystemMenuBar(true);
+        this.menuBar = menuBar;
+        menuBar.setUseSystemMenuBar(true);
 
         initFileMenu();
         initHelpMenu();
@@ -63,11 +77,15 @@ public final class MenuController extends MenuBar {
             }
         });
 
+        previous = new MenuItem("Previous");
+        previous.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
+        previous.setOnAction(event -> mainController.previousView());
+
         MenuItem exit = new MenuItem("Exit");
         exit.setOnAction(event -> mainController.exitProgram());
 
-        fileMenu.getItems().addAll(load, exit);
-        getMenus().add(fileMenu);
+        fileMenu.getItems().addAll(load, previous, exit);
+        menuBar.getMenus().add(fileMenu);
 
     }
 
@@ -80,14 +98,20 @@ public final class MenuController extends MenuBar {
 
         MenuItem shortcuts = new MenuItem("Shortcuts");
         shortcuts.setAccelerator(KeyCombination.keyCombination("f1"));
-        shortcuts.setOnAction(event -> {
-            mainController.setOverlay(new ShortcutController());
-        });
+        shortcuts.setOnAction(event -> mainController.setOverlay(new ShortcutController()));
 
         menuHelp.getItems().addAll(shortcuts);
 
-        getMenus().add(menuHelp);
+        menuBar.getMenus().add(menuHelp);
 
     }
 
+    /**
+     * Set the action to execute when the previous button is pressed.
+     *
+     * @param e Action to execute
+     */
+    public void setPreviousAction(final EventHandler<ActionEvent> e) {
+        previous.setOnAction(e);
+    }
 }

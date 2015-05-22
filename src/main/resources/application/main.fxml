@@ -5,33 +5,42 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
-<fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
+<?import javafx.scene.control.MenuBar?>
+<fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml">
+    <BorderPane fx:id="window">
+        <top>
+            <MenuBar fx:id="menu"></MenuBar>
+        </top>
+        <left>
+            <VBox fx:id="control">
+                <GridPane styleClass="control">
+                    <Label styleClass="h2" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+                        Temporary
+                        example
+                    </Label>
+                    <Button text="Load something" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false"/>
+                    <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="0" GridPane.rowIndex="2"
+                          GridPane.columnSpan="2">
+                        <Button text="Load"/>
+                    </HBox>
+                </GridPane>
+            </VBox>
+        </left>
 
-    <left>
-        <VBox fx:id="control">
-            <GridPane styleClass="control">
-                <Label styleClass="h2" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">Temporary
-                    example
-                </Label>
-                <Button text="Load something" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false"/>
-                <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="0" GridPane.rowIndex="2"
-                      GridPane.columnSpan="2">
-                    <Button text="Load"/>
-                </HBox>
-            </GridPane>
-        </VBox>
-    </left>
+        <center>
+            <BorderPane fx:id="main">
 
-    <center>
-        <BorderPane fx:id="main">
+                <center>
+                    <StackPane fx:id="view"/>
+                </center>
 
-            <center>
-                <StackPane fx:id="view"/>
-            </center>
+            </BorderPane>
+        </center>
+    </BorderPane>
 
-        </BorderPane>
-    </center>
+    <BorderPane fx:id="overlay" mouseTransparent="true">
+    </BorderPane>
 
     <stylesheets>
         <URL value="@css/style.css"/>

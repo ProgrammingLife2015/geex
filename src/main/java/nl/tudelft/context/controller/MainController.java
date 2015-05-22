@@ -1,7 +1,7 @@
 package nl.tudelft.context.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.breadcrumb.Breadcrumb;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 25-4-2015
  */
-public class MainController extends DefaultController<BorderPane> {
+public class MainController extends DefaultController<StackPane> {
 
     /**
      * The container of all views after this one.
@@ -27,10 +27,16 @@ public class MainController extends DefaultController<BorderPane> {
     StackPane view;
 
     /**
+     * Menubar from FXML
+     */
+    @FXML
+    MenuBar menu;
+
+    /**
      * FXML pointer for right BorderPane.
      */
     @FXML
-    BorderPane main;
+    BorderPane main, window, overlay;
 
     /**
      * A stack of the current views.
@@ -43,6 +49,11 @@ public class MainController extends DefaultController<BorderPane> {
     private Workspace workspace;
 
     /**
+     * Controller for the menu.
+     */
+    private MenuController menuController;
+
+    /**
      * The MessageController that is needed to display error messages.
      */
     MessageController messageController;
@@ -51,8 +62,7 @@ public class MainController extends DefaultController<BorderPane> {
      * Init a controller at main.fxml.
      */
     public MainController() {
-
-        super(new BorderPane());
+        super(new StackPane());
 
         viewStack = new ViewStack();
 
@@ -71,24 +81,29 @@ public class MainController extends DefaultController<BorderPane> {
      */
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
-
         main.setTop(new Breadcrumb(this, viewStack));
-        root.setTop(new MenuController(this));
+        menuController = new MenuController(this, menu);
 
         messageController = new MessageController();
-        main.setBottom(messageController.getRoot());
-
-        root.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ESCAPE) {
-                previousView();
-            }
-        });
-
+        window.setBottom(messageController.getRoot());
     }
 
-    public final void setOverlay(final OverlayController overlay) {
-        viewStack.add(null);
-        view.getChildren().add(overlay.getRoot());
+    /**
+     * Set the current overlay.
+     *
+     * @param content The new overlay
+     */
+    public final void setOverlay(final OverlayController content) {
+        overlay.setCenter(content.getRoot());
+        menuController.setPreviousAction(event -> removeOverlay());
+    }
+
+    /**
+     * Remove the current overlay.
+     */
+    public final void removeOverlay() {
+        overlay.getChildren().clear();
+        menuController.setPreviousAction(event -> previousView());
     }
 
     /**
@@ -170,6 +185,7 @@ public class MainController extends DefaultController<BorderPane> {
 
     /**
      * The function that is used to display a message in the footer.
+     *
      * @param text The text that will be displayed.
      */
     public final void displayMessage(final String text) {
