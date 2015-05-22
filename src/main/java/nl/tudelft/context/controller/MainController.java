@@ -27,7 +27,7 @@ public class MainController extends DefaultController<StackPane> {
     StackPane view;
 
     /**
-     * Menubar from FXML
+     * Menubar from FXML.
      */
     @FXML
     MenuBar menu;
