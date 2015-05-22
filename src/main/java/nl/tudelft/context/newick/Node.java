@@ -4,7 +4,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import nl.tudelft.context.drawable.DrawableNode;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,12 +15,12 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 3-5-2015
  */
-public class Node extends DrawableNode implements Serializable {
+public class Node extends DrawableNode {
 
     /**
      * Selection of the node.
      */
-    public enum Selection implements Serializable {
+    public enum Selection {
         /**
          * Not selected.
          */
