@@ -91,19 +91,31 @@ public class MainController extends DefaultController<StackPane> {
     /**
      * Set the current overlay.
      *
-     * @param content The new overlay
+     * @param overlayController The new overlay
      */
-    public final void setOverlay(final OverlayController content) {
-        overlay.setCenter(content.getRoot());
-        menuController.setPreviousAction(event -> removeOverlay());
+    public final void setOverlay(final OverlayController overlayController) {
+        overlay.setCenter(overlayController.getRoot());
+        this.root.setOnMouseClicked(event -> this.toggleOverlay(overlayController));
     }
 
     /**
      * Remove the current overlay.
      */
     public final void removeOverlay() {
-        overlay.getChildren().clear();
-        menuController.setPreviousAction(event -> previousView());
+        overlay.setCenter(null);
+        this.root.setOnMouseClicked(null);
+    }
+
+    /**
+     * Toggle the current overlay.
+     * @param overlayController The overlay to show if there is an overlay.
+     */
+    public void toggleOverlay(final OverlayController overlayController) {
+        if (overlay.getCenter() == null) {
+            setOverlay(overlayController);
+        } else {
+            removeOverlay();
+        }
     }
 
     /**
@@ -191,4 +203,6 @@ public class MainController extends DefaultController<StackPane> {
     public final void displayMessage(final String text) {
         messageController.displayMessage(text);
     }
+
+
 }

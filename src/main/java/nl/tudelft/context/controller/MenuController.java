@@ -101,20 +101,11 @@ public final class MenuController {
 
         MenuItem shortcuts = new MenuItem("Shortcuts");
         shortcuts.setAccelerator(KeyCombination.keyCombination("f1"));
-        shortcuts.setOnAction(event -> mainController.setOverlay(new OverlayController()));
+        shortcuts.setOnAction(event -> mainController.toggleOverlay(new OverlayController()));
 
         menuHelp.getItems().addAll(shortcuts);
 
         menuBar.getMenus().add(menuHelp);
 
-    }
-
-    /**
-     * Set the action to execute when the previous button is pressed.
-     *
-     * @param e Action to execute
-     */
-    public void setPreviousAction(final EventHandler<ActionEvent> e) {
-        previous.setOnAction(e);
     }
 }
