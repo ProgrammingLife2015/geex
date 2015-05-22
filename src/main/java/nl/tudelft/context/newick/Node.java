@@ -3,12 +3,13 @@ package nl.tudelft.context.newick;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import nl.tudelft.context.drawable.DrawableNode;
+import nl.tudelft.context.newick.selection.None;
+import nl.tudelft.context.newick.selection.Selection;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -16,24 +17,6 @@ import java.util.stream.Collectors;
  * @since 3-5-2015
  */
 public class Node extends DrawableNode {
-
-    /**
-     * Selection of the node.
-     */
-    public enum Selection {
-        /**
-         * Not selected.
-         */
-        NONE,
-        /**
-         * Contains children that are (partially) selected.
-         */
-        PARTIAL,
-        /**
-         * All of its children are selected.
-         */
-        ALL
-    }
 
     /**
      * The name of the Node.
@@ -56,7 +39,7 @@ public class Node extends DrawableNode {
     /**
      * The selection of the node.
      */
-    private ObjectProperty<Selection> selection = new SimpleObjectProperty<>(Selection.NONE);
+    private ObjectProperty<Selection> selection = new SimpleObjectProperty<>(new None());
 
     /**
      * Builds a new node with the corresponding name and weight.
@@ -151,7 +134,7 @@ public class Node extends DrawableNode {
 
         Set<String> sources = new HashSet<>();
 
-        if (!isUnknown() && getSelection().equals(Selection.ALL)) {
+        if (!isUnknown() && selection.get().useSources()) {
             sources.add(name);
         }
 
@@ -166,14 +149,7 @@ public class Node extends DrawableNode {
      * new selection will be ALL.
      */
     public void toggleSelected() {
-        switch (getSelection()) {
-            case ALL:
-                setSelection(Selection.NONE);
-                break;
-            default:
-                setSelection(Selection.ALL);
-                break;
-        }
+        setSelection(selection.get().toggle());
     }
 
     /**
@@ -183,18 +159,7 @@ public class Node extends DrawableNode {
      */
     public void setSelection(final Selection selection) {
         this.selection.setValue(selection);
-        for (Node child : getChildren()) {
-            child.setSelection(selection);
-        }
-    }
-
-    /**
-     * Gets the selection of the node.
-     *
-     * @return the selection.
-     */
-    public Selection getSelection() {
-        return this.selection.get();
+        getChildren().forEach(node -> node.setSelection(selection));
     }
 
     /**
@@ -207,6 +172,15 @@ public class Node extends DrawableNode {
     }
 
     /**
+     * Gets the selection of the node.
+     *
+     * @return the selection.
+     */
+    public Selection getSelection() {
+        return selection.getValue();
+    }
+
+    /**
      * Sets the selection of the node, based on the selection of its children;
      * <p>
      * All the children's selection is ALL: ALL
@@ -216,24 +190,12 @@ public class Node extends DrawableNode {
      * If the node has a parent, it also calls this method on its parent.
      */
     public void updateSelected() {
-        Selection childSelection = Selection.PARTIAL;
-        Set<Selection> selectionSet = getChildren().stream()
+        selection.setValue(getChildren().stream()
                 .map(Node::getSelection)
-                .collect(Collectors.toSet());
+                .reduce(Selection::merge).orElse(new None()));
 
-        if (!selectionSet.contains(Selection.PARTIAL)) {
-            if (!selectionSet.contains(Selection.NONE)) {
-                childSelection = Selection.ALL;
-            } else if (!selectionSet.contains(Selection.ALL)) {
-                childSelection = Selection.NONE;
-            }
-        }
-
-        if (!getSelection().equals(childSelection)) {
-            this.selection.setValue(childSelection);
-            if (hasParent()) {
-                getParent().updateSelected();
-            }
+        if (hasParent()) {
+            getParent().updateSelected();
         }
     }
 
