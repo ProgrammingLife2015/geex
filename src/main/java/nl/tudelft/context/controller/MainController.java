@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.breadcrumb.Breadcrumb;
@@ -33,7 +32,7 @@ public class MainController extends DefaultController<StackPane> {
     StackPane view;
 
     /**
-     * Menubar from FXML.
+     * Menu bar from FXML.
      */
     @FXML
     MenuBar menu;
@@ -92,12 +91,6 @@ public class MainController extends DefaultController<StackPane> {
         main.setBottom(messageController.getRoot());
 
         setBaseView(new WelcomeController(this));
-
-        root.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.L) {
-                toggleNewick();
-            }
-        });
     }
 
     /**
@@ -189,12 +182,12 @@ public class MainController extends DefaultController<StackPane> {
             toggleNewick();
         }
 
-        int index = viewList.indexOf(viewController);
+        int index = viewList.indexOf(viewController) + 1;
         viewList.stream()
-                .skip(index + 1)
+                .skip(index)
                 .forEach(vc -> vc.setVisibility(false));
         viewList.stream()
-                .limit(index + 1)
+                .limit(index)
                 .forEach(vc -> vc.setVisibility(true));
 
     }

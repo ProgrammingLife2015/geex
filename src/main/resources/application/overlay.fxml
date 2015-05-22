@@ -8,12 +8,15 @@
         Shortcuts &amp; Help
     </Label>
 
-    <Label GridPane.columnIndex="0" GridPane.rowIndex="1">Previous view</Label>
-    <Label GridPane.columnIndex="1" GridPane.rowIndex="1">Esc</Label>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="1">Open workspace</Label>
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="1">Ctrl+O</Label>
 
-    <Label GridPane.columnIndex="0" GridPane.rowIndex="2">Toggle Help</Label>
-    <Label GridPane.columnIndex="1" GridPane.rowIndex="2">F1</Label>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="2">Previous view</Label>
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="2">Esc</Label>
 
-    <Label GridPane.columnIndex="0" GridPane.rowIndex="3">Open workspace</Label>
-    <Label GridPane.columnIndex="1" GridPane.rowIndex="3">Ctrl+O</Label>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="3">Show Phylogenetic tree</Label>
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="3">Ctrl+Q</Label>
+
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="4">Toggle Help</Label>
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="4">F1</Label>
 </fx:root>

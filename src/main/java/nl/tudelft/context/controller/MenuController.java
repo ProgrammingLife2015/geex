@@ -16,6 +16,7 @@ import nl.tudelft.context.workspace.Workspace;
  * @since 8-5-2015
  */
 public final class MenuController {
+
     /**
      * Reference to the MainController of the application.
      */
@@ -25,11 +26,6 @@ public final class MenuController {
      * Menu bar used in this class.
      */
     MenuBar menuBar;
-
-    /**
-     * Menu items used in other classes.
-     */
-    MenuItem previous;
 
     /**
      * Create a new menu.
@@ -76,11 +72,15 @@ public final class MenuController {
 
         final Menu navigateMenu = new Menu("Navigate");
 
-        previous = new MenuItem("Previous");
+        final MenuItem previous = new MenuItem("Previous");
         previous.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
         previous.setOnAction(event -> mainController.previousView());
 
-        navigateMenu.getItems().addAll(previous);
+        final MenuItem showNewick = new MenuItem("Show Phylogenetic tree");
+        showNewick.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN));
+        showNewick.setOnAction(event -> mainController.toggleNewick());
+
+        navigateMenu.getItems().addAll(previous, showNewick);
         menuBar.getMenus().add(navigateMenu);
 
     }
