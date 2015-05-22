@@ -63,6 +63,17 @@ public class InfoLabel extends VBox {
     }
 
     /**
+     * Get the current column the label is displayed.
+     *
+     * @return Column index
+     */
+    public int currentColumn() {
+
+        return (int) translateXProperty().get() / Graph.LABEL_SPACING;
+
+    }
+
+    /**
      * Initialize the Label without the BaseLabels shown.
      *
      * @return Initialized Upper label
