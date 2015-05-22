@@ -164,8 +164,6 @@ abstract class javafx.application.Application {
     +start(stage : Stage)
 }
 
-class org.jgrapht.graph.DefaultDirectedGraph<E, V>
-
 interface javafx.fxml.Initializable {
     +initialize(location : URL, resources : ResourceBundle)
 }
