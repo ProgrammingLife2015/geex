@@ -4,31 +4,33 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<fx:root type="javafx.scene.layout.GridPane" alignment="CENTER" hgap="10.0" maxHeight="275.0" maxWidth="510.0" prefHeight="275.0" styleClass="welcome" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
-  <columnConstraints>
-    <ColumnConstraints percentWidth="50.0" />
-    <ColumnConstraints percentWidth="50.0" />
-  </columnConstraints>
-  <VBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-    <children>
-      <ImageView fitWidth="250.0" styleClass="logo" />
-      <Button fx:id="load" graphicTextGap="4.0" maxWidth="+Infinity" prefWidth="-1.0" rotate="0.0" text="Load workspace..."/>
-    </children>
-  </VBox>
-  <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
-    <children>
-      <Label text="Recent workspaces" textFill="WHITE">
-        <font>
-          <Font name="Arial Bold" size="16.0" />
-        </font>
-      </Label>
-      <ListView disable="true">
-        <Label text="Here come the previous workspaces" />
-      </ListView>
-    </children>
-  </VBox>
+<fx:root type="javafx.scene.layout.GridPane" alignment="CENTER" hgap="10.0" maxHeight="275.0" maxWidth="510.0"
+         prefHeight="275.0" styleClass="welcome" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1"
+         xmlns="http://javafx.com/javafx/2.2">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50.0"/>
+        <ColumnConstraints percentWidth="50.0"/>
+    </columnConstraints>
+    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <ImageView styleClass="logo" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+        <Button fx:id="load" text="Load workspace..." AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0" minHeight="50"/>
+    </AnchorPane>
+    <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <children>
+            <Label text="Recent workspaces" textFill="WHITE">
+                <font>
+                    <Font name="Arial Bold" size="16.0"/>
+                </font>
+            </Label>
+            <ListView disable="true">
+                <Label text="Here come the previous workspaces"/>
+            </ListView>
+        </children>
+    </VBox>
 </fx:root>
