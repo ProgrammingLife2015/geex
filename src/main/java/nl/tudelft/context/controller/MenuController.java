@@ -43,6 +43,7 @@ public final class MenuController {
         menuBar.setUseSystemMenuBar(true);
 
         initFileMenu();
+        initNavigateMenu();
         initHelpMenu();
 
     }
@@ -60,15 +61,27 @@ public final class MenuController {
         directoryChooser.setTitle("Select Workspace Folder");
         load.setOnAction(event -> Workspace.chooseWorkspace(mainController));
 
+        MenuItem exit = new MenuItem("Exit");
+        exit.setOnAction(event -> mainController.exitProgram());
+
+        fileMenu.getItems().addAll(load, exit);
+        menuBar.getMenus().add(fileMenu);
+
+    }
+
+    /**
+     * Set up navigate menu.
+     */
+    public void initNavigateMenu() {
+
+        final Menu navigateMenu = new Menu("Navigate");
+
         previous = new MenuItem("Previous");
         previous.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
         previous.setOnAction(event -> mainController.previousView());
 
-        MenuItem exit = new MenuItem("Exit");
-        exit.setOnAction(event -> mainController.exitProgram());
-
-        fileMenu.getItems().addAll(load, previous, exit);
-        menuBar.getMenus().add(fileMenu);
+        navigateMenu.getItems().addAll(previous);
+        menuBar.getMenus().add(navigateMenu);
 
     }
 
@@ -77,15 +90,15 @@ public final class MenuController {
      */
     public void initHelpMenu() {
 
-        final Menu menuHelp = new Menu("Help");
+        final Menu helpMenu = new Menu("Help");
 
         MenuItem shortcuts = new MenuItem("Shortcuts");
         shortcuts.setAccelerator(new KeyCodeCombination(KeyCode.F1));
         shortcuts.setOnAction(event -> mainController.toggleOverlay(new OverlayController()));
 
-        menuHelp.getItems().addAll(shortcuts);
+        helpMenu.getItems().addAll(shortcuts);
 
-        menuBar.getMenus().add(menuHelp);
+        menuBar.getMenus().add(helpMenu);
 
     }
 }
