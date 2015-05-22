@@ -5,7 +5,9 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
 import nl.tudelft.context.drawable.DrawableEdge;
+import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.newick.Tree;
 import nl.tudelft.context.service.LoadNewickService;
 import nl.tudelft.context.workspace.Workspace;
@@ -13,6 +15,7 @@ import nl.tudelft.context.workspace.Workspace;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -22,6 +25,10 @@ import java.util.stream.Collectors;
  */
 public final class NewickController extends ViewController<ScrollPane> {
 
+    /**
+     * This is the x disposition of the load button.
+     */
+    public static final double LOAD_BUTTON_OFFSET = -50;
     /**
      * ProgressIndicator to show when the tree is loading.
      */
@@ -59,9 +66,6 @@ public final class NewickController extends ViewController<ScrollPane> {
         this.loadNewickService = new LoadNewickService(workspace.getNwkFile());
 
         loadFXML("/application/newick.fxml");
-
-
-
 
     }
 
@@ -111,21 +115,34 @@ public final class NewickController extends ViewController<ScrollPane> {
 
         // Bind nodes
         List<Label> nodeList = tree.vertexSet().stream()
-                .map(node -> {
-                    final Label label = new Label(node.getName());
-                    label.setCache(true);
-                    label.translateXProperty().bind(node.translateXProperty());
-                    label.translateYProperty().bind(node.translateYProperty());
-                    if (node.isUnknown()) {
-                        label.getStyleClass().add("ancestor");
-                    }
-                    label.setOnMouseClicked(event ->
-                            mainController.setView(new GraphController(mainController, node.getSources())));
-                    return label;
-                }).collect(Collectors.toList());
+                .map(NewickLabel::new)
+                .collect(Collectors.toList());
 
         newick.getChildren().addAll(edgeList);
         newick.getChildren().addAll(nodeList);
+
+        Label button = new Label("Load");
+        button.setTranslateX(LOAD_BUTTON_OFFSET);
+        button.setOnMouseClicked(event -> loadGraph(tree));
+        root.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                loadGraph(tree);
+            }
+        });
+
+        newick.getChildren().add(button);
+    }
+
+    /**
+     * Loads the graph of the selected strands.
+     *
+     * @param tree the tree with the nodes to show.
+     */
+    protected void loadGraph(final Tree tree) {
+        Set<String> sources = tree.getRoot().getSources();
+        if (!sources.isEmpty()) {
+            mainController.setView(new GraphController(mainController, sources));
+        }
     }
 
     @Override

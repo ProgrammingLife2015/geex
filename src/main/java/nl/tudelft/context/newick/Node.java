@@ -1,19 +1,40 @@
 package nl.tudelft.context.newick;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import nl.tudelft.context.drawable.DrawableNode;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
  * @version 1.0
  * @since 3-5-2015
  */
-public final class Node extends DrawableNode implements Serializable {
+public class Node extends DrawableNode {
+
+    /**
+     * Selection of the node.
+     */
+    public enum Selection {
+        /**
+         * Not selected.
+         */
+        NONE,
+        /**
+         * Contains children that are (partially) selected.
+         */
+        PARTIAL,
+        /**
+         * All of its children are selected.
+         */
+        ALL
+    }
+
     /**
      * The name of the Node.
      */
@@ -26,6 +47,16 @@ public final class Node extends DrawableNode implements Serializable {
      * The children of the Node.
      */
     private List<Node> children;
+
+    /**
+     * The parent node.
+     */
+    private Node parent;
+
+    /**
+     * The selection of the node.
+     */
+    private ObjectProperty<Selection> selection = new SimpleObjectProperty<>(Selection.NONE);
 
     /**
      * Builds a new node with the corresponding name and weight.
@@ -58,6 +89,33 @@ public final class Node extends DrawableNode implements Serializable {
     }
 
     /**
+     * Checks if the node has a parent.
+     *
+     * @return true if the node has a parent; otherwise false.
+     */
+    public boolean hasParent() {
+        return getParent() != null;
+    }
+
+    /**
+     * Sets the parent of the node.
+     *
+     * @param parent the parent.
+     */
+    public void setParent(final Node parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * Gets the parent of the node.
+     *
+     * @return the parent of the node.
+     */
+    public Node getParent() {
+        return parent;
+    }
+
+    /**
      * Gets the name of this node.
      *
      * @return the name of this node
@@ -77,10 +135,11 @@ public final class Node extends DrawableNode implements Serializable {
 
     /**
      * Tells whether this node is an unknown ancestor or not.
+     *
      * @return true if the node is an unknown ancestor; otherwise false
      */
     public boolean isUnknown() {
-        return this.name.equals("");
+        return this.name.isEmpty();
     }
 
     /**
@@ -92,7 +151,7 @@ public final class Node extends DrawableNode implements Serializable {
 
         Set<String> sources = new HashSet<>();
 
-        if (!name.isEmpty()) {
+        if (!isUnknown() && getSelection().equals(Selection.ALL)) {
             sources.add(name);
         }
 
@@ -100,6 +159,82 @@ public final class Node extends DrawableNode implements Serializable {
 
         return sources;
 
+    }
+
+    /**
+     * Toggles the selection of the node. If the selection was ALL, the the new selection will be NONE; otherwise the
+     * new selection will be ALL.
+     */
+    public void toggleSelected() {
+        switch (getSelection()) {
+            case ALL:
+                setSelection(Selection.NONE);
+                break;
+            default:
+                setSelection(Selection.ALL);
+                break;
+        }
+    }
+
+    /**
+     * Sets the new selection of the node. It recursively sets the selection of its children also.
+     *
+     * @param selection The new selection of the node and its children.
+     */
+    public void setSelection(final Selection selection) {
+        this.selection.setValue(selection);
+        for (Node child : getChildren()) {
+            child.setSelection(selection);
+        }
+    }
+
+    /**
+     * Gets the selection of the node.
+     *
+     * @return the selection.
+     */
+    public Selection getSelection() {
+        return this.selection.get();
+    }
+
+    /**
+     * Gets the selection property of the node.
+     *
+     * @return the selection property.
+     */
+    public ObjectProperty<Selection> getSelectionProperty() {
+        return this.selection;
+    }
+
+    /**
+     * Sets the selection of the node, based on the selection of its children;
+     * <p>
+     * All the children's selection is ALL: ALL
+     * All the children's selection is NONE: NONE
+     * Otherwise: PARTIAL
+     * <p>
+     * If the node has a parent, it also calls this method on its parent.
+     */
+    public void updateSelected() {
+        Selection childSelection = Selection.PARTIAL;
+        Set<Selection> selectionSet = getChildren().stream()
+                .map(Node::getSelection)
+                .collect(Collectors.toSet());
+
+        if (!selectionSet.contains(Selection.PARTIAL)) {
+            if (!selectionSet.contains(Selection.NONE)) {
+                childSelection = Selection.ALL;
+            } else if (!selectionSet.contains(Selection.ALL)) {
+                childSelection = Selection.NONE;
+            }
+        }
+
+        if (!getSelection().equals(childSelection)) {
+            this.selection.setValue(childSelection);
+            if (hasParent()) {
+                getParent().updateSelected();
+            }
+        }
     }
 
     @Override

@@ -1,15 +1,21 @@
 package nl.tudelft.context.controller;
 
+import com.sun.javafx.collections.ObservableListWrapper;
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.scene.layout.StackPane;
+import nl.tudelft.context.breadcrumb.ViewStack;
+import nl.tudelft.context.newick.Node;
+import nl.tudelft.context.newick.Tree;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.util.ArrayList;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -20,6 +26,9 @@ import static org.mockito.Mockito.when;
 public class NewickControllerTest {
 
     protected static NewickController newickController;
+    protected static MainController mainController;
+
+    protected final static File nwkFile = new File(GraphControllerTest.class.getResource("/newick/10strains.nwk").getPath());
 
     /**
      * Setup Load Newick Controller.
@@ -27,12 +36,15 @@ public class NewickControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        MainController mainController = mock(MainController.class);
+        mainController = mock(MainController.class);
+        mainController.viewStack = new ViewStack();
+        mainController.view = mock(StackPane.class);
         Workspace workspace = mock(Workspace.class);
         mainController.messageController = new MessageController();
 
-        when(workspace.getNwkFile()).thenReturn(mock(File.class));
+        when(workspace.getNwkFile()).thenReturn(nwkFile);
         when(mainController.getWorkspace()).thenReturn(workspace);
+        when(mainController.view.getChildren()).thenReturn(new ObservableListWrapper<>(new ArrayList<>()));
 
         newickController = new NewickController(mainController);
 
@@ -46,6 +58,24 @@ public class NewickControllerTest {
 
         newickController.loadFXML("");
 
+    }
+
+    /**
+     * Nothing should break when no nodes, or some nodes are selected.
+     */
+    @Test
+    public void testLoadGraph() {
+        Tree tree = new Tree();
+        Node node = new Node("n1", 1.23);
+        tree.setRoot(node);
+        newickController.loadGraph(tree);
+        node.setSelection(Node.Selection.ALL);
+        newickController.loadGraph(tree);
+    }
+
+    @Test
+    public void testBreadcrumbName() {
+        assertEquals("Phylogenetic tree", newickController.getBreadcrumbName());
     }
 
 }
