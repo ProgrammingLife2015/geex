@@ -26,10 +26,10 @@ import java.util.stream.Collectors;
 public class MainController extends DefaultController<StackPane> {
 
     /**
-     * The container of all views after this one.
+     * FXML stack panes in view.
      */
     @FXML
-    StackPane view;
+    StackPane view, overlay;
 
     /**
      * Menu bar from FXML.
@@ -41,7 +41,7 @@ public class MainController extends DefaultController<StackPane> {
      * FXML pointer for right BorderPane.
      */
     @FXML
-    BorderPane main, overlay;
+    BorderPane main;
 
     /**
      * A list of the current views.
@@ -57,6 +57,11 @@ public class MainController extends DefaultController<StackPane> {
      * The MessageController that is needed to display error messages.
      */
     MessageController messageController;
+
+    /**
+     * Overlay controller with help functionality.
+     */
+    OverlayController overlayController;
 
     /**
      * If Newick is lifted.
@@ -90,37 +95,17 @@ public class MainController extends DefaultController<StackPane> {
         messageController = new MessageController();
         main.setBottom(messageController.getRoot());
 
+        overlayController = new OverlayController();
+        overlay.getChildren().add(overlayController.getRoot());
+
         setBaseView(new WelcomeController(this));
     }
 
     /**
-     * Set the current overlay.
-     *
-     * @param overlayController The new overlay
-     */
-    public final void setOverlay(final OverlayController overlayController) {
-        overlay.setCenter(overlayController.getRoot());
-        this.root.setOnMouseClicked(event -> this.toggleOverlay(overlayController));
-    }
-
-    /**
-     * Remove the current overlay.
-     */
-    public final void removeOverlay() {
-        overlay.setCenter(null);
-        this.root.setOnMouseClicked(null);
-    }
-
-    /**
      * Toggle the current overlay.
-     * @param overlayController The overlay to show if there is an overlay.
      */
-    public void toggleOverlay(final OverlayController overlayController) {
-        if (overlay.getCenter() == null) {
-            setOverlay(overlayController);
-        } else {
-            removeOverlay();
-        }
+    public void toggleOverlay() {
+        overlayController.setVisibility(!overlayController.getVisibilityProperty().getValue());
     }
 
     /**

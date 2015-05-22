@@ -1,7 +1,5 @@
 package nl.tudelft.context.controller;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Parent;
 
 /**

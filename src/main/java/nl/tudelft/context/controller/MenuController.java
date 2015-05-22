@@ -7,7 +7,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.DirectoryChooser;
-import nl.tudelft.context.controller.overlay.OverlayController;
 import nl.tudelft.context.workspace.Workspace;
 
 /**
@@ -94,7 +93,7 @@ public final class MenuController {
 
         MenuItem shortcuts = new MenuItem("Shortcuts");
         shortcuts.setAccelerator(new KeyCodeCombination(KeyCode.F1));
-        shortcuts.setOnAction(event -> mainController.toggleOverlay(new OverlayController()));
+        shortcuts.setOnAction(event -> mainController.toggleOverlay());
 
         helpMenu.getItems().addAll(shortcuts);
 

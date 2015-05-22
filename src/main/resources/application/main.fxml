@@ -22,7 +22,7 @@
         </center>
     </BorderPane>
 
-    <BorderPane fx:id="overlay" mouseTransparent="true"/>
+    <StackPane fx:id="overlay" mouseTransparent="true"/>
 
     <stylesheets>
         <URL value="@css/style.css"/>
