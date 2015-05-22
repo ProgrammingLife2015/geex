@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
+<?import javafx.scene.layout.GridPane?>
+<fx:root type="javafx.scene.layout.GridPane" styleClass="overlay" xmlns:fx="http://javafx.com/fxml" hgap="10">
+    <Label styleClass="h2"
+           GridPane.rowIndex="0" GridPane.columnSpan="2">
+        Shortcuts &amp; Help
+    </Label>
 
-    <Label text="Hello there"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="1">Previous view</Label>
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="1">Esc</Label>
 
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="2">Help</Label>
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="2">F1</Label>
+
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="3">Open workspace</Label>
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="3">Ctrl+O</Label>
 </fx:root>

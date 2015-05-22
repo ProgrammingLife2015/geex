@@ -1,6 +1,6 @@
 package nl.tudelft.context.controller.overlay;
 
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import nl.tudelft.context.controller.DefaultController;
 
 import java.net.URL;
@@ -11,12 +11,12 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 21-5-2015
  */
-public class OverlayController extends DefaultController<AnchorPane> {
+public class OverlayController extends DefaultController<GridPane> {
     /**
      * Create an overlay controller.
      */
     public OverlayController() {
-        super(new AnchorPane());
+        super(new GridPane());
 
         loadFXML("/application/overlay.fxml");
     }
