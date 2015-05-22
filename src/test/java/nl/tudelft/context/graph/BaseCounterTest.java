@@ -8,7 +8,7 @@ import java.util.Scanner;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @author Jasper on 6-5-2015.
+ * @author Jasper Nieuwdorp
  * @version 1f
  * @since 6-5-2015
  */
