@@ -266,3 +266,8 @@
     -fx-padding: 5px;
     -fx-font: 0.3cm 'Arial';
 }
+
+
+.breadcrumb HBox Label.inactive {
+    -fx-text-fill: #bababa;
+}
