@@ -133,6 +133,11 @@ public final class NewickController extends ViewController<ScrollPane> {
         newick.getChildren().add(button);
     }
 
+    /**
+     * Loads the graph of the selected strands.
+     *
+     * @param tree the tree with the nodes to show.
+     */
     protected void loadGraph(Tree tree) {
         Set<String> sources = tree.getRoot().getSources();
         if (!sources.isEmpty()) {
