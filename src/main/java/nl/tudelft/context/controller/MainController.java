@@ -85,7 +85,7 @@ public class MainController extends DefaultController<StackPane> {
         menuController = new MenuController(this, menu);
 
         messageController = new MessageController();
-        window.setBottom(messageController.getRoot());
+        main.setBottom(messageController.getRoot());
     }
 
     /**
