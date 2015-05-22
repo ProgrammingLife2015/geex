@@ -51,7 +51,7 @@ public class MainController extends DefaultController<StackPane> {
     /**
      * Controller for the menu.
      */
-    private MenuController menuController;
+    MenuController menuController;
 
     /**
      * The MessageController that is needed to display error messages.
