@@ -159,7 +159,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         // Bind nodes
         List<InfoLabel> nodeList = graph.vertexSet().stream()
-                .map(node -> new InfoLabel(mainController, graph, node))
+                .map(node -> new InfoLabel(mainController, this, graph, node))
                 .collect(Collectors.toList());
 
         sequences.getChildren().addAll(edgeList);

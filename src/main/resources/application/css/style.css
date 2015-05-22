@@ -12,16 +12,41 @@
 }
 
 .transparent {
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(43, 43, 43, 0.8);
 }
 
 .margin {
     -fx-padding: 50px;
 }
 
-.transparent .margin {
+.margin-top {
     -fx-padding: 30px 50px 50px;
-    -fx-background-color: rgba(43, 43, 43, 0.8);
+}
+
+/* Overlay */
+#overlay {
+    -fx-padding: 100px;
+}
+
+.overlay {
+    -fx-padding: 20px;
+    -fx-opacity: 0.9;
+    -fx-border-width: 10px;
+    -fx-border-color: rgba(0, 0, 0, .5);
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-background-color: rgba(0, 0, 0, .7);
+}
+
+.overlay .h2 {
+    -fx-padding: 20px 10px 10px;
+    -fx-text-fill: #fff;
+}
+
+.overlay Label {
+    -fx-text-fill: #fff;
+    -fx-padding: 5px 10px;
+    -fx-font: 0.4cm 'Arial';
 }
 
 /* Control */
@@ -36,7 +61,7 @@
     -fx-vgap: 10px;
 }
 
-.control .h2,
+.h2,
 .transparent .margin .h2 {
     -fx-font: bold 0.4cm 'Arial';
 }
@@ -46,7 +71,7 @@
     -fx-text-fill: #2b2b2b;
 }
 
-.transparent .margin .h2 {
+.margin-top .h2 {
     -fx-padding: 20px 0 10px;
     -fx-text-fill: #fff;
 }
@@ -277,6 +302,7 @@
     -fx-font: 0.3cm 'Arial';
 }
 
-.breadcrumb HBox.last Label {
-    -fx-cursor: default;
+
+.breadcrumb HBox Label.inactive {
+    -fx-text-fill: #bababa;
 }

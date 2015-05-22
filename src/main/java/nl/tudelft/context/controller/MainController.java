@@ -1,14 +1,21 @@
 package nl.tudelft.context.controller;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.MenuBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.breadcrumb.Breadcrumb;
-import nl.tudelft.context.breadcrumb.ViewStack;
+import nl.tudelft.context.controller.overlay.OverlayController;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -17,7 +24,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 25-4-2015
  */
-public class MainController extends DefaultController<BorderPane> {
+public class MainController extends DefaultController<StackPane> {
 
     /**
      * The container of all views after this one.
@@ -26,15 +33,21 @@ public class MainController extends DefaultController<BorderPane> {
     StackPane view;
 
     /**
+     * Menubar from FXML.
+     */
+    @FXML
+    MenuBar menu;
+
+    /**
      * FXML pointer for right BorderPane.
      */
     @FXML
-    BorderPane main;
+    BorderPane main, overlay;
 
     /**
-     * A stack of the current views.
+     * A list of the current views.
      */
-    ViewStack viewStack;
+    ObservableList<ViewController> viewList = FXCollections.observableList(new ArrayList<>());
 
     /**
      * The current workspace.
@@ -47,13 +60,15 @@ public class MainController extends DefaultController<BorderPane> {
     MessageController messageController;
 
     /**
+     * If Newick is lifted.
+     */
+    BooleanProperty newickLifted = new SimpleBooleanProperty(false);
+
+    /**
      * Init a controller at main.fxml.
      */
     public MainController() {
-
-        super(new BorderPane());
-
-        viewStack = new ViewStack();
+        super(new StackPane());
 
         loadFXML("/application/main.fxml");
 
@@ -70,21 +85,49 @@ public class MainController extends DefaultController<BorderPane> {
      */
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
-
-        main.setTop(new Breadcrumb(this, viewStack));
-        root.setTop(new MenuController(this));
+        main.setTop(new Breadcrumb(this, viewList));
+        new MenuController(this, menu);
 
         messageController = new MessageController();
         main.setBottom(messageController.getRoot());
 
-        root.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ESCAPE) {
-                previousView();
-            }
-        });
-
         setBaseView(new WelcomeController(this));
 
+        root.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.L) {
+                toggleNewick();
+            }
+        });
+    }
+
+    /**
+     * Set the current overlay.
+     *
+     * @param overlayController The new overlay
+     */
+    public final void setOverlay(final OverlayController overlayController) {
+        overlay.setCenter(overlayController.getRoot());
+        this.root.setOnMouseClicked(event -> this.toggleOverlay(overlayController));
+    }
+
+    /**
+     * Remove the current overlay.
+     */
+    public final void removeOverlay() {
+        overlay.setCenter(null);
+        this.root.setOnMouseClicked(null);
+    }
+
+    /**
+     * Toggle the current overlay.
+     * @param overlayController The overlay to show if there is an overlay.
+     */
+    public void toggleOverlay(final OverlayController overlayController) {
+        if (overlay.getCenter() == null) {
+            setOverlay(overlayController);
+        } else {
+            removeOverlay();
+        }
     }
 
     /**
@@ -94,20 +137,26 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void setBaseView(final ViewController viewController) {
 
-        view.getChildren().clear();
-        viewStack.clear();
-        setView(viewController);
+        view.getChildren().setAll(viewController.getRoot());
+        viewList.setAll(viewController);
 
     }
 
     /**
      * Set a new main view and push it on the view stack.
      *
+     * @param on             Controller to stack this view on
      * @param viewController Controller containing JavaFX root
      */
-    public final void setView(final ViewController viewController) {
+    public final void setView(final ViewController on, final ViewController viewController) {
 
-        viewStack.add(viewController);
+        if (newickLifted.getValue()) {
+            toggleNewick();
+        }
+
+        viewList.remove(viewList.indexOf(on) + 1, viewList.size());
+        viewList.add(viewController);
+        view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
         view.getChildren().add(viewController.getRoot());
 
     }
@@ -117,24 +166,45 @@ public class MainController extends DefaultController<BorderPane> {
      */
     public final void previousView() {
 
-        if (viewStack.size() > 1) {
-            viewStack.pop();
-            view.getChildren().retainAll(
-                    viewStack.stream().map(ViewController::getRoot).collect(Collectors.toSet()));
+        if (newickLifted.getValue()) {
+            toggleNewick();
+        } else {
+            List<ViewController> visibleViews = viewList.filtered(viewController ->
+                    viewController.getVisibilityProperty().getValue());
+            if (visibleViews.size() > 1) {
+                visibleViews.get(visibleViews.size() - 1).setVisibility(false);
+            }
         }
 
     }
 
     /**
-     * Go back to the given view.
+     * Go the a certain view.
      *
-     * @param viewController View to go back to
+     * @param viewController View to go to
      */
-    public final void backToView(final ViewController viewController) {
+    public void toView(final ViewController viewController) {
 
-        while (!viewStack.peek().equals(viewController)) {
-            previousView();
+        if (newickLifted.getValue()) {
+            toggleNewick();
         }
+
+        int index = viewList.indexOf(viewController);
+        viewList.stream()
+                .skip(index + 1)
+                .forEach(vc -> vc.setVisibility(false));
+        viewList.stream()
+                .limit(index + 1)
+                .forEach(vc -> vc.setVisibility(true));
+
+    }
+
+    /**
+     * Toggle the newick view on top of everything else.
+     */
+    public void toggleNewick() {
+
+        newickLifted.setValue(!newickLifted.getValue());
 
     }
 
@@ -163,12 +233,14 @@ public class MainController extends DefaultController<BorderPane> {
         this.workspace = workspace;
     }
 
-
     /**
      * The function that is used to display a message in the footer.
+     *
      * @param text The text that will be displayed.
      */
     public final void displayMessage(final String text) {
         messageController.displayMessage(text);
     }
+
+
 }

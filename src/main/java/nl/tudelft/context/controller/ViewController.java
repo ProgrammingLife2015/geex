@@ -1,5 +1,7 @@
 package nl.tudelft.context.controller;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Parent;
 
 /**
@@ -9,6 +11,11 @@ import javafx.scene.Parent;
  * @since 14-5-2015
  */
 public abstract class ViewController<T extends Parent> extends DefaultController<T> {
+
+    /**
+     * Visibility property.
+     */
+    private BooleanProperty visibilityProperty = new SimpleBooleanProperty(true);
 
     /**
      * Create a generic controller with T as root.
@@ -22,6 +29,8 @@ public abstract class ViewController<T extends Parent> extends DefaultController
 
         super(root);
 
+        root.visibleProperty().bind(visibilityProperty);
+
     }
 
     /**
@@ -30,5 +39,23 @@ public abstract class ViewController<T extends Parent> extends DefaultController
      * @return Name for the breadcrumb
      */
     public abstract String getBreadcrumbName();
+
+    /**
+     * Set the visibility.
+     *
+     * @param visibility True if visible
+     */
+    public void setVisibility(final Boolean visibility) {
+        visibilityProperty.setValue(visibility);
+    }
+
+    /**
+     * Get the visibility property.
+     *
+     * @return Visibility property
+     */
+    public BooleanProperty getVisibilityProperty() {
+        return visibilityProperty;
+    }
 
 }

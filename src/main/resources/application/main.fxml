@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import java.net.URL?>
-<fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
+<fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml">
 
-    <center>
-        <BorderPane fx:id="main">
+    <BorderPane>
+        <top>
+            <MenuBar fx:id="menu"/>
+        </top>
 
-            <center>
-                <StackPane fx:id="view"/>
-            </center>
+        <center>
+            <BorderPane fx:id="main">
 
-        </BorderPane>
-    </center>
+                <center>
+                    <StackPane fx:id="view"/>
+                </center>
+
+            </BorderPane>
+        </center>
+    </BorderPane>
+
+    <BorderPane fx:id="overlay" mouseTransparent="true"/>
 
     <stylesheets>
         <URL value="@css/style.css"/>
