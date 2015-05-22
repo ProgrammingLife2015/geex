@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import nl.tudelft.context.controller.BaseController;
+import nl.tudelft.context.controller.GraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.graph.BaseCounter;
 import nl.tudelft.context.graph.Graph;
@@ -34,11 +35,13 @@ public class InfoLabel extends VBox {
     /**
      * Constructor for the InfoLabel.
      *
-     * @param mainController MainController indicating the controller.
-     * @param graph          Graph containing the node
-     * @param node           Node indicating the node
+     * @param mainController  MainController indicating the controller
+     * @param graphController GraphController to place the next view on
+     * @param graph           Graph containing the node
+     * @param node            Node indicating the node
      */
-    public InfoLabel(final MainController mainController, final Graph graph, final Node node) {
+    public InfoLabel(final MainController mainController, final GraphController graphController,
+                     final Graph graph, final Node node) {
 
         this.node = node;
 
@@ -46,7 +49,7 @@ public class InfoLabel extends VBox {
         translateXProperty().bind(node.translateXProperty());
         translateYProperty().bind(node.translateYProperty());
 
-        setOnMouseClicked(event -> mainController.setView(new BaseController(graph, node)));
+        setOnMouseClicked(event -> mainController.setView(graphController, new BaseController(graph, node)));
 
     }
 

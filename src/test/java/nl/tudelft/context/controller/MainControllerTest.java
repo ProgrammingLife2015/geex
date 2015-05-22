@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -52,7 +54,7 @@ public class MainControllerTest {
 
         when(workspace.getNodeFile()).thenReturn(mock(File.class));
         when(workspace.getEdgeFile()).thenReturn(mock(File.class));
-        when(workspace.getNodeFile()).thenReturn(mock(File.class));
+        when(workspace.getNwkFile()).thenReturn(mock(File.class));
 
     }
 
@@ -67,28 +69,6 @@ public class MainControllerTest {
     }
 
     /**
-     * Test view list.
-     */
-    @Test
-    public void testTopViewList() {
-
-        MainController mc = new MainController();
-        mc.setWorkspace(workspace);
-
-        BaseController baseController1 = new BaseController(graph, node1);
-        BaseController baseController2 = new BaseController(graph, node2);
-
-        mc.setView(baseController1);
-        assertEquals(baseController1, mc.viewStack.peek());
-        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(0));
-
-        mc.setView(baseController2);
-        assertEquals(baseController2, mc.viewStack.peek());
-        assertEquals(baseController2.getRoot(), mc.view.getChildren().get(1));
-
-    }
-
-    /**
      * Test previous view.
      */
     @Test
@@ -97,61 +77,67 @@ public class MainControllerTest {
         MainController mc = new MainController();
         mc.setWorkspace(workspace);
 
-
         BaseController baseController1 = new BaseController(graph, node1);
         BaseController baseController2 = new BaseController(graph, node2);
 
-        mc.setView(baseController1);
-        mc.setView(baseController2);
-
-        mc.previousView();
-
-        assertEquals(baseController1, mc.viewStack.peek());
-        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(0));
-
-    }
-
-    /**
-     * Test empty view list.
-     */
-    @Test
-    public void testEmptyViewList() {
-
-        MainController mc = new MainController();
-        mc.setWorkspace(workspace);
-
-
-        BaseController baseController1 = new BaseController(graph, node1);
-        BaseController baseController2 = new BaseController(graph, node2);
-
-        mc.setView(baseController1);
-        mc.setView(baseController2);
-
-        mc.previousView();
-        mc.previousView();
-
-        assertEquals(baseController1, mc.viewStack.peek());
-        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(0));
-
-    }
-
-    /**
-     * Test base view size.
-     */
-    @Test
-    public void setBaseViewSize() {
-
-        MainController mc = new MainController();
-        mc.setWorkspace(workspace);
-
-        BaseController baseController1 = new BaseController(graph, node1);
-        BaseController baseController2 = new BaseController(graph, node2);
-
-        mc.setView(baseController1);
-        mc.setView(baseController2);
         mc.setBaseView(baseController1);
+        mc.setView(baseController1, baseController2);
 
-        assertEquals(1, mc.viewStack.size());
+        mc.previousView();
+
+        assertEquals(baseController1, mc.viewList.get(0));
+        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(0));
+        assertFalse(baseController2.getVisibilityProperty().getValue());
+
+    }
+
+    /**
+     * Test to view.
+     */
+    public void testToView() {
+
+        MainController mc = new MainController();
+        mc.setWorkspace(workspace);
+
+        BaseController baseController1 = new BaseController(graph, node1);
+        BaseController baseController2 = new BaseController(graph, node2);
+
+        mc.setBaseView(baseController1);
+        mc.setView(baseController1, baseController2);
+
+        assertTrue(baseController1.getVisibilityProperty().getValue());
+        assertTrue(baseController2.getVisibilityProperty().getValue());
+
+        mc.toView(baseController1);
+
+        assertTrue(baseController1.getVisibilityProperty().getValue());
+        assertFalse(baseController2.getVisibilityProperty().getValue());
+
+    }
+
+    /**
+     * Test to view.
+     */
+    @Test
+    public void testToViewWithNewick() {
+
+        MainController mc = new MainController();
+        mc.setWorkspace(workspace);
+        mc.toggleNewick();
+
+        BaseController baseController1 = new BaseController(graph, node1);
+        BaseController baseController2 = new BaseController(graph, node2);
+
+        mc.setBaseView(baseController1);
+        mc.setView(baseController1, baseController2);
+
+        assertTrue(baseController1.getVisibilityProperty().getValue());
+        assertTrue(baseController2.getVisibilityProperty().getValue());
+
+        mc.toView(baseController1);
+
+        assertTrue(baseController1.getVisibilityProperty().getValue());
+        assertFalse(baseController2.getVisibilityProperty().getValue());
 
     }
 
@@ -167,6 +153,24 @@ public class MainControllerTest {
         mc.displayMessage(text);
 
         assertEquals(mc.messageController.message.getText(), text);
+    }
+
+    /**
+     * Test toggle Newick.
+     */
+    @Test
+    public void toggleNewick() {
+
+        assertFalse(mainController.newickLifted.getValue());
+
+        mainController.toggleNewick();
+
+        assertTrue(mainController.newickLifted.getValue());
+
+        mainController.toggleNewick();
+
+        assertFalse(mainController.newickLifted.getValue());
+
     }
 
 }
