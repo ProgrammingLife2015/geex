@@ -43,8 +43,7 @@
         </center>
     </BorderPane>
 
-    <BorderPane fx:id="overlay" mouseTransparent="true">
-    </BorderPane>
+    <BorderPane fx:id="overlay" mouseTransparent="true"/>
 
     <stylesheets>
         <URL value="@css/style.css"/>
