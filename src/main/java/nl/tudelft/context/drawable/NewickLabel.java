@@ -17,9 +17,9 @@ public class NewickLabel extends Label {
     /**
      * Creates a label, based on a newick node.
      *
-     * @param node           The node to base the label on.
+     * @param node The node to base the label on.
      */
-    public NewickLabel(Node node) {
+    public NewickLabel(final Node node) {
         super(node.getName());
 
         this.node = node;
@@ -36,7 +36,9 @@ public class NewickLabel extends Label {
         translateXProperty().bind(node.translateXProperty());
         translateYProperty().bind(node.translateYProperty());
 
-        node.selection.addListener((observable, oldValue, newValue) -> setSelectedClass(oldValue, newValue));
+        node.getSelectionProperty().addListener(
+                (observable, oldValue, newValue) -> setSelectedClass(oldValue, newValue)
+        );
 
         if (node.isUnknown()) {
             getStyleClass().add("ancestor");
@@ -61,7 +63,7 @@ public class NewickLabel extends Label {
      * @param oldValue The old selection value.
      * @param newValue The new selection value.
      */
-    public void setSelectedClass(Node.Selection oldValue, Node.Selection newValue) {
+    public void setSelectedClass(final Node.Selection oldValue, final Node.Selection newValue) {
         if (!oldValue.equals(newValue)) {
             switch (newValue) {
                 case NONE:
