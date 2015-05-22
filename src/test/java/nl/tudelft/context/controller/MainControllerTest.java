@@ -80,11 +80,11 @@ public class MainControllerTest {
 
         mc.setView(baseController1);
         assertEquals(baseController1, mc.viewStack.peek());
-        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(0));
+        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(1));
 
         mc.setView(baseController2);
         assertEquals(baseController2, mc.viewStack.peek());
-        assertEquals(baseController2.getRoot(), mc.view.getChildren().get(1));
+        assertEquals(baseController2.getRoot(), mc.view.getChildren().get(2));
 
     }
 
@@ -107,7 +107,7 @@ public class MainControllerTest {
         mc.previousView();
 
         assertEquals(baseController1, mc.viewStack.peek());
-        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(0));
+        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(1));
 
     }
 
@@ -128,10 +128,9 @@ public class MainControllerTest {
         mc.setView(baseController2);
 
         mc.previousView();
-        mc.previousView();
 
         assertEquals(baseController1, mc.viewStack.peek());
-        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(0));
+        assertEquals(baseController1.getRoot(), mc.view.getChildren().get(1));
 
     }
 
