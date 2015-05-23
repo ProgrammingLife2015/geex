@@ -63,7 +63,7 @@ public final class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
      * @param nodes  nodes to display
      * @return next column
      */
-    private List<Node> nextColumn(final List<Node> nodes) {
+    public List<Node> nextColumn(final List<Node> nodes) {
 
         return nodes.stream()
                 .flatMap(node -> outgoingEdgesOf(node).stream()

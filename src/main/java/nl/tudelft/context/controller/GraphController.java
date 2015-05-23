@@ -9,6 +9,7 @@ import nl.tudelft.context.annotation.AnnotationMap;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
+import nl.tudelft.context.mutations.MutationParser;
 import nl.tudelft.context.service.LoadAnnotationService;
 import nl.tudelft.context.service.LoadGraphService;
 import nl.tudelft.context.workspace.Workspace;
@@ -116,6 +117,7 @@ public final class GraphController extends ViewController<AnchorPane> {
         loadGraphService.setOnSucceeded(event -> {
             Graph graph = loadGraphService.getValue().flat(sources);
             graph.position();
+            loadMutations(graph);
             showGraph(graph);
             mainController.displayMessage(MessageController.SUCCESS_LOAD_GRAPH);
         });
@@ -123,6 +125,17 @@ public final class GraphController extends ViewController<AnchorPane> {
             mainController.displayMessage(MessageController.FAIL_LOAD_GRAPH);
         });
         loadGraphService.restart();
+
+    }
+
+    /**
+     * Load Mutations from the graph.
+     */
+    private void loadMutations(final Graph graph) {
+
+        MutationParser mp = new MutationParser(graph);
+        mp.checkMutations();
+        mp.printVariations();
 
     }
 
@@ -143,7 +156,6 @@ public final class GraphController extends ViewController<AnchorPane> {
         loadAnnotationService.restart();
 
     }
-
 
     /**
      * Show graph with reference points.
