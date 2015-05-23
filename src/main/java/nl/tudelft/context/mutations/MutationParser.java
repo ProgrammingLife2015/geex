@@ -56,29 +56,17 @@ public final class MutationParser {
      * Recursively checks a variation from start till end.
      * @param startNode the node where a variation starts.
      */
-    public void checkVariation(final Node startNode) {
+    private void checkVariation(final Node startNode) {
 
-        List<Node> nextNodes =  new LinkedList<>();
-
-        Set<DefaultEdge> listEdges = graph.outgoingEdgesOf(startNode);
-        nextNodes.addAll(listEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()));
-
-        nextNodes.stream().filter(temp -> !variations.contains(temp)).forEach(variations::add);
-
-        System.out.println("nextNodes: " + nextNodes.stream().map(Node::getId).collect(Collectors.toList()));
-
-        List<List<Node>> listSets = new LinkedList<>();
-        for (int i = 0; i < graph.outDegreeOf(startNode); i++) {
-
-            listSets.add(new LinkedList<>());
-
-        }
+        List<Node> nextNodes =  getNextNodes(startNode);
+        List<List<Node>> listSets = getFreshListSets(graph.outDegreeOf(startNode));
 
         int set = 0;
 
         while (!nextNodes.isEmpty()) {
 
             Node node = nextNodes.get(0);
+            addToVariations(node);
 
             if (graph.outDegreeOf(node) > 1) {
 
@@ -107,12 +95,69 @@ public final class MutationParser {
 
     }
 
+    /**
+     * This function checks if there is a duplicate in the list.
+     * @param node The node to be added.
+     */
+    private void addToVariations(Node node) {
+
+        if (!variations.contains(node)) {
+            variations.add(node);
+        }
+
+    }
+
+    /**
+     * This function returns a List of empty lists.
+      * @param amount How many lists you want in the list.
+     * @return The list of lists.
+     */
+    private List<List<Node>> getFreshListSets(int amount) {
+
+        List<List<Node>> list = new LinkedList<>();
+
+        for (int i = 0; i < amount; i++) {
+
+            list.add(new LinkedList<>());
+
+        }
+
+        return list;
+    }
+
+    /**
+     * This function returns the next nodes of a node.
+     * @param startNode The node this function will return the next nodes from.
+     * @return Return a list of nodes that is connected to the startNode.
+     */
+    private List<Node> getNextNodes(Node startNode) {
+
+        List<Node> targetNodes =  new LinkedList<>();
+
+        Set<DefaultEdge> listEdges = graph.outgoingEdgesOf(startNode);
+        targetNodes.addAll(listEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()));
+
+
+        return targetNodes;
+
+    }
+
+    /**
+     * Prints the obtained variations.
+     */
     public void printVariations() {
         System.out.println("Amount of variations: " + variations.size());
         System.out.println(variations.toString());
     }
 
-    public boolean checkAllSets(Iterator iterator, Node node) {
+    /**
+     * Function that checks if the node is inside one of the sets that is given with the iterator.
+     *
+     * @param iterator The iterator of the list with sets.
+     * @param node The node that is to be found.
+     * @return If the node is found it will return true and vice versa.
+     */
+    private boolean checkAllSets(Iterator iterator, Node node) {
 
         return !iterator.hasNext() || ((List<Node>) iterator.next()).contains(node) && checkAllSets(iterator, node);
 
