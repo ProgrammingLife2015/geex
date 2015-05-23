@@ -44,7 +44,7 @@ public final class MutationParser {
                 .filter(node -> graph.outDegreeOf(node) > 1)
                 .collect(Collectors.toSet());
 
-        System.out.println("nodeSet: " + nodeSet.toString());
+        System.out.println("nodeSet: " + nodeSet.stream().map(Node::getId).collect(Collectors.toList()));
 
         nodeSet.forEach(this::checkVariation);
 
@@ -63,15 +63,12 @@ public final class MutationParser {
         Set<DefaultEdge> listEdges = graph.outgoingEdgesOf(startNode);
         nextNodes.addAll(listEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()));
 
-        variations.addAll(nextNodes.stream().collect(Collectors.toList()));
+        nextNodes.stream().filter(temp -> !variations.contains(temp)).forEach(variations::add);
 
-        System.out.println("nextNodes: " + nextNodes);
-        System.out.println("variations: "+ variations);
+        System.out.println("nextNodes: " + nextNodes.stream().map(Node::getId).collect(Collectors.toList()));
 
-        Iterator iterator = nextNodes.iterator();
-
-        List<List<Node>> listSets = new LinkedList();
-        for(int i = 0; i < graph.outDegreeOf(startNode); i++) {
+        List<List<Node>> listSets = new LinkedList<>();
+        for (int i = 0; i < graph.outDegreeOf(startNode); i++) {
 
             listSets.add(new LinkedList<>());
 
@@ -79,9 +76,10 @@ public final class MutationParser {
 
         int set = 0;
 
-        while (iterator.hasNext()) {
+        while (!nextNodes.isEmpty()) {
 
-            Node node = (Node) iterator.next();
+            Node node = nextNodes.get(0);
+
             if (graph.outDegreeOf(node) > 1) {
 
                 checkVariation(node);
@@ -100,9 +98,8 @@ public final class MutationParser {
                     set = 0;
                 }
 
-                List<Node> listInsert = new LinkedList();
-                listInsert.add(node);
-                nextNodes.addAll(graph.nextColumn(listInsert));
+                Set<DefaultEdge> setOfEdges = graph.outgoingEdgesOf(node);
+                nextNodes.addAll(setOfEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()));
 
             }
 
@@ -117,23 +114,8 @@ public final class MutationParser {
 
     public boolean checkAllSets(Iterator iterator, Node node) {
 
-        if (iterator.hasNext()) {
+        return !iterator.hasNext() || ((List<Node>) iterator.next()).contains(node) && checkAllSets(iterator, node);
 
-           if (((List<Node>) iterator.next()).contains(node)) {
-
-               return checkAllSets(iterator, node);
-
-           } else {
-
-               return false;
-
-           }
-
-        } else {
-
-            return true;
-
-        }
     }
 
 }
