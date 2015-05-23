@@ -45,7 +45,6 @@ public class MessageController extends DefaultController<VBox> {
      */
     public static final String SUCCESS_LOAD_TREE = "Phylogenetic tree loaded successfully.";
 
-
     /**
      * Message used when annotation loading fails.
      */
@@ -55,6 +54,17 @@ public class MessageController extends DefaultController<VBox> {
      * Message used when annotation loading succeeds.
      */
     public static final String SUCCESS_LOAD_ANNOTATION = "Annotations loaded successfully.";
+
+    /**
+     * Message used when mutations loading fails.
+     */
+    public static final String FAIL_LOAD_MUTATION = "Could not load mutations.";
+
+    /**
+     * Message used when mutations loading succeeds.
+     */
+    public static final String SUCCESS_LOAD_MUTATION = "Mutations loaded successfully.";
+
     /**
      * The text that is shown.
      */

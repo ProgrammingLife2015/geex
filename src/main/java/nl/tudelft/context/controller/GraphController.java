@@ -9,9 +9,10 @@ import nl.tudelft.context.annotation.AnnotationMap;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.mutations.MutationParser;
+import nl.tudelft.context.graph.Node;
 import nl.tudelft.context.service.LoadAnnotationService;
 import nl.tudelft.context.service.LoadGraphService;
+import nl.tudelft.context.service.LoadMutationService;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
@@ -66,9 +67,19 @@ public final class GraphController extends ViewController<AnchorPane> {
     LoadAnnotationService loadAnnotationService;
 
     /**
+     * The service for loading the mutations.
+     */
+    LoadMutationService loadMutationService;
+
+    /**
      * Sources that are displayed in the graph.
      */
     Set<String> sources;
+
+    /**
+     * The graph that has been loaded.
+     */
+    Graph graph;
 
     /**
      * Init a controller at graph.fxml.
@@ -85,6 +96,7 @@ public final class GraphController extends ViewController<AnchorPane> {
         Workspace workspace = mainController.getWorkspace();
         this.loadGraphService = new LoadGraphService(workspace.getNodeFile(), workspace.getEdgeFile());
         this.loadAnnotationService = new LoadAnnotationService(workspace.getAnnotationFile());
+        this.loadMutationService = new LoadMutationService();
 
         loadFXML("/application/graph.fxml");
 
@@ -115,13 +127,14 @@ public final class GraphController extends ViewController<AnchorPane> {
     private void loadGraph() {
 
         loadGraphService.setOnSucceeded(event -> {
-            Graph graph = loadGraphService.getValue().flat(sources);
+            this.graph = loadGraphService.getValue().flat(sources);
             graph.position();
-            loadMutations(graph);
+            loadMutations();
             showGraph(graph);
             mainController.displayMessage(MessageController.SUCCESS_LOAD_GRAPH);
         });
         loadGraphService.setOnFailed(event -> {
+            this.graph = null;
             mainController.displayMessage(MessageController.FAIL_LOAD_GRAPH);
         });
         loadGraphService.restart();
@@ -131,11 +144,16 @@ public final class GraphController extends ViewController<AnchorPane> {
     /**
      * Load Mutations from the graph.
      */
-    private void loadMutations(final Graph graph) {
+    private void loadMutations() {
 
-        MutationParser mp = new MutationParser(graph);
-        mp.checkMutations();
-        mp.printVariations();
+        loadMutationService.setGraph(graph);
+        loadMutationService.setOnSucceeded(event -> {
+            List<Node> nodes = loadMutationService.getValue();
+            System.out.println(nodes);
+            mainController.displayMessage(MessageController.SUCCESS_LOAD_MUTATION);
+        });
+        loadMutationService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_MUTATION));
+        loadMutationService.restart();
 
     }
 

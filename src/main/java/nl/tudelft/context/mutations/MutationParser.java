@@ -26,6 +26,7 @@ public final class MutationParser {
 
     /**
      * The constructor of the class.
+     *
      * @param graph The graph that will be checked for mutations
      */
     public MutationParser(final Graph graph) {
@@ -38,7 +39,7 @@ public final class MutationParser {
     /**
      * The function that creates the mutations.
      */
-    public void checkMutations() {
+    public List<Node> checkMutations() {
 
         Set<Node> nodeSet = graph.vertexSet().stream()
                 .filter(node -> graph.outDegreeOf(node) > 1)
@@ -50,10 +51,13 @@ public final class MutationParser {
 
         System.out.println("Variations: " + variations.stream().map(Node::getId).collect(Collectors.toList()));
 
+        return variations;
+
     }
 
     /**
      * Recursively checks a variation from start till end.
+     *
      * @param startNode the node where a variation starts.
      */
     private void checkVariation(final Node startNode) {
@@ -97,6 +101,7 @@ public final class MutationParser {
 
     /**
      * This function checks if there is a duplicate in the list.
+     *
      * @param node The node to be added.
      */
     private void addToVariations(Node node) {
@@ -109,6 +114,7 @@ public final class MutationParser {
 
     /**
      * This function returns a List of empty lists.
+     *
       * @param amount How many lists you want in the list.
      * @return The list of lists.
      */
@@ -127,6 +133,7 @@ public final class MutationParser {
 
     /**
      * This function returns the next nodes of a node.
+     *
      * @param startNode The node this function will return the next nodes from.
      * @return Return a list of nodes that is connected to the startNode.
      */
