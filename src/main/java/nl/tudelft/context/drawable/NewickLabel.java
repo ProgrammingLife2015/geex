@@ -2,6 +2,7 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.control.Label;
 import nl.tudelft.context.newick.Node;
+import nl.tudelft.context.newick.selection.Selection;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -63,24 +64,8 @@ public class NewickLabel extends Label {
      * @param oldValue The old selection value.
      * @param newValue The new selection value.
      */
-    public void setSelectedClass(final Node.Selection oldValue, final Node.Selection newValue) {
-        if (!oldValue.equals(newValue)) {
-            switch (newValue) {
-                case NONE:
-                    getStyleClass().remove("selected");
-                    getStyleClass().remove("partial");
-                    break;
-                case PARTIAL:
-                    getStyleClass().remove("selected");
-                    getStyleClass().add("partial");
-                    break;
-                case ALL:
-                    getStyleClass().add("selected");
-                    getStyleClass().remove("partial");
-                    break;
-                default:
-                    break;
-            }
-        }
+    public void setSelectedClass(final Selection oldValue, final Selection newValue) {
+        getStyleClass().remove(oldValue.styleClass());
+        getStyleClass().add(newValue.styleClass());
     }
 }
