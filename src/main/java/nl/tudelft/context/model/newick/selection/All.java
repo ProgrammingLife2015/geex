@@ -1,30 +1,33 @@
-package nl.tudelft.context.newick.selection;
+package nl.tudelft.context.model.newick.selection;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 22-5-2015
  */
-public class Partial implements Selection {
+public class All implements Selection {
 
     @Override
     public boolean useSources() {
-        return false;
+        return true;
     }
 
     @Override
     public Selection toggle() {
-        return new All();
+        return new None();
     }
 
     @Override
     public Selection merge(final Selection selection) {
-        return this;
+        if (selection instanceof All) {
+            return this;
+        }
+        return new Partial();
     }
 
     @Override
     public String styleClass() {
-        return "partial";
+        return "selected";
     }
 
 }

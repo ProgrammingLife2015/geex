@@ -1,11 +1,11 @@
-package nl.tudelft.context.newick.selection;
+package nl.tudelft.context.model.newick.selection;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 22-5-2015
  */
-public class None implements Selection {
+public class Partial implements Selection {
 
     @Override
     public boolean useSources() {
@@ -19,15 +19,12 @@ public class None implements Selection {
 
     @Override
     public Selection merge(final Selection selection) {
-        if (selection instanceof None) {
-            return this;
-        }
-        return new Partial();
+        return this;
     }
 
     @Override
     public String styleClass() {
-        return "none";
+        return "partial";
     }
 
 }

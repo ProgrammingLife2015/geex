@@ -1,4 +1,4 @@
-package nl.tudelft.context.newick.selection;
+package nl.tudelft.context.model.newick.selection;
 
 /**
  * @author René Vennik <renevennik@gmail.com>

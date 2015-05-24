@@ -1,9 +1,9 @@
 package nl.tudelft.context.model.newick;
 
-import nl.tudelft.context.newick.selection.All;
-import nl.tudelft.context.newick.selection.None;
-import nl.tudelft.context.newick.selection.Partial;
-import nl.tudelft.context.newick.selection.Selection;
+import nl.tudelft.context.model.newick.selection.All;
+import nl.tudelft.context.model.newick.selection.None;
+import nl.tudelft.context.model.newick.selection.Partial;
+import nl.tudelft.context.model.newick.selection.Selection;
 import org.junit.Test;
 
 import java.util.Collections;
