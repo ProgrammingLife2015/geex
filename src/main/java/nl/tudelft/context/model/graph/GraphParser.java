@@ -28,7 +28,8 @@ public final class GraphParser extends MultiParser<GraphMap> {
      * @throws FileNotFoundException        The file is not found.
      * @throws UnsupportedEncodingException The file contains an unsupported encoding (not UTF-8).
      */
-    public GraphParser(final File nodeFile, final File edgeFile) throws FileNotFoundException, UnsupportedEncodingException {
+    public GraphParser(final File nodeFile, final File edgeFile)
+            throws FileNotFoundException, UnsupportedEncodingException {
         super(nodeFile, edgeFile);
     }
 

@@ -32,12 +32,13 @@ public final class TreeParser extends Parser<Tree> {
     public static final int MIN_WEIGHT = 30;
 
     /**
-     * Create a new TreeParser
+     * Create a new TreeParser.
      * @param file The tree source file.
-     * @throws FileNotFoundException
-     * @throws UnsupportedEncodingException
+     * @throws FileNotFoundException The file is not found.
+     * @throws UnsupportedEncodingException The file contains an unsupported encoding (not UTF-8).
      */
-    public TreeParser(final File file) throws FileNotFoundException, UnsupportedEncodingException {
+    public TreeParser(final File file)
+            throws FileNotFoundException, UnsupportedEncodingException {
         super(file);
     }
 

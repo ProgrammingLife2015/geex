@@ -19,8 +19,8 @@ public class AnnotationParser extends Parser<AnnotationMap> {
     /**
      * Create a new AnnotationParser.
      * @param file File to parse
-     * @throws FileNotFoundException
-     * @throws UnsupportedEncodingException
+     * @throws FileNotFoundException The file is not found.
+     * @throws UnsupportedEncodingException The file contains an unsupported encoding (not UTF-8).
      */
     public AnnotationParser(final File file) throws FileNotFoundException, UnsupportedEncodingException {
         super(file);
@@ -31,7 +31,7 @@ public class AnnotationParser extends Parser<AnnotationMap> {
      * @param reader Reader to read.
      * @return A parsed annotationmap.
      */
-    public AnnotationMap parse(BufferedReader reader) {
+    public AnnotationMap parse(final BufferedReader reader) {
         Scanner sc = new Scanner(reader);
         AnnotationMap annotationMap = new AnnotationMap();
         String line = "";
