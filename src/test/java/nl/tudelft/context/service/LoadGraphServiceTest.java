@@ -66,10 +66,4 @@ public class LoadGraphServiceTest {
         assertNotNull(graph);
 
     }
-
-    @Test
-    public void addReaderTest() throws Exception {
-
-    }
-
 }
