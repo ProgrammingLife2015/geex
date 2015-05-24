@@ -69,29 +69,34 @@ public final class MutationParser {
 
         while (!nextNodes.isEmpty()) {
 
-            Node node = nextNodes.get(0);
-            addToVariations(node);
+            Node node = nextNodes.remove(0);
 
-            if (graph.outDegreeOf(node) > 1) {
+//            if (graph.outDegreeOf(node) > 1) {
+//
+//                checkVariation(node);
+//
+//            }
 
-                checkVariation(node);
-
-            }
-
-            if (checkAllSets(listSets.iterator(), node)) {
+            if (checkAllSets(listSets, node)) {
 
                 break;
 
             } else {
 
+                addToList(variations, node);
                 listSets.get(set).add(node);
                 set++;
-                if (set > graph.outDegreeOf(startNode)) {
+                if (set >= graph.outDegreeOf(startNode)) {
                     set = 0;
                 }
 
                 Set<DefaultEdge> setOfEdges = graph.outgoingEdgesOf(node);
-                nextNodes.addAll(setOfEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()));
+
+                if (!nextNodes.isEmpty()) {
+                    setOfEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()).forEach(n -> addToList(nextNodes, n));
+                } else {
+                    variations.remove(node);
+                }
 
             }
 
@@ -104,10 +109,10 @@ public final class MutationParser {
      *
      * @param node The node to be added.
      */
-    private void addToVariations(Node node) {
+    private void addToList(List<Node> list, Node node) {
 
-        if (!variations.contains(node)) {
-            variations.add(node);
+        if (!list.contains(node)) {
+            list.add(node);
         }
 
     }
@@ -160,13 +165,24 @@ public final class MutationParser {
     /**
      * Function that checks if the node is inside one of the sets that is given with the iterator.
      *
-     * @param iterator The iterator of the list with sets.
+     * @param list The list of sets.
      * @param node The node that is to be found.
      * @return If the node is found it will return true and vice versa.
      */
-    private boolean checkAllSets(Iterator iterator, Node node) {
+    private boolean checkAllSets(List<List<Node>> list, Node node) {
 
-        return !iterator.hasNext() || ((List<Node>) iterator.next()).contains(node) && checkAllSets(iterator, node);
+        boolean res = false;
+        for (List<Node> aList : list) {
+
+            if (aList.contains(node)) {
+                res = true;
+                break;
+            }
+
+        }
+
+        return res;
+//        return !iterator.hasNext() || ((List<Node>) iterator.next()).contains(node) && checkAllSets(list, node);
 
     }
 
