@@ -1,5 +1,6 @@
 package nl.tudelft.context.model.newick;
 
+import nl.tudelft.context.model.Parser;
 import org.junit.Test;
 
 import java.io.File;
@@ -18,7 +19,7 @@ import static org.junit.Assert.fail;
  */
 public class TreeFactoryTest {
     protected static File file;
-    protected static TreeParser treeParser;
+    protected static Parser<Tree> treeParser;
     protected static Tree tree;
     protected static Node root;
 
@@ -28,7 +29,7 @@ public class TreeFactoryTest {
     public static void loadFile() {
         file = new File(TreeTest.class.getResource("/newick/10strains.nwk").getPath());
         try {
-            treeParser = new TreeParser(file);
+            treeParser = new TreeParser().setReader(file);
         } catch (FileNotFoundException e) {
             fail("File not found");
         } catch (UnsupportedEncodingException e) {

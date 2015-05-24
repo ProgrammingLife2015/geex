@@ -3,6 +3,7 @@ package nl.tudelft.context.service;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.concurrent.Worker;
 import nl.tudelft.context.model.newick.Tree;
+import nl.tudelft.context.model.newick.TreeParser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -28,7 +29,7 @@ public class LoadNewickServiceTest {
     @Test
     public void testNewickLoadSucceeds() throws Exception {
 
-        final LoadNewickService loadNewickService = new LoadNewickService(nwkFile);
+        final LoadService<Tree> loadNewickService = new LoadService<>(TreeParser.class, nwkFile);
 
         CompletableFuture<Tree> completableFuture = new CompletableFuture<>();
 

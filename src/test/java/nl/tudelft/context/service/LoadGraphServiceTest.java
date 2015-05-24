@@ -38,7 +38,7 @@ public class LoadGraphServiceTest {
     @BeforeClass
     public static void beforeClass() throws FileNotFoundException, UnsupportedEncodingException {
 
-        graphFromFactory = new GraphParser(nodeFile, edgeFile).parse();
+        graphFromFactory = new GraphParser().setReader(nodeFile, edgeFile).parse();
 
     }
 
@@ -48,7 +48,7 @@ public class LoadGraphServiceTest {
     @Test
     public void testGraphLoadSucceeds() throws Exception {
 
-        final LoadGraphService loadGraphService = new LoadGraphService(nodeFile, edgeFile);
+        final LoadService<GraphMap> loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
 
         CompletableFuture<Graph> completableFuture = new CompletableFuture<>();
 
@@ -64,6 +64,11 @@ public class LoadGraphServiceTest {
         Graph graph = completableFuture.get(5000, TimeUnit.MILLISECONDS);
 
         assertNotNull(graph);
+
+    }
+
+    @Test
+    public void addReaderTest() throws Exception {
 
     }
 
