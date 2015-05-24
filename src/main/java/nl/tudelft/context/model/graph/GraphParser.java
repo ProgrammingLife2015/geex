@@ -1,11 +1,8 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.MultiParser;
+import nl.tudelft.context.model.Parser;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,21 +14,7 @@ import java.util.Scanner;
  * @version 1.0
  * @since 23-4-2015
  */
-public final class GraphParser extends MultiParser<GraphMap> {
-
-
-    /**
-     * Create a new parser of type T.
-     *
-     * @param nodeFile node file source.
-     * @param edgeFile edge file source.
-     * @throws FileNotFoundException        The file is not found.
-     * @throws UnsupportedEncodingException The file contains an unsupported encoding (not UTF-8).
-     */
-    public GraphParser(final File nodeFile, final File edgeFile)
-            throws FileNotFoundException, UnsupportedEncodingException {
-        super(nodeFile, edgeFile);
-    }
+public final class GraphParser extends Parser<GraphMap> {
 
     @Override
     protected GraphMap parse(final BufferedReader... reader) {

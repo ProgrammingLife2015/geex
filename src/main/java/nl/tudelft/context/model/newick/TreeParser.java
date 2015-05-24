@@ -4,9 +4,6 @@ import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import nl.tudelft.context.model.Parser;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -32,18 +29,15 @@ public final class TreeParser extends Parser<Tree> {
     public static final int MIN_WEIGHT = 30;
 
     /**
-     * Create a new TreeParser.
-     * @param file The tree source file.
-     * @throws FileNotFoundException The file is not found.
-     * @throws UnsupportedEncodingException The file contains an unsupported encoding (not UTF-8).
+     * Empty constructor for creating an empty TreeParser.
      */
-    public TreeParser(final File file)
-            throws FileNotFoundException, UnsupportedEncodingException {
-        super(file);
+    public TreeParser() {
+        super();
     }
 
     @Override
-    protected Tree parse(final BufferedReader reader) {
+    protected Tree parse(final BufferedReader... readerList) {
+        BufferedReader reader = readerList[0];
         net.sourceforge.olduvai.treejuxtaposer.TreeParser tp =
                 new net.sourceforge.olduvai.treejuxtaposer.TreeParser(reader);
 

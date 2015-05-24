@@ -37,7 +37,7 @@ public class AnnotationParserTest {
 
     @Test
     public void testGetAnnotationMap() throws Exception {
-        AnnotationMap annotationMap2 = new AnnotationParser(annotationFile).parse();
+        AnnotationMap annotationMap2 = new AnnotationParser().setReader(annotationFile).parse();
         assertEquals(annotationMap1.toString(), annotationMap2.toString());
 
     }

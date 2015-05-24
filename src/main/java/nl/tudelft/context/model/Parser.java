@@ -17,7 +17,7 @@ public abstract class Parser<T> {
     /**
      * Reader used for reading the file.
      */
-    BufferedReader reader;
+    BufferedReader[] readerList;
 
     /**
      * Empty constructor for child classes which extend functionality.
@@ -27,13 +27,20 @@ public abstract class Parser<T> {
     }
 
     /**
-     * Create a new parser of type T.
-     * @param file File source.
-     * @throws FileNotFoundException The file is not found.
-     * @throws UnsupportedEncodingException The file contains an unsupported encoding (not UTF-8).
+     * Set the readers for this parser.
+     * @param files The files to read from
+     * @return this
+     * @throws FileNotFoundException If the file is not found.
+     * @throws UnsupportedEncodingException If the file contains an unsupported encoding.
      */
-    public Parser(final File file) throws FileNotFoundException, UnsupportedEncodingException {
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+    public Parser<T> setReader(final File... files) throws FileNotFoundException, UnsupportedEncodingException {
+        readerList = new BufferedReader[files.length];
+        for (int i = 0; i < files.length; i++) {
+            File file = files[i];
+            readerList[i] = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+        }
+
+        return this;
     }
 
     /**
@@ -41,7 +48,7 @@ public abstract class Parser<T> {
      * @return Parsed object.
      */
     public T parse() {
-        return parse(reader);
+        return parse(readerList);
     }
 
     /**
@@ -49,5 +56,5 @@ public abstract class Parser<T> {
      * @param file File to parse.
      * @return Parsed object.
      */
-    protected abstract T parse(BufferedReader file);
+    protected abstract T parse(BufferedReader... file);
 }

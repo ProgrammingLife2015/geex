@@ -3,9 +3,6 @@ package nl.tudelft.context.model.annotation;
 import nl.tudelft.context.model.Parser;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 
@@ -17,21 +14,12 @@ import java.util.Scanner;
 public class AnnotationParser extends Parser<AnnotationMap> {
 
     /**
-     * Create a new AnnotationParser.
-     * @param file File to parse
-     * @throws FileNotFoundException The file is not found.
-     * @throws UnsupportedEncodingException The file contains an unsupported encoding (not UTF-8).
-     */
-    public AnnotationParser(final File file) throws FileNotFoundException, UnsupportedEncodingException {
-        super(file);
-    }
-
-    /**
      * Parse the file into an AnnotationMap.
-     * @param reader Reader to read.
+     * @param readerList Reader to read.
      * @return A parsed annotationmap.
      */
-    public AnnotationMap parse(final BufferedReader reader) {
+    public AnnotationMap parse(final BufferedReader... readerList) {
+        BufferedReader reader = readerList[0];
         Scanner sc = new Scanner(reader);
         AnnotationMap annotationMap = new AnnotationMap();
         String line = "";
