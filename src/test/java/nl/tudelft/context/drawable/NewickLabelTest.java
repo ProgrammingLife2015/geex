@@ -2,6 +2,9 @@ package nl.tudelft.context.drawable;
 
 import de.saxsys.javafx.test.JfxRunner;
 import nl.tudelft.context.model.newick.Node;
+import nl.tudelft.context.model.newick.selection.All;
+import nl.tudelft.context.model.newick.selection.None;
+import nl.tudelft.context.model.newick.selection.Partial;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -94,8 +97,9 @@ public class NewickLabelTest {
     @Test
     public void testSelectionNotChanged() {
         NewickLabel newickLabel = getLabel();
+        newickLabel.setSelectedClass(new None(), new None()); // Fix for empty style class none
         int numClasses = newickLabel.getStyleClass().size();
-        newickLabel.setSelectedClass(Node.Selection.NONE, Node.Selection.NONE);
+        newickLabel.setSelectedClass(new None(), new None());
         assertEquals(numClasses, newickLabel.getStyleClass().size());
     }
 
@@ -105,7 +109,7 @@ public class NewickLabelTest {
     @Test
     public void testSelectionAll() {
         NewickLabel newickLabel = getLabel();
-        newickLabel.setSelectedClass(Node.Selection.NONE, Node.Selection.ALL);
+        newickLabel.setSelectedClass(new None(), new All());
         assertFalse(newickLabel.getStyleClass().contains("partial"));
         assertTrue(newickLabel.getStyleClass().contains("selected"));
     }
@@ -116,7 +120,7 @@ public class NewickLabelTest {
     @Test
     public void testSelectionPartial() {
         NewickLabel newickLabel = getLabel();
-        newickLabel.setSelectedClass(Node.Selection.NONE, Node.Selection.PARTIAL);
+        newickLabel.setSelectedClass(new None(), new Partial());
         assertTrue(newickLabel.getStyleClass().contains("partial"));
         assertFalse(newickLabel.getStyleClass().contains("selected"));
     }
@@ -127,7 +131,7 @@ public class NewickLabelTest {
     @Test
     public void testSelectionNone() {
         NewickLabel newickLabel = getLabel();
-        newickLabel.setSelectedClass(Node.Selection.ALL, Node.Selection.NONE);
+        newickLabel.setSelectedClass(new All(), new None());
         assertFalse(newickLabel.getStyleClass().contains("partial"));
         assertFalse(newickLabel.getStyleClass().contains("selected"));
     }

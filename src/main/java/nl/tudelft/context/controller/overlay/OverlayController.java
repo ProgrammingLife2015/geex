@@ -18,6 +18,8 @@ public class OverlayController extends DefaultController<GridPane> {
     public OverlayController() {
         super(new GridPane());
 
+        setVisibility(false);
+
         loadFXML("/application/overlay.fxml");
     }
 

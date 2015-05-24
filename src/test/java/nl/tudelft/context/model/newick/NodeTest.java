@@ -1,13 +1,18 @@
 package nl.tudelft.context.model.newick;
 
+import nl.tudelft.context.newick.selection.All;
+import nl.tudelft.context.newick.selection.None;
+import nl.tudelft.context.newick.selection.Partial;
+import nl.tudelft.context.newick.selection.Selection;
 import org.junit.Test;
 
 import java.util.Collections;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -61,9 +66,9 @@ public class NodeTest {
     @Test
     public void testToggleSelectionFromNoneToAll() {
         Node n = new Node("", 1);
-        n.setSelection(Node.Selection.NONE);
+        n.setSelection(new None());
         n.toggleSelected();
-        assertEquals(Node.Selection.ALL, n.getSelection());
+        assertThat(n.getSelection(), instanceOf(All.class));
     }
 
     /**
@@ -72,9 +77,9 @@ public class NodeTest {
     @Test
     public void testToggleSelectionFromPartialToAll() {
         Node n = new Node("", 1);
-        n.setSelection(Node.Selection.PARTIAL);
+        n.setSelection(new Partial());
         n.toggleSelected();
-        assertEquals(Node.Selection.ALL, n.getSelection());
+        assertThat(n.getSelection(), instanceOf(All.class));
     }
 
     /**
@@ -83,9 +88,9 @@ public class NodeTest {
     @Test
     public void testToggleSelectionFromAllToNone() {
         Node n = new Node("", 1);
-        n.setSelection(Node.Selection.ALL);
+        n.setSelection(new All());
         n.toggleSelected();
-        assertEquals(Node.Selection.NONE, n.getSelection());
+        assertThat(n.getSelection(), instanceOf(None.class));
     }
 
     /**
@@ -96,8 +101,9 @@ public class NodeTest {
         Node n1 = new Node("", 1);
         Node n2 = mock(Node.class);
         n1.addChild(n2);
-        n1.setSelection(Node.Selection.ALL);
-        verify(n2, times(1)).setSelection(Node.Selection.ALL);
+        Selection selection = new All();
+        n1.setSelection(selection);
+        verify(n2, times(1)).setSelection(selection);
     }
 
     /**
@@ -110,10 +116,10 @@ public class NodeTest {
         Node n3 = new Node("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
-        n2.setSelection(Node.Selection.ALL);
-        n3.setSelection(Node.Selection.ALL);
+        n2.setSelection(new All());
+        n3.setSelection(new All());
         n1.updateSelected();
-        assertEquals(Node.Selection.ALL, n1.getSelection());
+        assertThat(n1.getSelection(), instanceOf(All.class));
     }
 
     /**
@@ -126,10 +132,10 @@ public class NodeTest {
         Node n3 = new Node("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
-        n2.setSelection(Node.Selection.NONE);
-        n3.setSelection(Node.Selection.NONE);
+        n2.setSelection(new None());
+        n3.setSelection(new None());
         n1.updateSelected();
-        assertEquals(Node.Selection.NONE, n1.getSelection());
+        assertThat(n1.getSelection(), instanceOf(None.class));
     }
 
     /**
@@ -142,10 +148,10 @@ public class NodeTest {
         Node n3 = new Node("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
-        n2.setSelection(Node.Selection.PARTIAL);
-        n3.setSelection(Node.Selection.NONE);
+        n2.setSelection(new Partial());
+        n3.setSelection(new None());
         n1.updateSelected();
-        assertEquals(Node.Selection.PARTIAL, n1.getSelection());
+        assertThat(n1.getSelection(), instanceOf(Partial.class));
     }
 
     /**
@@ -158,10 +164,10 @@ public class NodeTest {
         Node n3 = new Node("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
-        n2.setSelection(Node.Selection.ALL);
-        n3.setSelection(Node.Selection.NONE);
+        n2.setSelection(new All());
+        n3.setSelection(new None());
         n1.updateSelected();
-        assertEquals(Node.Selection.PARTIAL, n1.getSelection());
+        assertThat(n1.getSelection(), instanceOf(Partial.class));
     }
 
     /**
