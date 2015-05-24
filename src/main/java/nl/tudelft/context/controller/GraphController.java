@@ -163,8 +163,6 @@ public final class GraphController extends ViewController<AnchorPane> {
                 .collect(Collectors.toList());
 
         sequences.getChildren().addAll(edgeList);
-        sequences.getChildren().addAll(nodeList);
-
         initOnTheFlyLoading(nodeList);
 
     }
@@ -198,14 +196,17 @@ public final class GraphController extends ViewController<AnchorPane> {
         double width = scroll.getWidth();
         double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
                 * scroll.getHvalue();
-        int indexFrom = (int) Math.round(left / Graph.LABEL_SPACING) - 1;
+        int indexFrom = (int) Math.floor(left / Graph.LABEL_SPACING) - 1;
         int indexTo = indexFrom + (int) Math.ceil(width / Graph.LABEL_SPACING) + 1;
 
-        IntStream.rangeClosed(indexFrom, indexTo)
+        List<InfoLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
                 .mapToObj(map::remove)
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
-                .forEach(InfoLabel::init);
+                .collect(Collectors.toList());
+
+        infoLabels.forEach(InfoLabel::init);
+        sequences.getChildren().addAll(infoLabels);
 
     }
 
