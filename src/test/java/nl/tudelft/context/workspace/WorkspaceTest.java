@@ -1,25 +1,31 @@
 package nl.tudelft.context.workspace;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
  * @version 1.1
  * @since 9-5-2015
  */
-public class WorkspaceTest extends TestCase {
+public class WorkspaceTest {
 
+    @Test
     public void testNullDirectory() throws Exception {
         Workspace workspace = new Workspace(null);
 
         assertEquals(null, workspace.directory);
     }
 
+    @Test
     public void testDirectory() throws Exception {
         File file = new File("mydir");
         Workspace workspace = new Workspace(file);
@@ -27,6 +33,7 @@ public class WorkspaceTest extends TestCase {
         assertEquals(file, workspace.directory);
     }
 
+    @Test
     public void testOneGraph() throws Exception {
         Workspace workspace = new Workspace(null);
         File[] pathList = new File[4];
@@ -51,16 +58,15 @@ public class WorkspaceTest extends TestCase {
         assertEquals(annPath, workspace.getAnnotationFile());
     }
 
+    @Test(expected = FileNotFoundException.class)
     public void testNotFound() throws Exception {
         Workspace workspace = new Workspace(null);
 
         workspace.load();
-
-        assertEquals(null, workspace.getNodeFile());
-        assertEquals(null, workspace.getAnnotationFile());
     }
 
-    public void testLoadNoAnnotationFile() {
+    @Test(expected = FileNotFoundException.class)
+    public void testLoadNoAnnotationFile() throws Exception {
         Workspace workspace1 = new Workspace(null);
         File[] pathList = new File[4];
 
@@ -75,11 +81,12 @@ public class WorkspaceTest extends TestCase {
         pathList[3] = annPath1;
 
         workspace1.files = pathList;
-        assertFalse(workspace1.load());
 
+        workspace1.load();
     }
 
-    public void testLoadNoNwkFile() {
+    @Test(expected = FileNotFoundException.class)
+    public void testLoadNoNwkFile() throws Exception{
         Workspace workspace1 = new Workspace(null);
         File[] pathList = new File[4];
 
@@ -94,11 +101,13 @@ public class WorkspaceTest extends TestCase {
         pathList[3] = annPath1;
 
         workspace1.files = pathList;
-        assertFalse(workspace1.load());
+
+        workspace1.load();
 
     }
 
-    public void testLoadNoNodeFile() {
+    @Test(expected = FileNotFoundException.class)
+    public void testLoadNoNodeFile() throws Exception {
         Workspace workspace1 = new Workspace(null);
         File[] pathList = new File[4];
 
@@ -113,11 +122,12 @@ public class WorkspaceTest extends TestCase {
         pathList[3] = annPath1;
 
         workspace1.files = pathList;
-        assertFalse(workspace1.load());
+        workspace1.load();
 
     }
 
-    public void testLoadNoEdgeFile() {
+    @Test(expected = FileNotFoundException.class)
+    public void testLoadNoEdgeFile() throws Exception {
         Workspace workspace1 = new Workspace(null);
         File[] pathList = new File[4];
 
@@ -132,7 +142,8 @@ public class WorkspaceTest extends TestCase {
         pathList[3] = annPath1;
 
         workspace1.files = pathList;
-        assertFalse(workspace1.load());
+
+        workspace1.load();
 
     }
 
