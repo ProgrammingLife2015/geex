@@ -63,6 +63,7 @@ public class Workspace {
 
     /**
      * Choose a workspace with a directorychooser.
+     *
      * @param mainController The application to choose a workspace for.
      */
     public static void chooseWorkspace(final MainController mainController) {
@@ -91,7 +92,7 @@ public class Workspace {
      * @return The found file, null if no file is found.
      * @throws FileNotFoundException Thrown if file not found.
      */
-    private File findFile(final File[] files, final String extension) throws FileNotFoundException{
+    private File findFile(final File[] files, final String extension) throws FileNotFoundException {
         return Arrays.stream(files)
                 .filter(file -> file
                         .toString()
@@ -104,10 +105,9 @@ public class Workspace {
     /**
      * Load graphs and newick files from the loaded directory.
      *
-     * @return If all files are loaded.
      * @throws FileNotFoundException If any of the files is not found.
      */
-    public final void load() throws FileNotFoundException{
+    public final void load() throws FileNotFoundException {
         edgeFile = findFile(files, ".edge.graph");
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
