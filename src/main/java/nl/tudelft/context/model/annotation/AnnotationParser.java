@@ -1,10 +1,12 @@
 package nl.tudelft.context.model.annotation;
 
+import nl.tudelft.context.model.Parser;
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
 
 
 /**
@@ -12,34 +14,30 @@ import java.io.InputStreamReader;
  * @version 1.0
  * @since 21-5-2015
  */
-public class AnnotationParser {
+public class AnnotationParser extends Parser<AnnotationMap> {
 
     /**
-     * Create an AnnotationMap from a file.
-     *
-     * @param annotationFile the file with the annotations
-     * @return the annotationMap
-     * @throws IOException when the file is not readable.
+     * Create a new AnnotationParser.
+     * @param file File to parse
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException
      */
-    public final AnnotationMap getAnnotationMap(final File annotationFile)
-            throws IOException {
-        BufferedReader fileReader =
-                new BufferedReader(new InputStreamReader(new FileInputStream(annotationFile), "UTF-8"));
-        return parseAnnotations(fileReader);
+    public AnnotationParser(final File file) throws FileNotFoundException, UnsupportedEncodingException {
+        super(file);
     }
 
     /**
-     * Parse the file and generate the annotations.
-     *
-     * @param bufferedReader the reader for the file
-     * @return an annotationMap with the annotations
-     * @throws IOException when the file is not readable.
+     * Parse the file into an AnnotationMap.
+     * @param reader Reader to read.
+     * @return A parsed annotationmap.
      */
-    public final AnnotationMap parseAnnotations(final BufferedReader bufferedReader) throws IOException {
+    public AnnotationMap parse(BufferedReader reader) {
+        Scanner sc = new Scanner(reader);
         AnnotationMap annotationMap = new AnnotationMap();
         String line = "";
         String cvsSplitBy = ",";
-        while ((line = bufferedReader.readLine()) != null) {
+        while (sc.hasNextLine()) {
+            line = sc.nextLine();
             String[] splitLine = line.split(cvsSplitBy);
             annotationMap.put(splitLine[1], getAnnotation(splitLine));
         }

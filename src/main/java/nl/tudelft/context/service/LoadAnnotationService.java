@@ -2,11 +2,10 @@ package nl.tudelft.context.service;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-
-import java.io.File;
-
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.annotation.AnnotationParser;
+
+import java.io.File;
 
 /**
  * Service for loading Annotations.
@@ -44,8 +43,8 @@ public class LoadAnnotationService extends Service<AnnotationMap> {
         return new Task<AnnotationMap>() {
             @Override
             protected AnnotationMap call() throws Exception {
-                AnnotationParser annotationParser = new AnnotationParser();
-                return annotationParser.getAnnotationMap(annotationFile);
+                AnnotationParser annotationParser = new AnnotationParser(annotationFile);
+                return annotationParser.parse();
             }
         };
 
