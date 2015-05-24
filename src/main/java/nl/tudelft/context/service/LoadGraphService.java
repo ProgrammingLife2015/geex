@@ -49,8 +49,8 @@ public class LoadGraphService extends Service<GraphMap> {
         return new Task<GraphMap>() {
             @Override
             protected GraphMap call() throws Exception {
-                GraphParser graphParser = new GraphParser();
-                return graphParser.getGraphMap(nodeFile, edgeFile);
+                GraphParser graphParser = new GraphParser(nodeFile, edgeFile);
+                return graphParser.parse();
             }
         };
 

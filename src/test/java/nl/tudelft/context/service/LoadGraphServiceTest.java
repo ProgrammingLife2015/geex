@@ -38,8 +38,7 @@ public class LoadGraphServiceTest {
     @BeforeClass
     public static void beforeClass() throws FileNotFoundException, UnsupportedEncodingException {
 
-        GraphParser graphParser = new GraphParser();
-        graphFromFactory = graphParser.getGraphMap(nodeFile, edgeFile);
+        graphFromFactory = new GraphParser(nodeFile, edgeFile).parse();
 
     }
 
