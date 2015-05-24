@@ -2,7 +2,7 @@ package nl.tudelft.context.service;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.concurrent.Worker;
-import nl.tudelft.context.newick.Tree;
+import nl.tudelft.context.model.newick.Tree;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

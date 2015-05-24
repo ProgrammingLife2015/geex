@@ -8,7 +8,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
-import nl.tudelft.context.newick.Tree;
+import nl.tudelft.context.model.newick.Tree;
 import nl.tudelft.context.service.LoadNewickService;
 import nl.tudelft.context.workspace.Workspace;
 

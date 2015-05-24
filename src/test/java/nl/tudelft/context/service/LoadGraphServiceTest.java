@@ -2,9 +2,9 @@ package nl.tudelft.context.service;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.concurrent.Worker;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.GraphMap;
-import nl.tudelft.context.graph.GraphParser;
+import nl.tudelft.context.model.graph.Graph;
+import nl.tudelft.context.model.graph.GraphMap;
+import nl.tudelft.context.model.graph.GraphParser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,9 +1,7 @@
 package nl.tudelft.context.drawable;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.controller.MainController;
-import nl.tudelft.context.newick.Node;
-import org.junit.Before;
+import nl.tudelft.context.model.newick.Node;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

@@ -5,8 +5,8 @@ import javafx.concurrent.Task;
 
 import java.io.File;
 
-import nl.tudelft.context.annotation.AnnotationMap;
-import nl.tudelft.context.annotation.AnnotationParser;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.AnnotationParser;
 
 /**
  * Service for loading Annotations.

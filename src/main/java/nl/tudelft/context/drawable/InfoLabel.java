@@ -7,9 +7,9 @@ import javafx.scene.layout.VBox;
 import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.GraphController;
 import nl.tudelft.context.controller.MainController;
-import nl.tudelft.context.graph.BaseCounter;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.Node;
+import nl.tudelft.context.model.graph.BaseCounter;
+import nl.tudelft.context.model.graph.Graph;
+import nl.tudelft.context.model.graph.Node;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,9 +1,9 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.GraphParser;
-import nl.tudelft.context.graph.Node;
+import nl.tudelft.context.model.graph.Graph;
+import nl.tudelft.context.model.graph.GraphParser;
+import nl.tudelft.context.model.graph.Node;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;

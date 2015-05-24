@@ -2,8 +2,8 @@ package nl.tudelft.context.service;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import nl.tudelft.context.newick.Tree;
-import nl.tudelft.context.newick.TreeParser;
+import nl.tudelft.context.model.newick.Tree;
+import nl.tudelft.context.model.newick.TreeParser;
 
 import java.io.File;
 

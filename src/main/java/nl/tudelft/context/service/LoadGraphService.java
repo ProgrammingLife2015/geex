@@ -2,8 +2,8 @@ package nl.tudelft.context.service;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import nl.tudelft.context.graph.GraphMap;
-import nl.tudelft.context.graph.GraphParser;
+import nl.tudelft.context.model.graph.GraphMap;
+import nl.tudelft.context.model.graph.GraphParser;
 
 import java.io.File;
 
