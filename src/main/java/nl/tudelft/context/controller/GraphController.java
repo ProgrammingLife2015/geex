@@ -7,6 +7,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import nl.tudelft.context.annotation.AnnotationMap;
 import nl.tudelft.context.drawable.DrawableEdge;
+import nl.tudelft.context.drawable.DrawableMutation;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.graph.Graph;
 import nl.tudelft.context.graph.Node;
@@ -16,12 +17,7 @@ import nl.tudelft.context.service.LoadMutationService;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -149,7 +145,7 @@ public final class GraphController extends ViewController<AnchorPane> {
         loadMutationService.setGraph(graph);
         loadMutationService.setOnSucceeded(event -> {
             List<Node> nodes = loadMutationService.getValue();
-            System.out.println(nodes);
+            showMutations(nodes);
             mainController.displayMessage(MessageController.SUCCESS_LOAD_MUTATION);
         });
         loadMutationService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_MUTATION));
@@ -243,6 +239,14 @@ public final class GraphController extends ViewController<AnchorPane> {
     @Override
     public String getBreadcrumbName() {
         return "Genome graph (" + sources.size() + ")";
+    }
+
+    public void showMutations(List<Node> nodes) {
+
+        List<DrawableMutation> list = nodes.stream().map(DrawableMutation::new).collect(Collectors.toList());
+
+        sequences.getChildren().addAll(list);
+
     }
 
 }

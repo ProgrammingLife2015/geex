@@ -20,10 +20,6 @@ public class LoadMutationService extends Service<List<Node>> {
      */
     Graph graph;
 
-    public LoadMutationService() {
-
-    }
-
     /**
      * Function used to set the graph.
      *
