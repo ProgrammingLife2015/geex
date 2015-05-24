@@ -1,14 +1,15 @@
 package nl.tudelft.context.model.newick;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -22,25 +23,18 @@ public class TreeFactoryTest {
     protected static Node root;
 
     /**
-     * Set up TreeParser
-     */
-    @BeforeClass
-    public static void beforeClass() {
-        file = new File(TreeTest.class.getResource("/newick/10strains.nwk").getPath());
-        treeParser = new TreeParser();
-    }
-
-    /**
      * Helper class for loading the file.
      */
     public static void loadFile() {
+        file = new File(TreeTest.class.getResource("/newick/10strains.nwk").getPath());
         try {
-            tree = treeParser.getTree(file);
+            treeParser = new TreeParser(file);
         } catch (FileNotFoundException e) {
             fail("File not found");
         } catch (UnsupportedEncodingException e) {
             fail("Unsupported encoding");
         }
+        tree = treeParser.parse();
         assertTrue(tree.vertexSet().size() > 0);
         root = tree.getRoot();
         assertNotNull(root);

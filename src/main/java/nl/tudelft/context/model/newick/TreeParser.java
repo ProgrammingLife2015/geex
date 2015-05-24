@@ -1,12 +1,11 @@
 package nl.tudelft.context.model.newick;
 
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
+import nl.tudelft.context.model.Parser;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -14,7 +13,7 @@ import java.io.UnsupportedEncodingException;
  * @version 1.0
  * @since 3-5-2015
  */
-public final class TreeParser {
+public final class TreeParser extends Parser<Tree> {
     /**
      * The node factory.
      */
@@ -33,38 +32,28 @@ public final class TreeParser {
     public static final int MIN_WEIGHT = 30;
 
     /**
-     * Creates a new phylogenetic tree, based on the information in the Newick file.
-     *
-     * @param nwkFile the Newick file
-     * @return a phylogenetic tree
-     * @throws FileNotFoundException        when nwkFile is not found
-     * @throws UnsupportedEncodingException when nwkFile has an unsupported encoding
+     * Create a new TreeParser
+     * @param file The tree source file.
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException
      */
-    public Tree getTree(final File nwkFile) throws FileNotFoundException, UnsupportedEncodingException {
-        Tree tree = new Tree();
-
-        parseTree(nwkFile, tree);
-
-        return tree;
+    public TreeParser(final File file) throws FileNotFoundException, UnsupportedEncodingException {
+        super(file);
     }
 
-    /**
-     * Parses the file and creates the nodes to add to the tree.
-     *
-     * @param nwkFile the Newick file
-     * @param tree    the Tree to add the nodes to
-     * @throws FileNotFoundException        when the nwkFile is not found
-     * @throws UnsupportedEncodingException when the nwkFile has an unsupported encoding
-     */
-    public void parseTree(final File nwkFile, final Tree tree)
-            throws FileNotFoundException, UnsupportedEncodingException {
-        BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(nwkFile), "UTF-8"));
+    @Override
+    protected Tree parse(final BufferedReader reader) {
         net.sourceforge.olduvai.treejuxtaposer.TreeParser tp =
-                new net.sourceforge.olduvai.treejuxtaposer.TreeParser(fileReader);
+                new net.sourceforge.olduvai.treejuxtaposer.TreeParser(reader);
+
         net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize("");
         Node root = nodeParser.getNode(nwkTree.getRoot());
+
+        Tree tree = new Tree();
         getOffspring(nwkTree.getRoot(), root, tree, 0);
         tree.setRoot(root);
+
+        return tree;
     }
 
     /**

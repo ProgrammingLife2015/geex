@@ -43,8 +43,8 @@ public class LoadNewickService extends Service<Tree> {
         return new Task<Tree>() {
             @Override
             protected Tree call() throws Exception {
-                TreeParser treeParser = new TreeParser();
-                return treeParser.getTree(nwkFile);
+                TreeParser treeParser = new TreeParser(nwkFile);
+                return treeParser.parse();
             }
         };
 
