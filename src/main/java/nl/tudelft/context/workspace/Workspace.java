@@ -47,6 +47,11 @@ public class Workspace {
     File annotationFile;
 
     /**
+     * The resistance file in the workspace.
+     */
+    File resistanceFile;
+
+    /**
      * Create a new workspace on the directory.
      *
      * @param directory The workspace root
@@ -112,6 +117,7 @@ public class Workspace {
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
         annotationFile = findFile(files, ".ann.csv");
+        resistanceFile = findFile(files, ".imm.csv");
     }
 
     /**
@@ -148,6 +154,15 @@ public class Workspace {
      */
     public File getAnnotationFile() {
         return annotationFile;
+    }
+
+    /**
+     * Get the resistance file in the workspace.
+     *
+     * @return resistance file
+     */
+    public File getResistanceFile() {
+        return resistanceFile;
     }
 
 }

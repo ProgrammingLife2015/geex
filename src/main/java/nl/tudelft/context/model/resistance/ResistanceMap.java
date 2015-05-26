@@ -7,7 +7,7 @@ import java.util.HashMap;
  * @version 1.0
  * @since 21-5-2015
  */
-public class ResistanceMap extends HashMap<String, Resistance> {
+public class ResistanceMap extends HashMap<Integer, Resistance> {
 
 
     /**

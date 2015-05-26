@@ -24,8 +24,8 @@ public class ResistanceMapTest {
         resistance1 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor");
         resistance2 = new Resistance("set", "amet", "-11", 6, "consecteur");
         resistanceMap = new ResistanceMap();
-        resistanceMap.put("1", resistance1);
-        resistanceMap.put("2", resistance2);
+        resistanceMap.put(1, resistance1);
+        resistanceMap.put(2, resistance2);
     }
 
     @Test

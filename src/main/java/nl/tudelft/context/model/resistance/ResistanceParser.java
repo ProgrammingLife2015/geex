@@ -25,10 +25,12 @@ public class ResistanceParser extends Parser<ResistanceMap> {
         ResistanceMap resistanceMap = new ResistanceMap();
         String line = "";
         String cvsSplitBy = ",";
+        int index = 0;
         while (sc.hasNextLine()) {
             line = sc.nextLine();
             String[] splitLine = line.split(cvsSplitBy);
-            resistanceMap.put(splitLine[1], getResistance(splitLine));
+            resistanceMap.put(index, getResistance(splitLine));
+            index++;
         }
 
         return resistanceMap;

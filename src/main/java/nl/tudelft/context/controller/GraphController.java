@@ -13,6 +13,8 @@ import nl.tudelft.context.model.annotation.AnnotationParser;
 import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
+import nl.tudelft.context.model.resistance.ResistanceMap;
+import nl.tudelft.context.model.resistance.ResistanceParser;
 import nl.tudelft.context.service.LoadService;
 import nl.tudelft.context.workspace.Workspace;
 
@@ -68,6 +70,11 @@ public final class GraphController extends ViewController<AnchorPane> {
     Service<AnnotationMap> loadAnnotationService;
 
     /**
+     * The service for loading the resistance annotations.
+     */
+    Service<ResistanceMap> loadResistanceService;
+
+    /**
      * Sources that are displayed in the graph.
      */
     Set<String> sources;
@@ -87,6 +94,8 @@ public final class GraphController extends ViewController<AnchorPane> {
         Workspace workspace = mainController.getWorkspace();
         this.loadGraphService = new LoadService<>(GraphParser.class, workspace.getNodeFile(), workspace.getEdgeFile());
         this.loadAnnotationService = new LoadService<>(AnnotationParser.class, workspace.getAnnotationFile());
+        this.loadResistanceService = new LoadService<>(ResistanceParser.class, workspace.getResistanceFile());
+
 
         loadFXML("/application/graph.fxml");
 
@@ -108,6 +117,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         loadGraph();
         loadAnnotation();
+        loadResistance();
 
     }
 
@@ -139,11 +149,31 @@ public final class GraphController extends ViewController<AnchorPane> {
             mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
             System.out.println("annotationMap = " + annotationMap.toString());
 
+
         });
         loadAnnotationService.setOnFailed(event -> {
             mainController.displayMessage(MessageController.FAIL_LOAD_ANNOTATION);
         });
         loadAnnotationService.restart();
+
+    }
+
+    /**
+     * Load resistances from source.
+     */
+    private void loadResistance() {
+
+        loadResistanceService.setOnSucceeded(event -> {
+            ResistanceMap resistanceMap = loadResistanceService.getValue();
+            mainController.displayMessage(MessageController.SUCCESS_LOAD_RESISTANCE);
+            System.out.println("resistanceMap = " + resistanceMap.toString());
+
+
+        });
+        loadResistanceService.setOnFailed(event -> {
+            mainController.displayMessage(MessageController.FAIL_LOAD_RESISTANCE);
+        });
+        loadResistanceService.restart();
 
     }
 
