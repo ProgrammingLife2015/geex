@@ -2,8 +2,8 @@ package nl.tudelft.context.service;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.concurrent.Worker;
-import nl.tudelft.context.model.newick.Tree;
-import nl.tudelft.context.model.newick.TreeParser;
+import nl.tudelft.context.model.newick.Newick;
+import nl.tudelft.context.model.newick.NewickParser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -29,9 +29,9 @@ public class LoadNewickServiceTest {
     @Test
     public void testNewickLoadSucceeds() throws Exception {
 
-        final LoadService<Tree> loadNewickService = new LoadService<>(TreeParser.class, nwkFile);
+        final LoadService<Newick> loadNewickService = new LoadService<>(NewickParser.class, nwkFile);
 
-        CompletableFuture<Tree> completableFuture = new CompletableFuture<>();
+        CompletableFuture<Newick> completableFuture = new CompletableFuture<>();
 
         loadNewickService.stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == Worker.State.SUCCEEDED) {
@@ -42,9 +42,9 @@ public class LoadNewickServiceTest {
         loadNewickService.restart();
 
         // Wait for graphFromFactory service
-        Tree tree = completableFuture.get(5000, TimeUnit.MILLISECONDS);
+        Newick newick = completableFuture.get(5000, TimeUnit.MILLISECONDS);
 
-        assertNotNull(tree);
+        assertNotNull(newick);
 
     }
 

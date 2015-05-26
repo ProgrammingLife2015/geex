@@ -10,13 +10,13 @@ import static org.junit.Assert.*;
  * @version 1.0
  * @since 06-05-2015
  */
-public class TreeTest {
+public class NewickTest {
 
-    private static Tree tree;
+    private static Newick newick;
 
     @Before
     public void setup() {
-        tree = new Tree();
+        newick = new Newick();
     }
 
     /**
@@ -25,23 +25,23 @@ public class TreeTest {
      */
     @Test
     public void testRoot() {
-        assertNull(tree.getRoot());
+        assertNull(newick.getRoot());
         Node root1 = new Node("A", 1.39);
-        tree.setRoot(root1);
-        assertEquals(root1, tree.getRoot());
+        newick.setRoot(root1);
+        assertEquals(root1, newick.getRoot());
         Node root2 = new Node("B", 1.1);
-        tree.setRoot(root2);
-        assertEquals(root2, tree.getRoot());
+        newick.setRoot(root2);
+        assertEquals(root2, newick.getRoot());
     }
 
     @Test
     public void testToString() {
-        assertEquals("", tree.toString());
-        tree.setRoot(new Node("Some name", 1.23));
-        assertEquals("Node<Some name,1.23>\n", tree.toString());
-        tree.getRoot().addChild(new Node("Some other name", 2.34));
+        assertEquals("", newick.toString());
+        newick.setRoot(new Node("Some name", 1.23));
+        assertEquals("Node<Some name,1.23>\n", newick.toString());
+        newick.getRoot().addChild(new Node("Some other name", 2.34));
         assertEquals("Node<Some name,1.23>\n" +
                 "\tNode<Some other name,2.34>\n",
-                tree.toString());
+                newick.toString());
     }
 }

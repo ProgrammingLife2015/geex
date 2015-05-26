@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.model.newick.Node;
-import nl.tudelft.context.model.newick.Tree;
+import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
@@ -83,12 +83,12 @@ public class NewickControllerTest {
      */
     @Test
     public void testLoadGraph() {
-        Tree tree = new Tree();
+        Newick newick = new Newick();
         Node node = new Node("n1", 1.23);
-        tree.setRoot(node);
-        newickController.loadGraph(tree);
+        newick.setRoot(node);
+        newickController.loadGraph(newick);
         node.setSelection(new All());
-        newickController.loadGraph(tree);
+        newickController.loadGraph(newick);
     }
 
     @Test

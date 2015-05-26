@@ -9,8 +9,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
-import nl.tudelft.context.model.newick.Tree;
-import nl.tudelft.context.model.newick.TreeParser;
+import nl.tudelft.context.model.newick.Newick;
+import nl.tudelft.context.model.newick.NewickParser;
 import nl.tudelft.context.service.LoadService;
 import nl.tudelft.context.workspace.Workspace;
 
@@ -51,7 +51,7 @@ public final class NewickController extends ViewController<ScrollPane> {
     /**
      * The service used for loading the newick tree.
      */
-    Service<Tree> loadNewickService;
+    Service<Newick> loadNewickService;
 
     /**
      * Init a controller at newick.fxml.
@@ -65,7 +65,7 @@ public final class NewickController extends ViewController<ScrollPane> {
         this.mainController = mainController;
 
         Workspace workspace = mainController.getWorkspace();
-        this.loadNewickService = new LoadService<>(TreeParser.class, workspace.getNwkFile());
+        this.loadNewickService = new LoadService<>(NewickParser.class, workspace.getNwkFile());
 
         loadFXML("/application/newick.fxml");
 
@@ -114,42 +114,42 @@ public final class NewickController extends ViewController<ScrollPane> {
     /**
      * Show the newick in console.
      *
-     * @param tree newick to show
+     * @param newick newick to show
      */
-    protected void showTree(final Tree tree) {
+    protected void showTree(final Newick newick) {
 
         // Bind edges
-        List<DrawableEdge> edgeList = tree.edgeSet().stream()
-                .map(edge -> new DrawableEdge(tree, edge))
+        List<DrawableEdge> edgeList = newick.edgeSet().stream()
+                .map(edge -> new DrawableEdge(newick, edge))
                 .collect(Collectors.toList());
 
         // Bind nodes
-        List<Label> nodeList = tree.vertexSet().stream()
+        List<Label> nodeList = newick.vertexSet().stream()
                 .map(NewickLabel::new)
                 .collect(Collectors.toList());
 
-        newick.getChildren().addAll(edgeList);
-        newick.getChildren().addAll(nodeList);
+        this.newick.getChildren().addAll(edgeList);
+        this.newick.getChildren().addAll(nodeList);
 
         Label button = new Label("Load");
         button.setTranslateX(LOAD_BUTTON_OFFSET);
-        button.setOnMouseClicked(event -> loadGraph(tree));
+        button.setOnMouseClicked(event -> loadGraph(newick));
         root.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) {
-                loadGraph(tree);
+                loadGraph(newick);
             }
         });
 
-        newick.getChildren().add(button);
+        this.newick.getChildren().add(button);
     }
 
     /**
      * Loads the graph of the selected strands.
      *
-     * @param tree the tree with the nodes to show.
+     * @param newick the tree with the nodes to show.
      */
-    protected void loadGraph(final Tree tree) {
-        Set<String> sources = tree.getRoot().getSources();
+    protected void loadGraph(final Newick newick) {
+        Set<String> sources = newick.getRoot().getSources();
         if (!sources.isEmpty()) {
             mainController.setView(this, new GraphController(mainController, sources));
         }
