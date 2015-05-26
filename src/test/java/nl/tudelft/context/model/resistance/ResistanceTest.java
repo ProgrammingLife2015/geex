@@ -64,8 +64,32 @@ public class ResistanceTest {
         assertFalse(resistance1.equals("not a resistance"));
     }
 
+
     @Test
-    public void testEqualsNotResistance() throws Exception {
+    public void testEqualsExtensive() throws Exception {
+        assertTrue(resistance1.equals(resistance3));
+
+        resistance3 = new Resistance("different", "ipsum", "-Q264P", 5, "dolor");
+        assertFalse(resistance1.equals(resistance3));
+
+        resistance3 = new Resistance("lorem", "different", "-Q264P", 5, "dolor");
+        assertFalse(resistance1.equals(resistance3));
+
+        resistance3 = new Resistance("lorem", "ipsum", "-different", 5, "dolor");
+        assertFalse(resistance1.equals(resistance3));
+
+        resistance3 = new Resistance("lorem", "ipsum", "-Q264P", 6, "dolor");
+        assertFalse(resistance1.equals(resistance3));
+
+        resistance3 = new Resistance("lorem", "ipsum", "-Q264P", 5, "different");
+        assertFalse(resistance1.equals(resistance3));
+
+        resistance3 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor");
+    }
+
+
+    @Test
+    public void testEqualsNotA() throws Exception {
         assertFalse(resistance1.equals("not a resistance"));
     }
 
