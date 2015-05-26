@@ -16,7 +16,7 @@ public class ResistanceParser extends Parser<ResistanceMap> {
      * Parse the file into an ResistanceMap.
      *
      * @param readerList Reader to read.
-     * @return A parsed annotationmap.
+     * @return A parsed resistanceMap.
      */
     @Override
     protected ResistanceMap parse(final BufferedReader... readerList) {
@@ -34,6 +34,13 @@ public class ResistanceParser extends Parser<ResistanceMap> {
         return resistanceMap;
     }
 
+    /**
+     * Read a splitted line and generate an resistance.
+     *
+     * @param splitLine the line with information for the resistance.
+     * @return Resistance
+     * @throws NumberFormatException when the data isn't correct
+     */
     public final Resistance getResistance(final String[] splitLine) throws NumberFormatException {
         String geneName = splitLine[0];
         String typeOfMutation = splitLine[1];
