@@ -2,8 +2,8 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.newick.Tree;
+import nl.tudelft.context.model.graph.Graph;
+import nl.tudelft.context.model.newick.Tree;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 

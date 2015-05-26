@@ -1,5 +1,6 @@
 package nl.tudelft.context.controller;
 
+import javafx.concurrent.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -8,8 +9,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
-import nl.tudelft.context.newick.Tree;
-import nl.tudelft.context.service.LoadNewickService;
+import nl.tudelft.context.model.newick.Tree;
+import nl.tudelft.context.model.newick.TreeParser;
+import nl.tudelft.context.service.LoadService;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
@@ -49,7 +51,7 @@ public final class NewickController extends ViewController<ScrollPane> {
     /**
      * The service used for loading the newick tree.
      */
-    LoadNewickService loadNewickService;
+    Service<Tree> loadNewickService;
 
     /**
      * Init a controller at newick.fxml.
@@ -63,7 +65,7 @@ public final class NewickController extends ViewController<ScrollPane> {
         this.mainController = mainController;
 
         Workspace workspace = mainController.getWorkspace();
-        this.loadNewickService = new LoadNewickService(workspace.getNwkFile());
+        this.loadNewickService = new LoadService<>(TreeParser.class, workspace.getNwkFile());
 
         loadFXML("/application/newick.fxml");
 

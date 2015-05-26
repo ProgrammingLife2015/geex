@@ -1,16 +1,19 @@
 package nl.tudelft.context.controller;
 
+import javafx.concurrent.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import nl.tudelft.context.annotation.AnnotationMap;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.service.LoadAnnotationService;
-import nl.tudelft.context.service.LoadGraphService;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.AnnotationParser;
+import nl.tudelft.context.model.graph.Graph;
+import nl.tudelft.context.model.graph.GraphMap;
+import nl.tudelft.context.model.graph.GraphParser;
+import nl.tudelft.context.service.LoadService;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
@@ -57,12 +60,12 @@ public final class GraphController extends ViewController<AnchorPane> {
     /**
      * The service for loading the Graph.
      */
-    LoadGraphService loadGraphService;
+    Service<GraphMap> loadGraphService;
 
     /**
      * The service for loading the annotations.
      */
-    LoadAnnotationService loadAnnotationService;
+    Service<AnnotationMap> loadAnnotationService;
 
     /**
      * Sources that are displayed in the graph.
@@ -82,8 +85,8 @@ public final class GraphController extends ViewController<AnchorPane> {
         this.mainController = mainController;
         this.sources = sources;
         Workspace workspace = mainController.getWorkspace();
-        this.loadGraphService = new LoadGraphService(workspace.getNodeFile(), workspace.getEdgeFile());
-        this.loadAnnotationService = new LoadAnnotationService(workspace.getAnnotationFile());
+        this.loadGraphService = new LoadService<>(GraphParser.class, workspace.getNodeFile(), workspace.getEdgeFile());
+        this.loadAnnotationService = new LoadService<>(AnnotationParser.class, workspace.getAnnotationFile());
 
         loadFXML("/application/graph.fxml");
 

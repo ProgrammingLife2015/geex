@@ -18,7 +18,7 @@
     </columnConstraints>
     <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="0">
         <ImageView styleClass="logo" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
-        <Button fx:id="load" text="Load workspace..." AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+        <Button fx:id="load" text="Load new workspace..." AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
                 AnchorPane.rightAnchor="0" minHeight="50"/>
     </AnchorPane>
     <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">

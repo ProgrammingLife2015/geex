@@ -2,9 +2,9 @@ package nl.tudelft.context.service;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.concurrent.Worker;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.GraphMap;
-import nl.tudelft.context.graph.GraphParser;
+import nl.tudelft.context.model.graph.Graph;
+import nl.tudelft.context.model.graph.GraphMap;
+import nl.tudelft.context.model.graph.GraphParser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,8 +38,7 @@ public class LoadGraphServiceTest {
     @BeforeClass
     public static void beforeClass() throws FileNotFoundException, UnsupportedEncodingException {
 
-        GraphParser graphParser = new GraphParser();
-        graphFromFactory = graphParser.getGraphMap(nodeFile, edgeFile);
+        graphFromFactory = new GraphParser().setReader(nodeFile, edgeFile).parse();
 
     }
 
@@ -49,7 +48,7 @@ public class LoadGraphServiceTest {
     @Test
     public void testGraphLoadSucceeds() throws Exception {
 
-        final LoadGraphService loadGraphService = new LoadGraphService(nodeFile, edgeFile);
+        final LoadService<GraphMap> loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
 
         CompletableFuture<Graph> completableFuture = new CompletableFuture<>();
 
@@ -67,5 +66,4 @@ public class LoadGraphServiceTest {
         assertNotNull(graph);
 
     }
-
 }
