@@ -59,7 +59,7 @@ public class Resistance {
     /**
      * getter for geneName.
      *
-     * @return
+     * @return geneName
      */
     public String getGeneName() {
         return geneName;
@@ -132,7 +132,7 @@ public class Resistance {
                 + this.getTypeOfMutation() + ", "
                 + this.getChange() + ", "
                 + this.getGenomePosition() + ", "
-                + this.getDrugName() + ", "
+                + this.getDrugName()
                 + ")";
     }
 
@@ -143,7 +143,7 @@ public class Resistance {
      */
     @Override
     public final int hashCode() {
-        return geneName.hashCode() + 37 * drugName.hashCode() + 37 * 37 * genomePosition;
+        return getGeneName().hashCode() + 37 * getDrugName().hashCode() + 37 * 37 * genomePosition;
     }
 
 

@@ -15,7 +15,7 @@ public class AnnotationTest {
     protected static Annotation annotation1, annotation2, annotation3, annotation4;
 
     /**
-     * Set up by creating two annotations.
+     * Set up by creating four annotations.
      */
     @BeforeClass
     public static void BeforeClass() {
