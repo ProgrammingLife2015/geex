@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class ResistanceTest {
 
-    protected static Resistance resistance1, resistance2, resistance3, resistance4;
+    protected static Resistance resistance1, resistance2, resistance3;
 
     /**
      * Set up by creating two annotations.
