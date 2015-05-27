@@ -209,6 +209,7 @@ public class MainController extends DefaultController<StackPane> {
      */
     public final void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
+        workspace.preload();
     }
 
     /**
