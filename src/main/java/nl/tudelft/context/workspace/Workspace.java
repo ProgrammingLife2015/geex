@@ -5,6 +5,13 @@ import javafx.stage.Window;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.controller.MessageController;
 import nl.tudelft.context.controller.NewickController;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.AnnotationParser;
+import nl.tudelft.context.model.graph.GraphMap;
+import nl.tudelft.context.model.graph.GraphParser;
+import nl.tudelft.context.model.newick.Newick;
+import nl.tudelft.context.model.newick.NewickParser;
+import nl.tudelft.context.service.LoadService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -45,6 +52,14 @@ public class Workspace {
      * The annotation file in the workspace.
      */
     File annotationFile;
+
+    public LoadService<Newick> loadNewickService;
+    public LoadService<GraphMap> loadGraphService;
+    public LoadService<AnnotationMap> loadAnnotationService;
+
+    public Newick newick;
+    public AnnotationMap annotation;
+    public GraphMap graph;
 
     /**
      * Create a new workspace on the directory.
@@ -112,6 +127,19 @@ public class Workspace {
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
         annotationFile = findFile(files, ".ann.csv");
+    }
+
+    public final void preload() {
+        loadNewickService = new LoadService<>(NewickParser.class, nwkFile);
+        loadNewickService.setOnSucceeded(event -> newick = loadNewickService.getValue());
+        loadAnnotationService = new LoadService<>(AnnotationParser.class, annotationFile);
+        loadAnnotationService.setOnSucceeded(event -> annotation = loadAnnotationService.getValue());
+        loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
+        loadGraphService.setOnSucceeded(event -> graph = loadGraphService.getValue());
+
+        loadNewickService.start();
+        loadAnnotationService.start();
+        loadGraphService.start();
     }
 
     /**
