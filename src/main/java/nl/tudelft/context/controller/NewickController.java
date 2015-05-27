@@ -51,7 +51,7 @@ public final class NewickController extends ViewController<ScrollPane> {
     /**
      * The service used for loading the newick tree.
      */
-    Service<Newick> loadNewickService;
+    LoadService<Newick> loadNewickService;
 
     /**
      * Init a controller at newick.fxml.
@@ -65,7 +65,7 @@ public final class NewickController extends ViewController<ScrollPane> {
         this.mainController = mainController;
 
         Workspace workspace = mainController.getWorkspace();
-        this.loadNewickService = new LoadService<>(NewickParser.class, workspace.getNwkFile());
+        this.loadNewickService = workspace.loadNewickService;
 
         loadFXML("/application/newick.fxml");
 
@@ -101,14 +101,7 @@ public final class NewickController extends ViewController<ScrollPane> {
      * Load newick from source.
      */
     public void loadTree() {
-
-        loadNewickService.setOnSucceeded(event -> {
-            showTree(loadNewickService.getValue());
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
-        });
-        loadNewickService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_TREE));
-        loadNewickService.restart();
-
+        loadNewickService.setFinished(event -> showTree(loadNewickService.getValue()));
     }
 
     /**
@@ -117,7 +110,6 @@ public final class NewickController extends ViewController<ScrollPane> {
      * @param newick newick to show
      */
     protected void showTree(final Newick newick) {
-
         // Bind edges
         List<DrawableEdge> edgeList = newick.edgeSet().stream()
                 .map(edge -> new DrawableEdge(newick, edge))
