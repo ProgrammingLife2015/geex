@@ -117,20 +117,12 @@ public final class GraphController extends ViewController<AnchorPane> {
     private void loadGraph() {
         System.out.println("Loading graph");
         loadGraphService.setFinished(event -> {
-            Task t = new Task<Void>() {
-                @Override
-                protected Void call() throws Exception {
-                    Graph graph = mainController.getWorkspace().loadGraphService.getValue().flat(sources);
-                    graph.position();
-                    // Run in fx thread
-                    Platform.runLater(() -> showGraph(graph));
-
-                    return null;
-                }
-            };
-
-            progressIndicator.visibleProperty().bind(t.runningProperty());
-            new Thread(t).start();
+            // Run in fx thread
+            Platform.runLater(() -> {
+                Graph graph = loadGraphService.getValue().flat(sources);
+                graph.position();
+                showGraph(graph);
+            });
         });
     }
 
