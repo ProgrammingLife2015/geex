@@ -2,6 +2,8 @@ package nl.tudelft.context.service;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import nl.tudelft.context.model.Parser;
 
 import java.io.File;
@@ -41,6 +43,16 @@ public class LoadService<T> extends Service<T> {
                 parser.setReader(files);
                 return parser.parse();
             }
+
+
         };
+    }
+
+    public final void setFinished(EventHandler<WorkerStateEvent> value) {
+        if (isRunning()) {
+            setOnSucceeded(value);
+        } else {
+            value.handle(null);
+        }
     }
 }
