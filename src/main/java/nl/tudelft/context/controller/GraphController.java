@@ -1,6 +1,8 @@
 package nl.tudelft.context.controller;
 
+import javafx.application.Platform;
 import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
@@ -9,10 +11,8 @@ import javafx.scene.layout.AnchorPane;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.model.annotation.AnnotationMap;
-import nl.tudelft.context.model.annotation.AnnotationParser;
 import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import nl.tudelft.context.workspace.Workspace;
 
@@ -60,12 +60,12 @@ public final class GraphController extends ViewController<AnchorPane> {
     /**
      * The service for loading the Graph.
      */
-    Service<GraphMap> loadGraphService;
+    LoadService<GraphMap> loadGraphService;
 
     /**
      * The service for loading the annotations.
      */
-    Service<AnnotationMap> loadAnnotationService;
+    LoadService<AnnotationMap> loadAnnotationService;
 
     /**
      * Sources that are displayed in the graph.
@@ -85,8 +85,8 @@ public final class GraphController extends ViewController<AnchorPane> {
         this.mainController = mainController;
         this.sources = sources;
         Workspace workspace = mainController.getWorkspace();
-        this.loadGraphService = new LoadService<>(GraphParser.class, workspace.getNodeFile(), workspace.getEdgeFile());
-        this.loadAnnotationService = new LoadService<>(AnnotationParser.class, workspace.getAnnotationFile());
+        this.loadGraphService = workspace.loadGraphService;
+        this.loadAnnotationService = workspace.loadAnnotationService;
 
         loadFXML("/application/graph.fxml");
 
@@ -115,36 +115,32 @@ public final class GraphController extends ViewController<AnchorPane> {
      * Load graph from source.
      */
     private void loadGraph() {
+        System.out.println("Loading graph");
+        loadGraphService.setFinished(event -> {
+            Task t = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    Graph graph = mainController.getWorkspace().loadGraphService.getValue().flat(sources);
+                    graph.position();
+                    // Run in fx thread
+                    Platform.runLater(() -> showGraph(graph));
 
-        loadGraphService.setOnSucceeded(event -> {
-            Graph graph = loadGraphService.getValue().flat(sources);
-            graph.position();
-            showGraph(graph);
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_GRAPH);
-        });
-        loadGraphService.setOnFailed(event -> {
-            mainController.displayMessage(MessageController.FAIL_LOAD_GRAPH);
-        });
-        loadGraphService.restart();
+                    return null;
+                }
+            };
 
+            progressIndicator.visibleProperty().bind(t.runningProperty());
+            new Thread(t).start();
+        });
     }
 
     /**
      * Load annotation from source.
      */
     private void loadAnnotation() {
-
-        loadAnnotationService.setOnSucceeded(event -> {
+        loadAnnotationService.setFinished(event -> {
             AnnotationMap annotationMap = loadAnnotationService.getValue();
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
-            System.out.println("annotationMap = " + annotationMap.toString());
-
         });
-        loadAnnotationService.setOnFailed(event -> {
-            mainController.displayMessage(MessageController.FAIL_LOAD_ANNOTATION);
-        });
-        loadAnnotationService.restart();
-
     }
 
 
