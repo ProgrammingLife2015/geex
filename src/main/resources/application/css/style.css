@@ -2,6 +2,15 @@
     -fx-background-color: #2b2b2b;
 }
 
+.welcome {
+    -fx-background-color: #1d1d1d;
+    -fx-padding: 15px;
+}
+
+.logo {
+    -fx-image: url("../images/geex.png");
+}
+
 .transparent {
     -fx-background-color: rgba(43, 43, 43, 0.8);
 }

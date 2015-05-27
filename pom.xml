@@ -213,7 +213,7 @@
             <name>René Vennik</name>
             <email>renevennik@gmail.com</email>
             <roles>
-                <role>developer</role>
+                <role>product owner, developer</role>
             </roles>
         </developer>
         <developer>
@@ -221,7 +221,7 @@
             <name>Jasper Nieuwdorp</name>
             <email>nieuwdorp.jasper@gmail.com</email>
             <roles>
-                <role>developer</role>
+                <role>scrum master, developer</role>
             </roles>
         </developer>
         <developer>

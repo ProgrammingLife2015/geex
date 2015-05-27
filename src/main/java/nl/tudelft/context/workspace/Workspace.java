@@ -1,6 +1,13 @@
 package nl.tudelft.context.workspace;
 
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Window;
+import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.controller.MessageController;
+import nl.tudelft.context.controller.NewickController;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 /**
@@ -55,34 +62,56 @@ public class Workspace {
     }
 
     /**
+     * Choose a workspace with a directorychooser.
+     *
+     * @param mainController The application to choose a workspace for.
+     */
+    public static void chooseWorkspace(final MainController mainController) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Workspace Folder");
+        Window window = mainController.getRoot().getScene().getWindow();
+        File workspaceDirectory = directoryChooser.showDialog(window);
+
+        Workspace workspace = new Workspace(workspaceDirectory);
+        try {
+            workspace.load();
+            mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
+
+            mainController.setWorkspace(workspace);
+            mainController.setBaseView(new NewickController(mainController));
+        } catch (FileNotFoundException e) {
+            mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
+        }
+    }
+
+    /**
      * Find a file in files with a certain extension.
      *
      * @param files     Files to search in
      * @param extension Extension to end with
      * @return The found file, null if no file is found.
+     * @throws FileNotFoundException Thrown if file not found.
      */
-    private File findFile(final File[] files, final String extension) {
+    private File findFile(final File[] files, final String extension) throws FileNotFoundException {
         return Arrays.stream(files)
                 .filter(file -> file
                         .toString()
                         .toLowerCase()
                         .endsWith(extension))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(FileNotFoundException::new);
     }
 
     /**
      * Load graphs and newick files from the loaded directory.
      *
-     * @return If all files are loaded.
+     * @throws FileNotFoundException If any of the files is not found.
      */
-    public final boolean load() {
+    public final void load() throws FileNotFoundException {
         edgeFile = findFile(files, ".edge.graph");
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
         annotationFile = findFile(files, ".ann.csv");
-
-        return edgeFile != null && nodeFile != null && nwkFile != null && annotationFile != null;
     }
 
     /**

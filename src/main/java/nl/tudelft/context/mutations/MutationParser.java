@@ -1,7 +1,7 @@
 package nl.tudelft.context.mutations;
 
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.Node;
+import nl.tudelft.context.model.graph.Graph;
+import nl.tudelft.context.model.graph.Node;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.util.*;

@@ -2,7 +2,7 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import nl.tudelft.context.graph.Node;
+import nl.tudelft.context.model.graph.Node;
 
 /**
  * @author Jim

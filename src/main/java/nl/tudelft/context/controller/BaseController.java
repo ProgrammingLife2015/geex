@@ -3,8 +3,8 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.text.Text;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.Node;
+import nl.tudelft.context.model.graph.Graph;
+import nl.tudelft.context.model.graph.Node;
 import org.apache.commons.lang.StringUtils;
 
 import java.net.URL;

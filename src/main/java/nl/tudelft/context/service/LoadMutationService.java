@@ -2,8 +2,8 @@ package nl.tudelft.context.service;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import nl.tudelft.context.graph.Graph;
-import nl.tudelft.context.graph.Node;
+import nl.tudelft.context.model.graph.Graph;
+import nl.tudelft.context.model.graph.Node;
 import nl.tudelft.context.mutations.MutationParser;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class LoadMutationService extends Service<List<Node>> {
      * @return the task to execute.
      */
     @Override
-    protected final Task<List<Node>>  createTask() {
+    protected final Task<List<Node>> createTask() {
         return new Task<List<Node>>() {
             @Override
             protected List<Node> call() throws Exception {
