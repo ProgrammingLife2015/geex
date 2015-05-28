@@ -50,7 +50,11 @@ public class LoadService<T> extends Service<T> {
 
     public final void setFinished(EventHandler<WorkerStateEvent> value) {
         if (isRunning()) {
-            setOnSucceeded(value);
+            EventHandler<WorkerStateEvent> eventHandler = getOnSucceeded();
+            setOnSucceeded(event -> {
+                eventHandler.handle(event);
+                value.handle(event);
+            });
         } else {
             value.handle(null);
         }
