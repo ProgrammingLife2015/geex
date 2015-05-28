@@ -75,11 +75,15 @@ public final class MenuController {
         previous.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
         previous.setOnAction(event -> mainController.previousView());
 
+        final MenuItem loadGenomeGraph = new MenuItem("Load Genome Graph");
+        loadGenomeGraph.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
+        loadGenomeGraph.setDisable(true);
+
         final MenuItem showNewick = new MenuItem("Show Phylogenetic tree");
         showNewick.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN));
         showNewick.setOnAction(event -> mainController.toggleNewick());
 
-        navigateMenu.getItems().addAll(previous, showNewick);
+        navigateMenu.getItems().addAll(previous, loadGenomeGraph, showNewick);
         menuBar.getMenus().add(navigateMenu);
 
     }
