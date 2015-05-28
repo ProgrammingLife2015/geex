@@ -4,6 +4,7 @@ import javafx.concurrent.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import nl.tudelft.context.drawable.DrawableEdge;
@@ -28,9 +29,9 @@ import java.util.stream.Collectors;
 public final class NewickController extends ViewController<ScrollPane> {
 
     /**
-     * Tells whether the controller is currently active (top view)
+     * Tells whether the controller is currently active (top view).
      */
-    public boolean active = false;
+    boolean active = false;
     /**
      * ProgressIndicator to show when the tree is loading.
      */
@@ -133,11 +134,11 @@ public final class NewickController extends ViewController<ScrollPane> {
 
 
         mainController.menuController.menuBar.getMenus().get(1).setOnAction(event -> loadGraph(tree));
-        tree.getRoot().getSelectionProperty().addListener(((observable, oldValue, newValue) -> {
-            menuItemSetDisable(
-                    !active || (newValue instanceof None)
+        tree.getRoot().getSelectionProperty().addListener((observable, oldValue, newValue) -> {
+            getMenuItem().setDisable(
+                    !active || newValue instanceof None
             );
-        }));
+        });
     }
 
     /**
@@ -152,8 +153,13 @@ public final class NewickController extends ViewController<ScrollPane> {
         }
     }
 
-    protected void menuItemSetDisable(boolean disabled) {
-        mainController.menuController.menuBar.getMenus().get(1).getItems().get(1).setDisable(disabled);
+    /**
+     * Gets the menu item that loads the graph of the selected nodes.
+     *
+     * @return the menu item.
+     */
+    protected MenuItem getMenuItem() {
+        return mainController.menuController.menuBar.getMenus().get(1).getItems().get(1);
     }
 
     @Override
@@ -165,7 +171,7 @@ public final class NewickController extends ViewController<ScrollPane> {
     public void activate() {
         active = true;
         if (loadNewickService.getValue() != null) {
-            menuItemSetDisable(
+            getMenuItem().setDisable(
                     loadNewickService.getValue().getRoot().getSelection() instanceof None
             );
         }
@@ -174,7 +180,7 @@ public final class NewickController extends ViewController<ScrollPane> {
     @Override
     public void deactivate() {
         active = false;
-        menuItemSetDisable(true);
+        getMenuItem().setDisable(true);
     }
 
 }
