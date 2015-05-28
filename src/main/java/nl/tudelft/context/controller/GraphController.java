@@ -115,14 +115,11 @@ public final class GraphController extends ViewController<AnchorPane> {
      * Load graph from source.
      */
     private void loadGraph() {
-        System.out.println("Loading graph");
         loadGraphService.setFinished(event -> {
+            Graph graph = loadGraphService.getValue().flat(sources);
+            graph.position();
             // Run in fx thread
-            Platform.runLater(() -> {
-                Graph graph = loadGraphService.getValue().flat(sources);
-                graph.position();
-                showGraph(graph);
-            });
+            Platform.runLater(() -> showGraph(graph));
         });
     }
 
