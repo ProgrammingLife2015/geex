@@ -6,11 +6,11 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.KeyCode;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.model.newick.Tree;
 import nl.tudelft.context.model.newick.TreeParser;
+import nl.tudelft.context.model.newick.selection.None;
 import nl.tudelft.context.service.LoadService;
 import nl.tudelft.context.workspace.Workspace;
 
@@ -28,9 +28,9 @@ import java.util.stream.Collectors;
 public final class NewickController extends ViewController<ScrollPane> {
 
     /**
-     * This is the x disposition of the load button.
+     * Tells whether the controller is currently active (top view)
      */
-    public static final double LOAD_BUTTON_OFFSET = -50;
+    public boolean active = false;
     /**
      * ProgressIndicator to show when the tree is loading.
      */
@@ -131,16 +131,13 @@ public final class NewickController extends ViewController<ScrollPane> {
         newick.getChildren().addAll(edgeList);
         newick.getChildren().addAll(nodeList);
 
-        Label button = new Label("Load");
-        button.setTranslateX(LOAD_BUTTON_OFFSET);
-        button.setOnMouseClicked(event -> loadGraph(tree));
-        root.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER)) {
-                loadGraph(tree);
-            }
-        });
 
-        newick.getChildren().add(button);
+        mainController.menuController.menuBar.getMenus().get(1).setOnAction(event -> loadGraph(tree));
+        tree.getRoot().getSelectionProperty().addListener(((observable, oldValue, newValue) -> {
+            menuItemSetDisable(
+                    !active || (newValue instanceof None)
+            );
+        }));
     }
 
     /**
@@ -155,6 +152,10 @@ public final class NewickController extends ViewController<ScrollPane> {
         }
     }
 
+    protected void menuItemSetDisable(boolean disabled) {
+        mainController.menuController.menuBar.getMenus().get(1).getItems().get(1).setDisable(disabled);
+    }
+
     @Override
     public String getBreadcrumbName() {
         return "Phylogenetic tree";
@@ -162,12 +163,18 @@ public final class NewickController extends ViewController<ScrollPane> {
 
     @Override
     public void activate() {
-        // empty method
+        active = true;
+        if (loadNewickService.getValue() != null) {
+            menuItemSetDisable(
+                    loadNewickService.getValue().getRoot().getSelection() instanceof None
+            );
+        }
     }
 
     @Override
     public void deactivate() {
-        // empty method
+        active = false;
+        menuItemSetDisable(true);
     }
 
 }
