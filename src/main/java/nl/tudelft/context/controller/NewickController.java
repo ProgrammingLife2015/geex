@@ -160,4 +160,14 @@ public final class NewickController extends ViewController<ScrollPane> {
         return "Phylogenetic tree";
     }
 
+    @Override
+    public void activate() {
+        // empty method
+    }
+
+    @Override
+    public void deactivate() {
+        // empty method
+    }
+
 }

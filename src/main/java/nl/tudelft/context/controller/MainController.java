@@ -3,6 +3,7 @@ package nl.tudelft.context.controller;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
@@ -69,6 +70,11 @@ public class MainController extends DefaultController<StackPane> {
     BooleanProperty newickLifted = new SimpleBooleanProperty(false);
 
     /**
+     * The MenuController that needs to be changed whenever the current view changes.
+     */
+    MenuController menuController;
+
+    /**
      * Init a controller at main.fxml.
      */
     public MainController() {
@@ -90,7 +96,7 @@ public class MainController extends DefaultController<StackPane> {
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
         main.setTop(new Breadcrumb(this, viewList));
-        new MenuController(this, menu);
+        menuController = new MenuController(this, menu);
 
         messageController = new MessageController();
         main.setBottom(messageController.getRoot());
@@ -114,10 +120,12 @@ public class MainController extends DefaultController<StackPane> {
      * @param viewController Controller containing JavaFX root
      */
     public final void setBaseView(final ViewController viewController) {
+        deactivateView();
 
         view.getChildren().setAll(viewController.getRoot());
         viewList.setAll(viewController);
 
+        activateView();
     }
 
     /**
@@ -127,6 +135,7 @@ public class MainController extends DefaultController<StackPane> {
      * @param viewController Controller containing JavaFX root
      */
     public final void setView(final ViewController on, final ViewController viewController) {
+        deactivateView();
 
         if (newickLifted.getValue()) {
             toggleNewick();
@@ -137,12 +146,14 @@ public class MainController extends DefaultController<StackPane> {
         view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
         view.getChildren().add(viewController.getRoot());
 
+        activateView();
     }
 
     /**
      * Set the previous view as view.
      */
     public final void previousView() {
+        deactivateView();
 
         if (newickLifted.getValue()) {
             toggleNewick();
@@ -154,6 +165,7 @@ public class MainController extends DefaultController<StackPane> {
             }
         }
 
+        activateView();
     }
 
     /**
@@ -162,6 +174,7 @@ public class MainController extends DefaultController<StackPane> {
      * @param viewController View to go to
      */
     public void toView(final ViewController viewController) {
+        deactivateView();
 
         if (newickLifted.getValue()) {
             toggleNewick();
@@ -175,6 +188,46 @@ public class MainController extends DefaultController<StackPane> {
                 .limit(index)
                 .forEach(vc -> vc.setVisibility(true));
 
+        activateView();
+    }
+
+    /**
+     * Gets the controller at the top, which should be visible to the user.
+     *
+     * @return the top ViewController that is visible; otherwise <tt>null</tt> if none is visible.
+     */
+    public final ViewController topView() {
+
+        List<ViewController> visibleViews = viewList.filtered(
+                viewController -> viewController.getVisibilityProperty().getValue()
+        );
+
+        if (!visibleViews.isEmpty()) {
+            return visibleViews.get(visibleViews.size() - 1);
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
+     * Activates the top visible ViewController.
+     */
+    public final void activateView() {
+        ViewController topView = topView();
+        if (topView != null) {
+            topView.activate();
+        }
+    }
+
+    /**
+     * Deactivates the top visible ViewController.
+     */
+    public final void deactivateView() {
+        ViewController topView = topView();
+        if (topView != null) {
+            topView.deactivate();
+        }
     }
 
     /**
