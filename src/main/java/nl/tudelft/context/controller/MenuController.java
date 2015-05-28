@@ -27,6 +27,11 @@ public final class MenuController {
     MenuBar menuBar;
 
     /**
+     * The menu item for loading the genome graph.
+     */
+    MenuItem loadGenomeGraph;
+
+    /**
      * Create a new menu.
      *
      * @param mainController The MainController of the application.
@@ -75,7 +80,7 @@ public final class MenuController {
         previous.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
         previous.setOnAction(event -> mainController.previousView());
 
-        final MenuItem loadGenomeGraph = new MenuItem("Load Genome Graph");
+        loadGenomeGraph = new MenuItem("Load Genome Graph");
         loadGenomeGraph.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
         loadGenomeGraph.setDisable(true);
 
@@ -103,5 +108,14 @@ public final class MenuController {
 
         menuBar.getMenus().add(helpMenu);
 
+    }
+
+    /**
+     * Gets the menu item that is responsible for loading the genome graph.
+     *
+     * @return the menu item for loading the genome graph
+     */
+    public MenuItem getLoadGenomeGraph() {
+        return loadGenomeGraph;
     }
 }

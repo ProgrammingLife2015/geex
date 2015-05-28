@@ -255,6 +255,13 @@ public class MainController extends DefaultController<StackPane> {
     }
 
     /**
+     * Gets the MenuController.
+     *
+     * @return The MenuController
+     */
+    public MenuController getMenuController() { return menuController; }
+
+    /**
      * Set the current workspace.
      *
      * @param workspace The new workspace

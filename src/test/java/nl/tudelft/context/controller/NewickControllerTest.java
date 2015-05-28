@@ -5,6 +5,8 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.model.newick.Node;
 import nl.tudelft.context.model.newick.Tree;
@@ -31,6 +33,7 @@ public class NewickControllerTest {
 
     protected static NewickController newickController;
     protected static MainController mainController;
+    protected static MenuItem menuItem;
 
     protected final static File nwkFile = new File(GraphControllerTest.class.getResource("/newick/10strains.nwk").getPath());
     protected static BooleanProperty bp = new SimpleBooleanProperty(false);
@@ -53,7 +56,9 @@ public class NewickControllerTest {
         when(mainController.getWorkspace()).thenReturn(workspace);
         when(mainController.view.getChildren()).thenReturn(new ObservableListWrapper<>(new ArrayList<>()));
 
-        newickController = new NewickController(mainController);
+        menuItem = mock(MenuItem.class);
+
+        newickController = new NewickController(mainController, menuItem);
 
     }
 
@@ -91,6 +96,9 @@ public class NewickControllerTest {
         newickController.loadGraph(tree);
     }
 
+    /**
+     * Test whether the breadcrumb name is ok.
+     */
     @Test
     public void testBreadcrumbName() {
         assertEquals("Phylogenetic tree", newickController.getBreadcrumbName());
