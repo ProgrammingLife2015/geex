@@ -4,6 +4,7 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -98,6 +99,17 @@ public class MenuControllerTest {
 //        mb.getMenus().get(2).getItems().get(0).fire();
 //        verify(mainController, times(1)).toggleOverlay();
 
+    }
+
+    @Test
+    public void testGenomeGraphLoader() {
+
+        MenuBar mb = new MenuBar();
+        MenuController mc = new MenuController(mainController, mb);
+
+        assertEquals(mc.getLoadGenomeGraph().getText(), "Load Genome Graph");
+        assertEquals(mc.getLoadGenomeGraph().getAccelerator(), new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
+        assertEquals(mc.getLoadGenomeGraph().disableProperty().getValue(), true);
     }
 
 }

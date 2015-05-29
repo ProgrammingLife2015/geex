@@ -24,11 +24,6 @@ public final class MenuController {
     MainController mainController;
 
     /**
-     * Menu bar used in this class.
-     */
-    MenuBar menuBar;
-
-    /**
      * The menu item for loading the genome graph.
      */
     MenuItem loadGenomeGraph;
@@ -41,11 +36,11 @@ public final class MenuController {
      */
     public MenuController(final MainController mainController, final MenuBar menuBar) {
         this.mainController = mainController;
-        this.menuBar = menuBar;
         menuBar.setUseSystemMenuBar(true);
 
         menuBar.getMenus().add(createMenu("_File",
-                createWorkspaceLoader("Select Workspace Folder", new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN)),
+                createWorkspaceLoader("Select Workspace Folder",
+                        new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN)),
                 createMenuItem("Exit",
                         event -> mainController.exitProgram())));
         menuBar.getMenus().add(createMenu("_Navigate",
@@ -119,6 +114,7 @@ public final class MenuController {
      * Function used to create a workspace loader.
      *
      * @param title Title of the menuItem.
+     * @param keyComb The KeyCodeCombination to be attached.
      * @return Returns the menuItem with the workspace loader attached.
      */
     private MenuItem createWorkspaceLoader(final String title, final KeyCodeCombination keyComb) {
@@ -133,6 +129,12 @@ public final class MenuController {
 
     }
 
+    /**
+     * The function used to create the menuItem with the genomegraphloader.
+     * @param title The title of the menuItem.
+     * @param keyComb The keycombination to be attached.
+     * @return The menuitem with all params.
+     */
     private MenuItem createGenomeGraphLoader(final String title, final KeyCombination keyComb) {
         loadGenomeGraph = new MenuItem(title);
         loadGenomeGraph.setAccelerator(keyComb);
