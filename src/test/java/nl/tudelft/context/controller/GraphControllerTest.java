@@ -42,16 +42,36 @@ public class GraphControllerTest {
     public static void beforeClass() throws Exception {
 
         MainController mainController = mock(MainController.class);
-        Workspace workspace = mock(Workspace.class);
         mainController.messageController = new MessageController();
 
-        when(workspace.getEdgeFile()).thenReturn(edgeFile);
-        when(workspace.getNodeFile()).thenReturn(nodeFile);
-        when(workspace.getNwkFile()).thenReturn(nwkFile);
-        when(mainController.getWorkspace()).thenReturn(workspace);
+        ReadOnlyObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
+        ReadOnlyObjectProperty<AnnotationMap> annotationMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
 
-        graphController = new GraphController(mainController, new HashSet<>(Arrays.asList("Cat", "Dog")));
+        graphController = new GraphController(mainController, new HashSet<>(Arrays.asList("Cat", "Dog")),
+                graphMapReadOnlyObjectProperty, annotationMapReadOnlyObjectProperty);
 
+    }
+
+    @Test
+    public void testUpdateGraph() throws Exception {
+        SimpleObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
+        ReadOnlyObjectProperty<AnnotationMap> annotationMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
+
+        GraphMap graphMap = new GraphParser().setReader(nodeFile, edgeFile).parse();
+
+        GraphController graphController = new GraphController(mock(MainController.class), new HashSet<>(Arrays.asList("Cat", "Dog")), graphMapReadOnlyObjectProperty, annotationMapReadOnlyObjectProperty);
+
+        graphMapReadOnlyObjectProperty.setValue(graphMap);
+
+        CompletableFuture<Boolean> sequencesAdded = new CompletableFuture<>();
+
+        graphController.sequences.getChildren().addListener((ListChangeListener<? super Node>) event -> {
+            if (graphController.sequences.getChildren().size() == sequencesAmount) {
+                sequencesAdded.complete(true);
+            }
+        });
+
+        assertEquals(true, sequencesAdded.get(5000, TimeUnit.MILLISECONDS));
     }
 
     /**
@@ -71,24 +91,6 @@ public class GraphControllerTest {
     @Test
     public void testGetBreadcrumbName() {
         assertEquals("Genome graph (2)", graphController.getBreadcrumbName());
-    }
-
-    /**
-     * Test sequences added.
-     */
-    @Test
-    public void testGraph() throws Exception {
-
-        CompletableFuture<Boolean> sequencesAdded = new CompletableFuture<>();
-
-        graphController.sequences.getChildren().addListener((ListChangeListener<? super Node>) event -> {
-            if (graphController.sequences.getChildren().size() == sequencesAmount) {
-                sequencesAdded.complete(true);
-            }
-        });
-
-        assertEquals(true, sequencesAdded.get(5000, TimeUnit.MILLISECONDS));
-
     }
 
 }
