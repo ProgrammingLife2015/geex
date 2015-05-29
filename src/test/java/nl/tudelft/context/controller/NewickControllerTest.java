@@ -5,6 +5,7 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.model.newick.Node;
 import nl.tudelft.context.model.newick.Tree;
@@ -17,9 +18,10 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.util.ArrayList;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -31,7 +33,10 @@ public class NewickControllerTest {
 
     protected static NewickController newickController;
     protected static MainController mainController;
+    protected static MenuItem menuItem;
 
+    protected final static File nodeFile = new File(GraphControllerTest.class.getResource("/graph/node.graph").getPath());
+    protected final static File edgeFile = new File(GraphControllerTest.class.getResource("/graph/edge.graph").getPath());
     protected final static File nwkFile = new File(GraphControllerTest.class.getResource("/newick/10strains.nwk").getPath());
     protected static BooleanProperty bp = new SimpleBooleanProperty(false);
 
@@ -49,19 +54,34 @@ public class NewickControllerTest {
         mainController.messageController = new MessageController();
         mainController.newickLifted = bp;
 
+        when(workspace.getEdgeFile()).thenReturn(edgeFile);
+        when(workspace.getNodeFile()).thenReturn(nodeFile);
         when(workspace.getNwkFile()).thenReturn(nwkFile);
         when(mainController.getWorkspace()).thenReturn(workspace);
         when(mainController.view.getChildren()).thenReturn(new ObservableListWrapper<>(new ArrayList<>()));
 
-        newickController = new NewickController(mainController);
+        menuItem = spy(new MenuItem());
 
+        newickController = new NewickController(mainController, menuItem);
+
+    }
+
+    /**
+     * MainController should receive a message that the tree is loaded.
+     */
+    @Test
+    public void testMessageTreeLoaded() {
+        Tree tree = new Tree();
+        tree.setRoot(new Node("a", 1));
+        newickController.showTree(tree);
+        verify(mainController, atLeast(1)).displayMessage(MessageController.SUCCESS_LOAD_TREE);
     }
 
     /**
      * Test toggle Newick.
      */
     @Test
-    public void toggleNewick() {
+    public void testToggleNewick() {
 
         bp.setValue(true);
         bp.setValue(false);
@@ -79,7 +99,7 @@ public class NewickControllerTest {
     }
 
     /**
-     * Nothing should break when no nodes, or some nodes are selected.
+     * View should only change to GraphController when at least one node is selected.
      */
     @Test
     public void testLoadGraph() {
@@ -87,13 +107,41 @@ public class NewickControllerTest {
         Node node = new Node("n1", 1.23);
         tree.setRoot(node);
         newickController.loadGraph(tree);
+        verify(mainController, never()).setView(any(NewickController.class), any(GraphController.class));
         node.setSelection(new All());
         newickController.loadGraph(tree);
+        verify(mainController, times(1)).setView(any(NewickController.class), any(GraphController.class));
     }
 
+    /**
+     * Test whether the breadcrumb name is ok.
+     */
     @Test
     public void testBreadcrumbName() {
         assertEquals("Phylogenetic tree", newickController.getBreadcrumbName());
+    }
+
+    /**
+     * Nothing should break when activate is called.
+     */
+    @Test
+    public void testActivate() {
+        newickController.activate();
+        Tree tree = new Tree();
+        tree.setRoot(new Node("n1", 1.23));
+        assertTrue(newickController.active);
+        newickController.tree = tree;
+        newickController.deactivate();
+        newickController.activate();
+    }
+
+    /**
+     * Nothing should break when deactivate is called.
+     */
+    @Test
+    public void testDeactivate() {
+        newickController.deactivate();
+        assertFalse(newickController.active);
     }
 
 }

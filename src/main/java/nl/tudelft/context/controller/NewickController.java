@@ -4,9 +4,9 @@ import javafx.concurrent.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.KeyCode;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.model.newick.Tree;
@@ -28,9 +28,9 @@ import java.util.stream.Collectors;
 public final class NewickController extends ViewController<ScrollPane> {
 
     /**
-     * This is the x disposition of the load button.
+     * Tells whether the controller is currently active (top view).
      */
-    public static final double LOAD_BUTTON_OFFSET = -50;
+    boolean active = false;
     /**
      * ProgressIndicator to show when the tree is loading.
      */
@@ -54,15 +54,27 @@ public final class NewickController extends ViewController<ScrollPane> {
     Service<Tree> loadNewickService;
 
     /**
+     * The menu item that initiates loadGraph().
+     */
+    MenuItem menuItem;
+
+    /**
+     * The loaded phylogenetic tree.
+     */
+    Tree tree;
+
+    /**
      * Init a controller at newick.fxml.
      *
-     * @param mainController   MainController for the application
+     * @param mainController MainController for the application
+     * @param menuItem       MenuItem for the application
      */
-    public NewickController(final MainController mainController) {
+    public NewickController(final MainController mainController, final MenuItem menuItem) {
 
         super(new ScrollPane());
 
         this.mainController = mainController;
+        this.menuItem = menuItem;
 
         Workspace workspace = mainController.getWorkspace();
         this.loadNewickService = new LoadService<>(TreeParser.class, workspace.getNwkFile());
@@ -102,21 +114,20 @@ public final class NewickController extends ViewController<ScrollPane> {
      */
     public void loadTree() {
 
-        loadNewickService.setOnSucceeded(event -> {
-            showTree(loadNewickService.getValue());
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
-        });
+        loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
         loadNewickService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_TREE));
         loadNewickService.restart();
 
     }
 
     /**
-     * Show the newick in console.
+     * Show the phylogenetic tree.
      *
      * @param tree newick to show
      */
     protected void showTree(final Tree tree) {
+
+        this.tree = tree;
 
         // Bind edges
         List<DrawableEdge> edgeList = tree.edgeSet().stream()
@@ -131,16 +142,12 @@ public final class NewickController extends ViewController<ScrollPane> {
         newick.getChildren().addAll(edgeList);
         newick.getChildren().addAll(nodeList);
 
-        Label button = new Label("Load");
-        button.setTranslateX(LOAD_BUTTON_OFFSET);
-        button.setOnMouseClicked(event -> loadGraph(tree));
-        root.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER)) {
-                loadGraph(tree);
-            }
-        });
 
-        newick.getChildren().add(button);
+        menuItem.setOnAction(event -> loadGraph(tree));
+        tree.getRoot().getSelectionProperty().addListener((observable, oldValue, newValue) ->
+                menuItem.setDisable(!(active && newValue.isAny())));
+
+        mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
     }
 
     /**
@@ -158,6 +165,20 @@ public final class NewickController extends ViewController<ScrollPane> {
     @Override
     public String getBreadcrumbName() {
         return "Phylogenetic tree";
+    }
+
+    @Override
+    public void activate() {
+        active = true;
+        if (tree != null) {
+            menuItem.setDisable(!tree.getRoot().getSelection().isAny());
+        }
+    }
+
+    @Override
+    public void deactivate() {
+        active = false;
+        menuItem.setDisable(true);
     }
 
 }
