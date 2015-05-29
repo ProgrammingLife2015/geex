@@ -142,40 +142,4 @@ public class Workspace {
         loadGraphService.start();
     }
 
-    /**
-     * Get Node file in the workspace.
-     *
-     * @return Node file
-     */
-    public File getNodeFile() {
-        return nodeFile;
-    }
-
-    /**
-     * Get the Edge file in the workspace.
-     *
-     * @return Edge file
-     */
-    public File getEdgeFile() {
-        return edgeFile;
-    }
-
-    /**
-     * Get the newick graph in the workspace.
-     *
-     * @return Newick file
-     */
-    public File getNwkFile() {
-        return nwkFile;
-    }
-
-    /**
-     * Get the annotation file in the workspace.
-     *
-     * @return annotation file
-     */
-    public File getAnnotationFile() {
-        return annotationFile;
-    }
-
 }
