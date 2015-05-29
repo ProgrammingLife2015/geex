@@ -1,28 +1,26 @@
 package nl.tudelft.context.controller;
 
-import com.sun.javafx.collections.ObservableListWrapper;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.collections.FXCollections;
-import javafx.scene.layout.StackPane;
-import nl.tudelft.context.model.newick.Node;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.Group;
 import nl.tudelft.context.model.newick.Newick;
+import nl.tudelft.context.model.newick.Node;
 import nl.tudelft.context.model.newick.selection.All;
-import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
+ * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
  * @version 1.0
  * @since 26-4-2015
  */
@@ -32,7 +30,6 @@ public class NewickControllerTest {
     protected static NewickController newickController;
     protected static MainController mainController;
 
-    protected final static File nwkFile = new File(GraphControllerTest.class.getResource("/newick/10strains.nwk").getPath());
     protected static BooleanProperty bp = new SimpleBooleanProperty(false);
 
     /**
@@ -40,21 +37,11 @@ public class NewickControllerTest {
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
-
         mainController = mock(MainController.class);
-
-        mainController.viewList = FXCollections.observableList(new ArrayList<>());
-        mainController.view = mock(StackPane.class);
-        Workspace workspace = mock(Workspace.class);
-        mainController.messageController = new MessageController();
         mainController.newickLifted = bp;
 
-        when(workspace.getNwkFile()).thenReturn(nwkFile);
-        when(mainController.getWorkspace()).thenReturn(workspace);
-        when(mainController.view.getChildren()).thenReturn(new ObservableListWrapper<>(new ArrayList<>()));
-
-        newickController = new NewickController(mainController);
-
+        ReadOnlyObjectProperty<Newick> newickReadOnlyObjectProperty = new SimpleObjectProperty<>();
+        newickController = new NewickController(mainController, newickReadOnlyObjectProperty);
     }
 
     /**
@@ -87,8 +74,23 @@ public class NewickControllerTest {
         Node node = new Node("n1", 1.23);
         newick.setRoot(node);
         newickController.loadGraph(newick);
+        verifyZeroInteractions(mainController);
+
         node.setSelection(new All());
         newickController.loadGraph(newick);
+        verify(mainController).showGraph(newickController, node.getSources());
+    }
+
+    @Test
+    public void testShowTree() {
+        newickController.newick = new Group();
+
+        Newick newick = new Newick();
+        Node node = new Node("n1", 1.23);
+        newick.setRoot(node);
+
+        newickController.showTree(newick);
+        assertEquals(1, newickController.newick.getChildren().size());
     }
 
     @Test
