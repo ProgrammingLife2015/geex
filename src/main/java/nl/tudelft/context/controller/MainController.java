@@ -129,7 +129,7 @@ public class MainController extends DefaultController<StackPane> {
         viewList.setAll(viewController);
 
         activateView();
-        
+
     }
 
     /**
@@ -138,7 +138,7 @@ public class MainController extends DefaultController<StackPane> {
      * @param on             Controller to stack this view on
      * @param viewController Controller containing JavaFX root
      */
-    public void setView(ViewController on, ViewController viewController) {
+    public void setView(final ViewController on, final ViewController viewController) {
 
         if (newickLifted.getValue()) {
             toggleNewick();
@@ -260,7 +260,9 @@ public class MainController extends DefaultController<StackPane> {
      *
      * @return The MenuController
      */
-    public MenuController getMenuController() { return menuController; }
+    public MenuController getMenuController() {
+        return menuController;
+    }
 
     /**
      * Set the current workspace.

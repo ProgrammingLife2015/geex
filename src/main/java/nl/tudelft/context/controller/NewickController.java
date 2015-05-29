@@ -67,6 +67,7 @@ public final class NewickController extends ViewController<ScrollPane> {
      * Init a controller at newick.fxml.
      *
      * @param mainController   MainController for the application
+     * @param menuItem   MenuItem for the application
      */
     public NewickController(final MainController mainController, final MenuItem menuItem) {
 
