@@ -4,7 +4,7 @@ jdk:
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "! [ \"$TRAVIS_PULL_REQUEST\" = \"false\" ] && git checkout HEAD^2 && echo \"OCTOPULL_SHA=$(git rev-parse HEAD)\"; true"
+  - "! [ \"$TRAVIS_PULL_REQUEST\" = \"false\" ] && git checkout $TRAVIS_BRANCH && echo \"OCTOPULL_SHA=$(git rev-parse HEAD)\"; true"
 script:
   - "if [ \"$TRAVIS_PULL_REQUEST\" = \"false\" ]; then mvn test -B ; else mvn site -B; fi"
 notifications:
