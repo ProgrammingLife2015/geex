@@ -18,9 +18,7 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.util.ArrayList;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -111,6 +109,8 @@ public class NewickControllerTest {
         node.setSelection(new All());
         newickController.loadGraph(tree);
         verify(mainController, times(1)).setView(any(NewickController.class), any(GraphController.class));
+        newickController.loadGraph(tree);
+        verify(mainController, times(1)).toView(any(GraphController.class));
     }
 
     /**
