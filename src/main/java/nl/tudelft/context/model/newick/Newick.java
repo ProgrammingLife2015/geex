@@ -8,7 +8,7 @@ import org.jgrapht.graph.DefaultEdge;
  * @version 1.0
  * @since 3-5-2015
  */
-public final class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
+public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     /**
      * The root of the tree.

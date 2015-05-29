@@ -48,10 +48,10 @@ public class WorkspaceTest {
 
         workspace.load();
 
-        assertEquals(nodePath, workspace.getNodeFile());
-        assertEquals(edgePath, workspace.getEdgeFile());
-        assertEquals(nwkPath, workspace.getNwkFile());
-        assertEquals(annPath, workspace.getAnnotationFile());
+        assertEquals(nodePath, workspace.nodeFile);
+        assertEquals(edgePath, workspace.edgeFile);
+        assertEquals(nwkPath, workspace.nwkFile);
+        assertEquals(annPath, workspace.annotationFile);
     }
 
     @Test(expected = FileNotFoundException.class)

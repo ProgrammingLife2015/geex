@@ -1,8 +1,13 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.graph.GraphMap;
+import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,7 +33,6 @@ public class GraphControllerTest {
 
     protected final static File nodeFile = new File(GraphControllerTest.class.getResource("/graph/node.graph").getPath());
     protected final static File edgeFile = new File(GraphControllerTest.class.getResource("/graph/edge.graph").getPath());
-    protected final static File nwkFile = new File(GraphControllerTest.class.getResource("/newick/10strains.nwk").getPath());
 
     protected static final int sequencesAmount = 4;
 

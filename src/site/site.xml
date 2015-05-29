@@ -17,7 +17,7 @@
             <item name="CheckStyle" href="/checkstyle.html"/>
             <item name="PMD" href="/pmd.html"/>
             <item name="CPD" href="/cpd.html"/>
-            <item name="JaCoCo Coverage" href="/jacoco/index.html"/>
+            <!--<item name="JaCoCo Coverage" href="/jacoco/index.html"/>-->
             <item name="Cobertura Coverage" href="/cobertura/index.html"/>
         </menu>
         <menu name="Architecture">

@@ -202,4 +202,14 @@ public final class GraphController extends ViewController<AnchorPane> {
         return "Genome graph (" + sources.size() + ")";
     }
 
+    @Override
+    public void activate() {
+        // empty method
+    }
+
+    @Override
+    public void deactivate() {
+        // empty method
+    }
+
 }
