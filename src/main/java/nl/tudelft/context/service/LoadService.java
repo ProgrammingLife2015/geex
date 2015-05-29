@@ -32,6 +32,8 @@ public class LoadService<T> extends Service<T> {
     public LoadService(final Class<? extends Parser<T>> parserClass, final File... files) {
         this.parserClass = parserClass;
         this.files = files;
+
+        ready();
     }
 
     @Override
@@ -46,17 +48,5 @@ public class LoadService<T> extends Service<T> {
 
 
         };
-    }
-
-    public final void setFinished(EventHandler<WorkerStateEvent> value) {
-        if (isRunning()) {
-            EventHandler<WorkerStateEvent> eventHandler = getOnSucceeded();
-            setOnSucceeded(event -> {
-                eventHandler.handle(event);
-                value.handle(event);
-            });
-        } else {
-            value.handle(null);
-        }
     }
 }
