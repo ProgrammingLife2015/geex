@@ -1,7 +1,6 @@
 package nl.tudelft.context.controller;
 
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -67,6 +66,8 @@ public final class GraphController extends ViewController<AnchorPane> {
      *
      * @param mainController MainController for the application
      * @param sources        Sources to display
+     * @param graphMapIn The graphMap from the workspace, might not be loaded.
+     * @param annotationMapIn The AnnotationMap from the workspace, might not be loaded.
      */
     public GraphController(final MainController mainController,
                            final Set<String> sources,
