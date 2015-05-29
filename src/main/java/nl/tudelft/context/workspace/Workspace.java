@@ -129,13 +129,13 @@ public class Workspace {
         annotationFile = findFile(files, ".ann.csv");
     }
 
+    /**
+     * Preload the workspace, makes sure all the services are started.
+     */
     public final void preload() {
         loadNewickService = new LoadService<>(NewickParser.class, nwkFile);
-        loadNewickService.setOnSucceeded(event -> newick = loadNewickService.getValue());
         loadAnnotationService = new LoadService<>(AnnotationParser.class, annotationFile);
-        loadAnnotationService.setOnSucceeded(event -> annotation = loadAnnotationService.getValue());
         loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
-        loadGraphService.setOnSucceeded(event -> graph = loadGraphService.getValue());
 
         loadNewickService.start();
         loadAnnotationService.start();
