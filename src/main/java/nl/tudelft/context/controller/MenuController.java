@@ -40,7 +40,7 @@ public final class MenuController {
         menuBar.setUseSystemMenuBar(true);
 
         menuBar.getMenus().add(createMenu("_File",
-                createWorkspaceLoader("Select Workspace Folder"),
+                createWorkspaceLoader("Select Workspace Folder", new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN)),
                 createMenuItem("Exit",
                         event -> mainController.exitProgram())));
         menuBar.getMenus().add(createMenu("_Navigate",
@@ -114,12 +114,13 @@ public final class MenuController {
      * @param title Title of the menuItem.
      * @return Returns the menuItem with the workspace loader attached.
      */
-    private MenuItem createWorkspaceLoader(final String title) {
+    private MenuItem createWorkspaceLoader(final String title, final KeyCodeCombination keyComb) {
 
         final MenuItem res = new MenuItem(title);
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Workspace Folder");
         res.setOnAction(event -> Workspace.chooseWorkspace(mainController));
+        res.setAccelerator(keyComb);
 
         return res;
 
