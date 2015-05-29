@@ -1,5 +1,6 @@
 package nl.tudelft.context.controller;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -190,7 +191,7 @@ public class MainController extends DefaultController<StackPane> {
      * Exits the program.
      */
     public final void exitProgram() {
-        System.exit(0);
+        Platform.exit();
     }
 
     /**
