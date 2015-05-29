@@ -1,6 +1,8 @@
 package nl.tudelft.context.controller;
 
-import javafx.concurrent.Service;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -10,9 +12,7 @@ import javafx.scene.input.KeyCode;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.model.newick.Newick;
-import nl.tudelft.context.model.newick.NewickParser;
 import nl.tudelft.context.service.LoadService;
-import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
 import java.util.List;
@@ -48,27 +48,27 @@ public final class NewickController extends ViewController<ScrollPane> {
      */
     MainController mainController;
 
-    /**
-     * The service used for loading the newick tree.
-     */
-    LoadService<Newick> loadNewickService;
+    ObjectProperty<Newick> newickObjectProperty;
 
     /**
      * Init a controller at newick.fxml.
      *
      * @param mainController   MainController for the application
+     * @param newickIn
      */
-    public NewickController(final MainController mainController) {
-
+    public NewickController(final MainController mainController, final ReadOnlyObjectProperty<Newick> newickIn) {
         super(new ScrollPane());
 
         this.mainController = mainController;
+        newickObjectProperty = new SimpleObjectProperty<>();
 
-        Workspace workspace = mainController.getWorkspace();
-        this.loadNewickService = workspace.loadNewickService;
+        newickObjectProperty.addListener((observable, oldValue, newValue) -> {
+            showTree(newValue);
+        });
+
+        newickObjectProperty.bind(newickIn);
 
         loadFXML("/application/newick.fxml");
-
     }
 
     /**
@@ -83,7 +83,7 @@ public final class NewickController extends ViewController<ScrollPane> {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
-        progressIndicator.visibleProperty().bind(loadNewickService.runningProperty());
+        progressIndicator.visibleProperty().bind(newickObjectProperty.isNull());
 
         mainController.newickLifted.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -92,16 +92,6 @@ public final class NewickController extends ViewController<ScrollPane> {
                 root.toBack();
             }
         });
-
-        loadTree();
-
-    }
-
-    /**
-     * Load newick from source.
-     */
-    public void loadTree() {
-        loadNewickService.setFinished(event -> showTree(loadNewickService.getValue()));
     }
 
     /**
@@ -143,7 +133,10 @@ public final class NewickController extends ViewController<ScrollPane> {
     protected void loadGraph(final Newick newick) {
         Set<String> sources = newick.getRoot().getSources();
         if (!sources.isEmpty()) {
-            mainController.setView(this, new GraphController(mainController, sources));
+            mainController.setView(this,
+                    new GraphController(mainController, sources,
+                            mainController.getWorkspace().getGraph(),
+                            mainController.getWorkspace().getAnnotation()));
         }
     }
 
