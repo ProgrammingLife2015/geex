@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -222,4 +223,9 @@ public class MainController extends DefaultController<StackPane> {
     }
 
 
+    public void showGraph(final NewickController on, final Set<String> sources) {
+        this.setView(on, new GraphController(this, sources,
+                workspace.getGraph(),
+                workspace.getAnnotation()));
+    }
 }
