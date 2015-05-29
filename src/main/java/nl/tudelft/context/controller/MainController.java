@@ -74,6 +74,11 @@ public class MainController extends DefaultController<StackPane> {
     MenuController menuController;
 
     /**
+     * The last top view that was seen.
+     */
+    ViewController lastTopView;
+
+    /**
      * Init a controller at main.fxml.
      */
     public MainController() {
@@ -119,12 +124,12 @@ public class MainController extends DefaultController<StackPane> {
      * @param viewController Controller containing JavaFX root
      */
     public final void setBaseView(final ViewController viewController) {
-        deactivateView();
 
         view.getChildren().setAll(viewController.getRoot());
         viewList.setAll(viewController);
 
         activateView();
+        
     }
 
     /**
@@ -134,7 +139,6 @@ public class MainController extends DefaultController<StackPane> {
      * @param viewController Controller containing JavaFX root
      */
     public final void setView(final ViewController on, final ViewController viewController) {
-        deactivateView();
 
         if (newickLifted.getValue()) {
             toggleNewick();
@@ -146,13 +150,13 @@ public class MainController extends DefaultController<StackPane> {
         view.getChildren().add(viewController.getRoot());
 
         activateView();
+
     }
 
     /**
      * Set the previous view as view.
      */
     public final void previousView() {
-        deactivateView();
 
         if (newickLifted.getValue()) {
             toggleNewick();
@@ -165,6 +169,7 @@ public class MainController extends DefaultController<StackPane> {
         }
 
         activateView();
+
     }
 
     /**
@@ -173,7 +178,6 @@ public class MainController extends DefaultController<StackPane> {
      * @param viewController View to go to
      */
     public void toView(final ViewController viewController) {
-        deactivateView();
 
         if (newickLifted.getValue()) {
             toggleNewick();
@@ -188,6 +192,7 @@ public class MainController extends DefaultController<StackPane> {
                 .forEach(vc -> vc.setVisibility(true));
 
         activateView();
+
     }
 
     /**
@@ -214,18 +219,14 @@ public class MainController extends DefaultController<StackPane> {
      */
     public final void activateView() {
         ViewController topView = topView();
-        if (topView != null) {
-            topView.activate();
-        }
-    }
-
-    /**
-     * Deactivates the top visible ViewController.
-     */
-    public final void deactivateView() {
-        ViewController topView = topView();
-        if (topView != null) {
-            topView.deactivate();
+        if (topView != lastTopView) {
+            if (lastTopView != null) {
+                lastTopView.deactivate();
+            }
+            if (topView != null) {
+                topView.activate();
+            }
+            lastTopView = topView;
         }
     }
 

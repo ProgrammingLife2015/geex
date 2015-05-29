@@ -56,7 +56,7 @@ public final class MenuController {
         final Menu fileMenu = new Menu("_File");
 
         MenuItem load = new MenuItem("Load Workspace...");
-        load.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+        load.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Workspace Folder");
         load.setOnAction(event -> Workspace.chooseWorkspace(mainController));
@@ -81,11 +81,11 @@ public final class MenuController {
         previous.setOnAction(event -> mainController.previousView());
 
         loadGenomeGraph = new MenuItem("Load Genome Graph");
-        loadGenomeGraph.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
+        loadGenomeGraph.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
         loadGenomeGraph.setDisable(true);
 
         final MenuItem showNewick = new MenuItem("Show Phylogenetic tree");
-        showNewick.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN));
+        showNewick.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN));
         showNewick.setOnAction(event -> mainController.toggleNewick());
 
         navigateMenu.getItems().addAll(previous, loadGenomeGraph, showNewick);
