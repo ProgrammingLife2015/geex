@@ -1,8 +1,10 @@
 package nl.tudelft.context.controller;
 
 import javafx.application.Platform;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
@@ -13,8 +15,6 @@ import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.service.LoadService;
-import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
 import java.util.Collection;
@@ -58,16 +58,6 @@ public final class GraphController extends ViewController<AnchorPane> {
     MainController mainController;
 
     /**
-     * The service for loading the Graph.
-     */
-    LoadService<GraphMap> loadGraphService;
-
-    /**
-     * The service for loading the annotations.
-     */
-    LoadService<AnnotationMap> loadAnnotationService;
-
-    /**
      * Sources that are displayed in the graph.
      */
     Set<String> sources;
@@ -78,15 +68,30 @@ public final class GraphController extends ViewController<AnchorPane> {
      * @param mainController MainController for the application
      * @param sources        Sources to display
      */
-    public GraphController(final MainController mainController, final Set<String> sources) {
+    public GraphController(final MainController mainController,
+                           final Set<String> sources,
+                           final ReadOnlyObjectProperty<GraphMap> graphMapIn,
+                           final ReadOnlyObjectProperty<AnnotationMap> annotationMapIn) {
 
         super(new AnchorPane());
 
         this.mainController = mainController;
         this.sources = sources;
-        Workspace workspace = mainController.getWorkspace();
-        this.loadGraphService = workspace.loadGraphService;
-        this.loadAnnotationService = workspace.loadAnnotationService;
+
+        ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
+
+
+        graphMapProperty.addListener((observable, oldValue, newValue) -> {
+            loadGraph(newValue);
+        });
+
+        annotationMapProperty.addListener((observable, oldValue, newValue) -> {
+            loadAnnotation(newValue);
+        });
+
+        graphMapProperty.bind(graphMapIn);
+        annotationMapProperty.bind(annotationMapIn);
 
         loadFXML("/application/graph.fxml");
 
@@ -104,32 +109,25 @@ public final class GraphController extends ViewController<AnchorPane> {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
-        progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
-
-        loadGraph();
-        loadAnnotation();
-
     }
 
     /**
      * Load graph from source.
+     * @param graphMap The GraphMap which is loaded.
      */
-    private void loadGraph() {
-        loadGraphService.setFinished(event -> {
-            Graph graph = loadGraphService.getValue().flat(sources);
-            graph.position();
-            // Run in fx thread
-            Platform.runLater(() -> showGraph(graph));
-        });
+    private void loadGraph(final GraphMap graphMap) {
+        Graph graph = graphMap.flat(sources);
+        graph.position();
+        // Run in fx thread
+        Platform.runLater(() -> showGraph(graph));
     }
 
     /**
      * Load annotation from source.
+     * @param annotationMap The annotationmap which is loaded.
      */
-    private void loadAnnotation() {
-        loadAnnotationService.setFinished(event -> {
-            AnnotationMap annotationMap = loadAnnotationService.getValue();
-        });
+    private void loadAnnotation(final AnnotationMap annotationMap) {
+        // TODO: use annotations
     }
 
 
