@@ -18,12 +18,12 @@ public class App extends Application {
     /**
      * Minimum width in pixels of application.
      */
-    protected static int FRAME_WIDTH = 800;
+    protected static final int FRAME_WIDTH = 800;
 
     /**
      * Minimum height in pixels of application.
      */
-    protected static int FRAME_HEIGHT = 600;
+    protected static final int FRAME_HEIGHT = 600;
 
     /**
      * @param args arguments
@@ -45,7 +45,7 @@ public class App extends Application {
      * @param stage the primary stage for this application.
      */
     @Override
-    public final void start(final Stage stage) {
+    public final void start(Stage stage) {
 
         MainController controller = new MainController();
         Scene scene = new Scene(controller.getRoot());
