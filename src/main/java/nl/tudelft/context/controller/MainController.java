@@ -203,7 +203,7 @@ public class MainController extends DefaultController<StackPane> {
     }
 
     /**
-     * Set the current workspace.
+     * Set the current workspace. And also preload it.
      *
      * @param workspace The new workspace
      */
