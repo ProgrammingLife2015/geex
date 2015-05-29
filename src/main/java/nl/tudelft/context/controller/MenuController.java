@@ -29,6 +29,11 @@ public final class MenuController {
     MenuBar menuBar;
 
     /**
+     * The menu item for loading the genome graph.
+     */
+    MenuItem loadGenomeGraph;
+
+    /**
      * Create a new menu.
      *
      * @param mainController The MainController of the application.
@@ -49,7 +54,9 @@ public final class MenuController {
                         event -> mainController.previousView()),
                 createMenuItem("Show Phylogenetic tree",
                         new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN),
-                        event -> mainController.toggleNewick())));
+                        event -> mainController.toggleNewick()),
+                createGenomeGraphLoader("Load Genome Graph",
+                        new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN))));
         menuBar.getMenus().add(createMenu("_Help",
                 createMenuItem("Shortcuts",
                         new KeyCodeCombination(KeyCode.F1),
@@ -124,5 +131,21 @@ public final class MenuController {
 
         return res;
 
+    }
+
+    private MenuItem createGenomeGraphLoader(final String title, final KeyCombination keyComb) {
+        loadGenomeGraph = new MenuItem(title);
+        loadGenomeGraph.setAccelerator(keyComb);
+        loadGenomeGraph.setDisable(true);
+        return loadGenomeGraph;
+    }
+
+    /**
+     * Gets the menu item that is responsible for loading the genome graph.
+     *
+     * @return the menu item for loading the genome graph
+     */
+    public MenuItem getLoadGenomeGraph() {
+        return loadGenomeGraph;
     }
 }

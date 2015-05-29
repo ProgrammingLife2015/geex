@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 23-4-2015
  */
-public final class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
+public class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     /**
      * Define the amount of spacing for the nodes.

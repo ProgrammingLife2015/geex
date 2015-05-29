@@ -43,4 +43,14 @@ public class WelcomeController extends ViewController<GridPane> {
     public final String getBreadcrumbName() {
         return "Welcome";
     }
+
+    @Override
+    public void activate() {
+        // empty method
+    }
+
+    @Override
+    public void deactivate() {
+        // empty method
+    }
 }
