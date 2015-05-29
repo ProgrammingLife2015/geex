@@ -138,7 +138,7 @@ public class MainController extends DefaultController<StackPane> {
      * @param on             Controller to stack this view on
      * @param viewController Controller containing JavaFX root
      */
-    public final void setView(final ViewController on, final ViewController viewController) {
+    public void setView(ViewController on, ViewController viewController) {
 
         if (newickLifted.getValue()) {
             toggleNewick();
@@ -276,7 +276,7 @@ public class MainController extends DefaultController<StackPane> {
      *
      * @param text The text that will be displayed.
      */
-    public final void displayMessage(final String text) {
+    public void displayMessage(final String text) {
         messageController.displayMessage(text);
     }
 

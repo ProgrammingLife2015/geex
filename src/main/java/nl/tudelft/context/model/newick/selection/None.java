@@ -13,6 +13,11 @@ public class None implements Selection {
     }
 
     @Override
+    public boolean isAny() {
+        return false;
+    }
+
+    @Override
     public Selection toggle() {
         return new All();
     }

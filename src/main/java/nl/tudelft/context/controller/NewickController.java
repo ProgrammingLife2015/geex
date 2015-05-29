@@ -11,7 +11,6 @@ import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.model.newick.Tree;
 import nl.tudelft.context.model.newick.TreeParser;
-import nl.tudelft.context.model.newick.selection.None;
 import nl.tudelft.context.service.LoadService;
 import nl.tudelft.context.workspace.Workspace;
 
@@ -58,6 +57,11 @@ public final class NewickController extends ViewController<ScrollPane> {
      * The menu item that initiates loadGraph().
      */
     MenuItem menuItem;
+
+    /**
+     * The loaded phylogenetic tree.
+     */
+    Tree tree;
 
     /**
      * Init a controller at newick.fxml.
@@ -109,21 +113,20 @@ public final class NewickController extends ViewController<ScrollPane> {
      */
     public void loadTree() {
 
-        loadNewickService.setOnSucceeded(event -> {
-            showTree(loadNewickService.getValue());
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
-        });
+        loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
         loadNewickService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_TREE));
         loadNewickService.restart();
 
     }
 
     /**
-     * Show the newick in console.
+     * Show the phylogenetic tree.
      *
      * @param tree newick to show
      */
     protected void showTree(final Tree tree) {
+
+        this.tree = tree;
 
         // Bind edges
         List<DrawableEdge> edgeList = tree.edgeSet().stream()
@@ -141,7 +144,9 @@ public final class NewickController extends ViewController<ScrollPane> {
 
         menuItem.setOnAction(event -> loadGraph(tree));
         tree.getRoot().getSelectionProperty().addListener((observable, oldValue, newValue) ->
-                menuItem.setDisable(!active || newValue instanceof None));
+                menuItem.setDisable(!(active && newValue.isAny())));
+
+        mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
     }
 
     /**
@@ -164,10 +169,8 @@ public final class NewickController extends ViewController<ScrollPane> {
     @Override
     public void activate() {
         active = true;
-        if (loadNewickService.getValue() != null) {
-            menuItem.setDisable(
-                    loadNewickService.getValue().getRoot().getSelection() instanceof None
-            );
+        if (tree != null) {
+            menuItem.setDisable(!tree.getRoot().getSelection().isAny());
         }
     }
 

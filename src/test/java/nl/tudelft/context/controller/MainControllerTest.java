@@ -1,6 +1,7 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.beans.property.BooleanProperty;
 import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.graph.Node;
@@ -14,9 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -54,6 +53,8 @@ public class MainControllerTest {
         when(workspace.getNodeFile()).thenReturn(mock(File.class));
         when(workspace.getEdgeFile()).thenReturn(mock(File.class));
         when(workspace.getNwkFile()).thenReturn(mock(File.class));
+
+        mainController.setWorkspace(workspace);
 
     }
 
@@ -158,7 +159,7 @@ public class MainControllerTest {
      * Test toggle Newick.
      */
     @Test
-    public void toggleNewick() {
+    public void testToggleNewick() {
 
         assertFalse(mainController.newickLifted.getValue());
 
@@ -170,6 +171,36 @@ public class MainControllerTest {
 
         assertFalse(mainController.newickLifted.getValue());
 
+    }
+
+    /**
+     * Test the workspace getter.
+     */
+    @Test
+    public void testGetWorkspace() {
+        assertEquals(workspace, mainController.getWorkspace());
+    }
+
+    /**
+     * Test the MenuController getter.
+     */
+    @Test
+    public void testGetMenuController() {
+        assertEquals(mainController.menuController, mainController.getMenuController());
+    }
+
+    /**
+     * Should return the top view that is visible.
+     */
+    @Test
+    public void testTopView() {
+        ViewController baseView = new BaseController(mock(Graph.class), mock(Node.class));
+
+        mainController.setBaseView(baseView);
+        assertEquals(baseView, mainController.topView());
+
+        baseView.setVisibility(false);
+        assertNull(mainController.topView());
     }
 
 }

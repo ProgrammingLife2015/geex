@@ -13,6 +13,11 @@ public class Partial implements Selection {
     }
 
     @Override
+    public boolean isAny() {
+        return true;
+    }
+
+    @Override
     public Selection toggle() {
         return new All();
     }
