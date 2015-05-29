@@ -18,12 +18,12 @@ public class App extends Application {
     /**
      * Minimum width in pixels of application.
      */
-    protected static final int FRAME_WIDTH = 800;
+    protected static int FRAME_WIDTH = 800;
 
     /**
      * Minimum height in pixels of application.
      */
-    protected static final int FRAME_HEIGHT = 600;
+    protected static int FRAME_HEIGHT = 600;
 
     /**
      * @param args arguments
