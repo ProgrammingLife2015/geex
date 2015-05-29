@@ -48,13 +48,16 @@ public final class NewickController extends ViewController<ScrollPane> {
      */
     MainController mainController;
 
+    /**
+     * The newick object, can change.
+     */
     ObjectProperty<Newick> newickObjectProperty;
 
     /**
      * Init a controller at newick.fxml.
      *
      * @param mainController   MainController for the application
-     * @param newickIn
+     * @param newickIn Newick object from the workspace, might not be loaded.
      */
     public NewickController(final MainController mainController, final ReadOnlyObjectProperty<Newick> newickIn) {
         super(new ScrollPane());
@@ -133,10 +136,7 @@ public final class NewickController extends ViewController<ScrollPane> {
     protected void loadGraph(final Newick newick) {
         Set<String> sources = newick.getRoot().getSources();
         if (!sources.isEmpty()) {
-            mainController.setView(this,
-                    new GraphController(mainController, sources,
-                            mainController.getWorkspace().getGraph(),
-                            mainController.getWorkspace().getAnnotation()));
+            mainController.showGraph(this, sources);
         }
     }
 
