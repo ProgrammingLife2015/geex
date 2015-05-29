@@ -142,4 +142,27 @@ public class Workspace {
         loadGraphService.start();
     }
 
+    /**
+     * Get the Newick Property.
+     * @return A ReadOnlyObjectProperty containing, or not yet containing a Newick.
+     */
+    public ReadOnlyObjectProperty<Newick> getNewick() {
+        return loadNewickService.valueProperty();
+    }
+
+    /**
+     * Get the AnnotationMap Property.
+     * @return A ReadOnlyObjectProperty containing, or not yet containing an AnnotationMap.
+     */
+    public ReadOnlyObjectProperty<AnnotationMap> getAnnotation() {
+        return loadAnnotationService.valueProperty();
+    }
+
+    /**
+     * Get the GraphMap Property.
+     * @return A ReadOnlyObjectProperty containing, or not yet containing a GraphMap.
+     */
+    public ReadOnlyObjectProperty<GraphMap> getGraph() {
+        return loadGraphService.valueProperty();
+    }
 }
