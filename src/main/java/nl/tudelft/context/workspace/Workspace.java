@@ -1,5 +1,6 @@
 package nl.tudelft.context.workspace;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 import nl.tudelft.context.controller.MainController;
@@ -53,13 +54,20 @@ public class Workspace {
      */
     File annotationFile;
 
-    public LoadService<Newick> loadNewickService;
-    public LoadService<GraphMap> loadGraphService;
-    public LoadService<AnnotationMap> loadAnnotationService;
+    /**
+     * The service used for parsing a Newick.
+     */
+    LoadService<Newick> loadNewickService;
 
-    public Newick newick;
-    public AnnotationMap annotation;
-    public GraphMap graph;
+    /**
+     * The service used for parsing a Graph.
+     */
+    LoadService<GraphMap> loadGraphService;
+
+    /**
+     * The service used for parsing an Annotation.
+     */
+    LoadService<AnnotationMap> loadAnnotationService;
 
     /**
      * Create a new workspace on the directory.
