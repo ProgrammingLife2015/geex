@@ -140,11 +140,8 @@ public final class NewickController extends ViewController<ScrollPane> {
 
 
         menuItem.setOnAction(event -> loadGraph(tree));
-        tree.getRoot().getSelectionProperty().addListener((observable, oldValue, newValue) -> {
-            menuItem.setDisable(
-                    !active || newValue instanceof None
-            );
-        });
+        tree.getRoot().getSelectionProperty().addListener((observable, oldValue, newValue) ->
+                menuItem.setDisable(!active || newValue instanceof None));
     }
 
     /**
