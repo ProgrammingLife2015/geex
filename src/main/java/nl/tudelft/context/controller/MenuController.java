@@ -1,5 +1,7 @@
 package nl.tudelft.context.controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -30,74 +32,96 @@ public final class MenuController {
      * Create a new menu.
      *
      * @param mainController The MainController of the application.
-     * @param menuBar The menubar this Menu should hook onto.
+     * @param menuBar        The menubar this Menu should hook onto.
      */
     public MenuController(final MainController mainController, final MenuBar menuBar) {
         this.mainController = mainController;
         this.menuBar = menuBar;
         menuBar.setUseSystemMenuBar(true);
 
-        initFileMenu();
-        initNavigateMenu();
-        initHelpMenu();
+        menuBar.getMenus().add(createMenu("_File",
+                createWorkspaceLoader("Select Workspace Folder"),
+                createMenuItem("Exit",
+                        event -> mainController.exitProgram())));
+        menuBar.getMenus().add(createMenu("_Navigate",
+                createMenuItem("Previous",
+                        new KeyCodeCombination(KeyCode.ESCAPE),
+                        event -> mainController.previousView()),
+                createMenuItem("Show Phylogenetic tree",
+                        new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN),
+                        event -> mainController.toggleNewick())));
+        menuBar.getMenus().add(createMenu("_Help",
+                createMenuItem("Shortcuts",
+                        new KeyCodeCombination(KeyCode.F1),
+                        event -> mainController.toggleOverlay())));
 
     }
 
     /**
-     * Set up file menu.
+     * The function that will create a menu with an undefined number of menuItems.
+     *
+     * @param title     Title of the menu.
+     * @param menuItems The menu items that will be added to this menu.
+     * @return Menu with the menuItems attached.
      */
-    public void initFileMenu() {
+    private Menu createMenu(final String title, final MenuItem... menuItems) {
 
-        final Menu fileMenu = new Menu("_File");
+        final Menu menu = new Menu(title);
+        menu.getItems().addAll(menuItems);
+        return menu;
 
-        MenuItem load = new MenuItem("Load Workspace...");
-        load.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+    }
+
+    /**
+     * The function that returns a menuItem with a title, shortcut and event attached.
+     *
+     * @param title   The title of the menuItem.
+     * @param keyComb The shortcut to this menuItem.
+     * @param event   Event that the item will use.
+     * @return The menuItem with the parameters attached.
+     */
+    private MenuItem createMenuItem(final String title,
+                                    final KeyCombination keyComb,
+                                    final EventHandler<ActionEvent> event) {
+
+        final MenuItem res = new MenuItem(title);
+        res.setAccelerator(keyComb);
+        res.setOnAction(event);
+
+        return res;
+
+    }
+
+    /**
+     * The function that returns a menuItem without a shortcut.
+     *
+     * @param title Title of the menuItem.
+     * @param event Event that the item will use.
+     * @return The menu item with the title and the event attached.
+     */
+    private MenuItem createMenuItem(final String title, final EventHandler<ActionEvent> event) {
+
+        final MenuItem res = new MenuItem(title);
+        res.setOnAction(event);
+
+        return res;
+
+    }
+
+    /**
+     * Function used to create a workspace loader.
+     *
+     * @param title Title of the menuItem.
+     * @return Returns the menuItem with the workspace loader attached.
+     */
+    private MenuItem createWorkspaceLoader(final String title) {
+
+        final MenuItem res = new MenuItem(title);
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Workspace Folder");
-        load.setOnAction(event -> Workspace.chooseWorkspace(mainController));
+        res.setOnAction(event -> Workspace.chooseWorkspace(mainController));
 
-        MenuItem exit = new MenuItem("Exit");
-        exit.setOnAction(event -> mainController.exitProgram());
-
-        fileMenu.getItems().addAll(load, exit);
-        menuBar.getMenus().add(fileMenu);
-
-    }
-
-    /**
-     * Set up navigate menu.
-     */
-    public void initNavigateMenu() {
-
-        final Menu navigateMenu = new Menu("_Navigate");
-
-        final MenuItem previous = new MenuItem("Previous");
-        previous.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
-        previous.setOnAction(event -> mainController.previousView());
-
-        final MenuItem showNewick = new MenuItem("Show Phylogenetic tree");
-        showNewick.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN));
-        showNewick.setOnAction(event -> mainController.toggleNewick());
-
-        navigateMenu.getItems().addAll(previous, showNewick);
-        menuBar.getMenus().add(navigateMenu);
-
-    }
-
-    /**
-     * Set up help menu.
-     */
-    public void initHelpMenu() {
-
-        final Menu helpMenu = new Menu("_Help");
-
-        MenuItem shortcuts = new MenuItem("Shortcuts");
-        shortcuts.setAccelerator(new KeyCodeCombination(KeyCode.F1));
-        shortcuts.setOnAction(event -> mainController.toggleOverlay());
-
-        helpMenu.getItems().addAll(shortcuts);
-
-        menuBar.getMenus().add(helpMenu);
+        return res;
 
     }
 }
