@@ -1,0 +1,134 @@
+@startuml
+class DrawableNode {
+    currentIncoming : int
+    translateX : double
+    translateY : double
+
+    +incrementIncoming() : int
+}
+class DrawableEdge extends javafx.scene.shape.Line
+
+
+package model {
+abstract class Parser<T> {
+    readerList : BufferedReader[]
+
+    +setReader(files : File...) : Parser<T>
+    +parse() : T
+    + {abstract} parse(file : BufferedReader...) : T
+}
+
+package graph {
+    class BaseCounter<Character, MutableInt> extends java.util.HashMap {
+        {static} df : DecimalFormat
+        # baseSize : int
+
+        +getPercentage(c : char)
+        +getPercentageString(c : char)
+    }
+    class graph.Node extends DrawableNode {
+        # id : int
+        # sources : Set<String>
+        # refStartPosition : int
+        # refEndPosition : int
+        # content : String
+        # baseCounter : BaseCounter
+    }
+    class graph.NodeParser {
+        #getNodeId(sc : Scanner) : int
+        +getNode(sc : Scanner) : Node
+    }
+
+    class Graph<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
+        +getFirstNode() : Node
+        +position()
+        -nextColumn(nodes : List<Node>) : List<Node>
+        -positionNodes(nodes : List<Node>, column : int)
+    }
+    class GraphMap<String, Graph> extends java.util.HashMap {
+        +flat(sources : Set<String>) : Graph
+        -getGraph(source : String) : Graph
+        +addVertex(node : Node)
+        +addEdge(source : Node, target : Node)
+    }
+    class GraphParser<GraphMap> extends Parser {
+        -parseNodes(nodeFile : File, graph : Graph) : List<Node>
+        -parseEdges(edgeFile : File, graph : Graph, nodeList : List<Node>)
+    }
+
+    'Relations
+
+    GraphParser ..> GraphMap : << create >>
+    GraphMap --> Graph : << contains >>
+    GraphParser ..> graph.NodeParser
+
+    Graph --> graph.Node : << contains >>
+
+    graph.NodeParser ..> graph.Node : << create >>
+    graph.Node *-- BaseCounter
+}
+
+
+package newick {
+    class newick.Node extends DrawableNode {
+        - name : String
+        weight : double
+        children : List<Node>
+    }
+    class newick.NodeParser {
+        +getNode(node : TreeNode) : Node
+    }
+    class Tree<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
+        +getFirstNode() : Node
+    }
+    class TreeParser<Tree> extends Parser {
+        +getOffspring(node : TreeNode, parent : Node, tree : Tree) : int
+        +createNode(child : TreeNode, parent : Node, row : int) : Node
+        +addDummy(parent : Node, n : Node, tree : Tree
+    }
+
+    package selection {
+        interface Selection {
+            useSources() : boolean
+            isAny() : boolean
+
+            toggle() : Selection
+            merge(selection : Selection) : Selection
+            styleClass() : String
+        }
+
+        class All implements Selection
+        class None implements Selection
+        class Partial implements Selection
+    }
+
+    TreeParser ..> Tree : << create >>
+    TreeParser ..> newick.NodeParser
+    newick.NodeParser ..> newick.Node : << create >>
+
+    Tree --> newick.Node : << contains >>
+}
+
+package annotation {
+    class Annotation {
+        id : int
+        name : String
+        strand : boolean
+        start : int
+        end : int
+        proteinName : String
+
+        +equalsLoose(other : Annotation) : boolean
+    }
+    class AnnotationMap<String, Annotation> extends java.util.HashMap
+    class AnnotationParser<AnnotationMap> extends Parser {
+        +getAnnotation(splitLine : String) : Annotation
+    }
+
+    'Relations
+
+    AnnotationParser ..> AnnotationMap : << create >>
+    AnnotationMap "1" --> "*" Annotation : << contains >>
+}
+}
+@enduml
