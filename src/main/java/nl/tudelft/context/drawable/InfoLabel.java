@@ -3,6 +3,7 @@ package nl.tudelft.context.drawable;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.GraphController;
@@ -31,6 +32,11 @@ public class InfoLabel extends VBox {
      * The width of the InfoLabel.
      */
     public static final int LABEL_WIDTH = 60;
+
+    /**
+     * The height of the InfoLabel.
+     */
+    public static final int LABEL_HEIGHT = 55;
 
     /**
      * Constructor for the InfoLabel.
@@ -88,9 +94,27 @@ public class InfoLabel extends VBox {
 
         final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
         label.setTooltip(percentages);
+        label.setOnMouseMoved(event -> mouseOver(event, label));
+        label.setOnMouseExited(event -> addWidth(0, label));
 
         return label;
 
+    }
+
+    private void mouseOver(MouseEvent event, Label label) {
+        double dx = event.getX() - (label.getWidth() / 2);
+        double dy = event.getY() - (label.getHeight() / 2);
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        distance = Math.max(0, distance - 10);
+        int width = (int) (20 * Math.pow(Math.E, -(Math.pow(distance / 10, 2))));
+        addWidth(width, label);
+    }
+
+    private void addWidth(int width, Label label) {
+        label.translateXProperty().setValue(-width / 2);
+        label.translateYProperty().setValue(-width / 2);
+        label.setStyle("-fx-min-height: " + (LABEL_HEIGHT + width) + "px;"
+                + "-fx-min-width: " + (LABEL_WIDTH + width) + "px;");
     }
 
     /**
