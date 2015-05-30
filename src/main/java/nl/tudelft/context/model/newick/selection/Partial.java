@@ -28,6 +28,16 @@ public class Partial implements Selection {
     }
 
     @Override
+    public Selection mergeNone() {
+        return this;
+    }
+
+    @Override
+    public Selection mergeAll() {
+        return this;
+    }
+
+    @Override
     public String styleClass() {
         return "partial";
     }

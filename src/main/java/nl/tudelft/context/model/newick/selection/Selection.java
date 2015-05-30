@@ -37,6 +37,20 @@ public interface Selection {
     Selection merge(Selection selection);
 
     /**
+     * Merge this selection with None.
+     *
+     * @return The new selection
+     */
+    Selection mergeNone();
+
+    /**
+     * Merge this selection with All.
+     *
+     * @return The new selection
+     */
+    Selection mergeAll();
+
+    /**
      * Style class of current selection.
      *
      * @return Style class
