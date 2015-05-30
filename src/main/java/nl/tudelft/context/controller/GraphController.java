@@ -111,7 +111,6 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        System.out.println(getRoot());
     }
 
     /**
