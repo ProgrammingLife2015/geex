@@ -6,8 +6,6 @@ class DrawableNode {
 
     +incrementIncoming() : int
 }
-class DrawableEdge extends javafx.scene.shape.Line
-
 
 package model {
 abstract class Parser<T> {

@@ -6,7 +6,7 @@ class App extends javafx.application.Application {
     {static} +main(args : String...)
 }
 
-
+class DrawableEdge extends javafx.scene.shape.Line
 class BaseLabel extends javafx.scene.shape.Rectangle {
     {static}+BASE_HEIGHT : int
 }
@@ -163,16 +163,19 @@ MainController o-- MenuController
 MainController o-- MessageController
 MainController o-- OverlayController
 
-NewickController -- LoadNewickService
 NewickController -- DrawableEdge
 NewickController -- LoadService : <Tree>
+NewickController -- NewickLabel
 
 GraphController ..> BaseController
 GraphController ..> InfoLabel
 GraphController ..> Workspace
+GraphController ..> DrawableEdge
 GraphController -- DrawableEdge
 GraphController -- LoadService : <GraphMap>
 GraphController -- LoadService : <AnnotationMap>
+
+LoadService ..> model.Parser
 
 InfoLabel ..> BaseLabel
 
