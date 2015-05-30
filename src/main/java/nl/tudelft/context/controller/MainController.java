@@ -286,7 +286,12 @@ public class MainController extends DefaultController<StackPane> {
         messageController.displayMessage(text);
     }
 
-
+    /**
+     * Show the graph.
+     *
+     * @param on Controller to place it on
+     * @param sources Sources to display
+     */
     public void showGraph(final NewickController on, final Set<String> sources) {
         this.setView(on, new GraphController(this, sources,
                 workspace.getGraph(),

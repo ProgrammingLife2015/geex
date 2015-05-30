@@ -1,6 +1,5 @@
 package nl.tudelft.context.controller;
 
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -69,26 +68,26 @@ public final class NewickController extends ViewController<ScrollPane> {
     GraphController graphController;
 
     /**
->>>>>>> origin/master
+     * Property with Newick tree.
+     */
+    ReadOnlyObjectProperty<Newick> newickIn;
+
+    /**
      * Init a controller at newick.fxml.
      *
-     * @param mainController   MainController for the application
+     * @param mainController MainController for the application
      * @param menuItem       MenuItem for the application
-     * @param newickIn Newick object from the workspace, might not be loaded.
+     * @param newickIn       Newick object from the workspace, might not be loaded.
      */
-    public NewickController(final MainController mainController, final MenuItem menuItem, final ReadOnlyObjectProperty<Newick> newickIn) {
+    public NewickController(final MainController mainController, final MenuItem menuItem,
+                            final ReadOnlyObjectProperty<Newick> newickIn) {
+
         super(new ScrollPane());
 
         this.mainController = mainController;
         this.menuItem = menuItem;
-        newickObjectProperty = new SimpleObjectProperty<>();
 
-        newickObjectProperty.addListener((observable, oldValue, newValue) -> {
-            showTree(newValue);
-        });
-
-        Platform.runLater(() -> newickObjectProperty.bind(newickIn));
-
+        this.newickIn = newickIn;
 
         loadFXML("/application/newick.fxml");
     }
@@ -105,8 +104,6 @@ public final class NewickController extends ViewController<ScrollPane> {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
-        progressIndicator.visibleProperty().bind(newickObjectProperty.isNull());
-
         mainController.newickLifted.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 root.toFront();
@@ -114,6 +111,17 @@ public final class NewickController extends ViewController<ScrollPane> {
                 root.toBack();
             }
         });
+
+        newickObjectProperty = new SimpleObjectProperty<>();
+
+        newickObjectProperty.addListener((observable, oldValue, newValue) -> {
+            showTree(newValue);
+        });
+
+        newickObjectProperty.bind(newickIn);
+
+        progressIndicator.visibleProperty().bind(newickObjectProperty.isNull());
+
     }
 
     /**
@@ -172,7 +180,12 @@ public final class NewickController extends ViewController<ScrollPane> {
     public void activate() {
         active = true;
         if (newickObjectProperty.isNotNull().get()) {
-            menuItem.setDisable(!newickObjectProperty.get().getRoot().getSelection().isAny());
+            menuItem.setDisable(
+                    !newickObjectProperty
+                            .get()
+                            .getRoot()
+                            .getSelection()
+                            .isAny());
         }
     }
 

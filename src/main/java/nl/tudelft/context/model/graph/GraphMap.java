@@ -2,7 +2,6 @@ package nl.tudelft.context.model.graph;
 
 import org.jgrapht.Graphs;
 
-import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 

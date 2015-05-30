@@ -6,8 +6,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuItem;
-import nl.tudelft.context.model.annotation.AnnotationMap;
-import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.Node;
 import nl.tudelft.context.model.newick.selection.All;
@@ -50,9 +48,9 @@ public class NewickControllerTest {
 
         when(mainController.getWorkspace()).thenReturn(workspace);
 
-        Newick newick = mock(Newick.class);
-
-        newickSimpleObjectProperty.set(mock(Newick.class));
+        Newick newick = new Newick();
+        newick.setRoot(new Node("n1", 1.23));
+        newickSimpleObjectProperty.set(newick);
 
         menuItem = spy(new MenuItem());
 
@@ -123,12 +121,9 @@ public class NewickControllerTest {
      * Nothing should break when activate is called.
      */
     @Test
-    public void testActivate() {
+    public void testActivate() throws InterruptedException {
         newickController.activate();
-        Newick newick = new Newick();
-        newick.setRoot(new Node("n1", 1.23));
         assertTrue(newickController.active);
-        newickSimpleObjectProperty.set(newick);
         newickController.deactivate();
         newickController.activate();
     }

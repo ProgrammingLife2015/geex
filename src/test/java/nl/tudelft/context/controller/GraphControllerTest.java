@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
-import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -65,8 +63,6 @@ public class GraphControllerTest {
 
         GraphController graphController = new GraphController(mock(MainController.class), new HashSet<>(Arrays.asList("Cat", "Dog")), graphMapReadOnlyObjectProperty, annotationMapReadOnlyObjectProperty);
 
-        graphMapReadOnlyObjectProperty.setValue(graphMap);
-
         CompletableFuture<Boolean> sequencesAdded = new CompletableFuture<>();
 
         graphController.sequences.getChildren().addListener((ListChangeListener<? super Node>) event -> {
@@ -74,6 +70,8 @@ public class GraphControllerTest {
                 sequencesAdded.complete(true);
             }
         });
+
+        graphMapReadOnlyObjectProperty.setValue(graphMap);
 
         assertEquals(true, sequencesAdded.get(5000, TimeUnit.MILLISECONDS));
     }

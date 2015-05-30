@@ -1,6 +1,5 @@
 package nl.tudelft.context.controller;
 
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -62,11 +61,21 @@ public final class GraphController extends ViewController<AnchorPane> {
     Set<String> sources;
 
     /**
+     * Property with graph map.
+     */
+    ReadOnlyObjectProperty<GraphMap> graphMapIn;
+
+    /**
+     * Property with annotation map.
+     */
+    ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
+
+    /**
      * Init a controller at graph.fxml.
      *
-     * @param mainController MainController for the application
-     * @param sources        Sources to display
-     * @param graphMapIn The graphMap from the workspace, might not be loaded.
+     * @param mainController  MainController for the application
+     * @param sources         Sources to display
+     * @param graphMapIn      The graphMap from the workspace, might not be loaded.
      * @param annotationMapIn The AnnotationMap from the workspace, might not be loaded.
      */
     public GraphController(final MainController mainController,
@@ -79,25 +88,10 @@ public final class GraphController extends ViewController<AnchorPane> {
         this.mainController = mainController;
         this.sources = sources;
 
-        ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
-        ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
-
-
-        graphMapProperty.addListener((observable, oldValue, newValue) -> {
-            loadGraph(newValue);
-        });
-
-        annotationMapProperty.addListener((observable, oldValue, newValue) -> {
-            loadAnnotation(newValue);
-        });
+        this.graphMapIn = graphMapIn;
+        this.annotationMapIn = annotationMapIn;
 
         loadFXML("/application/graph.fxml");
-
-        // Wait for the controller to initialize.
-        Platform.runLater(() -> {
-            graphMapProperty.bind(graphMapIn);
-            annotationMapProperty.bind(annotationMapIn);
-        });
     }
 
     /**
@@ -111,10 +105,28 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
+
+        ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
+
+        graphMapProperty.addListener((observable, oldValue, newValue) -> {
+            loadGraph(newValue);
+        });
+
+        annotationMapProperty.addListener((observable, oldValue, newValue) -> {
+            loadAnnotation(newValue);
+        });
+
+        graphMapProperty.bind(graphMapIn);
+        annotationMapProperty.bind(annotationMapIn);
+
+        progressIndicator.visibleProperty().bind(graphMapProperty.isNull());
+
     }
 
     /**
      * Load graph from source.
+     *
      * @param graphMap The GraphMap which is loaded.
      */
     private void loadGraph(final GraphMap graphMap) {
@@ -126,10 +138,10 @@ public final class GraphController extends ViewController<AnchorPane> {
 
     /**
      * Load annotation from source.
+     *
      * @param annotationMap The annotationmap which is loaded.
      */
     private void loadAnnotation(final AnnotationMap annotationMap) {
-        // TODO: use annotations
     }
 
 
@@ -170,6 +182,7 @@ public final class GraphController extends ViewController<AnchorPane> {
         );
 
         showCurrentLabels(map);
+        scroll.widthProperty().addListener(event -> showCurrentLabels(map));
         scroll.hvalueProperty().addListener(event -> showCurrentLabels(map));
 
     }
