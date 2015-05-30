@@ -2,6 +2,7 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -94,27 +95,26 @@ public class InfoLabel extends VBox {
 
         final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
         label.setTooltip(percentages);
-        label.setOnMouseMoved(event -> mouseOver(event, label));
-        label.setOnMouseExited(event -> addWidth(0, label));
+//        label.setOnMouseMoved(this::mouseOver);
+//        label.setOnMouseExited(event -> setScale(1));
 
         return label;
 
     }
 
-    private void mouseOver(MouseEvent event, Label label) {
-        double dx = event.getX() - (label.getWidth() / 2);
-        double dy = event.getY() - (label.getHeight() / 2);
+    public void mouseOver(MouseEvent event, Group sequences) {
+        double dx = event.getX() - (sequences.getLayoutX() + getTranslateX() + (getWidth() / 2));
+        double dy = event.getY() - (sequences.getLayoutY() + getTranslateY() + (getHeight() / 2));
         double distance = Math.sqrt(dx * dx + dy * dy);
-        distance = Math.max(0, distance - 10);
-        int width = (int) (20 * Math.pow(Math.E, -(Math.pow(distance / 10, 2))));
-        addWidth(width, label);
+        double maxDistance = 3 * LABEL_WIDTH;
+        distance = Math.min(maxDistance, distance);
+        double scale = 1 + Math.pow(Math.E, - (distance / LABEL_WIDTH));
+        setScale(scale);
     }
 
-    private void addWidth(int width, Label label) {
-        label.translateXProperty().setValue(-width / 2);
-        label.translateYProperty().setValue(-width / 2);
-        label.setStyle("-fx-min-height: " + (LABEL_HEIGHT + width) + "px;"
-                + "-fx-min-width: " + (LABEL_WIDTH + width) + "px;");
+    private void setScale(double scale) {
+        setScaleX(scale);
+        setScaleY(scale);
     }
 
     /**

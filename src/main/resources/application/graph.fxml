@@ -11,7 +11,7 @@
 
     <ScrollPane fx:id="scroll" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
                 AnchorPane.leftAnchor="0">
-        <StackPane>
+        <StackPane fx:id="stack">
             <StackPane styleClass="margin">
                 <Group fx:id="sequences"/>
             </StackPane>

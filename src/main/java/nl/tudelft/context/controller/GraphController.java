@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.model.annotation.AnnotationMap;
@@ -51,6 +52,12 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     @FXML
     ScrollPane scroll;
+
+    /**
+     * Scroll pane to monitor.
+     */
+    @FXML
+    StackPane stack;
 
     /**
      * Reference to the MainController of the app.
@@ -210,6 +217,8 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         infoLabels.forEach(InfoLabel::init);
         sequences.getChildren().addAll(infoLabels);
+
+        scroll.setOnMouseMoved(event -> infoLabels.forEach(label -> label.mouseOver(event, sequences)));
 
     }
 
