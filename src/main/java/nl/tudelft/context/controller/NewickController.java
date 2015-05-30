@@ -171,7 +171,7 @@ public final class NewickController extends ViewController<ScrollPane> {
     @Override
     public void activate() {
         active = true;
-        if (newickObjectProperty.isNull().get()) {
+        if (newickObjectProperty.isNotNull().get()) {
             menuItem.setDisable(!newickObjectProperty.get().getRoot().getSelection().isAny());
         }
     }
