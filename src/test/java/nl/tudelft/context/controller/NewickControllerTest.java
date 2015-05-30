@@ -6,9 +6,12 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuItem;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.Node;
 import nl.tudelft.context.model.newick.selection.All;
+import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +42,15 @@ public class NewickControllerTest {
     public static void beforeClass() throws Exception {
         mainController = mock(MainController.class);
         mainController.newickLifted = bp;
+
+        Workspace workspace = mock(Workspace.class);
+
+        when(workspace.getGraph()).thenReturn(new SimpleObjectProperty<>());
+        when(workspace.getAnnotation()).thenReturn(new SimpleObjectProperty<>());
+
+        when(mainController.getWorkspace()).thenReturn(workspace);
+
+        Newick newick = mock(Newick.class);
 
         newickSimpleObjectProperty.set(mock(Newick.class));
 

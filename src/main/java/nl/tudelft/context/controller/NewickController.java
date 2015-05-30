@@ -1,5 +1,6 @@
 package nl.tudelft.context.controller;
 
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -86,7 +87,8 @@ public final class NewickController extends ViewController<ScrollPane> {
             showTree(newValue);
         });
 
-        newickObjectProperty.bind(newickIn);
+        Platform.runLater(() -> newickObjectProperty.bind(newickIn));
+
 
         loadFXML("/application/newick.fxml");
     }
