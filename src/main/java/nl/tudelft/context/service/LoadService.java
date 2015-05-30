@@ -2,8 +2,6 @@ package nl.tudelft.context.service;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import nl.tudelft.context.model.Parser;
 
 import java.io.File;

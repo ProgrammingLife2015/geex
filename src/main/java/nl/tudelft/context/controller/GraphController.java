@@ -91,11 +91,13 @@ public final class GraphController extends ViewController<AnchorPane> {
             loadAnnotation(newValue);
         });
 
-        graphMapProperty.bind(graphMapIn);
-        annotationMapProperty.bind(annotationMapIn);
-
         loadFXML("/application/graph.fxml");
 
+        // Wait for the controller to initialize.
+        Platform.runLater(() -> {
+            graphMapProperty.bind(graphMapIn);
+            annotationMapProperty.bind(annotationMapIn);
+        });
     }
 
     /**
@@ -109,7 +111,7 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-
+        System.out.println(getRoot());
     }
 
     /**
@@ -120,7 +122,7 @@ public final class GraphController extends ViewController<AnchorPane> {
         Graph graph = graphMap.flat(sources);
         graph.position();
         // Run in fx thread
-        Platform.runLater(() -> showGraph(graph));
+        showGraph(graph);
     }
 
     /**
