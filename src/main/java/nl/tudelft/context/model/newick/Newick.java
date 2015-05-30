@@ -11,9 +11,14 @@ import org.jgrapht.graph.DefaultEdge;
 public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     /**
+     * Serial Version UID for serializing purposes.
+     */
+    private static final long serialVersionUID = -9035500723462666491L;
+
+    /**
      * The root of the tree.
      */
-    private Node root;
+    transient Node root;
 
     /**
      * Create a new Tree, with default edges.

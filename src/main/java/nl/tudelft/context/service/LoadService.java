@@ -18,7 +18,7 @@ public class LoadService<T> extends Service<T> {
     /**
      * The class used for parsing the files.
      */
-    Class<? extends Parser<T>> parserClass;
+    private Class<? extends Parser<T>> parserClass;
     /**
      * The files to parse.
      */

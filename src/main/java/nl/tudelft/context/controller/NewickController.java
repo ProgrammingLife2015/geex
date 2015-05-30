@@ -58,6 +58,17 @@ public final class NewickController extends ViewController<ScrollPane> {
     MenuItem menuItem;
 
     /**
+     * The current selection of the tree.
+     */
+    Set<String> selection;
+
+    /**
+     * The GraphController that belongs to the current selection.
+     */
+    GraphController graphController;
+
+    /**
+>>>>>>> origin/master
      * Init a controller at newick.fxml.
      *
      * @param mainController   MainController for the application
@@ -135,9 +146,18 @@ public final class NewickController extends ViewController<ScrollPane> {
      * @param newick the tree with the nodes to show.
      */
     protected void loadGraph(final Newick newick) {
-        Set<String> sources = newick.getRoot().getSources();
-        if (!sources.isEmpty()) {
-            mainController.showGraph(this, sources);
+        Set<String> newSelection = newick.getRoot().getSources();
+        if (!newSelection.isEmpty()) {
+            if (!newSelection.equals(selection)) {
+                graphController = new GraphController(mainController,
+                        newSelection,
+                        mainController.getWorkspace().getGraph(),
+                        mainController.getWorkspace().getAnnotation());
+                mainController.setView(this, graphController);
+            } else {
+                mainController.toView(graphController);
+            }
+            selection = newSelection;
         }
     }
 
