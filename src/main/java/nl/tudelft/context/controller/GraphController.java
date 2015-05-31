@@ -18,6 +18,7 @@ import nl.tudelft.context.model.graph.StackGraph;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -71,6 +72,11 @@ public final class GraphController extends ViewController<AnchorPane> {
      * Property with annotation map.
      */
     ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
+
+    /**
+     * List of graph views.
+     */
+    LinkedList<StackGraph> graphList = new LinkedList<>();
 
     /**
      * Init a controller at graph.fxml.
@@ -132,9 +138,9 @@ public final class GraphController extends ViewController<AnchorPane> {
      * @param graphMap The GraphMap which is loaded.
      */
     private void loadGraph(final GraphMap graphMap) {
-        StackGraph graph = graphMap.flat(sources);
-        graph = new SinglePointGraph(graph);
-        DrawableGraph drawableGraph = new DrawableGraph(graph);
+        graphList.add(graphMap.flat(sources));
+        graphList.add(new SinglePointGraph(graphList.getLast()));
+        DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
         showGraph(drawableGraph);
     }
 
