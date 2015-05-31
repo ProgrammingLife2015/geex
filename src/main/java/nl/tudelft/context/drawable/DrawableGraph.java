@@ -3,6 +3,7 @@ package nl.tudelft.context.drawable;
 import nl.tudelft.context.model.graph.DefaultGraph;
 import nl.tudelft.context.model.graph.Graph;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,13 +33,19 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
 
         this.graph = graph;
 
+        HashMap<Integer, DrawableNode> added = new HashMap<>();
+
         graph.vertexSet().stream()
-                .forEach(node -> addVertex(new DrawableNode(node)));
+                .forEach(node -> {
+                    DrawableNode drawableNode = new DrawableNode(node);
+                    added.put(node.getId(), drawableNode);
+                    addVertex(drawableNode);
+                });
 
         graph.edgeSet().stream()
                 .forEach(edge -> addEdge(
-                        new DrawableNode(graph.getEdgeSource(edge)),
-                        new DrawableNode(graph.getEdgeTarget(edge))
+                        added.get(graph.getEdgeSource(edge).getId()),
+                        added.get(graph.getEdgeTarget(edge).getId())
                 ));
 
         position();
@@ -54,10 +61,6 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
 
         int i = 0;
         while (!start.isEmpty()) {
-            System.out.println("-------------------------");
-            for (DrawableNode d : start) {
-                outgoingEdgesOf(d).stream().forEach(x -> System.out.println(getEdgeTarget(x).getNode().getId()));
-            }
             positionNodes(start, i++);
             start = nextColumn(start);
         }
