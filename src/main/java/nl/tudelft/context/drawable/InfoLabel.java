@@ -102,12 +102,11 @@ public class InfoLabel extends VBox {
 
     }
 
-    public void mouseOver(MouseEvent event, Group sequences) {
-        double dx = event.getX() - (sequences.getLayoutX() + getTranslateX() + (getWidth() / 2));
-        double dy = event.getY() - (sequences.getLayoutY() + getTranslateY() + (getHeight() / 2));
+    public void mouseOver(double mouseX, double mouseY) {
+        double dx = mouseX - getTranslateX() - (getWidth() / 2);
+        double dy = mouseY - getTranslateY() - (getHeight() / 2);
         double distance = Math.sqrt(dx * dx + dy * dy);
-        double maxDistance = 3 * LABEL_WIDTH;
-        distance = Math.min(maxDistance, distance);
+        distance = Math.max(0, distance - .5 * LABEL_WIDTH);
         double scale = 1 + Math.pow(Math.E, - (distance / LABEL_WIDTH));
         setScale(scale);
     }

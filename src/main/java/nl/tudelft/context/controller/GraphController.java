@@ -16,12 +16,7 @@ import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphMap;
 
 import java.net.URL;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -76,6 +71,9 @@ public final class GraphController extends ViewController<AnchorPane> {
      * Property with annotation map.
      */
     ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
+
+    Double mouseX = .0;
+    Double mouseY = .0;
 
     /**
      * Init a controller at graph.fxml.
@@ -177,7 +175,7 @@ public final class GraphController extends ViewController<AnchorPane> {
     /**
      * Listen to position and load on the fly.
      *
-     * @param nodeList Labels to to load on the fly
+     * @param nodeList Labels to load on the fly
      */
     private void initOnTheFlyLoading(final List<InfoLabel> nodeList) {
 
@@ -187,10 +185,17 @@ public final class GraphController extends ViewController<AnchorPane> {
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         );
+        Map<Integer, List<InfoLabel>> immutableMap = new HashMap<>(map);
 
         showCurrentLabels(map);
-        scroll.widthProperty().addListener(event -> showCurrentLabels(map));
-        scroll.hvalueProperty().addListener(event -> showCurrentLabels(map));
+        scroll.widthProperty().addListener(event -> {
+            showCurrentLabels(map);
+            bindMouseOver(immutableMap);
+        });
+        scroll.hvalueProperty().addListener(event -> {
+            showCurrentLabels(map);
+            bindMouseOver(immutableMap);
+        });
 
     }
 
@@ -216,11 +221,39 @@ public final class GraphController extends ViewController<AnchorPane> {
         infoLabels.forEach(InfoLabel::init);
         sequences.getChildren().addAll(infoLabels);
 
-        scroll.setOnMouseMoved(event -> {
-            infoLabels.forEach(label -> label.mouseOver(event, sequences));
-            System.out.println(infoLabels);
-        });
+    }
 
+    /**
+     * Show all the labels on current position.
+     *
+     * @param map Containing the labels indexed by position
+     */
+    private void bindMouseOver(final Map<Integer, List<InfoLabel>> map) {
+
+        double width = scroll.getWidth();
+        double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
+                * scroll.getHvalue();
+        int indexFrom = (int) Math.floor(left / Graph.LABEL_SPACING) - 1;
+        int indexTo = indexFrom + (int) Math.ceil(width / Graph.LABEL_SPACING) + 1;
+
+        List<InfoLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
+                .mapToObj(map::get)
+                .filter(Objects::nonNull)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+
+        scroll.setOnMouseMoved(event -> {
+            mouseX = event.getX();
+            mouseY = event.getY();
+            infoLabels.forEach(label ->
+                    label.mouseOver(
+                            mouseX - sequences.getLayoutX() + left,
+                            mouseY - sequences.getLayoutY()));
+        });
+        infoLabels.forEach(label ->
+                label.mouseOver(
+                        mouseX - sequences.getLayoutX() + left,
+                        mouseY - sequences.getLayoutY()));
     }
 
     @Override
