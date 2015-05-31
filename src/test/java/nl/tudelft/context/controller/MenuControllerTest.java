@@ -1,26 +1,19 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.stage.Window;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
 
 /**
  * @author Jim
@@ -51,7 +44,7 @@ public class MenuControllerTest {
 
         assertTrue(mb.getMenus().get(0).getText().equals("_File"));
 
-        assertTrue(mb.getMenus().get(0).getItems().get(0).getText().equals("Select Workspace Folder"));
+        assertTrue(mb.getMenus().get(0).getItems().get(0).getText().equals("Select workspace folder"));
         assertTrue(mb.getMenus().get(0).getItems().get(1).getText().equals("Exit"));
         assertEquals(mb.getMenus().get(0).getItems().get(0).getAccelerator(), new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         assertEquals(mb.getMenus().get(0).isVisible(), true);
@@ -71,7 +64,7 @@ public class MenuControllerTest {
 
         assertTrue(mb.getMenus().get(1).getText().equals("_Navigate"));
 
-        assertTrue(mb.getMenus().get(1).getItems().get(0).getText().equals("Previous"));
+        assertTrue(mb.getMenus().get(1).getItems().get(0).getText().equals("Previous view"));
         assertEquals(mb.getMenus().get(1).getItems().get(0).getAccelerator(), new KeyCodeCombination(KeyCode.ESCAPE));
         assertTrue(mb.getMenus().get(1).getItems().get(1).getText().equals("Show Phylogenetic tree"));
         assertEquals(mb.getMenus().get(1).getItems().get(1).getAccelerator(), new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN));
@@ -107,7 +100,7 @@ public class MenuControllerTest {
         MenuBar mb = new MenuBar();
         MenuController mc = new MenuController(mainController, mb);
 
-        assertEquals(mc.getLoadGenomeGraph().getText(), "Load Genome Graph");
+        assertEquals(mc.getLoadGenomeGraph().getText(), "Load Genome graph");
         assertEquals(mc.getLoadGenomeGraph().getAccelerator(), new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
         assertEquals(mc.getLoadGenomeGraph().disableProperty().getValue(), true);
     }
