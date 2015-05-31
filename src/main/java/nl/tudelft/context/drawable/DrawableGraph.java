@@ -1,7 +1,7 @@
 package nl.tudelft.context.drawable;
 
 import nl.tudelft.context.model.graph.DefaultGraph;
-import nl.tudelft.context.model.graph.Graph;
+import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,14 +22,14 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
     /**
      * Graph that is drawn.
      */
-    private Graph graph;
+    private StackGraph graph;
 
     /**
      * Create a wrapper around a graph to draw the graph.
      *
      * @param graph Graph to draw
      */
-    public DrawableGraph(final Graph graph) {
+    public DrawableGraph(final StackGraph graph) {
 
         this.graph = graph;
 
@@ -107,7 +107,7 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
      *
      * @return Graph that is being drawn
      */
-    public Graph getGraph() {
+    public StackGraph getGraph() {
         return graph;
     }
 

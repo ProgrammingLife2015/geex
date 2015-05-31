@@ -12,8 +12,9 @@ import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableGraph;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.model.annotation.AnnotationMap;
-import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphMap;
+import nl.tudelft.context.model.graph.SinglePointGraph;
+import nl.tudelft.context.model.graph.StackGraph;
 
 import java.net.URL;
 import java.util.Collection;
@@ -131,7 +132,8 @@ public final class GraphController extends ViewController<AnchorPane> {
      * @param graphMap The GraphMap which is loaded.
      */
     private void loadGraph(final GraphMap graphMap) {
-        Graph graph = graphMap.flat(sources);
+        StackGraph graph = graphMap.flat(sources);
+        graph = new SinglePointGraph(graph);
         DrawableGraph drawableGraph = new DrawableGraph(graph);
         showGraph(drawableGraph);
     }
@@ -148,18 +150,18 @@ public final class GraphController extends ViewController<AnchorPane> {
     /**
      * Show graph with reference points.
      *
-     * @param graph Graph to show
+     * @param drawableGraph Graph to show
      */
-    private void showGraph(final DrawableGraph graph) {
+    private void showGraph(final DrawableGraph drawableGraph) {
 
         // Bind edges
-        List<DrawableEdge> edgeList = graph.edgeSet().stream()
-                .map(edge -> new DrawableEdge(graph, edge))
+        List<DrawableEdge> edgeList = drawableGraph.edgeSet().stream()
+                .map(edge -> new DrawableEdge(drawableGraph, edge))
                 .collect(Collectors.toList());
 
         // Bind nodes
-        List<InfoLabel> nodeList = graph.vertexSet().stream()
-                .map(node -> new InfoLabel(mainController, this, graph, node))
+        List<InfoLabel> nodeList = drawableGraph.vertexSet().stream()
+                .map(node -> new InfoLabel(mainController, this, drawableGraph.getGraph(), node))
                 .collect(Collectors.toList());
 
         sequences.getChildren().addAll(edgeList);
