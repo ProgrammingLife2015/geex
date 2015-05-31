@@ -2,7 +2,6 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.newick.Newick;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -15,37 +14,27 @@ import org.jgrapht.graph.DefaultEdge;
 public class DrawableEdge extends Line {
 
     /**
-     * Define the X translation of the graph nodes.
+     * Define the Y translation of the graph nodes.
      */
-    public static final int X_OFFSET_GRAPH = 30;
+    public static final int OFFSET_GRAPH = 30;
 
     /**
      * Define the Y translation of the graph nodes.
      */
-    public static final int Y_OFFSET_GRAPH = 30;
-
-    /**
-     * Define the X translation of the graph nodes.
-     */
-    public static final int X_OFFSET_TREE = 10;
-
-    /**
-     * Define the Y translation of the graph nodes.
-     */
-    public static final int Y_OFFSET_TREE = 10;
+    public static final int OFFSET_TREE = 10;
 
     /**
      * Creates edge for graph and bind it to nodes.
      *
-     * @param graph graph that contains edge
-     * @param edge  edge to bind and display
+     * @param drawableGraph graph that contains edge
+     * @param edge          edge to bind and display
      */
-    public DrawableEdge(final Graph graph, final DefaultEdge edge) {
+    public DrawableEdge(final DrawableGraph drawableGraph, final DefaultEdge edge) {
 
-        initialize(graph, edge);
+        initialize(drawableGraph, edge);
 
-        setTranslateX(X_OFFSET_GRAPH);
-        setTranslateY(Y_OFFSET_GRAPH);
+        setTranslateX(OFFSET_GRAPH);
+        setTranslateY(OFFSET_GRAPH);
 
     }
 
@@ -53,14 +42,14 @@ public class DrawableEdge extends Line {
      * Creates edge for tree and bind it to nodes.
      *
      * @param newick graph that contains edge
-     * @param edge edge to bind and display
+     * @param edge   edge to bind and display
      */
     public DrawableEdge(final Newick newick, final DefaultEdge edge) {
 
         initialize(newick, edge);
 
-        setTranslateX(X_OFFSET_TREE);
-        setTranslateY(Y_OFFSET_TREE);
+        setTranslateX(OFFSET_TREE);
+        setTranslateY(OFFSET_TREE);
 
     }
 

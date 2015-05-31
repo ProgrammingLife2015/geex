@@ -1,7 +1,5 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.drawable.DrawableNode;
-
 import java.util.Set;
 
 /**
@@ -9,7 +7,7 @@ import java.util.Set;
  * @version 1.1
  * @since 23-4-2015
  */
-public class Node extends DrawableNode {
+public class Node {
 
     /**
      * The identifier of the current Node.
