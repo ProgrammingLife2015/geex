@@ -29,20 +29,44 @@ public final class MenuController {
     MenuItem loadGenomeGraph;
 
     /**
+     * FXML menu bar.
+     */
+    MenuBar menuBar;
+
+    /**
      * Create a new menu.
      *
      * @param mainController The MainController of the application.
      * @param menuBar        The menubar this Menu should hook onto.
      */
     public MenuController(final MainController mainController, final MenuBar menuBar) {
+
         this.mainController = mainController;
-        menuBar.setUseSystemMenuBar(true);
+        this.menuBar = menuBar;
+
+        initFileMenu();
+        initNavigateMenu();
+        initHelpMenu();
+
+    }
+
+    /**
+     * Initialize file menu.
+     */
+    private void initFileMenu() {
 
         menuBar.getMenus().add(createMenu("_File",
                 createWorkspaceLoader("Select Workspace Folder",
                         new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN)),
                 createMenuItem("Exit", null,
                         event -> mainController.exitProgram())));
+    }
+
+    /**
+     * Initialize file menu.
+     */
+    private void initNavigateMenu() {
+
         menuBar.getMenus().add(createMenu("_Navigate",
                 createMenuItem("Previous",
                         new KeyCodeCombination(KeyCode.ESCAPE),
@@ -52,6 +76,14 @@ public final class MenuController {
                         event -> mainController.toggleNewick()),
                 createGenomeGraphLoader("Load Genome Graph",
                         new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN))));
+
+    }
+
+    /**
+     * Initialize help menu.
+     */
+    private void initHelpMenu() {
+
         menuBar.getMenus().add(createMenu("_Help",
                 createMenuItem("Shortcuts",
                         new KeyCodeCombination(KeyCode.F1),
@@ -97,7 +129,7 @@ public final class MenuController {
     /**
      * Function used to create a workspace loader.
      *
-     * @param title Title of the menuItem.
+     * @param title   Title of the menuItem.
      * @param keyComb The KeyCodeCombination to be attached.
      * @return Returns the menuItem with the workspace loader attached.
      */
@@ -115,7 +147,8 @@ public final class MenuController {
 
     /**
      * The function used to create the menuItem with the genomegraphloader.
-     * @param title The title of the menuItem.
+     *
+     * @param title   The title of the menuItem.
      * @param keyComb The keycombination to be attached.
      * @return The menuitem with all params.
      */
