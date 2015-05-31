@@ -41,7 +41,7 @@ public final class MenuController {
         menuBar.getMenus().add(createMenu("_File",
                 createWorkspaceLoader("Select Workspace Folder",
                         new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN)),
-                createMenuItem("Exit",
+                createMenuItem("Exit", null,
                         event -> mainController.exitProgram())));
         menuBar.getMenus().add(createMenu("_Navigate",
                 createMenuItem("Previous",
@@ -88,22 +88,6 @@ public final class MenuController {
 
         final MenuItem res = new MenuItem(title);
         res.setAccelerator(keyComb);
-        res.setOnAction(event);
-
-        return res;
-
-    }
-
-    /**
-     * The function that returns a menuItem without a shortcut.
-     *
-     * @param title Title of the menuItem.
-     * @param event Event that the item will use.
-     * @return The menu item with the title and the event attached.
-     */
-    private MenuItem createMenuItem(final String title, final EventHandler<ActionEvent> event) {
-
-        final MenuItem res = new MenuItem(title);
         res.setOnAction(event);
 
         return res;
