@@ -10,7 +10,7 @@
 <fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
 
     <ScrollPane fx:id="scroll" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
-                AnchorPane.leftAnchor="0">
+                AnchorPane.leftAnchor="0" fitToHeight="true" fitToWidth="true">
         <StackPane>
             <StackPane styleClass="margin">
                 <Group fx:id="sequences"/>

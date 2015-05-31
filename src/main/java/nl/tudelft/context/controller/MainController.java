@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -257,6 +258,7 @@ public class MainController extends DefaultController<StackPane> {
     }
 
     /**
+     * Set the current workspace. And also preload it.
      * Gets the MenuController.
      *
      * @return The MenuController
@@ -266,12 +268,13 @@ public class MainController extends DefaultController<StackPane> {
     }
 
     /**
-     * Set the current workspace.
+     * Set the current workspace. And also preload it.
      *
      * @param workspace The new workspace
      */
     public final void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
+        workspace.preload();
     }
 
     /**
@@ -283,5 +286,15 @@ public class MainController extends DefaultController<StackPane> {
         messageController.displayMessage(text);
     }
 
-
+    /**
+     * Show the graph.
+     *
+     * @param on Controller to place it on
+     * @param sources Sources to display
+     */
+    public void showGraph(final NewickController on, final Set<String> sources) {
+        this.setView(on, new GraphController(this, sources,
+                workspace.getGraph(),
+                workspace.getAnnotation()));
+    }
 }

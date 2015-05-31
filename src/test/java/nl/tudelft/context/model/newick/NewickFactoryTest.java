@@ -17,27 +17,27 @@ import static org.junit.Assert.fail;
  * @version 1.0
  * @since 13-05-2015
  */
-public class TreeFactoryTest {
+public class NewickFactoryTest {
     protected static File file;
-    protected static Parser<Tree> treeParser;
-    protected static Tree tree;
+    protected static Parser<Newick> treeParser;
+    protected static Newick newick;
     protected static Node root;
 
     /**
      * Helper class for loading the file.
      */
     public static void loadFile() {
-        file = new File(TreeTest.class.getResource("/newick/10strains.nwk").getPath());
+        file = new File(NewickTest.class.getResource("/newick/10strains.nwk").getPath());
         try {
-            treeParser = new TreeParser().setReader(file);
+            treeParser = new NewickParser().setReader(file);
         } catch (FileNotFoundException e) {
             fail("File not found");
         } catch (UnsupportedEncodingException e) {
             fail("Unsupported encoding");
         }
-        tree = treeParser.parse();
-        assertTrue(tree.vertexSet().size() > 0);
-        root = tree.getRoot();
+        newick = treeParser.parse();
+        assertTrue(newick.vertexSet().size() > 0);
+        root = newick.getRoot();
         assertNotNull(root);
     }
 
@@ -84,7 +84,7 @@ public class TreeFactoryTest {
                         "\t\t\tNode<TKK-01-0015,0.0021152603439986706>\n" +
                         "\t\t\tNode<TKK-01-0029,0.0015547169605270028>\n" +
                         "\t\tNode<TKK_04_0002,0.0010063934605568647>\n",
-                tree.toString()
+                newick.toString()
         );
     }
 

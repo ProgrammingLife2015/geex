@@ -1,28 +1,25 @@
 package nl.tudelft.context.controller;
 
-import com.sun.javafx.collections.ObservableListWrapper;
+
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.collections.FXCollections;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.StackPane;
+import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.Node;
-import nl.tudelft.context.model.newick.Tree;
 import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.*;
 import static org.mockito.Mockito.*;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
+ * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
  * @version 1.0
  * @since 26-4-2015
  */
@@ -33,9 +30,7 @@ public class NewickControllerTest {
     protected static MainController mainController;
     protected static MenuItem menuItem;
 
-    protected final static File nodeFile = new File(GraphControllerTest.class.getResource("/graph/node.graph").getPath());
-    protected final static File edgeFile = new File(GraphControllerTest.class.getResource("/graph/edge.graph").getPath());
-    protected final static File nwkFile = new File(GraphControllerTest.class.getResource("/newick/10strains.nwk").getPath());
+    protected static SimpleObjectProperty<Newick> newickSimpleObjectProperty = new SimpleObjectProperty<>();
     protected static BooleanProperty bp = new SimpleBooleanProperty(false);
 
     /**
@@ -43,24 +38,23 @@ public class NewickControllerTest {
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
-
         mainController = mock(MainController.class);
-
-        mainController.viewList = FXCollections.observableList(new ArrayList<>());
-        mainController.view = mock(StackPane.class);
-        Workspace workspace = mock(Workspace.class);
-        mainController.messageController = new MessageController();
         mainController.newickLifted = bp;
 
-        when(workspace.getEdgeFile()).thenReturn(edgeFile);
-        when(workspace.getNodeFile()).thenReturn(nodeFile);
-        when(workspace.getNwkFile()).thenReturn(nwkFile);
+        Workspace workspace = mock(Workspace.class);
+
+        when(workspace.getGraph()).thenReturn(new SimpleObjectProperty<>());
+        when(workspace.getAnnotation()).thenReturn(new SimpleObjectProperty<>());
+
         when(mainController.getWorkspace()).thenReturn(workspace);
-        when(mainController.view.getChildren()).thenReturn(new ObservableListWrapper<>(new ArrayList<>()));
+
+        Newick newick = new Newick();
+        newick.setRoot(new Node("n1", 1.23));
+        newickSimpleObjectProperty.set(newick);
 
         menuItem = spy(new MenuItem());
 
-        newickController = new NewickController(mainController, menuItem);
+        newickController = new NewickController(mainController, menuItem, newickSimpleObjectProperty);
 
     }
 
@@ -69,9 +63,9 @@ public class NewickControllerTest {
      */
     @Test
     public void testMessageTreeLoaded() {
-        Tree tree = new Tree();
-        tree.setRoot(new Node("a", 1));
-        newickController.showTree(tree);
+        Newick newick = new Newick();
+        newick.setRoot(new Node("a", 1));
+        newickController.showTree(newick);
         verify(mainController, atLeast(1)).displayMessage(MessageController.SUCCESS_LOAD_TREE);
     }
 
@@ -101,15 +95,17 @@ public class NewickControllerTest {
      */
     @Test
     public void testLoadGraph() {
-        Tree tree = new Tree();
+        Newick newick = new Newick();
         Node node = new Node("n1", 1.23);
-        tree.setRoot(node);
-        newickController.loadGraph(tree);
-        verify(mainController, never()).setView(any(NewickController.class), any(GraphController.class));
+        newick.setRoot(node);
+        newickController.loadGraph(newick);
+        verify(mainController, never()).showGraph(newickController, node.getSources());
+
         node.setSelection(new All());
-        newickController.loadGraph(tree);
+
+        newickController.loadGraph(newick);
         verify(mainController, times(1)).setView(any(NewickController.class), any(GraphController.class));
-        newickController.loadGraph(tree);
+        newickController.loadGraph(newick);
         verify(mainController, times(1)).toView(any(GraphController.class));
     }
 
@@ -125,12 +121,9 @@ public class NewickControllerTest {
      * Nothing should break when activate is called.
      */
     @Test
-    public void testActivate() {
+    public void testActivate() throws InterruptedException {
         newickController.activate();
-        Tree tree = new Tree();
-        tree.setRoot(new Node("n1", 1.23));
         assertTrue(newickController.active);
-        newickController.tree = tree;
         newickController.deactivate();
         newickController.activate();
     }

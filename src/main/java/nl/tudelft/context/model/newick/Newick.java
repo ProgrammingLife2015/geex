@@ -8,7 +8,7 @@ import org.jgrapht.graph.DefaultEdge;
  * @version 1.0
  * @since 3-5-2015
  */
-public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
+public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     /**
      * Serial Version UID for serializing purposes.
@@ -23,7 +23,7 @@ public final class Tree extends DefaultDirectedGraph<Node, DefaultEdge> {
     /**
      * Create a new Tree, with default edges.
      */
-    public Tree() {
+    public Newick() {
         super(DefaultEdge.class);
     }
 
