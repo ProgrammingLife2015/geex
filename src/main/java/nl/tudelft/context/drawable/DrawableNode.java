@@ -37,6 +37,13 @@ public class DrawableNode {
     }
 
     /**
+     * Reset the current incoming.
+     */
+    public final void resetIncoming() {
+        currentIncoming = 0;
+    }
+
+    /**
      * @return translateX property
      */
     public final ObservableDoubleValue translateXProperty() {

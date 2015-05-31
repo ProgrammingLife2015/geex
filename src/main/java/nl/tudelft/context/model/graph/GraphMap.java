@@ -2,15 +2,15 @@ package nl.tudelft.context.model.graph;
 
 import org.jgrapht.Graphs;
 
-import java.util.HashMap;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 20-5-2015
  */
-public class GraphMap extends HashMap<String, Graph> {
+public class GraphMap extends ConcurrentHashMap<String, Graph> {
 
     /**
      * Create a graph with graphs from sources flatten.

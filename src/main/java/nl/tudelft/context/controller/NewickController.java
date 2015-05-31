@@ -1,6 +1,8 @@
 package nl.tudelft.context.controller;
 
-import javafx.concurrent.Service;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -9,10 +11,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
-import nl.tudelft.context.model.newick.Tree;
-import nl.tudelft.context.model.newick.TreeParser;
-import nl.tudelft.context.service.LoadService;
-import nl.tudelft.context.workspace.Workspace;
+import nl.tudelft.context.model.newick.Newick;
 
 import java.net.URL;
 import java.util.List;
@@ -49,19 +48,14 @@ public final class NewickController extends ViewController<ScrollPane> {
     MainController mainController;
 
     /**
-     * The service used for loading the newick tree.
+     * The newick object, can change.
      */
-    Service<Tree> loadNewickService;
+    ObjectProperty<Newick> newickObjectProperty;
 
     /**
      * The menu item that initiates loadGraph().
      */
     MenuItem menuItem;
-
-    /**
-     * The loaded phylogenetic tree.
-     */
-    Tree tree;
 
     /**
      * The current selection of the tree.
@@ -74,23 +68,28 @@ public final class NewickController extends ViewController<ScrollPane> {
     GraphController graphController;
 
     /**
+     * Property with Newick tree.
+     */
+    ReadOnlyObjectProperty<Newick> newickIn;
+
+    /**
      * Init a controller at newick.fxml.
      *
      * @param mainController MainController for the application
      * @param menuItem       MenuItem for the application
+     * @param newickIn       Newick object from the workspace, might not be loaded.
      */
-    public NewickController(final MainController mainController, final MenuItem menuItem) {
+    public NewickController(final MainController mainController, final MenuItem menuItem,
+                            final ReadOnlyObjectProperty<Newick> newickIn) {
 
         super(new ScrollPane());
 
         this.mainController = mainController;
         this.menuItem = menuItem;
 
-        Workspace workspace = mainController.getWorkspace();
-        this.loadNewickService = new LoadService<>(TreeParser.class, workspace.getNwkFile());
+        this.newickIn = newickIn;
 
         loadFXML("/application/newick.fxml");
-
     }
 
     /**
@@ -105,8 +104,6 @@ public final class NewickController extends ViewController<ScrollPane> {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
-        progressIndicator.visibleProperty().bind(loadNewickService.runningProperty());
-
         mainController.newickLifted.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 root.toFront();
@@ -115,46 +112,39 @@ public final class NewickController extends ViewController<ScrollPane> {
             }
         });
 
-        loadTree();
+        newickObjectProperty = new SimpleObjectProperty<>();
 
-    }
+        newickObjectProperty.addListener((observable, oldValue, newValue) -> {
+            showTree(newValue);
+        });
 
-    /**
-     * Load newick from source.
-     */
-    public void loadTree() {
+        newickObjectProperty.bind(newickIn);
 
-        loadNewickService.setOnSucceeded(event -> showTree(loadNewickService.getValue()));
-        loadNewickService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_TREE));
-        loadNewickService.restart();
+        progressIndicator.visibleProperty().bind(newickObjectProperty.isNull());
 
     }
 
     /**
      * Show the phylogenetic tree.
      *
-     * @param tree newick to show
+     * @param newick newick to show
      */
-    protected void showTree(final Tree tree) {
-
-        this.tree = tree;
-
+    protected void showTree(final Newick newick) {
         // Bind edges
-        List<DrawableEdge> edgeList = tree.edgeSet().stream()
-                .map(edge -> new DrawableEdge(tree, edge))
+        List<DrawableEdge> edgeList = newick.edgeSet().stream()
+                .map(edge -> new DrawableEdge(newick, edge))
                 .collect(Collectors.toList());
 
         // Bind nodes
-        List<Label> nodeList = tree.vertexSet().stream()
+        List<Label> nodeList = newick.vertexSet().stream()
                 .map(NewickLabel::new)
                 .collect(Collectors.toList());
 
-        newick.getChildren().addAll(edgeList);
-        newick.getChildren().addAll(nodeList);
+        this.newick.getChildren().addAll(edgeList);
+        this.newick.getChildren().addAll(nodeList);
 
-
-        menuItem.setOnAction(event -> loadGraph(tree));
-        tree.getRoot().getSelectionProperty().addListener((observable, oldValue, newValue) ->
+        menuItem.setOnAction(event -> loadGraph(newick));
+        newick.getRoot().getSelectionProperty().addListener((observable, oldValue, newValue) ->
                 menuItem.setDisable(!(active && newValue.isAny())));
 
         mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
@@ -163,13 +153,16 @@ public final class NewickController extends ViewController<ScrollPane> {
     /**
      * Loads the graph of the selected strands.
      *
-     * @param tree the tree with the nodes to show.
+     * @param newick the tree with the nodes to show.
      */
-    protected void loadGraph(final Tree tree) {
-        Set<String> newSelection = tree.getRoot().getSources();
+    protected void loadGraph(final Newick newick) {
+        Set<String> newSelection = newick.getRoot().getSources();
         if (!newSelection.isEmpty()) {
             if (!newSelection.equals(selection)) {
-                graphController = new GraphController(mainController, newSelection);
+                graphController = new GraphController(mainController,
+                        newSelection,
+                        mainController.getWorkspace().getGraph(),
+                        mainController.getWorkspace().getAnnotation());
                 mainController.setView(this, graphController);
             } else {
                 mainController.toView(graphController);
@@ -186,8 +179,13 @@ public final class NewickController extends ViewController<ScrollPane> {
     @Override
     public void activate() {
         active = true;
-        if (tree != null) {
-            menuItem.setDisable(!tree.getRoot().getSelection().isAny());
+        if (newickObjectProperty.isNotNull().get()) {
+            menuItem.setDisable(
+                    !newickObjectProperty
+                            .get()
+                            .getRoot()
+                            .getSelection()
+                            .isAny());
         }
     }
 

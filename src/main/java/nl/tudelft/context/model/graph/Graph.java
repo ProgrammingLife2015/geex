@@ -85,6 +85,7 @@ public class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
 
         int row = 0;
         for (Node node : nodes) {
+            node.resetIncoming();
             node.setTranslateX(column * LABEL_SPACING);
             node.setTranslateY(row * LABEL_SPACING - shift);
             row++;

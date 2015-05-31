@@ -1,6 +1,8 @@
 package nl.tudelft.context.controller;
 
-import javafx.concurrent.Service;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
@@ -10,12 +12,8 @@ import javafx.scene.layout.StackPane;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.model.annotation.AnnotationMap;
-import nl.tudelft.context.model.annotation.AnnotationParser;
 import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.model.graph.GraphParser;
-import nl.tudelft.context.service.LoadService;
-import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
 import java.util.Collection;
@@ -65,38 +63,42 @@ public final class GraphController extends ViewController<AnchorPane> {
     MainController mainController;
 
     /**
-     * The service for loading the Graph.
-     */
-    Service<GraphMap> loadGraphService;
-
-    /**
-     * The service for loading the annotations.
-     */
-    Service<AnnotationMap> loadAnnotationService;
-
-    /**
      * Sources that are displayed in the graph.
      */
     Set<String> sources;
 
     /**
+     * Property with graph map.
+     */
+    ReadOnlyObjectProperty<GraphMap> graphMapIn;
+
+    /**
+     * Property with annotation map.
+     */
+    ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
+
+    /**
      * Init a controller at graph.fxml.
      *
-     * @param mainController MainController for the application
-     * @param sources        Sources to display
+     * @param mainController  MainController for the application
+     * @param sources         Sources to display
+     * @param graphMapIn      The graphMap from the workspace, might not be loaded.
+     * @param annotationMapIn The AnnotationMap from the workspace, might not be loaded.
      */
-    public GraphController(final MainController mainController, final Set<String> sources) {
+    public GraphController(final MainController mainController,
+                           final Set<String> sources,
+                           final ReadOnlyObjectProperty<GraphMap> graphMapIn,
+                           final ReadOnlyObjectProperty<AnnotationMap> annotationMapIn) {
 
         super(new AnchorPane());
 
         this.mainController = mainController;
         this.sources = sources;
-        Workspace workspace = mainController.getWorkspace();
-        this.loadGraphService = new LoadService<>(GraphParser.class, workspace.getNodeFile(), workspace.getEdgeFile());
-        this.loadAnnotationService = new LoadService<>(AnnotationParser.class, workspace.getAnnotationFile());
+
+        this.graphMapIn = graphMapIn;
+        this.annotationMapIn = annotationMapIn;
 
         loadFXML("/application/graph.fxml");
-
     }
 
     /**
@@ -111,47 +113,42 @@ public final class GraphController extends ViewController<AnchorPane> {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
-        progressIndicator.visibleProperty().bind(loadGraphService.runningProperty());
+        ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
 
-        loadGraph();
-        loadAnnotation();
+        graphMapProperty.addListener((observable, oldValue, newValue) -> {
+            loadGraph(newValue);
+        });
+
+        annotationMapProperty.addListener((observable, oldValue, newValue) -> {
+            loadAnnotation(newValue);
+        });
+
+        graphMapProperty.bind(graphMapIn);
+        annotationMapProperty.bind(annotationMapIn);
+
+        progressIndicator.visibleProperty().bind(graphMapProperty.isNull());
 
     }
 
     /**
      * Load graph from source.
+     *
+     * @param graphMap The GraphMap which is loaded.
      */
-    private void loadGraph() {
-
-        loadGraphService.setOnSucceeded(event -> {
-            Graph graph = loadGraphService.getValue().flat(sources);
-            graph.position();
-            showGraph(graph);
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_GRAPH);
-        });
-        loadGraphService.setOnFailed(event -> {
-            mainController.displayMessage(MessageController.FAIL_LOAD_GRAPH);
-        });
-        loadGraphService.restart();
-
+    private void loadGraph(final GraphMap graphMap) {
+        Graph graph = graphMap.flat(sources);
+        graph.position();
+        // Run in fx thread
+        showGraph(graph);
     }
 
     /**
      * Load annotation from source.
+     *
+     * @param annotationMap The annotationmap which is loaded.
      */
-    private void loadAnnotation() {
-
-        loadAnnotationService.setOnSucceeded(event -> {
-            AnnotationMap annotationMap = loadAnnotationService.getValue();
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
-            System.out.println("annotationMap = " + annotationMap.toString());
-
-        });
-        loadAnnotationService.setOnFailed(event -> {
-            mainController.displayMessage(MessageController.FAIL_LOAD_ANNOTATION);
-        });
-        loadAnnotationService.restart();
-
+    private void loadAnnotation(final AnnotationMap annotationMap) {
     }
 
 
@@ -192,6 +189,7 @@ public final class GraphController extends ViewController<AnchorPane> {
         );
 
         showCurrentLabels(map);
+        scroll.widthProperty().addListener(event -> showCurrentLabels(map));
         scroll.hvalueProperty().addListener(event -> showCurrentLabels(map));
 
     }
