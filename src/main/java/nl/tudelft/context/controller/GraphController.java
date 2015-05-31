@@ -218,7 +218,10 @@ public final class GraphController extends ViewController<AnchorPane> {
         infoLabels.forEach(InfoLabel::init);
         sequences.getChildren().addAll(infoLabels);
 
-        scroll.setOnMouseMoved(event -> infoLabels.forEach(label -> label.mouseOver(event, sequences)));
+        scroll.setOnMouseMoved(event -> {
+            infoLabels.forEach(label -> label.mouseOver(event, sequences));
+            System.out.println(infoLabels);
+        });
 
     }
 
