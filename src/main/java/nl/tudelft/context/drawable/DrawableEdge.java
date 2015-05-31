@@ -3,7 +3,7 @@ package nl.tudelft.context.drawable;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import nl.tudelft.context.model.graph.Graph;
-import nl.tudelft.context.model.newick.Tree;
+import nl.tudelft.context.model.newick.Newick;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -52,12 +52,12 @@ public class DrawableEdge extends Line {
     /**
      * Creates edge for tree and bind it to nodes.
      *
-     * @param tree graph that contains edge
+     * @param newick graph that contains edge
      * @param edge edge to bind and display
      */
-    public DrawableEdge(final Tree tree, final DefaultEdge edge) {
+    public DrawableEdge(final Newick newick, final DefaultEdge edge) {
 
-        initialize(tree, edge);
+        initialize(newick, edge);
 
         setTranslateX(X_OFFSET_TREE);
         setTranslateY(Y_OFFSET_TREE);

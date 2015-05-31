@@ -24,10 +24,17 @@ public class All implements Selection {
 
     @Override
     public Selection merge(final Selection selection) {
-        if (selection instanceof All) {
-            return this;
-        }
+        return selection.mergeAll();
+    }
+
+    @Override
+    public Selection mergeNone() {
         return new Partial();
+    }
+
+    @Override
+    public Selection mergeAll() {
+        return this;
     }
 
     @Override
