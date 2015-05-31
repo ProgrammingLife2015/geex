@@ -38,9 +38,9 @@ abstract class ViewController<T extends Parent> extends DefaultController {
 }
 class GraphController<AnchorPane> extends ViewController {
     mainController : MainController
-    loadGraphService : Service<GraphMap>
-    loadAnnotationService : Service<AnnotationMap>
     sources : Set<String>
+    graphMapIn : ReadOnlyObjectProperty<GraphMap>
+    annatationMapIn : ReadOnlyObjectProperty<AnnotationMap>
 
     -loadGraph()
     -loadAnnotation()
@@ -91,13 +91,14 @@ class MenuController {
 }
 class NewickController<ScrollPane> extends ViewController {
     mainController : MainController
-    loadNewickService : Service<Tree>
+    graphController : GraphController
+    newickIn : ReadOnlyObjectProperty<Newick>
+    newickObjectProperty : ObjectProperty<Newick>
     menuItem : MenuItem
-    tree : Tree
+    newick : Newick
 
-    +loadTree()
-    #showTree(tree : Tree)
-    #loadGraph(tree : Tree)
+    #showTree(newick : Newick)
+    #loadGraph(newick : Newick)
 }
 class WelcomeController<GridPane> extends ViewController {
     -mainController : MainController
@@ -111,13 +112,14 @@ class LoadService<T> extends javafx.concurrent.Service {
 
 class Workspace {
     directory : File
-    files : File[]
-    edgeFile : File
-    nodeFile : File
-    nwkFile : File
+    loadNewickService : LoadService<Newick>
+    loadGraphService : LoadService<GraphMap>
+    loadAnnotationService : LoadService<AnnotationMap>
+
+    +load()
+    +preload()
 
     +{static}chooseWorkspace(mainController : MainController)
-    -findFile(files : File[], extension : String)
 }
 
 'FXML
@@ -162,27 +164,29 @@ App "1" *-- "1" MainController
 MainController o-- MenuController
 MainController o-- MessageController
 MainController o-- OverlayController
+MainController --> WelcomeController
 
 NewickController -- DrawableEdge
-NewickController -- LoadService : <Tree>
 NewickController -- NewickLabel
+NewickController --> GraphController
 
-GraphController ..> BaseController
 GraphController ..> InfoLabel
-GraphController ..> Workspace
 GraphController ..> DrawableEdge
-GraphController -- DrawableEdge
-GraphController -- LoadService : <GraphMap>
-GraphController -- LoadService : <AnnotationMap>
 
 LoadService ..> model.Parser
 
 InfoLabel ..> BaseLabel
+InfoLabel --> BaseController
 
 MainController ..> Workspace
 
+WelcomeController --> NewickController
+
+Workspace ..> LoadService
+
 'External classes
 abstract class javafx.concurrent.Service<V> {
+    -value : ReadOnlyObjectProperty<V>
     +createTask() : Task<V>
 }
 
