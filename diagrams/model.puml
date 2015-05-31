@@ -76,10 +76,10 @@ package newick {
     class newick.NodeParser {
         +getNode(node : TreeNode) : Node
     }
-    class Tree<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
+    class Newick<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
         +getFirstNode() : Node
     }
-    class TreeParser<Tree> extends Parser {
+    class NewickParser<Tree> extends Parser {
         +getOffspring(node : TreeNode, parent : Node, tree : Tree) : int
         +createNode(child : TreeNode, parent : Node, row : int) : Node
         +addDummy(parent : Node, n : Node, tree : Tree
@@ -100,11 +100,11 @@ package newick {
         class Partial implements Selection
     }
 
-    TreeParser ..> Tree : << create >>
-    TreeParser ..> newick.NodeParser
+    NewickParser ..> Newick : << create >>
+    NewickParser ..> newick.NodeParser
     newick.NodeParser ..> newick.Node : << create >>
 
-    Tree --> newick.Node : << contains >>
+    Newick --> newick.Node : << contains >>
 }
 
 package annotation {
