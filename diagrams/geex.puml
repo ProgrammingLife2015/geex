@@ -26,10 +26,10 @@ class NewickLabel extends javafx.scene.control.Label {
 }
 
 abstract class DefaultController<T extends Parent> implements javafx.fxml.Initializable {
-    # root : T
+    root : T
+    -visibilityProperty : BooleanProperty
     #loadFXML(fxmlFile : String)
-    #loadFile(fileChooser : FileChooser, source : TextField)
-    #getRoot() : Parent
+    +getRoot() : Parent
 }
 abstract class ViewController<T extends Parent> extends DefaultController {
     +{abstract}getBreadcrumbName() : String
@@ -40,7 +40,7 @@ class GraphController<AnchorPane> extends ViewController {
     mainController : MainController
     sources : Set<String>
     graphMapIn : ReadOnlyObjectProperty<GraphMap>
-    annatationMapIn : ReadOnlyObjectProperty<AnnotationMap>
+    annotationMapIn : ReadOnlyObjectProperty<AnnotationMap>
 
     -loadGraph()
     -loadAnnotation()
