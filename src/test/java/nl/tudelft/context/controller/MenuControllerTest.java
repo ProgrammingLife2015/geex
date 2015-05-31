@@ -53,7 +53,7 @@ public class MenuControllerTest {
 
         assertTrue(mb.getMenus().get(0).getItems().get(0).getText().equals("Select Workspace Folder"));
         assertTrue(mb.getMenus().get(0).getItems().get(1).getText().equals("Exit"));
-        assertEquals(mb.getMenus().get(0).getItems().get(0).getAccelerator(), new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+        assertEquals(mb.getMenus().get(0).getItems().get(0).getAccelerator(), new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         assertEquals(mb.getMenus().get(0).isVisible(), true);
 
 //        mb.getMenus().get(0).getItems().get(0).fire();
@@ -74,7 +74,7 @@ public class MenuControllerTest {
         assertTrue(mb.getMenus().get(1).getItems().get(0).getText().equals("Previous"));
         assertEquals(mb.getMenus().get(1).getItems().get(0).getAccelerator(), new KeyCodeCombination(KeyCode.ESCAPE));
         assertTrue(mb.getMenus().get(1).getItems().get(1).getText().equals("Show Phylogenetic tree"));
-        assertEquals(mb.getMenus().get(1).getItems().get(1).getAccelerator(), new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN));
+        assertEquals(mb.getMenus().get(1).getItems().get(1).getAccelerator(), new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN));
         assertEquals(mb.getMenus().get(1).isVisible(), true);
 
 //        mb.getMenus().get(1).getItems().get(0).fire();
