@@ -54,7 +54,10 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
 
         int i = 0;
         while (!start.isEmpty()) {
-            System.out.println(start);
+            System.out.println("-------------------------");
+            for (DrawableNode d : start) {
+                outgoingEdgesOf(d).stream().forEach(x -> System.out.println(getEdgeTarget(x).getNode().getId()));
+            }
             positionNodes(start, i++);
             start = nextColumn(start);
         }
