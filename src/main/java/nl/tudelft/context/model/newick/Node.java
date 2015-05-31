@@ -2,7 +2,7 @@ package nl.tudelft.context.model.newick;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import nl.tudelft.context.drawable.DrawableNode;
+import nl.tudelft.context.drawable.DrawablePosition;
 import nl.tudelft.context.model.newick.selection.None;
 import nl.tudelft.context.model.newick.selection.Selection;
 
@@ -16,7 +16,7 @@ import java.util.Set;
  * @version 1.0
  * @since 3-5-2015
  */
-public class Node extends DrawableNode {
+public class Node extends DrawablePosition {
 
     /**
      * The name of the Node.

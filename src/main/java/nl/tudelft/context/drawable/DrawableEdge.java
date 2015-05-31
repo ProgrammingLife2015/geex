@@ -70,7 +70,7 @@ public class DrawableEdge extends Line {
      * @param graph the graph of the edge
      * @param edge  the edge
      */
-    private void initialize(final DefaultDirectedGraph<? extends DrawableNode, DefaultEdge> graph,
+    private void initialize(final DefaultDirectedGraph<? extends DrawablePosition, DefaultEdge> graph,
                             final DefaultEdge edge) {
 
         startXProperty().bind(graph.getEdgeSource(edge).translateXProperty());
