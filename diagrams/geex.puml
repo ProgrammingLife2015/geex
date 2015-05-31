@@ -109,6 +109,10 @@ class LoadService<T> extends javafx.concurrent.Service {
     -parserClass : Class<? extends Parser<T>>
     -files : File[]
 }
+abstract class model.Parser<T> {
+    +parse() : T
+    +setReader(readerList : BufferedReader...)
+}
 
 class Workspace {
     directory : File
@@ -166,9 +170,8 @@ MainController o-- MessageController
 MainController o-- OverlayController
 MainController --> WelcomeController
 
-NewickController -- DrawableEdge
-NewickController -- NewickLabel
-NewickController --> GraphController
+NewickController ..> DrawableEdge
+NewickController ..> NewickLabel
 
 GraphController ..> InfoLabel
 GraphController ..> DrawableEdge
