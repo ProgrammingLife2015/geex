@@ -47,6 +47,8 @@ public final class MutationParser {
 
         System.out.println("nodeSet: " + nodeSet.stream().map(Node::getId).collect(Collectors.toList()));
 
+        System.out.println(graph);
+
         nodeSet.forEach(this::checkVariation);
 
         System.out.println("Variations: " + variations.stream().map(Node::getId).collect(Collectors.toList()));

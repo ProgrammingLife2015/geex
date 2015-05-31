@@ -20,6 +20,13 @@ public class LoadMutationService extends Service<List<Node>> {
      */
     Graph graph;
 
+    public LoadMutationService(final Graph graph) {
+
+        System.out.println("Hoi!");
+        this.graph = graph;
+
+    }
+
     /**
      * Function used to set the graph.
      *

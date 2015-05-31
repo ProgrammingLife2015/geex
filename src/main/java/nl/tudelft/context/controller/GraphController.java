@@ -99,12 +99,10 @@ public final class GraphController extends ViewController<AnchorPane> {
         this.mainController = mainController;
         this.sources = sources;
 
-        Workspace workspace = mainController.getWorkspace();
-        this.loadMutationService = new LoadMutationService();
-
-
         this.graphMapIn = graphMapIn;
         this.annotationMapIn = annotationMapIn;
+
+        this.loadMutationService = new LoadMutationService(graph);
 
         loadFXML("/application/graph.fxml");
     }
@@ -147,9 +145,9 @@ public final class GraphController extends ViewController<AnchorPane> {
     private void loadGraph(final GraphMap graphMap) {
         Graph graph = graphMap.flat(sources);
         graph.position();
-        loadMutations();
         // Run in fx thread
         showGraph(graph);
+        loadMutations();
     }
 
     /**
@@ -157,7 +155,7 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void loadMutations() {
 
-        loadMutationService.setGraph(graph);
+        loadMutationService.getValue();
         loadMutationService.setOnSucceeded(event -> {
             List<Node> nodes = loadMutationService.getValue();
             showMutations(nodes);
