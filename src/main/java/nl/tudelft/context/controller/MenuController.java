@@ -56,7 +56,7 @@ public final class MenuController {
     private void initFileMenu() {
 
         menuBar.getMenus().add(createMenu("_File",
-                createWorkspaceLoader("Select Workspace Folder",
+                createWorkspaceLoader("Select workspace folder",
                         new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN)),
                 createMenuItem("Exit", null,
                         event -> mainController.exitProgram())));
@@ -68,13 +68,13 @@ public final class MenuController {
     private void initNavigateMenu() {
 
         menuBar.getMenus().add(createMenu("_Navigate",
-                createMenuItem("Previous",
+                createMenuItem("Previous view",
                         new KeyCodeCombination(KeyCode.ESCAPE),
                         event -> mainController.previousView()),
                 createMenuItem("Show Phylogenetic tree",
                         new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN),
                         event -> mainController.toggleNewick()),
-                createGenomeGraphLoader("Load Genome Graph",
+                createGenomeGraphLoader("Load Genome graph",
                         new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN))));
 
     }
