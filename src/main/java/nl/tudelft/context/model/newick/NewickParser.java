@@ -1,5 +1,7 @@
 package nl.tudelft.context.model.newick;
 
+import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
+import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import nl.tudelft.context.model.Parser;
 
@@ -10,7 +12,7 @@ import java.io.BufferedReader;
  * @version 1.0
  * @since 3-5-2015
  */
-public final class TreeParser extends Parser<Tree> {
+public final class NewickParser extends Parser<Newick> {
     /**
      * The node factory.
      */
@@ -31,24 +33,24 @@ public final class TreeParser extends Parser<Tree> {
     /**
      * Empty constructor for creating an empty TreeParser.
      */
-    public TreeParser() {
+    public NewickParser() {
         super();
     }
 
     @Override
-    protected Tree parse(final BufferedReader... readerList) {
+    protected Newick parse(final BufferedReader... readerList) {
         BufferedReader reader = readerList[0];
-        net.sourceforge.olduvai.treejuxtaposer.TreeParser tp =
-                new net.sourceforge.olduvai.treejuxtaposer.TreeParser(reader);
+        TreeParser tp =
+                new TreeParser(reader);
 
-        net.sourceforge.olduvai.treejuxtaposer.drawer.Tree nwkTree = tp.tokenize("");
+        Tree nwkTree = tp.tokenize("");
         Node root = nodeParser.getNode(nwkTree.getRoot());
 
-        Tree tree = new Tree();
-        getOffspring(nwkTree.getRoot(), root, tree, 0);
-        tree.setRoot(root);
+        Newick newick = new Newick();
+        getOffspring(nwkTree.getRoot(), root, newick, 0);
+        newick.setRoot(root);
 
-        return tree;
+        return newick;
     }
 
     /**
@@ -56,12 +58,12 @@ public final class TreeParser extends Parser<Tree> {
      *
      * @param node   the node, read by the newick parser
      * @param parent the parent node to add this node to as a child
-     * @param tree   the tree to add the nodes and edges to
+     * @param newick   the tree to add the nodes and edges to
      * @param row    the current row (depth) of the node
      * @return the new row (depth) of the next node
      */
-    public int getOffspring(final TreeNode node, final Node parent, final Tree tree, final int row) {
-        tree.addVertex(parent);
+    public int getOffspring(final TreeNode node, final Node parent, final Newick newick, final int row) {
+        newick.addVertex(parent);
 
         int ret = row;
 
@@ -71,12 +73,12 @@ public final class TreeParser extends Parser<Tree> {
             if (child != null) {
                 addRow = 0;
                 Node n = createNode(child, parent, ret);
-                ret = getOffspring(child, n, tree, ret);
+                ret = getOffspring(child, n, newick, ret);
                 parent.addChild(n);
                 if (i > 0) {
-                    addDummy(parent, n, tree);
+                    addDummy(parent, n, newick);
                 } else {
-                    tree.addEdge(parent, n);
+                    newick.addEdge(parent, n);
                 }
             }
         }
@@ -107,14 +109,14 @@ public final class TreeParser extends Parser<Tree> {
      *
      * @param parent the parent of the node
      * @param n      the node
-     * @param tree   the tree to add the dummy to
+     * @param newick   the tree to add the dummy to
      */
-    public void addDummy(final Node parent, final Node n, final Tree tree) {
+    public void addDummy(final Node parent, final Node n, final Newick newick) {
         Node dummy = new Node("", 0);
         dummy.setTranslateX(parent.translateXProperty().doubleValue());
         dummy.setTranslateY(n.translateYProperty().doubleValue());
-        tree.addVertex(dummy);
-        tree.addEdge(parent, dummy);
-        tree.addEdge(dummy, n);
+        newick.addVertex(dummy);
+        newick.addEdge(parent, dummy);
+        newick.addEdge(dummy, n);
     }
 }

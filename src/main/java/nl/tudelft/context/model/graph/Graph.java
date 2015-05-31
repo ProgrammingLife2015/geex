@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 23-4-2015
  */
-public final class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
+public class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     /**
      * Define the amount of spacing for the nodes.
@@ -85,6 +85,7 @@ public final class Graph extends DefaultDirectedGraph<Node, DefaultEdge> {
 
         int row = 0;
         for (Node node : nodes) {
+            node.resetIncoming();
             node.setTranslateX(column * LABEL_SPACING);
             node.setTranslateY(row * LABEL_SPACING - shift);
             row++;

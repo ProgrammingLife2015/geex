@@ -13,15 +13,27 @@ public class None implements Selection {
     }
 
     @Override
+    public boolean isAny() {
+        return false;
+    }
+
+    @Override
     public Selection toggle() {
         return new All();
     }
 
     @Override
     public Selection merge(final Selection selection) {
-        if (selection instanceof None) {
-            return this;
-        }
+        return selection.mergeNone();
+    }
+
+    @Override
+    public Selection mergeNone() {
+        return this;
+    }
+
+    @Override
+    public Selection mergeAll() {
         return new Partial();
     }
 

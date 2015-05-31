@@ -13,12 +13,27 @@ public class Partial implements Selection {
     }
 
     @Override
+    public boolean isAny() {
+        return true;
+    }
+
+    @Override
     public Selection toggle() {
         return new All();
     }
 
     @Override
     public Selection merge(final Selection selection) {
+        return this;
+    }
+
+    @Override
+    public Selection mergeNone() {
+        return this;
+    }
+
+    @Override
+    public Selection mergeAll() {
         return this;
     }
 

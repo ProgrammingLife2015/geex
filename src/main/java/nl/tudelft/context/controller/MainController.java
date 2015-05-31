@@ -1,5 +1,6 @@
 package nl.tudelft.context.controller;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -69,6 +71,16 @@ public class MainController extends DefaultController<StackPane> {
     BooleanProperty newickLifted = new SimpleBooleanProperty(false);
 
     /**
+     * The MenuController that needs to be changed whenever the current view changes.
+     */
+    MenuController menuController;
+
+    /**
+     * The last top view that was seen.
+     */
+    ViewController lastTopView;
+
+    /**
      * Init a controller at main.fxml.
      */
     public MainController() {
@@ -90,7 +102,7 @@ public class MainController extends DefaultController<StackPane> {
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
         main.setTop(new Breadcrumb(this, viewList));
-        new MenuController(this, menu);
+        menuController = new MenuController(this, menu);
 
         messageController = new MessageController();
         main.setBottom(messageController.getRoot());
@@ -118,6 +130,8 @@ public class MainController extends DefaultController<StackPane> {
         view.getChildren().setAll(viewController.getRoot());
         viewList.setAll(viewController);
 
+        activateView();
+
     }
 
     /**
@@ -126,7 +140,7 @@ public class MainController extends DefaultController<StackPane> {
      * @param on             Controller to stack this view on
      * @param viewController Controller containing JavaFX root
      */
-    public final void setView(final ViewController on, final ViewController viewController) {
+    public void setView(final ViewController on, final ViewController viewController) {
 
         if (newickLifted.getValue()) {
             toggleNewick();
@@ -136,6 +150,8 @@ public class MainController extends DefaultController<StackPane> {
         viewList.add(viewController);
         view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
         view.getChildren().add(viewController.getRoot());
+
+        activateView();
 
     }
 
@@ -153,6 +169,8 @@ public class MainController extends DefaultController<StackPane> {
                 visibleViews.get(visibleViews.size() - 1).setVisibility(false);
             }
         }
+
+        activateView();
 
     }
 
@@ -175,6 +193,43 @@ public class MainController extends DefaultController<StackPane> {
                 .limit(index)
                 .forEach(vc -> vc.setVisibility(true));
 
+        activateView();
+
+    }
+
+    /**
+     * Gets the controller at the top, which should be visible to the user.
+     *
+     * @return the top ViewController that is visible; otherwise <tt>null</tt> if none is visible.
+     */
+    public final ViewController topView() {
+
+        List<ViewController> visibleViews = viewList.filtered(
+                viewController -> viewController.getVisibilityProperty().getValue()
+        );
+
+        if (!visibleViews.isEmpty()) {
+            return visibleViews.get(visibleViews.size() - 1);
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
+     * Activates the top visible ViewController.
+     */
+    public final void activateView() {
+        ViewController topView = topView();
+        if (topView != lastTopView) {
+            if (lastTopView != null) {
+                lastTopView.deactivate();
+            }
+            if (topView != null) {
+                topView.activate();
+            }
+            lastTopView = topView;
+        }
     }
 
     /**
@@ -190,7 +245,7 @@ public class MainController extends DefaultController<StackPane> {
      * Exits the program.
      */
     public final void exitProgram() {
-        System.exit(0);
+        Platform.exit();
     }
 
     /**
@@ -203,12 +258,23 @@ public class MainController extends DefaultController<StackPane> {
     }
 
     /**
-     * Set the current workspace.
+     * Set the current workspace. And also preload it.
+     * Gets the MenuController.
+     *
+     * @return The MenuController
+     */
+    public MenuController getMenuController() {
+        return menuController;
+    }
+
+    /**
+     * Set the current workspace. And also preload it.
      *
      * @param workspace The new workspace
      */
     public final void setWorkspace(final Workspace workspace) {
         this.workspace = workspace;
+        workspace.preload();
     }
 
     /**
@@ -216,9 +282,19 @@ public class MainController extends DefaultController<StackPane> {
      *
      * @param text The text that will be displayed.
      */
-    public final void displayMessage(final String text) {
+    public void displayMessage(final String text) {
         messageController.displayMessage(text);
     }
 
-
+    /**
+     * Show the graph.
+     *
+     * @param on Controller to place it on
+     * @param sources Sources to display
+     */
+    public void showGraph(final NewickController on, final Set<String> sources) {
+        this.setView(on, new GraphController(this, sources,
+                workspace.getGraph(),
+                workspace.getAnnotation()));
+    }
 }
