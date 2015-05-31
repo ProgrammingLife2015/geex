@@ -10,7 +10,7 @@ package nl.tudelft.context.model.graph;
 public class Graph extends StackGraph {
 
     /**
-     * Create a Graph with default edges.
+     * Create a clean with default edges and nodes.
      */
     public Graph() {
 
