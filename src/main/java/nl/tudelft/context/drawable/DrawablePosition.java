@@ -8,7 +8,7 @@ import javafx.beans.value.ObservableDoubleValue;
  * @version 1.0
  * @since 31-5-2015
  */
-public class DrawablePosition {
+public abstract class DrawablePosition {
 
     /**
      * Translation in the direction of the X axis.
