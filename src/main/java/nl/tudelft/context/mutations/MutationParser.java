@@ -71,6 +71,7 @@ public final class MutationParser {
 
             if (checkAllSets(listSets, node)) {
 
+                mutation.remove(node);
                 break;
 
             } else {
@@ -95,6 +96,13 @@ public final class MutationParser {
 
     }
 
+    /**
+     * Returns and int set that will determine which set to add the next node to.
+     * @param set The int that will be incremented.
+     * @param graph The graph this startNode is in.
+     * @param startNode The startNote of the variation.
+     * @return The int that says which set is next to add the node to.
+     */
     private int getNextSetInt(int set, final Graph graph, final Node startNode) {
 
         set++;

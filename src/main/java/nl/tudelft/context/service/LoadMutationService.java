@@ -23,7 +23,6 @@ public class LoadMutationService extends Service<List<Mutation>> {
 
     public LoadMutationService(final Graph graph) {
 
-        System.out.println("Hoi!");
         this.graph = graph;
 
     }
