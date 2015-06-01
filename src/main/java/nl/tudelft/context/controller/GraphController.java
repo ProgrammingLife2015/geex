@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.InfoLabel;
+import nl.tudelft.context.effects.Zoom;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphMap;
@@ -71,9 +72,6 @@ public final class GraphController extends ViewController<AnchorPane> {
      * Property with annotation map.
      */
     ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
-
-    Double mouseX = .0;
-    Double mouseY = .0;
 
     /**
      * Init a controller at graph.fxml.
@@ -185,17 +183,12 @@ public final class GraphController extends ViewController<AnchorPane> {
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         );
-        Map<Integer, List<InfoLabel>> immutableMap = new HashMap<>(map);
 
         showCurrentLabels(map);
-        scroll.widthProperty().addListener(event -> {
-            showCurrentLabels(map);
-            bindMouseOver(immutableMap);
-        });
-        scroll.hvalueProperty().addListener(event -> {
-            showCurrentLabels(map);
-            bindMouseOver(immutableMap);
-        });
+        scroll.widthProperty().addListener(event ->  showCurrentLabels(map));
+        scroll.hvalueProperty().addListener(event -> showCurrentLabels(map));
+
+        new Zoom(scroll, sequences, new HashMap<>(map));
 
     }
 
@@ -221,39 +214,6 @@ public final class GraphController extends ViewController<AnchorPane> {
         infoLabels.forEach(InfoLabel::init);
         sequences.getChildren().addAll(infoLabels);
 
-    }
-
-    /**
-     * Show all the labels on current position.
-     *
-     * @param map Containing the labels indexed by position
-     */
-    private void bindMouseOver(final Map<Integer, List<InfoLabel>> map) {
-
-        double width = scroll.getWidth();
-        double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
-                * scroll.getHvalue();
-        int indexFrom = (int) Math.floor(left / Graph.LABEL_SPACING) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(width / Graph.LABEL_SPACING) + 1;
-
-        List<InfoLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
-                .mapToObj(map::get)
-                .filter(Objects::nonNull)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-
-        scroll.setOnMouseMoved(event -> {
-            mouseX = event.getX();
-            mouseY = event.getY();
-            infoLabels.forEach(label ->
-                    label.mouseOver(
-                            mouseX - sequences.getLayoutX() + left,
-                            mouseY - sequences.getLayoutY()));
-        });
-        infoLabels.forEach(label ->
-                label.mouseOver(
-                        mouseX - sequences.getLayoutX() + left,
-                        mouseY - sequences.getLayoutY()));
     }
 
     @Override

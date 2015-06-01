@@ -2,9 +2,7 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.GraphController;
@@ -33,11 +31,6 @@ public class InfoLabel extends VBox {
      * The width of the InfoLabel.
      */
     public static final int LABEL_WIDTH = 60;
-
-    /**
-     * The height of the InfoLabel.
-     */
-    public static final int LABEL_HEIGHT = 55;
 
     /**
      * Constructor for the InfoLabel.
@@ -95,25 +88,9 @@ public class InfoLabel extends VBox {
 
         final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
         label.setTooltip(percentages);
-//        label.setOnMouseMoved(this::mouseOver);
-//        label.setOnMouseExited(event -> setScale(1));
 
         return label;
 
-    }
-
-    public void mouseOver(double mouseX, double mouseY) {
-        double dx = mouseX - getTranslateX() - (getWidth() / 2);
-        double dy = mouseY - getTranslateY() - (getHeight() / 2);
-        double distance = Math.sqrt(dx * dx + dy * dy);
-        distance = Math.max(0, distance - .5 * LABEL_WIDTH);
-        double scale = 1 + Math.pow(Math.E, - (distance / LABEL_WIDTH));
-        setScale(scale);
-    }
-
-    private void setScale(double scale) {
-        setScaleX(scale);
-        setScaleY(scale);
     }
 
     /**
