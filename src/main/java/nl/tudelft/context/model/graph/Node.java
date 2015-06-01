@@ -159,10 +159,14 @@ public class Node {
     /**
      * Creates a label.
      *
+     * @param mainController  Main controller for setting views
+     * @param graphController Graph controller to set view on
+     * @param stackGraph      Stack graph for base controller
+     * @param drawableNode    Node to draw
      * @return Info label
      */
-    public DefaultLabel getLabel(MainController mainController, GraphController graphController,
-                              StackGraph stackGraph, DrawableNode drawableNode) {
+    public DefaultLabel getLabel(final MainController mainController, final GraphController graphController,
+                                 final StackGraph stackGraph, final DrawableNode drawableNode) {
         return new InfoLabel(mainController, graphController, stackGraph, drawableNode);
     }
 
