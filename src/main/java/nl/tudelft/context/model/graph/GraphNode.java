@@ -13,28 +13,6 @@ import nl.tudelft.context.drawable.SinglePointLabel;
  */
 public class GraphNode extends DefaultNode {
 
-    /**
-     * Counter for new id.
-     */
-    static int counter = -1;
-
-    /**
-     * Unique id.
-     */
-    int id;
-
-    /**
-     * Create a unique graph node.
-     */
-    public GraphNode() {
-        id = counter--;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
     @Override
     public String getContent() {
         return "";
@@ -42,7 +20,7 @@ public class GraphNode extends DefaultNode {
 
     @Override
     public DefaultLabel getLabel(final MainController mainController, final GraphController graphController,
-                                 final StackGraph stackGraph, final DrawableNode drawableNode) {
+                                 final DrawableNode drawableNode) {
         return new SinglePointLabel(drawableNode, this);
     }
 

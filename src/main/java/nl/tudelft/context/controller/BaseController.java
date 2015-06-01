@@ -3,7 +3,6 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.text.Text;
-import nl.tudelft.context.model.graph.DefaultNode;
 import nl.tudelft.context.model.graph.Node;
 import nl.tudelft.context.model.graph.StackGraph;
 import org.apache.commons.lang.StringUtils;
@@ -85,7 +84,8 @@ public final class BaseController extends ViewController<ScrollPane> {
 
         List<String> otherOccurrences = stackGraph.vertexSet().stream()
                 .filter(vertex -> vertex.getContent().equals(content) && !vertex.equals(node))
-                .map(DefaultNode::getId)
+                .map(node -> (Node) node)
+                .map(Node::getId)
                 .map(String::valueOf)
                 .collect(Collectors.toList());
 

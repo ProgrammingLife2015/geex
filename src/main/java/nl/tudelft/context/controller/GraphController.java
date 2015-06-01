@@ -167,7 +167,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         // Bind nodes
         List<DefaultLabel> nodeList = drawableGraph.vertexSet().stream()
-                .map(node -> node.getNode().getLabel(mainController, this, drawableGraph.getGraph(), node))
+                .map(node -> node.getNode().getLabel(mainController, this, node))
                 .collect(Collectors.toList());
 
         sequences.getChildren().addAll(edgeList);
@@ -219,6 +219,15 @@ public final class GraphController extends ViewController<AnchorPane> {
 
     }
 
+    /**
+     * Get the graph list.
+     *
+     * @return Graph list
+     */
+    public LinkedList<StackGraph> getGraphList() {
+        return graphList;
+    }
+
     @Override
     public String getBreadcrumbName() {
         return "Genome graph (" + sources.size() + ")";
@@ -233,5 +242,4 @@ public final class GraphController extends ViewController<AnchorPane> {
     public void deactivate() {
         // empty method
     }
-
 }

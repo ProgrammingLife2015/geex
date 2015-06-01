@@ -8,7 +8,6 @@ import nl.tudelft.context.controller.GraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.BaseCounter;
 import nl.tudelft.context.model.graph.Node;
-import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,12 +35,11 @@ public class InfoLabel extends DefaultLabel {
      *
      * @param mainController  MainController indicating the controller
      * @param graphController GraphController to place the next view on
-     * @param stackGraph      Graph containing the node
      * @param drawableNode    Node indicating drawable
      * @param node            Node indicating the node
      */
     public InfoLabel(final MainController mainController, final GraphController graphController,
-                     final StackGraph stackGraph, final DrawableNode drawableNode, final Node node) {
+                     final DrawableNode drawableNode, final Node node) {
 
         this.node = node;
 
@@ -50,7 +48,7 @@ public class InfoLabel extends DefaultLabel {
         translateYProperty().bind(drawableNode.translateYProperty());
 
         setOnMouseClicked(event -> mainController.setView(graphController,
-                new BaseController(stackGraph, node)));
+                new BaseController(graphController.getGraphList().getFirst(), node)));
 
     }
 

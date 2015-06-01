@@ -64,7 +64,11 @@ public class Node extends DefaultNode {
 
     }
 
-    @Override
+    /**
+     * Getter for id.
+     *
+     * @return id
+     */
     public int getId() {
 
         return id;
@@ -149,8 +153,8 @@ public class Node extends DefaultNode {
 
     @Override
     public DefaultLabel getLabel(final MainController mainController, final GraphController graphController,
-                                 final StackGraph stackGraph, final DrawableNode drawableNode) {
-        return new InfoLabel(mainController, graphController, stackGraph, drawableNode, this);
+                                 final DrawableNode drawableNode) {
+        return new InfoLabel(mainController, graphController, drawableNode, this);
     }
 
 }

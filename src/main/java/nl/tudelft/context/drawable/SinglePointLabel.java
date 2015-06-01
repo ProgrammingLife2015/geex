@@ -11,7 +11,7 @@ import nl.tudelft.context.model.graph.GraphNode;
 public class SinglePointLabel extends DefaultLabel {
 
     /**
-     * The node the InfoLabel belongs to.
+     * The node the label belongs to.
      */
     GraphNode node;
 

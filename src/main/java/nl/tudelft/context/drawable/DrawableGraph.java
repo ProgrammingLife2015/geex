@@ -1,6 +1,7 @@
 package nl.tudelft.context.drawable;
 
 import nl.tudelft.context.model.graph.DefaultGraph;
+import nl.tudelft.context.model.graph.DefaultNode;
 import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.HashMap;
@@ -33,19 +34,19 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
 
         this.graph = graph;
 
-        HashMap<Integer, DrawableNode> added = new HashMap<>();
+        HashMap<DefaultNode, DrawableNode> added = new HashMap<>();
 
         graph.vertexSet().stream()
                 .forEach(node -> {
                     DrawableNode drawableNode = new DrawableNode(node);
-                    added.put(node.getId(), drawableNode);
+                    added.put(node, drawableNode);
                     addVertex(drawableNode);
                 });
 
         graph.edgeSet().stream()
                 .forEach(edge -> addEdge(
-                        added.get(graph.getEdgeSource(edge).getId()),
-                        added.get(graph.getEdgeTarget(edge).getId())
+                        added.get(graph.getEdgeSource(edge)),
+                        added.get(graph.getEdgeTarget(edge))
                 ));
 
         position();
