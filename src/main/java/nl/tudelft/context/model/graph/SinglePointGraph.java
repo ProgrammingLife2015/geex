@@ -54,6 +54,8 @@ public class SinglePointGraph extends StackGraph {
 
         singlePart.forEach(this::snip);
         endSingle.forEach(this::snip);
+        startSingle.forEach(node ->
+                replace(node, new Node((int) (-Math.random() * 100000000), new HashSet<>(),0, 0, "")));
 
     }
 

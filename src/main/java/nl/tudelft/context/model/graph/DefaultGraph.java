@@ -76,4 +76,23 @@ public abstract class DefaultGraph<T> extends DefaultDirectedGraph<T, DefaultEdg
 
     }
 
+    /**
+     * Replace a node with an other node.
+     *
+     * @param oldNode Old node
+     * @param newNode New node
+     */
+    public void replace(final T oldNode, final T newNode) {
+
+        addVertex(newNode);
+        
+        getSources(oldNode).stream()
+                .forEach(before -> getTargets(oldNode).stream().forEach(node -> addEdge(newNode, node)));
+        getSources(oldNode).stream()
+                .forEach(before -> getSources(oldNode).stream().forEach(node -> addEdge(node, newNode)));
+
+        snip(oldNode);
+
+    }
+
 }
