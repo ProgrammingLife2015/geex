@@ -77,11 +77,6 @@ public final class GraphController extends ViewController<AnchorPane> {
     ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
 
     /**
-     * The graph that has been loaded.
-     */
-    Graph graph;
-
-    /**
      * Init a controller at graph.fxml.
      *
      * @param mainController  MainController for the application
@@ -102,7 +97,8 @@ public final class GraphController extends ViewController<AnchorPane> {
         this.graphMapIn = graphMapIn;
         this.annotationMapIn = annotationMapIn;
 
-        this.loadMutationService = new LoadMutationService(graph);
+        this.loadMutationService = new LoadMutationService(graphMapIn.get().flat(sources));
+        loadMutations();
 
         loadFXML("/application/graph.fxml");
     }
@@ -147,7 +143,6 @@ public final class GraphController extends ViewController<AnchorPane> {
         graph.position();
         // Run in fx thread
         showGraph(graph);
-        loadMutations();
     }
 
     /**
@@ -155,7 +150,6 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void loadMutations() {
 
-        loadMutationService.getValue();
         loadMutationService.setOnSucceeded(event -> {
             List<Node> nodes = loadMutationService.getValue();
             showMutations(nodes);
