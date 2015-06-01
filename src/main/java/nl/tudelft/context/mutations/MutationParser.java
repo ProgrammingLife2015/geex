@@ -69,12 +69,6 @@ public final class MutationParser {
 
             Node node = nextNodes.remove(0);
 
-//            if (graph.outDegreeOf(node) > 1) {
-//
-//                checkVariation(node);
-//
-//            }
-
             if (checkAllSets(listSets, node)) {
 
                 break;
@@ -83,10 +77,7 @@ public final class MutationParser {
 
                 mutation.add(node);
                 listSets.get(set).add(node);
-                set++;
-                if (set >= graph.outDegreeOf(startNode)) {
-                    set = 0;
-                }
+                set = getNextSetInt(set, graph, startNode);
 
                 Set<DefaultEdge> setOfEdges = graph.outgoingEdgesOf(node);
 
@@ -101,6 +92,17 @@ public final class MutationParser {
         }
 
         variations.add(mutation);
+
+    }
+
+    private int getNextSetInt(int set, final Graph graph, final Node startNode) {
+
+        set++;
+        if (set >= graph.outDegreeOf(startNode)) {
+            set = 0;
+        }
+
+        return set;
 
     }
 
