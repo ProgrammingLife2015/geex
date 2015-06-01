@@ -95,7 +95,7 @@ public abstract class DefaultGraph<T> extends DefaultDirectedWeightedGraph<T, De
                 getEdgeWeight(getEdge(node, oldNode))
         ));
 
-        snip(oldNode);
+        removeVertex(oldNode);
 
     }
 
