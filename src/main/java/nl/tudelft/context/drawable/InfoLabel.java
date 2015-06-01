@@ -8,8 +8,6 @@ import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.GraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.BaseCounter;
-import nl.tudelft.context.model.graph.Graph;
-import nl.tudelft.context.model.graph.Node;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +23,7 @@ public class InfoLabel extends VBox {
     /**
      * The node the InfoLabel belongs to.
      */
-    Node node;
+    DrawableNode drawableNode;
 
     /**
      * The width of the InfoLabel.
@@ -37,19 +35,20 @@ public class InfoLabel extends VBox {
      *
      * @param mainController  MainController indicating the controller
      * @param graphController GraphController to place the next view on
-     * @param graph           Graph containing the node
-     * @param node            Node indicating the node
+     * @param drawableGraph   Graph containing the node
+     * @param drawableNode    Node indicating the node
      */
     public InfoLabel(final MainController mainController, final GraphController graphController,
-                     final Graph graph, final Node node) {
+                     final DrawableGraph drawableGraph, final DrawableNode drawableNode) {
 
-        this.node = node;
+        this.drawableNode = drawableNode;
 
         setCache(true);
-        translateXProperty().bind(node.translateXProperty());
-        translateYProperty().bind(node.translateYProperty());
+        translateXProperty().bind(drawableNode.translateXProperty());
+        translateYProperty().bind(drawableNode.translateYProperty());
 
-        setOnMouseClicked(event -> mainController.setView(graphController, new BaseController(graph, node)));
+        setOnMouseClicked(event -> mainController.setView(graphController,
+                new BaseController(drawableGraph.getGraph(), drawableNode.getNode())));
 
     }
 
@@ -72,7 +71,7 @@ public class InfoLabel extends VBox {
      */
     public int currentColumn() {
 
-        return (int) translateXProperty().get() / Graph.LABEL_SPACING;
+        return (int) translateXProperty().get() / DrawableGraph.LABEL_SPACING;
 
     }
 
@@ -83,10 +82,10 @@ public class InfoLabel extends VBox {
      */
     private Label initMainLabel() {
 
-        final Label label = new Label(Integer.toString(node.getId()));
+        final Label label = new Label(Integer.toString(drawableNode.getNode().getId()));
         label.setCache(true);
 
-        final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
+        final Tooltip percentages = new Tooltip(drawableNode.getNode().getBaseCounter().toString());
         label.setTooltip(percentages);
 
         return label;
@@ -102,7 +101,7 @@ public class InfoLabel extends VBox {
 
         final Group group = new Group();
 
-        final BaseCounter baseCounter = node.getBaseCounter();
+        final BaseCounter baseCounter = drawableNode.getNode().getBaseCounter();
         List<BaseLabel> baseLabels = Arrays.asList('A', 'T', 'C', 'G', 'N').stream()
                 .map(base -> new BaseLabel(base, baseCounter.getRatio(base) * LABEL_WIDTH))
                 .collect(Collectors.toList());

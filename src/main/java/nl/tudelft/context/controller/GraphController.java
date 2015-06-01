@@ -8,18 +8,12 @@ import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import nl.tudelft.context.drawable.DrawableEdge;
-import nl.tudelft.context.drawable.DrawableMutation;
-import nl.tudelft.context.drawable.InfoLabel;
+import nl.tudelft.context.drawable.*;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.model.graph.GraphParser;
-import nl.tudelft.context.model.graph.Node;
 import nl.tudelft.context.mutations.Mutation;
-import nl.tudelft.context.service.LoadService;
 import nl.tudelft.context.service.LoadMutationService;
-import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
 import java.util.*;
@@ -141,9 +135,8 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void loadGraph(final GraphMap graphMap) {
         Graph graph = graphMap.flat(sources);
-        graph.position();
-        // Run in fx thread
-        showGraph(graph);
+        DrawableGraph drawableGraph = new DrawableGraph(graph);
+        showGraph(drawableGraph);
     }
 
     /**
@@ -153,7 +146,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         loadMutationService.setOnSucceeded(event -> {
             List<Mutation> nodes = loadMutationService.getValue();
-            showMutations(nodes);
+//            showMutations(nodes);
             mainController.displayMessage(MessageController.SUCCESS_LOAD_MUTATION);
         });
         loadMutationService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_MUTATION));
@@ -174,7 +167,7 @@ public final class GraphController extends ViewController<AnchorPane> {
      *
      * @param graph Graph to show
      */
-    private void showGraph(final Graph graph) {
+    private void showGraph(final DrawableGraph graph) {
 
         // Bind edges
         List<DrawableEdge> edgeList = graph.edgeSet().stream()
@@ -221,8 +214,8 @@ public final class GraphController extends ViewController<AnchorPane> {
         double width = scroll.getWidth();
         double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
                 * scroll.getHvalue();
-        int indexFrom = (int) Math.floor(left / Graph.LABEL_SPACING) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(width / Graph.LABEL_SPACING) + 1;
+        int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
+        int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
         List<InfoLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
                 .mapToObj(map::remove)
@@ -240,14 +233,14 @@ public final class GraphController extends ViewController<AnchorPane> {
         return "Genome graph (" + sources.size() + ")";
     }
 
-    public void showMutations(List<Mutation> nodes) {
-
-        for (Mutation mutation : nodes) {
-            List<DrawableMutation> list = mutation.stream().map(DrawableMutation::new).collect(Collectors.toList());
-            sequences.getChildren().addAll(list);
-        }
-
-    }
+//    public void showMutations(List<Mutation> nodes) {
+//
+//        for (Mutation mutation : nodes) {
+//            List<DrawableMutation> list = mutation.stream().map(node -> new DrawableMutation(node)).collect(Collectors.toList());
+//            sequences.getChildren().addAll(list);
+//        }
+//
+//    }
 
     @Override
     public void activate() {
