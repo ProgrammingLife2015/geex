@@ -8,9 +8,9 @@ import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableGraph;
-import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.SinglePointGraph;
@@ -166,8 +166,8 @@ public final class GraphController extends ViewController<AnchorPane> {
                 .collect(Collectors.toList());
 
         // Bind nodes
-        List<InfoLabel> nodeList = drawableGraph.vertexSet().stream()
-                .map(node -> new InfoLabel(mainController, this, drawableGraph.getGraph(), node))
+        List<DefaultLabel> nodeList = drawableGraph.vertexSet().stream()
+                .map(node -> node.getNode().getLabel(mainController, this, drawableGraph.getGraph(), node))
                 .collect(Collectors.toList());
 
         sequences.getChildren().addAll(edgeList);
@@ -180,11 +180,11 @@ public final class GraphController extends ViewController<AnchorPane> {
      *
      * @param nodeList Labels to to load on the fly
      */
-    private void initOnTheFlyLoading(final List<InfoLabel> nodeList) {
+    private void initOnTheFlyLoading(final List<DefaultLabel> nodeList) {
 
-        Map<Integer, List<InfoLabel>> map = nodeList.stream().collect(
+        Map<Integer, List<DefaultLabel>> map = nodeList.stream().collect(
                 Collectors.groupingBy(
-                        InfoLabel::currentColumn,
+                        DefaultLabel::currentColumn,
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         );
@@ -200,7 +200,7 @@ public final class GraphController extends ViewController<AnchorPane> {
      *
      * @param map Containing the labels indexed by position
      */
-    private void showCurrentLabels(final Map<Integer, List<InfoLabel>> map) {
+    private void showCurrentLabels(final Map<Integer, List<DefaultLabel>> map) {
 
         double width = scroll.getWidth();
         double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
@@ -208,13 +208,13 @@ public final class GraphController extends ViewController<AnchorPane> {
         int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
         int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
-        List<InfoLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
+        List<DefaultLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
                 .mapToObj(map::remove)
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
-        infoLabels.forEach(InfoLabel::init);
+        infoLabels.forEach(DefaultLabel::init);
         sequences.getChildren().addAll(infoLabels);
 
     }

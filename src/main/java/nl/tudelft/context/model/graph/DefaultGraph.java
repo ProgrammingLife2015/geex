@@ -34,4 +34,46 @@ public abstract class DefaultGraph<T> extends DefaultDirectedGraph<T, DefaultEdg
 
     }
 
+    /**
+     * Get all targets from a node.
+     *
+     * @param node Node to get targets from
+     * @return The targets of the node
+     */
+    public List<T> getTargets(final T node) {
+
+        return outgoingEdgesOf(node).stream()
+                .map(this::getEdgeTarget)
+                .collect(Collectors.toList());
+
+    }
+
+    /**
+     * Get all sources from a node.
+     *
+     * @param node Node to get sources from
+     * @return The sources of the node
+     */
+    public List<T> getSources(final T node) {
+
+        return incomingEdgesOf(node).stream()
+                .map(this::getEdgeSource)
+                .collect(Collectors.toList());
+
+    }
+
+    /**
+     * Snip a node form the graph and connect edges.
+     *
+     * @param node Node to snip
+     */
+    public void snip(final T node) {
+
+        getSources(node).stream()
+                .forEach(before -> getTargets(node).stream()
+                        .forEach(after -> addEdge(before, after)));
+        removeVertex(node);
+
+    }
+
 }

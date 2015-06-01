@@ -3,7 +3,6 @@ package nl.tudelft.context.drawable;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.VBox;
 import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.GraphController;
 import nl.tudelft.context.controller.MainController;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 13-5-2015
  */
-public class InfoLabel extends VBox {
+public class InfoLabel extends DefaultLabel {
 
     /**
      * The node the InfoLabel belongs to.
@@ -53,9 +52,7 @@ public class InfoLabel extends VBox {
 
     }
 
-    /**
-     * Draw sub elements when needed.
-     */
+    @Override
     public final void init() {
 
         getChildren().addAll(
@@ -65,11 +62,7 @@ public class InfoLabel extends VBox {
 
     }
 
-    /**
-     * Get the current column the label is displayed.
-     *
-     * @return Column index
-     */
+    @Override
     public int currentColumn() {
 
         return (int) translateXProperty().get() / DrawableGraph.LABEL_SPACING;

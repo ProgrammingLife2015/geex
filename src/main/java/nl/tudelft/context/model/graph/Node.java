@@ -1,5 +1,11 @@
 package nl.tudelft.context.model.graph;
 
+import nl.tudelft.context.controller.GraphController;
+import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.drawable.DefaultLabel;
+import nl.tudelft.context.drawable.DrawableNode;
+import nl.tudelft.context.drawable.InfoLabel;
+
 import java.util.Set;
 
 /**
@@ -148,6 +154,16 @@ public class Node {
     @Override
     public int hashCode() {
         return this.id;
+    }
+
+    /**
+     * Creates a label.
+     *
+     * @return Info label
+     */
+    public DefaultLabel getLabel(MainController mainController, GraphController graphController,
+                              StackGraph stackGraph, DrawableNode drawableNode) {
+        return new InfoLabel(mainController, graphController, stackGraph, drawableNode);
     }
 
 }
