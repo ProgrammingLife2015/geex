@@ -10,6 +10,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.drawable.DrawableEdge;
+import nl.tudelft.context.drawable.DrawableGraph;
 import nl.tudelft.context.drawable.InfoLabel;
 import nl.tudelft.context.effects.Zoom;
 import nl.tudelft.context.model.annotation.AnnotationMap;
@@ -134,9 +135,8 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void loadGraph(final GraphMap graphMap) {
         Graph graph = graphMap.flat(sources);
-        graph.position();
-        // Run in fx thread
-        showGraph(graph);
+        DrawableGraph drawableGraph = new DrawableGraph(graph);
+        showGraph(drawableGraph);
     }
 
     /**
@@ -153,7 +153,7 @@ public final class GraphController extends ViewController<AnchorPane> {
      *
      * @param graph Graph to show
      */
-    private void showGraph(final Graph graph) {
+    private void showGraph(final DrawableGraph graph) {
 
         // Bind edges
         List<DrawableEdge> edgeList = graph.edgeSet().stream()
@@ -202,8 +202,8 @@ public final class GraphController extends ViewController<AnchorPane> {
         double width = scroll.getWidth();
         double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
                 * scroll.getHvalue();
-        int indexFrom = (int) Math.floor(left / Graph.LABEL_SPACING) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(width / Graph.LABEL_SPACING) + 1;
+        int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
+        int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
         List<InfoLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
                 .mapToObj(map::remove)

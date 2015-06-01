@@ -8,7 +8,7 @@
 
     <BorderPane>
         <top>
-            <MenuBar fx:id="menu"/>
+            <MenuBar fx:id="menu" useSystemMenuBar="true"/>
         </top>
 
         <center>
