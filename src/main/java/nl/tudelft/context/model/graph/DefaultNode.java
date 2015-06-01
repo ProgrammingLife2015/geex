@@ -37,11 +37,4 @@ public abstract class DefaultNode {
      */
     public abstract DefaultLabel getLabel(final MainController mainController, final GraphController graphController,
                                           final StackGraph stackGraph, final DrawableNode drawableNode);
-
-    /**
-     * Get the drawable.
-     *
-     * @return The drawable
-     */
-    public abstract DrawableNode getDrawable();
 }

@@ -7,6 +7,7 @@ import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.GraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.BaseCounter;
+import nl.tudelft.context.model.graph.Node;
 import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.Arrays;
@@ -23,7 +24,7 @@ public class InfoLabel extends DefaultLabel {
     /**
      * The node the InfoLabel belongs to.
      */
-    DrawableNode drawableNode;
+    Node node;
 
     /**
      * The width of the InfoLabel.
@@ -36,19 +37,20 @@ public class InfoLabel extends DefaultLabel {
      * @param mainController  MainController indicating the controller
      * @param graphController GraphController to place the next view on
      * @param stackGraph      Graph containing the node
-     * @param drawableNode    Node indicating the node
+     * @param drawableNode    Node indicating drawable
+     * @param node            Node indicating the node
      */
     public InfoLabel(final MainController mainController, final GraphController graphController,
-                     final StackGraph stackGraph, final DrawableNode drawableNode) {
+                     final StackGraph stackGraph, final DrawableNode drawableNode, final Node node) {
 
-        this.drawableNode = drawableNode;
+        this.node = node;
 
         setCache(true);
         translateXProperty().bind(drawableNode.translateXProperty());
         translateYProperty().bind(drawableNode.translateYProperty());
 
         setOnMouseClicked(event -> mainController.setView(graphController,
-                new BaseController(stackGraph, drawableNode.getNode())));
+                new BaseController(stackGraph, node)));
 
     }
 
@@ -76,10 +78,10 @@ public class InfoLabel extends DefaultLabel {
      */
     private Label initMainLabel() {
 
-        final Label label = new Label(Integer.toString(drawableNode.getNode().getId()));
+        final Label label = new Label(Integer.toString(node.getId()));
         label.setCache(true);
 
-        final Tooltip percentages = new Tooltip(drawableNode.getNode().getBaseCounter().toString());
+        final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
         label.setTooltip(percentages);
 
         return label;
@@ -95,7 +97,7 @@ public class InfoLabel extends DefaultLabel {
 
         final Group group = new Group();
 
-        final BaseCounter baseCounter = drawableNode.getNode().getBaseCounter();
+        final BaseCounter baseCounter = node.getBaseCounter();
         List<BaseLabel> baseLabels = Arrays.asList('A', 'T', 'C', 'G', 'N').stream()
                 .map(base -> new BaseLabel(base, baseCounter.getRatio(base) * LABEL_WIDTH))
                 .collect(Collectors.toList());

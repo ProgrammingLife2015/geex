@@ -111,7 +111,6 @@ public class Node extends DefaultNode {
 
     }
 
-
     /**
      * Getter for baseCounter.
      *
@@ -151,12 +150,7 @@ public class Node extends DefaultNode {
     @Override
     public DefaultLabel getLabel(final MainController mainController, final GraphController graphController,
                                  final StackGraph stackGraph, final DrawableNode drawableNode) {
-        return new InfoLabel(mainController, graphController, stackGraph, drawableNode);
-    }
-
-    @Override
-    public DrawableNode getDrawable() {
-        return new DrawableNode(this);
+        return new InfoLabel(mainController, graphController, stackGraph, drawableNode, this);
     }
 
 }

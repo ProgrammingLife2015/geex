@@ -1,6 +1,6 @@
 package nl.tudelft.context.drawable;
 
-import nl.tudelft.context.model.graph.Node;
+import nl.tudelft.context.model.graph.DefaultNode;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -12,7 +12,7 @@ public class DrawableNode extends DrawablePosition {
     /**
      * Node that is drawn.
      */
-    private Node node;
+    private DefaultNode node;
 
     /**
      * The current number of incoming nodes.
@@ -35,7 +35,7 @@ public class DrawableNode extends DrawablePosition {
      *
      * @param node Node to draw
      */
-    public DrawableNode(final Node node) {
+    public DrawableNode(final DefaultNode node) {
 
         this.node = node;
 
@@ -46,7 +46,7 @@ public class DrawableNode extends DrawablePosition {
      *
      * @return Node that is drawn.
      */
-    public Node getNode() {
+    public DefaultNode getNode() {
 
         return node;
 
