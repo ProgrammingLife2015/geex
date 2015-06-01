@@ -16,7 +16,7 @@ public class GraphNode extends DefaultNode {
     /**
      * Counter for new id.
      */
-    public static int counter = -1;
+    static int counter = -1;
 
     /**
      * Unique id.
