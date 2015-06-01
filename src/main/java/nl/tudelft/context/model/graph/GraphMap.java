@@ -26,6 +26,11 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
                 .map(this::getGraph)
                 .forEach(g -> Graphs.addGraph(graph, g));
 
+        sources.stream()
+                .forEach(source -> get(source).edgeSet().stream()
+                        .map(edge -> graph.getEdge(graph.getEdgeSource(edge), graph.getEdgeTarget(edge)))
+                        .forEach(edge -> graph.setEdgeWeight(edge, graph.getEdgeWeight(edge) + 1)));
+
         return graph;
 
     }

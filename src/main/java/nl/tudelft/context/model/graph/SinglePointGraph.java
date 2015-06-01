@@ -47,14 +47,17 @@ public class SinglePointGraph extends StackGraph {
                 .forEach(this::addVertex);
 
         graph.edgeSet().stream()
-                .forEach(edge -> addEdge(
+                .forEach(edge -> setEdgeWeight(addEdge(
                         graph.getEdgeSource(edge),
                         graph.getEdgeTarget(edge)
-                ));
+                ), graph.getEdgeWeight(edge)));
 
         singlePart.forEach(this::snip);
-        startSingle.forEach(node ->
-                replace(node, new GraphNode()));
+        startSingle.forEach(node -> {
+            double weight = incomingEdgesOf(node).stream().mapToDouble(graph::getEdgeWeight).sum();
+            outgoingEdgesOf(node).stream().forEach(edge -> setEdgeWeight(edge, weight));
+            replace(node, new GraphNode());
+        });
 
     }
 

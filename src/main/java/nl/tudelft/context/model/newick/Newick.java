@@ -1,14 +1,14 @@
 package nl.tudelft.context.model.newick;
 
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.jgrapht.graph.DefaultWeightedEdge;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
  * @version 1.0
  * @since 3-5-2015
  */
-public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
+public class Newick extends DefaultDirectedWeightedGraph<Node, DefaultWeightedEdge> {
 
     /**
      * Serial Version UID for serializing purposes.
@@ -24,7 +24,7 @@ public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
      * Create a new Tree, with default edges.
      */
     public Newick() {
-        super(DefaultEdge.class);
+        super(DefaultWeightedEdge.class);
     }
 
     /**

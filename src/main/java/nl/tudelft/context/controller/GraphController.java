@@ -160,9 +160,11 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void showGraph(final DrawableGraph drawableGraph) {
 
+        final int maxWeight = sources.size();
+
         // Bind edges
         List<DrawableEdge> edgeList = drawableGraph.edgeSet().stream()
-                .map(edge -> new DrawableEdge(drawableGraph, edge))
+                .map(edge -> new DrawableEdge(drawableGraph, edge, maxWeight))
                 .collect(Collectors.toList());
 
         // Bind nodes
