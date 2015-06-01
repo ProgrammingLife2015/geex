@@ -74,7 +74,7 @@ public class DrawableNode extends DrawablePosition {
      */
     @Override
     public int hashCode() {
-        return node.getId();
+        return node.hashCode();
     }
 
 }

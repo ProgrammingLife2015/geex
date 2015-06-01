@@ -5,7 +5,7 @@ package nl.tudelft.context.model.graph;
  * @version 1.0
  * @since 1-6-2015
  */
-public abstract class StackGraph extends DefaultGraph<Node> {
+public abstract class StackGraph extends DefaultGraph<DefaultNode> {
 
 
 

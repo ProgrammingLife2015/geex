@@ -104,7 +104,7 @@ public class GraphTest {
     @Test
     public void testStartNodes() {
 
-        List<Node> nodeList = graph.getFirstNodes();
+        List<DefaultNode> nodeList = graph.getFirstNodes();
 
         assertEquals(1, nodeList.size());
         assertTrue(nodeList.contains(node1));

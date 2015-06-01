@@ -16,17 +16,17 @@ public class SinglePointGraph extends StackGraph {
     /**
      * Parts of a single base mutation.
      */
-    Set<Node> singlePart = new HashSet<>();
+    Set<DefaultNode> singlePart = new HashSet<>();
 
     /**
      * Nodes where single base mutation starts.
      */
-    Set<Node> startSingle = new HashSet<>();
+    Set<DefaultNode> startSingle = new HashSet<>();
 
     /**
      * Nodes where single base mutation ends.
      */
-    Set<Node> endSingle = new HashSet<>();
+    Set<DefaultNode> endSingle = new HashSet<>();
 
     /**
      * Clean graph.
@@ -67,13 +67,13 @@ public class SinglePointGraph extends StackGraph {
         graph.vertexSet().stream()
                 .forEach(startNode -> {
 
-                    List<Node> targets = graph.getTargets(startNode);
+                    List<DefaultNode> targets = graph.getTargets(startNode);
 
                     if (targets.size() == 1 || targets.stream().anyMatch(t -> t.getContent().length() != 1)) {
                         return;
                     }
 
-                    Set<Node> end = targets.stream()
+                    Set<DefaultNode> end = targets.stream()
                             .map(graph::getTargets)
                             .flatMap(Collection::stream)
                             .collect(Collectors.toSet());
@@ -99,7 +99,7 @@ public class SinglePointGraph extends StackGraph {
      */
     public void filterSingle() {
 
-        Set<Node> overlay = new HashSet<>(startSingle);
+        Set<DefaultNode> overlay = new HashSet<>(startSingle);
         overlay.retainAll(endSingle);
 
         singlePart.addAll(overlay);

@@ -37,7 +37,7 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
 
         graph.vertexSet().stream()
                 .forEach(node -> {
-                    DrawableNode drawableNode = new DrawableNode(node);
+                    DrawableNode drawableNode = node.getDrawable();
                     added.put(node.getId(), drawableNode);
                     addVertex(drawableNode);
                 });

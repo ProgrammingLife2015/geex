@@ -13,7 +13,7 @@ import java.util.Set;
  * @version 1.1
  * @since 23-4-2015
  */
-public class Node {
+public class Node extends DefaultNode {
 
     /**
      * The identifier of the current Node.
@@ -64,11 +64,7 @@ public class Node {
 
     }
 
-    /**
-     * Getter for id.
-     *
-     * @return id
-     */
+    @Override
     public int getId() {
 
         return id;
@@ -108,11 +104,7 @@ public class Node {
 
     }
 
-    /**
-     * Getter for content.
-     *
-     * @return DNA sequence
-     */
+    @Override
     public String getContent() {
 
         return content;
@@ -156,18 +148,15 @@ public class Node {
         return this.id;
     }
 
-    /**
-     * Creates a label.
-     *
-     * @param mainController  Main controller for setting views
-     * @param graphController Graph controller to set view on
-     * @param stackGraph      Stack graph for base controller
-     * @param drawableNode    Node to draw
-     * @return Info label
-     */
+    @Override
     public DefaultLabel getLabel(final MainController mainController, final GraphController graphController,
                                  final StackGraph stackGraph, final DrawableNode drawableNode) {
         return new InfoLabel(mainController, graphController, stackGraph, drawableNode);
+    }
+
+    @Override
+    public DrawableNode getDrawable() {
+        return new DrawableNode(this);
     }
 
 }
