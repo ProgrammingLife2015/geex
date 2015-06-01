@@ -53,7 +53,6 @@ public class SinglePointGraph extends StackGraph {
                 ));
 
         singlePart.forEach(this::snip);
-        endSingle.forEach(this::snip);
         startSingle.forEach(node ->
                 replace(node, new GraphNode()));
 
