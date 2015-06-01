@@ -47,14 +47,17 @@ public class SinglePointGraph extends StackGraph {
                 .forEach(this::addVertex);
 
         graph.edgeSet().stream()
-                .forEach(edge -> addEdge(
+                .forEach(edge -> setEdgeWeight(addEdge(
                         graph.getEdgeSource(edge),
                         graph.getEdgeTarget(edge)
-                ));
+                ), graph.getEdgeWeight(edge)));
 
         singlePart.forEach(this::snip);
-        startSingle.forEach(node ->
-                replace(node, new GraphNode()));
+        startSingle.forEach(node -> {
+            double weight = incomingEdgesOf(node).stream().mapToDouble(graph::getEdgeWeight).sum();
+            outgoingEdgesOf(node).stream().forEach(edge -> setEdgeWeight(edge, weight));
+            replace(node, new GraphNode());
+        });
 
     }
 
@@ -78,7 +81,7 @@ public class SinglePointGraph extends StackGraph {
                             .collect(Collectors.toSet());
 
                     if (end.size() == 1) {
-                        end.stream().filter(endNode -> graph.incomingEdgesOf(endNode).size() == targets.size())
+                        end.stream().filter(endNode -> graph.inDegreeOf(endNode) == targets.size())
                                 .forEach(endNode -> {
                                     targets.stream().forEach(singlePart::add);
                                     startSingle.add(startNode);
