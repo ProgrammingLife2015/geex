@@ -16,6 +16,7 @@ import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.graph.Node;
+import nl.tudelft.context.mutations.Mutation;
 import nl.tudelft.context.service.LoadService;
 import nl.tudelft.context.service.LoadMutationService;
 import nl.tudelft.context.workspace.Workspace;
@@ -151,7 +152,7 @@ public final class GraphController extends ViewController<AnchorPane> {
     private void loadMutations() {
 
         loadMutationService.setOnSucceeded(event -> {
-            List<Node> nodes = loadMutationService.getValue();
+            List<Mutation> nodes = loadMutationService.getValue();
             showMutations(nodes);
             mainController.displayMessage(MessageController.SUCCESS_LOAD_MUTATION);
         });
@@ -239,11 +240,12 @@ public final class GraphController extends ViewController<AnchorPane> {
         return "Genome graph (" + sources.size() + ")";
     }
 
-    public void showMutations(List<Node> nodes) {
+    public void showMutations(List<Mutation> nodes) {
 
-        List<DrawableMutation> list = nodes.stream().map(DrawableMutation::new).collect(Collectors.toList());
-
-        sequences.getChildren().addAll(list);
+        for (Mutation mutation : nodes) {
+            List<DrawableMutation> list = mutation.stream().map(DrawableMutation::new).collect(Collectors.toList());
+            sequences.getChildren().addAll(list);
+        }
 
     }
 

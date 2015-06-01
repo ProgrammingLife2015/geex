@@ -4,6 +4,7 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.Node;
+import nl.tudelft.context.mutations.Mutation;
 import nl.tudelft.context.mutations.MutationParser;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  * @version 1.0
  * @since 5/23/2015
  */
-public class LoadMutationService extends Service<List<Node>> {
+public class LoadMutationService extends Service<List<Mutation>> {
 
     /**
      * The graph where the mutations are in.
@@ -44,10 +45,10 @@ public class LoadMutationService extends Service<List<Node>> {
      * @return the task to execute.
      */
     @Override
-    protected final Task<List<Node>> createTask() {
-        return new Task<List<Node>>() {
+    protected final Task<List<Mutation>> createTask() {
+        return new Task<List<Mutation>>() {
             @Override
-            protected List<Node> call() throws Exception {
+            protected List<Mutation> call() throws Exception {
                 MutationParser mp = new MutationParser(graph);
                 return mp.checkMutations();
             }

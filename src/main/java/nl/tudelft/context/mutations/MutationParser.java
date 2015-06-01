@@ -22,7 +22,7 @@ public final class MutationParser {
     /**
      * The set with nodes where a variation is detected.
      */
-    List<Node> variations;
+    List<Mutation> variations;
 
     /**
      * The constructor of the class.
@@ -39,19 +39,13 @@ public final class MutationParser {
     /**
      * The function that creates the mutations.
      */
-    public List<Node> checkMutations() {
+    public List<Mutation> checkMutations() {
 
         Set<Node> nodeSet = graph.vertexSet().stream()
                 .filter(node -> graph.outDegreeOf(node) > 1)
                 .collect(Collectors.toSet());
 
-        System.out.println("nodeSet: " + nodeSet.stream().map(Node::getId).collect(Collectors.toList()));
-
-        System.out.println(graph);
-
         nodeSet.forEach(this::checkVariation);
-
-        System.out.println("Variations: " + variations.stream().map(Node::getId).collect(Collectors.toList()));
 
         return variations;
 
@@ -69,6 +63,8 @@ public final class MutationParser {
 
         int set = 0;
 
+        Mutation mutation = new Mutation();
+
         while (!nextNodes.isEmpty()) {
 
             Node node = nextNodes.remove(0);
@@ -85,7 +81,7 @@ public final class MutationParser {
 
             } else {
 
-                addToList(variations, node);
+                mutation.add(node);
                 listSets.get(set).add(node);
                 set++;
                 if (set >= graph.outDegreeOf(startNode)) {
@@ -95,27 +91,16 @@ public final class MutationParser {
                 Set<DefaultEdge> setOfEdges = graph.outgoingEdgesOf(node);
 
                 if (!nextNodes.isEmpty()) {
-                    setOfEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()).forEach(n -> addToList(nextNodes, n));
+                    setOfEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()).forEach(nextNodes::add);
                 } else {
-                    variations.remove(node);
+                    mutation.remove(node);
                 }
 
             }
 
         }
 
-    }
-
-    /**
-     * This function checks if there is a duplicate in the list.
-     *
-     * @param node The node to be added.
-     */
-    private void addToList(List<Node> list, Node node) {
-
-        if (!list.contains(node)) {
-            list.add(node);
-        }
+        variations.add(mutation);
 
     }
 
