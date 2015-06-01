@@ -47,11 +47,6 @@ public class DrawableEdge extends Line {
         setTranslateX(OFFSET_GRAPH);
         setTranslateY(OFFSET_GRAPH);
 
-        startXProperty().bind(drawableGraph.getEdgeSource(edge).translateXProperty());
-        endXProperty().bind(drawableGraph.getEdgeTarget(edge).translateXProperty());
-        startYProperty().bind(drawableGraph.getEdgeSource(edge).translateYProperty());
-        endYProperty().bind(drawableGraph.getEdgeTarget(edge).translateYProperty());
-
         setStrokeWidth(
                 Math.max(MINIMUM_LINE_WIDTH, MAXIMUM_LINE_WIDTH * drawableGraph.getEdgeWeight(edge) / maxWeight));
 
