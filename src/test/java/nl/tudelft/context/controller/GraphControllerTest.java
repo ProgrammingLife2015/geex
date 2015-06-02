@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
+import nl.tudelft.context.model.resistance.ResistanceMap;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,9 +49,10 @@ public class GraphControllerTest {
 
         ReadOnlyObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
         ReadOnlyObjectProperty<AnnotationMap> annotationMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
+        ReadOnlyObjectProperty<ResistanceMap> resistanceMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
 
         graphController = new GraphController(mainController, new HashSet<>(Arrays.asList("Cat", "Dog")),
-                graphMapReadOnlyObjectProperty, annotationMapReadOnlyObjectProperty);
+                graphMapReadOnlyObjectProperty, annotationMapReadOnlyObjectProperty, resistanceMapReadOnlyObjectProperty);
 
     }
 
@@ -58,10 +60,16 @@ public class GraphControllerTest {
     public void testUpdateGraph() throws Exception {
         SimpleObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
         ReadOnlyObjectProperty<AnnotationMap> annotationMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
+        ReadOnlyObjectProperty<ResistanceMap> resistanceMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
 
         GraphMap graphMap = new GraphParser().setReader(nodeFile, edgeFile).parse();
 
-        GraphController graphController = new GraphController(mock(MainController.class), new HashSet<>(Arrays.asList("Cat", "Dog")), graphMapReadOnlyObjectProperty, annotationMapReadOnlyObjectProperty);
+        GraphController graphController = new GraphController(
+                mock(MainController.class),
+                new HashSet<>(Arrays.asList("Cat", "Dog")),
+                graphMapReadOnlyObjectProperty,
+                annotationMapReadOnlyObjectProperty,
+                resistanceMapReadOnlyObjectProperty);
 
         CompletableFuture<Boolean> sequencesAdded = new CompletableFuture<>();
 

@@ -8,6 +8,7 @@ import nl.tudelft.context.drawable.DrawableGraph;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.SinglePointGraph;
+import nl.tudelft.context.model.resistance.ResistanceMap;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,9 +32,15 @@ public final class GraphController extends DefaultGraphController {
     ReadOnlyObjectProperty<GraphMap> graphMapIn;
 
     /**
+     * Sources that are displayed in the graph.
      * Property with annotation map.
      */
     ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
+
+    /**
+     * Property with resistance map.
+     */
+    ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn;
 
     /**
      * Init a controller at graph.fxml.
@@ -42,17 +49,20 @@ public final class GraphController extends DefaultGraphController {
      * @param sources         Sources to display
      * @param graphMapIn      The graphMap from the workspace, might not be loaded.
      * @param annotationMapIn The AnnotationMap from the workspace, might not be loaded.
+     * @param resistanceMapIn The ResistanceMap from the workspace, might not be loaded.
      */
     public GraphController(final MainController mainController,
                            final Set<String> sources,
                            final ReadOnlyObjectProperty<GraphMap> graphMapIn,
-                           final ReadOnlyObjectProperty<AnnotationMap> annotationMapIn) {
+                           final ReadOnlyObjectProperty<AnnotationMap> annotationMapIn,
+                           final ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn) {
 
         super(mainController);
         this.sources = sources;
 
         this.graphMapIn = graphMapIn;
         this.annotationMapIn = annotationMapIn;
+        this.resistanceMapIn = resistanceMapIn;
 
         loadFXML("/application/graph.fxml");
     }
@@ -73,6 +83,7 @@ public final class GraphController extends DefaultGraphController {
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<ResistanceMap> resistanceMapProperty = new SimpleObjectProperty<>();
 
         graphMapProperty.addListener((observable, oldValue, newValue) -> {
             loadGraph(newValue);
@@ -82,8 +93,13 @@ public final class GraphController extends DefaultGraphController {
             loadAnnotation(newValue);
         });
 
+        resistanceMapProperty.addListener((observable, oldValue, newValue) -> {
+            loadResistance(newValue);
+        });
+
         graphMapProperty.bind(graphMapIn);
         annotationMapProperty.bind(annotationMapIn);
+        resistanceMapProperty.bind(resistanceMapIn);
 
         progressIndicator.visibleProperty().bind(graphMapProperty.isNull());
 
@@ -104,9 +120,20 @@ public final class GraphController extends DefaultGraphController {
     /**
      * Load annotation from source.
      *
-     * @param annotationMap The annotationmap which is loaded.
+     * @param annotationMap The annotation map which is loaded.
      */
     private void loadAnnotation(final AnnotationMap annotationMap) {
+        mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
+        //
+    }
+
+    /**
+     * Load resistances from source.
+     *
+     * @param resistanceMap The resistance map which is loaded.
+     */
+    private void loadResistance(final ResistanceMap resistanceMap) {
+        mainController.displayMessage(MessageController.SUCCESS_LOAD_RESISTANCE);
     }
 
     @Override

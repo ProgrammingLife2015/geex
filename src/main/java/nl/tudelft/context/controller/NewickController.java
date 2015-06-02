@@ -161,7 +161,8 @@ public final class NewickController extends ViewController<ScrollPane> {
                 graphController = new GraphController(mainController,
                         newSelection,
                         mainController.getWorkspace().getGraph(),
-                        mainController.getWorkspace().getAnnotation());
+                        mainController.getWorkspace().getAnnotation(),
+                        mainController.getWorkspace().getResistance());
                 mainController.setView(this, graphController);
             } else {
                 mainController.toView(graphController);

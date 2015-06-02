@@ -45,7 +45,6 @@ public class MessageController extends DefaultController<VBox> {
      */
     public static final String SUCCESS_LOAD_TREE = "Phylogenetic tree loaded successfully.";
 
-
     /**
      * Message used when annotation loading fails.
      */
@@ -55,6 +54,20 @@ public class MessageController extends DefaultController<VBox> {
      * Message used when annotation loading succeeds.
      */
     public static final String SUCCESS_LOAD_ANNOTATION = "Annotations loaded successfully.";
+    /**
+     * The text that is shown.
+     */
+
+    /**
+     * Message used when resistance loading fails.
+     */
+    public static final String FAIL_LOAD_RESISTANCE = "Could not load resistance annotations.";
+
+    /**
+     * Message used when annotation loading succeeds.
+     */
+    public static final String SUCCESS_LOAD_RESISTANCE = "Resistance Annotations loaded successfully.";
+
     /**
      * The text that is shown.
      */
@@ -77,6 +90,7 @@ public class MessageController extends DefaultController<VBox> {
 
     /**
      * The function used to display a message and remove the previous one.
+     *
      * @param text The string to display.
      */
     public final void displayMessage(final String text) {
