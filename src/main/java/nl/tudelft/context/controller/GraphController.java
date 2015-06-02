@@ -103,6 +103,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         this.mainController = mainController;
         this.sources = sources;
+
         this.graphMapIn = graphMapIn;
         this.annotationMapIn = annotationMapIn;
         this.resistanceMapIn = resistanceMapIn;
