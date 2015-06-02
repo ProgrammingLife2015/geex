@@ -133,11 +133,15 @@ public final class NewickController extends ViewController<ScrollPane> {
         this.newick.getChildren().addAll(edgeList);
         this.newick.getChildren().addAll(nodeList);
 
-        MenuItem loadGenomeGraph = mainController.getMenuController().loadGenomeGraph;
+        MenuItem loadGenomeGraph = mainController.getMenuController().getLoadGenomeGraph();
         loadGenomeGraph.setOnAction(event -> loadGraph(newick));
         loadGenomeGraph.disableProperty().bind(
-                newick.getRoot().getSelectionProperty().isEqualTo(new None()).and(activeProperty)
+                newick.getRoot().getSelectionProperty().isEqualTo(new None()).or(activeProperty.not())
         );
+
+        loadGenomeGraph.disableProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println(newValue);
+        });
 
         mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
     }

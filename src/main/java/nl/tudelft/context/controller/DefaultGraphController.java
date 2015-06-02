@@ -58,7 +58,7 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
     MainController mainController;
 
     /**
-     * Map containing the labels indexed by position
+     * Map containing the labels indexed by position.
      */
     Map<Integer, List<DefaultLabel>> labelMap = new HashMap<>();
 

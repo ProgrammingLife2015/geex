@@ -23,9 +23,9 @@ public final class MenuController {
     MainController mainController;
 
     /**
-     * The menu items
+     * The menu items.
      */
-    public MenuItem
+    private MenuItem
             loadGenomeGraph,
             zoomIn,
             zoomOut;
@@ -72,6 +72,21 @@ public final class MenuController {
      */
     private void initNavigateMenu() {
 
+        loadGenomeGraph = createMenuItem("Load Genome graph",
+                new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN),
+                null,
+                true);
+
+        zoomIn = createMenuItem("Zoom in on graph",
+                new KeyCodeCombination(KeyCode.UP, KeyCombination.SHORTCUT_DOWN),
+                null,
+                true);
+
+        zoomOut = createMenuItem("Zoom out on graph",
+                new KeyCodeCombination(KeyCode.DOWN, KeyCombination.SHORTCUT_DOWN),
+                null,
+                true);
+
         menuBar.getMenus().add(createMenu("_Navigate",
                 createMenuItem("Previous view",
                         new KeyCodeCombination(KeyCode.ESCAPE),
@@ -81,18 +96,9 @@ public final class MenuController {
                         new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN),
                         event -> mainController.toggleNewick(),
                         false),
-                loadGenomeGraph = createMenuItem("Load Genome graph",
-                        new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN),
-                        null,
-                        true),
-                zoomIn = createMenuItem("Zoom in on graph",
-                        new KeyCodeCombination(KeyCode.UP, KeyCombination.SHORTCUT_DOWN),
-                        null,
-                        true),
-                zoomOut = createMenuItem("Zoom out on graph",
-                        new KeyCodeCombination(KeyCode.DOWN, KeyCombination.SHORTCUT_DOWN),
-                        null,
-                        true)));
+                loadGenomeGraph,
+                zoomIn,
+                zoomOut));
 
     }
 
@@ -145,6 +151,30 @@ public final class MenuController {
 
         return res;
 
+    }
+
+    /**
+     * Get the menu item to load the genome graph.
+     * @return The menu item to load the genome graph
+     */
+    public MenuItem getLoadGenomeGraph() {
+        return loadGenomeGraph;
+    }
+
+    /**
+     * Get the menu item to zoom in the graph.
+     * @return The menu item to zoom in the graph
+     */
+    public MenuItem getZoomIn() {
+        return zoomIn;
+    }
+
+    /**
+     * Get the menu item to zoom out the graph.
+     * @return The menu item to zoom out the graph
+     */
+    public MenuItem getZoomOut() {
+        return zoomOut;
     }
 
 }

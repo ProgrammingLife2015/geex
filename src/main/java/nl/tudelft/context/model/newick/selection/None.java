@@ -43,8 +43,13 @@ public class None implements Selection {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         return other instanceof None;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 
 }

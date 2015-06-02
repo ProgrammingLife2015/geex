@@ -3,6 +3,7 @@ package nl.tudelft.context.controller;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.MenuItem;
 import nl.tudelft.context.drawable.DrawableGraph;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
@@ -72,10 +73,12 @@ public final class GraphController extends DefaultGraphController {
         super.initialize(location, resources);
 
         MenuController menuController = mainController.getMenuController();
-        menuController.zoomIn.setOnAction(event -> showGraph(new DrawableGraph(graphList.getFirst())));
-        menuController.zoomIn.disableProperty().bind(activeProperty.not());
-        menuController.zoomOut.setOnAction(event -> showGraph(new DrawableGraph(graphList.getLast())));
-        menuController.zoomOut.disableProperty().bind(activeProperty.not());
+        MenuItem zoomIn = menuController.getZoomIn();
+        MenuItem zoomOut = menuController.getZoomOut();
+        zoomIn.setOnAction(event -> showGraph(new DrawableGraph(graphList.getFirst())));
+        zoomIn.disableProperty().bind(activeProperty.not());
+        zoomOut.setOnAction(event -> showGraph(new DrawableGraph(graphList.getLast())));
+        zoomOut.disableProperty().bind(activeProperty.not());
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();

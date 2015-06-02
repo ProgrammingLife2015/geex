@@ -43,8 +43,13 @@ public class Partial implements Selection {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         return other instanceof Partial;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 
 }
