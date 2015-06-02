@@ -86,11 +86,11 @@ public final class MenuController {
                         null,
                         true),
                 zoomIn = createMenuItem("Zoom in on graph",
-                        new KeyCodeCombination(KeyCode.UP),
+                        new KeyCodeCombination(KeyCode.UP, KeyCombination.SHORTCUT_DOWN),
                         null,
                         true),
                 zoomOut = createMenuItem("Zoom out on graph",
-                        new KeyCodeCombination(KeyCode.DOWN),
+                        new KeyCodeCombination(KeyCode.DOWN, KeyCombination.SHORTCUT_DOWN),
                         null,
                         true)));
 
