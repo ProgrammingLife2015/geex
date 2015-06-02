@@ -34,11 +34,15 @@ public abstract class ViewController<T extends Parent> extends DefaultController
     /**
      * Called whenever a view is activated.
      */
-    public abstract void activate();
+    public void activate() {
+        // Empty method
+    }
 
     /**
      * Called whenever a view is deactivated.
      */
-    public abstract void deactivate();
+    public void deactivate() {
+        // Empty method
+    }
 
 }

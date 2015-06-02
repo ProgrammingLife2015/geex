@@ -101,14 +101,4 @@ public final class GraphController extends DefaultGraphController {
     public String getBreadcrumbName() {
         return "Genome graph (" + sources.size() + ")";
     }
-
-    @Override
-    public void activate() {
-        // empty method
-    }
-
-    @Override
-    public void deactivate() {
-        // empty method
-    }
 }

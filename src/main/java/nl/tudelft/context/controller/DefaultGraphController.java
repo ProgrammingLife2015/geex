@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
  * @version 1.0
  * @since 2-6-2015
  */
-public abstract class DefaultGraphController extends  ViewController<AnchorPane> {
+public abstract class DefaultGraphController extends ViewController<AnchorPane> {
 
     /**
      * ProgressIndicator to show when the graph is loading.

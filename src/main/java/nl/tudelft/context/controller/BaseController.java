@@ -102,14 +102,4 @@ public final class BaseController extends ViewController<ScrollPane> {
         return "Sequence: " + node.getId();
     }
 
-    @Override
-    public void activate() {
-        // empty method
-    }
-
-    @Override
-    public void deactivate() {
-        // empty method
-    }
-
 }

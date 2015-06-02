@@ -59,16 +59,6 @@ public class SubGraphController extends DefaultGraphController {
     }
 
     @Override
-    public void activate() {
-
-    }
-
-    @Override
-    public void deactivate() {
-
-    }
-
-    @Override
     public String getBreadcrumbName() {
         return "Sub graph";
     }
