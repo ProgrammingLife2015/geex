@@ -2,6 +2,8 @@ package nl.tudelft.context.model.graph;
 
 import org.jgrapht.Graphs;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -84,13 +86,21 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
 
         values().stream().forEach(graph -> {
 
-            graph.vertexSet().stream()
-                    .filter(vertex -> graph.outDegreeOf(vertex) > 1)
-                    .forEach(vertex -> {
+            Queue<DefaultNode> queue = new LinkedList<>(graph.getFirstNodes());
+            while (!queue.isEmpty()) {
 
-                System.out.println(123);
+                DefaultNode start = queue.remove();
+                if (graph.outDegreeOf(start) > 1) {
 
-            });
+                    graph.getTargets(start).stream()
+                            .filter(vertex -> graph.inDegreeOf(vertex) > 1)
+                            .forEach(end -> graph.removeEdge(start, end));
+
+                }
+
+                queue.addAll(graph.getTargets(start));
+
+            }
 
         });
 
