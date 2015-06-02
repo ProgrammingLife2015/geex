@@ -42,4 +42,14 @@ public class All implements Selection {
         return "selected";
     }
 
+    @Override
+    public boolean equals(final Object other) {
+        return other instanceof All;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
 }

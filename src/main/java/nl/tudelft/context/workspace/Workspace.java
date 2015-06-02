@@ -113,8 +113,8 @@ public class Workspace {
             mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
 
             mainController.setWorkspace(workspace);
-            mainController.setBaseView(new NewickController(mainController,
-                    mainController.getMenuController().getLoadGenomeGraph(), workspace.getNewick()));
+            mainController.setBaseView(
+                    new NewickController(mainController, workspace.getNewick()));
         } catch (FileNotFoundException e) {
             mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
         }

@@ -42,4 +42,14 @@ public class None implements Selection {
         return "none";
     }
 
+    @Override
+    public boolean equals(final Object other) {
+        return other instanceof None;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
 }
