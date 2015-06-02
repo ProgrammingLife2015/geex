@@ -39,6 +39,7 @@ public class DrawableEdge extends Line {
      *
      * @param drawableGraph graph that contains edge
      * @param edge          edge to bind and display
+     * @param sourceSize number of strains in this edge
      */
     public DrawableEdge(final DrawableGraph drawableGraph, final DefaultEdge edge, final int sourceSize) {
 

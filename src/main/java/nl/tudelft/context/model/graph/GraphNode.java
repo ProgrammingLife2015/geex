@@ -25,7 +25,7 @@ public class GraphNode extends DefaultNode {
      * @param start Start of sub graph
      * @param end   End of sub graph
      */
-    public GraphNode(StackGraph graph, DefaultNode start, DefaultNode end) {
+    public GraphNode(final StackGraph graph, final DefaultNode start, final DefaultNode end) {
 
         sources = new HashSet<>();
 
