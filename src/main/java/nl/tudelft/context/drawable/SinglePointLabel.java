@@ -1,7 +1,7 @@
 package nl.tudelft.context.drawable;
 
 import javafx.scene.control.Label;
-import nl.tudelft.context.controller.GraphController;
+import nl.tudelft.context.controller.DefaultGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.controller.SubGraphController;
 import nl.tudelft.context.model.graph.GraphNode;
@@ -26,7 +26,7 @@ public class SinglePointLabel extends DefaultLabel {
      * @param drawableNode    Node indicating drawable
      * @param node            Node indicating the node
      */
-    public SinglePointLabel(final MainController mainController, final GraphController graphController,
+    public SinglePointLabel(final MainController mainController, final DefaultGraphController graphController,
                             final DrawableNode drawableNode, final GraphNode node) {
 
         this.node = node;
@@ -37,7 +37,7 @@ public class SinglePointLabel extends DefaultLabel {
         translateYProperty().bind(drawableNode.translateYProperty());
 
         setOnMouseClicked(event -> mainController.setView(graphController,
-                new SubGraphController(mainController)));
+                new SubGraphController(mainController, graphController.getGraphList().getFirst(), node)));
 
     }
 
