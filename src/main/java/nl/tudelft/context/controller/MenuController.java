@@ -1,5 +1,7 @@
 package nl.tudelft.context.controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -22,7 +24,12 @@ public final class MenuController {
     MainController mainController;
 
     /**
-     * Menu bar used in this class.
+     * The menu item for loading the genome graph.
+     */
+    MenuItem loadGenomeGraph;
+
+    /**
+     * FXML menu bar.
      */
     MenuBar menuBar;
 
@@ -30,12 +37,12 @@ public final class MenuController {
      * Create a new menu.
      *
      * @param mainController The MainController of the application.
-     * @param menuBar The menubar this Menu should hook onto.
+     * @param menuBar        The menubar this Menu should hook onto.
      */
     public MenuController(final MainController mainController, final MenuBar menuBar) {
+
         this.mainController = mainController;
         this.menuBar = menuBar;
-        menuBar.setUseSystemMenuBar(true);
 
         initFileMenu();
         initNavigateMenu();
@@ -44,60 +51,120 @@ public final class MenuController {
     }
 
     /**
-     * Set up file menu.
+     * Initialize file menu.
      */
-    public void initFileMenu() {
+    private void initFileMenu() {
 
-        final Menu fileMenu = new Menu("_File");
+        menuBar.getMenus().add(createMenu("_File",
+                createWorkspaceLoader("Select workspace folder",
+                        new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN)),
+                createMenuItem("Exit", null,
+                        event -> mainController.exitProgram())));
+    }
 
-        MenuItem load = new MenuItem("Load Workspace...");
-        load.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+    /**
+     * Initialize file menu.
+     */
+    private void initNavigateMenu() {
+
+        menuBar.getMenus().add(createMenu("_Navigate",
+                createMenuItem("Previous view",
+                        new KeyCodeCombination(KeyCode.ESCAPE),
+                        event -> mainController.previousView()),
+                createMenuItem("Show Phylogenetic tree",
+                        new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN),
+                        event -> mainController.toggleNewick()),
+                createGenomeGraphLoader("Load Genome graph",
+                        new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN))));
+
+    }
+
+    /**
+     * Initialize help menu.
+     */
+    private void initHelpMenu() {
+
+        menuBar.getMenus().add(createMenu("_Help",
+                createMenuItem("Shortcuts",
+                        new KeyCodeCombination(KeyCode.F1),
+                        event -> mainController.toggleOverlay())));
+
+    }
+
+    /**
+     * The function that will create a menu with an undefined number of menuItems.
+     *
+     * @param title     Title of the menu.
+     * @param menuItems The menu items that will be added to this menu.
+     * @return Menu with the menuItems attached.
+     */
+    private Menu createMenu(final String title, final MenuItem... menuItems) {
+
+        final Menu menu = new Menu(title);
+        menu.getItems().addAll(menuItems);
+        return menu;
+
+    }
+
+    /**
+     * The function that returns a menuItem with a title, shortcut and event attached.
+     *
+     * @param title   The title of the menuItem.
+     * @param keyComb The shortcut to this menuItem.
+     * @param event   Event that the item will use.
+     * @return The menuItem with the parameters attached.
+     */
+    private MenuItem createMenuItem(final String title,
+                                    final KeyCombination keyComb,
+                                    final EventHandler<ActionEvent> event) {
+
+        final MenuItem res = new MenuItem(title);
+        res.setAccelerator(keyComb);
+        res.setOnAction(event);
+
+        return res;
+
+    }
+
+    /**
+     * Function used to create a workspace loader.
+     *
+     * @param title   Title of the menuItem.
+     * @param keyComb The KeyCodeCombination to be attached.
+     * @return Returns the menuItem with the workspace loader attached.
+     */
+    private MenuItem createWorkspaceLoader(final String title, final KeyCodeCombination keyComb) {
+
+        final MenuItem res = new MenuItem(title);
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Workspace Folder");
-        load.setOnAction(event -> Workspace.chooseWorkspace(mainController));
+        res.setOnAction(event -> Workspace.chooseWorkspace(mainController));
+        res.setAccelerator(keyComb);
 
-        MenuItem exit = new MenuItem("Exit");
-        exit.setOnAction(event -> mainController.exitProgram());
-
-        fileMenu.getItems().addAll(load, exit);
-        menuBar.getMenus().add(fileMenu);
+        return res;
 
     }
 
     /**
-     * Set up navigate menu.
+     * The function used to create the menuItem with the genomegraphloader.
+     *
+     * @param title   The title of the menuItem.
+     * @param keyComb The keycombination to be attached.
+     * @return The menuitem with all params.
      */
-    public void initNavigateMenu() {
-
-        final Menu navigateMenu = new Menu("_Navigate");
-
-        final MenuItem previous = new MenuItem("Previous");
-        previous.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
-        previous.setOnAction(event -> mainController.previousView());
-
-        final MenuItem showNewick = new MenuItem("Show Phylogenetic tree");
-        showNewick.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN));
-        showNewick.setOnAction(event -> mainController.toggleNewick());
-
-        navigateMenu.getItems().addAll(previous, showNewick);
-        menuBar.getMenus().add(navigateMenu);
-
+    private MenuItem createGenomeGraphLoader(final String title, final KeyCombination keyComb) {
+        loadGenomeGraph = new MenuItem(title);
+        loadGenomeGraph.setAccelerator(keyComb);
+        loadGenomeGraph.setDisable(true);
+        return loadGenomeGraph;
     }
 
     /**
-     * Set up help menu.
+     * Gets the menu item that is responsible for loading the genome graph.
+     *
+     * @return the menu item for loading the genome graph
      */
-    public void initHelpMenu() {
-
-        final Menu helpMenu = new Menu("_Help");
-
-        MenuItem shortcuts = new MenuItem("Shortcuts");
-        shortcuts.setAccelerator(new KeyCodeCombination(KeyCode.F1));
-        shortcuts.setOnAction(event -> mainController.toggleOverlay());
-
-        helpMenu.getItems().addAll(shortcuts);
-
-        menuBar.getMenus().add(helpMenu);
-
+    public MenuItem getLoadGenomeGraph() {
+        return loadGenomeGraph;
     }
 }

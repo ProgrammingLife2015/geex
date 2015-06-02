@@ -1,29 +1,23 @@
 package nl.tudelft.context.drawable;
 
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ObservableDoubleValue;
+import nl.tudelft.context.model.graph.DefaultNode;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 1-5-2015
  */
-public class DrawableNode {
+public class DrawableNode extends DrawablePosition {
+
+    /**
+     * Node that is drawn.
+     */
+    private DefaultNode node;
 
     /**
      * The current number of incoming nodes.
      */
     int currentIncoming = 0;
-
-    /**
-     * Translation in the direction of the X axis.
-     */
-    SimpleDoubleProperty translateX = new SimpleDoubleProperty(0);
-
-    /**
-     * Translation in the direction of the Y axis.
-     */
-    SimpleDoubleProperty translateY = new SimpleDoubleProperty(0);
 
     /**
      * Increment current incoming and return.
@@ -37,43 +31,50 @@ public class DrawableNode {
     }
 
     /**
-     * @return translateX property
-     */
-    public final ObservableDoubleValue translateXProperty() {
-
-        return translateX;
-
-    }
-
-    /**
-     * @return translateY property
-     */
-    public final ObservableDoubleValue translateYProperty() {
-
-        return translateY;
-
-    }
-
-    /**
-     * Update translate x.
+     * Create a drawable node.
      *
-     * @param x new x
+     * @param node Node to draw
      */
-    public final void setTranslateX(final double x) {
+    public DrawableNode(final DefaultNode node) {
 
-        translateX.set(x);
+        this.node = node;
 
     }
 
     /**
-     * Update translate y.
+     * Get the node that is drawn.
      *
-     * @param y new y
+     * @return Node that is drawn.
      */
-    public final void setTranslateY(final double y) {
+    public DefaultNode getNode() {
 
-        translateY.set(y);
+        return node;
 
+    }
+
+    /**
+     * Check if nodes are equal.
+     *
+     * @param other Other object
+     * @return If other object has the same node
+     */
+    @Override
+    public boolean equals(final Object other) {
+        if (other instanceof DrawableNode) {
+            DrawableNode that = (DrawableNode) other;
+            return node.equals(that.node);
+        }
+        return false;
+    }
+
+    /**
+     * Creates an hashCode base on node.
+     *
+     * @return unique hashCode by id
+     */
+    @Override
+    public int hashCode() {
+        return node.hashCode();
     }
 
 }

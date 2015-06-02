@@ -1,10 +1,20 @@
 package nl.tudelft.context.workspace;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.controller.MessageController;
 import nl.tudelft.context.controller.NewickController;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.AnnotationParser;
+import nl.tudelft.context.model.graph.GraphMap;
+import nl.tudelft.context.model.graph.GraphParser;
+import nl.tudelft.context.model.newick.Newick;
+import nl.tudelft.context.model.newick.NewickParser;
+import nl.tudelft.context.model.resistance.ResistanceMap;
+import nl.tudelft.context.model.resistance.ResistanceParser;
+import nl.tudelft.context.service.LoadService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,6 +62,26 @@ public class Workspace {
     File resistanceFile;
 
     /**
+     * The service used for parsing a Newick.
+     */
+    LoadService<Newick> loadNewickService;
+
+    /**
+     * The service used for parsing a Graph.
+     */
+    LoadService<GraphMap> loadGraphService;
+
+    /**
+     * The service used for parsing an Annotation.
+     */
+    LoadService<AnnotationMap> loadAnnotationService;
+
+    /**
+     * The service used for parsing the Resistance.
+     */
+    LoadService<ResistanceMap> loadResistanceService;
+
+    /**
      * Create a new workspace on the directory.
      *
      * @param directory The workspace root
@@ -83,7 +113,8 @@ public class Workspace {
             mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
 
             mainController.setWorkspace(workspace);
-            mainController.setBaseView(new NewickController(mainController));
+            mainController.setBaseView(new NewickController(mainController,
+                    mainController.getMenuController().getLoadGenomeGraph(), workspace.getNewick()));
         } catch (FileNotFoundException e) {
             mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
         }
@@ -121,48 +152,50 @@ public class Workspace {
     }
 
     /**
-     * Get Node file in the workspace.
-     *
-     * @return Node file
+     * Preload the workspace, makes sure all the services are started.
      */
-    public File getNodeFile() {
-        return nodeFile;
+    public final void preload() {
+        loadNewickService = new LoadService<>(NewickParser.class, nwkFile);
+        loadAnnotationService = new LoadService<>(AnnotationParser.class, annotationFile);
+        loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
+        loadResistanceService = new LoadService<>(ResistanceParser.class, resistanceFile);
+
+        loadNewickService.start();
+        loadAnnotationService.start();
+        loadGraphService.start();
+        loadResistanceService.start();
     }
 
     /**
-     * Get the Edge file in the workspace.
-     *
-     * @return Edge file
+     * Get the Newick Property.
+     * @return A ReadOnlyObjectProperty containing, or not yet containing a Newick.
      */
-    public File getEdgeFile() {
-        return edgeFile;
+    public ReadOnlyObjectProperty<Newick> getNewick() {
+        return loadNewickService.valueProperty();
     }
 
     /**
-     * Get the newick graph in the workspace.
-     *
-     * @return Newick file
+     * Get the AnnotationMap Property.
+     * @return A ReadOnlyObjectProperty containing, or not yet containing an AnnotationMap.
      */
-    public File getNwkFile() {
-        return nwkFile;
+    public ReadOnlyObjectProperty<AnnotationMap> getAnnotation() {
+        return loadAnnotationService.valueProperty();
     }
 
     /**
-     * Get the annotation file in the workspace.
-     *
-     * @return annotation file
+     * Get the GraphMap Property.
+     * @return A ReadOnlyObjectProperty containing, or not yet containing a GraphMap.
      */
-    public File getAnnotationFile() {
-        return annotationFile;
+    public ReadOnlyObjectProperty<GraphMap> getGraph() {
+        return loadGraphService.valueProperty();
     }
 
     /**
-     * Get the resistance file in the workspace.
-     *
-     * @return resistance file
+     * Get the ResistanceMap Property.
+     * @return A ReadOnlyObjectProperty containing, or not yet containing a ResistanceMap.
      */
-    public File getResistanceFile() {
-        return resistanceFile;
+    public ReadOnlyObjectProperty<ResistanceMap> getResistance() {
+        return loadResistanceService.valueProperty();
     }
 
 }

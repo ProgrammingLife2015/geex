@@ -15,6 +15,13 @@ public interface Selection {
     boolean useSources();
 
     /**
+     * Checks if the selection includes at least one element.
+     *
+     * @return true if at least one element is selected; otherwise false.
+     */
+    boolean isAny();
+
+    /**
      * Toggle the selection.
      *
      * @return New selection
@@ -28,6 +35,20 @@ public interface Selection {
      * @return The new selection
      */
     Selection merge(Selection selection);
+
+    /**
+     * Merge this selection with None.
+     *
+     * @return The new selection
+     */
+    Selection mergeNone();
+
+    /**
+     * Merge this selection with All.
+     *
+     * @return The new selection
+     */
+    Selection mergeAll();
 
     /**
      * Style class of current selection.

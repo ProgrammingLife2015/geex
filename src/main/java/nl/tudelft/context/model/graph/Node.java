@@ -1,6 +1,10 @@
 package nl.tudelft.context.model.graph;
 
+import nl.tudelft.context.controller.GraphController;
+import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableNode;
+import nl.tudelft.context.drawable.InfoLabel;
 
 import java.util.Set;
 
@@ -9,7 +13,7 @@ import java.util.Set;
  * @version 1.1
  * @since 23-4-2015
  */
-public final class Node extends DrawableNode {
+public class Node extends DefaultNode {
 
     /**
      * The identifier of the current Node.
@@ -104,17 +108,12 @@ public final class Node extends DrawableNode {
 
     }
 
-    /**
-     * Getter for content.
-     *
-     * @return DNA sequence
-     */
+    @Override
     public String getContent() {
 
         return content;
 
     }
-
 
     /**
      * Getter for baseCounter.
@@ -150,6 +149,12 @@ public final class Node extends DrawableNode {
     @Override
     public int hashCode() {
         return this.id;
+    }
+
+    @Override
+    public DefaultLabel getLabel(final MainController mainController, final GraphController graphController,
+                                 final DrawableNode drawableNode) {
+        return new InfoLabel(mainController, graphController, drawableNode, this);
     }
 
 }

@@ -2,8 +2,7 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import nl.tudelft.context.model.graph.Graph;
-import nl.tudelft.context.model.newick.Tree;
+import nl.tudelft.context.model.newick.Newick;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -15,52 +14,42 @@ import org.jgrapht.graph.DefaultEdge;
 public class DrawableEdge extends Line {
 
     /**
-     * Define the X translation of the graph nodes.
+     * Define the Y translation of the graph nodes.
      */
-    public static final int X_OFFSET_GRAPH = 30;
+    public static final int OFFSET_GRAPH = 30;
 
     /**
      * Define the Y translation of the graph nodes.
      */
-    public static final int Y_OFFSET_GRAPH = 30;
-
-    /**
-     * Define the X translation of the graph nodes.
-     */
-    public static final int X_OFFSET_TREE = 10;
-
-    /**
-     * Define the Y translation of the graph nodes.
-     */
-    public static final int Y_OFFSET_TREE = 10;
+    public static final int OFFSET_TREE = 10;
 
     /**
      * Creates edge for graph and bind it to nodes.
      *
-     * @param graph graph that contains edge
-     * @param edge  edge to bind and display
+     * @param drawableGraph graph that contains edge
+     * @param edge          edge to bind and display
      */
-    public DrawableEdge(final Graph graph, final DefaultEdge edge) {
+    public DrawableEdge(final DrawableGraph drawableGraph, final DefaultEdge edge) {
 
-        initialize(graph, edge);
+        initialize(drawableGraph, edge);
 
-        setTranslateX(X_OFFSET_GRAPH);
-        setTranslateY(Y_OFFSET_GRAPH);
+        setTranslateX(OFFSET_GRAPH);
+        setTranslateY(OFFSET_GRAPH);
 
     }
 
     /**
      * Creates edge for tree and bind it to nodes.
      *
-     * @param tree graph that contains edge
-     * @param edge edge to bind and display
+     * @param newick graph that contains edge
+     * @param edge   edge to bind and display
      */
-    public DrawableEdge(final Tree tree, final DefaultEdge edge) {
+    public DrawableEdge(final Newick newick, final DefaultEdge edge) {
 
-        initialize(tree, edge);
+        initialize(newick, edge);
 
-        setTranslateX(X_OFFSET_TREE);
-        setTranslateY(Y_OFFSET_TREE);
+        setTranslateX(OFFSET_TREE);
+        setTranslateY(OFFSET_TREE);
 
     }
 
@@ -70,7 +59,7 @@ public class DrawableEdge extends Line {
      * @param graph the graph of the edge
      * @param edge  the edge
      */
-    private void initialize(final DefaultDirectedGraph<? extends DrawableNode, DefaultEdge> graph,
+    private void initialize(final DefaultDirectedGraph<? extends DrawablePosition, DefaultEdge> graph,
                             final DefaultEdge edge) {
 
         startXProperty().bind(graph.getEdgeSource(edge).translateXProperty());

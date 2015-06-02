@@ -1,13 +1,9 @@
 package nl.tudelft.context.workspace;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -54,11 +50,11 @@ public class WorkspaceTest {
 
         workspace.load();
 
-        assertEquals(nodePath, workspace.getNodeFile());
-        assertEquals(edgePath, workspace.getEdgeFile());
-        assertEquals(nwkPath, workspace.getNwkFile());
-        assertEquals(annPath, workspace.getAnnotationFile());
-        assertEquals(immPath, workspace.getResistanceFile());
+        assertEquals(nodePath, workspace.nodeFile);
+        assertEquals(edgePath, workspace.edgeFile);
+        assertEquals(nwkPath, workspace.nwkFile);
+        assertEquals(annPath, workspace.annotationFile);
+        assertEquals(immPath, workspace.resistanceFile);
     }
 
     @Test(expected = FileNotFoundException.class)

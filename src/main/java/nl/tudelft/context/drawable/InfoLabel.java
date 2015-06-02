@@ -3,12 +3,10 @@ package nl.tudelft.context.drawable;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.VBox;
 import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.GraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.BaseCounter;
-import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.Node;
 
 import java.util.Arrays;
@@ -20,7 +18,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 13-5-2015
  */
-public class InfoLabel extends VBox {
+public class InfoLabel extends DefaultLabel {
 
     /**
      * The node the InfoLabel belongs to.
@@ -37,25 +35,24 @@ public class InfoLabel extends VBox {
      *
      * @param mainController  MainController indicating the controller
      * @param graphController GraphController to place the next view on
-     * @param graph           Graph containing the node
+     * @param drawableNode    Node indicating drawable
      * @param node            Node indicating the node
      */
     public InfoLabel(final MainController mainController, final GraphController graphController,
-                     final Graph graph, final Node node) {
+                     final DrawableNode drawableNode, final Node node) {
 
         this.node = node;
 
         setCache(true);
-        translateXProperty().bind(node.translateXProperty());
-        translateYProperty().bind(node.translateYProperty());
+        translateXProperty().bind(drawableNode.translateXProperty());
+        translateYProperty().bind(drawableNode.translateYProperty());
 
-        setOnMouseClicked(event -> mainController.setView(graphController, new BaseController(graph, node)));
+        setOnMouseClicked(event -> mainController.setView(graphController,
+                new BaseController(graphController.getGraphList().getFirst(), node)));
 
     }
 
-    /**
-     * Draw sub elements when needed.
-     */
+    @Override
     public final void init() {
 
         getChildren().addAll(
@@ -65,14 +62,10 @@ public class InfoLabel extends VBox {
 
     }
 
-    /**
-     * Get the current column the label is displayed.
-     *
-     * @return Column index
-     */
+    @Override
     public int currentColumn() {
 
-        return (int) translateXProperty().get() / Graph.LABEL_SPACING;
+        return (int) translateXProperty().get() / DrawableGraph.LABEL_SPACING;
 
     }
 

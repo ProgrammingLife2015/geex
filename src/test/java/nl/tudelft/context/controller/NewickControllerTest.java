@@ -1,28 +1,25 @@
 package nl.tudelft.context.controller;
 
-import com.sun.javafx.collections.ObservableListWrapper;
+
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.collections.FXCollections;
-import javafx.scene.layout.StackPane;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.MenuItem;
+import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.Node;
-import nl.tudelft.context.model.newick.Tree;
 import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static junit.framework.TestCase.*;
+import static org.mockito.Mockito.*;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
+ * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
  * @version 1.0
  * @since 26-4-2015
  */
@@ -31,8 +28,9 @@ public class NewickControllerTest {
 
     protected static NewickController newickController;
     protected static MainController mainController;
+    protected static MenuItem menuItem;
 
-    protected final static File nwkFile = new File(GraphControllerTest.class.getResource("/newick/10strains.nwk").getPath());
+    protected static SimpleObjectProperty<Newick> newickSimpleObjectProperty = new SimpleObjectProperty<>();
     protected static BooleanProperty bp = new SimpleBooleanProperty(false);
 
     /**
@@ -40,28 +38,42 @@ public class NewickControllerTest {
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
-
         mainController = mock(MainController.class);
-
-        mainController.viewList = FXCollections.observableList(new ArrayList<>());
-        mainController.view = mock(StackPane.class);
-        Workspace workspace = mock(Workspace.class);
-        mainController.messageController = new MessageController();
         mainController.newickLifted = bp;
 
-        when(workspace.getNwkFile()).thenReturn(nwkFile);
+        Workspace workspace = mock(Workspace.class);
+
+        when(workspace.getGraph()).thenReturn(new SimpleObjectProperty<>());
+        when(workspace.getAnnotation()).thenReturn(new SimpleObjectProperty<>());
+
         when(mainController.getWorkspace()).thenReturn(workspace);
-        when(mainController.view.getChildren()).thenReturn(new ObservableListWrapper<>(new ArrayList<>()));
 
-        newickController = new NewickController(mainController);
+        Newick newick = new Newick();
+        newick.setRoot(new Node("n1", 1.23));
+        newickSimpleObjectProperty.set(newick);
 
+        menuItem = spy(new MenuItem());
+
+        newickController = new NewickController(mainController, menuItem, newickSimpleObjectProperty);
+
+    }
+
+    /**
+     * MainController should receive a message that the tree is loaded.
+     */
+    @Test
+    public void testMessageTreeLoaded() {
+        Newick newick = new Newick();
+        newick.setRoot(new Node("a", 1));
+        newickController.showTree(newick);
+        verify(mainController, atLeast(1)).displayMessage(MessageController.SUCCESS_LOAD_TREE);
     }
 
     /**
      * Test toggle Newick.
      */
     @Test
-    public void toggleNewick() {
+    public void testToggleNewick() {
 
         bp.setValue(true);
         bp.setValue(false);
@@ -79,21 +91,50 @@ public class NewickControllerTest {
     }
 
     /**
-     * Nothing should break when no nodes, or some nodes are selected.
+     * View should only change to GraphController when at least one node is selected.
      */
     @Test
     public void testLoadGraph() {
-        Tree tree = new Tree();
+        Newick newick = new Newick();
         Node node = new Node("n1", 1.23);
-        tree.setRoot(node);
-        newickController.loadGraph(tree);
+        newick.setRoot(node);
+        newickController.loadGraph(newick);
+        verify(mainController, never()).showGraph(newickController, node.getSources());
+
         node.setSelection(new All());
-        newickController.loadGraph(tree);
+
+        newickController.loadGraph(newick);
+        verify(mainController, times(1)).setView(any(NewickController.class), any(GraphController.class));
+        newickController.loadGraph(newick);
+        verify(mainController, times(1)).toView(any(GraphController.class));
     }
 
+    /**
+     * Test whether the breadcrumb name is ok.
+     */
     @Test
     public void testBreadcrumbName() {
         assertEquals("Phylogenetic tree", newickController.getBreadcrumbName());
+    }
+
+    /**
+     * Nothing should break when activate is called.
+     */
+    @Test
+    public void testActivate() throws InterruptedException {
+        newickController.activate();
+        assertTrue(newickController.active);
+        newickController.deactivate();
+        newickController.activate();
+    }
+
+    /**
+     * Nothing should break when deactivate is called.
+     */
+    @Test
+    public void testDeactivate() {
+        newickController.deactivate();
+        assertFalse(newickController.active);
     }
 
 }

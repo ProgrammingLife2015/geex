@@ -16,7 +16,7 @@ public class LoadService<T> extends Service<T> {
     /**
      * The class used for parsing the files.
      */
-    Class<? extends Parser<T>> parserClass;
+    private Class<? extends Parser<T>> parserClass;
     /**
      * The files to parse.
      */
@@ -30,6 +30,8 @@ public class LoadService<T> extends Service<T> {
     public LoadService(final Class<? extends Parser<T>> parserClass, final File... files) {
         this.parserClass = parserClass;
         this.files = files;
+
+        ready();
     }
 
     @Override
@@ -41,6 +43,8 @@ public class LoadService<T> extends Service<T> {
                 parser.setReader(files);
                 return parser.parse();
             }
+
+
         };
     }
 }

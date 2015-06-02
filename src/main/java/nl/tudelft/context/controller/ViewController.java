@@ -31,4 +31,14 @@ public abstract class ViewController<T extends Parent> extends DefaultController
      */
     public abstract String getBreadcrumbName();
 
+    /**
+     * Called whenever a view is activated.
+     */
+    public abstract void activate();
+
+    /**
+     * Called whenever a view is deactivated.
+     */
+    public abstract void deactivate();
+
 }

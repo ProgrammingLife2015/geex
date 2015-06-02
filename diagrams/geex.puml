@@ -7,13 +7,6 @@ class App extends javafx.application.Application {
 }
 
 class DrawableEdge extends javafx.scene.shape.Line
-class DrawableNode {
-    # currentIncoming : int
-    # translateX : SimpleDoubleProperty
-    # translateY : SimpleDoubleProperty
-
-    +incrementIncoming() : int
-}
 class BaseLabel extends javafx.scene.shape.Rectangle {
     {static}+BASE_HEIGHT : int
 }
@@ -25,36 +18,56 @@ class InfoLabel extends javafx.scene.layout.VBox {
     -initMainLabel() : Label
     -initBaseLabels() : Group
 }
+class NewickLabel extends javafx.scene.control.Label {
+    node : Node
+
+    +setEvents()
+    +setSelectedClass(oldValue : Selection, newValue : Selection)
+}
 
 abstract class DefaultController<T extends Parent> implements javafx.fxml.Initializable {
-    # root : T
+    root : T
+    -visibilityProperty : BooleanProperty
     #loadFXML(fxmlFile : String)
-    #loadFile(fileChooser : FileChooser, source : TextField)
-    #getRoot() : Parent
+    +getRoot() : Parent
 }
 abstract class ViewController<T extends Parent> extends DefaultController {
-    +getBreadcrumbName() : String
+    +{abstract}getBreadcrumbName() : String
+    +{abstract}activate()
+    +{abstract}deactivate()
 }
 class GraphController<AnchorPane> extends ViewController {
     mainController : MainController
-    loadGraphService : LoadGraphService
     sources : Set<String>
+    graphMapIn : ReadOnlyObjectProperty<GraphMap>
+    annotationMapIn : ReadOnlyObjectProperty<AnnotationMap>
 
     -loadGraph()
+    -loadAnnotation()
     -showGraph(graph : Graph)
     -initOnTheFlyLoading(nodeList : List<InfoLabel>)
     -showCurrentLabels(map : Map<Integer, List<InfoLabel>>)
 }
-class MainController<BorderPane> extends DefaultController {
-    viewstack : ViewStack
+class MainController<Stackpane> extends DefaultController {
+    viewList : ObservableList<ViewController>
+    -workspace : Workspace
     messageController : MessageController
+    overlayController : OverlayController
+    newickLifted : boolean
+    menuController : MenuController
+    lastTopView : ViewController
 
-    +setBaseView(node : Node)
-    +setView(node : Node)
+    +toggleOverlay()
+    +setBaseView(viewController : ViewController)
+    +setView(on : ViewController, viewController : ViewController)
     +previousView()
-    +backToView(viewController : ViewController)
+    +toView(viewController : ViewController)
+    +topView() : ViewController
+    +activateView()
+    +toggleNewick()
     +exitProgram()
     +getWorkspace() : Workspace
+    +getMenuController() : MenuController
     +setWorkspace(workspace : Workspace)
     +displayMessage(text : String)
 }
@@ -65,44 +78,52 @@ class BaseController<ScrollPane> extends ViewController {
 class MessageController<VBox> extends DefaultController {
     +displayMessage(text : String)
 }
-class MenuController extends javafx.scene.control.MenuBar {
-    # mainController : MainController
+class MenuController {
+    mainController : MainController
+    menuBar : MenuBar
+    loadGenomeGraph : MenuItem
 
     +initFileMenu()
+    +initNavigateMenu()
     +initHelpMenu()
+
+    +getLoadGenomeGraph() : MenuItem
 }
 class NewickController<ScrollPane> extends ViewController {
-    # mainController : MainController
-    # loadNewickService : LoadNewickService
+    mainController : MainController
+    graphController : GraphController
+    newickIn : ReadOnlyObjectProperty<Newick>
+    newickObjectProperty : ObjectProperty<Newick>
+    menuItem : MenuItem
+    newick : Newick
 
-    +loadTree()
-    #showTree(tree : Tree)
+    #showTree(newick : Newick)
+    #loadGraph(newick : Newick)
 }
+class WelcomeController<GridPane> extends ViewController {
+    -mainController : MainController
+}
+class OverlayController<GridPane> extends DefaultController
 
-class graph.GraphFactory {
-    ...
+class LoadService<T> extends javafx.concurrent.Service {
+    -parserClass : Class<? extends Parser<T>>
+    -files : File[]
 }
-
-class newick.TreeFactory {
-    ...
-}
-
-class LoadGraphService<Graph> extends javafx.concurrent.Service {
-    # nodeFile : File
-    # edgeFile : File
-}
-class LoadNewickService<Tree> extends javafx.concurrent.Service {
-    # nwkFile : File
+abstract class model.Parser<T> {
+    +parse() : T
+    +setReader(readerList : BufferedReader...)
 }
 
 class Workspace {
     directory : File
-    files : File[]
-    edgeFile : File
-    nodeFile : File
-    nwkFile : File
+    loadNewickService : LoadService<Newick>
+    loadGraphService : LoadService<GraphMap>
+    loadAnnotationService : LoadService<AnnotationMap>
 
-    -findFile(files : File[], extension : String)
+    +load()
+    +preload()
+
+    +{static}chooseWorkspace(mainController : MainController)
 }
 
 'FXML
@@ -114,9 +135,12 @@ class base << (F,orange) FXML >> {
 class graph << (F,orange) FXML >> {
     + progressIndicator : ProgressIndicator
     + sequences : Group
+    + scroll : ScrollPane
 }
 class main << (F,orange) FXML >> {
     + view : StackPane
+    + overlay : StackPane
+    + menu : MenuBar
     + main : BorderPane
 }
 class newick << (F,orange) FXML >> {
@@ -126,6 +150,10 @@ class newick << (F,orange) FXML >> {
 class footer << (F,orange) FXML >> {
     + message : Text
 }
+class welcome << (F,orange) FXML >> {
+    + load : Button
+}
+class overlay << (F,orange) FXML >>
 
 'Relations
 BaseController "1" *-- "1" base
@@ -133,27 +161,35 @@ GraphController "1" *-- "1" graph
 MainController "1" *-- "1" main
 NewickController "1" *-- "1" newick
 MessageController "1" *-- "1" footer
+WelcomeController "1" *-- "1" welcome
+OverlayController "1" *-- "1" overlay
 
 App "1" *-- "1" MainController
 MainController o-- MenuController
+MainController o-- MessageController
+MainController o-- OverlayController
+MainController --> WelcomeController
 
-NewickController -- LoadNewickService
-NewickController -- DrawableEdge
+NewickController ..> DrawableEdge
+NewickController ..> NewickLabel
 
-GraphController ..> BaseController
 GraphController ..> InfoLabel
-GraphController -- DrawableEdge
-GraphController -- LoadGraphService
+GraphController ..> DrawableEdge
+
+LoadService ..> model.Parser
 
 InfoLabel ..> BaseLabel
-
-LoadGraphService ..> graph.GraphFactory
-LoadNewickService ..> newick.TreeFactory
+InfoLabel --> BaseController
 
 MainController ..> Workspace
 
+WelcomeController --> NewickController
+
+Workspace ..> LoadService
+
 'External classes
 abstract class javafx.concurrent.Service<V> {
+    -value : ReadOnlyObjectProperty<V>
     +createTask() : Task<V>
 }
 

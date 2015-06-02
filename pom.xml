@@ -4,7 +4,7 @@
 
     <groupId>nl.tudelft.context</groupId>
     <artifactId>geex</artifactId>
-    <version>0.1</version>
+    <version>0.6</version>
     <packaging>jar</packaging>
 
     <name>Geex</name>
@@ -84,28 +84,6 @@
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.4.201502262128</version>
-                <executions>
-                    <execution>
-                        <id>default-prepare-agent</id>
-
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>default-report</id>
-                        <phase>site</phase>
-
-                        <goals>
-                            <goal>report</goal>
                         </goals>
                     </execution>
                 </executions>
