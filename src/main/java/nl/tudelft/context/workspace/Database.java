@@ -53,24 +53,25 @@ public class Database {
         try {
             ISqlJetTable table = db.getTable(tableName);
             db.beginTransaction(SqlJetTransactionMode.READ_ONLY);
-
-            try {
-                ISqlJetCursor cursor = table.order(table.getPrimaryKeyIndexName());
-                cursor.setLimit(limit);
-                if (!cursor.eof()) {
-                    do {
-                        String[] row = new String[cursor.getFieldsCount()];
-                        for (int i = 0, columnsLength = columns.length; i < columnsLength; i++) {
-                            row[i] = cursor.getString(columns[i]);
-                        }
-                        out.add(row);
-                    } while (cursor.next());
-                }
-            } finally {
-                db.commit();
+            ISqlJetCursor cursor = table.order(table.getPrimaryKeyIndexName());
+            cursor.setLimit(limit);
+            if (!cursor.eof()) {
+                do {
+                    String[] row = new String[cursor.getFieldsCount()];
+                    for (int i = 0, columnsLength = columns.length; i < columnsLength; i++) {
+                        row[i] = cursor.getString(columns[i]);
+                    }
+                    out.add(row);
+                } while (cursor.next());
             }
         } catch (SqlJetException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                db.commit();
+            } catch (SqlJetException e) {
+                e.printStackTrace();
+            }
         }
 
         return out;
