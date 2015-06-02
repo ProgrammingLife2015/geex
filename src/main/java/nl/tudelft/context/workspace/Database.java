@@ -78,10 +78,12 @@ public class Database {
     }
 
     private void createTables() throws SqlJetException {
-        String workspaceTable = "CREATE TABLE IF NOT EXISTS workspace (`location` TEXT NOT NULL PRIMARY KEY , `name` TEXT NOT NULL)";
+        String workspaceTable = "CREATE TABLE IF NOT EXISTS workspace (`location` TEXT NOT NULL PRIMARY KEY , `name` TEXT NOT NULL, `lastvisited` DATE NOT NULL)";
+        String workspaceIndex = "CREATE INDEX location_index ON workspace(location,name)";
 
         db.beginTransaction(SqlJetTransactionMode.WRITE);
         db.createTable(workspaceTable);
+        db.createIndex(workspaceIndex);
         db.commit();
     }
 }
