@@ -56,6 +56,7 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
     public final void addVertex(final Node node) {
 
         node.getSources().stream()
+                .filter(s -> node.getSources().contains(s))
                 .map(this::getGraph)
                 .forEach(graph -> graph.addVertex(node));
 
@@ -70,7 +71,7 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
     public final void addEdge(final Node source, final Node target) {
 
         source.getSources().stream()
-                .filter(s -> target.getSources().contains(s))
+                .filter(s -> source.getSources().contains(s) && target.getSources().contains(s))
                 .map(this::getGraph)
                 .forEach(graph -> graph.addEdge(source, target));
 

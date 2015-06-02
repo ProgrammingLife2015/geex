@@ -172,6 +172,7 @@
     -fx-min-height: 60px;
     -fx-pref-height: 60px;
     -fx-background-radius: 30px;
+    -fx-font: bold 0.45cm 'Arial';
 }
 
 /* Newick */
