@@ -20,10 +20,6 @@ public class Node extends DefaultNode {
      */
     int id;
     /**
-     * Set of genomes that contain this Node.
-     */
-    Set<String> sources;
-    /**
      * Start position in reference genome.
      */
     int refStartPosition;
@@ -75,11 +71,7 @@ public class Node extends DefaultNode {
 
     }
 
-    /**
-     * Getter for sources.
-     *
-     * @return sources
-     */
+    @Override
     public Set<String> getSources() {
 
         return sources;

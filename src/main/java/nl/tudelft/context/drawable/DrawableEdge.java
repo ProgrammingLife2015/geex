@@ -2,6 +2,7 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import nl.tudelft.context.model.graph.DefaultNode;
 import nl.tudelft.context.model.newick.Newick;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -35,6 +36,13 @@ public class DrawableEdge extends Line {
 
         setTranslateX(OFFSET_GRAPH);
         setTranslateY(OFFSET_GRAPH);
+
+        DefaultNode source = drawableGraph.getEdgeSource(edge).getNode();
+        DefaultNode target = drawableGraph.getEdgeTarget(edge).getNode();
+
+        setStrokeWidth(source.getSources().stream()
+                .filter(s -> target.getSources().contains(s))
+                .count());
 
     }
 

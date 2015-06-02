@@ -6,12 +6,48 @@ import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableNode;
 import nl.tudelft.context.drawable.SinglePointLabel;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 1-6-2015
  */
 public class GraphNode extends DefaultNode {
+
+    /**
+     * Create a graph node.
+     *
+     * @param graph Master graph
+     * @param start Start of sub graph
+     * @param end   End of sub graph
+     */
+    public GraphNode(StackGraph graph, DefaultNode start, DefaultNode end) {
+
+        sources = new HashSet<>();
+
+        Set<DefaultNode> visited = new HashSet<>();
+        visited.add(end);
+        Queue<DefaultNode> queue = new LinkedList<>();
+        queue.add(start);
+
+        while (!queue.isEmpty()) {
+
+            DefaultNode node = queue.remove();
+            sources.addAll(node.getSources());
+            graph.getTargets(node).stream()
+                    .filter(n -> !visited.contains(n))
+                    .forEach(n -> {
+                        queue.add(n);
+                        visited.add(n);
+                    });
+
+        }
+
+    }
 
     @Override
     public String getContent() {
