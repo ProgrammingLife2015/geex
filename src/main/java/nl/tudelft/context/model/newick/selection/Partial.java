@@ -42,4 +42,14 @@ public class Partial implements Selection {
         return "partial";
     }
 
+    @Override
+    public boolean equals(final Object other) {
+        return other instanceof Partial;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
 }

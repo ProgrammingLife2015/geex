@@ -1,5 +1,11 @@
 package nl.tudelft.context.model.graph;
 
+import nl.tudelft.context.controller.DefaultGraphController;
+import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.drawable.DefaultLabel;
+import nl.tudelft.context.drawable.DrawableNode;
+import nl.tudelft.context.drawable.InfoLabel;
+
 import java.util.Set;
 
 /**
@@ -7,16 +13,12 @@ import java.util.Set;
  * @version 1.1
  * @since 23-4-2015
  */
-public class Node {
+public class Node extends DefaultNode {
 
     /**
      * The identifier of the current Node.
      */
     int id;
-    /**
-     * Set of genomes that contain this Node.
-     */
-    Set<String> sources;
     /**
      * Start position in reference genome.
      */
@@ -25,10 +27,6 @@ public class Node {
      * End position in reference genome.
      */
     int refEndPosition;
-    /**
-     * The content of the current Node.
-     */
-    String content;
     /**
      * The Counter for the number of ACTG.
      */
@@ -69,11 +67,7 @@ public class Node {
 
     }
 
-    /**
-     * Getter for sources.
-     *
-     * @return sources
-     */
+    @Override
     public Set<String> getSources() {
 
         return sources;
@@ -101,18 +95,6 @@ public class Node {
         return refEndPosition;
 
     }
-
-    /**
-     * Getter for content.
-     *
-     * @return DNA sequence
-     */
-    public String getContent() {
-
-        return content;
-
-    }
-
 
     /**
      * Getter for baseCounter.
@@ -148,6 +130,12 @@ public class Node {
     @Override
     public int hashCode() {
         return this.id;
+    }
+
+    @Override
+    public DefaultLabel getLabel(final MainController mainController, final DefaultGraphController graphController,
+                                 final DrawableNode drawableNode) {
+        return new InfoLabel(mainController, graphController, drawableNode, this);
     }
 
 }

@@ -3,8 +3,8 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.text.Text;
-import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.Node;
+import nl.tudelft.context.model.graph.StackGraph;
 import org.apache.commons.lang.StringUtils;
 
 import java.net.URL;
@@ -40,7 +40,7 @@ public final class BaseController extends ViewController<ScrollPane> {
     /**
      * Graph containing the node to display.
      */
-    private Graph graph;
+    private StackGraph stackGraph;
 
     /**
      * Node that is displayed.
@@ -50,14 +50,14 @@ public final class BaseController extends ViewController<ScrollPane> {
     /**
      * Init a controller at graph.fxml.
      *
-     * @param graph Graph containing the node
-     * @param node  Node to display
+     * @param stackGraph Graph containing the node
+     * @param node       Node to display
      */
-    public BaseController(final Graph graph, final Node node) {
+    public BaseController(final StackGraph stackGraph, final Node node) {
 
         super(new ScrollPane());
 
-        this.graph = graph;
+        this.stackGraph = stackGraph;
         this.node = node;
 
         loadFXML("/application/base.fxml");
@@ -82,8 +82,9 @@ public final class BaseController extends ViewController<ScrollPane> {
 
         sources.setText(StringUtils.join(node.getSources(), ", "));
 
-        List<String> otherOccurrences = graph.vertexSet().stream()
+        List<String> otherOccurrences = stackGraph.vertexSet().stream()
                 .filter(vertex -> vertex.getContent().equals(content) && !vertex.equals(node))
+                .map(node -> (Node) node)
                 .map(Node::getId)
                 .map(String::valueOf)
                 .collect(Collectors.toList());
@@ -99,16 +100,6 @@ public final class BaseController extends ViewController<ScrollPane> {
     @Override
     public String getBreadcrumbName() {
         return "Sequence: " + node.getId();
-    }
-
-    @Override
-    public void activate() {
-        // empty method
-    }
-
-    @Override
-    public void deactivate() {
-        // empty method
     }
 
 }
