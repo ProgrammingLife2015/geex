@@ -7,11 +7,8 @@ import javafx.scene.control.MenuItem;
 import nl.tudelft.context.drawable.DrawableGraph;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.mutations.Mutation;
-import nl.tudelft.context.service.LoadMutationService;
 
 import java.net.URL;
-import java.util.*;
 import nl.tudelft.context.model.graph.SinglePointGraph;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
@@ -36,17 +33,8 @@ public final class GraphController extends DefaultGraphController {
     ReadOnlyObjectProperty<GraphMap> graphMapIn;
 
     /**
-<<<<<<< HEAD
-     * The service for loading the mutations.
-     */
-    LoadMutationService loadMutationService;
-
-    /**
-     * Sources that are displayed in the graph.
-=======
      * Sources that are displayed in the graph.
      * Property with annotation map.
->>>>>>> master
      */
     ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
 
@@ -76,9 +64,6 @@ public final class GraphController extends DefaultGraphController {
         this.graphMapIn = graphMapIn;
         this.annotationMapIn = annotationMapIn;
         this.resistanceMapIn = resistanceMapIn;
-
-        this.loadMutationService = new LoadMutationService(graphMapIn.get().flat(sources));
-        loadMutations();
 
         loadFXML("/application/graph.fxml");
     }
@@ -133,28 +118,12 @@ public final class GraphController extends DefaultGraphController {
     }
 
     /**
-     * Load Mutations from the graph.
-     */
-    private void loadMutations() {
-
-        loadMutationService.setOnSucceeded(event -> {
-            List<Mutation> nodes = loadMutationService.getValue();
-//            showMutations(nodes);
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_MUTATION);
-        });
-        loadMutationService.setOnFailed(event -> mainController.displayMessage(MessageController.FAIL_LOAD_MUTATION));
-        loadMutationService.restart();
-
-    }
-
-    /**
      * Load annotation from source.
      *
      * @param annotationMap The annotation map which is loaded.
      */
     private void loadAnnotation(final AnnotationMap annotationMap) {
         mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
-        //
     }
 
     /**
@@ -170,15 +139,6 @@ public final class GraphController extends DefaultGraphController {
     public String getBreadcrumbName() {
         return "Genome graph (" + sources.size() + ")";
     }
-
-//    public void showMutations(List<Mutation> nodes) {
-//
-//        for (Mutation mutation : nodes) {
-//            List<DrawableMutation> list = mutation.stream().map(node -> new DrawableMutation(node)).collect(Collectors.toList());
-//            sequences.getChildren().addAll(list);
-//        }
-//
-//    }
 
     @Override
     public void activate() {

@@ -1,7 +1,5 @@
-package nl.tudelft.context.mutations;
+package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.graph.Graph;
-import nl.tudelft.context.model.graph.Node;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.util.*;
@@ -9,45 +7,37 @@ import java.util.stream.Collectors;
 
 /**
  * @author Jim
- * @version 1.1
- * @since 22-5-2015
+ * @since 6/2/2015
  */
-public final class MutationParser {
+public class VariationGraph extends StackGraph {
 
     /**
-     * The graph that will be checked.
+     * The graph that will be read.
      */
-    Graph graph;
+    StackGraph graph;
 
     /**
-     * The set with nodes where a variation is detected.
+     * All the variations that are detected.
      */
-    List<Mutation> variations;
+    Map<Integer, DefaultNode> variations = new HashMap<>();
 
-    /**
-     * The constructor of the class.
-     *
-     * @param graph The graph that will be checked for mutations
-     */
-    public MutationParser(final Graph graph) {
+    public VariationGraph(final StackGraph graph) {
 
         this.graph = graph;
-        this.variations = new LinkedList<>();
+        checkMutations();
 
     }
 
     /**
      * The function that creates the mutations.
      */
-    public List<Mutation> checkMutations() {
+    public void checkMutations() {
 
-        Set<Node> nodeSet = graph.vertexSet().stream()
+        Set<DefaultNode> nodeSet = graph.vertexSet().stream()
                 .filter(node -> graph.outDegreeOf(node) > 1)
                 .collect(Collectors.toSet());
 
         nodeSet.forEach(this::checkVariation);
-
-        return variations;
 
     }
 
@@ -56,27 +46,20 @@ public final class MutationParser {
      *
      * @param startNode the node where a variation starts.
      */
-    private void checkVariation(final Node startNode) {
+    private void checkVariation(final DefaultNode startNode) {
 
-        List<Node> nextNodes =  getNextNodes(startNode);
-        List<List<Node>> listSets = getFreshListSets(graph.outDegreeOf(startNode));
+        List<DefaultNode> nextNodes =  getNextNodes(startNode);
+        List<List<DefaultNode>> listSets = getFreshListSets(graph.outDegreeOf(startNode));
 
         int set = 0;
 
-        Mutation mutation = new Mutation();
-
         while (!nextNodes.isEmpty()) {
 
-            Node node = nextNodes.remove(0);
+            DefaultNode node = nextNodes.remove(0);
 
-            if (checkAllSets(listSets, node)) {
+            if (!checkAllSets(listSets, node)) {
 
-                mutation.remove(node);
-                break;
-
-            } else {
-
-                mutation.add(node);
+                variations.put(variations.size(), node);
                 listSets.get(set).add(node);
                 set = getNextSetInt(set, graph, startNode);
 
@@ -85,14 +68,17 @@ public final class MutationParser {
                 if (!nextNodes.isEmpty()) {
                     setOfEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()).forEach(nextNodes::add);
                 } else {
-                    mutation.remove(node);
+                    variations.remove(variations.size());
                 }
+
+            } else {
+
+                variations.remove(variations.size());
+                break;
 
             }
 
         }
-
-        variations.add(mutation);
 
     }
 
@@ -103,7 +89,7 @@ public final class MutationParser {
      * @param startNode The startNote of the variation.
      * @return The int that says which set is next to add the node to.
      */
-    private int getNextSetInt(int set, final Graph graph, final Node startNode) {
+    private int getNextSetInt(int set, final StackGraph graph, final DefaultNode startNode) {
 
         set++;
         if (set >= graph.outDegreeOf(startNode)) {
@@ -117,12 +103,12 @@ public final class MutationParser {
     /**
      * This function returns a List of empty lists.
      *
-      * @param amount How many lists you want in the list.
+     * @param amount How many lists you want in the list.
      * @return The list of lists.
      */
-    private List<List<Node>> getFreshListSets(int amount) {
+    private List<List<DefaultNode>> getFreshListSets(int amount) {
 
-        List<List<Node>> list = new LinkedList<>();
+        List<List<DefaultNode>> list = new LinkedList<>();
 
         for (int i = 0; i < amount; i++) {
 
@@ -139,9 +125,9 @@ public final class MutationParser {
      * @param startNode The node this function will return the next nodes from.
      * @return Return a list of nodes that is connected to the startNode.
      */
-    private List<Node> getNextNodes(Node startNode) {
+    private List<DefaultNode> getNextNodes(DefaultNode startNode) {
 
-        List<Node> targetNodes =  new LinkedList<>();
+        List<DefaultNode> targetNodes =  new LinkedList<>();
 
         Set<DefaultEdge> listEdges = graph.outgoingEdgesOf(startNode);
         targetNodes.addAll(listEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()));
@@ -152,24 +138,16 @@ public final class MutationParser {
     }
 
     /**
-     * Prints the obtained variations.
-     */
-    public void printVariations() {
-        System.out.println("Amount of variations: " + variations.size());
-        System.out.println(variations.toString());
-    }
-
-    /**
      * Function that checks if the node is inside one of the sets that is given with the iterator.
      *
      * @param list The list of sets.
      * @param node The node that is to be found.
      * @return If the node is found it will return true and vice versa.
      */
-    private boolean checkAllSets(List<List<Node>> list, Node node) {
+    private boolean checkAllSets(List<List<DefaultNode>> list, DefaultNode node) {
 
         boolean res = false;
-        for (List<Node> aList : list) {
+        for (List<DefaultNode> aList : list) {
 
             if (aList.contains(node)) {
                 res = true;
@@ -179,7 +157,6 @@ public final class MutationParser {
         }
 
         return res;
-//        return !iterator.hasNext() || ((List<Node>) iterator.next()).contains(node) && checkAllSets(list, node);
 
     }
 
