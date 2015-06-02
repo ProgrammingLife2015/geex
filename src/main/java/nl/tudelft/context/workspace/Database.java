@@ -4,7 +4,6 @@ import org.tmatesoft.sqljet.core.SqlJetException;
 import org.tmatesoft.sqljet.core.SqlJetTransactionMode;
 import org.tmatesoft.sqljet.core.table.ISqlJetCursor;
 import org.tmatesoft.sqljet.core.table.ISqlJetTable;
-import org.tmatesoft.sqljet.core.table.ISqlJetTransaction;
 import org.tmatesoft.sqljet.core.table.SqlJetDb;
 
 import java.io.File;
@@ -19,6 +18,7 @@ import java.util.List;
 public class Database {
     private static final String DB_FILE = "geex.db";
     private SqlJetDb db;
+
     public Database() {
         try {
             db = SqlJetDb.open(new File(DB_FILE), true);
@@ -84,6 +84,27 @@ public class Database {
         db.beginTransaction(SqlJetTransactionMode.WRITE);
         db.createTable(workspaceTable);
         db.createIndex(workspaceIndex);
+        db.commit();
+    }
+
+    public void insert(final String tableName, final String... values) throws SqlJetException {
+        db.beginTransaction(SqlJetTransactionMode.READ_ONLY);
+        ISqlJetTable table = db.getTable(tableName);
+
+        ISqlJetCursor cursor = table.lookup("location_index", (Object[]) values);
+
+        if (cursor.getValue(0) != null) {
+            System.out.println("Already got this one!");
+            db.commit();
+            return;
+        }
+        db.commit();
+
+        db.beginTransaction(SqlJetTransactionMode.WRITE);
+        table = db.getTable(tableName);
+
+        table.insert(values);
+
         db.commit();
     }
 }
