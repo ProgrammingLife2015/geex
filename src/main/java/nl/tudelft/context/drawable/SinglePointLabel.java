@@ -53,7 +53,7 @@ public class SinglePointLabel extends DefaultLabel {
      */
     private Label initMainLabel() {
 
-        final Label label = new Label();
+        final Label label = new Label(node.getContent());
         label.setCache(true);
 
         return label;

@@ -20,10 +20,6 @@ public class Node extends DefaultNode {
      */
     int id;
     /**
-     * Set of genomes that contain this Node.
-     */
-    Set<String> sources;
-    /**
      * Start position in reference genome.
      */
     int refStartPosition;
@@ -31,10 +27,6 @@ public class Node extends DefaultNode {
      * End position in reference genome.
      */
     int refEndPosition;
-    /**
-     * The content of the current Node.
-     */
-    String content;
     /**
      * The Counter for the number of ACTG.
      */
@@ -75,11 +67,7 @@ public class Node extends DefaultNode {
 
     }
 
-    /**
-     * Getter for sources.
-     *
-     * @return sources
-     */
+    @Override
     public Set<String> getSources() {
 
         return sources;
@@ -105,13 +93,6 @@ public class Node extends DefaultNode {
     public int getRefEndPosition() {
 
         return refEndPosition;
-
-    }
-
-    @Override
-    public String getContent() {
-
-        return content;
 
     }
 

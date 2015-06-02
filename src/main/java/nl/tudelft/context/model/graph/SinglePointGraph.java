@@ -1,8 +1,10 @@
 package nl.tudelft.context.model.graph;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,14 +21,9 @@ public class SinglePointGraph extends StackGraph {
     Set<DefaultNode> singlePart = new HashSet<>();
 
     /**
-     * Nodes where single base mutation starts.
+     * Map with start and end of single mutation.
      */
-    Set<DefaultNode> startSingle = new HashSet<>();
-
-    /**
-     * Nodes where single base mutation ends.
-     */
-    Set<DefaultNode> endSingle = new HashSet<>();
+    Map<DefaultNode, DefaultNode> single = new HashMap<>();
 
     /**
      * Clean graph.
@@ -41,7 +38,6 @@ public class SinglePointGraph extends StackGraph {
     public SinglePointGraph(final StackGraph graph) {
 
         this.graph = graph;
-        markSingle();
 
         graph.vertexSet().stream()
                 .forEach(this::addVertex);
@@ -52,9 +48,13 @@ public class SinglePointGraph extends StackGraph {
                         graph.getEdgeTarget(edge)
                 ));
 
-        singlePart.forEach(this::snip);
-        startSingle.forEach(node ->
-                replace(node, new GraphNode()));
+        markSingle();
+
+        singlePart.forEach(this::removeVertex);
+        single.entrySet().forEach(entry -> {
+            addEdge(entry.getKey(), entry.getValue());
+            replace(entry.getKey(), new GraphNode(graph, entry.getKey(), entry.getValue()));
+        });
 
     }
 
@@ -78,11 +78,10 @@ public class SinglePointGraph extends StackGraph {
                             .collect(Collectors.toSet());
 
                     if (end.size() == 1) {
-                        end.stream().filter(endNode -> graph.incomingEdgesOf(endNode).size() == targets.size())
+                        end.stream().filter(endNode -> graph.inDegreeOf(endNode) == targets.size())
                                 .forEach(endNode -> {
                                     targets.stream().forEach(singlePart::add);
-                                    startSingle.add(startNode);
-                                    endSingle.add(endNode);
+                                    single.put(startNode, endNode);
                                 });
                     }
 
@@ -98,12 +97,23 @@ public class SinglePointGraph extends StackGraph {
      */
     public void filterSingle() {
 
-        Set<DefaultNode> overlay = new HashSet<>(startSingle);
-        overlay.retainAll(endSingle);
+        Map<DefaultNode, DefaultNode> newSingle = new HashMap<>();
 
+        Set<DefaultNode> overlay = new HashSet<>(single.keySet());
+        overlay.retainAll(single.values());
+
+        single.keySet().stream()
+                .filter(node -> !overlay.contains(node))
+                .forEach(startNode -> {
+                    DefaultNode endNode = startNode;
+                    while (single.containsKey(endNode)) {
+                        endNode = single.get(endNode);
+                    }
+                    newSingle.put(startNode, endNode);
+                });
+
+        single = newSingle;
         singlePart.addAll(overlay);
-        startSingle.removeAll(overlay);
-        endSingle.removeAll(overlay);
 
     }
 

@@ -63,20 +63,6 @@ public abstract class DefaultGraph<T> extends DefaultDirectedGraph<T, DefaultEdg
     }
 
     /**
-     * Snip a node form the graph and connect edges.
-     *
-     * @param node Node to snip
-     */
-    public void snip(final T node) {
-
-        getSources(node).stream()
-                .forEach(before -> getTargets(node).stream()
-                        .forEach(after -> addEdge(before, after)));
-        removeVertex(node);
-
-    }
-
-    /**
      * Replace a node with an other node.
      *
      * @param oldNode Old node
@@ -86,12 +72,10 @@ public abstract class DefaultGraph<T> extends DefaultDirectedGraph<T, DefaultEdg
 
         addVertex(newNode);
 
-        getSources(oldNode).stream()
-                .forEach(before -> getTargets(oldNode).stream().forEach(node -> addEdge(newNode, node)));
-        getSources(oldNode).stream()
-                .forEach(before -> getSources(oldNode).stream().forEach(node -> addEdge(node, newNode)));
+        getTargets(oldNode).stream().forEach(node -> addEdge(newNode, node));
+        getSources(oldNode).stream().forEach(node -> addEdge(node, newNode));
 
-        snip(oldNode);
+        removeVertex(oldNode);
 
     }
 
