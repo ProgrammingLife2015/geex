@@ -13,6 +13,7 @@ import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.NewickParser;
 import nl.tudelft.context.service.LoadService;
+import org.tmatesoft.sqljet.core.SqlJetException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -136,6 +137,16 @@ public class Workspace {
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
         annotationFile = findFile(files, ".ann.csv");
+
+        save();
+    }
+
+    private void save() {
+        try {
+            Database.instance().insert("workspace", this.directory.getAbsolutePath(), this.directory.getName());
+        } catch (SqlJetException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -153,6 +164,7 @@ public class Workspace {
 
     /**
      * Get the Newick Property.
+     *
      * @return A ReadOnlyObjectProperty containing, or not yet containing a Newick.
      */
     public ReadOnlyObjectProperty<Newick> getNewick() {
@@ -161,6 +173,7 @@ public class Workspace {
 
     /**
      * Get the AnnotationMap Property.
+     *
      * @return A ReadOnlyObjectProperty containing, or not yet containing an AnnotationMap.
      */
     public ReadOnlyObjectProperty<AnnotationMap> getAnnotation() {
@@ -169,6 +182,7 @@ public class Workspace {
 
     /**
      * Get the GraphMap Property.
+     *
      * @return A ReadOnlyObjectProperty containing, or not yet containing a GraphMap.
      */
     public ReadOnlyObjectProperty<GraphMap> getGraph() {
