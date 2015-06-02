@@ -3,14 +3,15 @@ package nl.tudelft.context.effects;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import nl.tudelft.context.drawable.DrawableGraph;
 import nl.tudelft.context.drawable.InfoLabel;
-import nl.tudelft.context.model.graph.Graph;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static nl.tudelft.context.drawable.InfoLabel.LABEL_WIDTH;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -39,8 +40,8 @@ public class Zoom {
         double width = scroll.getWidth();
         double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
                 * scroll.getHvalue();
-        int indexFrom = (int) Math.floor(left / Graph.LABEL_SPACING) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(width / Graph.LABEL_SPACING) + 1;
+        int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
+        int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
         return IntStream.rangeClosed(indexFrom, indexTo);
     }
@@ -101,5 +102,6 @@ public class Zoom {
         double scale = 1 + .25 * (Math.cos(ratio * Math.PI) + 1);
         label.setScaleX(scale);
         label.setScaleY(scale);
+        label.setCache(true);
     }
 }
