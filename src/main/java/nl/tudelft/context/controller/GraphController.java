@@ -160,11 +160,9 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void showGraph(final DrawableGraph drawableGraph) {
 
-        final int sourceSize = sources.size();
-
         // Bind edges
         List<DrawableEdge> edgeList = drawableGraph.edgeSet().stream()
-                .map(edge -> new DrawableEdge(drawableGraph, edge, sourceSize))
+                .map(edge -> new DrawableEdge(drawableGraph, edge, sources))
                 .collect(Collectors.toList());
 
         // Bind nodes

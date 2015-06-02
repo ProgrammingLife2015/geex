@@ -7,6 +7,8 @@ import nl.tudelft.context.model.newick.Newick;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
+import java.util.Set;
+
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
@@ -39,9 +41,9 @@ public class DrawableEdge extends Line {
      *
      * @param drawableGraph graph that contains edge
      * @param edge          edge to bind and display
-     * @param sourceSize number of strains in this edge
+     * @param sources       strains in this graph
      */
-    public DrawableEdge(final DrawableGraph drawableGraph, final DefaultEdge edge, final int sourceSize) {
+    public DrawableEdge(final DrawableGraph drawableGraph, final DefaultEdge edge, final Set<String> sources) {
 
         initialize(drawableGraph, edge);
 
@@ -52,9 +54,9 @@ public class DrawableEdge extends Line {
         DefaultNode target = drawableGraph.getEdgeTarget(edge).getNode();
 
         long sourceAmount = source.getSources().stream()
-                .filter(s -> target.getSources().contains(s))
+                .filter(s -> target.getSources().contains(s) && sources.contains(s))
                 .count();
-        setStrokeWidth(Math.max(MINIMUM_LINE_WIDTH, MAXIMUM_LINE_WIDTH * sourceAmount / sourceSize));
+        setStrokeWidth(Math.max(MINIMUM_LINE_WIDTH, MAXIMUM_LINE_WIDTH * sourceAmount / sources.size()));
 
     }
 
