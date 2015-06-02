@@ -76,4 +76,24 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
                 .forEach(graph -> graph.addEdge(source, target));
 
     }
+
+    /**
+     * Filter all skipping edges in single strains.
+     */
+    public void filter() {
+
+        values().stream().forEach(graph -> {
+
+            graph.vertexSet().stream()
+                    .filter(vertex -> graph.outDegreeOf(vertex) > 1)
+                    .forEach(vertex -> {
+
+                System.out.println(123);
+
+            });
+
+        });
+
+    }
+
 }
