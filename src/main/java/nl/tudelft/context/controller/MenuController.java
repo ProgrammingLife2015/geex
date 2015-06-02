@@ -58,7 +58,7 @@ public final class MenuController {
                 createMenuItem("Select workspace folder",
                         new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN),
                         event -> Workspace.chooseWorkspace(mainController),
-                        true),
+                        false),
                 createMenuItem("Exit", null,
                         event -> mainController.exitProgram(),
                         false)));
