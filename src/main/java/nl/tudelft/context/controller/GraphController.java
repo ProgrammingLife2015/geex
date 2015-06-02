@@ -92,6 +92,7 @@ public final class GraphController extends ViewController<AnchorPane> {
      * @param sources         Sources to display
      * @param graphMapIn      The graphMap from the workspace, might not be loaded.
      * @param annotationMapIn The AnnotationMap from the workspace, might not be loaded.
+     * @param resistanceMapIn The ResistanceMap from the workspace, might not be loaded.
      */
     public GraphController(final MainController mainController,
                            final Set<String> sources,
@@ -162,7 +163,7 @@ public final class GraphController extends ViewController<AnchorPane> {
     /**
      * Load annotation from source.
      *
-     * @param annotationMap The annotationmap which is loaded.
+     * @param annotationMap The annotation map which is loaded.
      */
     private void loadAnnotation(final AnnotationMap annotationMap) {
         mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
@@ -170,6 +171,8 @@ public final class GraphController extends ViewController<AnchorPane> {
 
     /**
      * Load resistances from source.
+     *
+     * @param resistanceMap The resistance map which is loaded.
      */
     private void loadResistance(final ResistanceMap resistanceMap) {
         mainController.displayMessage(MessageController.SUCCESS_LOAD_RESISTANCE);
