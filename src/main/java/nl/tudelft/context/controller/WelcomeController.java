@@ -39,6 +39,7 @@ public class WelcomeController extends ViewController<GridPane> {
 
     /**
      * Create a WelcomeController.
+     *
      * @param mainController The MainController of the application
      */
     public WelcomeController(final MainController mainController) {
@@ -49,24 +50,24 @@ public class WelcomeController extends ViewController<GridPane> {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        previous.getItems().clear();
-        previous.getItems().addAll(
-                Database.instance().getList("workspace", new String[]{"name", "location"}, 5).stream().map(file -> {
-                    Label label = new Label(file[0]);
-                    System.out.println(file[0]);
-                    label.setOnMouseClicked(event -> {
-                        Workspace workspace = new Workspace(new File(file[1]));
-                        try {
-                            workspace.load();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        mainController.setWorkspace(workspace);
-                        mainController.setBaseView(new NewickController(mainController,
-                                mainController.getMenuController().getLoadGenomeGraph(), workspace.getNewick()));
-                    });
-                    return label;
-                }).collect(toList()));
+        previous.getItems().setAll(Database.instance().getList("workspace", new String[]{"name", "location"}, 5).stream().map(row -> {
+            Label label = new Label(row[0]);
+            System.out.println(row[0]);
+            label.setOnMouseClicked(event -> {
+                try {
+                    Workspace workspace = new Workspace(new File(row[1]));
+                    workspace.load();
+
+                    mainController.setWorkspace(workspace);
+                    mainController.setBaseView(new NewickController(mainController,
+                            mainController.getMenuController().getLoadGenomeGraph(), workspace.getNewick()));
+                    mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
+                } catch (FileNotFoundException ex) {
+                    mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
+                }
+            });
+            return label;
+        }).collect(toList()));
 
         load.setOnMouseClicked(event -> Workspace.chooseWorkspace(mainController));
     }
