@@ -5,6 +5,7 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
+import javafx.scene.control.MenuBar;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -37,6 +39,8 @@ public class GraphControllerTest {
 
     protected static GraphController graphController;
 
+    static MainController mainController;
+
 
     /**
      * Setup Load Graph Controller.
@@ -44,8 +48,9 @@ public class GraphControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        MainController mainController = mock(MainController.class);
+        mainController = mock(MainController.class);
         mainController.messageController = new MessageController();
+        when(mainController.getMenuController()).thenReturn(new MenuController(mainController, new MenuBar()));
 
         ReadOnlyObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
         ReadOnlyObjectProperty<AnnotationMap> annotationMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
@@ -65,7 +70,7 @@ public class GraphControllerTest {
         GraphMap graphMap = new GraphParser().setReader(nodeFile, edgeFile).parse();
 
         GraphController graphController = new GraphController(
-                mock(MainController.class),
+                mainController,
                 new HashSet<>(Arrays.asList("Cat", "Dog")),
                 graphMapReadOnlyObjectProperty,
                 annotationMapReadOnlyObjectProperty,

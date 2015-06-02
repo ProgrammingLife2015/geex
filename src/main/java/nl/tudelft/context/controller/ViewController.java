@@ -42,7 +42,6 @@ public abstract class ViewController<T extends Parent> extends DefaultController
      * Called whenever a view is activated.
      */
     public void activate() {
-        System.out.println("activate " + getBreadcrumbName());
         activeProperty.set(true);
     }
 
@@ -50,7 +49,6 @@ public abstract class ViewController<T extends Parent> extends DefaultController
      * Called whenever a view is deactivated.
      */
     public void deactivate() {
-        System.out.println("deactivte " + getBreadcrumbName());
         activeProperty.set(false);
     }
 
