@@ -10,11 +10,14 @@ import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableGraph;
 import nl.tudelft.context.model.graph.StackGraph;
 
+import java.net.URL;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -55,6 +58,11 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
     MainController mainController;
 
     /**
+     * Map containing the labels indexed by position
+     */
+    Map<Integer, List<DefaultLabel>> labelMap = new HashMap<>();
+
+    /**
      * Create defeualt graph controller.
      *
      * @param mainController MainController to set views with
@@ -64,6 +72,13 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
         super(new AnchorPane());
 
         this.mainController = mainController;
+
+    }
+
+    @Override
+    public void initialize(final URL location, final ResourceBundle resources) {
+
+        initOnTheFlyLoading();
 
     }
 
@@ -93,37 +108,34 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
                 .map(node -> node.getNode().getLabel(mainController, this, node))
                 .collect(Collectors.toList());
 
-        sequences.getChildren().addAll(edgeList);
-        initOnTheFlyLoading(nodeList);
+        sequences.getChildren().setAll(edgeList);
 
-    }
-
-    /**
-     * Listen to position and load on the fly.
-     *
-     * @param nodeList Labels to to load on the fly
-     */
-    private void initOnTheFlyLoading(final List<DefaultLabel> nodeList) {
-
-        Map<Integer, List<DefaultLabel>> map = nodeList.stream().collect(
+        labelMap = nodeList.stream().collect(
                 Collectors.groupingBy(
                         DefaultLabel::currentColumn,
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         );
 
-        showCurrentLabels(map);
-        scroll.widthProperty().addListener(event -> showCurrentLabels(map));
-        scroll.hvalueProperty().addListener(event -> showCurrentLabels(map));
+        showCurrentLabels();
+
+    }
+
+    /**
+     * Listen to position and load on the fly.
+     */
+    private void initOnTheFlyLoading() {
+
+        scroll.widthProperty().addListener(event -> showCurrentLabels());
+        scroll.hvalueProperty().addListener(event -> showCurrentLabels());
 
     }
 
     /**
      * Show all the labels on current position.
      *
-     * @param map Containing the labels indexed by position
      */
-    private void showCurrentLabels(final Map<Integer, List<DefaultLabel>> map) {
+    private void showCurrentLabels() {
 
         double width = scroll.getWidth();
         double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
@@ -132,7 +144,7 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
         int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
         List<DefaultLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
-                .mapToObj(map::remove)
+                .mapToObj(labelMap::remove)
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());

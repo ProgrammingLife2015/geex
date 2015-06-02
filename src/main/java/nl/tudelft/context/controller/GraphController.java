@@ -3,6 +3,7 @@ package nl.tudelft.context.controller;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.input.KeyCode;
 import nl.tudelft.context.drawable.DrawableGraph;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
@@ -58,6 +59,17 @@ public final class GraphController extends DefaultGraphController {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
+
+        super.initialize(location, resources);
+
+        scroll.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.UP) {
+                showGraph(new DrawableGraph(graphList.getFirst()));
+            }
+            if (event.getCode() == KeyCode.DOWN) {
+                showGraph(new DrawableGraph(graphList.getLast()));
+            }
+        });
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();

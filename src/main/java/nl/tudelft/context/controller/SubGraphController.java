@@ -49,6 +49,8 @@ public class SubGraphController extends DefaultGraphController {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
+        super.initialize(location, resources);
+
         progressIndicator.setVisible(false);
 
         Graph subGraph = new Graph();
