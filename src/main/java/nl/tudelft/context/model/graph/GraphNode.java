@@ -37,7 +37,6 @@ public class GraphNode extends DefaultNode {
         while (!queue.isEmpty()) {
 
             DefaultNode node = queue.remove();
-            sources.addAll(node.getSources());
             graph.getTargets(node).stream()
                     .filter(n -> !visited.contains(n))
                     .forEach(n -> {

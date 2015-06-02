@@ -162,7 +162,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         // Bind edges
         List<DrawableEdge> edgeList = drawableGraph.edgeSet().stream()
-                .map(edge -> new DrawableEdge(drawableGraph, edge, sources))
+                .map(edge -> new DrawableEdge(drawableGraph, edge))
                 .collect(Collectors.toList());
 
         // Bind nodes

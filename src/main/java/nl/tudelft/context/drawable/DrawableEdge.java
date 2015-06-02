@@ -2,12 +2,9 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import nl.tudelft.context.model.graph.DefaultNode;
 import nl.tudelft.context.model.newick.Newick;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-
-import java.util.Set;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -27,36 +24,17 @@ public class DrawableEdge extends Line {
     public static final int OFFSET_TREE = 10;
 
     /**
-     * Min width of line.
-     */
-    private static final double MINIMUM_LINE_WIDTH = .25;
-
-    /**
-     * Max width of line.
-     */
-    private static final double MAXIMUM_LINE_WIDTH = 8;
-
-    /**
      * Creates edge for graph and bind it to nodes.
      *
      * @param drawableGraph graph that contains edge
      * @param edge          edge to bind and display
-     * @param sources       strains in this graph
      */
-    public DrawableEdge(final DrawableGraph drawableGraph, final DefaultEdge edge, final Set<String> sources) {
+    public DrawableEdge(final DrawableGraph drawableGraph, final DefaultEdge edge) {
 
         initialize(drawableGraph, edge);
 
         setTranslateX(OFFSET_GRAPH);
         setTranslateY(OFFSET_GRAPH);
-
-        DefaultNode source = drawableGraph.getEdgeSource(edge).getNode();
-        DefaultNode target = drawableGraph.getEdgeTarget(edge).getNode();
-
-        long sourceAmount = source.getSources().stream()
-                .filter(s -> target.getSources().contains(s) && sources.contains(s))
-                .count();
-        setStrokeWidth(Math.max(MINIMUM_LINE_WIDTH, MAXIMUM_LINE_WIDTH * sourceAmount / sources.size()));
 
     }
 
