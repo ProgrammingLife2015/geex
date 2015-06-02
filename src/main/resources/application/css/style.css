@@ -167,6 +167,14 @@
     -fx-text-fill: #2b2b2b;
 }
 
+#sequences .single .label {
+    -fx-background-color: #e44544;
+    -fx-min-height: 60px;
+    -fx-pref-height: 60px;
+    -fx-background-radius: 30px;
+    -fx-font: bold 0.45cm 'Arial';
+}
+
 /* Newick */
 #newick {
     -fx-min-height: 100%;

@@ -3,8 +3,8 @@ package nl.tudelft.context.effects;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableGraph;
-import nl.tudelft.context.drawable.InfoLabel;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,12 +21,12 @@ import java.util.stream.IntStream;
 public class Zoom {
     final ScrollPane scroll;
     final Group sequences;
-    final Map<Integer, List<InfoLabel>> map;
+    final Map<Integer, List<DefaultLabel>> map;
     double mouseX = .0;
     double mouseY = .0;
     public static final int PEEK_RADIUS = 60;
 
-    public Zoom(ScrollPane scroll, Group sequences, Map<Integer, List<InfoLabel>> map) {
+    public Zoom(ScrollPane scroll, Group sequences, Map<Integer, List<DefaultLabel>> map) {
         this.scroll = scroll;
         this.sequences = sequences;
         this.map = map;
@@ -48,7 +48,7 @@ public class Zoom {
 
     public void apply() {
 
-        List<InfoLabel> infoLabels = getInfoLabelsRange()
+        List<DefaultLabel> infoLabels = getInfoLabelsRange()
                 .mapToObj(map::get)
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
@@ -64,13 +64,13 @@ public class Zoom {
         mouseOver(infoLabels, left, top);
     }
 
-    public void mouseOver(final MouseEvent event, List<InfoLabel> infoLabels, final double left, final double top) {
+    public void mouseOver(final MouseEvent event, List<DefaultLabel> infoLabels, final double left, final double top) {
         mouseX = event.getX();
         mouseY = event.getY();
         mouseOver(infoLabels, left, top);
     }
 
-    public void mouseOver(final List<InfoLabel> infoLabels, final double left, final double top) {
+    public void mouseOver(final List<DefaultLabel> infoLabels, final double left, final double top) {
         infoLabels.forEach(label ->
                 mouseOver(
                         label,
@@ -84,7 +84,7 @@ public class Zoom {
      * @param mouseX The x-position of the mouse.
      * @param mouseY The y-position of the mouse.
      */
-    public void mouseOver(InfoLabel label, final double mouseX, final double mouseY) {
+    public void mouseOver(DefaultLabel label, final double mouseX, final double mouseY) {
         double dx = mouseX - label.getTranslateX() - (label.getWidth() / 2);
         double dy = mouseY - label.getTranslateY() - (label.getHeight() / 2);
         double distance = Math.sqrt(dx * dx + dy * dy);
@@ -98,7 +98,7 @@ public class Zoom {
      *
      * @param ratio A ratio between .0 and 1.0.
      */
-    private void addScale(InfoLabel label, final double ratio) {
+    private void addScale(DefaultLabel label, final double ratio) {
         double scale = 1 + .25 * (Math.cos(ratio * Math.PI) + 1);
         label.setScaleX(scale);
         label.setScaleY(scale);
