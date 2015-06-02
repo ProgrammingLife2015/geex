@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableGraph;
@@ -33,7 +32,7 @@ import java.util.stream.IntStream;
  * @version 1.0
  * @since 7-5-2015
  */
-public final class GraphController extends ViewController<AnchorPane> {
+public final class GraphController extends DefaultGraphController {
 
     /**
      * ProgressIndicator to show when the graph is loading.
@@ -52,11 +51,6 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     @FXML
     ScrollPane scroll;
-
-    /**
-     * Reference to the MainController of the app.
-     */
-    MainController mainController;
 
     /**
      * Sources that are displayed in the graph.
@@ -91,9 +85,7 @@ public final class GraphController extends ViewController<AnchorPane> {
                            final ReadOnlyObjectProperty<GraphMap> graphMapIn,
                            final ReadOnlyObjectProperty<AnnotationMap> annotationMapIn) {
 
-        super(new AnchorPane());
-
-        this.mainController = mainController;
+        super(mainController);
         this.sources = sources;
 
         this.graphMapIn = graphMapIn;

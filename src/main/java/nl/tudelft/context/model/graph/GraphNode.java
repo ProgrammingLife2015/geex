@@ -53,7 +53,7 @@ public class GraphNode extends DefaultNode {
     @Override
     public DefaultLabel getLabel(final MainController mainController, final GraphController graphController,
                                  final DrawableNode drawableNode) {
-        return new SinglePointLabel(drawableNode, this);
+        return new SinglePointLabel(mainController, graphController, drawableNode, this);
     }
 
 }

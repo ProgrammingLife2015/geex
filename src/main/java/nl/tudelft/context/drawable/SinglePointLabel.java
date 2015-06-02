@@ -1,6 +1,9 @@
 package nl.tudelft.context.drawable;
 
 import javafx.scene.control.Label;
+import nl.tudelft.context.controller.GraphController;
+import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.controller.SubGraphController;
 import nl.tudelft.context.model.graph.GraphNode;
 
 /**
@@ -18,10 +21,13 @@ public class SinglePointLabel extends DefaultLabel {
     /**
      * Constructor for the single point mutation label.
      *
+     * @param mainController  MainController indicating the controller
+     * @param graphController GraphController to place the next view on
      * @param drawableNode    Node indicating drawable
      * @param node            Node indicating the node
      */
-    public SinglePointLabel(final DrawableNode drawableNode, final GraphNode node) {
+    public SinglePointLabel(final MainController mainController, final GraphController graphController,
+                            final DrawableNode drawableNode, final GraphNode node) {
 
         this.node = node;
 
@@ -29,6 +35,9 @@ public class SinglePointLabel extends DefaultLabel {
         getStyleClass().add("single");
         translateXProperty().bind(drawableNode.translateXProperty());
         translateYProperty().bind(drawableNode.translateYProperty());
+
+        setOnMouseClicked(event -> mainController.setView(graphController,
+                new SubGraphController(mainController)));
 
     }
 
