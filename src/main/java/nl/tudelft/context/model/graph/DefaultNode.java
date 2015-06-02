@@ -50,6 +50,7 @@ public abstract class DefaultNode {
      * @param drawableNode    Node to draw
      * @return Info label
      */
-    public abstract DefaultLabel getLabel(final MainController mainController, final DefaultGraphController graphController,
+    public abstract DefaultLabel getLabel(final MainController mainController,
+                                          final DefaultGraphController graphController,
                                           final DrawableNode drawableNode);
 }

@@ -19,7 +19,7 @@ import java.util.Set;
 public class GraphNode extends DefaultNode {
 
     /**
-     * Nodes of sub graph
+     * Nodes of sub graph.
      */
     Set<DefaultNode> nodes = new HashSet<>();
 

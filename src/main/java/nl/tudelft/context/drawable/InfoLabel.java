@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.DefaultGraphController;
-import nl.tudelft.context.controller.GraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.BaseCounter;
 import nl.tudelft.context.model.graph.Node;

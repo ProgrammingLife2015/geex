@@ -1,7 +1,6 @@
 package nl.tudelft.context.model.graph;
 
 import nl.tudelft.context.controller.DefaultGraphController;
-import nl.tudelft.context.controller.GraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableNode;

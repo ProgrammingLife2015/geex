@@ -16,11 +16,26 @@ import java.util.ResourceBundle;
  */
 public class SubGraphController extends DefaultGraphController {
 
+    /**
+     * Old graph.
+     */
     StackGraph stackGraph;
+
+    /**
+     * Node containing sub graph.
+     */
     GraphNode graphNode;
 
-
-    public SubGraphController(MainController mainController, StackGraph stackGraph, GraphNode graphNode) {
+    /**
+     * Create a sub graph controller.
+     *
+     * @param mainController Main controller to set views on.
+     * @param stackGraph     Old graph
+     * @param graphNode      Node containing sub graph
+     */
+    public SubGraphController(final MainController mainController,
+                              final StackGraph stackGraph,
+                              final GraphNode graphNode) {
 
         super(mainController);
 
@@ -32,7 +47,7 @@ public class SubGraphController extends DefaultGraphController {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
 
         progressIndicator.setVisible(false);
 

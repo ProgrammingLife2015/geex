@@ -54,7 +54,12 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
      */
     MainController mainController;
 
-    public DefaultGraphController(MainController mainController) {
+    /**
+     * Create defeualt graph controller.
+     *
+     * @param mainController MainController to set views with
+     */
+    public DefaultGraphController(final MainController mainController) {
 
         super(new AnchorPane());
 
