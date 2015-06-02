@@ -34,6 +34,7 @@ import java.util.stream.IntStream;
  * @version 1.0
  * @since 7-5-2015
  */
+@SuppressWarnings("unused")
 public final class GraphController extends ViewController<AnchorPane> {
 
     /**
@@ -167,6 +168,7 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void loadAnnotation(final AnnotationMap annotationMap) {
         mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
+        //
     }
 
     /**
