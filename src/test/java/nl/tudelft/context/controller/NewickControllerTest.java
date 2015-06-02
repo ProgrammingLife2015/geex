@@ -45,6 +45,7 @@ public class NewickControllerTest {
 
         when(workspace.getGraph()).thenReturn(new SimpleObjectProperty<>());
         when(workspace.getAnnotation()).thenReturn(new SimpleObjectProperty<>());
+        when(workspace.getResistance()).thenReturn(new SimpleObjectProperty<>());
 
         when(mainController.getWorkspace()).thenReturn(workspace);
 

@@ -142,7 +142,7 @@ public class Annotation {
      * Only checks id, for comprehensive comparison use equals
      *
      * @param other the object that should be compared
-     * @return if node is equal to an other node
+     * @return if annotaion is equal to an other annotation
      */
     public final boolean equalsLoose(final Annotation other) {
         return id == other.id;
@@ -154,7 +154,6 @@ public class Annotation {
      * @return string representing the annotation
      */
     @Override
-
     public final String toString() {
         return "("
                 + this.getId() + ", "
@@ -172,7 +171,6 @@ public class Annotation {
      * @return unique hashCode by id
      */
     @Override
-
     public final int hashCode() {
         return this.id;
     }
