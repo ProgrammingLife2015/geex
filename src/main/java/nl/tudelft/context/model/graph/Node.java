@@ -28,10 +28,6 @@ public class Node extends DefaultNode {
      */
     int refEndPosition;
     /**
-     * The content of the current Node.
-     */
-    String content;
-    /**
      * The Counter for the number of ACTG.
      */
     BaseCounter baseCounter;
@@ -97,13 +93,6 @@ public class Node extends DefaultNode {
     public int getRefEndPosition() {
 
         return refEndPosition;
-
-    }
-
-    @Override
-    public String getContent() {
-
-        return content;
 
     }
 

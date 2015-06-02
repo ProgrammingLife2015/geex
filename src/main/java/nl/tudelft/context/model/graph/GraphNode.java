@@ -47,11 +47,8 @@ public class GraphNode extends DefaultNode {
 
         }
 
-    }
+        content = Integer.toString(visited.size());
 
-    @Override
-    public String getContent() {
-        return "";
     }
 
     @Override

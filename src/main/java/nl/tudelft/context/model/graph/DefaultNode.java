@@ -20,6 +20,11 @@ public abstract class DefaultNode {
     Set<String> sources;
 
     /**
+     * The content of the current Node.
+     */
+    String content;
+
+    /**
      * Getter for sources.
      *
      * @return sources
@@ -33,7 +38,9 @@ public abstract class DefaultNode {
      *
      * @return DNA sequence
      */
-    public abstract String getContent();
+    public String getContent() {
+        return content;
+    }
 
     /**
      * Creates a label.
