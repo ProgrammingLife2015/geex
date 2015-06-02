@@ -27,7 +27,7 @@ public class GraphNode extends DefaultNode {
      */
     public GraphNode(final StackGraph graph, final DefaultNode start, final DefaultNode end) {
 
-        sources = new HashSet<>();
+        sources = start.getSources();
 
         Set<DefaultNode> visited = new HashSet<>();
         visited.add(end);
