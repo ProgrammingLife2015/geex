@@ -139,10 +139,6 @@ public final class NewickController extends ViewController<ScrollPane> {
                 newick.getRoot().getSelectionProperty().isEqualTo(new None()).or(activeProperty.not())
         );
 
-        loadGenomeGraph.disableProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue);
-        });
-
         mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
     }
 
