@@ -78,7 +78,7 @@ public class SinglePointGraph extends StackGraph {
                             .collect(Collectors.toSet());
 
                     if (end.size() == 1) {
-                        end.stream().filter(endNode -> graph.incomingEdgesOf(endNode).size() == targets.size())
+                        end.stream().filter(endNode -> graph.inDegreeOf(endNode) == targets.size())
                                 .forEach(endNode -> {
                                     targets.stream().forEach(singlePart::add);
                                     single.put(startNode, endNode);
