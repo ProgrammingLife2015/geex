@@ -125,7 +125,7 @@ public class NewickControllerTest {
     @Test
     public void testActivate() throws InterruptedException {
         newickController.activate();
-        assertTrue(newickController.active);
+        assertTrue(newickController.activeProperty.get());
         newickController.deactivate();
         newickController.activate();
     }
@@ -136,7 +136,7 @@ public class NewickControllerTest {
     @Test
     public void testDeactivate() {
         newickController.deactivate();
-        assertFalse(newickController.active);
+        assertFalse(newickController.activeProperty.get());
     }
 
 }

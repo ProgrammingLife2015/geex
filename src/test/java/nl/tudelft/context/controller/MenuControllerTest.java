@@ -100,9 +100,9 @@ public class MenuControllerTest {
         MenuBar mb = new MenuBar();
         MenuController mc = new MenuController(mainController, mb);
 
-        assertEquals(mc.getLoadGenomeGraph().getText(), "Load Genome graph");
-        assertEquals(mc.getLoadGenomeGraph().getAccelerator(), new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
-        assertEquals(mc.getLoadGenomeGraph().disableProperty().getValue(), true);
+        assertEquals(mc.loadGenomeGraph.getText(), "Load Genome graph");
+        assertEquals(mc.loadGenomeGraph.getAccelerator(), new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
+        assertEquals(mc.loadGenomeGraph.disableProperty().getValue(), true);
     }
 
 }

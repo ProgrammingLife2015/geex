@@ -42,4 +42,9 @@ public class Partial implements Selection {
         return "partial";
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Partial;
+    }
+
 }

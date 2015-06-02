@@ -23,9 +23,12 @@ public final class MenuController {
     MainController mainController;
 
     /**
-     * The menu item for loading the genome graph.
+     * The menu items
      */
-    MenuItem loadGenomeGraph;
+    public MenuItem
+            loadGenomeGraph,
+            zoomIn,
+            zoomOut;
 
     /**
      * FXML menu bar.
@@ -80,6 +83,14 @@ public final class MenuController {
                         false),
                 loadGenomeGraph = createMenuItem("Load Genome graph",
                         new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN),
+                        null,
+                        true),
+                zoomIn = createMenuItem("Zoom in on graph",
+                        new KeyCodeCombination(KeyCode.UP),
+                        null,
+                        true),
+                zoomOut = createMenuItem("Zoom out on graph",
+                        new KeyCodeCombination(KeyCode.DOWN),
                         null,
                         true)));
 
@@ -136,12 +147,4 @@ public final class MenuController {
 
     }
 
-    /**
-     * Gets the menu item that is responsible for loading the genome graph.
-     *
-     * @return the menu item for loading the genome graph
-     */
-    public MenuItem getLoadGenomeGraph() {
-        return loadGenomeGraph;
-    }
 }
