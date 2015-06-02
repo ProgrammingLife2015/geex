@@ -41,6 +41,7 @@ public class NewickControllerTest {
     public static void beforeClass() throws Exception {
         mainController = mock(MainController.class);
         mainController.newickLifted = bp;
+        when(mainController.getMenuController()).thenReturn(new MenuController(mainController, new MenuBar()));
 
         Workspace workspace = mock(Workspace.class);
 
@@ -56,7 +57,7 @@ public class NewickControllerTest {
 
         menuItem = spy(new MenuItem());
 
-        newickController = new NewickController(mainController, new MenuController(mainController, new MenuBar()), newickSimpleObjectProperty);
+        newickController = new NewickController(mainController, newickSimpleObjectProperty);
 
     }
 
