@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import nl.tudelft.context.drawable.DrawableEdge;
@@ -44,11 +45,6 @@ public final class NewickController extends ViewController<ScrollPane> {
     MainController mainController;
 
     /**
-     * The menu controller to change the menu.
-     */
-    MenuController menuController;
-
-    /**
      * The newick object, can change.
      */
     ObjectProperty<Newick> newickObjectProperty;
@@ -74,13 +70,12 @@ public final class NewickController extends ViewController<ScrollPane> {
      * @param mainController MainController for the application
      * @param newickIn       Newick object from the workspace, might not be loaded.
      */
-    public NewickController(final MainController mainController, final MenuController menuController,
+    public NewickController(final MainController mainController,
                             final ReadOnlyObjectProperty<Newick> newickIn) {
 
         super(new ScrollPane());
 
         this.mainController = mainController;
-        this.menuController = menuController;
 
         this.newickIn = newickIn;
 
@@ -138,9 +133,9 @@ public final class NewickController extends ViewController<ScrollPane> {
         this.newick.getChildren().addAll(edgeList);
         this.newick.getChildren().addAll(nodeList);
 
-        menuController.loadGenomeGraph.setOnAction(event -> loadGraph(newick));
-
-        menuController.loadGenomeGraph.disableProperty().bind(
+        MenuItem loadGenomeGraph = mainController.getMenuController().loadGenomeGraph;
+        loadGenomeGraph.setOnAction(event -> loadGraph(newick));
+        loadGenomeGraph.disableProperty().bind(
                 newick.getRoot().getSelectionProperty().isEqualTo(new None()).and(activeProperty)
         );
 
