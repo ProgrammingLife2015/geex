@@ -76,16 +76,15 @@ public final class NewickController extends ViewController<ScrollPane> {
      * Init a controller at newick.fxml.
      *
      * @param mainController MainController for the application
-     * @param menuItem       MenuItem for the application
      * @param newickIn       Newick object from the workspace, might not be loaded.
      */
-    public NewickController(final MainController mainController, final MenuItem menuItem,
+    public NewickController(final MainController mainController, final MenuController menuController,
                             final ReadOnlyObjectProperty<Newick> newickIn) {
 
         super(new ScrollPane());
 
         this.mainController = mainController;
-        this.menuItem = menuItem;
+        this.menuItem = menuController.getLoadGenomeGraph();
 
         this.newickIn = newickIn;
 

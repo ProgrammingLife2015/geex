@@ -5,6 +5,7 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.Node;
@@ -54,7 +55,7 @@ public class NewickControllerTest {
 
         menuItem = spy(new MenuItem());
 
-        newickController = new NewickController(mainController, menuItem, newickSimpleObjectProperty);
+        newickController = new NewickController(mainController, new MenuController(mainController, new MenuBar()), newickSimpleObjectProperty);
 
     }
 
