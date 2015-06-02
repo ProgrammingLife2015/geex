@@ -140,6 +140,7 @@ public final class GraphController extends ViewController<AnchorPane> {
 
         graphMapProperty.bind(graphMapIn);
         annotationMapProperty.bind(annotationMapIn);
+        resistanceMapProperty.bind(resistanceMapIn);
 
         progressIndicator.visibleProperty().bind(graphMapProperty.isNull());
 
@@ -171,7 +172,6 @@ public final class GraphController extends ViewController<AnchorPane> {
      */
     private void loadResistance(final ResistanceMap resistanceMap) {
         mainController.displayMessage(MessageController.SUCCESS_LOAD_RESISTANCE);
-        System.out.println("resistanceMap = " + resistanceMap.toString());
     }
 
 
