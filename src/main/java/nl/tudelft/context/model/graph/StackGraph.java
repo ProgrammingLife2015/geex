@@ -43,8 +43,8 @@ public abstract class StackGraph extends DefaultGraph<DefaultNode> {
 
         edgeSet().stream()
                 .forEach(edge -> {
-                    DefaultNode source = getEdgeTarget(edge);
-                    DefaultNode target = getEdgeSource(edge);
+                    DefaultNode source = getEdgeSource(edge);
+                    DefaultNode target = getEdgeTarget(edge);
                     if (nodes.contains(source)
                             && nodes.contains(target)) {
                         setEdgeWeight(
