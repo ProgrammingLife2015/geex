@@ -3,8 +3,8 @@ package nl.tudelft.context.drawable;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import nl.tudelft.context.model.newick.Newick;
-import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultWeightedEdge;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -29,9 +29,11 @@ public class DrawableEdge extends Line {
      * @param drawableGraph graph that contains edge
      * @param edge          edge to bind and display
      */
-    public DrawableEdge(final DrawableGraph drawableGraph, final DefaultEdge edge) {
+    public DrawableEdge(final DrawableGraph drawableGraph, final DefaultWeightedEdge edge) {
 
-        initialize(drawableGraph, edge);
+        initialize();
+        setStart(drawableGraph.getEdgeSource(edge));
+        setEnd(drawableGraph.getEdgeTarget(edge));
 
         setTranslateX(OFFSET_GRAPH);
         setTranslateY(OFFSET_GRAPH);
@@ -46,7 +48,9 @@ public class DrawableEdge extends Line {
      */
     public DrawableEdge(final Newick newick, final DefaultEdge edge) {
 
-        initialize(newick, edge);
+        initialize();
+        setStart(newick.getEdgeSource(edge));
+        setEnd(newick.getEdgeTarget(edge));
 
         setTranslateX(OFFSET_TREE);
         setTranslateY(OFFSET_TREE);
@@ -55,20 +59,29 @@ public class DrawableEdge extends Line {
 
     /**
      * Creates an edge for a given graph and sets the color to white.
-     *
-     * @param graph the graph of the edge
-     * @param edge  the edge
      */
-    private void initialize(final DefaultDirectedGraph<? extends DrawablePosition, DefaultEdge> graph,
-                            final DefaultEdge edge) {
-
-        startXProperty().bind(graph.getEdgeSource(edge).translateXProperty());
-        endXProperty().bind(graph.getEdgeTarget(edge).translateXProperty());
-        startYProperty().bind(graph.getEdgeSource(edge).translateYProperty());
-        endYProperty().bind(graph.getEdgeTarget(edge).translateYProperty());
-
+    private void initialize() {
         setStroke(Color.WHITE);
+    }
 
+    /**
+     * Bind the start position of the edge.
+     *
+     * @param start Position to bind with
+     */
+    private void setStart(final DrawablePosition start) {
+        startXProperty().bind(start.translateXProperty());
+        startYProperty().bind(start.translateYProperty());
+    }
+
+    /**
+     * Bind the end position of the edge.
+     *
+     * @param end Position to bind with
+     */
+    private void setEnd(final DrawablePosition end) {
+        endXProperty().bind(end.translateXProperty());
+        endYProperty().bind(end.translateYProperty());
     }
 
 }
