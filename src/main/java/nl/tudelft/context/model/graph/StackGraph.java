@@ -7,6 +7,22 @@ package nl.tudelft.context.model.graph;
  */
 public abstract class StackGraph extends DefaultGraph<DefaultNode> {
 
+    /**
+     * Clone an other graph into this graph.
+     *
+     * @param stackGraph Graph to clone
+     */
+    protected void setGraph(StackGraph stackGraph) {
 
+        stackGraph.vertexSet().stream()
+                .forEach(this::addVertex);
+
+        stackGraph.edgeSet().stream()
+                .forEach(edge -> setEdgeWeight(addEdge(
+                        stackGraph.getEdgeSource(edge),
+                        stackGraph.getEdgeTarget(edge)
+                ), stackGraph.getEdgeWeight(edge)));
+
+    }
 
 }

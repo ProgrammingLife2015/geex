@@ -38,15 +38,7 @@ public class SinglePointGraph extends StackGraph {
     public SinglePointGraph(final StackGraph graph) {
 
         this.graph = graph;
-
-        graph.vertexSet().stream()
-                .forEach(this::addVertex);
-
-        graph.edgeSet().stream()
-                .forEach(edge -> addEdge(
-                        graph.getEdgeSource(edge),
-                        graph.getEdgeTarget(edge)
-                ));
+        setGraph(graph);
 
         markSingle();
 
