@@ -1,5 +1,6 @@
 package nl.tudelft.context.effects;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
@@ -34,15 +35,23 @@ public class Zoom {
     /**
      * The mouse's last known x-position.
      */
-    double mouseX = .0;
+    double mouseX = 0;
     /**
      * The mouse's last known y-position.
      */
-    double mouseY = .0;
+    double mouseY = 0;
     /**
      * The radius from the label's center in which the nodes are at their biggest.
      */
-    public static final int PEEK_RADIUS = 60;
+    public static final int PEEK_RADIUS = 30;
+    /**
+     * (A portion of) this gets added to the scale of the labels affected by the zoom.
+     */
+    public static final double SCALE_ADDED = .25;
+    /**
+     * Only labels that are MAX_DISTANCE away from the mouse are affected by the zoom.
+     */
+    public static final int MAX_DISTANCE = 120;
 
     /**
      * Constructs a Zoom effect.
@@ -51,7 +60,7 @@ public class Zoom {
      * @param sequences The sequences group
      * @param labelsMap The map with all labels
      */
-    public Zoom(ScrollPane scroll, Group sequences, Map<Integer, List<DefaultLabel>> labelsMap) {
+    public Zoom(final ScrollPane scroll, final Group sequences, final Map<Integer, List<DefaultLabel>> labelsMap) {
         this.scroll = scroll;
         this.sequences = sequences;
         this.labelsMap = labelsMap;
@@ -65,13 +74,13 @@ public class Zoom {
      * Binds the effect to all visible labels.
      */
     private void bindEffect() {
-        double width = scroll.getWidth();
-        double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
+        Bounds layoutBounds = scroll.getContent().layoutBoundsProperty().getValue();
+        double left = (layoutBounds.getWidth() - scroll.getWidth())
                 * scroll.getHvalue();
-        double top = (scroll.getContent().layoutBoundsProperty().getValue().getHeight() - scroll.getHeight())
+        double top = (layoutBounds.getHeight() - scroll.getHeight())
                 * scroll.getVvalue();
         int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
+        int indexTo = indexFrom + (int) Math.ceil(scroll.getWidth() / DrawableGraph.LABEL_SPACING) + 1;
 
         List<DefaultLabel> infoLabels = getLabels(indexFrom, indexTo);
 
@@ -85,9 +94,15 @@ public class Zoom {
      * @param left       The x-offset of the scroll panel (including scroll)
      * @param top        The y-offset of the scroll panel (including scroll)
      */
-    private void setEvents(List<DefaultLabel> infoLabels, double left, double top) {
-        scroll.setOnMouseEntered(event -> applyAllAndSetMouse(event, infoLabels, left, top));
-        scroll.setOnMouseMoved(event -> applyAllAndSetMouse(event, infoLabels, left, top));
+    private void setEvents(final List<DefaultLabel> infoLabels, final double left, final double top) {
+        scroll.setOnMouseEntered(event -> {
+            setMouse(event);
+            applyAll(infoLabels, left, top);
+        });
+        scroll.setOnMouseMoved(event -> {
+            setMouse(event);
+            applyAll(infoLabels, left, top);
+        });
         applyAll(infoLabels, left, top);
     }
 
@@ -98,7 +113,7 @@ public class Zoom {
      * @param indexTo   The last column that is visible
      * @return          A list of labels that are visible
      */
-    private List<DefaultLabel> getLabels(int indexFrom, int indexTo) {
+    private List<DefaultLabel> getLabels(final int indexFrom, final int indexTo) {
         return IntStream.rangeClosed(indexFrom, indexTo)
                 .mapToObj(labelsMap::get)
                 .filter(Objects::nonNull)
@@ -107,17 +122,13 @@ public class Zoom {
     }
 
     /**
-     * Applies the zoom effect to the labels and sets the last known mouse position.
+     * Sets the last known mouse position.
      *
      * @param event      The event that triggered this
-     * @param infoLabels The labels to apply the effect to
-     * @param left       The x-offset of the scroll panel (including scroll)
-     * @param top        The y-offset of the scroll panel (including scroll)
      */
-    public void applyAllAndSetMouse(final MouseEvent event, List<DefaultLabel> infoLabels, final double left, final double top) {
+    public void setMouse(final MouseEvent event) {
         mouseX = event.getX();
         mouseY = event.getY();
-        applyAll(infoLabels, left, top);
     }
 
     /**
@@ -139,13 +150,12 @@ public class Zoom {
      * @param mouseX The mouse's x-position
      * @param mouseY The mouse's y-position
      */
-    public void apply(DefaultLabel label, final double mouseX, final double mouseY) {
+    public void apply(final DefaultLabel label, final double mouseX, final double mouseY) {
         double dx = mouseX - label.getTranslateX() - (label.getWidth() / 2);
         double dy = mouseY - label.getTranslateY() - (label.getHeight() / 2);
         double distance = Math.sqrt(dx * dx + dy * dy);
-        double maxDistance = 2 * PEEK_RADIUS;
-        distance = Math.max(0, Math.min(maxDistance, distance - (.5 * PEEK_RADIUS)));
-        addScale(label, distance / maxDistance);
+        distance = Math.max(0, Math.min(MAX_DISTANCE, distance - PEEK_RADIUS));
+        addScale(label, distance / MAX_DISTANCE);
     }
 
     /**
@@ -159,8 +169,8 @@ public class Zoom {
      * @param label The label to scale
      * @param ratio The ratio to add to the scale
      */
-    private void addScale(DefaultLabel label, final double ratio) {
-        double scale = 1 + .25 * (Math.cos(ratio * Math.PI) + 1);
+    private void addScale(final DefaultLabel label, final double ratio) {
+        double scale = 1 + SCALE_ADDED * (Math.cos(ratio * Math.PI) + 1);
         label.setScaleX(scale);
         label.setScaleY(scale);
         label.setCache(true);
