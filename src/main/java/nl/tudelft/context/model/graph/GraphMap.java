@@ -3,7 +3,7 @@ package nl.tudelft.context.model.graph;
 import org.jgrapht.Graphs;
 
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -86,10 +86,10 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
 
         values().stream().forEach(graph -> {
 
-            Queue<DefaultNode> queue = new LinkedList<>(graph.getFirstNodes());
-            while (!queue.isEmpty()) {
+            List<DefaultNode> current = new LinkedList<>(graph.getFirstNodes());
+            while (current.size() > 0) {
 
-                DefaultNode start = queue.remove();
+                DefaultNode start = current.get(0);
                 if (graph.outDegreeOf(start) > 1) {
 
                     graph.getTargets(start).stream()
@@ -98,7 +98,7 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
 
                 }
 
-                queue.addAll(graph.getTargets(start));
+                current = graph.getTargets(start);
 
             }
 
