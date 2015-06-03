@@ -46,7 +46,7 @@ public class SinglePointGraph extends StackGraph {
         single.entrySet().forEach(entry -> {
             setEdgeWeight(
                     addEdge(entry.getKey(), entry.getValue()),
-                    0
+                    incomingEdgesOf(entry.getKey()).stream().mapToDouble(graph::getEdgeWeight).sum()
             );
             replace(entry.getKey(), new GraphNode(graph, entry.getKey(), entry.getValue()));
         });

@@ -51,7 +51,7 @@ public class SubGraphController extends DefaultGraphController {
 
         progressIndicator.setVisible(false);
 
-        StackGraph subGraph = stackGraph.getSubGraph(graphNode.getNodes());
+        StackGraph subGraph = stackGraph.createSubGraph(graphNode.getNodes());
         graphList.add(subGraph);
 
         DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());

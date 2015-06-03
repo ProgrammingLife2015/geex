@@ -33,7 +33,7 @@ public abstract class StackGraph extends DefaultGraph<DefaultNode> {
      * @param nodes Nodes the sub graph will contain
      * @return Sub graph of this graph
      */
-    public Graph getSubGraph(final Set<DefaultNode> nodes) {
+    public Graph createSubGraph(final Set<DefaultNode> nodes) {
 
         Graph subGraph = new Graph();
 
