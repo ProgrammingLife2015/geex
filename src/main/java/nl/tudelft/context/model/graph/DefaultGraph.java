@@ -72,8 +72,14 @@ public abstract class DefaultGraph<T> extends DefaultDirectedWeightedGraph<T, De
 
         addVertex(newNode);
 
-        getTargets(oldNode).stream().forEach(node -> addEdge(newNode, node));
-        getSources(oldNode).stream().forEach(node -> addEdge(node, newNode));
+        outgoingEdgesOf(oldNode).stream().forEach(edge -> setEdgeWeight(
+                addEdge(newNode, getEdgeTarget(edge)),
+                getEdgeWeight(edge)
+        ));
+        incomingEdgesOf(oldNode).stream().forEach(edge -> setEdgeWeight(
+                addEdge(getEdgeSource(edge), newNode),
+                getEdgeWeight(edge)
+        ));
 
         removeVertex(oldNode);
 
