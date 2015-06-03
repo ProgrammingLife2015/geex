@@ -1,7 +1,9 @@
 package nl.tudelft.context.model.graph;
 
 import org.jgrapht.Graphs;
+import org.jgrapht.graph.AbstractBaseGraph;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -32,9 +34,11 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
                 .forEach(edge -> graph.setEdgeWeight(edge, 0));
 
         sources.stream()
-                .forEach(source -> get(source).edgeSet().stream()
-                        .map(edge -> graph.getEdge(graph.getEdgeSource(edge), graph.getEdgeTarget(edge)))
-                        .forEach(edge -> graph.setEdgeWeight(edge, graph.getEdgeWeight(edge) + 1d / sources.size())));
+                .map(this::getGraph)
+                .map(AbstractBaseGraph::edgeSet)
+                .flatMap(Collection::stream)
+                .map(edge -> graph.getEdge(graph.getEdgeSource(edge), graph.getEdgeTarget(edge)))
+                .forEach(edge -> graph.setEdgeWeight(edge, graph.getEdgeWeight(edge) + 1d / sources.size()));
 
         return graph;
 
