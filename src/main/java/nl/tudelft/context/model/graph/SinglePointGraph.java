@@ -41,6 +41,7 @@ public class SinglePointGraph extends StackGraph {
         setGraph(graph);
 
         markSingle();
+        filterSingle();
 
         singlePart.forEach(this::removeVertex);
         single.entrySet().forEach(entry -> {
@@ -81,9 +82,6 @@ public class SinglePointGraph extends StackGraph {
                     }
 
                 });
-
-
-        filterSingle();
 
     }
 
