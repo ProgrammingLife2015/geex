@@ -46,4 +46,14 @@ public class ZoomTest {
 
     }
 
+    /**
+     * At least it should give no errors.
+     */
+    @Test
+    public void testConstruct() {
+
+        zoom = new Zoom(scroll, sequences, map);
+
+    }
+
 }
