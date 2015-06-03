@@ -161,18 +161,15 @@ public class Zoom {
     /**
      * Adds a scale to the InfoLabel, based on a given ratio [.0, 1.0].
      *
-     * @param ratio A ratio between .0 and 1.0.
-     */
-    /**
-     * Adds a scale to the InfoLabel, based on a given ratio [.0, 1.0].
-     *
      * @param label The label to scale
      * @param ratio The ratio to add to the scale
      */
     private void addScale(final DefaultLabel label, final double ratio) {
         double scale = 1 + SCALE_ADDED * (Math.cos(ratio * Math.PI) + 1);
+
         label.setScaleX(scale);
         label.setScaleY(scale);
+
         label.setCache(true);
     }
 }

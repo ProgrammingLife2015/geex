@@ -1,6 +1,6 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.controller.GraphController;
+import nl.tudelft.context.controller.DefaultGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableNode;
@@ -50,6 +50,7 @@ public abstract class DefaultNode {
      * @param drawableNode    Node to draw
      * @return Info label
      */
-    public abstract DefaultLabel getLabel(final MainController mainController, final GraphController graphController,
+    public abstract DefaultLabel getLabel(final MainController mainController,
+                                          final DefaultGraphController graphController,
                                           final DrawableNode drawableNode);
 }

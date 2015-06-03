@@ -1,5 +1,7 @@
 package nl.tudelft.context.controller;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Parent;
 
 /**
@@ -9,6 +11,11 @@ import javafx.scene.Parent;
  * @since 14-5-2015
  */
 public abstract class ViewController<T extends Parent> extends DefaultController<T> {
+
+    /**
+     * Tells whether the controller is currently active (top view).
+     */
+    BooleanProperty activeProperty = new SimpleBooleanProperty(false);
 
     /**
      * Create a generic controller with T as root.
@@ -34,11 +41,15 @@ public abstract class ViewController<T extends Parent> extends DefaultController
     /**
      * Called whenever a view is activated.
      */
-    public abstract void activate();
+    public void activate() {
+        activeProperty.set(true);
+    }
 
     /**
      * Called whenever a view is deactivated.
      */
-    public abstract void deactivate();
+    public void deactivate() {
+        activeProperty.set(false);
+    }
 
 }

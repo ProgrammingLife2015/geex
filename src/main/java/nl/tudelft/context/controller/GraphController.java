@@ -3,69 +3,23 @@ package nl.tudelft.context.controller;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import nl.tudelft.context.drawable.DefaultLabel;
-import nl.tudelft.context.drawable.DrawableEdge;
+import javafx.scene.control.MenuItem;
 import nl.tudelft.context.drawable.DrawableGraph;
-import nl.tudelft.context.effects.Zoom;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.SinglePointGraph;
-import nl.tudelft.context.model.graph.StackGraph;
+import nl.tudelft.context.model.resistance.ResistanceMap;
 
 import java.net.URL;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 7-5-2015
  */
-public final class GraphController extends ViewController<AnchorPane> {
-
-    /**
-     * ProgressIndicator to show when the graph is loading.
-     */
-    @FXML
-    ProgressIndicator progressIndicator;
-
-    /**
-     * The container for the graph.
-     */
-    @FXML
-    Group sequences;
-
-    /**
-     * Scroll pane to monitor.
-     */
-    @FXML
-    ScrollPane scroll;
-
-    /**
-     * Scroll pane to monitor.
-     */
-    @FXML
-    StackPane stack;
-
-    /**
-     * Reference to the MainController of the app.
-     */
-    MainController mainController;
+public final class GraphController extends DefaultGraphController {
 
     /**
      * Sources that are displayed in the graph.
@@ -78,14 +32,15 @@ public final class GraphController extends ViewController<AnchorPane> {
     ReadOnlyObjectProperty<GraphMap> graphMapIn;
 
     /**
+     * Sources that are displayed in the graph.
      * Property with annotation map.
      */
     ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
 
     /**
-     * List of graph views.
+     * Property with resistance map.
      */
-    LinkedList<StackGraph> graphList = new LinkedList<>();
+    ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn;
 
     /**
      * Init a controller at graph.fxml.
@@ -94,37 +49,40 @@ public final class GraphController extends ViewController<AnchorPane> {
      * @param sources         Sources to display
      * @param graphMapIn      The graphMap from the workspace, might not be loaded.
      * @param annotationMapIn The AnnotationMap from the workspace, might not be loaded.
+     * @param resistanceMapIn The ResistanceMap from the workspace, might not be loaded.
      */
     public GraphController(final MainController mainController,
                            final Set<String> sources,
                            final ReadOnlyObjectProperty<GraphMap> graphMapIn,
-                           final ReadOnlyObjectProperty<AnnotationMap> annotationMapIn) {
+                           final ReadOnlyObjectProperty<AnnotationMap> annotationMapIn,
+                           final ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn) {
 
-        super(new AnchorPane());
-
-        this.mainController = mainController;
+        super(mainController);
         this.sources = sources;
 
         this.graphMapIn = graphMapIn;
         this.annotationMapIn = annotationMapIn;
+        this.resistanceMapIn = resistanceMapIn;
 
         loadFXML("/application/graph.fxml");
     }
 
-    /**
-     * Called to initialize a controller after its root element has been
-     * completely processed.
-     *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  <tt>null</tt> if the location is not known.
-     * @param resources The resources used to localize the root object, or <tt>null</tt> if
-     *                  the root object was not localized.
-     */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
+        super.initialize(location, resources);
+
+        MenuController menuController = mainController.getMenuController();
+        MenuItem zoomIn = menuController.getZoomIn();
+        MenuItem zoomOut = menuController.getZoomOut();
+        zoomIn.setOnAction(event -> showGraph(new DrawableGraph(graphList.getFirst())));
+        zoomIn.disableProperty().bind(activeProperty.not());
+        zoomOut.setOnAction(event -> showGraph(new DrawableGraph(graphList.getLast())));
+        zoomOut.disableProperty().bind(activeProperty.not());
+
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<ResistanceMap> resistanceMapProperty = new SimpleObjectProperty<>();
 
         graphMapProperty.addListener((observable, oldValue, newValue) -> {
             loadGraph(newValue);
@@ -134,8 +92,13 @@ public final class GraphController extends ViewController<AnchorPane> {
             loadAnnotation(newValue);
         });
 
+        resistanceMapProperty.addListener((observable, oldValue, newValue) -> {
+            loadResistance(newValue);
+        });
+
         graphMapProperty.bind(graphMapIn);
         annotationMapProperty.bind(annotationMapIn);
+        resistanceMapProperty.bind(resistanceMapIn);
 
         progressIndicator.visibleProperty().bind(graphMapProperty.isNull());
 
@@ -156,101 +119,24 @@ public final class GraphController extends ViewController<AnchorPane> {
     /**
      * Load annotation from source.
      *
-     * @param annotationMap The annotationmap which is loaded.
+     * @param annotationMap The annotation map which is loaded.
      */
     private void loadAnnotation(final AnnotationMap annotationMap) {
-    }
-
-
-    /**
-     * Show graph with reference points.
-     *
-     * @param drawableGraph Graph to show
-     */
-    private void showGraph(final DrawableGraph drawableGraph) {
-
-        // Bind edges
-        List<DrawableEdge> edgeList = drawableGraph.edgeSet().stream()
-                .map(edge -> new DrawableEdge(drawableGraph, edge))
-                .collect(Collectors.toList());
-
-        // Bind nodes
-        List<DefaultLabel> nodeList = drawableGraph.vertexSet().stream()
-                .map(node -> node.getNode().getLabel(mainController, this, node))
-                .collect(Collectors.toList());
-
-        sequences.getChildren().addAll(edgeList);
-        initOnTheFlyLoading(nodeList);
-
+        mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
+        //
     }
 
     /**
-     * Listen to position and load on the fly.
+     * Load resistances from source.
      *
-     * @param nodeList Labels to load on the fly
+     * @param resistanceMap The resistance map which is loaded.
      */
-    private void initOnTheFlyLoading(final List<DefaultLabel> nodeList) {
-
-        Map<Integer, List<DefaultLabel>> map = nodeList.stream().collect(
-                Collectors.groupingBy(
-                        DefaultLabel::currentColumn,
-                        Collectors.mapping(Function.identity(), Collectors.toList())
-                )
-        );
-
-        showCurrentLabels(map);
-        scroll.widthProperty().addListener(event ->  showCurrentLabels(map));
-        scroll.hvalueProperty().addListener(event -> showCurrentLabels(map));
-
-        new Zoom(scroll, sequences, new HashMap<>(map));
-
-    }
-
-    /**
-     * Show all the labels on current position.
-     *
-     * @param map Containing the labels indexed by position
-     */
-    private void showCurrentLabels(final Map<Integer, List<DefaultLabel>> map) {
-
-        double width = scroll.getWidth();
-        double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
-                * scroll.getHvalue();
-        int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
-
-        List<DefaultLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
-                .mapToObj(map::remove)
-                .filter(Objects::nonNull)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-
-        infoLabels.forEach(DefaultLabel::init);
-        sequences.getChildren().addAll(infoLabels);
-
-    }
-
-    /**
-     * Get the graph list.
-     *
-     * @return Graph list
-     */
-    public LinkedList<StackGraph> getGraphList() {
-        return graphList;
+    private void loadResistance(final ResistanceMap resistanceMap) {
+        mainController.displayMessage(MessageController.SUCCESS_LOAD_RESISTANCE);
     }
 
     @Override
     public String getBreadcrumbName() {
         return "Genome graph (" + sources.size() + ")";
-    }
-
-    @Override
-    public void activate() {
-        // empty method
-    }
-
-    @Override
-    public void deactivate() {
-        // empty method
     }
 }

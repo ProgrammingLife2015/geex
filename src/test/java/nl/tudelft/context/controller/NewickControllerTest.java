@@ -5,6 +5,7 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.Node;
@@ -40,11 +41,13 @@ public class NewickControllerTest {
     public static void beforeClass() throws Exception {
         mainController = mock(MainController.class);
         mainController.newickLifted = bp;
+        when(mainController.getMenuController()).thenReturn(new MenuController(mainController, new MenuBar()));
 
         Workspace workspace = mock(Workspace.class);
 
         when(workspace.getGraph()).thenReturn(new SimpleObjectProperty<>());
         when(workspace.getAnnotation()).thenReturn(new SimpleObjectProperty<>());
+        when(workspace.getResistance()).thenReturn(new SimpleObjectProperty<>());
 
         when(mainController.getWorkspace()).thenReturn(workspace);
 
@@ -54,7 +57,7 @@ public class NewickControllerTest {
 
         menuItem = spy(new MenuItem());
 
-        newickController = new NewickController(mainController, menuItem, newickSimpleObjectProperty);
+        newickController = new NewickController(mainController, newickSimpleObjectProperty);
 
     }
 
@@ -123,7 +126,7 @@ public class NewickControllerTest {
     @Test
     public void testActivate() throws InterruptedException {
         newickController.activate();
-        assertTrue(newickController.active);
+        assertTrue(newickController.activeProperty.get());
         newickController.deactivate();
         newickController.activate();
     }
@@ -134,7 +137,7 @@ public class NewickControllerTest {
     @Test
     public void testDeactivate() {
         newickController.deactivate();
-        assertFalse(newickController.active);
+        assertFalse(newickController.activeProperty.get());
     }
 
 }

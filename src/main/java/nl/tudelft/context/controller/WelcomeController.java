@@ -44,13 +44,4 @@ public class WelcomeController extends ViewController<GridPane> {
         return "Welcome";
     }
 
-    @Override
-    public void activate() {
-        // empty method
-    }
-
-    @Override
-    public void deactivate() {
-        // empty method
-    }
 }

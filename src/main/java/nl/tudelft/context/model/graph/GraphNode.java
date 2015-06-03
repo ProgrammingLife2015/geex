@@ -1,6 +1,6 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.controller.GraphController;
+import nl.tudelft.context.controller.DefaultGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableNode;
@@ -19,6 +19,11 @@ import java.util.Set;
 public class GraphNode extends DefaultNode {
 
     /**
+     * Nodes of sub graph.
+     */
+    Set<DefaultNode> nodes = new HashSet<>();
+
+    /**
      * Create a graph node.
      *
      * @param graph Master graph
@@ -29,8 +34,7 @@ public class GraphNode extends DefaultNode {
 
         sources = start.getSources();
 
-        Set<DefaultNode> visited = new HashSet<>();
-        visited.add(end);
+        nodes.add(end);
         Queue<DefaultNode> queue = new LinkedList<>();
         queue.add(start);
 
@@ -38,22 +42,31 @@ public class GraphNode extends DefaultNode {
 
             DefaultNode node = queue.remove();
             graph.getTargets(node).stream()
-                    .filter(n -> !visited.contains(n))
+                    .filter(n -> !nodes.contains(n))
                     .forEach(n -> {
                         queue.add(n);
-                        visited.add(n);
+                        nodes.add(n);
                     });
 
         }
 
-        content = Integer.toString(visited.size());
+        content = Integer.toString(nodes.size());
 
     }
 
+    /**
+     * Get nodes of sub graph.
+     *
+     * @return Nodes of sub graph
+     */
+    public Set<DefaultNode> getNodes() {
+        return nodes;
+    }
+
     @Override
-    public DefaultLabel getLabel(final MainController mainController, final GraphController graphController,
+    public DefaultLabel getLabel(final MainController mainController, final DefaultGraphController graphController,
                                  final DrawableNode drawableNode) {
-        return new SinglePointLabel(drawableNode, this);
+        return new SinglePointLabel(mainController, graphController, drawableNode, this);
     }
 
 }
