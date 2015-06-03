@@ -1,13 +1,14 @@
 package nl.tudelft.context.model.graph;
 
-import org.jgrapht.Graphs;
 import org.jgrapht.graph.AbstractBaseGraph;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -24,23 +25,44 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
      */
     public final Graph flat(final Set<String> sources) {
 
+        final double strains = sources.size();
+
         Graph graph = new Graph();
+        List<Graph> graphs = getGraphList(sources);
 
-        sources.stream()
-                .map(this::getGraph)
-                .forEach(g -> Graphs.addGraph(graph, g));
+        graphs.stream()
+                .map(AbstractBaseGraph::vertexSet)
+                .flatMap(Collection::stream)
+                .forEach(graph::addVertex);
 
-        graph.edgeSet().stream()
-                .forEach(edge -> graph.setEdgeWeight(edge, 0));
-
-        sources.stream()
-                .map(this::getGraph)
+        graphs.stream()
                 .map(AbstractBaseGraph::edgeSet)
                 .flatMap(Collection::stream)
-                .map(edge -> graph.getEdge(graph.getEdgeSource(edge), graph.getEdgeTarget(edge)))
-                .forEach(edge -> graph.setEdgeWeight(edge, graph.getEdgeWeight(edge) + 1d / sources.size()));
+                .collect(Collectors.groupingBy(
+                        edge -> Arrays.asList(
+                                graph.getEdgeSource(edge),
+                                graph.getEdgeTarget(edge)
+                        ),
+                        Collectors.counting()
+                ))
+                .forEach((nodes, count) ->
+                        graph.setEdgeWeight(graph.addEdge(nodes.get(0), nodes.get(1)), count / strains));
 
         return graph;
+
+    }
+
+    /**
+     * Get the graph list by sources.
+     *
+     * @param sources Sources to get the graphs from
+     * @return Graphs by sources
+     */
+    private List<Graph> getGraphList(final Set<String> sources) {
+
+        return sources.stream()
+                .map(this::getGraph)
+                .collect(Collectors.toList());
 
     }
 
