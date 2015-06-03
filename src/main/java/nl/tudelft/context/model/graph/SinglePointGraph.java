@@ -44,7 +44,10 @@ public class SinglePointGraph extends StackGraph {
 
         singlePart.forEach(this::removeVertex);
         single.entrySet().forEach(entry -> {
-            addEdge(entry.getKey(), entry.getValue());
+            setEdgeWeight(
+                    addEdge(entry.getKey(), entry.getValue()),
+                    0
+            );
             replace(entry.getKey(), new GraphNode(graph, entry.getKey(), entry.getValue()));
         });
 
