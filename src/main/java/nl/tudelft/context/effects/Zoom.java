@@ -73,7 +73,7 @@ public class Zoom {
     /**
      * Binds the effect to all visible labels.
      */
-    private void bindEffect() {
+    public void bindEffect() {
         Bounds layoutBounds = scroll.getContent().layoutBoundsProperty().getValue();
         double left = (layoutBounds.getWidth() - scroll.getWidth())
                 * scroll.getHvalue();
@@ -88,7 +88,7 @@ public class Zoom {
     }
 
     /**
-     * Sets the listeners to the scroll panel. The effect is based on the mouse's position.
+     * Tells the labels to apply this effect whenever the mouse moves or enters the scroll panel.
      *
      * @param infoLabels The labels that should zoom
      * @param left       The x-offset of the scroll panel (including scroll)
