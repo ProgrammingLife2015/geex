@@ -43,11 +43,12 @@ public class VariationGraph extends StackGraph {
 
         checkMutations();
 
-        variations.stream().forEach(this::removeVertex);
-        variationStartEnd.entrySet().forEach(entry -> {
-            addEdge(entry.getKey(), entry.getValue());
-            replace(entry.getKey(), new GraphNode(graph, entry.getKey(), entry.getValue()));
-        });
+
+//        variations.stream().forEach(this::removeVertex);
+//        variationStartEnd.entrySet().forEach(entry -> {
+//            addEdge(entry.getKey(), entry.getValue());
+//            replace(entry.getKey(), new GraphNode(graph, entry.getKey(), entry.getValue()));
+//        });
 
     }
 
@@ -75,6 +76,7 @@ public class VariationGraph extends StackGraph {
         List<List<DefaultNode>> listSets = getFreshListSets(graph.outDegreeOf(startNode));
 
         int set = 0;
+        int amountOfBranches = nextNodes.size() - 1;
 
         while (!nextNodes.isEmpty()) {
 
@@ -87,6 +89,9 @@ public class VariationGraph extends StackGraph {
                 set = getNextSetInt(set, graph, startNode);
 
                 Set<DefaultEdge> setOfEdges = graph.outgoingEdgesOf(node);
+                if(setOfEdges.size() > 1) {
+                    amountOfBranches += setOfEdges.size() - 1;
+                }
 
                 if (!nextNodes.isEmpty()) {
                     setOfEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()).forEach(nextNodes::add);
@@ -97,9 +102,13 @@ public class VariationGraph extends StackGraph {
 
             } else {
 
-                variations.remove(node);
-                variationStartEnd.put(startNode, node);
-                break;
+                if(amountOfBranches == 0) {
+                    variations.remove(node);
+                    variationStartEnd.put(startNode, node);
+                    break;
+                }else{
+                    amountOfBranches--;
+                }
 
             }
 
