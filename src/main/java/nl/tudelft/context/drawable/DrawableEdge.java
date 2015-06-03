@@ -24,6 +24,16 @@ public class DrawableEdge extends Line {
     public static final int OFFSET_TREE = 10;
 
     /**
+     * Min width of line.
+     */
+    private static final double MINIMUM_LINE_WIDTH = .25;
+
+    /**
+     * Max width of line.
+     */
+    private static final double MAXIMUM_LINE_WIDTH = 8;
+
+    /**
      * Creates edge for graph and bind it to nodes.
      *
      * @param drawableGraph graph that contains edge
@@ -37,6 +47,8 @@ public class DrawableEdge extends Line {
 
         setTranslateX(OFFSET_GRAPH);
         setTranslateY(OFFSET_GRAPH);
+
+        setStrokeWidth(Math.max(MINIMUM_LINE_WIDTH, drawableGraph.getEdgeWeight(edge) * MAXIMUM_LINE_WIDTH));
 
     }
 
