@@ -82,7 +82,7 @@ public final class BaseController extends ViewController<ScrollPane> {
 
         sources.setText(StringUtils.join(node.getSources(), ", "));
 
-        List<String> otherOccurrences = stackGraph.vertexSet().stream()
+        List<String> otherOccurrences = stackGraph.vertexSet().parallelStream()
                 .filter(vertex -> vertex.getContent().equals(content) && !vertex.equals(node))
                 .map(node -> (Node) node)
                 .map(Node::getId)

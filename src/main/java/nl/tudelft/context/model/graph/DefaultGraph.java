@@ -28,7 +28,7 @@ public abstract class DefaultGraph<T> extends DefaultDirectedWeightedGraph<T, De
      */
     public List<T> getFirstNodes() {
 
-        return vertexSet().stream()
+        return vertexSet().parallelStream()
                 .filter(x -> this.inDegreeOf(x) == 0)
                 .collect(Collectors.toList());
 

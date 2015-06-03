@@ -35,7 +35,7 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
                 .flatMap(Collection::stream)
                 .forEach(graph::addVertex);
 
-        graphs.stream()
+        graphs.parallelStream()
                 .map(AbstractBaseGraph::edgeSet)
                 .flatMap(Collection::stream)
                 .collect(Collectors.groupingBy(
@@ -118,7 +118,7 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
      */
     public void filter() {
 
-        values().stream().forEach(graph -> {
+        values().parallelStream().forEach(graph -> {
 
             List<DefaultNode> current = new LinkedList<>(graph.getFirstNodes());
             while (current.size() > 0) {

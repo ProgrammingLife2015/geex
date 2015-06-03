@@ -51,7 +51,7 @@ public class SinglePointGraph extends StackGraph {
      */
     private void markSingle() {
 
-        graph.vertexSet().stream()
+        graph.vertexSet().parallelStream()
                 .forEach(startNode -> {
 
                     List<DefaultNode> targets = graph.getTargets(startNode);
@@ -108,12 +108,12 @@ public class SinglePointGraph extends StackGraph {
     private void replaceSingle() {
 
         singlePart.forEach(this::removeVertex);
-        single.entrySet().forEach(entry -> {
+        single.forEach((start, end) -> {
             setEdgeWeight(
-                    addEdge(entry.getKey(), entry.getValue()),
-                    incomingEdgesOf(entry.getKey()).stream().mapToDouble(graph::getEdgeWeight).sum()
+                    addEdge(start, end),
+                    incomingEdgesOf(start).stream().mapToDouble(graph::getEdgeWeight).sum()
             );
-            replace(entry.getKey(), new GraphNode(graph, entry.getKey(), entry.getValue()));
+            replace(start, new GraphNode(graph, start, end));
         });
 
     }
