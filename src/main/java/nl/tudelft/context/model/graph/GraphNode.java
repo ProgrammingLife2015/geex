@@ -36,11 +36,11 @@ public class GraphNode extends DefaultNode {
 
         Queue<DefaultNode> queue = new LinkedList<>();
         queue.add(start);
+        nodes.add(start);
 
         while (!queue.isEmpty()) {
 
             DefaultNode node = queue.remove();
-            nodes.add(node);
 
             graph.getTargets(node).stream()
                     .filter(n -> !nodes.contains(n) && !n.equals(end))
