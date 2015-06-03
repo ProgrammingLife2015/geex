@@ -12,7 +12,7 @@ public abstract class StackGraph extends DefaultGraph<DefaultNode> {
      *
      * @param stackGraph Graph to clone
      */
-    protected void setGraph(StackGraph stackGraph) {
+    protected void setGraph(final StackGraph stackGraph) {
 
         stackGraph.vertexSet().stream()
                 .forEach(this::addVertex);
