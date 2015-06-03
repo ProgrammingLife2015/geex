@@ -1,6 +1,7 @@
 package nl.tudelft.context.effects;
 
 import javafx.geometry.Bounds;
+import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
@@ -170,6 +171,6 @@ public class Zoom {
         label.setScaleX(scale);
         label.setScaleY(scale);
 
-        label.setCache(true);
+        label.setCacheHint(CacheHint.SCALE);
     }
 }
