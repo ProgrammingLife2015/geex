@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableGraph;
+import nl.tudelft.context.effects.Zoom;
 import nl.tudelft.context.model.graph.StackGraph;
 
 import java.net.URL;
@@ -116,6 +117,8 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         );
+
+        new Zoom(scroll, sequences, new HashMap<>(labelMap));
 
         showCurrentLabels();
 
