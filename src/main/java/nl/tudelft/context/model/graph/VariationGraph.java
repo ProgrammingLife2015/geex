@@ -19,12 +19,35 @@ public class VariationGraph extends StackGraph {
     /**
      * All the variations that are detected.
      */
-    Map<Integer, DefaultNode> variations = new HashMap<>();
+    List<DefaultNode> variations;
+
+    /**
+     * Map with all start and end nodes.
+     */
+    Map<DefaultNode, DefaultNode> variationStartEnd;
 
     public VariationGraph(final StackGraph graph) {
 
         this.graph = graph;
+        this.variations = new ArrayList<>();
+        this.variationStartEnd = new HashMap<>();
+
+        graph.vertexSet().stream()
+                .forEach(this::addVertex);
+
+        graph.edgeSet().stream()
+                .forEach(edge -> addEdge(
+                        graph.getEdgeSource(edge),
+                        graph.getEdgeTarget(edge)
+                ));
+
         checkMutations();
+
+        variations.stream().forEach(this::removeVertex);
+        variationStartEnd.entrySet().forEach(entry -> {
+            addEdge(entry.getKey(), entry.getValue());
+            replace(entry.getKey(), new GraphNode(graph, entry.getKey(), entry.getValue()));
+        });
 
     }
 
@@ -48,7 +71,7 @@ public class VariationGraph extends StackGraph {
      */
     private void checkVariation(final DefaultNode startNode) {
 
-        List<DefaultNode> nextNodes =  getNextNodes(startNode);
+        List<DefaultNode> nextNodes =  getTargets(startNode);
         List<List<DefaultNode>> listSets = getFreshListSets(graph.outDegreeOf(startNode));
 
         int set = 0;
@@ -59,7 +82,7 @@ public class VariationGraph extends StackGraph {
 
             if (!checkAllSets(listSets, node)) {
 
-                variations.put(variations.size(), node);
+                variations.add(node);
                 listSets.get(set).add(node);
                 set = getNextSetInt(set, graph, startNode);
 
@@ -68,12 +91,14 @@ public class VariationGraph extends StackGraph {
                 if (!nextNodes.isEmpty()) {
                     setOfEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()).forEach(nextNodes::add);
                 } else {
-                    variations.remove(variations.size());
+                    variations.remove(node);
+                    variationStartEnd.put(startNode, node);
                 }
 
             } else {
 
-                variations.remove(variations.size());
+                variations.remove(node);
+                variationStartEnd.put(startNode, node);
                 break;
 
             }
@@ -117,24 +142,6 @@ public class VariationGraph extends StackGraph {
         }
 
         return list;
-    }
-
-    /**
-     * This function returns the next nodes of a node.
-     *
-     * @param startNode The node this function will return the next nodes from.
-     * @return Return a list of nodes that is connected to the startNode.
-     */
-    private List<DefaultNode> getNextNodes(DefaultNode startNode) {
-
-        List<DefaultNode> targetNodes =  new LinkedList<>();
-
-        Set<DefaultEdge> listEdges = graph.outgoingEdgesOf(startNode);
-        targetNodes.addAll(listEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()));
-
-
-        return targetNodes;
-
     }
 
     /**

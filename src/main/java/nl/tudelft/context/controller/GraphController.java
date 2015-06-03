@@ -10,6 +10,7 @@ import nl.tudelft.context.model.graph.GraphMap;
 
 import java.net.URL;
 import nl.tudelft.context.model.graph.SinglePointGraph;
+import nl.tudelft.context.model.graph.VariationGraph;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
 import java.util.ResourceBundle;
@@ -113,6 +114,7 @@ public final class GraphController extends DefaultGraphController {
     private void loadGraph(final GraphMap graphMap) {
         graphList.add(graphMap.flat(sources));
         graphList.add(new SinglePointGraph(graphList.getLast()));
+        graphList.add(new VariationGraph(graphList.getLast()));
         DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
         showGraph(drawableGraph);
     }
@@ -138,16 +140,6 @@ public final class GraphController extends DefaultGraphController {
     @Override
     public String getBreadcrumbName() {
         return "Genome graph (" + sources.size() + ")";
-    }
-
-    @Override
-    public void activate() {
-        // empty method
-    }
-
-    @Override
-    public void deactivate() {
-        // empty method
     }
 
 }
