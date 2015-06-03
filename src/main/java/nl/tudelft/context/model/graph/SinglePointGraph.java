@@ -51,7 +51,7 @@ public class SinglePointGraph extends StackGraph {
      */
     private void markSingle() {
 
-        graph.vertexSet().parallelStream()
+        graph.vertexSet().stream()
                 .forEach(startNode -> {
 
                     List<DefaultNode> targets = graph.getTargets(startNode);
