@@ -26,6 +26,8 @@ public final class GraphParser extends Parser<GraphMap> {
         List<Node> nodeList = parseNodes(nodeReader, graphMap);
         parseEdges(edgeReader, graphMap, nodeList);
 
+        graphMap.filter();
+
         return graphMap;
     }
 

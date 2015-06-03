@@ -2,6 +2,8 @@ package nl.tudelft.context.model.graph;
 
 import org.jgrapht.Graphs;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -76,4 +78,32 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
                 .forEach(graph -> graph.addEdge(source, target));
 
     }
+
+    /**
+     * Filter all skipping edges in single strains.
+     */
+    public void filter() {
+
+        values().stream().forEach(graph -> {
+
+            List<DefaultNode> current = new LinkedList<>(graph.getFirstNodes());
+            while (current.size() > 0) {
+
+                DefaultNode start = current.get(0);
+                if (graph.outDegreeOf(start) > 1) {
+
+                    graph.getTargets(start).stream()
+                            .filter(vertex -> graph.inDegreeOf(vertex) > 1)
+                            .forEach(end -> graph.removeEdge(start, end));
+
+                }
+
+                current = graph.getTargets(start);
+
+            }
+
+        });
+
+    }
+
 }
