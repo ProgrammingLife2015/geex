@@ -4,9 +4,12 @@ jdk:
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "! [ \"$TRAVIS_PULL_REQUEST\" = \"false\" ] && git checkout HEAD^2 && echo \"OCTOPULL_SHA=$(git rev-parse HEAD)\"; true"
+  - "[ \"$TRAVIS_PULL_REQUEST\" = \"true\" ] && git checkout HEAD^2 && echo \"OCTOPULL_SHA=$(git rev-parse HEAD)\"; true"
+  - "git clone -b travis `git config --get remote.origin.url` target/travis"
 script:
-  - "if [ \"$TRAVIS_PULL_REQUEST\" = \"false\" ]; then mvn test -B ; else mvn site -B; fi"
+  - "[ \"$TRAVIS_PULL_REQUEST\" = \"true\" ] && mvn site -B" # Site when pull request
+  - "[ \"$TRAVIS_PULL_REQUEST\" = \"false\" ] && ! [ \"$TRAVIS_BRANCH\" = \"master\" ] && mvn test -B" # Test when not on master
+  - "[ \"$TRAVIS_BRANCH\" = \"master\" ] && mvn site-deploy -B --settings target/travis/settings.xml" # Deploy site on master
 notifications:
   webhooks:
     - http://octopull.rmhartog.me/api/travis/webhook
