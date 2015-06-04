@@ -99,12 +99,12 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
     protected void showGraph(final DrawableGraph drawableGraph) {
 
         // Bind edges
-        List<DrawableEdge> edgeList = drawableGraph.edgeSet().parallelStream()
+        List<DrawableEdge> edgeList = drawableGraph.edgeSet().stream()
                 .map(edge -> new DrawableEdge(drawableGraph, edge))
                 .collect(Collectors.toList());
 
         // Bind nodes
-        List<DefaultLabel> nodeList = drawableGraph.vertexSet().parallelStream()
+        List<DefaultLabel> nodeList = drawableGraph.vertexSet().stream()
                 .map(node -> node.getNode().getLabel(mainController, this, node))
                 .collect(Collectors.toList());
 
