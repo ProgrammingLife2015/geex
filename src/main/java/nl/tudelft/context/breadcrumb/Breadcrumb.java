@@ -1,6 +1,6 @@
 package nl.tudelft.context.breadcrumb;
 
-import javafx.beans.property.SimpleListProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -23,9 +23,9 @@ public final class Breadcrumb extends HBox {
     MainController mainController;
 
     /**
-     * Property to keep track on view list.
+     * Observable list to keep track on view list.
      */
-    SimpleListProperty<ViewController> viewProperty;
+    ObservableList<ViewController> viewList;
 
     /**
      * Create a breadcrumb that listen to a view stack.
@@ -39,17 +39,15 @@ public final class Breadcrumb extends HBox {
 
         getStyleClass().add("breadcrumb");
 
-        this.viewProperty = new SimpleListProperty<>(viewList);
-        this.viewProperty.addListener((observable, oldValue, newValue) -> update(newValue));
+        this.viewList = viewList;
+        this.viewList.addListener((ListChangeListener<ViewController>) c -> update());
 
     }
 
     /**
      * Update the breadcrumb.
-     *
-     * @param viewList List to display
      */
-    public void update(final ObservableList<ViewController> viewList) {
+    public void update() {
 
         List<HBox> items = viewList.stream()
                 .map(viewController -> {
