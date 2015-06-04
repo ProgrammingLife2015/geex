@@ -195,11 +195,7 @@ public class MainController extends DefaultController<StackPane> {
                 viewController -> viewController.getVisibilityProperty().getValue()
         );
 
-        if (!visibleViews.isEmpty()) {
-            return visibleViews.get(visibleViews.size() - 1);
-        } else {
-            return null;
-        }
+        return visibleViews.get(visibleViews.size() - 1);
 
     }
 
@@ -212,9 +208,7 @@ public class MainController extends DefaultController<StackPane> {
             if (lastTopView != null) {
                 lastTopView.setActivated(false);
             }
-            if (topView != null) {
-                topView.setActivated(true);
-            }
+            topView.setActivated(true);
             lastTopView = topView;
         }
     }
