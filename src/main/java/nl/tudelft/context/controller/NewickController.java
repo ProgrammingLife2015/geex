@@ -130,6 +130,8 @@ public final class NewickController extends ViewController<ScrollPane> {
                 .map(NewickLabel::new)
                 .collect(Collectors.toList());
 
+        nodeList.forEach(l -> l.getStyleClass().add("newick-label"));
+
         this.newick.getChildren().addAll(edgeList);
         this.newick.getChildren().addAll(nodeList);
 

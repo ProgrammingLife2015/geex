@@ -155,7 +155,7 @@
     -fx-min-height: 100%;
 }
 
-#sequences .label {
+.info-label {
     -fx-background-color: #e6b43a;
     -fx-cursor: hand;
     -fx-min-width: 60px;
@@ -167,12 +167,17 @@
     -fx-text-fill: #2b2b2b;
 }
 
-#sequences .single .label {
+.single-label {
     -fx-background-color: #e44544;
+    -fx-cursor: hand;
+    -fx-min-width: 60px;
     -fx-min-height: 60px;
+    -fx-pref-width: 60px;
     -fx-pref-height: 60px;
+    -fx-alignment: center;
     -fx-background-radius: 30px;
     -fx-font: bold 0.45cm 'Arial';
+    -fx-text-fill: #2b2b2b;
 }
 
 /* Newick */
@@ -180,7 +185,7 @@
     -fx-min-height: 100%;
 }
 
-#newick .label {
+.newick-label {
     -fx-background-color: #2b2b2b;
     -fx-min-height: 20px;
     -fx-alignment: center;
@@ -191,7 +196,7 @@
     -fx-padding: 0 5px;
 }
 
-#newick .label.ancestor {
+.newick-label.ancestor {
     -fx-min-width: 20px;
     -fx-start-margin: -10px;
     -fx-padding: 0;
@@ -199,24 +204,24 @@
     -fx-background-radius: 10px;
 }
 
-#newick .label.selected,
-#newick .label.ancestor.selected {
+.newick-label.selected,
+.newick-label.ancestor.selected {
     -fx-background-color: #8ad;
     -fx-text-fill: #2b2b2b;
 }
 
-#newick .label.partial,
-#newick .label.ancestor.partial {
+.newick-label.partial,
+.newick-label.ancestor.partial {
     -fx-background-color: #a9d;
     -fx-text-fill: #2b2b2b;
 }
 
-#newick .label:hover,
-#newick .label.ancestor:hover,
-#newick .label.selected:hover,
-#newick .label.ancestor.selected:hover,
-#newick .label.partial:hover,
-#newick .label.ancestor.partial:hover {
+.newick-label:hover,
+.newick-label.ancestor:hover,
+.newick-label.selected:hover,
+.newick-label.ancestor.selected:hover,
+.newick-label.partial:hover,
+.newick-label.ancestor.partial:hover {
     -fx-background-color: #a9d;
     -fx-text-fill: #2b2b2b;
 }

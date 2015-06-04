@@ -32,7 +32,6 @@ public class SinglePointLabel extends DefaultLabel {
         this.node = node;
 
         setCache(true);
-        getStyleClass().add("single");
         translateXProperty().bind(drawableNode.translateXProperty());
         translateYProperty().bind(drawableNode.translateYProperty());
 
@@ -64,6 +63,7 @@ public class SinglePointLabel extends DefaultLabel {
 
         final Label label = new Label(node.getContent());
         label.setCache(true);
+        label.getStyleClass().add("single-label");
 
         return label;
 
