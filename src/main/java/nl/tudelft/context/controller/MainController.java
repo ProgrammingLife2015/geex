@@ -223,10 +223,10 @@ public class MainController extends DefaultController<StackPane> {
         ViewController topView = topView();
         if (topView != lastTopView) {
             if (lastTopView != null) {
-                lastTopView.deactivate();
+                lastTopView.setActivated(false);
             }
             if (topView != null) {
-                topView.activate();
+                topView.setActivated(true);
             }
             lastTopView = topView;
         }
