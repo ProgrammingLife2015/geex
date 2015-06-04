@@ -1,7 +1,9 @@
 package nl.tudelft.context.controller.overlay;
 
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.StackPane;
 import nl.tudelft.context.controller.DefaultController;
+import nl.tudelft.context.controller.MainController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,16 +13,20 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 21-5-2015
  */
-public class OverlayController extends DefaultController<GridPane> {
+public class OverlayController extends DefaultController<StackPane> {
     /**
      * Create an overlay controller.
      */
-    public OverlayController() {
-        super(new GridPane());
+    public OverlayController(MainController mainController, StackPane stackPane) {
 
+        super(stackPane);
         setVisibility(false);
 
+        MenuItem toggleOverlay = mainController.getMenuController().getToggleOverlay();
+        toggleOverlay.setOnAction(event -> setVisibility(!getVisibilityProperty().getValue()));
+
         loadFXML("/application/overlay.fxml");
+
     }
 
     @Override

@@ -61,11 +61,6 @@ public class MainController extends DefaultController<StackPane> {
     MessageController messageController;
 
     /**
-     * Overlay controller with help functionality.
-     */
-    OverlayController overlayController;
-
-    /**
      * If Newick is lifted.
      */
     BooleanProperty newickLifted = new SimpleBooleanProperty(false);
@@ -107,17 +102,9 @@ public class MainController extends DefaultController<StackPane> {
         messageController = new MessageController();
         main.setBottom(messageController.getRoot());
 
-        overlayController = new OverlayController();
-        overlay.getChildren().add(overlayController.getRoot());
+        new OverlayController(this, overlay);
 
         setBaseView(new WelcomeController(this));
-    }
-
-    /**
-     * Toggle the current overlay.
-     */
-    public void toggleOverlay() {
-        overlayController.setVisibility(!overlayController.getVisibilityProperty().getValue());
     }
 
     /**

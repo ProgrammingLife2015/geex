@@ -27,6 +27,7 @@ public final class MenuController {
      */
     private MenuItem
             loadGenomeGraph,
+            toggleOverlay,
             zoomIn,
             zoomOut;
 
@@ -107,11 +108,13 @@ public final class MenuController {
      */
     private void initHelpMenu() {
 
+        toggleOverlay = createMenuItem("Shortcuts",
+                new KeyCodeCombination(KeyCode.F1),
+                null,
+                false);
+
         menuBar.getMenus().add(createMenu("_Help",
-                createMenuItem("Shortcuts",
-                        new KeyCodeCombination(KeyCode.F1),
-                        event -> mainController.toggleOverlay(),
-                        false)));
+                toggleOverlay));
 
     }
 
@@ -175,6 +178,14 @@ public final class MenuController {
      */
     public MenuItem getZoomOut() {
         return zoomOut;
+    }
+
+    /**
+     * Get the menu item to toggle the overlay.
+     * @return The menu item to toggle the overlay
+     */
+    public MenuItem getToggleOverlay() {
+        return toggleOverlay;
     }
 
 }
