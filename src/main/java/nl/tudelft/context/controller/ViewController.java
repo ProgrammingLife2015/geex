@@ -40,6 +40,8 @@ public abstract class ViewController<T extends Parent> extends DefaultController
 
     /**
      * Set active or not.
+     *
+     * @param active New activated state
      */
     public void setActivated(final boolean active) {
         activeProperty.set(active);
