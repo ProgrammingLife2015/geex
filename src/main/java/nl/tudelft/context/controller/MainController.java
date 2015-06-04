@@ -130,9 +130,7 @@ public class MainController extends DefaultController<StackPane> {
      */
     public void setView(final ViewController on, final ViewController viewController) {
 
-        if (newickLifted.getValue()) {
-            toggleNewick();
-        }
+        newickLifted.setValue(false);
 
         viewList.remove(viewList.indexOf(on) + 1, viewList.size());
         viewList.add(viewController);
@@ -177,9 +175,7 @@ public class MainController extends DefaultController<StackPane> {
      */
     public void toView(final ViewController viewController) {
 
-        if (newickLifted.getValue()) {
-            toggleNewick();
-        }
+        newickLifted.setValue(false);
 
         int index = viewList.indexOf(viewController) + 1;
         viewList.stream()
