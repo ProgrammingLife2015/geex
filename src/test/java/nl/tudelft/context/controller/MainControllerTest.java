@@ -1,7 +1,6 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
-import javafx.beans.property.BooleanProperty;
 import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.graph.Node;
@@ -17,7 +16,6 @@ import java.util.HashSet;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -194,6 +192,15 @@ public class MainControllerTest {
 
         mainController.setBaseView(baseView);
         assertEquals(baseView, mainController.topView());
+    }
+
+    /**
+     * Should return an exception.
+     */
+    @Test(expected = Exception.class)
+    public void testNoTopView() {
+        ViewController baseView = new BaseController(mock(Graph.class), mock(Node.class));
+        mainController.setBaseView(baseView);
 
         baseView.setVisibility(false);
         assertNull(mainController.topView());
