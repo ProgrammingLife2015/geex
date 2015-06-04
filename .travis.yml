@@ -7,9 +7,9 @@ before_install:
 - '[ "$TRAVIS_PULL_REQUEST" = "true" ] && git checkout HEAD^2 && echo "OCTOPULL_SHA=$(git rev-parse HEAD)"; true'
 - git clone -b travis `git config --get remote.origin.url` target/travis
 script:
-- 'if [ "$TRAVIS_PULL_REQUEST" = "true" ]; then mvn site -B; else true; fi;'
+#- 'if [ "$TRAVIS_PULL_REQUEST" = "true" ]; then mvn site -B; else true; fi;'
 - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && ! [ "$TRAVIS_BRANCH" = "master" ]; then mvn test -B; else true; fi;'
-- 'if [ "$TRAVIS_BRANCH" = "master" ]; then mvn site-deploy -B --settings target/travis/settings.xml; else true; fi;'
+- 'if [ "$TRAVIS_PULL_REQUEST" = "true" ]; then mvn site-deploy -B --settings target/travis/settings.xml; else true; fi;'
 notifications:
   webhooks:
   - http://octopull.rmhartog.me/api/travis/webhook
