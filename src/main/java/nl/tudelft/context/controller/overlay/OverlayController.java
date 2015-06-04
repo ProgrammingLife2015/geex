@@ -14,10 +14,14 @@ import java.util.ResourceBundle;
  * @since 21-5-2015
  */
 public class OverlayController extends DefaultController<StackPane> {
+
     /**
      * Create an overlay controller.
+     *
+     * @param mainController Main controller to get the menu
+     * @param stackPane      FXML stack pane
      */
-    public OverlayController(MainController mainController, StackPane stackPane) {
+    public OverlayController(final MainController mainController, final StackPane stackPane) {
 
         super(stackPane);
         setVisibility(false);
