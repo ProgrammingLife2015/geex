@@ -43,23 +43,27 @@ public class VariationGraph extends StackGraph {
 
         checkMutations();
 
-        variationStartEnd.entrySet().stream().forEach(variations::remove);
-        variationStartEnd.keySet().stream().forEach(variations::remove);
-        boolean check = true;
-        for (DefaultNode node : variations) {
-            if (variationStartEnd.containsKey(node) || variationStartEnd.containsValue(node)) {
-                check = false;
-                System.out.println("Faal " + node.getContent());
-            }
-        }
+        System.out.println(variationStartEnd.entrySet());
+//        variationStartEnd.entrySet().forEach(entry -> {
+//            variations.remove(entry.getKey());
+//            variations.remove(entry.getValue());
+//        });
+//
+//        variations.stream().forEach(variationStartEnd::remove);
 
-        if(check) {
-            variations.stream().forEach(this::removeVertex);
-            variationStartEnd.entrySet().forEach(entry -> {
-                addEdge(entry.getKey(), entry.getValue());
-                replace(entry.getKey(), new GraphNode(graph, entry.getKey(), entry.getValue()));
-            });
-        }
+//        variations.stream().forEach(this::removeVertex);
+//        variationStartEnd.entrySet().forEach(entry -> {
+//            addVertex(entry.getKey());
+//            addVertex(entry.getValue());
+//            addEdge(entry.getKey(), entry.getValue());
+//            replace(entry.getKey(), new GraphNode(graph, entry.getKey(), entry.getValue()));
+//        });
+
+        variations.stream().forEach(node -> replace(node, new VarNode(node)));
+        variationStartEnd.entrySet().forEach(node -> {
+            replace(node.getKey(), new VarNode(node.getKey()));
+            replace(node.getValue(), new VarNode(node.getValue()));
+        });
 
     }
 
@@ -88,7 +92,7 @@ public class VariationGraph extends StackGraph {
         List<DefaultNode> nextNodes =  getTargets(startNode);
 //        List<List<DefaultNode>> listSets = getFreshListSets(outDegreeOf(startNode));
 
-        int set = 0;
+//        int set = 0;
         int amountOfBranches = nextNodes.size() - 1;
         DefaultNode node = null;
 
