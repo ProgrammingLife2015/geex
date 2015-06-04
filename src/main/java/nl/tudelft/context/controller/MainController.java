@@ -187,15 +187,13 @@ public class MainController extends DefaultController<StackPane> {
     /**
      * Gets the controller at the top, which should be visible to the user.
      *
-     * @return the top ViewController that is visible; otherwise <tt>null</tt> if none is visible.
+     * @return the top ViewController that is visible; there should be always one visible.
      */
     public final ViewController topView() {
 
-        List<ViewController> visibleViews = viewList.filtered(
-                viewController -> viewController.getVisibilityProperty().getValue()
-        );
-
-        return visibleViews.get(visibleViews.size() - 1);
+        return viewList.stream()
+                .filter(viewController -> viewController.getVisibilityProperty().getValue())
+                .reduce((previous, current) -> current).get();
 
     }
 
