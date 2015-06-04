@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>Geex</name>
-    <url>http://maven.apache.org</url>
+    <url>http://github.com/Vennik/contextproject</url>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
