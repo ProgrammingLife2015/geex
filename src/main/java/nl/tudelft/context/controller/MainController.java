@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -143,6 +144,15 @@ public class MainController extends DefaultController<StackPane> {
     }
 
     /**
+     * Creates a stream of visible view controllers.
+     *
+     * @return A stream of visible view controllers
+     */
+    private Stream<ViewController> getVisibleStream() {
+        return viewList.stream().filter(viewController -> viewController.getVisibilityProperty().getValue());
+    }
+
+    /**
      * Set the previous view as view.
      */
     public final void previousView() {
@@ -150,8 +160,7 @@ public class MainController extends DefaultController<StackPane> {
         if (newickLifted.getValue()) {
             toggleNewick();
         } else {
-            viewList.stream()
-                    .filter(viewController -> viewController.getVisibilityProperty().getValue())
+            getVisibleStream()
                     .skip(1)
                     .reduce((previous, current) -> current)
                     .ifPresent(viewController -> viewController.setVisibility(false));
@@ -191,9 +200,7 @@ public class MainController extends DefaultController<StackPane> {
      */
     public final Optional<ViewController> topView() {
 
-        return viewList.stream()
-                .filter(viewController -> viewController.getVisibilityProperty().getValue())
-                .reduce((previous, current) -> current);
+        return getVisibleStream().reduce((previous, current) -> current);
 
     }
 
@@ -211,9 +218,7 @@ public class MainController extends DefaultController<StackPane> {
      * Toggle the newick view on top of everything else.
      */
     public void toggleNewick() {
-
         newickLifted.setValue(!newickLifted.getValue());
-
     }
 
     /**
