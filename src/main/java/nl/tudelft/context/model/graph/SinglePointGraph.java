@@ -38,30 +38,18 @@ public class SinglePointGraph extends StackGraph {
     public SinglePointGraph(final StackGraph graph) {
 
         this.graph = graph;
-
-        graph.vertexSet().stream()
-                .forEach(this::addVertex);
-
-        graph.edgeSet().stream()
-                .forEach(edge -> addEdge(
-                        graph.getEdgeSource(edge),
-                        graph.getEdgeTarget(edge)
-                ));
+        setGraph(graph);
 
         markSingle();
-
-        singlePart.forEach(this::removeVertex);
-        single.entrySet().forEach(entry -> {
-            addEdge(entry.getKey(), entry.getValue());
-            replace(entry.getKey(), new GraphNode(graph, entry.getKey(), entry.getValue()));
-        });
+        filterSingle();
+        replaceSingle();
 
     }
 
     /**
      * Mark all the single base mutations.
      */
-    public void markSingle() {
+    private void markSingle() {
 
         graph.vertexSet().stream()
                 .forEach(startNode -> {
@@ -87,15 +75,12 @@ public class SinglePointGraph extends StackGraph {
 
                 });
 
-
-        filterSingle();
-
     }
 
     /**
      * Remove duplicates in single start & and.
      */
-    public void filterSingle() {
+    private void filterSingle() {
 
         Map<DefaultNode, DefaultNode> newSingle = new HashMap<>();
 
@@ -114,6 +99,22 @@ public class SinglePointGraph extends StackGraph {
 
         single = newSingle;
         singlePart.addAll(overlay);
+
+    }
+
+    /**
+     * Replace all single parts with a graph node.
+     */
+    private void replaceSingle() {
+
+        singlePart.forEach(this::removeVertex);
+        single.forEach((start, end) -> {
+            setEdgeWeight(
+                    addEdge(start, end),
+                    incomingEdgesOf(start).stream().mapToDouble(graph::getEdgeWeight).sum()
+            );
+            replace(start, new GraphNode(graph, start, end));
+        });
 
     }
 

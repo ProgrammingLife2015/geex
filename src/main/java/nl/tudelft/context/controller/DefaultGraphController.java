@@ -111,7 +111,7 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
 
         sequences.getChildren().setAll(edgeList);
 
-        labelMap = nodeList.stream().collect(
+        labelMap = nodeList.parallelStream().collect(
                 Collectors.groupingBy(
                         DefaultLabel::currentColumn,
                         Collectors.mapping(Function.identity(), Collectors.toList())

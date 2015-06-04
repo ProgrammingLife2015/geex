@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.graph;
 
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.jgrapht.graph.DefaultWeightedEdge;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 31-5-2015
  */
-public abstract class DefaultGraph<T> extends DefaultDirectedGraph<T, DefaultEdge> {
+public abstract class DefaultGraph<T> extends DefaultDirectedWeightedGraph<T, DefaultWeightedEdge> {
 
     /**
      * Create a default graph.
      */
     public DefaultGraph() {
-        super(DefaultEdge.class);
+        super(DefaultWeightedEdge.class);
     }
 
     /**
@@ -28,7 +28,7 @@ public abstract class DefaultGraph<T> extends DefaultDirectedGraph<T, DefaultEdg
      */
     public List<T> getFirstNodes() {
 
-        return vertexSet().stream()
+        return vertexSet().parallelStream()
                 .filter(x -> this.inDegreeOf(x) == 0)
                 .collect(Collectors.toList());
 
@@ -72,8 +72,14 @@ public abstract class DefaultGraph<T> extends DefaultDirectedGraph<T, DefaultEdg
 
         addVertex(newNode);
 
-        getTargets(oldNode).stream().forEach(node -> addEdge(newNode, node));
-        getSources(oldNode).stream().forEach(node -> addEdge(node, newNode));
+        outgoingEdgesOf(oldNode).stream().forEach(edge -> setEdgeWeight(
+                addEdge(newNode, getEdgeTarget(edge)),
+                getEdgeWeight(edge)
+        ));
+        incomingEdgesOf(oldNode).stream().forEach(edge -> setEdgeWeight(
+                addEdge(getEdgeSource(edge), newNode),
+                getEdgeWeight(edge)
+        ));
 
         removeVertex(oldNode);
 
