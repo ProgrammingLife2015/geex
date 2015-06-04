@@ -191,19 +191,10 @@ public class MainControllerTest {
         ViewController baseView = new BaseController(mock(Graph.class), mock(Node.class));
 
         mainController.setBaseView(baseView);
-        assertEquals(baseView, mainController.topView());
-    }
-
-    /**
-     * Should return an exception.
-     */
-    @Test(expected = Exception.class)
-    public void testNoTopView() {
-        ViewController baseView = new BaseController(mock(Graph.class), mock(Node.class));
-        mainController.setBaseView(baseView);
+        assertEquals(baseView, mainController.topView().get());
 
         baseView.setVisibility(false);
-        assertNull(mainController.topView());
+        assertFalse(mainController.topView().isPresent());
     }
 
 }
