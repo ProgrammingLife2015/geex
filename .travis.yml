@@ -9,7 +9,7 @@ before_install:
 script:
 - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then mvn site -B; else true; fi;'
 - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && ! [ "$TRAVIS_BRANCH" = "master" ]; then mvn test -B; else true; fi;'
-- 'if [ "$TRAVIS_BRANCH" = "master" ]; then mvn site-deploy -B --settings target/travis/settings.xml; else true; fi;'
+- 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then mvn site-deploy -B --settings target/travis/settings.xml; else true; fi;'
 notifications:
   webhooks:
   - http://octopull.rmhartog.me/api/travis/webhook
