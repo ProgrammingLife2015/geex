@@ -53,13 +53,7 @@ public final class Breadcrumb extends HBox {
                 .map(viewController -> {
                     final Label label = new Label(viewController.getBreadcrumbName());
                     label.setOnMouseClicked(event -> mainController.toView(viewController));
-                    viewController.getVisibilityProperty().addListener((observable, oldValue, newValue) -> {
-                        if (newValue) {
-                            label.getStyleClass().remove("inactive");
-                        } else {
-                            label.getStyleClass().add("inactive");
-                        }
-                    });
+                    label.disableProperty().bind(viewController.getVisibilityProperty().not());
                     return new HBox(label);
                 })
                 .collect(Collectors.toList());
