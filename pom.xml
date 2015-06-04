@@ -16,6 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <main.class>nl.tudelft.context.App</main.class>
+        <github.global.server>github</github.global.server>
     </properties>
 
     <dependencies>
@@ -114,6 +115,25 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.11</version>
+                <configuration>
+                    <message>Creating site for ${project.version}</message>
+                    <repositoryName>geex.github.io</repositoryName>
+                    <repositoryOwner>geex</repositoryOwner>
+                    <branch>refs/heads/master</branch>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>site-deploy</phase>
                     </execution>
                 </executions>
             </plugin>
