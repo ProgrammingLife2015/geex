@@ -15,7 +15,7 @@ import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -73,7 +73,7 @@ public class MainController extends DefaultController<StackPane> {
     /**
      * The last top view that was seen.
      */
-    ViewController lastTopView;
+    Optional<ViewController> previousTopView = Optional.empty();
 
     /**
      * Init a controller at main.fxml.
@@ -150,11 +150,11 @@ public class MainController extends DefaultController<StackPane> {
         if (newickLifted.getValue()) {
             toggleNewick();
         } else {
-            List<ViewController> visibleViews = viewList.filtered(viewController ->
-                    viewController.getVisibilityProperty().getValue());
-            if (visibleViews.size() > 1) {
-                visibleViews.get(visibleViews.size() - 1).setVisibility(false);
-            }
+            viewList.stream()
+                    .filter(viewController -> viewController.getVisibilityProperty().getValue())
+                    .skip(1)
+                    .reduce((previous, current) -> current)
+                    .ifPresent(viewController -> viewController.setVisibility(false));
         }
 
         activateView();
@@ -187,13 +187,13 @@ public class MainController extends DefaultController<StackPane> {
     /**
      * Gets the controller at the top, which should be visible to the user.
      *
-     * @return the top ViewController that is visible; there should be always one visible.
+     * @return the an option to the top ViewController that is visible
      */
-    public final ViewController topView() {
+    public final Optional<ViewController> topView() {
 
         return viewList.stream()
                 .filter(viewController -> viewController.getVisibilityProperty().getValue())
-                .reduce((previous, current) -> current).get();
+                .reduce((previous, current) -> current);
 
     }
 
@@ -201,14 +201,10 @@ public class MainController extends DefaultController<StackPane> {
      * Activates the top visible ViewController.
      */
     public final void activateView() {
-        ViewController topView = topView();
-        if (topView != lastTopView) {
-            if (lastTopView != null) {
-                lastTopView.setActivated(false);
-            }
-            topView.setActivated(true);
-            lastTopView = topView;
-        }
+        Optional<ViewController> nextTopView = topView();
+        previousTopView.ifPresent(previousView -> previousView.setActivated(false));
+        nextTopView.ifPresent(nextView -> nextView.setActivated(true));
+        previousTopView = nextTopView;
     }
 
     /**
@@ -268,7 +264,7 @@ public class MainController extends DefaultController<StackPane> {
     /**
      * Show the graph.
      *
-     * @param on Controller to place it on
+     * @param on      Controller to place it on
      * @param sources Sources to display
      */
     public void showGraph(final NewickController on, final Set<String> sources) {
