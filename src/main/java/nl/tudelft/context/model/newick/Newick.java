@@ -55,9 +55,10 @@ public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     /**
      * Recursive toString helper for the tree.
+     *
      * @param node  the current node
      * @param level the level of the tree
-     * @return      a string representation of the node
+     * @return a string representation of the node
      */
     public String toString(final Node node, final int level) {
         StringBuilder res = new StringBuilder();

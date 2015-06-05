@@ -9,10 +9,10 @@ import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
 
 import java.net.URL;
-import nl.tudelft.context.model.graph.SinglePointGraph;
 import nl.tudelft.context.model.graph.VariationGraph;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -27,6 +27,19 @@ public final class GraphController extends DefaultGraphController {
      * Sources that are displayed in the graph.
      */
     Set<String> sources;
+
+    /**
+     * Sources that are displayed in the graph.
+     */
+    ObjectProperty<Set<String>> selectedSources = new SimpleObjectProperty<>(new HashSet<>());
+
+    /**
+     * Select controller to select strains.
+     */
+    SelectNewickController selectNewickController = new SelectNewickController(
+            this,
+            mainController.getWorkspace().getNewick()
+    );;
 
     /**
      * Property with graph map.
@@ -74,14 +87,6 @@ public final class GraphController extends DefaultGraphController {
 
         super.initialize(location, resources);
 
-        MenuController menuController = mainController.getMenuController();
-        MenuItem zoomIn = menuController.getZoomIn();
-        MenuItem zoomOut = menuController.getZoomOut();
-        zoomIn.setOnAction(event -> showGraph(new DrawableGraph(graphList.getFirst())));
-        zoomIn.disableProperty().bind(activeProperty.not());
-        zoomOut.setOnAction(event -> showGraph(new DrawableGraph(graphList.getLast())));
-        zoomOut.disableProperty().bind(activeProperty.not());
-
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<ResistanceMap> resistanceMapProperty = new SimpleObjectProperty<>();
@@ -98,11 +103,36 @@ public final class GraphController extends DefaultGraphController {
             loadResistance(newValue);
         });
 
+        selectedSources.addListener(event -> System.out.println(selectedSources));
+
         graphMapProperty.bind(graphMapIn);
         annotationMapProperty.bind(annotationMapIn);
         resistanceMapProperty.bind(resistanceMapIn);
 
         progressIndicator.visibleProperty().bind(graphMapProperty.isNull());
+
+        initMenu();
+
+    }
+
+    /**
+     * Bind the menu buttons.
+     */
+    private void initMenu() {
+
+        MenuController menuController = mainController.getMenuController();
+
+        MenuItem zoomIn = menuController.getZoomIn();
+        zoomIn.setOnAction(event -> showGraph(new DrawableGraph(graphList.getFirst())));
+        zoomIn.disableProperty().bind(activeProperty.not());
+
+        MenuItem zoomOut = menuController.getZoomOut();
+        zoomOut.setOnAction(event -> showGraph(new DrawableGraph(graphList.getLast())));
+        zoomOut.disableProperty().bind(activeProperty.not());
+
+        MenuItem toggleSelect = menuController.getToggleSelect();
+        toggleSelect.setOnAction(event -> mainController.setView(this, selectNewickController));
+        toggleSelect.disableProperty().bind(activeProperty.not());
 
     }
 
@@ -117,6 +147,15 @@ public final class GraphController extends DefaultGraphController {
 //        graphList.add(new SinglePointGraph(graphList.getLast()));
         DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
         showGraph(drawableGraph);
+    }
+
+    /**
+     * Update the selected sources.
+     *
+     * @param sources New selected sources.
+     */
+    public void updateSelectedSources(final Set<String> sources) {
+        selectedSources.setValue(sources);
     }
 
     /**

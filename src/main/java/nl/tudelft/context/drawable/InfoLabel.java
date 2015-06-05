@@ -78,6 +78,7 @@ public class InfoLabel extends DefaultLabel {
 
         final Label label = new Label(Integer.toString(node.getId()));
         label.setCache(true);
+        label.getStyleClass().add("info-label");
 
         final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
         label.setTooltip(percentages);

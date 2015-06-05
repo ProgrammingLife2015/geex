@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>Geex</name>
-    <url>http://maven.apache.org</url>
+    <url>http://github.com/Vennik/contextproject</url>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -16,7 +16,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <main.class>nl.tudelft.context.App</main.class>
+        <github.global.server>github</github.global.server>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>tmate</id>
+            <url>http://maven.tmatesoft.com/content/repositories/releases</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <!-- Testing -->
@@ -61,6 +69,11 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.tmatesoft.sqljet</groupId>
+            <artifactId>sqljet</artifactId>
+            <version>1.1.10</version>
         </dependency>
     </dependencies>
     <build>
@@ -116,6 +129,33 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.11</version>
+                <configuration>
+                    <message>Creating site for ${project.version}</message>
+                    <repositoryName>geex.github.io</repositoryName>
+                    <repositoryOwner>geex</repositoryOwner>
+                    <branch>refs/heads/master</branch>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>site-deploy</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.4</version>
+                <configuration>
+                    <skipDeploy>true</skipDeploy>
+                </configuration>
             </plugin>
         </plugins>
     </build>

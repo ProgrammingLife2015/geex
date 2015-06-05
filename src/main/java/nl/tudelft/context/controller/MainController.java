@@ -1,8 +1,6 @@
 package nl.tudelft.context.controller;
 
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,10 +13,11 @@ import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -61,16 +60,6 @@ public class MainController extends DefaultController<StackPane> {
     MessageController messageController;
 
     /**
-     * Overlay controller with help functionality.
-     */
-    OverlayController overlayController;
-
-    /**
-     * If Newick is lifted.
-     */
-    BooleanProperty newickLifted = new SimpleBooleanProperty(false);
-
-    /**
      * The MenuController that needs to be changed whenever the current view changes.
      */
     MenuController menuController;
@@ -78,7 +67,7 @@ public class MainController extends DefaultController<StackPane> {
     /**
      * The last top view that was seen.
      */
-    ViewController lastTopView;
+    Optional<ViewController> previousTopView = Optional.empty();
 
     /**
      * Init a controller at main.fxml.
@@ -107,17 +96,9 @@ public class MainController extends DefaultController<StackPane> {
         messageController = new MessageController();
         main.setBottom(messageController.getRoot());
 
-        overlayController = new OverlayController();
-        overlay.getChildren().add(overlayController.getRoot());
+        new OverlayController(this, overlay);
 
-        setBaseView(new WelcomeController(this));
-    }
-
-    /**
-     * Toggle the current overlay.
-     */
-    public void toggleOverlay() {
-        overlayController.setVisibility(!overlayController.getVisibilityProperty().getValue());
+        setBaseView(new WelcomeController(this, menuController.getWelcomeMenuItem()));
     }
 
     /**
@@ -142,10 +123,6 @@ public class MainController extends DefaultController<StackPane> {
      */
     public void setView(final ViewController on, final ViewController viewController) {
 
-        if (newickLifted.getValue()) {
-            toggleNewick();
-        }
-
         viewList.remove(viewList.indexOf(on) + 1, viewList.size());
         viewList.add(viewController);
         view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
@@ -156,19 +133,23 @@ public class MainController extends DefaultController<StackPane> {
     }
 
     /**
+     * Creates a stream of visible view controllers.
+     *
+     * @return A stream of visible view controllers
+     */
+    private Stream<ViewController> getVisibleStream() {
+        return viewList.stream().filter(viewController -> viewController.getVisibilityProperty().getValue());
+    }
+
+    /**
      * Set the previous view as view.
      */
     public final void previousView() {
 
-        if (newickLifted.getValue()) {
-            toggleNewick();
-        } else {
-            List<ViewController> visibleViews = viewList.filtered(viewController ->
-                    viewController.getVisibilityProperty().getValue());
-            if (visibleViews.size() > 1) {
-                visibleViews.get(visibleViews.size() - 1).setVisibility(false);
-            }
-        }
+        getVisibleStream()
+                .skip(1)
+                .reduce((previous, current) -> current)
+                .ifPresent(viewController -> viewController.setVisibility(false));
 
         activateView();
 
@@ -180,10 +161,6 @@ public class MainController extends DefaultController<StackPane> {
      * @param viewController View to go to
      */
     public void toView(final ViewController viewController) {
-
-        if (newickLifted.getValue()) {
-            toggleNewick();
-        }
 
         int index = viewList.indexOf(viewController) + 1;
         viewList.stream()
@@ -200,19 +177,11 @@ public class MainController extends DefaultController<StackPane> {
     /**
      * Gets the controller at the top, which should be visible to the user.
      *
-     * @return the top ViewController that is visible; otherwise <tt>null</tt> if none is visible.
+     * @return the an option to the top ViewController that is visible
      */
-    public final ViewController topView() {
+    public final Optional<ViewController> topView() {
 
-        List<ViewController> visibleViews = viewList.filtered(
-                viewController -> viewController.getVisibilityProperty().getValue()
-        );
-
-        if (!visibleViews.isEmpty()) {
-            return visibleViews.get(visibleViews.size() - 1);
-        } else {
-            return null;
-        }
+        return getVisibleStream().reduce((previous, current) -> current);
 
     }
 
@@ -220,25 +189,10 @@ public class MainController extends DefaultController<StackPane> {
      * Activates the top visible ViewController.
      */
     public final void activateView() {
-        ViewController topView = topView();
-        if (topView != lastTopView) {
-            if (lastTopView != null) {
-                lastTopView.deactivate();
-            }
-            if (topView != null) {
-                topView.activate();
-            }
-            lastTopView = topView;
-        }
-    }
-
-    /**
-     * Toggle the newick view on top of everything else.
-     */
-    public void toggleNewick() {
-
-        newickLifted.setValue(!newickLifted.getValue());
-
+        Optional<ViewController> nextTopView = topView();
+        previousTopView.ifPresent(previousView -> previousView.setActivated(false));
+        nextTopView.ifPresent(nextView -> nextView.setActivated(true));
+        previousTopView = nextTopView;
     }
 
     /**
@@ -289,7 +243,7 @@ public class MainController extends DefaultController<StackPane> {
     /**
      * Show the graph.
      *
-     * @param on Controller to place it on
+     * @param on      Controller to place it on
      * @param sources Sources to display
      */
     public void showGraph(final NewickController on, final Set<String> sources) {

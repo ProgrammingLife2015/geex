@@ -8,7 +8,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import nl.tudelft.context.workspace.Workspace;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -27,8 +26,11 @@ public final class MenuController {
      */
     private MenuItem
             loadGenomeGraph,
+            toggleOverlay,
+            toggleSelect,
             zoomIn,
-            zoomOut;
+            zoomOut,
+            welcomeMenuItem;
 
     /**
      * FXML menu bar.
@@ -57,11 +59,13 @@ public final class MenuController {
      */
     private void initFileMenu() {
 
+        welcomeMenuItem = createMenuItem("Select workspace folder",
+                new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN),
+                null,
+                false);
+
         menuBar.getMenus().add(createMenu("_File",
-                createMenuItem("Select workspace folder",
-                        new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN),
-                        event -> Workspace.chooseWorkspace(mainController),
-                        false),
+                welcomeMenuItem,
                 createMenuItem("Exit", null,
                         event -> mainController.exitProgram(),
                         false)));
@@ -87,15 +91,17 @@ public final class MenuController {
                 null,
                 true);
 
+        toggleSelect = createMenuItem("Show Phylogenetic tree",
+                new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN),
+                null,
+                true);
+
         menuBar.getMenus().add(createMenu("_Navigate",
                 createMenuItem("Previous view",
                         new KeyCodeCombination(KeyCode.ESCAPE),
                         event -> mainController.previousView(),
                         false),
-                createMenuItem("Show Phylogenetic tree",
-                        new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN),
-                        event -> mainController.toggleNewick(),
-                        false),
+                toggleSelect,
                 loadGenomeGraph,
                 zoomIn,
                 zoomOut));
@@ -107,11 +113,13 @@ public final class MenuController {
      */
     private void initHelpMenu() {
 
+        toggleOverlay = createMenuItem("Shortcuts",
+                new KeyCodeCombination(KeyCode.F1),
+                null,
+                false);
+
         menuBar.getMenus().add(createMenu("_Help",
-                createMenuItem("Shortcuts",
-                        new KeyCodeCombination(KeyCode.F1),
-                        event -> mainController.toggleOverlay(),
-                        false)));
+                toggleOverlay));
 
     }
 
@@ -154,7 +162,17 @@ public final class MenuController {
     }
 
     /**
+     * Get the menu item to select a workspace.
+     *
+     * @return MenuItem for the welcomeController.
+     */
+    public MenuItem getWelcomeMenuItem() {
+        return welcomeMenuItem;
+    }
+
+    /**
      * Get the menu item to load the genome graph.
+     *
      * @return The menu item to load the genome graph
      */
     public MenuItem getLoadGenomeGraph() {
@@ -163,6 +181,7 @@ public final class MenuController {
 
     /**
      * Get the menu item to zoom in the graph.
+     *
      * @return The menu item to zoom in the graph
      */
     public MenuItem getZoomIn() {
@@ -171,10 +190,29 @@ public final class MenuController {
 
     /**
      * Get the menu item to zoom out the graph.
+     *
      * @return The menu item to zoom out the graph
      */
     public MenuItem getZoomOut() {
         return zoomOut;
+    }
+
+    /**
+     * Get the menu item to toggle the overlay.
+     *
+     * @return The menu item to toggle the overlay
+     */
+    public MenuItem getToggleOverlay() {
+        return toggleOverlay;
+    }
+
+    /**
+     * Get the menu item to toggle the select view.
+     *
+     * @return The menu item to toggle the select view
+     */
+    public MenuItem getToggleSelect() {
+        return toggleSelect;
     }
 
 }
