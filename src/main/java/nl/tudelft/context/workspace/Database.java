@@ -46,7 +46,10 @@ public class Database {
         if (instance == null) {
             synchronized (Database.class) {
                 if (instance == null) {
-                    instance = new Database();
+                    Database database = new Database();
+                    database.open();
+
+                    instance = database;
                 }
             }
         }
