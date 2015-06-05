@@ -78,10 +78,16 @@ public class Database {
         return out;
     }
 
-    private void createTables() throws SqlJetException {
+    private void open() throws SqlJetException {
+        db = SqlJetDb.open(new File(DB_FILE), true);
+
+        db.runTransaction(db1 -> {
+            db1.getOptions().setUserVersion(1);
+            return true;
+        }, SqlJetTransactionMode.WRITE);
+
         String workspaceTable = "CREATE TABLE workspace (`location` TEXT NOT NULL, `name` TEXT NOT NULL)";
         String workspaceIndex = "CREATE INDEX location_index ON workspace(location,name)";
-        String workspaceRowIndex = "CREATE INDEX row_index ON workspace(rowid)";
 
         if (db.getTable("workspace") == null) {
             db.runWriteTransaction(arg0 -> {
