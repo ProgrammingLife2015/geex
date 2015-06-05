@@ -28,6 +28,7 @@ public final class MenuController {
     private MenuItem
             loadGenomeGraph,
             toggleOverlay,
+            toggleSelect,
             zoomIn,
             zoomOut;
 
@@ -88,15 +89,17 @@ public final class MenuController {
                 null,
                 true);
 
+        toggleSelect = createMenuItem("Show Phylogenetic tree",
+                new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN),
+                null,
+                true);
+
         menuBar.getMenus().add(createMenu("_Navigate",
                 createMenuItem("Previous view",
                         new KeyCodeCombination(KeyCode.ESCAPE),
                         event -> mainController.previousView(),
                         false),
-                createMenuItem("Show Phylogenetic tree",
-                        new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN),
-                        null,
-                        false),
+                toggleSelect,
                 loadGenomeGraph,
                 zoomIn,
                 zoomOut));
@@ -158,6 +161,7 @@ public final class MenuController {
 
     /**
      * Get the menu item to load the genome graph.
+     *
      * @return The menu item to load the genome graph
      */
     public MenuItem getLoadGenomeGraph() {
@@ -166,6 +170,7 @@ public final class MenuController {
 
     /**
      * Get the menu item to zoom in the graph.
+     *
      * @return The menu item to zoom in the graph
      */
     public MenuItem getZoomIn() {
@@ -174,6 +179,7 @@ public final class MenuController {
 
     /**
      * Get the menu item to zoom out the graph.
+     *
      * @return The menu item to zoom out the graph
      */
     public MenuItem getZoomOut() {
@@ -182,10 +188,20 @@ public final class MenuController {
 
     /**
      * Get the menu item to toggle the overlay.
+     *
      * @return The menu item to toggle the overlay
      */
     public MenuItem getToggleOverlay() {
         return toggleOverlay;
+    }
+
+    /**
+     * Get the menu item to toggle the select view.
+     *
+     * @return The menu item to toggle the select view
+     */
+    public MenuItem getToggleSelect() {
+        return toggleSelect;
     }
 
 }

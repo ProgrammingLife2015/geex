@@ -8,7 +8,6 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.ScrollPane;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.model.newick.Newick;
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 8-5-2015
  */
-public final class NewickController extends ViewController<ScrollPane> {
+public final class NewickController extends DefaultNewickController {
 
     /**
      * ProgressIndicator to show when the tree is loading.
@@ -72,8 +71,6 @@ public final class NewickController extends ViewController<ScrollPane> {
      */
     public NewickController(final MainController mainController,
                             final ReadOnlyObjectProperty<Newick> newickIn) {
-
-        super(new ScrollPane());
 
         this.mainController = mainController;
 
