@@ -15,6 +15,7 @@ import org.tmatesoft.sqljet.core.SqlJetException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static java.util.stream.Collectors.toList;
@@ -67,13 +68,14 @@ public class WelcomeController extends ViewController<GridPane> {
 
     private void reloadListView() {
         try {
-            previous.getItems().setAll(Database.instance()
-                    .getList("workspace", new String[]{"location", "name"}, NO_OF_PREVIOUS_WORKSPACES)
-                    .stream().map(row -> {
-                        Label label = new Label(row[1]);
-                        label.setOnMouseClicked(event -> loadWorkspace(new File(row[0])));
-                        return label;
-                    }).collect(toList()));
+            final List<String[]> workspaces = Database.instance()
+                    .getList("workspace", new String[]{"location", "name"}, NO_OF_PREVIOUS_WORKSPACES);
+
+            previous.getItems().setAll(workspaces.stream()
+                    .map(row -> new Label(row[1])).collect(toList()));
+
+            previous.setOnMouseClicked(event -> previous.getSelectionModel().getSelectedIndices().stream()
+                    .forEach(x -> loadWorkspace(new File(workspaces.get(x)[0]))));
 
             if (previous.getItems().size() == 0) {
                 previous.setDisable(true);
