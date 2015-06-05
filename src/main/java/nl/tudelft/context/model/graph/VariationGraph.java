@@ -36,7 +36,7 @@ public class VariationGraph extends StackGraph {
                 .forEach(this::addVertex);
 
         graph.edgeSet().stream()
-                .forEach(edge -> addEdge(
+                .forEach(edge -> this.addEdge(
                         graph.getEdgeSource(edge),
                         graph.getEdgeTarget(edge)
                 ));
@@ -44,26 +44,20 @@ public class VariationGraph extends StackGraph {
         checkMutations();
 
         System.out.println(variationStartEnd.entrySet());
-//        variationStartEnd.entrySet().forEach(entry -> {
-//            variations.remove(entry.getKey());
-//            variations.remove(entry.getValue());
-//        });
-//
-//        variations.stream().forEach(variationStartEnd::remove);
 
-//        variations.stream().forEach(this::removeVertex);
-//        variationStartEnd.entrySet().forEach(entry -> {
-//            addVertex(entry.getKey());
-//            addVertex(entry.getValue());
-//            addEdge(entry.getKey(), entry.getValue());
-//            replace(entry.getKey(), new GraphNode(graph, entry.getKey(), entry.getValue()));
-//        });
-
-        variations.stream().forEach(node -> replace(node, new VarNode(node)));
-        variationStartEnd.entrySet().forEach(node -> {
-            replace(node.getKey(), new VarNode(node.getKey()));
-            replace(node.getValue(), new VarNode(node.getValue()));
+        variations.stream().forEach(node -> {
+            replace(node, new VarNode(node));
+            System.out.println("Variations node " + node);
         });
+//        variationStartEnd.entrySet().forEach(node -> {
+//            System.out.println(containsVertex(node.getKey()) && containsVertex(node.getValue()));
+//            if(containsVertex(node.getKey()) && containsVertex(node.getValue())) {
+////                replace(node.getKey(), new VarNode(node.getKey()));
+////                replace(node.getValue(), new VarNode(node.getValue()));
+//                replace(node.getKey(), new Node(0, new TreeSet<>(), 0, 0, "A"));
+//                replace(node.getValue(), new VarNode(node.getValue()));
+//            }
+//        });
 
     }
 
@@ -79,7 +73,7 @@ public class VariationGraph extends StackGraph {
         nodeSet.forEach((startNode) -> {
             if (!variations.contains(startNode)) {
                 DefaultNode temp = checkVariation(startNode);
-                if(!variations.contains(temp)) {
+                if (!variations.contains(temp)) {
                     variationStartEnd.put(startNode, temp);
                 }
             }
@@ -106,11 +100,11 @@ public class VariationGraph extends StackGraph {
 //                listSets.get(set).add(node);
 //                set = getNextSetInt(set, graph, startNode);
 
-                Set<DefaultEdge> setOfEdges = outgoingEdgesOf(node);
-                if(setOfEdges.size() > 1) {
+                List<DefaultNode> setOfNextNodes = getTargets(node);
+                if(setOfNextNodes.size() > 1) {
                     nextNodes.add(checkVariation(node));
-                } else if(!setOfEdges.isEmpty() || !nextNodes.isEmpty()){
-                    setOfEdges.stream().map(this::getEdgeTarget).collect(Collectors.toList()).forEach(nextNodes::add);
+                } else if(!setOfNextNodes.isEmpty() || !nextNodes.isEmpty()){
+                    nextNodes.addAll(setOfNextNodes);
                 }
 
             } else {
@@ -128,56 +122,6 @@ public class VariationGraph extends StackGraph {
         return node;
 
     }
-
-    /**
-     * Recursively checks a variation from start till end.
-     *
-     * @param startNode the node where a variation starts.
-     */
-//    private void checkVariation(final DefaultNode startNode) {
-//
-//        List<DefaultNode> nextNodes =  getTargets(startNode);
-//        List<List<DefaultNode>> listSets = getFreshListSets(graph.outDegreeOf(startNode));
-//
-//        int set = 0;
-//        int amountOfBranches = nextNodes.size() - 1;
-//
-//        while (!nextNodes.isEmpty()) {
-//
-//            DefaultNode node = nextNodes.remove(0);
-//
-//            if (!checkAllSets(listSets, node)) {
-//
-//                variations.add(node);
-//                listSets.get(set).add(node);
-//                set = getNextSetInt(set, graph, startNode);
-//
-//                Set<DefaultEdge> setOfEdges = graph.outgoingEdgesOf(node);
-//                if(setOfEdges.size() > 1) {
-//                    amountOfBranches += setOfEdges.size() - 1;
-//                }
-//
-//                if (!nextNodes.isEmpty()) {
-//                    setOfEdges.stream().map(graph::getEdgeTarget).collect(Collectors.toList()).forEach(nextNodes::add);
-//                } else {
-//                    variations.remove(node);
-//                    variationStartEnd.put(startNode, node);
-//                }
-//
-//            } else {
-//
-//                amountOfBranches--;
-//                if(amountOfBranches == 0) {
-//                    variations.remove(node);
-//                    variationStartEnd.put(startNode, node);
-//                    break;
-//                }
-//
-//            }
-//
-//        }
-//
-//    }
 
     /**
      * Returns and int set that will determine which set to add the next node to.
