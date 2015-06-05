@@ -137,16 +137,13 @@ public class Workspace {
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
         annotationFile = findFile(files, ".ann.csv");
-
-        save();
     }
 
-    private void save() {
-        try {
-            Database.instance().replace("workspace", this.directory.getAbsolutePath(), this.directory.getName());
-        } catch (SqlJetException e) {
-            e.printStackTrace();
-        }
+    /**
+     * Save the current workspace to the database.
+     */
+    public void save() throws SqlJetException{
+        Database.instance().replace("workspace", this.directory.getAbsolutePath(), this.directory.getName());
     }
 
     /**

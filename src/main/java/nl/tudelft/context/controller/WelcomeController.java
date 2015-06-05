@@ -69,12 +69,13 @@ public class WelcomeController extends ViewController<GridPane> {
         try {
             Workspace workspace = new Workspace(new File(directory));
             workspace.load();
+            workspace.save();
 
             mainController.setWorkspace(workspace);
             mainController.setBaseView(new NewickController(mainController,
                     mainController.getMenuController().getLoadGenomeGraph(), workspace.getNewick()));
             mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
-        } catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException | SqlJetException ex) {
             mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
         }
     }
