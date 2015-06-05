@@ -49,7 +49,6 @@ public abstract class DefaultNewickController extends ViewController<ScrollPane>
     public DefaultNewickController(final ReadOnlyObjectProperty<Newick> newickIn) {
 
         super(new ScrollPane());
-
         this.newickIn = newickIn;
 
     }

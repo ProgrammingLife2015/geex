@@ -210,12 +210,14 @@
     -fx-text-fill: #2b2b2b;
 }
 
-.newick-label.partial,
-.newick-label.ancestor.partial {
-    -fx-background-color: #a9d;
+#newick-select .newick-label.selected,
+#newick-select .newick-label.ancestor.selected {
+    -fx-background-color: #dd5b58;
     -fx-text-fill: #2b2b2b;
 }
 
+.newick-label.partial,
+.newick-label.ancestor.partial,
 .newick-label:hover,
 .newick-label.ancestor:hover,
 .newick-label.selected:hover,

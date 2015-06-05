@@ -44,7 +44,6 @@ public final class NewickController extends DefaultNewickController {
                             final ReadOnlyObjectProperty<Newick> newickIn) {
 
         super(newickIn);
-
         this.mainController = mainController;
 
         loadFXML("/application/newick.fxml");
@@ -61,8 +60,6 @@ public final class NewickController extends DefaultNewickController {
         List<Label> nodeList = newick.vertexSet().stream()
                 .map(NewickLabel::new)
                 .collect(Collectors.toList());
-
-        nodeList.forEach(l -> l.getStyleClass().add("newick-label"));
 
         this.newick.getChildren().addAll(edgeList);
         this.newick.getChildren().addAll(nodeList);
