@@ -93,15 +93,15 @@ public class Database {
     }
 
     public void insert(final String tableName, final String... values) throws SqlJetException {
-        db.beginTransaction(SqlJetTransactionMode.READ_ONLY);
+        db.beginTransaction(SqlJetTransactionMode.WRITE);
         ISqlJetTable table = db.getTable(tableName);
 
         ISqlJetCursor cursor = table.lookup("location_index", (Object[]) values);
 
-        if (cursor.getValue(0) != null) {
+        if (cursor.getRowCount() != 0) {
             System.out.println("Already got this one!");
-            db.commit();
-            return;
+            cursor.delete();
+            cursor.close();
         }
         db.commit();
 
