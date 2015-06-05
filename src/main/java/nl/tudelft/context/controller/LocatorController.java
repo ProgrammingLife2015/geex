@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -42,14 +43,25 @@ public final class LocatorController extends DefaultController<Pane> {
     /**
      * Label map by column.
      */
-    Map<Integer, Integer> lengthMap;
+    TreeMap<Integer, Integer> treeMap;
+
+    /**
+     * Location boundaries.
+     */
+    int minLocation, maxLocation;
+
+    /**
+     * Location property.
+     */
+    ObjectProperty<Location> locationProperty;
 
     /**
      * Construct the LocatorController.
      *
-     * @param locator   The locator pane.
-     * @param scroll    The scroll pane.
-     * @param labelsMap The map with labels.
+     * @param locator          The locator pane
+     * @param scroll           The scroll pane
+     * @param locationProperty Location property of view
+     * @param labelsMap        The map with labels
      */
     public LocatorController(final Pane locator, final ScrollPane scroll,
                              final ObjectProperty<Location> locationProperty,
@@ -59,17 +71,21 @@ public final class LocatorController extends DefaultController<Pane> {
 
         this.locator = locator;
         this.scroll = scroll;
+        this.locationProperty = locationProperty;
 
-        locationProperty.addListener((observable, oldValue, newValue) -> setPosition(newValue));
-
-        lengthMap = labelsMap.entrySet().stream()
+        treeMap = labelsMap.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream()
                                 .map(DefaultLabel::getNode)
                                 .mapToInt(DefaultNode::getLength)
-                                .max().getAsInt()
+                                .max().getAsInt(),
+                        (a, b) -> a,
+                        TreeMap::new
                 ));
+
+        minLocation = treeMap.firstKey();
+        maxLocation = treeMap.lastKey();
 
         loadFXML("/application/locator.fxml");
 
@@ -77,6 +93,9 @@ public final class LocatorController extends DefaultController<Pane> {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
+
+        locationProperty.addListener((observable, oldValue, newValue) -> setPosition(newValue));
+
     }
 
     /**
@@ -86,11 +105,14 @@ public final class LocatorController extends DefaultController<Pane> {
      */
     public void setPosition(final Location location) {
 
-        int start = location.getStart();
-        int end = location.getEnd();
+        int start = Math.max(minLocation, location.getStart() + 1);
+        int end = Math.min(maxLocation, location.getEnd() - 1);
 
-        locatorIndicator.setTranslateX(start);
-        locatorIndicator.setWidth(end - start);
+        int startPosition = treeMap.get(start);
+        int endPosition = treeMap.get(end);
+
+        locatorIndicator.setTranslateX(startPosition);
+        locatorIndicator.setWidth(endPosition - startPosition);
 
     }
 }
