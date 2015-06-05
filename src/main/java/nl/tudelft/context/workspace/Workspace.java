@@ -82,12 +82,10 @@ public class Workspace {
      *
      * @param directory The workspace root
      */
-    public Workspace(final File directory) {
+    public Workspace(final File directory) throws FileNotFoundException {
         this.directory = directory;
-        if (this.directory == null) {
-            files = new File[0];
-
-            return;
+        if (this.directory == null || ! this.directory.exists()) {
+            throw new FileNotFoundException();
         }
         files = this.directory.listFiles();
     }

@@ -61,14 +61,19 @@ public class WelcomeController extends ViewController<GridPane> {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
+        reloadListView();
+        load.setOnMouseClicked(event -> selectWorkspace(mainController.getRoot().getScene().getWindow()));
+    }
+
+    private void reloadListView() {
         try {
             previous.getItems().setAll(Database.instance()
                     .getList("workspace", new String[]{"location", "name"}, NO_OF_PREVIOUS_WORKSPACES)
                     .stream().map(row -> {
-                Label label = new Label(row[1]);
-                label.setOnMouseClicked(event -> loadWorkspace(new File(row[0])));
-                return label;
-            }).collect(toList()));
+                        Label label = new Label(row[1]);
+                        label.setOnMouseClicked(event -> loadWorkspace(new File(row[0])));
+                        return label;
+                    }).collect(toList()));
 
             if (previous.getItems().size() == 0) {
                 previous.setDisable(true);
@@ -77,8 +82,6 @@ public class WelcomeController extends ViewController<GridPane> {
             mainController.displayMessage(MessageController.FAIL_LOAD_PREVIOUS);
             // Continue, this doesn't break the software.
         }
-
-        load.setOnMouseClicked(event -> selectWorkspace(mainController.getRoot().getScene().getWindow()));
     }
 
     private void selectWorkspace(final Window window) {
@@ -91,6 +94,7 @@ public class WelcomeController extends ViewController<GridPane> {
 
     /**
      * Load the workspace from the directory.
+     *
      * @param directory Directory to set as workspace.
      */
     private void loadWorkspace(final File directory) {
@@ -104,6 +108,12 @@ public class WelcomeController extends ViewController<GridPane> {
             mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
         } catch (FileNotFoundException | SqlJetException ex) {
             mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
+            try {
+                Database.instance().remove("workspace", directory.getAbsolutePath());
+                reloadListView();
+            } catch (SqlJetException ignored) {
+
+            }
         }
     }
 
