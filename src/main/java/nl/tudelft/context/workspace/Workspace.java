@@ -142,8 +142,9 @@ public class Workspace {
 
     /**
      * Save the current workspace to the database.
+     * @throws SqlJetException Saving failed.
      */
-    public void save() throws SqlJetException{
+    public void save() throws SqlJetException {
         Database.instance().replace("workspace", this.directory.getAbsolutePath(), this.directory.getName());
     }
 
