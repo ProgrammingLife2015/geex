@@ -12,6 +12,7 @@ import javafx.scene.control.ScrollPane;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.model.newick.Newick;
+import nl.tudelft.context.model.newick.selection.None;
 
 import java.net.URL;
 import java.util.List;
@@ -26,10 +27,6 @@ import java.util.stream.Collectors;
  */
 public final class NewickController extends ViewController<ScrollPane> {
 
-    /**
-     * Tells whether the controller is currently active (top view).
-     */
-    boolean active = false;
     /**
      * ProgressIndicator to show when the tree is loading.
      */
@@ -53,11 +50,6 @@ public final class NewickController extends ViewController<ScrollPane> {
     ObjectProperty<Newick> newickObjectProperty;
 
     /**
-     * The menu item that initiates loadGraph().
-     */
-    MenuItem menuItem;
-
-    /**
      * The current selection of the tree.
      */
     Set<String> selection;
@@ -76,16 +68,14 @@ public final class NewickController extends ViewController<ScrollPane> {
      * Init a controller at newick.fxml.
      *
      * @param mainController MainController for the application
-     * @param menuItem       MenuItem for the application
      * @param newickIn       Newick object from the workspace, might not be loaded.
      */
-    public NewickController(final MainController mainController, final MenuItem menuItem,
+    public NewickController(final MainController mainController,
                             final ReadOnlyObjectProperty<Newick> newickIn) {
 
         super(new ScrollPane());
 
         this.mainController = mainController;
-        this.menuItem = menuItem;
 
         this.newickIn = newickIn;
 
@@ -140,12 +130,16 @@ public final class NewickController extends ViewController<ScrollPane> {
                 .map(NewickLabel::new)
                 .collect(Collectors.toList());
 
+        nodeList.forEach(l -> l.getStyleClass().add("newick-label"));
+
         this.newick.getChildren().addAll(edgeList);
         this.newick.getChildren().addAll(nodeList);
 
-        menuItem.setOnAction(event -> loadGraph(newick));
-        newick.getRoot().getSelectionProperty().addListener((observable, oldValue, newValue) ->
-                menuItem.setDisable(!(active && newValue.isAny())));
+        MenuItem loadGenomeGraph = mainController.getMenuController().getLoadGenomeGraph();
+        loadGenomeGraph.setOnAction(event -> loadGraph(newick));
+        loadGenomeGraph.disableProperty().bind(
+                newick.getRoot().getSelectionProperty().isEqualTo(new None()).or(activeProperty.not())
+        );
 
         mainController.displayMessage(MessageController.SUCCESS_LOAD_TREE);
     }
@@ -162,7 +156,8 @@ public final class NewickController extends ViewController<ScrollPane> {
                 graphController = new GraphController(mainController,
                         newSelection,
                         mainController.getWorkspace().getGraph(),
-                        mainController.getWorkspace().getAnnotation());
+                        mainController.getWorkspace().getAnnotation(),
+                        mainController.getWorkspace().getResistance());
                 mainController.setView(this, graphController);
             } else {
                 mainController.toView(graphController);
@@ -174,25 +169,6 @@ public final class NewickController extends ViewController<ScrollPane> {
     @Override
     public String getBreadcrumbName() {
         return "Phylogenetic tree";
-    }
-
-    @Override
-    public void activate() {
-        active = true;
-        if (newickObjectProperty.isNotNull().get()) {
-            menuItem.setDisable(
-                    !newickObjectProperty
-                            .get()
-                            .getRoot()
-                            .getSelection()
-                            .isAny());
-        }
-    }
-
-    @Override
-    public void deactivate() {
-        active = false;
-        menuItem.setDisable(true);
     }
 
 }

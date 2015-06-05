@@ -1,7 +1,8 @@
 package nl.tudelft.context.drawable;
 
 import nl.tudelft.context.model.graph.DefaultGraph;
-import nl.tudelft.context.model.graph.Graph;
+import nl.tudelft.context.model.graph.DefaultNode;
+import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,31 +23,31 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
     /**
      * Graph that is drawn.
      */
-    private Graph graph;
+    private StackGraph graph;
 
     /**
      * Create a wrapper around a graph to draw the graph.
      *
      * @param graph Graph to draw
      */
-    public DrawableGraph(final Graph graph) {
+    public DrawableGraph(final StackGraph graph) {
 
         this.graph = graph;
 
-        HashMap<Integer, DrawableNode> added = new HashMap<>();
+        HashMap<DefaultNode, DrawableNode> added = new HashMap<>();
 
         graph.vertexSet().stream()
                 .forEach(node -> {
                     DrawableNode drawableNode = new DrawableNode(node);
-                    added.put(node.getId(), drawableNode);
+                    added.put(node, drawableNode);
                     addVertex(drawableNode);
                 });
 
         graph.edgeSet().stream()
-                .forEach(edge -> addEdge(
-                        added.get(graph.getEdgeSource(edge).getId()),
-                        added.get(graph.getEdgeTarget(edge).getId())
-                ));
+                .forEach(edge -> setEdgeWeight(addEdge(
+                        added.get(graph.getEdgeSource(edge)),
+                        added.get(graph.getEdgeTarget(edge))
+                ), graph.getEdgeWeight(edge)));
 
         position();
 
@@ -107,7 +108,7 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
      *
      * @return Graph that is being drawn
      */
-    public Graph getGraph() {
+    public StackGraph getGraph() {
         return graph;
     }
 

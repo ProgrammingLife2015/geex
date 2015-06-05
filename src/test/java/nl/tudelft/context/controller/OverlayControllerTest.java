@@ -1,6 +1,7 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.scene.layout.StackPane;
 import nl.tudelft.context.controller.overlay.OverlayController;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class OverlayControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
 
-        overlayController = new OverlayController();
+        overlayController = new OverlayController(new MainController(), new StackPane());
 
     }
 

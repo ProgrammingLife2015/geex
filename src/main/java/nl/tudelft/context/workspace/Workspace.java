@@ -12,6 +12,8 @@ import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.NewickParser;
+import nl.tudelft.context.model.resistance.ResistanceMap;
+import nl.tudelft.context.model.resistance.ResistanceParser;
 import nl.tudelft.context.service.LoadService;
 import org.tmatesoft.sqljet.core.SqlJetException;
 
@@ -56,6 +58,11 @@ public class Workspace {
     File annotationFile;
 
     /**
+     * The resistance file in the workspace.
+     */
+    File resistanceFile;
+
+    /**
      * The service used for parsing a Newick.
      */
     LoadService<Newick> loadNewickService;
@@ -69,6 +76,11 @@ public class Workspace {
      * The service used for parsing an Annotation.
      */
     LoadService<AnnotationMap> loadAnnotationService;
+
+    /**
+     * The service used for parsing the Resistance.
+     */
+    LoadService<ResistanceMap> loadResistanceService;
 
     /**
      * Create a new workspace on the directory.
@@ -103,8 +115,7 @@ public class Workspace {
             mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
 
             mainController.setWorkspace(workspace);
-            mainController.setBaseView(new NewickController(mainController,
-                    mainController.getMenuController().getLoadGenomeGraph(), workspace.getNewick()));
+            mainController.setBaseView(new NewickController(mainController, workspace.getNewick()));
         } catch (FileNotFoundException | SqlJetException e) {
             mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
         }
@@ -138,6 +149,7 @@ public class Workspace {
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
         annotationFile = findFile(files, ".ann.csv");
+        resistanceFile = findFile(files, ".imm.csv");
     }
 
     /**
@@ -155,10 +167,12 @@ public class Workspace {
         loadNewickService = new LoadService<>(NewickParser.class, nwkFile);
         loadAnnotationService = new LoadService<>(AnnotationParser.class, annotationFile);
         loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
+        loadResistanceService = new LoadService<>(ResistanceParser.class, resistanceFile);
 
         loadNewickService.start();
         loadAnnotationService.start();
         loadGraphService.start();
+        loadResistanceService.start();
     }
 
     /**
@@ -187,4 +201,13 @@ public class Workspace {
     public ReadOnlyObjectProperty<GraphMap> getGraph() {
         return loadGraphService.valueProperty();
     }
+
+    /**
+     * Get the ResistanceMap Property.
+     * @return A ReadOnlyObjectProperty containing, or not yet containing a ResistanceMap.
+     */
+    public ReadOnlyObjectProperty<ResistanceMap> getResistance() {
+        return loadResistanceService.valueProperty();
+    }
+
 }
