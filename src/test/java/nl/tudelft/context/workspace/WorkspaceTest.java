@@ -14,24 +14,28 @@ import static junit.framework.TestCase.assertEquals;
  */
 public class WorkspaceTest {
 
-    @Test
+    @Test(expected = FileNotFoundException.class)
     public void testNullDirectory() throws Exception {
-        Workspace workspace = new Workspace(null);
-
-        assertEquals(null, workspace.directory);
+        new Workspace(null);
     }
 
     @Test
     public void testDirectory() throws Exception {
-        File file = new File("mydir");
+        File file = File.createTempFile("mydir","wp");
         Workspace workspace = new Workspace(file);
 
         assertEquals(file, workspace.directory);
     }
 
+    @Test(expected = FileNotFoundException.class)
+    public void testNoDirectory() throws Exception {
+        File file = new File("mydir");
+        new Workspace(file);
+    }
+
     @Test
     public void testOneGraph() throws Exception {
-        Workspace workspace = new Workspace(null);
+        Workspace workspace = new Workspace(File.createTempFile("mydir", "workspace"));
         File[] pathList = new File[5];
 
         File edgePath = new File("mygraph.edge.graph");
