@@ -2,8 +2,6 @@ package nl.tudelft.context.controller;
 
 
 import de.saxsys.javafx.test.JfxRunner;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -32,7 +30,6 @@ public class NewickControllerTest {
     protected static MenuItem menuItem;
 
     protected static SimpleObjectProperty<Newick> newickSimpleObjectProperty = new SimpleObjectProperty<>();
-    protected static BooleanProperty bp = new SimpleBooleanProperty(false);
 
     /**
      * Setup Load Newick Controller.
@@ -40,13 +37,13 @@ public class NewickControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
         mainController = mock(MainController.class);
-        mainController.newickLifted = bp;
         when(mainController.getMenuController()).thenReturn(new MenuController(mainController, new MenuBar()));
 
         Workspace workspace = mock(Workspace.class);
 
         when(workspace.getGraph()).thenReturn(new SimpleObjectProperty<>());
         when(workspace.getAnnotation()).thenReturn(new SimpleObjectProperty<>());
+        when(workspace.getNewick()).thenReturn(new SimpleObjectProperty<>());
         when(workspace.getResistance()).thenReturn(new SimpleObjectProperty<>());
 
         when(mainController.getWorkspace()).thenReturn(workspace);
@@ -70,17 +67,6 @@ public class NewickControllerTest {
         newick.setRoot(new Node("a", 1));
         newickController.showTree(newick);
         verify(mainController, atLeast(1)).displayMessage(MessageController.SUCCESS_LOAD_TREE);
-    }
-
-    /**
-     * Test toggle Newick.
-     */
-    @Test
-    public void testToggleNewick() {
-
-        bp.setValue(true);
-        bp.setValue(false);
-
     }
 
     /**

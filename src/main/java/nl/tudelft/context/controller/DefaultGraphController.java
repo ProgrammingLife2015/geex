@@ -64,7 +64,7 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
     Map<Integer, List<DefaultLabel>> labelMap = new HashMap<>();
 
     /**
-     * Create defeualt graph controller.
+     * Create default graph controller.
      *
      * @param mainController MainController to set views with
      */

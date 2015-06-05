@@ -34,6 +34,8 @@ public class NewickLabel extends Label {
      */
     public void initialize() {
         setCache(true);
+        getStyleClass().add("newick-label");
+
         translateXProperty().bind(node.translateXProperty());
         translateYProperty().bind(node.translateYProperty());
 
