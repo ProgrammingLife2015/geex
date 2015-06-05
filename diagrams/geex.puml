@@ -10,7 +10,11 @@ class DrawableEdge extends javafx.scene.shape.Line
 class BaseLabel extends javafx.scene.shape.Rectangle {
     {static}+BASE_HEIGHT : int
 }
-class InfoLabel extends javafx.scene.layout.VBox {
+abstract class DefaultLabel extends javafx.scene.layout.VBox {
+    +init()
+    +currentColumn() : int
+}
+class InfoLabel extends DefaultLabel {
     node : Node
     {static}+LABEL_WIDTH : int
 
@@ -36,17 +40,25 @@ abstract class ViewController<T extends Parent> extends DefaultController {
     +{abstract}activate()
     +{abstract}deactivate()
 }
-class GraphController<AnchorPane> extends ViewController {
+abstract class DefaultGraphController<AnchorPane> extends ViewController {
     mainController : MainController
-    sources : Set<String>
-    graphMapIn : ReadOnlyObjectProperty<GraphMap>
-    annotationMapIn : ReadOnlyObjectProperty<AnnotationMap>
 
-    -loadGraph()
-    -loadAnnotation()
-    -showGraph(graph : Graph)
+    +getGraphList() : LinkedList<StackGraph>
+    #showGraph(drawableGraph : DrawableGraph)
     -initOnTheFlyLoading(nodeList : List<InfoLabel>)
     -showCurrentLabels(map : Map<Integer, List<InfoLabel>>)
+}
+class GraphController extends DefaultGraphController {
+    sources : Set<String>
+    selectedSources : Set<String>
+    selectNewickController : SelectNewickController
+
+    -initMenu()
+    -loadGraph(graphMap : GraphMap)
+    -loadAnnotation(annotationMap : AnnotationMap)
+    -loadResistance(resistanceMap : ResistanceMap)
+    +updateSelectedSources(sources : Set<String>)
+
 }
 class MainController<Stackpane> extends DefaultController {
     viewList : ObservableList<ViewController>
@@ -66,9 +78,6 @@ class MainController<Stackpane> extends DefaultController {
     +activateView()
     +toggleNewick()
     +exitProgram()
-    +getWorkspace() : Workspace
-    +getMenuController() : MenuController
-    +setWorkspace(workspace : Workspace)
     +displayMessage(text : String)
 }
 class BaseController<ScrollPane> extends ViewController {
@@ -82,28 +91,40 @@ class MenuController {
     mainController : MainController
     menuBar : MenuBar
     loadGenomeGraph : MenuItem
+    toggleOverlay : MenuItem
+    toggleSelect : MenuItem
+    zoomIn : MenuItem
+    zoomOut : MenuItem
+    welcomeMenuItem : MenuItem
 
     +initFileMenu()
     +initNavigateMenu()
     +initHelpMenu()
 
-    +getLoadGenomeGraph() : MenuItem
+    -createMenu(title : String, menuItems : MenuItem...) : Menu
+    -createMenuItem(
 }
-class NewickController<ScrollPane> extends ViewController {
-    mainController : MainController
-    graphController : GraphController
-    newickIn : ReadOnlyObjectProperty<Newick>
-    newickObjectProperty : ObjectProperty<Newick>
-    menuItem : MenuItem
-    newick : Newick
-
+abstract class DefaultNewickController<ScrollPane> extends ViewController {
     #showTree(newick : Newick)
+}
+class NewickController extends DefaultNewickController {
+    mainController : MainController
+    selection : Set<String>
+    graphController : GraphController
+
     #loadGraph(newick : Newick)
 }
 class WelcomeController<GridPane> extends ViewController {
     -mainController : MainController
 }
 class OverlayController<GridPane> extends DefaultController
+class SelectNewickController extends DefaultNewickController {
+    -graphController : GraphController
+}
+class SubGraphController extends DefaultGraphController {
+    stackGraph : StackGraph
+    graphNode : GraphNode
+}
 
 class LoadService<T> extends javafx.concurrent.Service {
     -parserClass : Class<? extends Parser<T>>
@@ -124,6 +145,22 @@ class Workspace {
     +save()
     +load()
     +preload()
+}
+
+class Zoom {
+    scroll : ScrollPane
+    sequences : Group
+    labelsMap : Map<Integer, List<DefaultLabel>>
+    mouseX : double
+    mouseY : double
+
+    +bindEffect()
+    -setEvents()
+    -getLabels(indexFrom : int, indexTo : int) : List<DefaultLabel>
+    +applyAll(infoLabels : List<DefaultLabel>, left : double, right : double)
+    +apply(label : DefaultLabel, mouseX : doube, mouseY : double)
+    -addScale(label : DefaultLabel, ratio : double)
+
 }
 
 'FXML
@@ -157,9 +194,9 @@ class overlay << (F,orange) FXML >>
 
 'Relations
 BaseController "1" *-- "1" base
-GraphController "1" *-- "1" graph
+DefaultGraphController "1" *-- "1" graph
 MainController "1" *-- "1" main
-NewickController "1" *-- "1" newick
+DefaultNewickController "1" *-- "1" newick
 MessageController "1" *-- "1" footer
 WelcomeController "1" *-- "1" welcome
 OverlayController "1" *-- "1" overlay
@@ -170,20 +207,26 @@ MainController o-- MessageController
 MainController o-- OverlayController
 MainController --> WelcomeController
 
-NewickController ..> DrawableEdge
-NewickController ..> NewickLabel
+DefaultNewickController ..> DrawableEdge
+DefaultNewickController ..> NewickLabel
 
-GraphController ..> InfoLabel
-GraphController ..> DrawableEdge
+DefaultGraphController ..> InfoLabel
+DefaultGraphController ..> DrawableEdge
+DefaultGraphController ..> Zoom
 
 LoadService ..> model.Parser
 
 InfoLabel ..> BaseLabel
 InfoLabel --> BaseController
 
+NewickController --> GraphController
+
 MainController ..> Workspace
 
 WelcomeController --> NewickController
+
+GraphController --> SelectNewickController
+GraphController --> SubGraphController
 
 Workspace ..> LoadService
 
