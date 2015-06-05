@@ -1,6 +1,7 @@
 package nl.tudelft.context.model.newick;
 
 import nl.tudelft.context.model.Parser;
+import nl.tudelft.context.model.newick.node.AbstractNode;
 import org.junit.Test;
 
 import java.io.File;

@@ -1,6 +1,8 @@
 package nl.tudelft.context.model.newick;
 
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
+import nl.tudelft.context.model.newick.node.AbstractNode;
+import nl.tudelft.context.model.newick.node.LeaveNode;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

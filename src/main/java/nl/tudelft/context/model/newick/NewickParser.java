@@ -4,6 +4,8 @@ import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import nl.tudelft.context.model.Parser;
+import nl.tudelft.context.model.newick.node.AbstractNode;
+import nl.tudelft.context.model.newick.node.DummyNode;
 
 import java.io.BufferedReader;
 

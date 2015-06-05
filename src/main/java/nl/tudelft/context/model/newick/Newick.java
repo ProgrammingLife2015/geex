@@ -1,5 +1,6 @@
 package nl.tudelft.context.model.newick;
 
+import nl.tudelft.context.model.newick.node.AbstractNode;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 

@@ -1,5 +1,7 @@
 package nl.tudelft.context.model.newick;
 
+import nl.tudelft.context.model.newick.node.AbstractNode;
+import nl.tudelft.context.model.newick.node.LeaveNode;
 import org.junit.Before;
 import org.junit.Test;
 

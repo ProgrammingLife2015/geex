@@ -1,4 +1,4 @@
-package nl.tudelft.context.model.newick;
+package nl.tudelft.context.model.newick.node;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -7,7 +7,6 @@ import nl.tudelft.context.model.newick.selection.None;
 import nl.tudelft.context.model.newick.selection.Selection;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

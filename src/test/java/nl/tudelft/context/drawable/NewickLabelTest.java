@@ -1,9 +1,9 @@
 package nl.tudelft.context.drawable;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.model.newick.AbstractNode;
-import nl.tudelft.context.model.newick.AncestorNode;
-import nl.tudelft.context.model.newick.LeaveNode;
+import nl.tudelft.context.model.newick.node.AbstractNode;
+import nl.tudelft.context.model.newick.node.AncestorNode;
+import nl.tudelft.context.model.newick.node.LeaveNode;
 import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.model.newick.selection.None;
 import nl.tudelft.context.model.newick.selection.Partial;

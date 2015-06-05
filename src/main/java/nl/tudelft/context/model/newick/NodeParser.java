@@ -1,6 +1,9 @@
 package nl.tudelft.context.model.newick;
 
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
+import nl.tudelft.context.model.newick.node.AbstractNode;
+import nl.tudelft.context.model.newick.node.AncestorNode;
+import nl.tudelft.context.model.newick.node.LeaveNode;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>

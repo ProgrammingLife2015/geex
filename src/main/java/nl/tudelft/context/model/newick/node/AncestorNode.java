@@ -1,4 +1,4 @@
-package nl.tudelft.context.model.newick;
+package nl.tudelft.context.model.newick.node;
 
 import java.util.HashSet;
 import java.util.Set;
