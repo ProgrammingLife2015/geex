@@ -99,12 +99,13 @@ public class Workspace {
         Workspace workspace = new Workspace(workspaceDirectory);
         try {
             workspace.load();
+            workspace.save();
             mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
 
             mainController.setWorkspace(workspace);
             mainController.setBaseView(new NewickController(mainController,
                     mainController.getMenuController().getLoadGenomeGraph(), workspace.getNewick()));
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | SqlJetException e) {
             mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
         }
     }

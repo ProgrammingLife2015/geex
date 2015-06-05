@@ -67,10 +67,10 @@ public class Database {
             return true;
         }, SqlJetTransactionMode.WRITE);
 
-        String workspaceTable = "CREATE TABLE workspace (`location` TEXT NOT NULL, `name` TEXT NOT NULL)";
-        String workspaceIndex = "CREATE INDEX location_index ON workspace(location,name)";
+        String workspaceTable = "CREATE TABLE workspace (`location` TEXT NOT NULL PRIMARY KEY, `name` TEXT NOT NULL)";
+        String workspaceIndex = "CREATE INDEX location_index ON workspace(location, name)";
 
-        if (db.getTable("workspace") == null) {
+        if (db.getSchema().getTable("workspace") == null) {
             db.runWriteTransaction(arg0 -> {
                 arg0.createTable(workspaceTable);
                 arg0.createIndex(workspaceIndex);
