@@ -4,7 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Window;
 import nl.tudelft.context.workspace.Database;
 import nl.tudelft.context.workspace.Workspace;
 import org.tmatesoft.sqljet.core.SqlJetException;
@@ -47,9 +50,12 @@ public class WelcomeController extends ViewController<GridPane> {
      *
      * @param mainController The MainController of the application
      */
-    public WelcomeController(final MainController mainController) {
+    public WelcomeController(final MainController mainController, final MenuItem welcomeMenuItem) {
         super(new GridPane());
         this.mainController = mainController;
+
+        welcomeMenuItem.setOnAction(event -> selectWorkspace(mainController.getRoot().getScene().getWindow()));
+
         loadFXML("/application/welcome.fxml");
     }
 
@@ -60,7 +66,7 @@ public class WelcomeController extends ViewController<GridPane> {
                     .getList("workspace", new String[]{"location", "name"}, NO_OF_PREVIOUS_WORKSPACES)
                     .stream().map(row -> {
                 Label label = new Label(row[1]);
-                label.setOnMouseClicked(event -> loadWorkspace(row[0]));
+                label.setOnMouseClicked(event -> loadWorkspace(new File(row[0])));
                 return label;
             }).collect(toList()));
 
@@ -72,16 +78,24 @@ public class WelcomeController extends ViewController<GridPane> {
             // Continue, this doesn't break the software.
         }
 
-        load.setOnMouseClicked(event -> Workspace.chooseWorkspace(mainController));
+        load.setOnMouseClicked(event -> selectWorkspace(mainController.getRoot().getScene().getWindow()));
+    }
+
+    private void selectWorkspace(final Window window) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Workspace Folder");
+        File workspaceDirectory = directoryChooser.showDialog(window);
+
+        loadWorkspace(workspaceDirectory);
     }
 
     /**
      * Load the workspace from the directory.
      * @param directory Directory to set as workspace.
      */
-    private void loadWorkspace(final String directory) {
+    private void loadWorkspace(final File directory) {
         try {
-            Workspace workspace = new Workspace(new File(directory));
+            Workspace workspace = new Workspace(directory);
             workspace.load();
             workspace.save();
 
