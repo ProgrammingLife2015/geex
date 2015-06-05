@@ -45,12 +45,17 @@ public final class LocatorController extends DefaultController<Pane> {
     /**
      * Total distance form left in a map.
      */
-    Map<Integer, Integer> totalMap = new HashMap<>();
+    Map<Integer, Double> totalMap = new HashMap<>();
 
     /**
      * Location boundaries.
      */
-    int minLocation, maxLocation, totalLength;
+    int minLocation, maxLocation;
+
+    /**
+     * Average total length.
+     */
+    double totalLength;
 
     /**
      * Location property.
@@ -75,19 +80,19 @@ public final class LocatorController extends DefaultController<Pane> {
         this.scroll = scroll;
         this.locationProperty = locationProperty;
 
-        TreeMap<Integer, Integer> treeMap = labelsMap.entrySet().stream()
+        TreeMap<Integer, Double> treeMap = labelsMap.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream()
                                 .map(DefaultLabel::getNode)
                                 .mapToInt(DefaultNode::getLength)
-                                .max().getAsInt(),
+                                .average().getAsDouble(),
                         (a, b) -> a,
                         TreeMap::new
                 ));
 
         totalLength = 0;
-        for (Map.Entry<Integer, Integer> entry : treeMap.entrySet()) {
+        for (Map.Entry<Integer, Double> entry : treeMap.entrySet()) {
             totalMap.put(entry.getKey(), totalLength);
             totalLength += entry.getValue();
         }
@@ -118,8 +123,8 @@ public final class LocatorController extends DefaultController<Pane> {
         int start = Math.max(minLocation, location.getStart());
         int end = Math.min(maxLocation, location.getEnd());
 
-        double startPosition = totalMap.get(start) / (double) totalLength;
-        double endPosition = totalMap.get(end) / (double) totalLength;
+        double startPosition = totalMap.get(start) / totalLength;
+        double endPosition = totalMap.get(end) / totalLength;
 
         locatorIndicator.setTranslateX(startPosition * locator.getWidth());
         locatorIndicator.setWidth((endPosition - startPosition) * locator.getWidth());
