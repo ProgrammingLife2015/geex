@@ -114,8 +114,7 @@ public class Database {
     /**
      * Replace data in a table, does not fail when the original doesn't exist.
      * @param tableName Table to replace data in.
-     * @param index
-     * @param values
+     * @param values Values to replace
      * @throws SqlJetException
      */
     public void replace(final String tableName, final String... values) throws SqlJetException {
