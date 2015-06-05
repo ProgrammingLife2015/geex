@@ -33,6 +33,14 @@ public final class GraphController extends DefaultGraphController {
     ObjectProperty<Set<String>> selectedSources = new SimpleObjectProperty<>(new HashSet<>());
 
     /**
+     * Select controller to select strains.
+     */
+    SelectNewickController selectNewickController = new SelectNewickController(
+            this,
+            mainController.getWorkspace().getNewick()
+    );
+
+    /**
      * Property with graph map.
      */
     ReadOnlyObjectProperty<GraphMap> graphMapIn;
@@ -120,10 +128,7 @@ public final class GraphController extends DefaultGraphController {
         zoomOut.disableProperty().bind(activeProperty.not());
 
         MenuItem toggleSelect = menuController.getToggleSelect();
-        toggleSelect.setOnAction(event ->
-                mainController.setView(this, new SelectNewickController(
-                        this,
-                        mainController.getWorkspace().getNewick())));
+        toggleSelect.setOnAction(event -> mainController.setView(this, selectNewickController));
         toggleSelect.disableProperty().bind(activeProperty.not());
 
     }

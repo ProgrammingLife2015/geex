@@ -45,15 +45,6 @@ public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
         return root;
     }
 
-    /**
-     * Create a sub newick tree of selected nodes.
-     *
-     * @return New newick tree
-     */
-    public Newick createSubNewick() {
-        return this;
-    }
-
     @Override
     public String toString() {
         if (getRoot() == null) {

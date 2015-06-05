@@ -44,9 +44,8 @@ public class SelectNewickController extends DefaultNewickController {
     }
 
     @Override
-    void showTree(Newick parentNewick) {
+    void showTree(Newick newick) {
 
-        final Newick newick = parentNewick.createSubNewick();
         newick.getRoot().getSelectionProperty().addListener(event -> {
                 graphController.updateSelectedSources(newick.getRoot().getSources());
         });
