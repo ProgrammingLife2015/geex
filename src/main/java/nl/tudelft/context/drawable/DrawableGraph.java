@@ -6,6 +6,7 @@ import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -24,6 +25,16 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
      * Graph that is drawn.
      */
     private StackGraph graph;
+
+    /**
+     * The max length of each column in lengths of ATCGs.
+     */
+    final Map<Integer, Integer> columnLengths = new HashMap<>();
+
+    /**
+     * The max length of the graph in lengths of ATCGs.
+     */
+    Integer maxLength = 0;
 
     /**
      * Create a wrapper around a graph to draw the graph.
@@ -110,6 +121,31 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
      */
     public StackGraph getGraph() {
         return graph;
+    }
+
+    /**
+     * Gets the max length of the graph in length of bases.
+     *
+     * @return The max length of the graph.
+     */
+    public int getMaxLength() {
+
+        if (maxLength != null) {
+            return maxLength;
+        }
+
+        maxLength = 0;
+
+        vertexSet().stream().forEach(vertex -> {
+            int column = vertex.translateXProperty().intValue() / LABEL_SPACING;
+            Integer oldLength = columnLengths.get(column);
+            int length = vertex.getNode().getLength();
+            if (oldLength == null || oldLength < length) {
+                maxLength += length - oldLength;
+            }
+        });
+
+        return maxLength;
     }
 
 }

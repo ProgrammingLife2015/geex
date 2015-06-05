@@ -1,6 +1,7 @@
 package nl.tudelft.context.drawable;
 
 import javafx.scene.layout.VBox;
+import nl.tudelft.context.model.graph.DefaultNode;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -20,5 +21,12 @@ public abstract class DefaultLabel extends VBox {
      * @return Column index
      */
     public abstract int currentColumn();
+
+    /**
+     * Gets the node that belongs to the label.
+     *
+     * @return The node
+     */
+    public abstract DefaultNode getNode();
 
 }

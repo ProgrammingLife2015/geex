@@ -111,4 +111,9 @@ public class InfoLabel extends DefaultLabel {
 
     }
 
+    @Override
+    public Node getNode() {
+        return node;
+    }
+
 }

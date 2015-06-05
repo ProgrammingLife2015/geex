@@ -54,8 +54,7 @@ public class SubGraphController extends DefaultGraphController {
         progressIndicator.setVisible(false);
 
         Graph subGraph = new Graph();
-        stackGraph.vertexSet().stream()
-                .filter(node -> graphNode.getNodes().contains(node))
+        graphNode.getNodes().stream()
                 .forEach(subGraph::addVertex);
 
         stackGraph.edgeSet().stream()

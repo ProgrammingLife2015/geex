@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableGraph;
@@ -47,6 +48,12 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
      */
     @FXML
     ScrollPane scroll;
+
+    /**
+     * The locator.
+     */
+    @FXML
+    Pane locator;
 
     /**
      * List of graph views.
@@ -119,6 +126,7 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
         );
 
         new Zoom(scroll, sequences, new HashMap<>(labelMap));
+        new LocatorController(locator, scroll, drawableGraph);
 
         showCurrentLabels();
 

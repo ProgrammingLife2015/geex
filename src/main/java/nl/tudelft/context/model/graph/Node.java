@@ -138,4 +138,9 @@ public class Node extends DefaultNode {
         return new InfoLabel(mainController, graphController, drawableNode, this);
     }
 
+    @Override
+    public int getLength() {
+        return content.length();
+    }
+
 }

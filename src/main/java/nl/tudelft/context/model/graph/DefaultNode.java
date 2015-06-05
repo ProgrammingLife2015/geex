@@ -43,6 +43,13 @@ public abstract class DefaultNode {
     }
 
     /**
+     * Gets the length of the node's content in ATCGs.
+     *
+     * @return The length;
+     */
+    public abstract int getLength();
+
+    /**
      * Creates a label.
      *
      * @param mainController  Main controller for setting views

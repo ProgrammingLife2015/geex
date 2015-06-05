@@ -69,4 +69,9 @@ public class GraphNode extends DefaultNode {
         return new SinglePointLabel(mainController, graphController, drawableNode, this);
     }
 
+    @Override
+    public int getLength() {
+        return 0;
+    }
+
 }

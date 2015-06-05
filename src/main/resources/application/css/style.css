@@ -314,3 +314,10 @@
 .breadcrumb HBox Label.inactive {
     -fx-text-fill: #bababa;
 }
+
+/* Locator */
+#locator {
+    -fx-min-height: 60px;
+    -fx-min-width: 100%;
+    -fx-background-color : rgba(100, 100, 100, .8);
+}

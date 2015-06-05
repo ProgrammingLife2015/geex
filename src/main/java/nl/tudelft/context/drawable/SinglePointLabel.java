@@ -69,4 +69,9 @@ public class SinglePointLabel extends DefaultLabel {
 
     }
 
+    @Override
+    public GraphNode getNode() {
+        return node;
+    }
+
 }
