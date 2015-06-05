@@ -22,6 +22,7 @@ import static java.util.stream.Collectors.toList;
  * @since 18-5-2015
  */
 public class WelcomeController extends ViewController<GridPane> {
+    private static final int NO_OF_PREVIOUS_WORKSPACES = 9;
     /**
      * The load button.
      */
@@ -52,11 +53,15 @@ public class WelcomeController extends ViewController<GridPane> {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         try {
-            previous.getItems().setAll(Database.instance().getList("workspace", new String[]{"location", "name"}, 5).stream().map(row -> {
+            previous.getItems().setAll(Database.instance().getList("workspace", new String[]{"location", "name"}, NO_OF_PREVIOUS_WORKSPACES).stream().map(row -> {
                 Label label = new Label(row[1]);
                 label.setOnMouseClicked(event -> loadWorkspace(row[0]));
                 return label;
             }).collect(toList()));
+
+            if (previous.getItems().size() == 0) {
+                previous.setDisable(true);
+            }
         } catch (SqlJetException e) {
             mainController.displayMessage(MessageController.FAIL_LOAD_PREVIOUS);
             // Continue, this doesn't break the software.
