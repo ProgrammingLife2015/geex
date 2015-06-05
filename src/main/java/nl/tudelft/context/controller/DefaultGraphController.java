@@ -151,8 +151,8 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
         double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
                 * scroll.getHvalue();
 
-        int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
+        int indexFrom = (int) Math.round(left / DrawableGraph.LABEL_SPACING) - 1;
+        int indexTo = indexFrom + (int) Math.round(width / DrawableGraph.LABEL_SPACING) + 1;
         locationProperty.setValue(new Location(indexFrom, indexTo));
 
     }
