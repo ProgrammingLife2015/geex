@@ -24,6 +24,18 @@ package graph {
         +getPercentage(c : char)
         +getPercentageString(c : char)
     }
+    abstract class DefaultGraph<T, DefaultWeightedEdge> extends org.jgrapht.graph.DefaultDirectedWeightedGraph {
+        +getFirstNodes() : List<T>
+        +getTargets(node : T) : List<T>
+        +getSources(node : T) : List<T>
+        +replace(oldNode : T, newNode : T)
+    }
+    abstract class DefaultNode {
+           sources : Set<String>
+           content : String
+
+           +getLabel(mainController : MainController, graphController : DefaultGraphController, drawableNode : DrawableNode) : DefaultLabel
+    }
     class graph.Node extends DrawableNode {
         # id : int
         # sources : Set<String>
@@ -37,21 +49,35 @@ package graph {
         +getNode(sc : Scanner) : Node
     }
 
-    class Graph<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
-        +getFirstNode() : Node
-        +position()
-        -nextColumn(nodes : List<Node>) : List<Node>
-        -positionNodes(nodes : List<Node>, column : int)
-    }
-    class GraphMap<String, Graph> extends java.util.HashMap {
+    class Graph extends StackGraph
+    class GraphMap<String, Graph> extends java.util.concurrent.ConcurrentHashMap {
         +flat(sources : Set<String>) : Graph
+        -getGraphList(sources : Set<String>) : List<Graph>
         -getGraph(source : String) : Graph
         +addVertex(node : Node)
         +addEdge(source : Node, target : Node)
+        +filter()
+    }
+    class GraphNode extends DefaultNode {
+        nodes : Set<DefaultNode>
     }
     class GraphParser<GraphMap> extends Parser {
         -parseNodes(nodeFile : File, graph : Graph) : List<Node>
         -parseEdges(edgeFile : File, graph : Graph, nodeList : List<Node>)
+    }
+    class SinglePointGraph extends StackGraph {
+        singlePart : Set<DefaultNode>
+        single : Map<DefaultNode, DefaultNode>
+        graph : StackGraph
+
+        -markSingle()
+        -filterSingle()
+        -replaceSingle()
+    }
+
+    abstract class StackGraph<DefaultNode> extends org.jgrapht.graph.DefaultGraph {
+        #setGraph(stackGraph : StackGraph)
+        +createSubGraph(nodes : Set<DefaultNode>) : Graph
     }
 
     'Relations
