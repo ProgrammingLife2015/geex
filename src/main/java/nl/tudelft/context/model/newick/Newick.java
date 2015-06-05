@@ -8,7 +8,7 @@ import org.jgrapht.graph.DefaultEdge;
  * @version 1.0
  * @since 3-5-2015
  */
-public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
+public class Newick extends DefaultDirectedGraph<AbstractNode, DefaultEdge> {
 
     /**
      * Serial Version UID for serializing purposes.
@@ -18,7 +18,7 @@ public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
     /**
      * The root of the tree.
      */
-    transient Node root;
+    transient AbstractNode root;
 
     /**
      * Create a new Tree, with default edges.
@@ -32,7 +32,7 @@ public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
      *
      * @param n the root
      */
-    public void setRoot(final Node n) {
+    public void setRoot(final AbstractNode n) {
         root = n;
     }
 
@@ -41,7 +41,7 @@ public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
      *
      * @return the root
      */
-    public Node getRoot() {
+    public AbstractNode getRoot() {
         return root;
     }
 
@@ -60,12 +60,12 @@ public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
      * @param level the level of the tree
      * @return a string representation of the node
      */
-    public String toString(final Node node, final int level) {
+    public String toString(final AbstractNode node, final int level) {
         StringBuilder res = new StringBuilder();
         res.append(new String(new char[level]).replace("\0", "\t"));
         res.append(node.toString()).append("\n");
 
-        for (Node child : node.getChildren()) {
+        for (AbstractNode child : node.getChildren()) {
             res.append(toString(child, level + 1));
         }
 

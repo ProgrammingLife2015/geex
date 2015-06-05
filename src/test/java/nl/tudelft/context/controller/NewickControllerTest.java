@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import nl.tudelft.context.model.newick.Newick;
-import nl.tudelft.context.model.newick.Node;
 import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;

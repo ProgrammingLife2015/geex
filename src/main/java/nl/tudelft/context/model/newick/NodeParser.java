@@ -14,7 +14,7 @@ public final class NodeParser {
      * @param node A TreeNode from treejuxtaposer
      * @return A nl.tudelft.context.newick.Node
      */
-    public Node getNode(final TreeNode node) {
+    public AbstractNode getNode(final TreeNode node) {
         return new Node(node.getName(), node.getWeight());
     }
 }

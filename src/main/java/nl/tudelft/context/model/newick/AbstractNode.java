@@ -14,27 +14,27 @@ import java.util.Set;
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
  * @version 1.0
- * @since 3-5-2015
+ * @since 05-06-2015
  */
-public class Node extends DrawablePosition {
+public abstract class AbstractNode extends DrawablePosition {
 
     /**
-     * The name of the Node.
+     * The name of the node.
      */
     private final String name;
     /**
-     * The weight of the Node.
+     * The weight of the node.
      */
     private final double weight;
     /**
-     * The children of the Node.
+     * The children of the node.
      */
-    private List<Node> children;
+    private List<AbstractNode> children;
 
     /**
      * The parent node.
      */
-    private Node parent;
+    private AbstractNode parent;
 
     /**
      * The selection of the node.
@@ -47,7 +47,7 @@ public class Node extends DrawablePosition {
      * @param name   the name of the node
      * @param weight the weight (distance from parent) of the node
      */
-    public Node(final String name, final double weight) {
+    public AbstractNode(final String name, final double weight) {
         this.name = name;
         this.weight = weight;
         children = new ArrayList<>(2);
@@ -58,7 +58,7 @@ public class Node extends DrawablePosition {
      *
      * @param n the node to add as a child
      */
-    public void addChild(final Node n) {
+    public void addChild(final AbstractNode n) {
         this.children.add(n);
     }
 
@@ -67,7 +67,7 @@ public class Node extends DrawablePosition {
      *
      * @return the children
      */
-    public List<Node> getChildren() {
+    public List<AbstractNode> getChildren() {
         return children;
     }
 
@@ -85,7 +85,7 @@ public class Node extends DrawablePosition {
      *
      * @param parent the parent.
      */
-    public void setParent(final Node parent) {
+    public void setParent(final AbstractNode parent) {
         this.parent = parent;
     }
 
@@ -94,7 +94,7 @@ public class Node extends DrawablePosition {
      *
      * @return the parent of the node.
      */
-    public Node getParent() {
+    public AbstractNode getParent() {
         return parent;
     }
 
@@ -191,7 +191,7 @@ public class Node extends DrawablePosition {
      */
     public void updateSelected() {
         selection.setValue(getChildren().stream()
-                .map(Node::getSelection)
+                .map(AbstractNode::getSelection)
                 .reduce(Selection::merge).orElse(new None()));
 
         if (hasParent()) {
@@ -201,10 +201,10 @@ public class Node extends DrawablePosition {
 
     @Override
     public boolean equals(final Object other) {
-        if (other == null || !(other instanceof Node)) {
+        if (other == null || !(other instanceof AbstractNode)) {
             return false;
         }
-        Node that = (Node) other;
+        AbstractNode that = (AbstractNode) other;
         return name.equals(that.name)
                 && weight == that.weight;
     }
@@ -217,6 +217,6 @@ public class Node extends DrawablePosition {
 
     @Override
     public String toString() {
-        return "Node<" + name + "," + weight + ">";
+        return "AbstractNode<" + name + "," + weight + ">";
     }
 }
