@@ -55,10 +55,10 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
                 });
 
         graph.edgeSet().stream()
-                .forEach(edge -> addEdge(
+                .forEach(edge -> setEdgeWeight(addEdge(
                         added.get(graph.getEdgeSource(edge)),
                         added.get(graph.getEdgeTarget(edge))
-                ));
+                ), graph.getEdgeWeight(edge)));
 
         position();
 

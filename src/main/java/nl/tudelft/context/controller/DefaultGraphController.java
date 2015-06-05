@@ -71,7 +71,7 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
     Map<Integer, List<DefaultLabel>> labelMap = new HashMap<>();
 
     /**
-     * Create defeualt graph controller.
+     * Create default graph controller.
      *
      * @param mainController MainController to set views with
      */
@@ -118,7 +118,7 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
 
         sequences.getChildren().setAll(edgeList);
 
-        labelMap = nodeList.stream().collect(
+        labelMap = nodeList.parallelStream().collect(
                 Collectors.groupingBy(
                         DefaultLabel::currentColumn,
                         Collectors.mapping(Function.identity(), Collectors.toList())

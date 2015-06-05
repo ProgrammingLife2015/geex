@@ -1,7 +1,6 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
-import javafx.beans.property.BooleanProperty;
 import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.graph.Node;
@@ -17,7 +16,6 @@ import java.util.HashSet;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -119,7 +117,6 @@ public class MainControllerTest {
 
         MainController mc = new MainController();
         mc.setWorkspace(workspace);
-        mc.toggleNewick();
 
         BaseController baseController1 = new BaseController(graph, node1);
         BaseController baseController2 = new BaseController(graph, node2);
@@ -152,24 +149,6 @@ public class MainControllerTest {
     }
 
     /**
-     * Test toggle Newick.
-     */
-    @Test
-    public void testToggleNewick() {
-
-        assertFalse(mainController.newickLifted.getValue());
-
-        mainController.toggleNewick();
-
-        assertTrue(mainController.newickLifted.getValue());
-
-        mainController.toggleNewick();
-
-        assertFalse(mainController.newickLifted.getValue());
-
-    }
-
-    /**
      * Test the workspace getter.
      */
     @Test
@@ -193,10 +172,10 @@ public class MainControllerTest {
         ViewController baseView = new BaseController(mock(Graph.class), mock(Node.class));
 
         mainController.setBaseView(baseView);
-        assertEquals(baseView, mainController.topView());
+        assertEquals(baseView, mainController.topView().get());
 
         baseView.setVisibility(false);
-        assertNull(mainController.topView());
+        assertFalse(mainController.topView().isPresent());
     }
 
 }

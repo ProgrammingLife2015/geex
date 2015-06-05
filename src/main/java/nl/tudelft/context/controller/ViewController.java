@@ -39,17 +39,12 @@ public abstract class ViewController<T extends Parent> extends DefaultController
     public abstract String getBreadcrumbName();
 
     /**
-     * Called whenever a view is activated.
+     * Set active or not.
+     *
+     * @param active New activated state
      */
-    public void activate() {
-        activeProperty.set(true);
-    }
-
-    /**
-     * Called whenever a view is deactivated.
-     */
-    public void deactivate() {
-        activeProperty.set(false);
+    public void setActivated(final boolean active) {
+        activeProperty.set(active);
     }
 
 }

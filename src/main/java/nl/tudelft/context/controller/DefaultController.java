@@ -14,8 +14,7 @@ import java.io.IOException;
  * @version 1.0
  * @since 26-4-2015
  */
-public abstract class DefaultController<T extends Parent>
-        implements Initializable {
+public abstract class DefaultController<T extends Parent> implements Initializable {
 
     /**
      * The root of the controller, a javafx element which extends Parent.

@@ -1,11 +1,14 @@
 package nl.tudelft.context.model.graph;
 
-import org.jgrapht.Graphs;
+import org.jgrapht.graph.AbstractBaseGraph;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -22,13 +25,44 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
      */
     public final Graph flat(final Set<String> sources) {
 
-        Graph graph = new Graph();
+        final double strains = sources.size();
 
-        sources.stream()
-                .map(this::getGraph)
-                .forEach(g -> Graphs.addGraph(graph, g));
+        Graph graph = new Graph();
+        List<Graph> graphs = getGraphList(sources);
+
+        graphs.stream()
+                .map(AbstractBaseGraph::vertexSet)
+                .flatMap(Collection::stream)
+                .forEach(graph::addVertex);
+
+        graphs.parallelStream()
+                .map(AbstractBaseGraph::edgeSet)
+                .flatMap(Collection::stream)
+                .collect(Collectors.groupingBy(
+                        edge -> Arrays.asList(
+                                graph.getEdgeSource(edge),
+                                graph.getEdgeTarget(edge)
+                        ),
+                        Collectors.counting()
+                ))
+                .forEach((nodes, count) ->
+                        graph.setEdgeWeight(graph.addEdge(nodes.get(0), nodes.get(1)), count / strains));
 
         return graph;
+
+    }
+
+    /**
+     * Get the graph list by sources.
+     *
+     * @param sources Sources to get the graphs from
+     * @return Graphs by sources
+     */
+    private List<Graph> getGraphList(final Set<String> sources) {
+
+        return sources.stream()
+                .map(this::getGraph)
+                .collect(Collectors.toList());
 
     }
 
@@ -84,7 +118,7 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
      */
     public void filter() {
 
-        values().stream().forEach(graph -> {
+        values().parallelStream().forEach(graph -> {
 
             List<DefaultNode> current = new LinkedList<>(graph.getFirstNodes());
             while (current.size() > 0) {
