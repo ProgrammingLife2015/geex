@@ -316,6 +316,6 @@
 }
 
 
-.breadcrumb HBox Label:disabled {
+.breadcrumb HBox Label.inactive {
     -fx-text-fill: #bababa;
 }
