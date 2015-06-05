@@ -102,6 +102,8 @@ public final class GraphController extends DefaultGraphController {
             loadResistance(newValue);
         });
 
+        selectedSources.addListener(event -> System.out.println(selectedSources));
+
         graphMapProperty.bind(graphMapIn);
         annotationMapProperty.bind(annotationMapIn);
         resistanceMapProperty.bind(resistanceMapIn);
