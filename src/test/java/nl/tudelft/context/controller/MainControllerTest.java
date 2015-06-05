@@ -117,7 +117,6 @@ public class MainControllerTest {
 
         MainController mc = new MainController();
         mc.setWorkspace(workspace);
-        mc.toggleNewick();
 
         BaseController baseController1 = new BaseController(graph, node1);
         BaseController baseController2 = new BaseController(graph, node2);
@@ -147,24 +146,6 @@ public class MainControllerTest {
         mc.displayMessage(text);
 
         assertEquals(mc.messageController.message.getText(), text);
-    }
-
-    /**
-     * Test toggle Newick.
-     */
-    @Test
-    public void testToggleNewick() {
-
-        assertFalse(mainController.newickLifted.getValue());
-
-        mainController.toggleNewick();
-
-        assertTrue(mainController.newickLifted.getValue());
-
-        mainController.toggleNewick();
-
-        assertFalse(mainController.newickLifted.getValue());
-
     }
 
     /**

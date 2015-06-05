@@ -95,7 +95,7 @@ public final class MenuController {
                         false),
                 createMenuItem("Show Phylogenetic tree",
                         new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN),
-                        event -> mainController.toggleNewick(),
+                        null,
                         false),
                 loadGenomeGraph,
                 zoomIn,

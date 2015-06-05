@@ -1,8 +1,6 @@
 package nl.tudelft.context.controller;
 
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -60,11 +58,6 @@ public class MainController extends DefaultController<StackPane> {
      * The MessageController that is needed to display error messages.
      */
     MessageController messageController;
-
-    /**
-     * If Newick is lifted.
-     */
-    BooleanProperty newickLifted = new SimpleBooleanProperty(false);
 
     /**
      * The MenuController that needs to be changed whenever the current view changes.
@@ -130,8 +123,6 @@ public class MainController extends DefaultController<StackPane> {
      */
     public void setView(final ViewController on, final ViewController viewController) {
 
-        newickLifted.setValue(false);
-
         viewList.remove(viewList.indexOf(on) + 1, viewList.size());
         viewList.add(viewController);
         view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
@@ -155,14 +146,10 @@ public class MainController extends DefaultController<StackPane> {
      */
     public final void previousView() {
 
-        if (newickLifted.getValue()) {
-            toggleNewick();
-        } else {
-            getVisibleStream()
-                    .skip(1)
-                    .reduce((previous, current) -> current)
-                    .ifPresent(viewController -> viewController.setVisibility(false));
-        }
+        getVisibleStream()
+                .skip(1)
+                .reduce((previous, current) -> current)
+                .ifPresent(viewController -> viewController.setVisibility(false));
 
         activateView();
 
@@ -174,8 +161,6 @@ public class MainController extends DefaultController<StackPane> {
      * @param viewController View to go to
      */
     public void toView(final ViewController viewController) {
-
-        newickLifted.setValue(false);
 
         int index = viewList.indexOf(viewController) + 1;
         viewList.stream()
@@ -208,13 +193,6 @@ public class MainController extends DefaultController<StackPane> {
         previousTopView.ifPresent(previousView -> previousView.setActivated(false));
         nextTopView.ifPresent(nextView -> nextView.setActivated(true));
         previousTopView = nextTopView;
-    }
-
-    /**
-     * Toggle the newick view on top of everything else.
-     */
-    public void toggleNewick() {
-        newickLifted.setValue(!newickLifted.getValue());
     }
 
     /**

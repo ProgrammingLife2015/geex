@@ -94,14 +94,6 @@ public final class NewickController extends ViewController<ScrollPane> {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
-        mainController.newickLifted.addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                root.toFront();
-            } else {
-                root.toBack();
-            }
-        });
-
         newickObjectProperty = new SimpleObjectProperty<>();
 
         newickObjectProperty.addListener((observable, oldValue, newValue) -> {
