@@ -89,7 +89,9 @@ public class Database {
      */
     public void remove(final String tableName, final String... values) throws SqlJetException {
         db.runWriteTransaction(db1 -> {
-            ISqlJetCursor cursor = db.getTable(tableName).lookup(db.getTable(tableName).getPrimaryKeyIndexName(), (Object[]) values);
+            ISqlJetTable table = db.getTable(tableName);
+
+            ISqlJetCursor cursor = table.lookup(table.getPrimaryKeyIndexName(), values[0]);
 
             if (cursor.getRowCount() != 0) {
                 cursor.delete();
