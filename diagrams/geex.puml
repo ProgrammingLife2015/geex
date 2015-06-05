@@ -120,10 +120,10 @@ class Workspace {
     loadGraphService : LoadService<GraphMap>
     loadAnnotationService : LoadService<AnnotationMap>
 
+    -findFile(files : File[], extension : String) : File
+    +save()
     +load()
     +preload()
-
-    +{static}chooseWorkspace(mainController : MainController)
 }
 
 'FXML
