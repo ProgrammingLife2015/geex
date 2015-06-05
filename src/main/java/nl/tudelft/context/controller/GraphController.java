@@ -9,6 +9,8 @@ import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
 
 import java.net.URL;
+
+import nl.tudelft.context.model.graph.SinglePointGraph;
 import nl.tudelft.context.model.graph.VariationGraph;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
@@ -144,7 +146,7 @@ public final class GraphController extends DefaultGraphController {
     private void loadGraph(final GraphMap graphMap) {
         graphList.add(graphMap.flat(sources));
         graphList.add(new VariationGraph(graphList.getLast()));
-//        graphList.add(new SinglePointGraph(graphList.getLast()));
+        graphList.add(new SinglePointGraph(graphList.getLast()));
         DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
         showGraph(drawableGraph);
     }

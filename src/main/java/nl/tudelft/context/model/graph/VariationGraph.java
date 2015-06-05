@@ -36,21 +36,7 @@ public class VariationGraph extends StackGraph {
 
         checkMutations();
 
-        System.out.println(variationStartEnd.entrySet());
-
-        variations.stream().forEach(node -> {
-            node.setVariation(true);
-            System.out.println("Variations node " + node);
-        });
-//        variationStartEnd.entrySet().forEach(node -> {
-//            System.out.println(containsVertex(node.getKey()) && containsVertex(node.getValue()));
-//            if(containsVertex(node.getKey()) && containsVertex(node.getValue())) {
-////                replace(node.getKey(), new VarNode(node.getKey()));
-////                replace(node.getValue(), new VarNode(node.getValue()));
-//                replace(node.getKey(), new Node(0, new TreeSet<>(), 0, 0, "A"));
-//                replace(node.getValue(), new VarNode(node.getValue()));
-//            }
-//        });
+        variations.stream().forEach(node -> node.setVariation(true));
 
     }
 
@@ -74,12 +60,15 @@ public class VariationGraph extends StackGraph {
 
     }
 
+    /**
+     * The function that recursively checks each variation.
+     * @param startNode The node that starts the variation.
+     * @return Returns the end of the variation.
+     */
     private DefaultNode checkVariation(final DefaultNode startNode) {
 
         List<DefaultNode> nextNodes =  getTargets(startNode);
-//        List<List<DefaultNode>> listSets = getFreshListSets(outDegreeOf(startNode));
 
-//        int set = 0;
         int amountOfBranches = nextNodes.size() - 1;
         DefaultNode node = null;
 
@@ -90,8 +79,6 @@ public class VariationGraph extends StackGraph {
             if (!variations.contains(node)) {
 
                 variations.add(node);
-//                listSets.get(set).add(node);
-//                set = getNextSetInt(set, graph, startNode);
 
                 List<DefaultNode> setOfNextNodes = getTargets(node);
                 if(setOfNextNodes.size() > 1) {
@@ -113,66 +100,6 @@ public class VariationGraph extends StackGraph {
         }
 
         return node;
-
-    }
-
-    /**
-     * Returns and int set that will determine which set to add the next node to.
-     * @param set The int that will be incremented.
-     * @param graph The graph this startNode is in.
-     * @param startNode The startNote of the variation.
-     * @return The int that says which set is next to add the node to.
-     */
-    private int getNextSetInt(int set, final StackGraph graph, final DefaultNode startNode) {
-
-        set++;
-        if (set >= graph.outDegreeOf(startNode)) {
-            set = 0;
-        }
-
-        return set;
-
-    }
-
-    /**
-     * This function returns a List of empty lists.
-     *
-     * @param amount How many lists you want in the list.
-     * @return The list of lists.
-     */
-    private List<List<DefaultNode>> getFreshListSets(int amount) {
-
-        List<List<DefaultNode>> list = new LinkedList<>();
-
-        for (int i = 0; i < amount; i++) {
-
-            list.add(new LinkedList<>());
-
-        }
-
-        return list;
-    }
-
-    /**
-     * Function that checks if the node is inside one of the sets that is given with the iterator.
-     *
-     * @param list The list of sets.
-     * @param node The node that is to be found.
-     * @return If the node is found it will return true and vice versa.
-     */
-    private boolean checkAllSets(List<List<DefaultNode>> list, DefaultNode node) {
-
-        boolean res = false;
-        for (List<DefaultNode> aList : list) {
-
-            if (aList.contains(node)) {
-                res = true;
-                break;
-            }
-
-        }
-
-        return res;
 
     }
 

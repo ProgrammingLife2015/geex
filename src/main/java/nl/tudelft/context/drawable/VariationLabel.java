@@ -25,6 +25,6 @@ public class VariationLabel extends InfoLabel {
     public VariationLabel(MainController mainController, DefaultGraphController graphController, DrawableNode drawableNode, DefaultNode node) {
         super(mainController, graphController, drawableNode, (Node) node);
 
-        setBackground(new Background(new BackgroundFill(Paint.valueOf("Blue"), null, null)));
+        setOpacity(0);
     }
 }
