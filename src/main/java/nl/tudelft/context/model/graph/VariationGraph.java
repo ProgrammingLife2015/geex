@@ -32,14 +32,7 @@ public class VariationGraph extends StackGraph {
         this.variations = new ArrayList<>();
         this.variationStartEnd = new HashMap<>();
 
-        graph.vertexSet().stream()
-                .forEach(this::addVertex);
-
-        graph.edgeSet().stream()
-                .forEach(edge -> this.addEdge(
-                        graph.getEdgeSource(edge),
-                        graph.getEdgeTarget(edge)
-                ));
+        setGraph(graph);
 
         checkMutations();
 

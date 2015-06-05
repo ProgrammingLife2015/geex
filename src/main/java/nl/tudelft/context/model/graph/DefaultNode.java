@@ -54,22 +54,4 @@ public abstract class DefaultNode {
                                           final DefaultGraphController graphController,
                                           final DrawableNode drawableNode);
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        DefaultNode that = (DefaultNode) o;
-
-        if (sources != null ? !sources.equals(that.sources) : that.sources != null) return false;
-        return !(content != null ? !content.equals(that.content) : that.content != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = sources != null ? sources.hashCode() : 0;
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        return result;
-    }
 }
