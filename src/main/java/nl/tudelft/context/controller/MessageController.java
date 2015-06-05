@@ -16,6 +16,11 @@ import java.util.ResourceBundle;
 public class MessageController extends DefaultController<VBox> {
 
     /**
+     * Message used when loading previous workspaces fails.
+     */
+    public static final String FAIL_LOAD_PREVIOUS = "Could not load previous workspaces.";
+
+    /**
      * Message used when graph loading fails.
      */
     public static final String FAIL_LOAD_GRAPH = "Could not load genome graph.";
