@@ -353,7 +353,7 @@
 #locator {
     -fx-min-height: 60px;
     -fx-min-width: 100%;
-    -fx-background-color: rgba(100, 100, 100, .8);
+    -fx-background-color: #595959;
 }
 
 #locatorIndicator {
