@@ -5,6 +5,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Paint;
 import nl.tudelft.context.controller.DefaultGraphController;
 import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.model.graph.DefaultNode;
 import nl.tudelft.context.model.graph.Node;
 
 /**
@@ -21,8 +22,8 @@ public class VariationLabel extends InfoLabel {
      * @param drawableNode    Node indicating drawable
      * @param node            Node indicating the node
      */
-    public VariationLabel(MainController mainController, DefaultGraphController graphController, DrawableNode drawableNode, Node node) {
-        super(mainController, graphController, drawableNode, node);
+    public VariationLabel(MainController mainController, DefaultGraphController graphController, DrawableNode drawableNode, DefaultNode node) {
+        super(mainController, graphController, drawableNode, (Node) node);
 
         setBackground(new Background(new BackgroundFill(Paint.valueOf("Blue"), null, null)));
     }

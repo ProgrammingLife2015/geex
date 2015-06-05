@@ -39,7 +39,7 @@ public class VariationGraph extends StackGraph {
         System.out.println(variationStartEnd.entrySet());
 
         variations.stream().forEach(node -> {
-            replace(node, new VarNode(node));
+            node.setVariation(true);
             System.out.println("Variations node " + node);
         });
 //        variationStartEnd.entrySet().forEach(node -> {

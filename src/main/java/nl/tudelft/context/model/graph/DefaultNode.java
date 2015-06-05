@@ -4,6 +4,7 @@ import nl.tudelft.context.controller.DefaultGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableNode;
+import nl.tudelft.context.drawable.VariationLabel;
 
 import java.util.Set;
 
@@ -23,6 +24,8 @@ public abstract class DefaultNode {
      * The content of the current Node.
      */
     String content;
+
+    boolean isVariation = false;
 
     /**
      * Getter for sources.
@@ -53,5 +56,23 @@ public abstract class DefaultNode {
     public abstract DefaultLabel getLabel(final MainController mainController,
                                           final DefaultGraphController graphController,
                                           final DrawableNode drawableNode);
+
+    public void setVariation(final boolean bool) {
+
+        isVariation = true;
+
+    }
+
+    public boolean getVariation() {
+
+        return isVariation;
+
+    }
+
+    public VariationLabel getVariationLabel(final MainController mainController,
+                                            final DefaultGraphController graphController,
+                                            final DrawableNode drawableNode) {
+        return new VariationLabel(mainController, graphController, drawableNode, this);
+    }
 
 }
