@@ -11,8 +11,8 @@ import org.junit.Test;
 import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -33,22 +33,6 @@ public class NodeTest {
         AbstractNode m = new LeaveNode("b", 1);
         n.addChild(m);
         assertEquals(n.getChildren(), Collections.singletonList(m));
-    }
-
-    /**
-     * AbstractNode shouldn't equal null
-     */
-    @Test
-    public void testNotEqualsNull() {
-        assertFalse(new LeaveNode("", 0).equals(null));
-    }
-
-    /**
-     * AbstractNode shouldn't equal other objects
-     */
-    @Test
-    public void testNotEqualsOtherObject() {
-        assertFalse(new LeaveNode("", 0).equals(""));
     }
 
     /**
@@ -159,22 +143,5 @@ public class NodeTest {
         n3.setSelection(new None());
         n1.updateSelected();
         assertThat(n1.getSelection(), instanceOf(Partial.class));
-    }
-
-    /**
-     * AbstractNode shouldn't equals nodes with other names or weights
-     */
-    @Test
-    public void testNotEqualsOtherNode() {
-        assertFalse(new LeaveNode("", 0).equals(new LeaveNode("", 1)));
-        assertFalse(new LeaveNode("", 0).equals(new LeaveNode("a", 0)));
-    }
-
-    /**
-     * AbstractNode should equal a similar node
-     */
-    @Test
-    public void testEqualsNode() {
-        assertTrue(new LeaveNode("", 0).equals(new LeaveNode("", 0)));
     }
 }

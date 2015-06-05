@@ -178,22 +178,6 @@ public abstract class AbstractNode extends DrawablePosition {
     }
 
     @Override
-    public boolean equals(final Object other) {
-        if (other == null || !(other instanceof AbstractNode)) {
-            return false;
-        }
-        AbstractNode that = (AbstractNode) other;
-        return name.equals(that.name)
-                && weight == that.weight;
-    }
-
-    @Override
-    public int hashCode() {
-        long c = Double.doubleToLongBits(weight);
-        return 37 * name.hashCode() + (int) (c ^ (c >>> 32));
-    }
-
-    @Override
     public String toString() {
         return "Node<" + name + "," + weight + ">";
     }
