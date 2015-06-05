@@ -16,15 +16,32 @@ import java.util.List;
  * @since 1-6-2015
  */
 public class Database {
+    /**
+     * Database location.
+     */
     private static final String DB_FILE = "geex.db";
-    private SqlJetDb db;
 
-    public Database() throws SqlJetException {
-        open();
+    /**
+     * Reference to the SqlJet database.
+     */
+    SqlJetDb db;
+
+    /**
+     * Create a new Database
+     */
+    Database() {
     }
 
-    private static Database instance;
+    /**
+     * Static instance, for the singleton.
+     */
+    private static volatile Database instance;
 
+    /**
+     * Get or Create the database.
+     * @return The database for this application.
+     * @throws SqlJetException When the creation fails.
+     */
     public static Database instance() throws SqlJetException {
         if (instance == null) {
             synchronized (Database.class) {
@@ -36,6 +53,14 @@ public class Database {
         return instance;
     }
 
+    /**
+     * Get the contents of a table from the database.
+     * @param tableName The table to select form.
+     * @param columns The columns to select.
+     * @param limit The limit of the selection.
+     * @return A list of rows.
+     * @throws SqlJetException When the database fails.
+     */
     public List<String[]> getList(final String tableName, final String[] columns, final int limit) throws SqlJetException {
         List<String[]> out = new ArrayList<>();
 
@@ -59,6 +84,10 @@ public class Database {
         return out;
     }
 
+    /**
+     * Open the database and create the proper tables if they don't exist.
+     * @throws SqlJetException Something went wrong.
+     */
     private void open() throws SqlJetException {
         db = SqlJetDb.open(new File(DB_FILE), true);
 
