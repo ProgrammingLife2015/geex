@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -26,38 +27,26 @@ public class NodeTest {
      */
     @Test
     public void testChild() {
-        Node n = new Node("a", 0);
-        Node m = new Node("b", 1);
+        AbstractNode n = new LeaveNode("a", 0);
+        AbstractNode m = new LeaveNode("b", 1);
         n.addChild(m);
         assertEquals(n.getChildren(), Collections.singletonList(m));
     }
 
     /**
-     * Node shouldn't equal null
+     * AbstractNode shouldn't equal null
      */
     @Test
     public void testNotEqualsNull() {
-        assertFalse(new Node("", 0).equals(null));
+        assertFalse(new LeaveNode("", 0).equals(null));
     }
 
     /**
-     * Node shouldn't equal other objects
+     * AbstractNode shouldn't equal other objects
      */
     @Test
     public void testNotEqualsOtherObject() {
-        assertFalse(new Node("", 0).equals(""));
-    }
-
-    /**
-     * A node should be "unknown" if it's not a leaf node.
-     */
-    @Test
-    public void testIsUnknown() {
-        Node n1 = new Node("", 1);
-        Node n2 = new Node("abc", 9);
-
-        assertTrue(n1.isUnknown());
-        assertFalse(n2.isUnknown());
+        assertFalse(new LeaveNode("", 0).equals(""));
     }
 
     /**
@@ -65,7 +54,7 @@ public class NodeTest {
      */
     @Test
     public void testToggleSelectionFromNoneToAll() {
-        Node n = new Node("", 1);
+        AbstractNode n = new LeaveNode("", 1);
         n.setSelection(new None());
         n.toggleSelected();
         assertThat(n.getSelection(), instanceOf(All.class));
@@ -76,7 +65,7 @@ public class NodeTest {
      */
     @Test
     public void testToggleSelectionFromPartialToAll() {
-        Node n = new Node("", 1);
+        AbstractNode n = new LeaveNode("", 1);
         n.setSelection(new Partial());
         n.toggleSelected();
         assertThat(n.getSelection(), instanceOf(All.class));
@@ -87,7 +76,7 @@ public class NodeTest {
      */
     @Test
     public void testToggleSelectionFromAllToNone() {
-        Node n = new Node("", 1);
+        AbstractNode n = new LeaveNode("", 1);
         n.setSelection(new All());
         n.toggleSelected();
         assertThat(n.getSelection(), instanceOf(None.class));
@@ -98,8 +87,8 @@ public class NodeTest {
      */
     @Test
     public void testSetSelection() {
-        Node n1 = new Node("", 1);
-        Node n2 = mock(Node.class);
+        AbstractNode n1 = new LeaveNode("", 1);
+        AbstractNode n2 = mock(AbstractNode.class);
         n1.addChild(n2);
         Selection selection = new All();
         n1.setSelection(selection);
@@ -111,9 +100,9 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionAll() {
-        Node n1 = new Node("", 1);
-        Node n2 = new Node("a", 2);
-        Node n3 = new Node("b", 3);
+        AbstractNode n1 = new LeaveNode("", 1);
+        AbstractNode n2 = new LeaveNode("a", 2);
+        AbstractNode n3 = new LeaveNode("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
         n2.setSelection(new All());
@@ -127,9 +116,9 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionNone() {
-        Node n1 = new Node("", 1);
-        Node n2 = new Node("a", 2);
-        Node n3 = new Node("b", 3);
+        AbstractNode n1 = new LeaveNode("", 1);
+        AbstractNode n2 = new LeaveNode("a", 2);
+        AbstractNode n3 = new LeaveNode("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
         n2.setSelection(new None());
@@ -143,9 +132,9 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionPartialPartial() {
-        Node n1 = new Node("", 1);
-        Node n2 = new Node("a", 2);
-        Node n3 = new Node("b", 3);
+        AbstractNode n1 = new LeaveNode("", 1);
+        AbstractNode n2 = new LeaveNode("a", 2);
+        AbstractNode n3 = new LeaveNode("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
         n2.setSelection(new Partial());
@@ -159,9 +148,9 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionPartialAll() {
-        Node n1 = new Node("", 1);
-        Node n2 = new Node("a", 2);
-        Node n3 = new Node("b", 3);
+        AbstractNode n1 = new LeaveNode("", 1);
+        AbstractNode n2 = new LeaveNode("a", 2);
+        AbstractNode n3 = new LeaveNode("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
         n2.setSelection(new All());
@@ -171,19 +160,19 @@ public class NodeTest {
     }
 
     /**
-     * Node shouldn't equals nodes with other names or weights
+     * AbstractNode shouldn't equals nodes with other names or weights
      */
     @Test
     public void testNotEqualsOtherNode() {
-        assertFalse(new Node("", 0).equals(new Node("", 1)));
-        assertFalse(new Node("", 0).equals(new Node("a", 0)));
+        assertFalse(new LeaveNode("", 0).equals(new LeaveNode("", 1)));
+        assertFalse(new LeaveNode("", 0).equals(new LeaveNode("a", 0)));
     }
 
     /**
-     * Node should equal a similar node
+     * AbstractNode should equal a similar node
      */
     @Test
     public void testEqualsNode() {
-        assertTrue(new Node("", 0).equals(new Node("", 0)));
+        assertTrue(new LeaveNode("", 0).equals(new LeaveNode("", 0)));
     }
 }

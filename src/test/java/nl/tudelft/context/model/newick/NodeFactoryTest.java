@@ -23,7 +23,7 @@ public class NodeFactoryTest {
         TreeNode parserNode = new TreeNode();
         parserNode.setName("");
         parserNode.setWeight(1);
-        Node node = new Node("", 1);
+        AbstractNode node = new LeaveNode("", 1);
         assertEquals(node, nodeParser.getNode(parserNode));
     }
 }

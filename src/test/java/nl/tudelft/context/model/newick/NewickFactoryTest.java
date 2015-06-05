@@ -21,7 +21,7 @@ public class NewickFactoryTest {
     protected static File file;
     protected static Parser<Newick> treeParser;
     protected static Newick newick;
-    protected static Node root;
+    protected static AbstractNode root;
 
     /**
      * Helper class for loading the file.
@@ -93,14 +93,14 @@ public class NewickFactoryTest {
      * @param node the node
      * @return the number of leaves from node
      */
-    public int countLeaves(Node node) {
+    public int countLeaves(AbstractNode node) {
         if (node.getChildren().size() == 0) {
             return 1;
         }
 
         int sum = 0;
 
-        for (Node child : node.getChildren()) {
+        for (AbstractNode child : node.getChildren()) {
             sum += countLeaves(child);
         }
 
@@ -112,7 +112,7 @@ public class NewickFactoryTest {
      * @param node the node
      * @return the number of ancestors of the children of the node
      */
-    public int countAncestors(Node node) {
+    public int countAncestors(AbstractNode node) {
         if (node.getChildren().size() == 0) {
             return 0;
         }
@@ -120,7 +120,7 @@ public class NewickFactoryTest {
         int sum = 0;
 
         if (node.getChildren().size() > 0) {
-            for (Node child : node.getChildren()) {
+            for (AbstractNode child : node.getChildren()) {
                 sum += countAncestors(child);
             }
             sum += 1;

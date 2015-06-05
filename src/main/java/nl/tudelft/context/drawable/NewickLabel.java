@@ -1,6 +1,8 @@
 package nl.tudelft.context.drawable;
 
 import javafx.scene.control.Label;
+import nl.tudelft.context.model.newick.AbstractNode;
+import nl.tudelft.context.model.newick.AncestorNode;
 import nl.tudelft.context.model.newick.selection.Selection;
 
 /**
@@ -12,14 +14,14 @@ public class NewickLabel extends Label {
     /**
      * The node that the label is based on.
      */
-    Node node;
+    AbstractNode node;
 
     /**
      * Creates a label, based on a newick node.
      *
      * @param node The node to base the label on.
      */
-    public NewickLabel(final Node node) {
+    public NewickLabel(final AbstractNode node) {
         super(node.getName());
 
         this.node = node;
@@ -42,7 +44,7 @@ public class NewickLabel extends Label {
                 (observable, oldValue, newValue) -> setSelectedClass(oldValue, newValue)
         );
 
-        if (node.isUnknown()) {
+        if (node instanceof AncestorNode) {
             getStyleClass().add("ancestor");
         }
     }

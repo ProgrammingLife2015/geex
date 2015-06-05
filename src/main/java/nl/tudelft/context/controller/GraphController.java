@@ -38,7 +38,7 @@ public final class GraphController extends DefaultGraphController {
     SelectNewickController selectNewickController = new SelectNewickController(
             this,
             mainController.getWorkspace().getNewick()
-    );;
+    );
 
     /**
      * Property with graph map.

@@ -12,9 +12,13 @@ public final class NodeParser {
      * Constructs the Node from a TreeNode.
      *
      * @param node A TreeNode from treejuxtaposer
-     * @return A nl.tudelft.context.newick.Node
+     * @return A Newick node.
      */
     public AbstractNode getNode(final TreeNode node) {
-        return new Node(node.getName(), node.getWeight());
+        if (node.getName().equals("")) {
+            return new AncestorNode(node.getName(), node.getWeight());
+        } else {
+            return new LeaveNode(node.getName(), node.getWeight());
+        }
     }
 }

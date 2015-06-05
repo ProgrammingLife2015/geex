@@ -26,10 +26,10 @@ public class NewickTest {
     @Test
     public void testRoot() {
         assertNull(newick.getRoot());
-        Node root1 = new Node("A", 1.39);
+        AbstractNode root1 = new LeaveNode("A", 1.39);
         newick.setRoot(root1);
         assertEquals(root1, newick.getRoot());
-        Node root2 = new Node("B", 1.1);
+        AbstractNode root2 = new LeaveNode("B", 1.1);
         newick.setRoot(root2);
         assertEquals(root2, newick.getRoot());
     }
@@ -37,9 +37,9 @@ public class NewickTest {
     @Test
     public void testToString() {
         assertEquals("", newick.toString());
-        newick.setRoot(new Node("Some name", 1.23));
+        newick.setRoot(new LeaveNode("Some name", 1.23));
         assertEquals("Node<Some name,1.23>\n", newick.toString());
-        newick.getRoot().addChild(new Node("Some other name", 2.34));
+        newick.getRoot().addChild(new LeaveNode("Some other name", 2.34));
         assertEquals("Node<Some name,1.23>\n" +
                 "\tNode<Some other name,2.34>\n",
                 newick.toString());

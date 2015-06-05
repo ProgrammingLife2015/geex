@@ -44,7 +44,7 @@ public final class NewickParser extends Parser<Newick> {
                 new TreeParser(reader);
 
         Tree nwkTree = tp.tokenize("");
-        Node root = nodeParser.getNode(nwkTree.getRoot());
+        AbstractNode root = nodeParser.getNode(nwkTree.getRoot());
 
         Newick newick = new Newick();
         getOffspring(nwkTree.getRoot(), root, newick, 0);
@@ -62,7 +62,7 @@ public final class NewickParser extends Parser<Newick> {
      * @param row    the current row (depth) of the node
      * @return the new row (depth) of the next node
      */
-    public int getOffspring(final TreeNode node, final Node parent, final Newick newick, final int row) {
+    public int getOffspring(final TreeNode node, final AbstractNode parent, final Newick newick, final int row) {
         newick.addVertex(parent);
 
         int ret = row;
@@ -72,7 +72,7 @@ public final class NewickParser extends Parser<Newick> {
             TreeNode child = node.getChild(i);
             if (child != null) {
                 addRow = 0;
-                Node n = createNode(child, parent, ret);
+                AbstractNode n = createNode(child, parent, ret);
                 ret = getOffspring(child, n, newick, ret);
                 parent.addChild(n);
                 if (i > 0) {
@@ -94,8 +94,8 @@ public final class NewickParser extends Parser<Newick> {
      * @param row    the current row (depth) of the node
      * @return the node as a Node
      */
-    public Node createNode(final TreeNode child, final Node parent, final int row) {
-        Node n = nodeParser.getNode(child);
+    public AbstractNode createNode(final TreeNode child, final AbstractNode parent, final int row) {
+        AbstractNode n = nodeParser.getNode(child);
         n.setParent(parent);
         double x = parent.translateXProperty().doubleValue() + MIN_WEIGHT + WEIGHT_SCALE * n.getWeight();
         n.setTranslateX(x);
@@ -111,8 +111,8 @@ public final class NewickParser extends Parser<Newick> {
      * @param n      the node
      * @param newick   the tree to add the dummy to
      */
-    public void addDummy(final Node parent, final Node n, final Newick newick) {
-        Node dummy = new Node("", 0);
+    public void addDummy(final AbstractNode parent, final AbstractNode n, final Newick newick) {
+        AbstractNode dummy = new DummyNode();
         dummy.setTranslateX(parent.translateXProperty().doubleValue());
         dummy.setTranslateY(n.translateYProperty().doubleValue());
         newick.addVertex(dummy);

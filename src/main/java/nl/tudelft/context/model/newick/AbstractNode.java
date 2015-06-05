@@ -21,25 +21,25 @@ public abstract class AbstractNode extends DrawablePosition {
     /**
      * The name of the node.
      */
-    private final String name;
+    final String name;
     /**
      * The weight of the node.
      */
-    private final double weight;
+    final double weight;
     /**
      * The children of the node.
      */
-    private List<AbstractNode> children;
+    List<AbstractNode> children;
 
     /**
      * The parent node.
      */
-    private AbstractNode parent;
+    AbstractNode parent;
 
     /**
      * The selection of the node.
      */
-    private ObjectProperty<Selection> selection = new SimpleObjectProperty<>(new None());
+    ObjectProperty<Selection> selection = new SimpleObjectProperty<>(new None());
 
     /**
      * Builds a new node with the corresponding name and weight.
@@ -117,32 +117,11 @@ public abstract class AbstractNode extends DrawablePosition {
     }
 
     /**
-     * Tells whether this node is an unknown ancestor or not.
-     *
-     * @return true if the node is an unknown ancestor; otherwise false
-     */
-    public boolean isUnknown() {
-        return this.name.isEmpty();
-    }
-
-    /**
      * Gets the sources for the graph from this node and its children.
      *
      * @return name of this node and it's children
      */
-    public Set<String> getSources() {
-
-        Set<String> sources = new HashSet<>();
-
-        if (!isUnknown() && selection.get().useSources()) {
-            sources.add(name);
-        }
-
-        children.forEach(node -> sources.addAll(node.getSources()));
-
-        return sources;
-
-    }
+    public abstract Set<String> getSources();
 
     /**
      * Toggles the selection of the node. If the selection was ALL, the the new selection will be NONE; otherwise the
@@ -217,6 +196,6 @@ public abstract class AbstractNode extends DrawablePosition {
 
     @Override
     public String toString() {
-        return "AbstractNode<" + name + "," + weight + ">";
+        return "Node<" + name + "," + weight + ">";
     }
 }
