@@ -75,7 +75,7 @@ package graph {
         -replaceSingle()
     }
 
-    abstract class StackGraph<DefaultNode> extends org.jgrapht.graph.DefaultGraph {
+    abstract class StackGraph<DefaultNode> extends DefaultGraph {
         #setGraph(stackGraph : StackGraph)
         +createSubGraph(nodes : Set<DefaultNode>) : Graph
     }
@@ -90,20 +90,29 @@ package graph {
 
     graph.NodeParser ..> graph.Node : << create >>
     graph.Node *-- BaseCounter
+
+    StackGraph --> DefaultNode : << contains >>
+
+    DefaultNode --> DefaultNode : << contains >>
 }
 
 
 package newick {
     class newick.Node extends DrawableNode {
         - name : String
-        weight : double
-        children : List<Node>
+        - weight : double
+        - children : List<Node>
+        - parent : Node
+        - selection : Selection
     }
     class newick.NodeParser {
         +getNode(node : TreeNode) : Node
     }
     class Newick<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
+        root : newick.Node
+
         +getFirstNode() : Node
+        +toString(node : Node, level : int)
     }
     class NewickParser<Tree> extends Parser {
         +getOffspring(node : TreeNode, parent : Node, tree : Tree) : int
@@ -153,6 +162,22 @@ package annotation {
 
     AnnotationParser ..> AnnotationMap : << create >>
     AnnotationMap "1" --> "*" Annotation : << contains >>
+}
+
+package resistance {
+    class Resistance {
+        geneName : String
+        typeOfMutation : String
+        change : String
+        genomePosition : int
+    }
+    class ResistanceMap<Integer, Resistance> extends java.util.HashMap
+    class ResistanceParser<ResistanceMap> extends Parser {
+        +getResistance(splitLine : String[]) : Resistance
+    }
+
+    ResistanceParser ..> ResistanceMap : << create >>
+    ResistanceMap "1" --> "*" Resistance : << contains >>
 }
 }
 @enduml
