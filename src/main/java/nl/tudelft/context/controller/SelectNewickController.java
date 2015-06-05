@@ -26,9 +26,11 @@ public class SelectNewickController extends DefaultNewickController {
     /**
      * Create s select Newick controller.
      *
-     * @param newickIn Newick object from the workspace, might not be loaded.
+     * @param newickIn        Newick object from the workspace, might not be loaded
+     * @param graphController Controller where to update the sources
      */
-    public SelectNewickController(final GraphController graphController, final ReadOnlyObjectProperty<Newick> newickIn) {
+    public SelectNewickController(final GraphController graphController,
+                                  final ReadOnlyObjectProperty<Newick> newickIn) {
 
         super(newickIn);
         this.graphController = graphController;
@@ -44,10 +46,10 @@ public class SelectNewickController extends DefaultNewickController {
     }
 
     @Override
-    void showTree(Newick newick) {
+    void showTree(final Newick newick) {
 
         newick.getRoot().getSelectionProperty().addListener(event -> {
-                graphController.updateSelectedSources(newick.getRoot().getSources());
+            graphController.updateSelectedSources(newick.getRoot().getSources());
         });
 
         // Bind edges

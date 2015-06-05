@@ -152,7 +152,7 @@ public final class GraphController extends DefaultGraphController {
      *
      * @param sources New selected sources.
      */
-    public void updateSelectedSources(Set<String> sources) {
+    public void updateSelectedSources(final Set<String> sources) {
         selectedSources.setValue(sources);
     }
 

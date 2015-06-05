@@ -54,18 +54,6 @@ public class Node extends DrawablePosition {
     }
 
     /**
-     * Clone the node.
-     *
-     * @param node Node to clone
-     */
-    public Node(Node node) {
-        this.name = node.name;
-        this.weight = node.weight;
-        children = new ArrayList<>(2);
-        node.getChildren().stream().forEach(this::addChild);
-    }
-
-    /**
      * Adds a child to the node.
      *
      * @param n the node to add as a child
