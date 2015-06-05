@@ -99,24 +99,46 @@ public class Database {
         }
     }
 
-    public void insert(final String tableName, final String... values) throws SqlJetException {
-        db.beginTransaction(SqlJetTransactionMode.WRITE);
-        ISqlJetTable table = db.getTable(tableName);
+    /**
+     * Remove the specified values from te database. Does not fail
+     * when the record is not found.
+     * @param tableName The table to remove data from
+     * @param values The data to remove
+     * @throws SqlJetException When there is a database error.
+     */
+    public void remove(final String tableName, final String... values) throws SqlJetException {
+        db.runWriteTransaction(db1 -> {
+            ISqlJetCursor cursor = db.getTable(tableName).lookup(db.getTable(tableName).getPrimaryKeyIndexName(), (Object[]) values);
 
-        ISqlJetCursor cursor = table.lookup("location_index", (Object[]) values);
+            if (cursor.getRowCount() != 0) {
+                cursor.delete();
+            }
 
-        if (cursor.getRowCount() != 0) {
-            System.out.println("Already got this one!");
-            cursor.delete();
             cursor.close();
-        }
-        db.commit();
 
-        db.beginTransaction(SqlJetTransactionMode.WRITE);
-        table = db.getTable(tableName);
+            return null;
+        });
+    }
 
-        table.insert(values);
+    /**
+     * Insert a new row into a table.
+     * @param tableName Table to insert data into
+     * @param values Values to insert into the table
+     * @throws SqlJetException
+     */
+    public void insert(final String tableName, final String... values) throws SqlJetException {
+        db.runWriteTransaction(db1 -> db1.getTable(tableName).insert(values));
+    }
 
-        db.commit();
+    /**
+     * Replace data in a table, does not fail when the original doesn't exist.
+     * @param tableName Table to replace data in.
+     * @param index
+     * @param values
+     * @throws SqlJetException
+     */
+    public void replace(final String tableName, final String... values) throws SqlJetException {
+        remove(tableName, values);
+        insert(tableName, values);
     }
 }
