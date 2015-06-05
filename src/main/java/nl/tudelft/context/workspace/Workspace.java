@@ -143,7 +143,7 @@ public class Workspace {
 
     private void save() {
         try {
-            Database.instance().insert("workspace", this.directory.getAbsolutePath(), this.directory.getName());
+            Database.instance().replace("workspace", this.directory.getAbsolutePath(), this.directory.getName());
         } catch (SqlJetException e) {
             e.printStackTrace();
         }
