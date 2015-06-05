@@ -1,7 +1,7 @@
 package nl.tudelft.context.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import nl.tudelft.context.model.newick.Newick;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -10,8 +10,20 @@ import java.util.ResourceBundle;
  */
 public class SelectNewickController extends DefaultNewickController {
 
+    /**
+     * Create s select Newick controller.
+     *
+     * @param newickIn Newick object from the workspace, might not be loaded.
+     */
+    public SelectNewickController(final ReadOnlyObjectProperty<Newick> newickIn) {
+
+        super(newickIn);
+
+        loadFXML("/application/newick.fxml");
+    }
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    void showTree(Newick newick) {
 
     }
 
