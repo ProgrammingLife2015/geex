@@ -52,7 +52,6 @@ public class WelcomeController extends ViewController<GridPane> {
     public void initialize(final URL location, final ResourceBundle resources) {
         previous.getItems().setAll(Database.instance().getList("workspace", new String[]{"location", "name"}, 5).stream().map(row -> {
             Label label = new Label(row[1]);
-            System.out.println(row[1]);
             label.setOnMouseClicked(event -> {
                 try {
                     Workspace workspace = new Workspace(new File(row[0]));
