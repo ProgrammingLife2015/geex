@@ -48,32 +48,25 @@ public class Database {
         return instance;
     }
 
-    public List<String[]> getList(final String tableName, final String[] columns, final int limit) {
+    public List<String[]> getList(final String tableName, final String[] columns, final int limit) throws SqlJetException {
         List<String[]> out = new ArrayList<>();
-        try {
-            db.runWriteTransaction(db1 -> {
-                ISqlJetCursor cursor = db1.getTable(tableName).open().reverse();
 
-                while (!cursor.eof()) {
-                    String[] row = new String[cursor.getFieldsCount()];
-                    for (int i = 0, columnsLength = columns.length; i < columnsLength; i++) {
-                        row[i] = cursor.getString(columns[i]);
-                    }
-                    out.add(row);
-                    cursor.next();
+        db.runWriteTransaction(db1 -> {
+            ISqlJetCursor cursor = db1.getTable(tableName).open().reverse();
+
+            while (!cursor.eof() && out.size() < limit) {
+                String[] row = new String[cursor.getFieldsCount()];
+                for (int i = 0, columnsLength = columns.length; i < columnsLength; i++) {
+                    row[i] = cursor.getString(columns[i]);
                 }
-
-                return null;
-            });
-        } catch (SqlJetException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                db.commit();
-            } catch (SqlJetException e) {
-                e.printStackTrace();
+                out.add(row);
+                cursor.next();
             }
-        }
+
+            cursor.close();
+
+            return null;
+        });
 
         return out;
     }
