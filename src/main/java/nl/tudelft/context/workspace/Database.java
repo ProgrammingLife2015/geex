@@ -51,19 +51,20 @@ public class Database {
     public List<String[]> getList(final String tableName, final String[] columns, final int limit) {
         List<String[]> out = new ArrayList<>();
         try {
-            ISqlJetTable table = db.getTable(tableName);
-            db.beginTransaction(SqlJetTransactionMode.READ_ONLY);
-            ISqlJetCursor cursor = table.order(table.getPrimaryKeyIndexName());
-            cursor.setLimit(limit);
-            if (!cursor.eof()) {
-                do {
+            db.runWriteTransaction(db1 -> {
+                ISqlJetCursor cursor = db1.getTable(tableName).open().reverse();
+
+                while (!cursor.eof()) {
                     String[] row = new String[cursor.getFieldsCount()];
                     for (int i = 0, columnsLength = columns.length; i < columnsLength; i++) {
                         row[i] = cursor.getString(columns[i]);
                     }
                     out.add(row);
-                } while (cursor.next());
-            }
+                    cursor.next();
+                }
+
+                return null;
+            });
         } catch (SqlJetException e) {
             e.printStackTrace();
         } finally {
