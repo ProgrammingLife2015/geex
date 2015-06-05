@@ -1,11 +1,6 @@
 package nl.tudelft.context.workspace;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Window;
-import nl.tudelft.context.controller.MainController;
-import nl.tudelft.context.controller.MessageController;
-import nl.tudelft.context.controller.NewickController;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.annotation.AnnotationParser;
 import nl.tudelft.context.model.graph.GraphMap;
@@ -98,30 +93,6 @@ public class Workspace {
     }
 
     /**
-     * Choose a workspace with a directorychooser.
-     *
-     * @param mainController The application to choose a workspace for.
-     */
-    public static void chooseWorkspace(final MainController mainController) {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Select Workspace Folder");
-        Window window = mainController.getRoot().getScene().getWindow();
-        File workspaceDirectory = directoryChooser.showDialog(window);
-
-        Workspace workspace = new Workspace(workspaceDirectory);
-        try {
-            workspace.load();
-            workspace.save();
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
-
-            mainController.setWorkspace(workspace);
-            mainController.setBaseView(new NewickController(mainController, workspace.getNewick()));
-        } catch (FileNotFoundException | SqlJetException e) {
-            mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
-        }
-    }
-
-    /**
      * Find a file in files with a certain extension.
      *
      * @param files     Files to search in
@@ -154,6 +125,7 @@ public class Workspace {
 
     /**
      * Save the current workspace to the database.
+     *
      * @throws SqlJetException Saving failed.
      */
     public void save() throws SqlJetException {
@@ -204,6 +176,7 @@ public class Workspace {
 
     /**
      * Get the ResistanceMap Property.
+     *
      * @return A ReadOnlyObjectProperty containing, or not yet containing a ResistanceMap.
      */
     public ReadOnlyObjectProperty<ResistanceMap> getResistance() {
