@@ -27,7 +27,7 @@ public class Database {
     SqlJetDb db;
 
     /**
-     * Create a new Database
+     * Create a new Database.
      */
     Database() {
     }
@@ -64,7 +64,8 @@ public class Database {
      * @return A list of rows.
      * @throws SqlJetException When the database fails.
      */
-    public List<String[]> getList(final String tableName, final String[] columns, final int limit) throws SqlJetException {
+    public List<String[]> getList(final String tableName, final String[] columns, final int limit)
+            throws SqlJetException {
         List<String[]> out = new ArrayList<>();
 
         db.runReadTransaction(db1 -> {
@@ -139,7 +140,7 @@ public class Database {
      * Insert a new row into a table.
      * @param tableName Table to insert data into
      * @param values Values to insert into the table
-     * @throws SqlJetException
+     * @throws SqlJetException When the database fails.
      */
     public void insert(final String tableName, final String... values) throws SqlJetException {
         db.runWriteTransaction(db1 -> db1.getTable(tableName).insert(values));
@@ -149,7 +150,7 @@ public class Database {
      * Replace data in a table, does not fail when the original doesn't exist.
      * @param tableName Table to replace data in.
      * @param values Values to replace
-     * @throws SqlJetException
+     * @throws SqlJetException When the database fails.
      */
     public void replace(final String tableName, final String... values) throws SqlJetException {
         remove(tableName, values);

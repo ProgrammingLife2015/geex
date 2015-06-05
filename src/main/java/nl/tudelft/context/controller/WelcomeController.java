@@ -22,6 +22,9 @@ import static java.util.stream.Collectors.toList;
  * @since 18-5-2015
  */
 public class WelcomeController extends ViewController<GridPane> {
+    /**
+     * Number of previous workspaces.
+     */
     private static final int NO_OF_PREVIOUS_WORKSPACES = 9;
     /**
      * The load button.
@@ -53,7 +56,9 @@ public class WelcomeController extends ViewController<GridPane> {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         try {
-            previous.getItems().setAll(Database.instance().getList("workspace", new String[]{"location", "name"}, NO_OF_PREVIOUS_WORKSPACES).stream().map(row -> {
+            previous.getItems().setAll(Database.instance()
+                    .getList("workspace", new String[]{"location", "name"}, NO_OF_PREVIOUS_WORKSPACES)
+                    .stream().map(row -> {
                 Label label = new Label(row[1]);
                 label.setOnMouseClicked(event -> loadWorkspace(row[0]));
                 return label;
@@ -70,7 +75,11 @@ public class WelcomeController extends ViewController<GridPane> {
         load.setOnMouseClicked(event -> Workspace.chooseWorkspace(mainController));
     }
 
-    private void loadWorkspace(String directory) {
+    /**
+     * Load the workspace from the directory.
+     * @param directory Directory to set as workspace.
+     */
+    private void loadWorkspace(final String directory) {
         try {
             Workspace workspace = new Workspace(new File(directory));
             workspace.load();
