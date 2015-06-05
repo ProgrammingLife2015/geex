@@ -67,7 +67,7 @@ public class Database {
     public List<String[]> getList(final String tableName, final String[] columns, final int limit) throws SqlJetException {
         List<String[]> out = new ArrayList<>();
 
-        db.runWriteTransaction(db1 -> {
+        db.runReadTransaction(db1 -> {
             ISqlJetCursor cursor = db1.getTable(tableName).open().reverse();
 
             while (!cursor.eof() && out.size() < limit) {
