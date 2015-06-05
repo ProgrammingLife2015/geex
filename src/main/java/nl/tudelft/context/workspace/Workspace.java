@@ -1,11 +1,6 @@
 package nl.tudelft.context.workspace;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Window;
-import nl.tudelft.context.controller.MainController;
-import nl.tudelft.context.controller.MessageController;
-import nl.tudelft.context.controller.NewickController;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.annotation.AnnotationParser;
 import nl.tudelft.context.model.graph.GraphMap;
@@ -15,6 +10,7 @@ import nl.tudelft.context.model.newick.NewickParser;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 import nl.tudelft.context.model.resistance.ResistanceParser;
 import nl.tudelft.context.service.LoadService;
+import org.tmatesoft.sqljet.core.SqlJetException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -85,39 +81,14 @@ public class Workspace {
      * Create a new workspace on the directory.
      *
      * @param directory The workspace root
+     * @throws FileNotFoundException When the directory is null or doesn't exist
      */
-    public Workspace(final File directory) {
+    public Workspace(final File directory) throws FileNotFoundException {
         this.directory = directory;
-        if (this.directory == null) {
-            files = new File[0];
-
-            return;
+        if (this.directory == null || !this.directory.exists()) {
+            throw new FileNotFoundException();
         }
         files = this.directory.listFiles();
-    }
-
-    /**
-     * Choose a workspace with a directorychooser.
-     *
-     * @param mainController The application to choose a workspace for.
-     */
-    public static void chooseWorkspace(final MainController mainController) {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Select Workspace Folder");
-        Window window = mainController.getRoot().getScene().getWindow();
-        File workspaceDirectory = directoryChooser.showDialog(window);
-
-        Workspace workspace = new Workspace(workspaceDirectory);
-        try {
-            workspace.load();
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
-
-            mainController.setWorkspace(workspace);
-            mainController.setBaseView(
-                    new NewickController(mainController, workspace.getNewick()));
-        } catch (FileNotFoundException e) {
-            mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
-        }
     }
 
     /**
@@ -152,6 +123,15 @@ public class Workspace {
     }
 
     /**
+     * Save the current workspace to the database.
+     *
+     * @throws SqlJetException Saving failed.
+     */
+    public void save() throws SqlJetException {
+        Database.instance().replace("workspace", this.directory.getAbsolutePath(), this.directory.getName());
+    }
+
+    /**
      * Preload the workspace, makes sure all the services are started.
      */
     public final void preload() {
@@ -168,6 +148,7 @@ public class Workspace {
 
     /**
      * Get the Newick Property.
+     *
      * @return A ReadOnlyObjectProperty containing, or not yet containing a Newick.
      */
     public ReadOnlyObjectProperty<Newick> getNewick() {
@@ -176,6 +157,7 @@ public class Workspace {
 
     /**
      * Get the AnnotationMap Property.
+     *
      * @return A ReadOnlyObjectProperty containing, or not yet containing an AnnotationMap.
      */
     public ReadOnlyObjectProperty<AnnotationMap> getAnnotation() {
@@ -184,6 +166,7 @@ public class Workspace {
 
     /**
      * Get the GraphMap Property.
+     *
      * @return A ReadOnlyObjectProperty containing, or not yet containing a GraphMap.
      */
     public ReadOnlyObjectProperty<GraphMap> getGraph() {
@@ -192,6 +175,7 @@ public class Workspace {
 
     /**
      * Get the ResistanceMap Property.
+     *
      * @return A ReadOnlyObjectProperty containing, or not yet containing a ResistanceMap.
      */
     public ReadOnlyObjectProperty<ResistanceMap> getResistance() {

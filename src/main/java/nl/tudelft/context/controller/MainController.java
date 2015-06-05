@@ -98,7 +98,7 @@ public class MainController extends DefaultController<StackPane> {
 
         new OverlayController(this, overlay);
 
-        setBaseView(new WelcomeController(this));
+        setBaseView(new WelcomeController(this, menuController.getWelcomeMenuItem()));
     }
 
     /**
