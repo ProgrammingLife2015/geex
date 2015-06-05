@@ -45,6 +45,15 @@ public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
         return root;
     }
 
+    /**
+     * Create a sub newick tree of selected nodes.
+     *
+     * @return New newick tree
+     */
+    public Newick createSubNewick() {
+        return this;
+    }
+
     @Override
     public String toString() {
         if (getRoot() == null) {
@@ -55,9 +64,10 @@ public class Newick extends DefaultDirectedGraph<Node, DefaultEdge> {
 
     /**
      * Recursive toString helper for the tree.
+     *
      * @param node  the current node
      * @param level the level of the tree
-     * @return      a string representation of the node
+     * @return a string representation of the node
      */
     public String toString(final Node node, final int level) {
         StringBuilder res = new StringBuilder();

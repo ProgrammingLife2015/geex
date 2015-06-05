@@ -11,6 +11,7 @@ import nl.tudelft.context.model.graph.SinglePointGraph;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -25,6 +26,11 @@ public final class GraphController extends DefaultGraphController {
      * Sources that are displayed in the graph.
      */
     Set<String> sources;
+
+    /**
+     * Sources that are displayed in the graph.
+     */
+    ObjectProperty<Set<String>> selectedSources = new SimpleObjectProperty<>(new HashSet<>());
 
     /**
      * Property with graph map.
@@ -115,7 +121,9 @@ public final class GraphController extends DefaultGraphController {
 
         MenuItem toggleSelect = menuController.getToggleSelect();
         toggleSelect.setOnAction(event ->
-                mainController.setView(this, new SelectNewickController(mainController.getWorkspace().getNewick())));
+                mainController.setView(this, new SelectNewickController(
+                        this,
+                        mainController.getWorkspace().getNewick())));
         toggleSelect.disableProperty().bind(activeProperty.not());
 
     }
@@ -130,6 +138,15 @@ public final class GraphController extends DefaultGraphController {
         graphList.add(new SinglePointGraph(graphList.getLast()));
         DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
         showGraph(drawableGraph);
+    }
+
+    /**
+     * Update the selected sources.
+     *
+     * @param sources New selected sources.
+     */
+    public void updateSelectedSources(Set<String> sources) {
+        selectedSources.setValue(sources);
     }
 
     /**
