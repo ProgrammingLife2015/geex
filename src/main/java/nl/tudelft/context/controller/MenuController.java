@@ -158,6 +158,11 @@ public final class MenuController {
 
     }
 
+    /**
+     * Get the menu item to select a workspace.
+     *
+     * @return MenuItem for the welcomeController.
+     */
     public MenuItem getWelcomeMenuItem() {
         return welcomeMenuItem;
     }

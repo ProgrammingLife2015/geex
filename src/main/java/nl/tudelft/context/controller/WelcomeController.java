@@ -50,6 +50,7 @@ public class WelcomeController extends ViewController<GridPane> {
      * Create a WelcomeController.
      *
      * @param mainController The MainController of the application
+     * @param welcomeMenuItem MenuItem for selecting a workspace
      */
     public WelcomeController(final MainController mainController, final MenuItem welcomeMenuItem) {
         super(new GridPane());
@@ -66,6 +67,9 @@ public class WelcomeController extends ViewController<GridPane> {
         load.setOnMouseClicked(event -> selectWorkspace(mainController.getRoot().getScene().getWindow()));
     }
 
+    /**
+     * Reload the listView with previous workspaces.
+     */
     private void reloadListView() {
         try {
             final List<String[]> workspaces = Database.instance()
@@ -86,6 +90,10 @@ public class WelcomeController extends ViewController<GridPane> {
         }
     }
 
+    /**
+     * Use a directoryChooser to select a new workspace.
+     * @param window Window for the directoryChooser
+     */
     private void selectWorkspace(final Window window) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Workspace Folder");

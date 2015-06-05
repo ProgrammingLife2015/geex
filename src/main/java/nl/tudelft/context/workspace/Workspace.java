@@ -81,10 +81,11 @@ public class Workspace {
      * Create a new workspace on the directory.
      *
      * @param directory The workspace root
+     * @throws FileNotFoundException When the directory is null or doesn't exist
      */
     public Workspace(final File directory) throws FileNotFoundException {
         this.directory = directory;
-        if (this.directory == null || ! this.directory.exists()) {
+        if (this.directory == null || !this.directory.exists()) {
             throw new FileNotFoundException();
         }
         files = this.directory.listFiles();
