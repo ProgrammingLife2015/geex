@@ -28,7 +28,7 @@
                     <Font name="Arial Bold" size="16.0"/>
                 </font>
             </Label>
-            <ListView disable="true">
+            <ListView fx:id="previous">
                 <Label text="Here come the previous workspaces"/>
             </ListView>
         </children>

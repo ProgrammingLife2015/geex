@@ -8,7 +8,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import nl.tudelft.context.workspace.Workspace;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
@@ -30,7 +29,8 @@ public final class MenuController {
             toggleOverlay,
             toggleSelect,
             zoomIn,
-            zoomOut;
+            zoomOut,
+            welcomeMenuItem;
 
     /**
      * FXML menu bar.
@@ -59,11 +59,13 @@ public final class MenuController {
      */
     private void initFileMenu() {
 
+        welcomeMenuItem = createMenuItem("Select workspace folder",
+                new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN),
+                null,
+                false);
+
         menuBar.getMenus().add(createMenu("_File",
-                createMenuItem("Select workspace folder",
-                        new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN),
-                        event -> Workspace.chooseWorkspace(mainController),
-                        false),
+                welcomeMenuItem,
                 createMenuItem("Exit", null,
                         event -> mainController.exitProgram(),
                         false)));
@@ -157,6 +159,15 @@ public final class MenuController {
 
         return res;
 
+    }
+
+    /**
+     * Get the menu item to select a workspace.
+     *
+     * @return MenuItem for the welcomeController.
+     */
+    public MenuItem getWelcomeMenuItem() {
+        return welcomeMenuItem;
     }
 
     /**
