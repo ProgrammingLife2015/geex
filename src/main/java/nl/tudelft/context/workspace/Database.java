@@ -19,25 +19,13 @@ public class Database {
     private static final String DB_FILE = "geex.db";
     private SqlJetDb db;
 
-    public Database() {
-        try {
-            db = SqlJetDb.open(new File(DB_FILE), true);
-
-            db.runTransaction(db1 -> {
-                db1.getOptions().setUserVersion(1);
-                return true;
-            }, SqlJetTransactionMode.WRITE);
-
-            createTables();
-
-        } catch (SqlJetException e) {
-            e.printStackTrace();
-        }
+    public Database() throws SqlJetException {
+        open();
     }
 
     private static Database instance;
 
-    public static Database instance() {
+    public static Database instance() throws SqlJetException {
         if (instance == null) {
             synchronized (Database.class) {
                 if (instance == null) {
