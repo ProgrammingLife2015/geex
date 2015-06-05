@@ -32,6 +32,8 @@ public class DrawableNewick extends Newick {
      */
     public static final int MIN_WEIGHT = 30;
 
+    int currentRow = 0;
+
     /**
      * Create a wrapper around the Newick to draw the Newick tree.
      *
@@ -40,7 +42,12 @@ public class DrawableNewick extends Newick {
     public DrawableNewick(final Newick newick) {
         this.newick = newick;
 
-        addEdge(new DummyNode(), newick.getRoot());
+        newick.vertexSet().stream()
+                .forEach(this::addVertex);
+
+        DummyNode dummy = new DummyNode();
+        addVertex(dummy);
+        addEdge(dummy, newick.getRoot());
         newick.getRoot().setTranslateX(START_INDENT);
 
         newick.getRoot().getChildren()
@@ -55,6 +62,9 @@ public class DrawableNewick extends Newick {
     public void constructTree(final AbstractNode node) {
         addEdge(node.getParent(), node);
         translateNode(node);
+        if (node.getChildren().isEmpty()) {
+            currentRow++;
+        }
         node.getChildren()
                 .forEach(this::constructTree);
     }
@@ -67,6 +77,7 @@ public class DrawableNewick extends Newick {
     public void translateNode(final AbstractNode node) {
         node.setTranslateX(node.getParent().translateXProperty().doubleValue()
                 + MIN_WEIGHT + node.getWeight() * WEIGHT_SCALE);
+        node.setTranslateY(currentRow * ROW_HEIGHT);
     }
 
     /**

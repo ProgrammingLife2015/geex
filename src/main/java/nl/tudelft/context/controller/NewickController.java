@@ -4,6 +4,7 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import nl.tudelft.context.drawable.DrawableEdge;
+import nl.tudelft.context.drawable.DrawableNewick;
 import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.selection.None;
@@ -51,13 +52,15 @@ public final class NewickController extends DefaultNewickController {
 
     @Override
     protected void showTree(final Newick newick) {
+        DrawableNewick drawableNewick = new DrawableNewick(newick);
+
         // Bind edges
-        List<DrawableEdge> edgeList = newick.edgeSet().stream()
-                .map(edge -> new DrawableEdge(newick, edge))
+        List<DrawableEdge> edgeList = drawableNewick.edgeSet().stream()
+                .map(edge -> new DrawableEdge(drawableNewick, edge))
                 .collect(Collectors.toList());
 
         // Bind nodes
-        List<Label> nodeList = newick.vertexSet().stream()
+        List<Label> nodeList = drawableNewick.vertexSet().stream()
                 .map(NewickLabel::new)
                 .collect(Collectors.toList());
 
