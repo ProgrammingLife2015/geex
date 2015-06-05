@@ -3,20 +3,20 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import nl.tudelft.context.drawable.DrawableGraph;
-import nl.tudelft.context.model.graph.StackGraph;
+import nl.tudelft.context.drawable.DefaultLabel;
 
-import java.util.HashMap;
+import java.net.URL;
+import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
  * @version 1.0
  * @since 04-06-2015
  */
-public final class LocatorController {
+public final class LocatorController extends DefaultController<Pane> {
 
     /**
      * The locator of the graph.
@@ -25,55 +25,44 @@ public final class LocatorController {
     Pane locator;
 
     /**
+     * The locator of the graph.
+     */
+    @FXML
+    Line locatorIndicator;
+
+    /**
      * The ScrollPane with the graph.
      */
     final ScrollPane scroll;
 
     /**
-     * The graph.
+     * Label map by column.
      */
-    final DrawableGraph graph;
-
-    /**
-     * The length of the locator.
-     */
-    final int length = 1;
-
-    /**
-     * The locator of the graph.
-     */
-    Line locatorIndicator;
+    Map<Integer, List<DefaultLabel>> lengthMap;
 
     /**
      * Construct the LocatorController.
      *
-     * @param locator The locator pane.
-     * @param scroll  The scroll pane.
-     * @param graph   The list with labels.
+     * @param locator   The locator pane.
+     * @param scroll    The scroll pane.
+     * @param labelsMap The map with labels.
      */
-    public LocatorController(final Pane locator, final ScrollPane scroll, final DrawableGraph graph) {
+    public LocatorController(final Pane locator, final ScrollPane scroll, final Map<Integer, List<DefaultLabel>> labelsMap) {
+
+        super(locator);
 
         this.locator = locator;
         this.scroll = scroll;
-        this.graph = graph;
 
-        locatorIndicator = new Line(0, 0, 0, 0);
-        locatorIndicator.setStroke(Color.RED);
-        locator.getChildren().add(locatorIndicator);
-        locator.heightProperty().addListener(event -> locatorIndicator.setEndY(locator.getHeight() - 1));
-
-        scroll.hvalueProperty().addListener(event -> setPosition(scroll.getHvalue()));
+        loadFXML("/application/locator.fxml");
 
     }
 
-    /**
-     * Sets the length of the locator.
-     *
-     * @param graph The graph.
-     */
-    public void setLength(final DrawableGraph graph) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
-        int sum = graph.getMaxLength();
+        scroll.hvalueProperty().addListener(event -> setPosition(scroll.getHvalue()));
+
     }
 
     /**

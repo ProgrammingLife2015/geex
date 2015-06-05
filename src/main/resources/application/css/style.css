@@ -328,3 +328,8 @@
     -fx-min-width: 100%;
     -fx-background-color : rgba(100, 100, 100, .8);
 }
+
+#locatorIndicator {
+    -fx-min-height: 60px;
+    -fx-stroke: #e41a1c;
+}

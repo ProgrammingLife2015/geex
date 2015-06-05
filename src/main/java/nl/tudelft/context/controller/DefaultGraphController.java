@@ -125,8 +125,9 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
                 )
         );
 
-        new Zoom(scroll, sequences, new HashMap<>(labelMap));
-        new LocatorController(locator, scroll, drawableGraph);
+        Map<Integer, List<DefaultLabel>> cleanLabelMap = new HashMap<>(labelMap);
+        new Zoom(scroll, sequences, cleanLabelMap);
+        new LocatorController(locator, scroll, cleanLabelMap);
 
         showCurrentLabels();
 
