@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
 
-    <Line fx:id="locatorIndicator" startX="0" startY="0" endX="0" endY="60"/>
+    <Rectangle fx:id="locatorIndicator" height="58" translateY="1"/>
 
 </fx:root>
