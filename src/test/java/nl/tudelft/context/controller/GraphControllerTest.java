@@ -10,6 +10,7 @@ import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.resistance.ResistanceMap;
+import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,6 +56,12 @@ public class GraphControllerTest {
         ReadOnlyObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
         ReadOnlyObjectProperty<AnnotationMap> annotationMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
         ReadOnlyObjectProperty<ResistanceMap> resistanceMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
+
+        Workspace workspace = mock(Workspace.class);
+
+        when(workspace.getNewick()).thenReturn(new SimpleObjectProperty<>());
+
+        when(mainController.getWorkspace()).thenReturn(workspace);
 
         graphController = new GraphController(mainController, new HashSet<>(Arrays.asList("Cat", "Dog")),
                 graphMapReadOnlyObjectProperty, annotationMapReadOnlyObjectProperty, resistanceMapReadOnlyObjectProperty);

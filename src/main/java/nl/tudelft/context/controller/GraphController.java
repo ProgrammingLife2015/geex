@@ -35,10 +35,7 @@ public final class GraphController extends DefaultGraphController {
     /**
      * Select controller to select strains.
      */
-    SelectNewickController selectNewickController = new SelectNewickController(
-            this,
-            mainController.getWorkspace().getNewick()
-    );
+    SelectNewickController selectNewickController;
 
     /**
      * Property with graph map.
@@ -77,6 +74,11 @@ public final class GraphController extends DefaultGraphController {
         this.graphMapIn = graphMapIn;
         this.annotationMapIn = annotationMapIn;
         this.resistanceMapIn = resistanceMapIn;
+
+        selectNewickController = new SelectNewickController(
+                this,
+                mainController.getWorkspace().getNewick()
+        );
 
         loadFXML("/application/graph.fxml");
     }
