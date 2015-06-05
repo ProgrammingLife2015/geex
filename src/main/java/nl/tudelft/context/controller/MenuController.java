@@ -29,7 +29,8 @@ public final class MenuController {
             loadGenomeGraph,
             toggleOverlay,
             zoomIn,
-            zoomOut;
+            zoomOut,
+            welcomeMenuItem;
 
     /**
      * FXML menu bar.
@@ -58,11 +59,13 @@ public final class MenuController {
      */
     private void initFileMenu() {
 
+        welcomeMenuItem = createMenuItem("Select workspace folder",
+                new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN),
+                null,
+                false);
+
         menuBar.getMenus().add(createMenu("_File",
-                createMenuItem("Select workspace folder",
-                        new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN),
-                        event -> Workspace.chooseWorkspace(mainController),
-                        false),
+                welcomeMenuItem,
                 createMenuItem("Exit", null,
                         event -> mainController.exitProgram(),
                         false)));
@@ -156,8 +159,13 @@ public final class MenuController {
 
     }
 
+    public MenuItem getWelcomeMenuItem() {
+        return welcomeMenuItem;
+    }
+
     /**
      * Get the menu item to load the genome graph.
+     *
      * @return The menu item to load the genome graph
      */
     public MenuItem getLoadGenomeGraph() {
@@ -166,6 +174,7 @@ public final class MenuController {
 
     /**
      * Get the menu item to zoom in the graph.
+     *
      * @return The menu item to zoom in the graph
      */
     public MenuItem getZoomIn() {
@@ -174,6 +183,7 @@ public final class MenuController {
 
     /**
      * Get the menu item to zoom out the graph.
+     *
      * @return The menu item to zoom out the graph
      */
     public MenuItem getZoomOut() {
@@ -182,6 +192,7 @@ public final class MenuController {
 
     /**
      * Get the menu item to toggle the overlay.
+     *
      * @return The menu item to toggle the overlay
      */
     public MenuItem getToggleOverlay() {
