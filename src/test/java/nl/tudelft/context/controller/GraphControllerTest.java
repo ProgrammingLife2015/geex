@@ -68,6 +68,7 @@ public class GraphControllerTest {
 
     }
 
+
     @Test
     public void testUpdateGraph() throws Exception {
         SimpleObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
