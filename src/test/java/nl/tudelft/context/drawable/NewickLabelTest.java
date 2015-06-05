@@ -3,7 +3,7 @@ package nl.tudelft.context.drawable;
 import de.saxsys.javafx.test.JfxRunner;
 import nl.tudelft.context.model.newick.node.AbstractNode;
 import nl.tudelft.context.model.newick.node.AncestorNode;
-import nl.tudelft.context.model.newick.node.LeaveNode;
+import nl.tudelft.context.model.newick.node.StrandNode;
 import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.model.newick.selection.None;
 import nl.tudelft.context.model.newick.selection.Partial;
@@ -27,7 +27,7 @@ public class NewickLabelTest {
      * @return a newick label.
      */
     public NewickLabel getLabel() {
-        node = new LeaveNode("Test node", 1.23);
+        node = new StrandNode("Test node", 1.23);
         node.setTranslateX(2.34);
         node.setTranslateY(3.45);
         return new NewickLabel(node);

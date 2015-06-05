@@ -3,7 +3,7 @@ package nl.tudelft.context.model.newick;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import nl.tudelft.context.model.newick.node.AbstractNode;
 import nl.tudelft.context.model.newick.node.AncestorNode;
-import nl.tudelft.context.model.newick.node.LeaveNode;
+import nl.tudelft.context.model.newick.node.StrandNode;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -21,7 +21,7 @@ public final class NodeParser {
         if (node.getName().equals("")) {
             return new AncestorNode(node.getName(), node.getWeight());
         } else {
-            return new LeaveNode(node.getName(), node.getWeight());
+            return new StrandNode(node.getName(), node.getWeight());
         }
     }
 }

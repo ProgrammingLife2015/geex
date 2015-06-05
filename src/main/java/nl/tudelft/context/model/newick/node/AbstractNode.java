@@ -177,6 +177,13 @@ public abstract class AbstractNode extends DrawablePosition {
         }
     }
 
+    /**
+     * Returns the class name that belongs to the node.
+     *
+     * @return The class name
+     */
+    public abstract String getClassName();
+
     @Override
     public String toString() {
         return "Node<" + name + "," + weight + ">";

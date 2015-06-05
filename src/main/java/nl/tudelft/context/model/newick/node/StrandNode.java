@@ -8,14 +8,14 @@ import java.util.Set;
  * @version 1.0
  * @since 05-06-2015
  */
-public class LeaveNode extends AbstractNode {
+public class StrandNode extends AbstractNode {
     /**
      * Builds a new node with the corresponding name and weight.
      *
      * @param name   the name of the node
      * @param weight the weight (distance from parent) of the node
      */
-    public LeaveNode(final String name, final double weight) {
+    public StrandNode(final String name, final double weight) {
         super(name, weight);
     }
 
@@ -29,5 +29,10 @@ public class LeaveNode extends AbstractNode {
         children.forEach(node -> sources.addAll(node.getSources()));
 
         return sources;
+    }
+
+    @Override
+    public String getClassName() {
+        return "newick-strand";
     }
 }

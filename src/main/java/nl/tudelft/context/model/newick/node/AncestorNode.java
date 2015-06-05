@@ -28,4 +28,9 @@ public class AncestorNode extends AbstractNode {
 
         return sources;
     }
+
+    @Override
+    public String getClassName() {
+        return "newick-ancestor";
+    }
 }

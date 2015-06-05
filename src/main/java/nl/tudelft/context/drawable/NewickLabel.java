@@ -35,7 +35,7 @@ public class NewickLabel extends Label {
      */
     public void initialize() {
         setCache(true);
-        getStyleClass().add("newick-label");
+        getStyleClass().add(node.getClassName());
 
         translateXProperty().bind(node.translateXProperty());
         translateYProperty().bind(node.translateYProperty());
@@ -43,10 +43,6 @@ public class NewickLabel extends Label {
         node.getSelectionProperty().addListener(
                 (observable, oldValue, newValue) -> setSelectedClass(oldValue, newValue)
         );
-
-        if (node instanceof AncestorNode) {
-            getStyleClass().add("ancestor");
-        }
     }
 
     /**

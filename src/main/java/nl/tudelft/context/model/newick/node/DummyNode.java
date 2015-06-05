@@ -1,5 +1,6 @@
 package nl.tudelft.context.model.newick.node;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,7 +28,17 @@ public class DummyNode extends AbstractNode {
     }
 
     @Override
+    public List<AbstractNode> getChildren() {
+        return child.getChildren();
+    }
+
+    @Override
     public Set<String> getSources() {
         return child.getSources();
+    }
+
+    @Override
+    public String getClassName() {
+        return "newick-dummy";
     }
 }

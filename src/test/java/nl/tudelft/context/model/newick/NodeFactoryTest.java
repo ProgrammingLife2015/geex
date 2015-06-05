@@ -3,7 +3,7 @@ package nl.tudelft.context.model.newick;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import nl.tudelft.context.model.newick.node.AbstractNode;
 import nl.tudelft.context.model.newick.node.AncestorNode;
-import nl.tudelft.context.model.newick.node.LeaveNode;
+import nl.tudelft.context.model.newick.node.StrandNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ public class NodeFactoryTest {
         AbstractNode abstractNode = nodeParser.getNode(parserNode);
         assertEquals("abc", abstractNode.getName());
         assertEquals(1, abstractNode.getWeight(), 1e-12);
-        assertThat(abstractNode, instanceOf(LeaveNode.class));
+        assertThat(abstractNode, instanceOf(StrandNode.class));
     }
 
     /**

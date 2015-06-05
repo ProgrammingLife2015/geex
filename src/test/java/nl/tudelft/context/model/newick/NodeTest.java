@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.newick;
 
 import nl.tudelft.context.model.newick.node.AbstractNode;
-import nl.tudelft.context.model.newick.node.LeaveNode;
+import nl.tudelft.context.model.newick.node.StrandNode;
 import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.model.newick.selection.None;
 import nl.tudelft.context.model.newick.selection.Partial;
@@ -29,8 +29,8 @@ public class NodeTest {
      */
     @Test
     public void testChild() {
-        AbstractNode n = new LeaveNode("a", 0);
-        AbstractNode m = new LeaveNode("b", 1);
+        AbstractNode n = new StrandNode("a", 0);
+        AbstractNode m = new StrandNode("b", 1);
         n.addChild(m);
         assertEquals(n.getChildren(), Collections.singletonList(m));
     }
@@ -40,7 +40,7 @@ public class NodeTest {
      */
     @Test
     public void testToggleSelectionFromNoneToAll() {
-        AbstractNode n = new LeaveNode("", 1);
+        AbstractNode n = new StrandNode("", 1);
         n.setSelection(new None());
         n.toggleSelected();
         assertThat(n.getSelection(), instanceOf(All.class));
@@ -51,7 +51,7 @@ public class NodeTest {
      */
     @Test
     public void testToggleSelectionFromPartialToAll() {
-        AbstractNode n = new LeaveNode("", 1);
+        AbstractNode n = new StrandNode("", 1);
         n.setSelection(new Partial());
         n.toggleSelected();
         assertThat(n.getSelection(), instanceOf(All.class));
@@ -62,7 +62,7 @@ public class NodeTest {
      */
     @Test
     public void testToggleSelectionFromAllToNone() {
-        AbstractNode n = new LeaveNode("", 1);
+        AbstractNode n = new StrandNode("", 1);
         n.setSelection(new All());
         n.toggleSelected();
         assertThat(n.getSelection(), instanceOf(None.class));
@@ -73,7 +73,7 @@ public class NodeTest {
      */
     @Test
     public void testSetSelection() {
-        AbstractNode n1 = new LeaveNode("", 1);
+        AbstractNode n1 = new StrandNode("", 1);
         AbstractNode n2 = mock(AbstractNode.class);
         n1.addChild(n2);
         Selection selection = new All();
@@ -86,9 +86,9 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionAll() {
-        AbstractNode n1 = new LeaveNode("", 1);
-        AbstractNode n2 = new LeaveNode("a", 2);
-        AbstractNode n3 = new LeaveNode("b", 3);
+        AbstractNode n1 = new StrandNode("", 1);
+        AbstractNode n2 = new StrandNode("a", 2);
+        AbstractNode n3 = new StrandNode("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
         n2.setSelection(new All());
@@ -102,9 +102,9 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionNone() {
-        AbstractNode n1 = new LeaveNode("", 1);
-        AbstractNode n2 = new LeaveNode("a", 2);
-        AbstractNode n3 = new LeaveNode("b", 3);
+        AbstractNode n1 = new StrandNode("", 1);
+        AbstractNode n2 = new StrandNode("a", 2);
+        AbstractNode n3 = new StrandNode("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
         n2.setSelection(new None());
@@ -118,9 +118,9 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionPartialPartial() {
-        AbstractNode n1 = new LeaveNode("", 1);
-        AbstractNode n2 = new LeaveNode("a", 2);
-        AbstractNode n3 = new LeaveNode("b", 3);
+        AbstractNode n1 = new StrandNode("", 1);
+        AbstractNode n2 = new StrandNode("a", 2);
+        AbstractNode n3 = new StrandNode("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
         n2.setSelection(new Partial());
@@ -134,9 +134,9 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionPartialAll() {
-        AbstractNode n1 = new LeaveNode("", 1);
-        AbstractNode n2 = new LeaveNode("a", 2);
-        AbstractNode n3 = new LeaveNode("b", 3);
+        AbstractNode n1 = new StrandNode("", 1);
+        AbstractNode n2 = new StrandNode("a", 2);
+        AbstractNode n3 = new StrandNode("b", 3);
         n1.addChild(n2);
         n1.addChild(n3);
         n2.setSelection(new All());
