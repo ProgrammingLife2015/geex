@@ -114,8 +114,7 @@ public final class GraphController extends DefaultGraphController {
         zoomOut.disableProperty().bind(activeProperty.not());
 
         MenuItem toggleSelect = menuController.getToggleSelect();
-        toggleSelect.setOnAction(event -> mainController.setView(this,
-                        new NewickController(mainController, mainController.getWorkspace().getNewick())));
+        toggleSelect.setOnAction(event -> mainController.setView(this, new SelectNewickController()));
         toggleSelect.disableProperty().bind(activeProperty.not());
 
     }
