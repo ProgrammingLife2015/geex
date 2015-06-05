@@ -1,5 +1,6 @@
 package nl.tudelft.context.controller;
 
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
@@ -10,6 +11,7 @@ import nl.tudelft.context.drawable.Location;
 import nl.tudelft.context.model.graph.DefaultNode;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -41,14 +43,14 @@ public final class LocatorController extends DefaultController<Pane> {
     final ScrollPane scroll;
 
     /**
-     * Label map by column.
+     * Total distance form left in a map.
      */
-    TreeMap<Integer, Integer> treeMap;
+    Map<Integer, Integer> totalMap = new HashMap<>();
 
     /**
      * Location boundaries.
      */
-    int minLocation, maxLocation;
+    int minLocation, maxLocation, totalLength;
 
     /**
      * Location property.
@@ -73,7 +75,7 @@ public final class LocatorController extends DefaultController<Pane> {
         this.scroll = scroll;
         this.locationProperty = locationProperty;
 
-        treeMap = labelsMap.entrySet().stream()
+        TreeMap<Integer, Integer> treeMap = labelsMap.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream()
@@ -84,18 +86,26 @@ public final class LocatorController extends DefaultController<Pane> {
                         TreeMap::new
                 ));
 
+        totalLength = 0;
+        for (Map.Entry<Integer, Integer> entry : treeMap.entrySet()) {
+            totalMap.put(entry.getKey(), totalLength);
+            totalLength += entry.getValue();
+        }
+
         minLocation = treeMap.firstKey();
-        maxLocation = treeMap.lastKey();
+        maxLocation = treeMap.lastKey() + 1;
+        totalMap.put(maxLocation, totalLength);
 
         loadFXML("/application/locator.fxml");
+
+        locationProperty.addListener((observable, oldValue, newValue) -> {
+            Platform.runLater(() -> setPosition(newValue));
+        });
 
     }
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-
-        locationProperty.addListener((observable, oldValue, newValue) -> setPosition(newValue));
-
     }
 
     /**
@@ -105,14 +115,14 @@ public final class LocatorController extends DefaultController<Pane> {
      */
     public void setPosition(final Location location) {
 
-        int start = Math.max(minLocation, location.getStart() + 1);
-        int end = Math.min(maxLocation, location.getEnd() - 1);
+        int start = Math.max(minLocation, location.getStart());
+        int end = Math.min(maxLocation, location.getEnd());
 
-        int startPosition = treeMap.get(start);
-        int endPosition = treeMap.get(end);
+        double startPosition = totalMap.get(start) / (double) totalLength;
+        double endPosition = totalMap.get(end) / (double) totalLength;
 
-        locatorIndicator.setTranslateX(startPosition);
-        locatorIndicator.setWidth(endPosition - startPosition);
+        locatorIndicator.setTranslateX(startPosition * locator.getWidth());
+        locatorIndicator.setWidth((endPosition - startPosition) * locator.getWidth());
 
     }
 }
