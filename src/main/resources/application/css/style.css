@@ -351,7 +351,9 @@
 
 /* Locator */
 #locator {
-    -fx-min-height: 60px;
+    -fx-border-width: 1px 0 0;
+    -fx-border-color: #848484;
+    -fx-min-height: 45px;
     -fx-min-width: 100%;
     -fx-background-color: #595959;
 }
