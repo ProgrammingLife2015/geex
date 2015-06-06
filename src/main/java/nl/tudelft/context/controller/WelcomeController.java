@@ -121,7 +121,7 @@ public class WelcomeController extends ViewController<GridPane> {
             try {
                 Database.instance().remove("workspace", directory.getAbsolutePath());
                 reloadListView();
-            } catch (SqlJetException ignored) {
+            } catch (SqlJetException | NullPointerException ignored) {
 
             }
         }
