@@ -45,7 +45,8 @@ public class MenuControllerTest {
         assertTrue(mb.getMenus().get(0).getText().equals("_File"));
 
         assertTrue(mb.getMenus().get(0).getItems().get(0).getText().equals("Select workspace folder"));
-        assertTrue(mb.getMenus().get(0).getItems().get(1).getText().equals("Exit"));
+        assertTrue(mb.getMenus().get(0).getItems().get(1).getText().equals("_Select recent workspace"));
+        assertTrue(mb.getMenus().get(0).getItems().get(2).getText().equals("Exit"));
         assertEquals(mb.getMenus().get(0).getItems().get(0).getAccelerator(), new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         assertEquals(mb.getMenus().get(0).isVisible(), true);
 
