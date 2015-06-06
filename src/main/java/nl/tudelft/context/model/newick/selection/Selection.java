@@ -14,7 +14,6 @@ public interface Selection {
      *
      * @param sources The set with sources
      * @param name    The potentially new source
-     * @return        The set, with or without the new source
      */
     void addSource(final Set<String> sources, final String name);
 

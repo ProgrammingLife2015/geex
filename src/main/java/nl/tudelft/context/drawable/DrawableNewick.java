@@ -31,7 +31,9 @@ public class DrawableNewick extends Newick {
      * Child nodes are at least MIN_WEIGHT pixels moved from their parent.
      */
     public static final int MIN_WEIGHT = 30;
-
+    /**
+     * The current row of the tree, for drawing purposes.
+     */
     int currentRow = 0;
 
     /**

@@ -49,7 +49,6 @@ public final class NewickParser extends Parser<Newick> {
      * @param node   the node, read by the newick parser
      * @param parent the parent node to add this node to as a child
      * @param newick the tree to add the nodes and edges to
-     * @return the new row (depth) of the next node
      */
     public void getOffspring(final TreeNode node, final AbstractNode parent, final Newick newick) {
         for (int i = 0; i < node.numberLeaves; i += 1) {

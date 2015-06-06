@@ -2,7 +2,6 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.control.Label;
 import nl.tudelft.context.model.newick.node.AbstractNode;
-import nl.tudelft.context.model.newick.node.AncestorNode;
 import nl.tudelft.context.model.newick.selection.Selection;
 
 /**

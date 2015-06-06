@@ -34,7 +34,7 @@ public class AncestorNode extends AbstractNode {
     }
 
     @Override
-    public void translate(int minWeight, double weightScale, int yPos) {
+    public void translate(final int minWeight, final double weightScale, final int yPos) {
         setTranslateX(minWeight + weight * weightScale
                 + parent.orElse(new DummyNode()).translateXProperty().doubleValue());
         setTranslateY(yPos);
