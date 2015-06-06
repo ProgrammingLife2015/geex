@@ -29,6 +29,11 @@ public class AncestorNode extends AbstractNode {
     }
 
     @Override
+    public AncestorNode clone() {
+        return new AncestorNode(getWeight());
+    }
+
+    @Override
     public String getClassName() {
         return "newick-ancestor";
     }
@@ -39,6 +44,7 @@ public class AncestorNode extends AbstractNode {
                 + parent.orElse(new DummyNode()).translateXProperty().doubleValue());
         setTranslateY(yPos);
     }
+
 
     @Override
     public String toString() {

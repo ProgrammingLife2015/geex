@@ -39,6 +39,11 @@ public class DummyNode extends AbstractNode {
     }
 
     @Override
+    public DummyNode clone() {
+        return new DummyNode();
+    }
+
+    @Override
     public String getClassName() {
         return "newick-dummy";
     }

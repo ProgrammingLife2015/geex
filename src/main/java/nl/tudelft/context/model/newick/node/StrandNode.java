@@ -32,6 +32,11 @@ public class StrandNode extends AbstractNode {
     }
 
     @Override
+    public StrandNode clone() {
+        return new StrandNode(getName(), getWeight());
+    }
+
+    @Override
     public String getClassName() {
         return "newick-strand";
     }

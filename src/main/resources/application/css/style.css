@@ -214,8 +214,8 @@
     -fx-text-fill: #2b2b2b;
 }
 
-#newick-select .newick-strand.selected,
-#newick-select .newick-ancestor.selected {
+#newickSelectContainer .newick-strand.selected,
+#newickSelectContainer .newick-ancestor.selected {
     -fx-background-color: #dd5b58;
     -fx-text-fill: #2b2b2b;
 }

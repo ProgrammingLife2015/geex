@@ -177,6 +177,34 @@ public abstract class AbstractNode extends DrawablePosition {
     }
 
     /**
+     * Creates a clone of the current node.
+     *
+     * @return A clone of the current node
+     */
+    public abstract AbstractNode clone();
+
+    /**
+     * Should return a copy of all nodes that are (partially) selected.
+     *
+     * @return A copy of the nodes that are selected
+     */
+    public Optional<AbstractNode> getSelectedNodes() {
+        Optional<AbstractNode> optNode = Optional.empty();
+        if (!getSelection().equals(new None())) {
+            AbstractNode node = clone();
+            getChildren().stream()
+                    .map(AbstractNode::getSelectedNodes)
+                    .filter(Optional::isPresent)
+                    .forEach(opt -> {
+                        node.addChild(opt.get());
+                        opt.get().setParent(node);
+                    });
+            optNode = Optional.of(node);
+        }
+        return optNode;
+    }
+
+    /**
      * Returns the class name that belongs to the node.
      *
      * @return The class name
