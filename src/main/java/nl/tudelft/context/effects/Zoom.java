@@ -170,7 +170,5 @@ public class Zoom {
 
         label.setScaleX(scale);
         label.setScaleY(scale);
-
-        label.setCacheHint(CacheHint.SCALE);
     }
 }
