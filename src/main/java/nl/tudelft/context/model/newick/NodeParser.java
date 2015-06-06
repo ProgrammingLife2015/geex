@@ -19,7 +19,7 @@ public final class NodeParser {
      */
     public AbstractNode getNode(final TreeNode node) {
         if (node.getName().equals("")) {
-            return new AncestorNode(node.getName(), node.getWeight());
+            return new AncestorNode(node.getWeight());
         } else {
             return new StrandNode(node.getName(), node.getWeight());
         }

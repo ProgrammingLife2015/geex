@@ -8,6 +8,7 @@ import nl.tudelft.context.model.newick.selection.Selection;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -33,7 +34,7 @@ public abstract class AbstractNode extends DrawablePosition {
     /**
      * The parent node.
      */
-    AbstractNode parent;
+    Optional<AbstractNode> parent = Optional.empty();
 
     /**
      * The selection of the node.
@@ -76,7 +77,7 @@ public abstract class AbstractNode extends DrawablePosition {
      * @return true if the node has a parent; otherwise false.
      */
     public boolean hasParent() {
-        return getParent() != null;
+        return parent.isPresent();
     }
 
     /**
@@ -85,7 +86,7 @@ public abstract class AbstractNode extends DrawablePosition {
      * @param parent the parent.
      */
     public void setParent(final AbstractNode parent) {
-        this.parent = parent;
+        this.parent = Optional.of(parent);
     }
 
     /**
@@ -94,7 +95,7 @@ public abstract class AbstractNode extends DrawablePosition {
      * @return the parent of the node.
      */
     public AbstractNode getParent() {
-        return parent;
+        return parent.get();
     }
 
     /**
@@ -172,9 +173,7 @@ public abstract class AbstractNode extends DrawablePosition {
                 .map(AbstractNode::getSelection)
                 .reduce(Selection::merge).orElse(new None()));
 
-        if (hasParent()) {
-            getParent().updateSelected();
-        }
+        parent.ifPresent(AbstractNode::updateSelected);
     }
 
     /**
@@ -183,6 +182,15 @@ public abstract class AbstractNode extends DrawablePosition {
      * @return The class name
      */
     public abstract String getClassName();
+
+    /**
+     * Translates the position of the node, according to the given parameters.
+     *
+     * @param minWeight   The minimum horizontal distance to its parent
+     * @param weightScale A scalar to multiply the weight with
+     * @param yPos        The y-position of the node
+     */
+    public abstract void translate(final int minWeight, final double weightScale, final int yPos);
 
     @Override
     public String toString() {

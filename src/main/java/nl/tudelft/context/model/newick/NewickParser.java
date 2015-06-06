@@ -33,11 +33,12 @@ public final class NewickParser extends Parser<Newick> {
         TreeParser tp = new TreeParser(reader);
 
         Tree nwkTree = tp.tokenize("");
-        AbstractNode root = nodeParser.getNode(nwkTree.getRoot());
 
         Newick newick = new Newick();
-        getOffspring(nwkTree.getRoot(), root, newick);
+        AbstractNode root = nodeParser.getNode(nwkTree.getRoot());
         newick.setRoot(root);
+        newick.addVertex(root);
+        getOffspring(nwkTree.getRoot(), root, newick);
 
         return newick;
     }
@@ -51,12 +52,10 @@ public final class NewickParser extends Parser<Newick> {
      * @return the new row (depth) of the next node
      */
     public void getOffspring(final TreeNode node, final AbstractNode parent, final Newick newick) {
-        newick.addVertex(parent);
-
         for (int i = 0; i < node.numberLeaves; i += 1) {
             TreeNode child = node.getChild(i);
             if (child != null) {
-                AbstractNode n = createNode(child, parent);
+                AbstractNode n = createNode(child, parent, newick);
                 getOffspring(child, n, newick);
             }
         }
@@ -67,11 +66,14 @@ public final class NewickParser extends Parser<Newick> {
      *
      * @param child  the node, read by the newick parser
      * @param parent the parent node to add the child to
+     * @param newick the tree to add the nodes and edges to
      * @return the node as a Node
      */
-    public AbstractNode createNode(final TreeNode child, final AbstractNode parent) {
+    public AbstractNode createNode(final TreeNode child, final AbstractNode parent, final Newick newick) {
         AbstractNode n = nodeParser.getNode(child);
         DummyNode dummy = new DummyNode();
+        newick.addVertex(dummy);
+        newick.addVertex(n);
         connectNodes(parent, dummy);
         connectNodes(dummy, n);
 

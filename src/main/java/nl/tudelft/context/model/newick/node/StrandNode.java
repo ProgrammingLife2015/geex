@@ -35,4 +35,16 @@ public class StrandNode extends AbstractNode {
     public String getClassName() {
         return "newick-strand";
     }
+
+    @Override
+    public void translate(int minWeight, double weightScale, int yPos) {
+        setTranslateX(minWeight + weight * weightScale
+                + parent.orElse(new DummyNode()).translateXProperty().doubleValue());
+        setTranslateY(yPos);
+    }
+
+    @Override
+    public String toString() {
+        return "StrandNode<" + name + "," + weight + ">";
+    }
 }

@@ -12,11 +12,10 @@ public class AncestorNode extends AbstractNode {
     /**
      * Builds a new node with the corresponding name and weight.
      *
-     * @param name   the name of the node
      * @param weight the weight (distance from parent) of the node
      */
-    public AncestorNode(final String name, final double weight) {
-        super(name, weight);
+    public AncestorNode(final double weight) {
+        super("", weight);
     }
 
     @Override
@@ -32,5 +31,17 @@ public class AncestorNode extends AbstractNode {
     @Override
     public String getClassName() {
         return "newick-ancestor";
+    }
+
+    @Override
+    public void translate(int minWeight, double weightScale, int yPos) {
+        setTranslateX(minWeight + weight * weightScale
+                + parent.orElse(new DummyNode()).translateXProperty().doubleValue());
+        setTranslateY(yPos);
+    }
+
+    @Override
+    public String toString() {
+        return "AncestorNode<" + weight + ">";
     }
 }

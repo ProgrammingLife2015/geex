@@ -1,5 +1,6 @@
 package nl.tudelft.context.model.newick.node;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public class DummyNode extends AbstractNode {
 
     @Override
     public List<AbstractNode> getChildren() {
-        return child.getChildren();
+        return Arrays.asList(child);
     }
 
     @Override
@@ -40,5 +41,17 @@ public class DummyNode extends AbstractNode {
     @Override
     public String getClassName() {
         return "newick-dummy";
+    }
+
+    @Override
+    public void translate(int minWeight, double weightScale, int yPos) {
+        setTranslateX(weight * weightScale
+                + parent.orElse(new DummyNode()).translateXProperty().doubleValue());
+        setTranslateY(yPos);
+    }
+
+    @Override
+    public String toString() {
+        return "DummyNode";
     }
 }

@@ -75,9 +75,7 @@ public class DrawableNewick extends Newick {
      * @param node The root node to start with
      */
     public void translateNode(final AbstractNode node) {
-        node.setTranslateX(node.getParent().translateXProperty().doubleValue()
-                + MIN_WEIGHT + node.getWeight() * WEIGHT_SCALE);
-        node.setTranslateY(currentRow * ROW_HEIGHT);
+        node.translate(MIN_WEIGHT, WEIGHT_SCALE, currentRow * ROW_HEIGHT);
     }
 
     /**

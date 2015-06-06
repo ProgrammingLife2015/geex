@@ -39,7 +39,7 @@ public class NewickLabelTest {
      * @return a newick label.
      */
     public NewickLabel getLabelUnknown() {
-        node = new AncestorNode("", 2.34);
+        node = new AncestorNode(2.34);
         node.setTranslateX(3.45);
         node.setTranslateY(4.56);
         return new NewickLabel(node);
