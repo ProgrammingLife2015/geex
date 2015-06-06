@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -52,12 +51,12 @@ public final class LocatorController extends DefaultController<Pane> {
     /**
      * Location boundaries.
      */
-    int minLocation, maxLocation;
+    int minLocation = Integer.MAX_VALUE, maxLocation = Integer.MIN_VALUE;
 
     /**
-     * Maximum of ref positions.
+     * Minimum and maximum of ref positions.
      */
-    int maxRefPosition;
+    int minRefPosition = Integer.MAX_VALUE, maxRefPosition = Integer.MIN_VALUE;
 
     /**
      * Location property.
@@ -82,29 +81,21 @@ public final class LocatorController extends DefaultController<Pane> {
         this.scroll = scroll;
         this.locationProperty = locationProperty;
 
-        TreeMap<Integer, List<Integer>> treeMap = labelsMap.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> Arrays.asList(entry.getValue().stream()
-                                .map(DefaultLabel::getNode)
-                                .mapToInt(DefaultNode::getRefStartPosition)
-                                .min().getAsInt(), entry.getValue().stream()
-                                .map(DefaultLabel::getNode)
-                                .mapToInt(DefaultNode::getRefEndPosition)
-                                .max().getAsInt()),
-                        (a, b) -> a,
-                        TreeMap::new
-                ));
-
-        maxRefPosition = 0;
-        for (Map.Entry<Integer, List<Integer>> entry : treeMap.entrySet()) {
-            List<Integer> current = entry.getValue();
-            totalMap.put(entry.getKey(), current);
-            maxRefPosition = Math.max(maxRefPosition, current.get(1));
-        }
-
-        minLocation = treeMap.firstKey();
-        maxLocation = treeMap.lastKey();
+        labelsMap.forEach((column, labels) -> {
+            int min = labels.stream()
+                    .map(DefaultLabel::getNode)
+                    .mapToInt(DefaultNode::getRefStartPosition)
+                    .min().getAsInt();
+            int max = labels.stream()
+                    .map(DefaultLabel::getNode)
+                    .mapToInt(DefaultNode::getRefEndPosition)
+                    .max().getAsInt();
+            totalMap.put(column, Arrays.asList(min, max));
+            minRefPosition = Math.min(minRefPosition, min);
+            maxRefPosition = Math.max(maxRefPosition, max);
+            minLocation = Math.min(minLocation, column);
+            maxLocation = Math.max(maxLocation, column);
+        });
 
         loadFXML("/application/locator.fxml");
 
