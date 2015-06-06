@@ -136,7 +136,7 @@ public final class LocatorController {
 
         int min = list.stream()
                 .mapToInt(x -> x.get(0))
-                .min().getAsInt();
+                .min().getAsInt() - minRefPosition;
 
         int max = list.stream()
                 .mapToInt(x -> x.get(1))
