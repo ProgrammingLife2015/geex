@@ -32,11 +32,6 @@ public abstract class DefaultNewickController extends ViewController<ScrollPane>
     Group newick;
 
     /**
-     * The newick object, can change.
-     */
-    ObjectProperty<Newick> newickObjectProperty;
-
-    /**
      * Property with Newick tree.
      */
     ReadOnlyObjectProperty<Newick> newickIn;
@@ -56,7 +51,7 @@ public abstract class DefaultNewickController extends ViewController<ScrollPane>
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
-        newickObjectProperty = new SimpleObjectProperty<>();
+        SimpleObjectProperty<Newick> newickObjectProperty = new SimpleObjectProperty<>();
 
         newickObjectProperty.addListener((observable, oldValue, newValue) -> {
             showTree(newValue);
