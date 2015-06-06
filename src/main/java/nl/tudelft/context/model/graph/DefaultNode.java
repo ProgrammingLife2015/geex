@@ -43,11 +43,18 @@ public abstract class DefaultNode {
     }
 
     /**
-     * Gets the length of the node's content in ATCGs.
+     * Getter for reference start position.
      *
-     * @return The length;
+     * @return reference start position
      */
-    public abstract int getLength();
+    public abstract int getRefStartPosition();
+
+    /**
+     * Getter for reference end position.
+     *
+     * @return reference end position
+     */
+    public abstract int getRefEndPosition();
 
     /**
      * Creates a label.

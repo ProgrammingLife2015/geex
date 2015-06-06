@@ -11,12 +11,14 @@ import nl.tudelft.context.drawable.Location;
 import nl.tudelft.context.model.graph.DefaultNode;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -45,7 +47,7 @@ public final class LocatorController extends DefaultController<Pane> {
     /**
      * Total distance form left in a map.
      */
-    Map<Integer, Double> totalMap = new HashMap<>();
+    Map<Integer, List<Integer>> totalMap = new HashMap<>();
 
     /**
      * Location boundaries.
@@ -53,9 +55,9 @@ public final class LocatorController extends DefaultController<Pane> {
     int minLocation, maxLocation;
 
     /**
-     * Average total length.
+     * Maximum of ref positions.
      */
-    double totalLength;
+    int maxRefPosition;
 
     /**
      * Location property.
@@ -80,26 +82,29 @@ public final class LocatorController extends DefaultController<Pane> {
         this.scroll = scroll;
         this.locationProperty = locationProperty;
 
-        TreeMap<Integer, Double> treeMap = labelsMap.entrySet().stream()
+        TreeMap<Integer, List<Integer>> treeMap = labelsMap.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        entry -> entry.getValue().stream()
+                        entry -> Arrays.asList(entry.getValue().stream()
                                 .map(DefaultLabel::getNode)
-                                .mapToInt(DefaultNode::getLength)
-                                .average().getAsDouble(),
+                                .mapToInt(DefaultNode::getRefStartPosition)
+                                .min().getAsInt(), entry.getValue().stream()
+                                .map(DefaultLabel::getNode)
+                                .mapToInt(DefaultNode::getRefEndPosition)
+                                .max().getAsInt()),
                         (a, b) -> a,
                         TreeMap::new
                 ));
 
-        totalLength = 0;
-        for (Map.Entry<Integer, Double> entry : treeMap.entrySet()) {
-            totalMap.put(entry.getKey(), totalLength);
-            totalLength += entry.getValue();
+        maxRefPosition = 0;
+        for (Map.Entry<Integer, List<Integer>> entry : treeMap.entrySet()) {
+            List<Integer> current = entry.getValue();
+            totalMap.put(entry.getKey(), current);
+            maxRefPosition = Math.max(maxRefPosition, current.get(1));
         }
 
         minLocation = treeMap.firstKey();
-        maxLocation = treeMap.lastKey() + 1;
-        totalMap.put(maxLocation, totalLength);
+        maxLocation = treeMap.lastKey();
 
         loadFXML("/application/locator.fxml");
 
@@ -123,8 +128,20 @@ public final class LocatorController extends DefaultController<Pane> {
         int start = Math.max(minLocation, location.getStart());
         int end = Math.min(maxLocation, location.getEnd());
 
-        double startPosition = totalMap.get(start) / totalLength;
-        double endPosition = totalMap.get(end) / totalLength;
+        List<List<Integer>> list = IntStream.rangeClosed(start, end)
+                .mapToObj(totalMap::get)
+                .collect(Collectors.toList());
+
+        int min = list.stream()
+                .mapToInt(x -> x.get(0))
+                .min().getAsInt();
+
+        int max = list.stream()
+                .mapToInt(x -> x.get(1))
+                .max().getAsInt();
+
+        double startPosition = min / (double) maxRefPosition;
+        double endPosition = max / (double) maxRefPosition;
 
         locatorIndicator.setTranslateX(startPosition * locator.getWidth());
         locatorIndicator.setWidth((endPosition - startPosition) * locator.getWidth());

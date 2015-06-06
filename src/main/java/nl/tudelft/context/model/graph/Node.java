@@ -74,22 +74,14 @@ public class Node extends DefaultNode {
 
     }
 
-    /**
-     * Getter for reference start position.
-     *
-     * @return reference start position
-     */
+    @Override
     public int getRefStartPosition() {
 
         return refStartPosition;
 
     }
 
-    /**
-     * Getter for reference end position.
-     *
-     * @return reference end position
-     */
+    @Override
     public int getRefEndPosition() {
 
         return refEndPosition;
@@ -136,11 +128,6 @@ public class Node extends DefaultNode {
     public DefaultLabel getLabel(final MainController mainController, final DefaultGraphController graphController,
                                  final DrawableNode drawableNode) {
         return new InfoLabel(mainController, graphController, drawableNode, this);
-    }
-
-    @Override
-    public int getLength() {
-        return content.length();
     }
 
 }
