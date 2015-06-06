@@ -40,10 +40,10 @@ public class NewickTest {
     public void testToString() {
         assertEquals("", newick.toString());
         newick.setRoot(new StrandNode("Some name", 1.23));
-        assertEquals("Node<Some name,1.23>\n", newick.toString());
+        assertEquals("StrandNode<Some name,1.23>\n", newick.toString());
         newick.getRoot().addChild(new StrandNode("Some other name", 2.34));
-        assertEquals("Node<Some name,1.23>\n" +
-                "\tNode<Some other name,2.34>\n",
+        assertEquals("StrandNode<Some name,1.23>\n" +
+                        "\tStrandNode<Some other name,2.34>\n",
                 newick.toString());
     }
 }

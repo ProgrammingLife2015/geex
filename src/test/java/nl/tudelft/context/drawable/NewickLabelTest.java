@@ -76,12 +76,12 @@ public class NewickLabelTest {
     }
 
     /**
-     * Leaf nodes should not have the ancestor style class.
+     * Strand nodes should have strand class.
      */
     @Test
     public void testAncestor() {
         NewickLabel newickLabel = getLabel();
-        assertFalse(newickLabel.getStyleClass().contains("ancestor"));
+        assertTrue(newickLabel.getStyleClass().contains("newick-strand"));
     }
 
     /**
@@ -90,7 +90,7 @@ public class NewickLabelTest {
     @Test
     public void testAncestorUnknown() {
         NewickLabel newickLabel = getLabelUnknown();
-        assertTrue(newickLabel.getStyleClass().contains("ancestor"));
+        assertTrue(newickLabel.getStyleClass().contains("newick-ancestor"));
     }
 
     /**

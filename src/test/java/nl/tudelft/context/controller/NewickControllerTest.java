@@ -50,7 +50,9 @@ public class NewickControllerTest {
         when(mainController.getWorkspace()).thenReturn(workspace);
 
         Newick newick = new Newick();
-        newick.setRoot(new StrandNode("n1", 1.23));
+        AbstractNode node = new StrandNode("n1", 1.23);
+        newick.setRoot(node);
+        newick.addVertex(node);
         newickSimpleObjectProperty.set(newick);
 
         menuItem = spy(new MenuItem());
@@ -65,7 +67,9 @@ public class NewickControllerTest {
     @Test
     public void testMessageTreeLoaded() {
         Newick newick = new Newick();
-        newick.setRoot(new StrandNode("a", 1));
+        AbstractNode node = new StrandNode("a", 1);
+        newick.setRoot(node);
+        newick.addVertex(node);
         newickController.showTree(newick);
         verify(mainController, atLeast(1)).displayMessage(MessageController.SUCCESS_LOAD_TREE);
     }

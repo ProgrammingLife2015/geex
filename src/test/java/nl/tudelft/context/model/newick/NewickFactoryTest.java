@@ -57,7 +57,7 @@ public class NewickFactoryTest {
     @Test
     public void testNumAncestors() {
         loadFile();
-        assertEquals(9, countAncestors(root));
+        assertEquals(27, countAncestors(root));
     }
 
     /**
@@ -66,25 +66,43 @@ public class NewickFactoryTest {
     @Test
     public void testToString() {
         loadFile();
-        assertEquals("Node<,0.0>\n" +
-                        "\tNode<,4.752532404381782E-4>\n" +
-                        "\t\tNode<,0.001130109652876854>\n" +
-                        "\t\t\tNode<,0.0010106657864525914>\n" +
-                        "\t\t\t\tNode<TKK_04_0031,0.0019066613167524338>\n" +
-                        "\t\t\t\tNode<,0.001823665457777679>\n" +
-                        "\t\t\t\t\tNode<,6.628296105191112E-4>\n" +
-                        "\t\t\t\t\t\tNode<TKK_02_0068,0.0020415722392499447>\n" +
-                        "\t\t\t\t\t\tNode<TKK_02_0018,6.695450283586979E-4>\n" +
-                        "\t\t\t\t\tNode<TKK-01-0026,7.12309149093926E-4>\n" +
-                        "\t\t\tNode<TKK-01-0058,0.0028818827122449875>\n" +
-                        "\t\tNode<,0.004314309451729059>\n" +
-                        "\t\t\tNode<TKK_REF,5.660219176206738E-5>\n" +
-                        "\t\t\tNode<TKK-01-0066,1.1321144120302051E-4>\n" +
-                        "\tNode<,0.003898313269019127>\n" +
-                        "\t\tNode<,0.0011305224616080523>\n" +
-                        "\t\t\tNode<TKK-01-0015,0.0021152603439986706>\n" +
-                        "\t\t\tNode<TKK-01-0029,0.0015547169605270028>\n" +
-                        "\t\tNode<TKK_04_0002,0.0010063934605568647>\n",
+        assertEquals("AncestorNode<0.0>\n" +
+                        "\tDummyNode\n" +
+                        "\t\tAncestorNode<4.752532404381782E-4>\n" +
+                        "\t\t\tDummyNode\n" +
+                        "\t\t\t\tAncestorNode<0.001130109652876854>\n" +
+                        "\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\tAncestorNode<0.0010106657864525914>\n" +
+                        "\t\t\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\t\t\tStrandNode<TKK_04_0031,0.0019066613167524338>\n" +
+                        "\t\t\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\t\t\tAncestorNode<0.001823665457777679>\n" +
+                        "\t\t\t\t\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\t\t\t\t\tAncestorNode<6.628296105191112E-4>\n" +
+                        "\t\t\t\t\t\t\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\t\t\t\t\t\t\tStrandNode<TKK_02_0068,0.0020415722392499447>\n" +
+                        "\t\t\t\t\t\t\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\t\t\t\t\t\t\tStrandNode<TKK_02_0018,6.695450283586979E-4>\n" +
+                        "\t\t\t\t\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\t\t\t\t\tStrandNode<TKK-01-0026,7.12309149093926E-4>\n" +
+                        "\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\tStrandNode<TKK-01-0058,0.0028818827122449875>\n" +
+                        "\t\t\tDummyNode\n" +
+                        "\t\t\t\tAncestorNode<0.004314309451729059>\n" +
+                        "\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\tStrandNode<TKK_REF,5.660219176206738E-5>\n" +
+                        "\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\tStrandNode<TKK-01-0066,1.1321144120302051E-4>\n" +
+                        "\tDummyNode\n" +
+                        "\t\tAncestorNode<0.003898313269019127>\n" +
+                        "\t\t\tDummyNode\n" +
+                        "\t\t\t\tAncestorNode<0.0011305224616080523>\n" +
+                        "\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\tStrandNode<TKK-01-0015,0.0021152603439986706>\n" +
+                        "\t\t\t\t\tDummyNode\n" +
+                        "\t\t\t\t\t\tStrandNode<TKK-01-0029,0.0015547169605270028>\n" +
+                        "\t\t\tDummyNode\n" +
+                        "\t\t\t\tStrandNode<TKK_04_0002,0.0010063934605568647>\n",
                 newick.toString()
         );
     }
