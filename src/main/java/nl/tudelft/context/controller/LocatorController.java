@@ -58,11 +58,6 @@ public final class LocatorController {
     int minRefPosition = Integer.MAX_VALUE, maxRefPosition = Integer.MIN_VALUE;
 
     /**
-     * Location property.
-     */
-    ObjectProperty<Location> locationProperty;
-
-    /**
      * Construct the LocatorController.
      *
      * @param locator          The locator pane
@@ -76,7 +71,6 @@ public final class LocatorController {
 
         this.locator = locator;
         this.scroll = scroll;
-        this.locationProperty = locationProperty;
 
         initIndicator();
         initLabelMap(labelMap);
