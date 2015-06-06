@@ -140,11 +140,10 @@ public final class LocatorController extends DefaultController<Pane> {
                 .mapToInt(x -> x.get(1))
                 .max().getAsInt();
 
-        double startPosition = min / (double) maxRefPosition;
-        double endPosition = max / (double) maxRefPosition;
+        double scale = locator.getWidth() / maxRefPosition;
 
-        locatorIndicator.setTranslateX(startPosition * locator.getWidth());
-        locatorIndicator.setWidth((endPosition - startPosition) * locator.getWidth());
+        locatorIndicator.setTranslateX(min * scale);
+        locatorIndicator.setWidth((max - min) * scale);
 
     }
 }
