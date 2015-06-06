@@ -18,7 +18,6 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -116,7 +115,7 @@ public class WelcomeController extends ViewController<GridPane> {
                     menuItem.setOnAction(x -> loadWorkspace(new File(workspace[0])));
                     return menuItem;
                 })
-                .collect(Collectors.toList());
+                .collect(toList());
 
         selectRecentWorkspace.getItems().setAll(items);
         selectRecentWorkspace.setDisable(items.size() == 0);
