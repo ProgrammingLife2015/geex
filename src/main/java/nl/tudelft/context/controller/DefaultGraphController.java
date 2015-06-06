@@ -1,13 +1,17 @@
 package nl.tudelft.context.controller;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableGraph;
+import nl.tudelft.context.drawable.Location;
 import nl.tudelft.context.effects.Zoom;
 import nl.tudelft.context.model.graph.StackGraph;
 
@@ -49,6 +53,12 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
     ScrollPane scroll;
 
     /**
+     * The locator.
+     */
+    @FXML
+    Pane locator;
+
+    /**
      * List of graph views.
      */
     LinkedList<StackGraph> graphList = new LinkedList<>();
@@ -57,6 +67,11 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
      * Reference to the MainController of the app.
      */
     MainController mainController;
+
+    /**
+     * Location of the scroll bar.
+     */
+    ObjectProperty<Location> locationProperty = new SimpleObjectProperty<>(new Location(0, 0));
 
     /**
      * Map containing the labels indexed by position.
@@ -79,7 +94,10 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
-        initOnTheFlyLoading();
+        scroll.widthProperty().addListener(event -> updateLocation());
+        scroll.hvalueProperty().addListener(event -> updateLocation());
+
+        locationProperty.addListener(event -> showCurrentLabels());
 
     }
 
@@ -118,35 +136,37 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
                 )
         );
 
-        new Zoom(scroll, sequences, new HashMap<>(labelMap));
+        Map<Integer, List<DefaultLabel>> cleanLabelMap = new HashMap<>(labelMap);
+        new Zoom(scroll, sequences, cleanLabelMap);
+        new LocatorController(locator, scroll, locationProperty, cleanLabelMap);
 
         showCurrentLabels();
 
     }
 
     /**
-     * Listen to position and load on the fly.
+     * Update to the current location.
      */
-    private void initOnTheFlyLoading() {
+    private void updateLocation() {
 
-        scroll.widthProperty().addListener(event -> showCurrentLabels());
-        scroll.hvalueProperty().addListener(event -> showCurrentLabels());
+        double width = scroll.getWidth();
+        double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
+                * scroll.getHvalue();
+
+        int indexFrom = (int) Math.round(left / DrawableGraph.LABEL_SPACING) - 1;
+        int indexTo = indexFrom + (int) Math.round(width / DrawableGraph.LABEL_SPACING) + 1;
+        locationProperty.setValue(new Location(indexFrom, indexTo));
 
     }
 
     /**
      * Show all the labels on current position.
-     *
      */
     private void showCurrentLabels() {
 
-        double width = scroll.getWidth();
-        double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
-                * scroll.getHvalue();
-        int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
+        Location current = locationProperty.get();
 
-        List<DefaultLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
+        List<DefaultLabel> infoLabels = IntStream.rangeClosed(current.getStart(), current.getEnd())
                 .mapToObj(labelMap::remove)
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)

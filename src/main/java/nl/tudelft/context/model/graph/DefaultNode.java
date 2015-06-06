@@ -43,6 +43,20 @@ public abstract class DefaultNode {
     }
 
     /**
+     * Getter for reference start position.
+     *
+     * @return reference start position
+     */
+    public abstract int getRefStartPosition();
+
+    /**
+     * Getter for reference end position.
+     *
+     * @return reference end position
+     */
+    public abstract int getRefEndPosition();
+
+    /**
      * Creates a label.
      *
      * @param mainController  Main controller for setting views

@@ -37,7 +37,7 @@ public abstract class StackGraph extends DefaultGraph<DefaultNode> {
 
         Graph subGraph = new Graph();
 
-        vertexSet().stream()
+        nodes.stream()
                 .filter(nodes::contains)
                 .forEach(subGraph::addVertex);
 

@@ -1,5 +1,6 @@
 package nl.tudelft.context.drawable;
 
+import javafx.scene.CacheHint;
 import javafx.scene.control.Label;
 import nl.tudelft.context.controller.DefaultGraphController;
 import nl.tudelft.context.controller.MainController;
@@ -32,6 +33,7 @@ public class SinglePointLabel extends DefaultLabel {
         this.node = node;
 
         setCache(true);
+        setCacheHint(CacheHint.SCALE);
         translateXProperty().bind(drawableNode.translateXProperty());
         translateYProperty().bind(drawableNode.translateYProperty());
 
@@ -67,6 +69,11 @@ public class SinglePointLabel extends DefaultLabel {
 
         return label;
 
+    }
+
+    @Override
+    public GraphNode getNode() {
+        return node;
     }
 
 }

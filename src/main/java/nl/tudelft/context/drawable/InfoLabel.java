@@ -1,5 +1,6 @@
 package nl.tudelft.context.drawable;
 
+import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -44,6 +45,7 @@ public class InfoLabel extends DefaultLabel {
         this.node = node;
 
         setCache(true);
+        setCacheHint(CacheHint.SCALE);
         translateXProperty().bind(drawableNode.translateXProperty());
         translateYProperty().bind(drawableNode.translateYProperty());
 
@@ -110,6 +112,11 @@ public class InfoLabel extends DefaultLabel {
         group.getChildren().addAll(baseLabels);
         return group;
 
+    }
+
+    @Override
+    public Node getNode() {
+        return node;
     }
 
 }
