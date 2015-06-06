@@ -1,7 +1,6 @@
 package nl.tudelft.context.effects;
 
 import javafx.geometry.Bounds;
-import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;

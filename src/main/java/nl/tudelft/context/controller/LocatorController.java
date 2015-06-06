@@ -33,6 +33,11 @@ public final class LocatorController {
     Rectangle locatorIndicator;
 
     /**
+     * Height of the locator.
+     */
+    private static final int LOCATOR_HEIGHT = 43;
+
+    /**
      * The ScrollPane with the graph.
      */
     final ScrollPane scroll;
@@ -63,22 +68,47 @@ public final class LocatorController {
      * @param locator          The locator pane
      * @param scroll           The scroll pane
      * @param locationProperty Location property of view
-     * @param labelsMap        The map with labels
+     * @param labelMap         The map with labels
      */
     public LocatorController(final Pane locator, final ScrollPane scroll,
                              final ObjectProperty<Location> locationProperty,
-                             final Map<Integer, List<DefaultLabel>> labelsMap) {
+                             final Map<Integer, List<DefaultLabel>> labelMap) {
 
         this.locator = locator;
         this.scroll = scroll;
         this.locationProperty = locationProperty;
 
+        initIndicator();
+        initLabelMap(labelMap);
+
+        locator.widthProperty().addListener(event -> setPosition(locationProperty.get()));
+        locationProperty.addListener((observable, oldValue, newValue) -> {
+            setPosition(newValue);
+        });
+        setPosition(locationProperty.get());
+
+    }
+
+    /**
+     * Init indicator.
+     */
+    private void initIndicator() {
+
         locatorIndicator = new Rectangle();
-        locatorIndicator.setHeight(43);
-        locatorIndicator.setTranslateY(1);
+        locatorIndicator.setHeight(LOCATOR_HEIGHT);
+        locatorIndicator.setTranslateY(2);
         locator.getChildren().setAll(locatorIndicator);
 
-        labelsMap.forEach((column, labels) -> {
+    }
+
+    /**
+     * Init label map.
+     *
+     * @param labelMap Map to locate
+     */
+    private void initLabelMap(final Map<Integer, List<DefaultLabel>> labelMap) {
+
+        labelMap.forEach((column, labels) -> {
             int min = labels.stream()
                     .map(DefaultLabel::getNode)
                     .mapToInt(DefaultNode::getRefStartPosition)
@@ -92,10 +122,6 @@ public final class LocatorController {
             maxRefPosition = Math.max(maxRefPosition, max);
             minLocation = Math.min(minLocation, column);
             maxLocation = Math.max(maxLocation, column);
-        });
-
-        locationProperty.addListener((observable, oldValue, newValue) -> {
-            setPosition(newValue);
         });
 
     }
