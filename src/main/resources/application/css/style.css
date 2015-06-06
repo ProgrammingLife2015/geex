@@ -358,7 +358,7 @@
     -fx-background-color: #595959;
 }
 
-#locatorIndicator {
+#locator Rectangle {
     -fx-fill: rgba(228, 26, 28, 0.25);
     -fx-stroke: #e41a1c;
     -fx-stroke-width: 1px;

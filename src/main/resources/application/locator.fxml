@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Rectangle?>
-<fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
-
-    <Rectangle fx:id="locatorIndicator" height="43" translateY="1"/>
-
-</fx:root>

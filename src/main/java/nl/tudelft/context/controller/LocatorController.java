@@ -1,8 +1,6 @@
 package nl.tudelft.context.controller;
 
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
-import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -10,12 +8,10 @@ import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.Location;
 import nl.tudelft.context.model.graph.DefaultNode;
 
-import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -24,18 +20,16 @@ import java.util.stream.IntStream;
  * @version 1.0
  * @since 04-06-2015
  */
-public final class LocatorController extends DefaultController<Pane> {
+public final class LocatorController {
 
     /**
      * The locator of the graph.
      */
-    @FXML
     Pane locator;
 
     /**
      * The locator of the graph.
      */
-    @FXML
     Rectangle locatorIndicator;
 
     /**
@@ -75,11 +69,14 @@ public final class LocatorController extends DefaultController<Pane> {
                              final ObjectProperty<Location> locationProperty,
                              final Map<Integer, List<DefaultLabel>> labelsMap) {
 
-        super(locator);
-
         this.locator = locator;
         this.scroll = scroll;
         this.locationProperty = locationProperty;
+
+        locatorIndicator = new Rectangle();
+        locatorIndicator.setHeight(43);
+        locatorIndicator.setTranslateY(1);
+        locator.getChildren().setAll(locatorIndicator);
 
         labelsMap.forEach((column, labels) -> {
             int min = labels.stream()
@@ -97,16 +94,10 @@ public final class LocatorController extends DefaultController<Pane> {
             maxLocation = Math.max(maxLocation, column);
         });
 
-        loadFXML("/application/locator.fxml");
-
         locationProperty.addListener((observable, oldValue, newValue) -> {
-            Platform.runLater(() -> setPosition(newValue));
+            setPosition(newValue);
         });
 
-    }
-
-    @Override
-    public void initialize(final URL location, final ResourceBundle resources) {
     }
 
     /**
