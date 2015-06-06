@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -192,14 +193,22 @@ public abstract class AbstractNode extends DrawablePosition {
         Optional<AbstractNode> optNode = Optional.empty();
         if (!getSelection().equals(new None())) {
             AbstractNode node = clone();
-            getChildren().stream()
+            List<AbstractNode> next = getChildren().stream()
                     .map(AbstractNode::getSelectedNodes)
                     .filter(Optional::isPresent)
-                    .forEach(opt -> {
-                        node.addChild(opt.get());
-                        opt.get().setParent(node);
-                    });
-            optNode = Optional.of(node);
+                    .map(Optional::get)
+                    .collect(Collectors.toList());
+            if (node instanceof AncestorNode && next.size() == 1) {
+                optNode = Optional.of(next.get(0));
+                node.addChild(next.get(0));
+                next.get(0).setParent(node);
+            } else {
+                next.forEach(opt -> {
+                    node.addChild(opt);
+                    opt.setParent(node);
+                });
+                optNode = Optional.of(node);
+            }
         }
         return optNode;
     }
