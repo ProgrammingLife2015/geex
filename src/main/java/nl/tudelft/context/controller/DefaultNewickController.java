@@ -26,13 +26,13 @@ public abstract class DefaultNewickController extends ViewController<ScrollPane>
     ProgressIndicator progressIndicator;
 
     /**
-     * The container of the newick tree.
+     * The container of the Newick tree.
      */
     @FXML
-    Group newick;
+    Group newickContainer;
 
     /**
-     * The newick object, can change.
+     * The newickContainer object, can change.
      */
     ObjectProperty<Newick> newickObjectProperty;
 

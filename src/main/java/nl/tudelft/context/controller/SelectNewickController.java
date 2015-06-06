@@ -42,7 +42,7 @@ public class SelectNewickController extends DefaultNewickController {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         super.initialize(location, resources);
-        root.setId("newick-select");
+        root.setId("newickContainer-select");
     }
 
     @Override
@@ -62,8 +62,8 @@ public class SelectNewickController extends DefaultNewickController {
                 .map(NewickLabel::new)
                 .collect(Collectors.toList());
 
-        this.newick.getChildren().addAll(edgeList);
-        this.newick.getChildren().addAll(nodeList);
+        newickContainer.getChildren().addAll(edgeList);
+        newickContainer.getChildren().addAll(nodeList);
 
     }
 

@@ -36,7 +36,7 @@ public final class NewickController extends DefaultNewickController {
     GraphController graphController;
 
     /**
-     * Init a controller at newick.fxml.
+     * Init a controller at newickContainer.fxml.
      *
      * @param mainController MainController for the application
      * @param newickIn       Newick object from the workspace, might not be loaded.
@@ -64,8 +64,8 @@ public final class NewickController extends DefaultNewickController {
                 .map(NewickLabel::new)
                 .collect(Collectors.toList());
 
-        this.newick.getChildren().addAll(edgeList);
-        this.newick.getChildren().addAll(nodeList);
+        newickContainer.getChildren().addAll(edgeList);
+        newickContainer.getChildren().addAll(nodeList);
 
         MenuItem loadGenomeGraph = mainController.getMenuController().getLoadGenomeGraph();
         loadGenomeGraph.setOnAction(event -> loadGraph(newick));

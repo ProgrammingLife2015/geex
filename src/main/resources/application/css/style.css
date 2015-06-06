@@ -181,7 +181,7 @@
 }
 
 /* Newick */
-#newick {
+#newickContainer {
     -fx-min-height: 100%;
 }
 
