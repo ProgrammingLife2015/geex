@@ -59,6 +59,9 @@ public final class GraphController extends DefaultGraphController {
      */
     ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn;
 
+    /**
+     * The current depth of zoom level.
+     */
     int depth = 0;
 
     /**
@@ -148,13 +151,20 @@ public final class GraphController extends DefaultGraphController {
 
     }
 
-    private void incrDepth(int size) {
+    /**
+     * Increment the zoom level. It can't get bigger than the amount of graphs
+     * @param size The amount of graphs in the graphList.
+     */
+    private void incrDepth(final int size) {
         depth++;
-        if(depth > size - 1) {
+        if (depth > size - 1) {
             depth = size - 1;
         }
     }
 
+    /**
+     * Decrement the zoom level. It can't get lower than 0.
+     */
     private void decrDepth() {
         depth--;
         if (depth < 0) {

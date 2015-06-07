@@ -2,9 +2,6 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Paint;
 import nl.tudelft.context.controller.DefaultGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.DefaultNode;
@@ -24,13 +21,11 @@ public class VariationLabel extends InfoLabel {
      * @param drawableNode    Node indicating drawable
      * @param node            Node indicating the node
      */
-    public VariationLabel(MainController mainController, DefaultGraphController graphController, DrawableNode drawableNode, DefaultNode node) {
+    public VariationLabel(final MainController mainController,
+                          final DefaultGraphController graphController,
+                          final DrawableNode drawableNode, final
+                          DefaultNode node) {
         super(mainController, graphController, drawableNode, (Node) node);
-
-//        getChildren().clear();
-//        getChildren().add(initMainLabel());
-//        getChildren().get(0).getStyleClass().remove(0);
-//        getChildren().get(0).getStyleClass().add("variation-label");
     }
 
     /**

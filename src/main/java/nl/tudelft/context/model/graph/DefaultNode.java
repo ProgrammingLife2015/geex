@@ -25,7 +25,10 @@ public abstract class DefaultNode {
      */
     String content;
 
-    boolean isVariation = false;
+    /**
+     * Mark if this node represents a variation.
+     */
+    private boolean isVariation = false;
 
     /**
      * Getter for sources.
@@ -57,18 +60,33 @@ public abstract class DefaultNode {
                                           final DefaultGraphController graphController,
                                           final DrawableNode drawableNode);
 
+    /**
+     * Function used to set if this node represents a variation.
+     * @param bool The boolean that will be set.
+     */
     public void setVariation(final boolean bool) {
 
-        isVariation = true;
+        isVariation = bool;
 
     }
 
+    /**
+     * Returns if this node represents a variation.
+     * @return boolean.
+     */
     public boolean isVariation() {
 
         return isVariation;
 
     }
 
+    /**
+     * Returns the variation-label.
+     * @param mainController The maincontroller used.
+     * @param graphController The graphcontroller used.
+     * @param drawableNode The drawableNode that will be used.
+     * @return Returns the VariationLabel.
+     */
     public VariationLabel getVariationLabel(final MainController mainController,
                                             final DefaultGraphController graphController,
                                             final DrawableNode drawableNode) {

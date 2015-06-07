@@ -1,8 +1,10 @@
 package nl.tudelft.context.model.graph;
 
-import org.jgrapht.graph.DefaultEdge;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -26,12 +28,16 @@ public class VariationGraph extends StackGraph {
      */
     Map<DefaultNode, DefaultNode> variationStartEnd;
 
+    /**
+     * The constructor.
+     * @param graph Graph that will be read.
+     */
     public VariationGraph(final StackGraph graph) {
 
         this.graph = graph;
         this.variations = new ArrayList<>();
         this.variationStartEnd = new HashMap<>();
-        this.markVariations = true;
+        this.setMarkVariations(true);
 
         setGraph(graph);
 
@@ -82,16 +88,16 @@ public class VariationGraph extends StackGraph {
                 variations.add(node);
 
                 List<DefaultNode> setOfNextNodes = getTargets(node);
-                if(setOfNextNodes.size() > 1) {
+                if (setOfNextNodes.size() > 1) {
                     nextNodes.add(checkVariation(node));
-                } else if(!setOfNextNodes.isEmpty() || !nextNodes.isEmpty()){
+                } else if (!setOfNextNodes.isEmpty() || !nextNodes.isEmpty()) {
                     nextNodes.addAll(setOfNextNodes);
                 }
 
             } else {
 
                 amountOfBranches--;
-                if(amountOfBranches == 0) {
+                if (amountOfBranches == 0) {
                     variations.remove(node);
                     break;
                 }

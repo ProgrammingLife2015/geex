@@ -107,7 +107,7 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
         // Bind nodes
         List<DefaultLabel> nodeList = drawableGraph.vertexSet().stream()
                 .map(node -> {
-                    if (node.getNode().isVariation() && drawableGraph.markVariations) {
+                    if (node.getNode().isVariation() && drawableGraph.getMarkVariations()) {
                         return node.getNode().getVariationLabel(mainController, this, node);
                     } else {
                         return node.getNode().getLabel(mainController, this, node);

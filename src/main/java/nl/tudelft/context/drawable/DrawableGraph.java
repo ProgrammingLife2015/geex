@@ -15,8 +15,6 @@ import java.util.stream.Collectors;
  */
 public class DrawableGraph extends DefaultGraph<DrawableNode> {
 
-    public boolean markVariations = false;
-
     /**
      * Define the amount of spacing for the nodes.
      */
@@ -28,6 +26,11 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
     private StackGraph graph;
 
     /**
+     * The boolean that marks if this graph should show all variations.
+     */
+    private boolean markVariations = false;
+
+    /**
      * Create a wrapper around a graph to draw the graph.
      *
      * @param graph Graph to draw
@@ -35,7 +38,7 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
     public DrawableGraph(final StackGraph graph) {
 
         this.graph = graph;
-        this.markVariations = graph.markVariations;
+        this.markVariations = graph.getMarkVariations();
 
         HashMap<DefaultNode, DrawableNode> added = new HashMap<>();
 
@@ -113,6 +116,22 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
      */
     public StackGraph getGraph() {
         return graph;
+    }
+
+    /**
+     * Get the markVariations.
+     * @return markVariations
+     */
+    public boolean getMarkVariations() {
+        return markVariations;
+    }
+
+    /**
+     * Set the markVariations.
+     * @param bool The boolean to be set.
+     */
+    public void setMarkVariations(final boolean bool) {
+        markVariations = bool;
     }
 
 }
