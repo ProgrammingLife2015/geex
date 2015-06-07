@@ -153,11 +153,11 @@ public class WelcomeController extends ViewController<GridPane> {
             mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
             try {
                 Database.instance().remove("workspace", directory.getAbsolutePath());
-                reloadListView();
             } catch (SqlJetException | NullPointerException ignored) {
 
             }
         }
+        reloadListView();
     }
 
     @Override
