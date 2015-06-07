@@ -7,11 +7,13 @@ import nl.tudelft.context.controller.SubGraphController;
 import nl.tudelft.context.model.graph.GraphNode;
 
 /**
+ * The Javafx part of DrawableGraphNode.
+ *
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 1-6-2015
  */
-public class SinglePointLabel extends DefaultLabel {
+public class DrawableGraphNodeLabel extends DefaultLabel {
 
     /**
      * The node the label belongs to.
@@ -26,8 +28,8 @@ public class SinglePointLabel extends DefaultLabel {
      * @param abstractDrawableNode Node indicating drawable
      * @param node                 Node indicating the node
      */
-    public SinglePointLabel(final MainController mainController, final AbstractGraphController graphController,
-                            final AbstractDrawableNode abstractDrawableNode, final GraphNode node) {
+    public DrawableGraphNodeLabel(final MainController mainController, final AbstractGraphController graphController,
+                                  final AbstractDrawableNode abstractDrawableNode, final GraphNode node) {
 
         this.node = node;
 

@@ -4,7 +4,7 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import nl.tudelft.context.drawable.DefaultLabel;
-import nl.tudelft.context.drawable.InfoLabel;
+import nl.tudelft.context.drawable.DrawableNodeLabel;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +39,7 @@ public class ZoomTest {
         map = new HashMap<>();
         List<DefaultLabel> labels = new ArrayList<>();
         map.put(1, labels);
-        label = mock(InfoLabel.class);
+        label = mock(DrawableNodeLabel.class);
         labels.add(label);
 
         zoom = new Zoom(scroll, sequences, map);

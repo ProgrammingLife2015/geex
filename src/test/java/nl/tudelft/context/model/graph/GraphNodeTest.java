@@ -6,7 +6,7 @@ import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.drawable.AbstractDrawableNode;
 import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableGraphNode;
-import nl.tudelft.context.drawable.SinglePointLabel;
+import nl.tudelft.context.drawable.DrawableGraphNodeLabel;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,7 +76,7 @@ public class GraphNodeTest {
         AbstractDrawableNode abstractDrawableNode = new DrawableGraphNode(mock(GraphNode.class));
         DefaultLabel defaultLabel = abstractDrawableNode.getLabel(new MainController(), mock(AbstractGraphController.class));
 
-        assertThat(defaultLabel, instanceOf(SinglePointLabel.class));
+        assertThat(defaultLabel, instanceOf(DrawableGraphNodeLabel.class));
 
     }
 

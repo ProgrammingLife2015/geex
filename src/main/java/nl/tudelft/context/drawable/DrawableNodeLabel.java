@@ -14,11 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * The Javafx part of DrawableNode.
+ *
  * @author René Vennik <renevennik@gmail.com>
  * @version 1.0
  * @since 13-5-2015
  */
-public class InfoLabel extends DefaultLabel {
+public class DrawableNodeLabel extends DefaultLabel {
 
     /**
      * The node the InfoLabel belongs to.
@@ -38,8 +40,8 @@ public class InfoLabel extends DefaultLabel {
      * @param abstractDrawableNode Node indicating drawable
      * @param node                 Node indicating the node
      */
-    public InfoLabel(final MainController mainController, final AbstractGraphController graphController,
-                     final AbstractDrawableNode abstractDrawableNode, final Node node) {
+    public DrawableNodeLabel(final MainController mainController, final AbstractGraphController graphController,
+                             final AbstractDrawableNode abstractDrawableNode, final Node node) {
 
         this.node = node;
 
