@@ -53,7 +53,7 @@ public class InfoLabel extends DefaultLabel {
     }
 
     @Override
-    public final void init() {
+    public void init() {
 
         getChildren().addAll(
                 initMainLabel(),

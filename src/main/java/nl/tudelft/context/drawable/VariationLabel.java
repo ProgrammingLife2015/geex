@@ -26,10 +26,38 @@ public class VariationLabel extends InfoLabel {
      */
     public VariationLabel(MainController mainController, DefaultGraphController graphController, DrawableNode drawableNode, DefaultNode node) {
         super(mainController, graphController, drawableNode, (Node) node);
-        super.init();
 
-        getChildren().get(0).getStyleClass().remove(0);
-        getChildren().get(0).getStyleClass().add("variation-label");
+//        getChildren().clear();
+//        getChildren().add(initMainLabel());
+//        getChildren().get(0).getStyleClass().remove(0);
+//        getChildren().get(0).getStyleClass().add("variation-label");
     }
+
+    /**
+     * Initialize the Label without the BaseLabels shown.
+     *
+     * @return Initialized Upper label
+     */
+    private Label initMainLabel() {
+
+        final Label label = new Label(Integer.toString(node.getId()));
+        label.setCache(true);
+        label.getStyleClass().add("variation-label");
+
+        final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
+        label.setTooltip(percentages);
+
+        return label;
+
+    }
+
+    @Override
+    public final void init() {
+
+        getChildren().add(initMainLabel());
+
+    }
+
+
 
 }
