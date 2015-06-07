@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
  */
 public class DrawableGraph extends DefaultGraph<DrawableNode> {
 
+    public boolean markVariations = false;
+
     /**
      * Define the amount of spacing for the nodes.
      */
@@ -33,6 +35,7 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
     public DrawableGraph(final StackGraph graph) {
 
         this.graph = graph;
+        this.markVariations = graph.markVariations;
 
         HashMap<DefaultNode, DrawableNode> added = new HashMap<>();
 

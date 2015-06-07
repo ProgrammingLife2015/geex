@@ -9,6 +9,8 @@ import java.util.Set;
  */
 public abstract class StackGraph extends DefaultGraph<DefaultNode> {
 
+    public boolean markVariations = false;
+
     /**
      * Clone an other graph into this graph.
      *

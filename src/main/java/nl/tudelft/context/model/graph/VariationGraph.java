@@ -31,6 +31,7 @@ public class VariationGraph extends StackGraph {
         this.graph = graph;
         this.variations = new ArrayList<>();
         this.variationStartEnd = new HashMap<>();
+        this.markVariations = true;
 
         setGraph(graph);
 

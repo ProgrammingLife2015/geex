@@ -63,7 +63,7 @@ public abstract class DefaultNode {
 
     }
 
-    public boolean getVariation() {
+    public boolean isVariation() {
 
         return isVariation;
 

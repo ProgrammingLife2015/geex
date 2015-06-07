@@ -59,6 +59,8 @@ public final class GraphController extends DefaultGraphController {
      */
     ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn;
 
+    int depth = 0;
+
     /**
      * Init a controller at graph.fxml.
      *
@@ -124,18 +126,40 @@ public final class GraphController extends DefaultGraphController {
 
         MenuController menuController = mainController.getMenuController();
 
+        depth = graphList.size();
+
         MenuItem zoomIn = menuController.getZoomIn();
-        zoomIn.setOnAction(event -> showGraph(new DrawableGraph(graphList.getFirst())));
+        zoomIn.setOnAction(event -> {
+            decrDepth();
+            showGraph(new DrawableGraph(graphList.get(depth)));
+        });
         zoomIn.disableProperty().bind(activeProperty.not());
 
         MenuItem zoomOut = menuController.getZoomOut();
-        zoomOut.setOnAction(event -> showGraph(new DrawableGraph(graphList.getLast())));
+        zoomOut.setOnAction(event -> {
+            incrDepth(graphList.size());
+            showGraph(new DrawableGraph(graphList.get(depth)));
+        });
         zoomOut.disableProperty().bind(activeProperty.not());
 
         MenuItem toggleSelect = menuController.getToggleSelect();
         toggleSelect.setOnAction(event -> mainController.setView(this, selectNewickController));
         toggleSelect.disableProperty().bind(activeProperty.not());
 
+    }
+
+    private void incrDepth(int size) {
+        depth++;
+        if(depth > size - 1) {
+            depth = size - 1;
+        }
+    }
+
+    private void decrDepth() {
+        depth--;
+        if (depth < 0) {
+            depth = 0;
+        }
     }
 
     /**
