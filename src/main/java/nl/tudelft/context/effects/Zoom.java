@@ -5,8 +5,8 @@ import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
-import nl.tudelft.context.drawable.DefaultLabel;
-import nl.tudelft.context.drawable.DrawableGraph;
+import nl.tudelft.context.drawable.graph.DefaultLabel;
+import nl.tudelft.context.drawable.graph.DrawableGraph;
 
 import java.util.Collection;
 import java.util.List;

@@ -1,4 +1,4 @@
-package nl.tudelft.context.drawable;
+package nl.tudelft.context.drawable.graph;
 
 import nl.tudelft.context.model.graph.DefaultNode;
 import nl.tudelft.context.model.graph.GraphNode;

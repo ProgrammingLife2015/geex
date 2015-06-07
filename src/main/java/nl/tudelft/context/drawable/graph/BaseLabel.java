@@ -1,4 +1,4 @@
-package nl.tudelft.context.drawable;
+package nl.tudelft.context.drawable.graph;
 
 import javafx.scene.shape.Rectangle;
 

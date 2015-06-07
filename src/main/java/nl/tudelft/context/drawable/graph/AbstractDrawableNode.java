@@ -1,7 +1,8 @@
-package nl.tudelft.context.drawable;
+package nl.tudelft.context.drawable.graph;
 
 import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.drawable.DrawablePosition;
 import nl.tudelft.context.model.graph.DefaultNode;
 
 /**

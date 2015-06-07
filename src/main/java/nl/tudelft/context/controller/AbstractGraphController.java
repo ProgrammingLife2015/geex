@@ -5,9 +5,9 @@ import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import nl.tudelft.context.drawable.DefaultLabel;
+import nl.tudelft.context.drawable.graph.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableEdge;
-import nl.tudelft.context.drawable.DrawableGraph;
+import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.effects.Zoom;
 import nl.tudelft.context.model.graph.StackGraph;
 

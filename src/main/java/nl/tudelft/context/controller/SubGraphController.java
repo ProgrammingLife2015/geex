@@ -1,6 +1,6 @@
 package nl.tudelft.context.controller;
 
-import nl.tudelft.context.drawable.DrawableGraph;
+import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.model.graph.GraphNode;
 import nl.tudelft.context.model.graph.StackGraph;
 
