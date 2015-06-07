@@ -1,10 +1,6 @@
 package nl.tudelft.context.model.graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -74,14 +70,15 @@ public class VariationGraph extends StackGraph {
      */
     private DefaultNode checkVariation(final DefaultNode startNode) {
 
-        List<DefaultNode> nextNodes =  getTargets(startNode);
+        Queue<DefaultNode> nextNodes =  new LinkedList<>();
+        nextNodes.addAll(getTargets(startNode));
 
         int amountOfBranches = nextNodes.size() - 1;
         DefaultNode node = null;
 
         while (!nextNodes.isEmpty()) {
 
-            node = nextNodes.remove(0);
+            node = nextNodes.remove();
 
             if (!variations.contains(node)) {
 
