@@ -15,7 +15,7 @@ public abstract class AbstractDrawableNode extends DrawablePosition {
     /**
      * Node that is drawn.
      */
-    protected DefaultNode node;
+    private DefaultNode node;
 
     /**
      * The current number of incoming nodes.
@@ -62,7 +62,8 @@ public abstract class AbstractDrawableNode extends DrawablePosition {
      * @param graphController Reference to graphController for redirection.
      * @return Javafx VBox to draw.
      */
-    public abstract AbstractLabel getLabel(final MainController mainController, final AbstractGraphController graphController);
+    public abstract AbstractLabel getLabel(final MainController mainController,
+                                           final AbstractGraphController graphController);
 
     /**
      * Check if nodes are equal.

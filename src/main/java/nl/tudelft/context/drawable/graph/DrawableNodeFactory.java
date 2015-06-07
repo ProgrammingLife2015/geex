@@ -11,7 +11,7 @@ import nl.tudelft.context.model.graph.Node;
  * @version 1.0
  * @since 7-6-2015
  */
-public class DrawableNodeFactory {
+public final class DrawableNodeFactory {
     /**
      * Private constructor for utility class.
      */
@@ -25,7 +25,7 @@ public class DrawableNodeFactory {
      * @param node Node to make drawable.
      * @return A DrawableNode of the specific Node type.
      */
-    public static AbstractDrawableNode create(DefaultNode node) {
+    public static AbstractDrawableNode create(final DefaultNode node) {
         if (node instanceof GraphNode) {
             return new DrawableGraphNode((GraphNode) node);
         }
