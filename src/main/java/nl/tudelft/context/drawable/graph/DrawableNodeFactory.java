@@ -5,11 +5,26 @@ import nl.tudelft.context.model.graph.GraphNode;
 import nl.tudelft.context.model.graph.Node;
 
 /**
+ * Create a Drawable from a Node.
+ *
  * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
  * @version 1.0
  * @since 7-6-2015
  */
 public class DrawableNodeFactory {
+    /**
+     * Private constructor for utility class.
+     */
+    private DrawableNodeFactory() {
+
+    }
+
+    /**
+     * Make a DefaultNode of any type a proper Drawable.
+     *
+     * @param node Node to make drawable.
+     * @return A DrawableNode of the specific Node type.
+     */
     public static AbstractDrawableNode create(DefaultNode node) {
         if (node instanceof GraphNode) {
             return new DrawableGraphNode((GraphNode) node);

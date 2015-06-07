@@ -10,7 +10,12 @@ import nl.tudelft.context.model.graph.GraphNode;
  * @since 7-6-2015
  */
 public class DrawableGraphNode extends AbstractDrawableNode {
-    public DrawableGraphNode(GraphNode node) {
+    /**
+     * Create a new DrawableGraphNode, used for drawing a GraphNode.
+     *
+     * @param node Node containing the data.
+     */
+    public DrawableGraphNode(final GraphNode node) {
         super(node);
     }
 

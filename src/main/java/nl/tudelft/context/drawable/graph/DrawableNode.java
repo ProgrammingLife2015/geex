@@ -10,12 +10,17 @@ import nl.tudelft.context.model.graph.Node;
  * @since 7-6-2015
  */
 public class DrawableNode extends AbstractDrawableNode {
-    public DrawableNode(Node node) {
+    /**
+     * Create a new DrawableNode, used for drawing a Node.
+     *
+     * @param node Node containing the data.
+     */
+    public DrawableNode(final Node node) {
         super(node);
     }
 
     @Override
-    public AbstractLabel getLabel(MainController mainController, AbstractGraphController graphController) {
+    public AbstractLabel getLabel(final MainController mainController, final AbstractGraphController graphController) {
         return new DrawableNodeLabel(mainController, graphController, this, (Node) getNode());
     }
 }
