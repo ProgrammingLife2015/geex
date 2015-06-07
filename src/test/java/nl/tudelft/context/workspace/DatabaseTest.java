@@ -1,12 +1,12 @@
 package nl.tudelft.context.workspace;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.tmatesoft.sqljet.core.table.ISqlJetCursor;
 import org.tmatesoft.sqljet.core.table.ISqlJetTable;
 import org.tmatesoft.sqljet.core.table.ISqlJetTransaction;
 import org.tmatesoft.sqljet.core.table.SqlJetDb;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
@@ -18,12 +18,14 @@ import static org.mockito.Mockito.when;
  * @version 1.0
  * @since 5-6-2015
  */
-public class DatabaseTest extends TestCase {
+public class DatabaseTest {
 
+    @Test
     public void testInstance() throws Exception {
         assertEquals(Database.instance(), Database.instance());
     }
 
+    @Test
     public void testGetList() throws Exception {
         Database db = new Database();
         db.db = mock(SqlJetDb.class);
@@ -33,6 +35,7 @@ public class DatabaseTest extends TestCase {
         verify(db.db).runReadTransaction(any());
     }
 
+    @Test
     public void testRemove() throws Exception {
         Database db = new Database();
         db.db = mock(SqlJetDb.class);
@@ -42,6 +45,7 @@ public class DatabaseTest extends TestCase {
         verify(db.db).runWriteTransaction(any());
     }
 
+    @Test
     public void testInsert() throws Exception {
         Database db = new Database();
         db.db = mock(SqlJetDb.class);
@@ -67,6 +71,7 @@ public class DatabaseTest extends TestCase {
         verify(table).insert("value1");
     }
 
+    @Test
     public void testReplace() throws Exception {
         Database db = mock(Database.class);
         doCallRealMethod().when(db).replace(any());
