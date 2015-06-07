@@ -106,7 +106,7 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
 
         // Bind nodes
         List<DefaultLabel> nodeList = drawableGraph.vertexSet().stream()
-                .map(node -> node.getNode().getLabel(mainController, this, node))
+                .map(node -> node.getLabel(mainController, this))
                 .collect(Collectors.toList());
 
         sequences.getChildren().setAll(edgeList);

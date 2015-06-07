@@ -49,7 +49,7 @@ public class WelcomeController extends ViewController<GridPane> {
     /**
      * Create a WelcomeController.
      *
-     * @param mainController The MainController of the application
+     * @param mainController  The MainController of the application
      * @param welcomeMenuItem MenuItem for selecting a workspace
      */
     public WelcomeController(final MainController mainController, final MenuItem welcomeMenuItem) {
@@ -92,6 +92,7 @@ public class WelcomeController extends ViewController<GridPane> {
 
     /**
      * Use a directoryChooser to select a new workspace.
+     *
      * @param window Window for the directoryChooser
      */
     private void selectWorkspace(final Window window) {

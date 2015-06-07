@@ -33,19 +33,19 @@ public class InfoLabel extends DefaultLabel {
     /**
      * Constructor for the InfoLabel.
      *
-     * @param mainController  MainController indicating the controller
-     * @param graphController GraphController to place the next view on
-     * @param drawableNode    Node indicating drawable
-     * @param node            Node indicating the node
+     * @param mainController       MainController indicating the controller
+     * @param graphController      GraphController to place the next view on
+     * @param abstractDrawableNode Node indicating drawable
+     * @param node                 Node indicating the node
      */
     public InfoLabel(final MainController mainController, final DefaultGraphController graphController,
-                     final DrawableNode drawableNode, final Node node) {
+                     final AbstractDrawableNode abstractDrawableNode, final Node node) {
 
         this.node = node;
 
         setCache(true);
-        translateXProperty().bind(drawableNode.translateXProperty());
-        translateYProperty().bind(drawableNode.translateYProperty());
+        translateXProperty().bind(abstractDrawableNode.translateXProperty());
+        translateYProperty().bind(abstractDrawableNode.translateYProperty());
 
         setOnMouseClicked(event -> mainController.setView(graphController,
                 new BaseController(graphController.getGraphList().getFirst(), node)));

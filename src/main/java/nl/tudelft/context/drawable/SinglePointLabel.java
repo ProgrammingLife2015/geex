@@ -21,19 +21,19 @@ public class SinglePointLabel extends DefaultLabel {
     /**
      * Constructor for the single point mutation label.
      *
-     * @param mainController  MainController indicating the controller
-     * @param graphController GraphController to place the next view on
-     * @param drawableNode    Node indicating drawable
-     * @param node            Node indicating the node
+     * @param mainController       MainController indicating the controller
+     * @param graphController      GraphController to place the next view on
+     * @param abstractDrawableNode Node indicating drawable
+     * @param node                 Node indicating the node
      */
     public SinglePointLabel(final MainController mainController, final DefaultGraphController graphController,
-                            final DrawableNode drawableNode, final GraphNode node) {
+                            final AbstractDrawableNode abstractDrawableNode, final GraphNode node) {
 
         this.node = node;
 
         setCache(true);
-        translateXProperty().bind(drawableNode.translateXProperty());
-        translateYProperty().bind(drawableNode.translateYProperty());
+        translateXProperty().bind(abstractDrawableNode.translateXProperty());
+        translateYProperty().bind(abstractDrawableNode.translateYProperty());
 
         setOnMouseClicked(event -> mainController.setView(graphController,
                 new SubGraphController(mainController, graphController.getGraphList().getFirst(), node)));
