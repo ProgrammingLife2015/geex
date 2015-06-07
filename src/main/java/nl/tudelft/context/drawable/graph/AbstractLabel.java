@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
  * @version 1.0
  * @since 1-6-2015
  */
-public abstract class DefaultLabel extends VBox {
+public abstract class AbstractLabel extends VBox {
 
     /**
      * Draw sub elements when needed.

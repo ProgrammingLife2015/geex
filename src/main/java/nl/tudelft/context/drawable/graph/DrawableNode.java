@@ -15,7 +15,7 @@ public class DrawableNode extends AbstractDrawableNode {
     }
 
     @Override
-    public DefaultLabel getLabel(MainController mainController, AbstractGraphController graphController) {
+    public AbstractLabel getLabel(MainController mainController, AbstractGraphController graphController) {
         return new DrawableNodeLabel(mainController, graphController, this, (Node) getNode());
     }
 }

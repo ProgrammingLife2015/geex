@@ -55,7 +55,7 @@ public abstract class AbstractDrawableNode extends DrawablePosition {
 
     }
 
-    public abstract DefaultLabel getLabel(MainController mainController, AbstractGraphController graphController);
+    public abstract AbstractLabel getLabel(MainController mainController, AbstractGraphController graphController);
 
     /**
      * Check if nodes are equal.

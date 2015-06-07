@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 13-5-2015
  */
-public class DrawableNodeLabel extends DefaultLabel {
+public class DrawableNodeLabel extends AbstractLabel {
 
     /**
      * The node the InfoLabel belongs to.

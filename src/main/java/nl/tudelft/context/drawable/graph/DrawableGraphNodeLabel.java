@@ -13,7 +13,7 @@ import nl.tudelft.context.model.graph.GraphNode;
  * @version 1.0
  * @since 1-6-2015
  */
-public class DrawableGraphNodeLabel extends DefaultLabel {
+public class DrawableGraphNodeLabel extends AbstractLabel {
 
     /**
      * The node the label belongs to.

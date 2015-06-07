@@ -5,7 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import nl.tudelft.context.drawable.graph.DefaultLabel;
+import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.effects.Zoom;
@@ -61,7 +61,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     /**
      * Map containing the labels indexed by position.
      */
-    Map<Integer, List<DefaultLabel>> labelMap = new HashMap<>();
+    Map<Integer, List<AbstractLabel>> labelMap = new HashMap<>();
 
     /**
      * Create default graph controller.
@@ -105,7 +105,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .collect(Collectors.toList());
 
         // Bind nodes
-        List<DefaultLabel> nodeList = drawableGraph.vertexSet().stream()
+        List<AbstractLabel> nodeList = drawableGraph.vertexSet().stream()
                 .map(node -> node.getLabel(mainController, this))
                 .collect(Collectors.toList());
 
@@ -113,7 +113,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
 
         labelMap = nodeList.parallelStream().collect(
                 Collectors.groupingBy(
-                        DefaultLabel::currentColumn,
+                        AbstractLabel::currentColumn,
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         );
@@ -146,13 +146,13 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
         int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
-        List<DefaultLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
+        List<AbstractLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
                 .mapToObj(labelMap::remove)
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
-        infoLabels.forEach(DefaultLabel::init);
+        infoLabels.forEach(AbstractLabel::init);
         sequences.getChildren().addAll(infoLabels);
 
     }

@@ -4,7 +4,7 @@ import de.saxsys.javafx.test.JfxRunner;
 import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
-import nl.tudelft.context.drawable.graph.DefaultLabel;
+import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.graph.DrawableGraphNode;
 import nl.tudelft.context.drawable.graph.DrawableGraphNodeLabel;
 import org.junit.BeforeClass;
@@ -74,9 +74,9 @@ public class GraphNodeTest {
     public void testLabel() {
 
         AbstractDrawableNode abstractDrawableNode = new DrawableGraphNode(mock(GraphNode.class));
-        DefaultLabel defaultLabel = abstractDrawableNode.getLabel(new MainController(), mock(AbstractGraphController.class));
+        AbstractLabel abstractLabel = abstractDrawableNode.getLabel(new MainController(), mock(AbstractGraphController.class));
 
-        assertThat(defaultLabel, instanceOf(DrawableGraphNodeLabel.class));
+        assertThat(abstractLabel, instanceOf(DrawableGraphNodeLabel.class));
 
     }
 

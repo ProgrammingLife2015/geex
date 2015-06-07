@@ -5,7 +5,7 @@ import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
-import nl.tudelft.context.drawable.graph.DefaultLabel;
+import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 
 import java.util.Collection;
@@ -32,7 +32,7 @@ public class Zoom {
     /**
      * A map with all labels.
      */
-    final Map<Integer, List<DefaultLabel>> labelsMap;
+    final Map<Integer, List<AbstractLabel>> labelsMap;
     /**
      * The mouse's last known x-position.
      */
@@ -61,7 +61,7 @@ public class Zoom {
      * @param sequences The sequences group
      * @param labelsMap The map with all labels
      */
-    public Zoom(final ScrollPane scroll, final Group sequences, final Map<Integer, List<DefaultLabel>> labelsMap) {
+    public Zoom(final ScrollPane scroll, final Group sequences, final Map<Integer, List<AbstractLabel>> labelsMap) {
         this.scroll = scroll;
         this.sequences = sequences;
         this.labelsMap = labelsMap;
@@ -83,7 +83,7 @@ public class Zoom {
         int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
         int indexTo = indexFrom + (int) Math.ceil(scroll.getWidth() / DrawableGraph.LABEL_SPACING) + 1;
 
-        List<DefaultLabel> infoLabels = getLabels(indexFrom, indexTo);
+        List<AbstractLabel> infoLabels = getLabels(indexFrom, indexTo);
 
         setEvents(infoLabels, left, top);
     }
@@ -95,7 +95,7 @@ public class Zoom {
      * @param left       The x-offset of the scroll panel (including scroll)
      * @param top        The y-offset of the scroll panel (including scroll)
      */
-    private void setEvents(final List<DefaultLabel> infoLabels, final double left, final double top) {
+    private void setEvents(final List<AbstractLabel> infoLabels, final double left, final double top) {
         scroll.setOnMouseEntered(event -> {
             setMouse(event);
             applyAll(infoLabels, left, top);
@@ -114,7 +114,7 @@ public class Zoom {
      * @param indexTo   The last column that is visible
      * @return          A list of labels that are visible
      */
-    private List<DefaultLabel> getLabels(final int indexFrom, final int indexTo) {
+    private List<AbstractLabel> getLabels(final int indexFrom, final int indexTo) {
         return IntStream.rangeClosed(indexFrom, indexTo)
                 .mapToObj(labelsMap::get)
                 .filter(Objects::nonNull)
@@ -139,7 +139,7 @@ public class Zoom {
      * @param left       The x-offset of the scroll panel (including scroll)
      * @param top        The y-offset of the scroll panel (including scroll)
      */
-    public void applyAll(final List<DefaultLabel> infoLabels, final double left, final double top) {
+    public void applyAll(final List<AbstractLabel> infoLabels, final double left, final double top) {
         infoLabels.forEach(label ->
                 apply(label, mouseX - sequences.getLayoutX() + left,  mouseY - sequences.getLayoutY() + top));
     }
@@ -151,7 +151,7 @@ public class Zoom {
      * @param mouseX The mouse's x-position
      * @param mouseY The mouse's y-position
      */
-    public void apply(final DefaultLabel label, final double mouseX, final double mouseY) {
+    public void apply(final AbstractLabel label, final double mouseX, final double mouseY) {
         double dx = mouseX - label.getTranslateX() - (label.getWidth() / 2);
         double dy = mouseY - label.getTranslateY() - (label.getHeight() / 2);
         double distance = Math.sqrt(dx * dx + dy * dy);
@@ -165,7 +165,7 @@ public class Zoom {
      * @param label The label to scale
      * @param ratio The ratio to add to the scale
      */
-    private void addScale(final DefaultLabel label, final double ratio) {
+    private void addScale(final AbstractLabel label, final double ratio) {
         double scale = 1 + SCALE_ADDED * (Math.cos(ratio * Math.PI) + 1);
 
         label.setScaleX(scale);
