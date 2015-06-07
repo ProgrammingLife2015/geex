@@ -1,10 +1,5 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.controller.DefaultGraphController;
-import nl.tudelft.context.controller.MainController;
-import nl.tudelft.context.drawable.DefaultLabel;
-import nl.tudelft.context.drawable.DrawableNode;
-
 import java.util.Set;
 
 /**
@@ -41,16 +36,4 @@ public abstract class DefaultNode {
     public String getContent() {
         return content;
     }
-
-    /**
-     * Creates a label.
-     *
-     * @param mainController  Main controller for setting views
-     * @param graphController Graph controller to set view on
-     * @param drawableNode    Node to draw
-     * @return Info label
-     */
-    public abstract DefaultLabel getLabel(final MainController mainController,
-                                          final DefaultGraphController graphController,
-                                          final DrawableNode drawableNode);
 }

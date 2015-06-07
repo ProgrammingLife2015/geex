@@ -1,5 +1,8 @@
-package nl.tudelft.context.drawable;
+package nl.tudelft.context.drawable.graph;
 
+import nl.tudelft.context.controller.AbstractGraphController;
+import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.drawable.DrawablePosition;
 import nl.tudelft.context.model.graph.DefaultNode;
 
 /**
@@ -7,7 +10,7 @@ import nl.tudelft.context.model.graph.DefaultNode;
  * @version 1.0
  * @since 1-5-2015
  */
-public class DrawableNode extends DrawablePosition {
+public abstract class AbstractDrawableNode extends DrawablePosition {
 
     /**
      * Node that is drawn.
@@ -35,7 +38,7 @@ public class DrawableNode extends DrawablePosition {
      *
      * @param node Node to draw
      */
-    public DrawableNode(final DefaultNode node) {
+    public AbstractDrawableNode(final DefaultNode node) {
 
         this.node = node;
 
@@ -53,6 +56,16 @@ public class DrawableNode extends DrawablePosition {
     }
 
     /**
+     * Get the drawable javafx label for this node.
+     *
+     * @param mainController Reference to mainController for keybinding and redirection.
+     * @param graphController Reference to graphController for redirection.
+     * @return Javafx VBox to draw.
+     */
+    public abstract AbstractLabel getLabel(final MainController mainController,
+                                           final AbstractGraphController graphController);
+
+    /**
      * Check if nodes are equal.
      *
      * @param other Other object
@@ -60,8 +73,8 @@ public class DrawableNode extends DrawablePosition {
      */
     @Override
     public boolean equals(final Object other) {
-        if (other instanceof DrawableNode) {
-            DrawableNode that = (DrawableNode) other;
+        if (other instanceof AbstractDrawableNode) {
+            AbstractDrawableNode that = (AbstractDrawableNode) other;
             return node.equals(that.node);
         }
         return false;

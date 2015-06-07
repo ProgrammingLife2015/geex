@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 5-6-2015
  */
-public class SelectNewickController extends DefaultNewickController {
+public class SelectNewickController extends AbstractNewickController {
 
     /**
      * Graph controller to update the selection.

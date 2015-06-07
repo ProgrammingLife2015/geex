@@ -3,8 +3,8 @@ package nl.tudelft.context.effects;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
-import nl.tudelft.context.drawable.DefaultLabel;
-import nl.tudelft.context.drawable.InfoLabel;
+import nl.tudelft.context.drawable.graph.AbstractLabel;
+import nl.tudelft.context.drawable.graph.DrawableNodeLabel;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,9 +26,9 @@ public class ZoomTest {
 
     static ScrollPane scroll;
     static Group sequences;
-    static Map<Integer, List<DefaultLabel>> map;
+    static Map<Integer, List<AbstractLabel>> map;
     static Zoom zoom;
-    static DefaultLabel label;
+    static AbstractLabel label;
 
     @BeforeClass
     public static void beforeClass() {
@@ -37,9 +37,9 @@ public class ZoomTest {
 
         sequences = mock(Group.class);
         map = new HashMap<>();
-        List<DefaultLabel> labels = new ArrayList<>();
+        List<AbstractLabel> labels = new ArrayList<>();
         map.put(1, labels);
-        label = mock(InfoLabel.class);
+        label = mock(DrawableNodeLabel.class);
         labels.add(label);
 
         zoom = new Zoom(scroll, sequences, map);
