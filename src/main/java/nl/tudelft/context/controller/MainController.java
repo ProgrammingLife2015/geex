@@ -124,8 +124,9 @@ public class MainController extends DefaultController<StackPane> {
     public void setView(final ViewController on, final ViewController viewController) {
 
         viewList.remove(viewList.indexOf(on) + 1, viewList.size());
-        viewList.add(viewController);
         view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
+        viewList.add(viewController);
+        viewController.setVisibility(true);
         view.getChildren().add(viewController.getRoot());
 
         activateView();
