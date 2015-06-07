@@ -1,7 +1,9 @@
 package nl.tudelft.context.model.newick.node;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -31,6 +33,24 @@ public class AncestorNode extends AbstractNode {
     @Override
     public AncestorNode clone() {
         return new AncestorNode(getWeight());
+    }
+
+    @Override
+    public AbstractNode getSelectedNodes() {
+        AbstractNode node = clone();
+        List<AbstractNode> list = getChildren().stream()
+                .filter(n -> n.getSelection().isAny())
+                .map(AbstractNode::getSelectedNodes)
+                .collect(Collectors.toList());
+        if (list.size() == 1) {
+            return list.get(0);
+        } else {
+            list.stream().forEach(opt -> {
+                node.addChild(opt);
+                opt.setParent(node);
+            });
+            return node;
+        }
     }
 
     @Override

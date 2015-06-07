@@ -37,6 +37,19 @@ public class StrandNode extends AbstractNode {
     }
 
     @Override
+    public AbstractNode getSelectedNodes() {
+        AbstractNode node = clone();
+        getChildren().stream()
+                .filter(n -> n.getSelection().isAny())
+                .map(AbstractNode::getSelectedNodes)
+                .forEach(opt -> {
+                    node.addChild(opt);
+                    opt.setParent(node);
+                });
+        return node;
+    }
+
+    @Override
     public String getClassName() {
         return "newick-strand";
     }

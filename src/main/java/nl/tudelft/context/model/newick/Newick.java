@@ -55,8 +55,7 @@ public class Newick extends DefaultDirectedGraph<AbstractNode, DefaultEdge> {
     public Newick getSelectedSubGraph() throws Exception {
         Newick subNewick = new Newick();
 
-        subNewick.setRoot(root.getSelectedNodes()
-                .orElseThrow(() -> new Exception("Graph doesn't have selected nodes.")));
+        subNewick.setRoot(root.getSelectedNodes());
         subNewick.addVertices(subNewick.getRoot());
 
         return subNewick;
