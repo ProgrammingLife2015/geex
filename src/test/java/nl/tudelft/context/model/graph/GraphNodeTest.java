@@ -36,7 +36,7 @@ public class GraphNodeTest {
 
     static StackGraph graph;
     static GraphNode graphNode;
-    static Map<Integer, GraphNode> nodeMap = new HashMap<>();
+    static Map<Integer, DefaultNode> nodeMap = new HashMap<>();
 
     /**
      * Set up by parsing a single node1
@@ -74,7 +74,7 @@ public class GraphNodeTest {
     @Test
     public void testLabel() {
 
-        AbstractDrawableNode abstractDrawableNode = new DrawableGraphNode(nodeMap.get(0));
+        AbstractDrawableNode abstractDrawableNode = new DrawableGraphNode(mock(GraphNode.class));
         DefaultLabel defaultLabel = abstractDrawableNode.getLabel(new MainController(), mock(DefaultGraphController.class));
 
         assertThat(defaultLabel, instanceOf(SinglePointLabel.class));
