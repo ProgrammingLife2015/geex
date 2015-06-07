@@ -126,7 +126,7 @@ public final class GraphController extends DefaultGraphController {
 
         MenuController menuController = mainController.getMenuController();
 
-        depth = graphList.size();
+        depth = graphList.size() - 1;
 
         MenuItem zoomIn = menuController.getZoomIn();
         zoomIn.setOnAction(event -> {
