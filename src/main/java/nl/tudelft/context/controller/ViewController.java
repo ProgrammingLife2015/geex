@@ -10,7 +10,7 @@ import javafx.scene.Parent;
  * @version 1.0
  * @since 14-5-2015
  */
-public abstract class ViewController<T extends Parent> extends DefaultController<T> {
+public abstract class ViewController<T extends Parent> extends AbstractController<T> {
 
     /**
      * Tells whether the controller is currently active (top view).

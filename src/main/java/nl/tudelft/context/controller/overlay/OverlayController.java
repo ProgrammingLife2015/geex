@@ -2,7 +2,7 @@ package nl.tudelft.context.controller.overlay;
 
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
-import nl.tudelft.context.controller.DefaultController;
+import nl.tudelft.context.controller.AbstractController;
 import nl.tudelft.context.controller.MainController;
 
 import java.net.URL;
@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 21-5-2015
  */
-public class OverlayController extends DefaultController<StackPane> {
+public class OverlayController extends AbstractController<StackPane> {
 
     /**
      * Create an overlay controller.

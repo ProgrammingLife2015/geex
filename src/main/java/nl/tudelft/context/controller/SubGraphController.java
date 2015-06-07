@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 2-6-2015
  */
-public class SubGraphController extends DefaultGraphController {
+public class SubGraphController extends AbstractGraphController {
 
     /**
      * Old graph.

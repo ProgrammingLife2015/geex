@@ -1,12 +1,11 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.controller.DefaultGraphController;
+import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
-import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.AbstractDrawableNode;
+import nl.tudelft.context.drawable.DefaultLabel;
 import nl.tudelft.context.drawable.DrawableGraphNode;
-import nl.tudelft.context.drawable.DrawableNode;
 import nl.tudelft.context.drawable.SinglePointLabel;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -75,7 +74,7 @@ public class GraphNodeTest {
     public void testLabel() {
 
         AbstractDrawableNode abstractDrawableNode = new DrawableGraphNode(mock(GraphNode.class));
-        DefaultLabel defaultLabel = abstractDrawableNode.getLabel(new MainController(), mock(DefaultGraphController.class));
+        DefaultLabel defaultLabel = abstractDrawableNode.getLabel(new MainController(), mock(AbstractGraphController.class));
 
         assertThat(defaultLabel, instanceOf(SinglePointLabel.class));
 

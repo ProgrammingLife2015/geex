@@ -4,7 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import nl.tudelft.context.controller.BaseController;
-import nl.tudelft.context.controller.DefaultGraphController;
+import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.BaseCounter;
 import nl.tudelft.context.model.graph.Node;
@@ -38,7 +38,7 @@ public class InfoLabel extends DefaultLabel {
      * @param abstractDrawableNode Node indicating drawable
      * @param node                 Node indicating the node
      */
-    public InfoLabel(final MainController mainController, final DefaultGraphController graphController,
+    public InfoLabel(final MainController mainController, final AbstractGraphController graphController,
                      final AbstractDrawableNode abstractDrawableNode, final Node node) {
 
         this.node = node;

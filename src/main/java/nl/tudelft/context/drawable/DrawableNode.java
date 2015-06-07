@@ -1,6 +1,6 @@
 package nl.tudelft.context.drawable;
 
-import nl.tudelft.context.controller.DefaultGraphController;
+import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.Node;
 
@@ -15,7 +15,7 @@ public class DrawableNode extends AbstractDrawableNode {
     }
 
     @Override
-    public DefaultLabel getLabel(MainController mainController, DefaultGraphController graphController) {
+    public DefaultLabel getLabel(MainController mainController, AbstractGraphController graphController) {
         return new InfoLabel(mainController, graphController, this, (Node) getNode());
     }
 

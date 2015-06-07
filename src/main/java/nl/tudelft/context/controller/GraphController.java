@@ -20,7 +20,7 @@ import java.util.Set;
  * @version 1.0
  * @since 7-5-2015
  */
-public final class GraphController extends DefaultGraphController {
+public final class GraphController extends AbstractGraphController {
 
     /**
      * Sources that are displayed in the graph.

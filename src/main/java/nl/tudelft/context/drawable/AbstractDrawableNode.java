@@ -1,6 +1,6 @@
 package nl.tudelft.context.drawable;
 
-import nl.tudelft.context.controller.DefaultGraphController;
+import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.DefaultNode;
 
@@ -54,7 +54,7 @@ public abstract class AbstractDrawableNode extends DrawablePosition {
 
     }
 
-    public abstract DefaultLabel getLabel(MainController mainController, DefaultGraphController graphController);
+    public abstract DefaultLabel getLabel(MainController mainController, AbstractGraphController graphController);
 
     /**
      * Check if nodes are equal.
