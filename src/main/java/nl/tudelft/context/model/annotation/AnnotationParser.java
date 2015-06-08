@@ -15,6 +15,7 @@ public class AnnotationParser extends Parser<AnnotationMap> {
 
     /**
      * Parse the file into an AnnotationMap.
+     *
      * @param readerList Reader to read.
      * @return A parsed annotationmap.
      */
@@ -23,11 +24,13 @@ public class AnnotationParser extends Parser<AnnotationMap> {
         Scanner sc = new Scanner(reader);
         AnnotationMap annotationMap = new AnnotationMap();
         String line = "";
-        String cvsSplitBy = ",";
+        String fileSplitBy = "\\t";
+        int index = 0;
         while (sc.hasNextLine()) {
             line = sc.nextLine();
-            String[] splitLine = line.split(cvsSplitBy);
-            annotationMap.put(splitLine[1], getAnnotation(splitLine));
+            String[] splitLine = line.split(fileSplitBy);
+            annotationMap.put(index, getAnnotation(splitLine));
+            index++;
         }
 
         return annotationMap;
@@ -41,13 +44,19 @@ public class AnnotationParser extends Parser<AnnotationMap> {
      * @throws NumberFormatException when the data isn't correct
      */
     public final Annotation getAnnotation(final String[] splitLine) throws NumberFormatException {
-        int id = Integer.parseInt(splitLine[0]);
-        String name = splitLine[1];
-        Boolean strand = splitLine[2].equals("+");
+
+        String seqId = splitLine[0];
+        String source = splitLine[1];
+        String type = splitLine[2];
         int start = Integer.parseInt(splitLine[3]);
         int end = Integer.parseInt(splitLine[4]);
-        String proteinName = splitLine[5];
-        Annotation annotation = new Annotation(id, name, strand, start, end, proteinName);
+        float score = Float.parseFloat(splitLine[5]);
+        char strand = splitLine[6].charAt(0);
+        char phase = splitLine[7].charAt(0);
+        String attributes = splitLine[8];
+
+        Annotation annotation = new Annotation(seqId, source, type, start, end, score, strand, phase, attributes);
+        System.out.println("annotation = " + annotation);
         return annotation;
     }
 }

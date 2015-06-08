@@ -65,7 +65,6 @@ public class ResistanceParser extends Parser<ResistanceMap> {
         }
 
         Resistance resistance = new Resistance(geneName, typeOfMutation, change, genomePosition, drugName);
-        System.out.println("resistance = " + resistance);
         return resistance;
     }
 

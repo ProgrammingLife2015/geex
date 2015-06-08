@@ -190,15 +190,15 @@ public class Annotation {
     @Override
     public String toString() {
         return "Annotation(" +
-                "seqid:'" + seqid + ',' +
-                ", source:'" + source + ',' +
-                ", type:'" + type + ',' +
-                ", start:" + start + ',' +
-                ", end:" + end + ',' +
-                ", score:" + score + ',' +
-                ", strand:" + strand + ',' +
-                ", phase:" + phase + ',' +
-                ", attributes:'" + attributes + ',' +
+                "seqid:'" + seqid +
+                ", source:'" + source +
+                ", type:'" + type +
+                ", start:" + start +
+                ", end:" + end +
+                ", score:" + score +
+                ", strand:" + strand +
+                ", phase:" + phase +
+                ", attributes:'" + attributes +
                 ')';
     }
 
