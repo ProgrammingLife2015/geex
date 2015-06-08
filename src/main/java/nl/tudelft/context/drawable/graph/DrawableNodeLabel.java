@@ -2,7 +2,6 @@ package nl.tudelft.context.drawable.graph;
 
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
@@ -81,9 +80,6 @@ public class DrawableNodeLabel extends AbstractLabel {
         final Label label = new Label(Integer.toString(node.getId()));
         label.setCache(true);
         label.getStyleClass().add("info-label");
-
-        final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
-        label.setTooltip(percentages);
 
         return label;
 
