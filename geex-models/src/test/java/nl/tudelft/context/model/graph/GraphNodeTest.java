@@ -66,18 +66,4 @@ public class GraphNodeTest {
         assertEquals(nodes, graphNode.getNodes());
 
     }
-
-    /**
-     * Test if the label is good.
-     */
-    @Test
-    public void testLabel() {
-
-        AbstractDrawableNode abstractDrawableNode = new DrawableGraphNode(mock(GraphNode.class));
-        AbstractLabel abstractLabel = abstractDrawableNode.getLabel(new MainController(), mock(AbstractGraphController.class));
-
-        assertThat(abstractLabel, instanceOf(DrawableGraphNodeLabel.class));
-
-    }
-
 }

@@ -3,6 +3,7 @@ package nl.tudelft.context.drawable;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
+import nl.tudelft.context.drawable.graph.DrawableNode;
 import nl.tudelft.context.model.newick.Newick;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -62,8 +63,8 @@ public class DrawableEdge extends Line {
     public DrawableEdge(final Newick newick, final DefaultEdge edge) {
 
         initialize();
-        setStart(newick.getEdgeSource(edge));
-        setEnd(newick.getEdgeTarget(edge));
+        setStart(new DrawableNewickNode(newick.getEdgeSource(edge)));
+        setEnd(new DrawableNewickNode(newick.getEdgeTarget(edge)));
 
         setTranslateX(OFFSET_TREE);
         setTranslateY(OFFSET_TREE);

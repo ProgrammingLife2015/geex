@@ -1,5 +1,7 @@
 package nl.tudelft.context.drawable;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ObservableDoubleValue;
 
@@ -23,14 +25,14 @@ public abstract class DrawablePosition {
     /**
      * @return translateX property
      */
-    public final ObservableDoubleValue translateXProperty() {
+    public final DoubleProperty translateXProperty() {
         return translateX;
     }
 
     /**
      * @return translateY property
      */
-    public final ObservableDoubleValue translateYProperty() {
+    public final DoubleProperty translateYProperty() {
         return translateY;
     }
 
