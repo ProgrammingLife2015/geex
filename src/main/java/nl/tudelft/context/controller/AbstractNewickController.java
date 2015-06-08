@@ -32,11 +32,6 @@ public abstract class AbstractNewickController extends ViewController<ScrollPane
     Group newickContainer;
 
     /**
-     * The newickContainer object, can change.
-     */
-    ObjectProperty<Newick> newickObjectProperty;
-
-    /**
      * Property with Newick tree.
      */
     ReadOnlyObjectProperty<Newick> newickIn;
