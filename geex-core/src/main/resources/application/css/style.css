@@ -229,7 +229,7 @@
 }
 
 /* Base */
-#bases {
+#bases, #percentages {
     -fx-font: 0.4cm 'Courier New';
     -fx-fill: #fff;
 }
