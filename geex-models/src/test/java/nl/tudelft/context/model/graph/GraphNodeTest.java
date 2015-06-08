@@ -1,12 +1,6 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.controller.AbstractGraphController;
-import nl.tudelft.context.controller.MainController;
-import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
-import nl.tudelft.context.drawable.graph.AbstractLabel;
-import nl.tudelft.context.drawable.graph.DrawableGraphNode;
-import nl.tudelft.context.drawable.graph.DrawableGraphNodeLabel;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,10 +14,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
