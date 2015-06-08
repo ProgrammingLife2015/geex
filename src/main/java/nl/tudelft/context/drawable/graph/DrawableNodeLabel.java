@@ -82,9 +82,6 @@ public class DrawableNodeLabel extends AbstractLabel {
         label.setCache(true);
         label.getStyleClass().add("info-label");
 
-        final Tooltip percentages = new Tooltip(node.getBaseCounter().toString());
-        label.setTooltip(percentages);
-
         return label;
 
     }
