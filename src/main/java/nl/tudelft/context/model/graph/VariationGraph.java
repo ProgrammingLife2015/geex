@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -79,28 +80,33 @@ public class VariationGraph extends StackGraph {
         Queue<DefaultNode> nextNodes =  new LinkedList<>();
         nextNodes.addAll(getTargets(startNode));
 
+        System.out.println(((Node) startNode).getId() + " goes to " + nextNodes.stream().map(node -> ((Node) node).getId()).collect(Collectors.toList()));
+
         int amountOfBranches = nextNodes.size() - 1;
 
         while (!nextNodes.isEmpty()) {
 
             DefaultNode node = nextNodes.remove();
 
-            if (!variations.contains(node)) {
-
-                variations.add(node);
-
-                List<DefaultNode> setOfNextNodes = getTargets(node);
-                if (setOfNextNodes.size() > 1) {
-                    nextNodes.add(checkVariation(node));
-                } else if (!setOfNextNodes.isEmpty() || !nextNodes.isEmpty()) {
-                    nextNodes.addAll(setOfNextNodes);
-                }
-
-            } else {
+            if (variations.contains(node) || nextNodes.contains(node)) {
 
                 amountOfBranches--;
                 if (amountOfBranches == 0) {
                     variations.remove(node);
+                    return node;
+                }
+
+            } else {
+
+                variations.add(node);
+
+                List<DefaultNode> setOfNextNodes = getTargets(node);
+                System.out.println(((Node) node).getId() + " leads to " + setOfNextNodes.stream().map(node2 -> ((Node) node2).getId()).collect(Collectors.toList()));
+                if (setOfNextNodes.size() > 1) {
+                    nextNodes.add(checkVariation(node));
+                } else if (!setOfNextNodes.isEmpty() && !nextNodes.isEmpty() && !variations.containsAll(setOfNextNodes)) {
+                    nextNodes.addAll(setOfNextNodes);
+                } else {
                     return node;
                 }
 
