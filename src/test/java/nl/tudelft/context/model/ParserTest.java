@@ -1,20 +1,19 @@
 package nl.tudelft.context.model;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
  * @version 1.0
  * @since 24-5-2015
  */
-public class ParserTest extends TestCase {
+public class ParserTest {
     public static String MYSTRING = "my_test_string";
 
     class MyParser extends Parser<Object> {
@@ -25,13 +24,14 @@ public class ParserTest extends TestCase {
         }
     }
 
+    @Test
     public void testSetReader() throws Exception {
         MyParser p = new MyParser();
 
         File f1 = new File(getClass().getResource("/newick/10strains.nwk").getPath()),
                 f2 = new File(getClass().getResource("/newick/10strains.nwk").getPath());
 
-        assertEquals(null, p.readerList);
+        assertNull(p.readerList);
 
         p.setReader(f1, f2);
 
@@ -39,6 +39,7 @@ public class ParserTest extends TestCase {
 
     }
 
+    @Test
     public void testParse() throws Exception {
         MyParser p = new MyParser();
         assertEquals(MYSTRING, p.parse());

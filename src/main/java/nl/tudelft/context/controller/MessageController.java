@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 19-05-2015
  */
-public class MessageController extends DefaultController<VBox> {
+public class MessageController extends AbstractController<VBox> {
 
     /**
      * Message used when loading previous workspaces fails.

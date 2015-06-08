@@ -5,9 +5,9 @@ import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import nl.tudelft.context.drawable.DefaultLabel;
+import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.DrawableEdge;
-import nl.tudelft.context.drawable.DrawableGraph;
+import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.effects.Zoom;
 import nl.tudelft.context.model.graph.StackGraph;
 
@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
  * @version 1.0
  * @since 2-6-2015
  */
-public abstract class DefaultGraphController extends ViewController<AnchorPane> {
+public abstract class AbstractGraphController extends ViewController<AnchorPane> {
 
     /**
      * ProgressIndicator to show when the graph is loading.
@@ -61,14 +61,14 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
     /**
      * Map containing the labels indexed by position.
      */
-    Map<Integer, List<DefaultLabel>> labelMap = new HashMap<>();
+    Map<Integer, List<AbstractLabel>> labelMap = new HashMap<>();
 
     /**
      * Create default graph controller.
      *
      * @param mainController MainController to set views with
      */
-    public DefaultGraphController(final MainController mainController) {
+    public AbstractGraphController(final MainController mainController) {
 
         super(new AnchorPane());
 
@@ -105,15 +105,15 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
                 .collect(Collectors.toList());
 
         // Bind nodes
-        List<DefaultLabel> nodeList = drawableGraph.vertexSet().stream()
-                .map(node -> node.getNode().getLabel(mainController, this, node))
+        List<AbstractLabel> nodeList = drawableGraph.vertexSet().stream()
+                .map(node -> node.getLabel(mainController, this))
                 .collect(Collectors.toList());
 
         sequences.getChildren().setAll(edgeList);
 
         labelMap = nodeList.parallelStream().collect(
                 Collectors.groupingBy(
-                        DefaultLabel::currentColumn,
+                        AbstractLabel::currentColumn,
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         );
@@ -146,13 +146,13 @@ public abstract class DefaultGraphController extends ViewController<AnchorPane> 
         int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
         int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
-        List<DefaultLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
+        List<AbstractLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
                 .mapToObj(labelMap::remove)
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
-        infoLabels.forEach(DefaultLabel::init);
+        infoLabels.forEach(AbstractLabel::init);
         sequences.getChildren().addAll(infoLabels);
 
     }

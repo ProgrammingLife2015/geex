@@ -1,6 +1,6 @@
 package nl.tudelft.context.controller;
 
-import nl.tudelft.context.drawable.DrawableGraph;
+import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.model.graph.GraphNode;
 import nl.tudelft.context.model.graph.StackGraph;
 
@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 2-6-2015
  */
-public class SubGraphController extends DefaultGraphController {
+public class SubGraphController extends AbstractGraphController {
 
     /**
      * Old graph.

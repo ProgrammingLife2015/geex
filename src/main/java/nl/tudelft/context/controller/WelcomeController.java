@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
 import javafx.stage.DirectoryChooser;
@@ -41,20 +42,29 @@ public class WelcomeController extends ViewController<GridPane> {
      */
     @FXML
     ListView<Label> previous;
+
     /**
-     * The maincontroller of the application.
+     * The main controller of the application.
      */
     private MainController mainController;
 
     /**
+     * Select recent workspaces menu.
+     */
+    private Menu selectRecentWorkspace;
+
+    /**
      * Create a WelcomeController.
      *
-     * @param mainController The MainController of the application
-     * @param welcomeMenuItem MenuItem for selecting a workspace
+     * @param mainController        The MainController of the application
+     * @param welcomeMenuItem       Menu item for selecting a workspace
+     * @param selectRecentWorkspace Menu item for selecting a recent workspace
      */
-    public WelcomeController(final MainController mainController, final MenuItem welcomeMenuItem) {
+    public WelcomeController(final MainController mainController,
+                             final MenuItem welcomeMenuItem, final Menu selectRecentWorkspace) {
         super(new GridPane());
         this.mainController = mainController;
+        this.selectRecentWorkspace = selectRecentWorkspace;
 
         welcomeMenuItem.setOnAction(event -> selectWorkspace(mainController.getRoot().getScene().getWindow()));
 
@@ -75,6 +85,8 @@ public class WelcomeController extends ViewController<GridPane> {
             final List<String[]> workspaces = Database.instance()
                     .getList("workspace", new String[]{"location", "name"}, NO_OF_PREVIOUS_WORKSPACES);
 
+            refreshRecentMenu(workspaces);
+
             previous.getItems().setAll(workspaces.stream()
                     .map(row -> new Label(row[1])).collect(toList()));
 
@@ -91,7 +103,28 @@ public class WelcomeController extends ViewController<GridPane> {
     }
 
     /**
+     * Refresh recent menu.
+     *
+     * @param workspaces Workspaces to put in the menu
+     */
+    private void refreshRecentMenu(final List<String[]> workspaces) {
+
+        List<MenuItem> items = workspaces.stream()
+                .map(workspace -> {
+                    MenuItem menuItem = new MenuItem(workspace[1]);
+                    menuItem.setOnAction(x -> loadWorkspace(new File(workspace[0])));
+                    return menuItem;
+                })
+                .collect(toList());
+
+        selectRecentWorkspace.getItems().setAll(items);
+        selectRecentWorkspace.setDisable(items.size() == 0);
+
+    }
+
+    /**
      * Use a directoryChooser to select a new workspace.
+     *
      * @param window Window for the directoryChooser
      */
     private void selectWorkspace(final Window window) {
@@ -120,11 +153,11 @@ public class WelcomeController extends ViewController<GridPane> {
             mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
             try {
                 Database.instance().remove("workspace", directory.getAbsolutePath());
-                reloadListView();
-            } catch (SqlJetException ignored) {
+            } catch (SqlJetException | NullPointerException ignored) {
 
             }
         }
+        reloadListView();
     }
 
     @Override

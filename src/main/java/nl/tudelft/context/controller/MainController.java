@@ -24,7 +24,7 @@ import java.util.stream.Stream;
  * @version 1.0
  * @since 25-4-2015
  */
-public class MainController extends DefaultController<StackPane> {
+public class MainController extends AbstractController<StackPane> {
 
     /**
      * FXML stack panes in view.
@@ -98,7 +98,9 @@ public class MainController extends DefaultController<StackPane> {
 
         new OverlayController(this, overlay);
 
-        setBaseView(new WelcomeController(this, menuController.getWelcomeMenuItem()));
+        setBaseView(new WelcomeController(this,
+                menuController.getSelectWorkspace(),
+                menuController.getSelectRecentWorkspace()));
     }
 
     /**
