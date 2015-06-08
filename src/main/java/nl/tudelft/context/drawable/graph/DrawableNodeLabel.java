@@ -2,7 +2,6 @@ package nl.tudelft.context.drawable.graph;
 
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;

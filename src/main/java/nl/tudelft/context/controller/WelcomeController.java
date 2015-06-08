@@ -154,7 +154,7 @@ public class WelcomeController extends ViewController<GridPane> {
             try {
                 Database.instance().remove("workspace", directory.getAbsolutePath());
             } catch (SqlJetException | NullPointerException ignored) {
-
+                mainController.displayMessage(MessageController.FAIL_LOAD_RECENTWORKSPACE);
             }
         }
         reloadListView();
