@@ -19,10 +19,8 @@ public class AnnotationTest {
      */
     @BeforeClass
     public static void BeforeClass() {
-        annotation1 = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
-        annotation2 = new Annotation(2, "Rv0002", true, 2051, 3260, "dnaN");
-        annotation3 = new Annotation(8, "Rv0008c", false, 11873, 12311, "none");
-        annotation4 = new Annotation(2, "Rv0002", false, 999, 9999, "other");
+        annotation1 = new Annotation("Rv0001", true, 0, 1524, "dnaA");
+        annotation2 = new Annotation("Rv0001", true, 0, 1524, "dnaA");
 
     }
 
@@ -165,18 +163,6 @@ public class AnnotationTest {
     @Test
     public void testEqualsWithAntiSenseAnnotation() throws Exception {
         assertFalse(annotation1.equals(annotation3));
-
-    }
-
-    /**
-     * Test equalsLoose.
-     *
-     * @throws Exception
-     */
-    @Test
-    public void testEqualsLoose() throws Exception {
-        assertTrue(annotation1.equalsLoose(annotation1));
-        assertFalse(annotation1.equalsLoose(annotation2));
 
     }
 
