@@ -83,112 +83,103 @@ public class Annotation {
     /**
      * Create an annotation.
      *
-     * @param id          The id of the annotation (from Tabel Browser, wrongfully labeled score).
-     * @param name        Name of the genome.
-     * @param strand      Positve (true) or Negative (false) strand (Sense and Anti-Sense).
-     * @param start       Transcription start position.
-     * @param end         Transcription end position.
-     * @param proteinName Name of the protein.
+     * @param seqid      sequence ID for coordinates.
+     * @param source     describes which procedure was used to retrieve.
+     * @param type       type of the feature.
+     * @param start      start position.
+     * @param end        end position.
+     * @param score      score of the feature.
+     * @param strand     strand of the feature.
+     * @param phase      for CDS, indication if it has reference to reading frame.
+     * @param attributes list of attributes.
      */
-    public Annotation(final int id,
-                      final String name,
-                      final Boolean strand,
+    public Annotation(final String seqid,
+                      final String source,
+                      final String type,
                       final int start,
                       final int end,
-                      final String proteinName) {
-        this.id = id;
-        this.name = name;
-        this.strand = strand;
+                      final float score,
+                      final char strand,
+                      final char phase,
+                      final String attributes) {
+        this.seqid = seqid;
+        this.source = source;
+        this.type = type;
         this.start = start;
         this.end = end;
-        this.proteinName = proteinName;
-
+        this.score = score;
+        this.strand = strand;
+        this.phase = phase;
+        this.attributes = attributes;
     }
 
-    /**
-     * Getter for id.
-     *
-     * @return id
-     */
-    public final int getId() {
-        return id;
+    public void setSeqid(String seqid) {
+        this.seqid = seqid;
     }
 
-    /**
-     * Getter for name.
-     *
-     * @return name
-     */
-    public final String getName() {
-        return name;
+    public void setSource(String source) {
+        this.source = source;
     }
 
-    /**
-     * Getter for strand.
-     *
-     * @return strand
-     */
-    public final Boolean getStrand() {
-        return strand;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    /**
-     * Getter for start.
-     *
-     * @return start
-     */
-    public final int getStart() {
-        return start;
+    public void setStart(int start) {
+        this.start = start;
     }
 
-    /**
-     * Getter for end.
-     *
-     * @return end
-     */
-    public final int getEnd() {
-        return end;
+    public void setEnd(int end) {
+        this.end = end;
     }
 
-    /**
-     * Getter for proteinName.
-     *
-     * @return proteinName
-     */
-    public final String getProteinName() {
-        return proteinName;
+    public void setScore(float score) {
+        this.score = score;
     }
 
-    /**
-     * Checks if annotation is equal to an other annotation.
-     * This is the strict equals, for only checking id use equalsLoose
-     *
-     * @param other the object that should be compared
-     * @return if node is equal to an other node
-     */
+    public void setStrand(char strand) {
+        this.strand = strand;
+    }
+
+    public void setPhase(char phase) {
+        this.phase = phase;
+    }
+
+    public void setAttributes(String attributes) {
+        this.attributes = attributes;
+    }
+
     @Override
-    public final boolean equals(final Object other) {
-        if (other instanceof Annotation) {
-            Annotation that = (Annotation) other;
-            return id == that.id
-                    && name.equals(that.name)
-                    && strand == that.strand
-                    && start == that.start
-                    && end == that.end
-                    && proteinName.equals(that.proteinName);
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Annotation that = (Annotation) o;
+
+        if (start != that.start) return false;
+        if (end != that.end) return false;
+        if (Float.compare(that.score, score) != 0) return false;
+        if (strand != that.strand) return false;
+        if (phase != that.phase) return false;
+        if (!seqid.equals(that.seqid)) return false;
+        if (source != null ? !source.equals(that.source) : that.source != null) return false;
+        if (!type.equals(that.type)) return false;
+        return attributes.equals(that.attributes);
+
     }
 
-    /**
-     * Checks if annotation id is equal to an other annotation id.
-     * Only checks id, for comprehensive comparison use equals
-     *
-     * @param other the object that should be compared
-     * @return if annotaion is equal to an other annotation
-     */
-    public final boolean equalsLoose(final Annotation other) {
-        return id == other.id;
+    @Override
+    public int hashCode() {
+        int result = seqid.hashCode();
+        result = 31 * result + (source != null ? source.hashCode() : 0);
+        result = 31 * result + type.hashCode();
+        result = 31 * result + start;
+        result = 31 * result + end;
+        result = 31 * result + (score != +0.0f ? Float.floatToIntBits(score) : 0);
+        result = 31 * result + (int) strand;
+        result = 31 * result + (int) phase;
+        result = 31 * result + attributes.hashCode();
+        return result;
     }
 
     /**
@@ -197,25 +188,18 @@ public class Annotation {
      * @return string representing the annotation
      */
     @Override
-    public final String toString() {
-        return "("
-                + this.getId() + ", "
-                + this.getName() + ", "
-                + this.getStrand() + ", "
-                + this.getStart() + ", "
-                + this.getEnd() + ", "
-                + this.getProteinName()
-                + ")";
-    }
-
-    /**
-     * Creates an hashCode for annotation.
-     *
-     * @return unique hashCode by id
-     */
-    @Override
-    public final int hashCode() {
-        return this.id;
+    public String toString() {
+        return "Annotation(" +
+                "seqid:'" + seqid + ',' +
+                ", source:'" + source + ',' +
+                ", type:'" + type + ',' +
+                ", start:" + start + ',' +
+                ", end:" + end + ',' +
+                ", score:" + score + ',' +
+                ", strand:" + strand + ',' +
+                ", phase:" + phase + ',' +
+                ", attributes:'" + attributes + ',' +
+                ')';
     }
 
 }
