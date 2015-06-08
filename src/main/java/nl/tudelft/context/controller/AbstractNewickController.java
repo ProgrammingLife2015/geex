@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 5-6-2015
  */
-public abstract class DefaultNewickController extends ViewController<ScrollPane> {
+public abstract class AbstractNewickController extends ViewController<ScrollPane> {
 
     /**
      * ProgressIndicator to show when the tree is loading.
@@ -40,7 +40,7 @@ public abstract class DefaultNewickController extends ViewController<ScrollPane>
      *
      * @param newickIn Newick object from the workspace, might not be loaded.
      */
-    public DefaultNewickController(final ReadOnlyObjectProperty<Newick> newickIn) {
+    public AbstractNewickController(final ReadOnlyObjectProperty<Newick> newickIn) {
 
         super(new ScrollPane());
         this.newickIn = newickIn;

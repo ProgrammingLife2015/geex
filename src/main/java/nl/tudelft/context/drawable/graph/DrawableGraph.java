@@ -1,4 +1,4 @@
-package nl.tudelft.context.drawable;
+package nl.tudelft.context.drawable.graph;
 
 import nl.tudelft.context.model.graph.DefaultGraph;
 import nl.tudelft.context.model.graph.DefaultNode;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 31-5-2015
  */
-public class DrawableGraph extends DefaultGraph<DrawableNode> {
+public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
 
     /**
      * Define the amount of spacing for the nodes.
@@ -40,13 +40,13 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
         this.graph = graph;
         this.markVariations = graph.getMarkVariations();
 
-        HashMap<DefaultNode, DrawableNode> added = new HashMap<>();
+        HashMap<DefaultNode, AbstractDrawableNode> added = new HashMap<>();
 
         graph.vertexSet().stream()
                 .forEach(node -> {
-                    DrawableNode drawableNode = new DrawableNode(node);
-                    added.put(node, drawableNode);
-                    addVertex(drawableNode);
+                    AbstractDrawableNode abstractDrawableNode = DrawableNodeFactory.create(node);
+                    added.put(node, abstractDrawableNode);
+                    addVertex(abstractDrawableNode);
                 });
 
         graph.edgeSet().stream()
@@ -64,7 +64,7 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
      */
     public void position() {
 
-        List<DrawableNode> start = getFirstNodes();
+        List<AbstractDrawableNode> start = getFirstNodes();
 
         int i = 0;
         while (!start.isEmpty()) {
@@ -80,7 +80,7 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
      * @param nodes nodes to display
      * @return next column
      */
-    private List<DrawableNode> nextColumn(final List<DrawableNode> nodes) {
+    private List<AbstractDrawableNode> nextColumn(final List<AbstractDrawableNode> nodes) {
 
         return nodes.stream()
                 .flatMap(node -> outgoingEdgesOf(node).stream()
@@ -96,12 +96,12 @@ public class DrawableGraph extends DefaultGraph<DrawableNode> {
      * @param nodes  nodes to draw
      * @param column column to draw at
      */
-    private void positionNodes(final List<DrawableNode> nodes, final int column) {
+    private void positionNodes(final List<AbstractDrawableNode> nodes, final int column) {
 
         int shift = nodes.size() * LABEL_SPACING / 2;
 
         int row = 0;
-        for (DrawableNode node : nodes) {
+        for (AbstractDrawableNode node : nodes) {
             node.setTranslateX(column * LABEL_SPACING);
             node.setTranslateY(row * LABEL_SPACING - shift);
             row++;

@@ -30,7 +30,13 @@ public final class MenuController {
             toggleSelect,
             zoomIn,
             zoomOut,
-            welcomeMenuItem;
+            selectWorkspace;
+
+    /**
+     * The menu's.
+     */
+    private Menu
+            selectRecentWorkspace;
 
     /**
      * FXML menu bar.
@@ -59,13 +65,17 @@ public final class MenuController {
      */
     private void initFileMenu() {
 
-        welcomeMenuItem = createMenuItem("Select workspace folder",
+        selectWorkspace = createMenuItem("Select workspace folder",
                 new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN),
                 null,
                 false);
 
+        selectRecentWorkspace = new Menu("_Select recent workspace");
+        selectRecentWorkspace.setDisable(true);
+
         menuBar.getMenus().add(createMenu("_File",
-                welcomeMenuItem,
+                selectWorkspace,
+                selectRecentWorkspace,
                 createMenuItem("Exit", null,
                         event -> mainController.exitProgram(),
                         false)));
@@ -166,8 +176,17 @@ public final class MenuController {
      *
      * @return MenuItem for the welcomeController.
      */
-    public MenuItem getWelcomeMenuItem() {
-        return welcomeMenuItem;
+    public MenuItem getSelectWorkspace() {
+        return selectWorkspace;
+    }
+
+    /**
+     * Get the menu item to select a recent workspace.
+     *
+     * @return Menu for the welcomeController.
+     */
+    public Menu getSelectRecentWorkspace() {
+        return selectRecentWorkspace;
     }
 
     /**

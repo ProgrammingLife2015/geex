@@ -2,6 +2,7 @@ package nl.tudelft.context.drawable;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.model.newick.Newick;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;

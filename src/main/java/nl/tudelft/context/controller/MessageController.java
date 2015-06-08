@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 19-05-2015
  */
-public class MessageController extends DefaultController<VBox> {
+public class MessageController extends AbstractController<VBox> {
 
     /**
      * Message used when loading previous workspaces fails.
@@ -83,6 +83,11 @@ public class MessageController extends DefaultController<VBox> {
      * Message used when annotation loading succeeds.
      */
     public static final String SUCCESS_LOAD_RESISTANCE = "Resistance Annotations loaded successfully.";
+
+    /**
+     * Message used when annotation loading succeeds.
+     */
+    public static final String FAIL_LOAD_RECENTWORKSPACE = "Could not load recent workspace.";
 
     /**
      * The text that is shown.

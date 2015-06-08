@@ -1,11 +1,5 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.controller.DefaultGraphController;
-import nl.tudelft.context.controller.MainController;
-import nl.tudelft.context.drawable.DefaultLabel;
-import nl.tudelft.context.drawable.DrawableNode;
-import nl.tudelft.context.drawable.VariationLabel;
-
 import java.util.Set;
 
 /**
@@ -49,18 +43,6 @@ public abstract class DefaultNode {
     }
 
     /**
-     * Creates a label.
-     *
-     * @param mainController  Main controller for setting views
-     * @param graphController Graph controller to set view on
-     * @param drawableNode    Node to draw
-     * @return Info label
-     */
-    public abstract DefaultLabel getLabel(final MainController mainController,
-                                          final DefaultGraphController graphController,
-                                          final DrawableNode drawableNode);
-
-    /**
      * Function used to set if this node represents a variation.
      * @param bool The boolean that will be set.
      */
@@ -78,19 +60,6 @@ public abstract class DefaultNode {
 
         return isVariation;
 
-    }
-
-    /**
-     * Returns the variation-label.
-     * @param mainController The maincontroller used.
-     * @param graphController The graphcontroller used.
-     * @param drawableNode The drawableNode that will be used.
-     * @return Returns the VariationLabel.
-     */
-    public VariationLabel getVariationLabel(final MainController mainController,
-                                            final DefaultGraphController graphController,
-                                            final DrawableNode drawableNode) {
-        return new VariationLabel(mainController, graphController, drawableNode, this);
     }
 
 }

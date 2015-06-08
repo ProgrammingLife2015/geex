@@ -1,11 +1,5 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.controller.DefaultGraphController;
-import nl.tudelft.context.controller.MainController;
-import nl.tudelft.context.drawable.DefaultLabel;
-import nl.tudelft.context.drawable.DrawableNode;
-import nl.tudelft.context.drawable.SinglePointLabel;
-
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -63,11 +57,4 @@ public class GraphNode extends DefaultNode {
     public Set<DefaultNode> getNodes() {
         return nodes;
     }
-
-    @Override
-    public DefaultLabel getLabel(final MainController mainController, final DefaultGraphController graphController,
-                                 final DrawableNode drawableNode) {
-        return new SinglePointLabel(mainController, graphController, drawableNode, this);
-    }
-
 }

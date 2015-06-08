@@ -182,11 +182,11 @@ public class Node extends DrawablePosition {
 
     /**
      * Sets the selection of the node, based on the selection of its children;
-     * <p>
+     * <p/>
      * All the children's selection is ALL: ALL
      * All the children's selection is NONE: NONE
      * Otherwise: PARTIAL
-     * <p>
+     * <p/>
      * If the node has a parent, it also calls this method on its parent.
      */
     public void updateSelected() {

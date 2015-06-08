@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 8-5-2015
  */
-public final class NewickController extends DefaultNewickController {
+public final class NewickController extends AbstractNewickController {
 
     /**
      * The main controller used to set views.
