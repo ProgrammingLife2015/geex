@@ -6,6 +6,7 @@
     <artifactId>geex</artifactId>
     <version>0.7</version>
     <modules>
+        <module>geex-models</module>
         <module>geex-core</module>
     </modules>
     <packaging>pom</packaging>
