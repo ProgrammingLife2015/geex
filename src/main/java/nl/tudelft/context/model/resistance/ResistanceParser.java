@@ -71,6 +71,7 @@ public class ResistanceParser extends Parser<ResistanceMap> {
 
     /**
      * From a single letter-code determine which drug it stands for.
+     *
      * @param letter String that represents the single letter code
      * @return String the name of the drug
      */

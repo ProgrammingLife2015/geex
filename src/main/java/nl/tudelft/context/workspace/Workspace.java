@@ -119,7 +119,7 @@ public class Workspace {
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
         annotationFile = findFile(files, ".ann.csv");
-        resistanceFile = findFile(files, ".imm.csv");
+        resistanceFile = findFile(files, ".txt");
     }
 
     /**
