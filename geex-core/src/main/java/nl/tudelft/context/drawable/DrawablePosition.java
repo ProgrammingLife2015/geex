@@ -1,9 +1,7 @@
 package nl.tudelft.context.drawable;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ObservableDoubleValue;
 
 /**
  * @author René Vennik <renevennik@gmail.com>
