@@ -46,21 +46,21 @@ public class Resistance {
      * @param geneName       The name of the gene.
      * @param typeOfMutation The kind of mutation.
      * @param change         The description of what happens exactly in the mutation.
-     * @param genomePosition The position in the genome.
      * @param filter         The filter that was used to get the data.
+     * @param genomePosition The position in the genome.
      * @param drugName       The name of the drug for which the mutation causes resistance.
      */
     public Resistance(final String geneName,
                       final String typeOfMutation,
                       final String change,
-                      final int genomePosition,
                       final String filter,
+                      final int genomePosition,
                       final String drugName) {
         this.geneName = geneName;
         this.typeOfMutation = typeOfMutation;
         this.change = change;
-        this.genomePosition = genomePosition;
         this.filter = filter;
+        this.genomePosition = genomePosition;
         this.drugName = drugName;
 
     }
@@ -132,6 +132,7 @@ public class Resistance {
             return geneName.equals(that.geneName)
                     && typeOfMutation.equals(that.typeOfMutation)
                     && change.equals(that.change)
+                    && filter.equals(that.filter)
                     && genomePosition == that.genomePosition
                     && drugName.equals(that.drugName);
         }
@@ -149,8 +150,8 @@ public class Resistance {
                 + this.getGeneName() + ", "
                 + this.getTypeOfMutation() + ", "
                 + this.getChange() + ", "
-                + this.getGenomePosition() + ", "
                 + this.getFilter() + ", "
+                + this.getGenomePosition() + ", "
                 + this.getDrugName()
                 + ")";
     }

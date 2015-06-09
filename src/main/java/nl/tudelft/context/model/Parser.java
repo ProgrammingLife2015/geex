@@ -10,10 +10,10 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 /**
+ * @param <T> The filetype this parser should parse to.
  * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
  * @version 1.0
  * @since 24-5-2015
- * @param <T> The filetype this parser should parse to.
  */
 public abstract class Parser<T> {
     /**
@@ -30,9 +30,10 @@ public abstract class Parser<T> {
 
     /**
      * Set the readers for this parser.
+     *
      * @param files The files to read from
      * @return this
-     * @throws FileNotFoundException If the file is not found.
+     * @throws FileNotFoundException        If the file is not found.
      * @throws UnsupportedEncodingException If the file contains an unsupported encoding.
      */
     public Parser<T> setReader(final File... files) throws FileNotFoundException, UnsupportedEncodingException {
@@ -47,22 +48,20 @@ public abstract class Parser<T> {
 
     /**
      * Parse the object in this file.
+     *
      * @return Parsed object.
      */
     public T parse() {
-        try {
-            return parse(readerList);
-        } catch (ResistanceFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
+
+        return parse(readerList);
     }
 
     /**
      * Abstract method to which a file is given to parse.
+     *
      * @param file File to parse.
      * @return Parsed object.
      * @throws ResistanceFormatException If the data in the data isn't compliant with the specs.
      */
-    protected abstract T parse(BufferedReader... file) throws ResistanceFormatException;
+    protected abstract T parse(BufferedReader... file);
 }

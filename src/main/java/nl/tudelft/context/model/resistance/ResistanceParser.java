@@ -21,7 +21,7 @@ public class ResistanceParser extends Parser<ResistanceMap> {
      * @return A parsed resistanceMap.
      */
     @Override
-    protected ResistanceMap parse(final BufferedReader... readerList) throws ResistanceFormatException {
+    protected ResistanceMap parse(final BufferedReader... readerList) {
         BufferedReader reader = readerList[0];
         Scanner sc = new Scanner(reader);
         ResistanceMap resistanceMap = new ResistanceMap();
@@ -32,7 +32,10 @@ public class ResistanceParser extends Parser<ResistanceMap> {
             while (line.matches("^##.*$")) {
                 line = sc.nextLine();
             }
-            resistanceMap.put(index, getResistance(line));
+            try {
+                resistanceMap.put(index, getResistance(line));
+            } catch (ResistanceFormatException e) {
+            }
             index++;
         }
 
@@ -44,7 +47,7 @@ public class ResistanceParser extends Parser<ResistanceMap> {
      *
      * @param line the line with information for the resistance.
      * @return Resistance
-     * @throws NumberFormatException when the data isn't correct
+     * @throws NumberFormatException     when the data isn't correct
      * @throws ResistanceFormatException when the value of the data isn't spec compliant.
      */
     public final Resistance getResistance(final String line) throws NumberFormatException, ResistanceFormatException {
@@ -56,8 +59,8 @@ public class ResistanceParser extends Parser<ResistanceMap> {
             String change = matcher.group(3);
             String filter = matcher.group(4);
             int genomePosition = Integer.parseInt(matcher.group(5));
-            String drugName = getDrugName(matcher.group(6));
-            return new Resistance(geneName, typeOfMutation, change, genomePosition, filter, drugName);
+            String drugName = getDrugName(matcher.group(6).charAt(0));
+            return new Resistance(geneName, typeOfMutation, change, filter, genomePosition, drugName);
         } else {
             throw new ResistanceFormatException();
         }
@@ -69,24 +72,24 @@ public class ResistanceParser extends Parser<ResistanceMap> {
      * @param letter String that represents the single letter code
      * @return String the name of the drug
      */
-    public final String getDrugName(final String letter) {
+    public final String getDrugName(final char letter) {
         switch (letter) {
-            case "R":
+            case 'R' :
                 return "rifampicin";
-            case "T":
-            case "M":
+            case 'T' :
+            case 'M' :
                 return "ethionomide";
-            case "I":
+            case 'I' :
                 return "isoniazid";
-            case "O":
+            case 'O' :
                 return "ofloxacin";
-            case "S":
+            case 'S' :
                 return "streptomycin";
-            case "K":
+            case 'K' :
                 return "kanamycin";
-            case "P":
+            case 'P' :
                 return "pyrazinamide";
-            case "E":
+            case 'E' :
                 return "ethambutol";
             default:
                 return "none";

@@ -1,0 +1,4 @@
+## Test file
+## follows the conventions
+geneName:TypeOfMutation,change,filter,0	R
+geneName1:TypeOfMutation1,change1,filter1,1	M
