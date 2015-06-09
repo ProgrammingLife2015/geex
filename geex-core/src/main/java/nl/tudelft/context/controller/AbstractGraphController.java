@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import nl.context.tudelft.effect.Zoom;
+import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
 import nl.tudelft.context.drawable.graph.AbstractLabel;
@@ -101,6 +102,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         currentLabelsProperty.addListener((observable, oldValue, newValue) -> {
             zoomLabelsProperty.setValue(newValue.stream().collect(Collectors.toList()));
         });
+
+        new LocatorController(labelMapProperty, currentLabelsProperty);
 
         initOnTheFlyLoading();
 
