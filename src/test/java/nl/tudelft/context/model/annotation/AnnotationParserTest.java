@@ -25,13 +25,13 @@ public class AnnotationParserTest {
      */
     @BeforeClass
     public static void BeforeClass() throws Exception {
-        annotation1 = new Annotation(1, "lorem", true, 0, 2, "ipsum");
-        annotation2 = new Annotation(2, "dolor", false, 4, 6, "set");
+        //annotation1 = new Annotation(1, "lorem", true, 0, 2, "ipsum");
+        //annotation2 = new Annotation(2, "dolor", false, 4, 6, "set");
 
         annotationMap1 = new AnnotationMap();
 
-        annotationMap1.put("1", annotation1);
-        annotationMap1.put("2", annotation2);
+        annotationMap1.put(1, annotation1);
+        annotationMap1.put(2, annotation2);
         annotationFile = new File(AnnotationParserTest.class.getResource("/annotation/test.ann.csv").getPath());
     }
 

@@ -1,5 +1,7 @@
 package nl.tudelft.context.model;
 
+import nl.tudelft.context.model.resistance.ResistanceFormatException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,5 +58,5 @@ public abstract class Parser<T> {
      * @param file File to parse.
      * @return Parsed object.
      */
-    protected abstract T parse(BufferedReader... file);
+    protected abstract T parse(BufferedReader... file) throws ResistanceFormatException;
 }

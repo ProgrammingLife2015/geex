@@ -21,11 +21,11 @@ public class AnnotationMapTest {
      */
     @BeforeClass
     public static void BeforeClass() {
-        annotation1 = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
-        annotation2 = new Annotation(2, "Rv0002", true, 2051, 3260, "dnaN");
-        annotationMap1 = new AnnotationMap();
-        annotationMap1.put("1", annotation1);
-        annotationMap1.put("2", annotation2);
+        //annotation1 = new Annotation(1, "Rv0001", true, 0, 1524, "dnaA");
+        //annotation2 = new Annotation(2, "Rv0002", true, 2051, 3260, "dnaN");
+        //annotationMap1 = new AnnotationMap();
+        //annotationMap1.put("1", annotation1);
+        //annotationMap1.put("2", annotation2);
     }
 
     @Test

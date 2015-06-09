@@ -16,7 +16,7 @@ public class Annotation {
      * IDs may contain any characters, but must escape any characters not in the set [a-zA-Z0-9.:^*$@!+_?-|].
      * In particular, IDs may not contain unescaped whitespace and must not begin with an unescaped ">".
      */
-    String seqid;
+    String seqId;
 
     /**
      * The source is a free text qualifier intended to describe the algorithm or operating procedure that generated this feature.
@@ -83,17 +83,17 @@ public class Annotation {
     /**
      * Create an annotation.
      *
-     * @param seqid      sequence ID for coordinates.
+     * @param seqId      sequence ID for coordinates.
      * @param source     describes which procedure was used to retrieve.
      * @param type       type of the feature.
-     * @param start      start position.
+     * @param start      start position
      * @param end        end position.
      * @param score      score of the feature.
      * @param strand     strand of the feature.
-     * @param phase      for CDS, indication if it has reference to reading frame.
+     * @param phase      for CDS, indication if it has reference to read1ing frame.
      * @param attributes list of attributes.
      */
-    public Annotation(final String seqid,
+    public Annotation(final String seqId,
                       final String source,
                       final String type,
                       final int start,
@@ -102,7 +102,7 @@ public class Annotation {
                       final char strand,
                       final char phase,
                       final String attributes) {
-        this.seqid = seqid;
+        this.seqId = seqId;
         this.source = source;
         this.type = type;
         this.start = start;
@@ -113,41 +113,6 @@ public class Annotation {
         this.attributes = attributes;
     }
 
-    public void setSeqid(String seqid) {
-        this.seqid = seqid;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setStart(int start) {
-        this.start = start;
-    }
-
-    public void setEnd(int end) {
-        this.end = end;
-    }
-
-    public void setScore(float score) {
-        this.score = score;
-    }
-
-    public void setStrand(char strand) {
-        this.strand = strand;
-    }
-
-    public void setPhase(char phase) {
-        this.phase = phase;
-    }
-
-    public void setAttributes(String attributes) {
-        this.attributes = attributes;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -161,7 +126,7 @@ public class Annotation {
         if (Float.compare(that.score, score) != 0) return false;
         if (strand != that.strand) return false;
         if (phase != that.phase) return false;
-        if (!seqid.equals(that.seqid)) return false;
+        if (!seqId.equals(that.seqId)) return false;
         if (source != null ? !source.equals(that.source) : that.source != null) return false;
         if (!type.equals(that.type)) return false;
         return attributes.equals(that.attributes);
@@ -170,7 +135,7 @@ public class Annotation {
 
     @Override
     public int hashCode() {
-        int result = seqid.hashCode();
+        int result = seqId.hashCode();
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + type.hashCode();
         result = 31 * result + start;
@@ -190,7 +155,7 @@ public class Annotation {
     @Override
     public String toString() {
         return "Annotation(" +
-                "seqId:'" + seqid +
+                "seqId:'" + seqId +
                 ", source:'" + source +
                 ", type:'" + type +
                 ", start:" + start +

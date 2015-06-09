@@ -25,6 +25,11 @@ public class Resistance {
     String change;
 
     /**
+     * The filter that was used to get the data.
+     */
+    String filter;
+
+    /**
      * The position in the genome.
      */
     int genomePosition;
@@ -35,23 +40,39 @@ public class Resistance {
     String drugName;
 
     /**
+     * Create an resistance empty annotation.
+     */
+    public Resistance() {
+        this.geneName = "none";
+        this.typeOfMutation = "none";
+        this.change = "none";
+        this.genomePosition = Integer.MAX_VALUE;
+        this.filter = "none";
+        this.drugName = "none";
+
+    }
+
+    /**
      * Create an resistance annotation.
      *
      * @param geneName       The name of the gene.
-     * @param typeOfMutation The description of what happens exactly in the mutation.
+     * @param typeOfMutation The kind of mutation.
      * @param change         The description of what happens exactly in the mutation.
      * @param genomePosition The position in the genome.
+     * @param filter         The filter that was used to get the data.
      * @param drugName       The name of the drug for which the mutation causes resistance.
      */
     public Resistance(final String geneName,
                       final String typeOfMutation,
                       final String change,
                       final int genomePosition,
+                      final String filter,
                       final String drugName) {
         this.geneName = geneName;
         this.typeOfMutation = typeOfMutation;
         this.change = change;
         this.genomePosition = genomePosition;
+        this.filter = filter;
         this.drugName = drugName;
 
     }
@@ -102,6 +123,15 @@ public class Resistance {
     }
 
     /**
+     * getter for filter.
+     *
+     * @return filter
+     */
+    public String getFilter() {
+        return filter;
+    }
+
+    /**
      * Checks if resistance is equal to an other resistance.
      *
      * @param other the object that should be compared
@@ -132,6 +162,7 @@ public class Resistance {
                 + this.getTypeOfMutation() + ", "
                 + this.getChange() + ", "
                 + this.getGenomePosition() + ", "
+                + this.getFilter() + ", "
                 + this.getDrugName()
                 + ")";
     }

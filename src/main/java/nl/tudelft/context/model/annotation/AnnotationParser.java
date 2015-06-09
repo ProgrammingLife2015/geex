@@ -56,7 +56,6 @@ public class AnnotationParser extends Parser<AnnotationMap> {
         String attributes = splitLine[8];
 
         Annotation annotation = new Annotation(seqId, source, type, start, end, score, strand, phase, attributes);
-        System.out.println("annotation = " + annotation);
         return annotation;
     }
 }

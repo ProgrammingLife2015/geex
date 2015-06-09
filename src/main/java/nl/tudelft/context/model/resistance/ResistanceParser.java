@@ -21,22 +21,18 @@ public class ResistanceParser extends Parser<ResistanceMap> {
      * @return A parsed resistanceMap.
      */
     @Override
-    protected ResistanceMap parse(final BufferedReader... readerList) {
+    protected ResistanceMap parse(final BufferedReader... readerList) throws ResistanceFormatException {
         BufferedReader reader = readerList[0];
         Scanner sc = new Scanner(reader);
         ResistanceMap resistanceMap = new ResistanceMap();
-        String line = "";
-        String cvsSplitBy = ",";
+        String line;
         int index = 0;
         while (sc.hasNextLine()) {
             line = sc.nextLine();
             while (line.matches("^##.*$")) {
                 line = sc.nextLine();
             }
-            line = line.replace(":", ",");
-            line = line.replace("\r", ",");
-            String[] splitLine = line.split(cvsSplitBy);
-            resistanceMap.put(index, getResistance(splitLine));
+            resistanceMap.put(index, getResistance(line));
             index++;
         }
 
@@ -46,26 +42,24 @@ public class ResistanceParser extends Parser<ResistanceMap> {
     /**
      * Read a splitted line and generate an resistance.
      *
-     * @param splitLine the line with information for the resistance.
+     * @param line the line with information for the resistance.
      * @return Resistance
      * @throws NumberFormatException when the data isn't correct
      */
-    public final Resistance getResistance(final String[] splitLine) throws NumberFormatException {
-        String geneName = splitLine[0];
-        String typeOfMutation = splitLine[1];
-        String change = splitLine[2];
-        String drugName = "none";
-
-        Pattern p = Pattern.compile("(\\d+)(\t)([A-Z])");
-        int genomePosition = Integer.MAX_VALUE;
-        Matcher matcher = p.matcher(splitLine[4]);
+    public final Resistance getResistance(final String line) throws NumberFormatException, ResistanceFormatException {
+        Pattern p = Pattern.compile("(^.*):(.*),(.*),(.*),(\\d+)\\t([A-Z])");
+        Matcher matcher = p.matcher(line);
         if (matcher.find()) {
-            genomePosition = Integer.parseInt(matcher.group(1));
-            drugName = getDrugName(matcher.group(3));
+            String geneName = matcher.group(1);
+            String typeOfMutation = matcher.group(2);
+            String change = matcher.group(3);
+            String filter = matcher.group(4);
+            int genomePosition = Integer.parseInt(matcher.group(5));
+            String drugName = getDrugName(matcher.group(6));
+            return new Resistance(geneName, typeOfMutation, change, genomePosition, filter, drugName);
+        } else {
+            throw new ResistanceFormatException();
         }
-
-        Resistance resistance = new Resistance(geneName, typeOfMutation, change, genomePosition, drugName);
-        return resistance;
     }
 
     /**
@@ -75,40 +69,28 @@ public class ResistanceParser extends Parser<ResistanceMap> {
      * @return String the name of the drug
      */
     public final String getDrugName(final String letter) {
-        String drugName;
         switch (letter) {
             case "R":
-                drugName = "rifampicin";
-                break;
+                return "rifampicin";
             case "T":
-                drugName = "ethionomide";
-                break;
             case "M":
-                drugName = "ethionomide";
-                break;
+                return "ethionomide";
             case "I":
-                drugName = "isoniazid";
-                break;
+                return "isoniazid";
             case "O":
-                drugName = "ofloxacin";
-                break;
+                return "ofloxacin";
             case "S":
-                drugName = "streptomycin";
-                break;
+                return "streptomycin";
             case "K":
-                drugName = "kanamycin";
-                break;
+                return "kanamycin";
             case "P":
-                drugName = "pyrazinamide";
-                break;
+                return "pyrazinamide";
             case "E":
-                drugName = "ethambutol";
-                break;
+                return "ethambutol";
             default:
-                drugName = "none";
+                return "none";
 
         }
-        return drugName;
     }
 
 }
