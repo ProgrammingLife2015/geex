@@ -13,8 +13,7 @@
                 AnchorPane.leftAnchor="0" fitToHeight="true" fitToWidth="true">
         <StackPane>
             <StackPane styleClass="margin">
-                <Group fx:id="edges"/>
-                <Group fx:id="nodes"/>
+                <Group fx:id="sequences"/>
             </StackPane>
             <ProgressIndicator fx:id="progressIndicator"/>
         </StackPane>

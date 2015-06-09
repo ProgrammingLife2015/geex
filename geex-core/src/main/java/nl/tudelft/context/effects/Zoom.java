@@ -21,9 +21,9 @@ public class Zoom {
      */
     final ScrollPane scroll;
     /**
-     * The nodes group, needed for calculating positions.
+     * The graph group, needed for calculating positions.
      */
-    final Group nodes;
+    final Group sequences;
     /**
      * The mouse's last known x-position.
      */
@@ -45,11 +45,11 @@ public class Zoom {
      */
     public static final int MAX_DISTANCE = 120;
     /**
-     * The x-offset of the scroll panel (including scroll)
+     * The x-offset of the scroll panel (including scroll).
      */
     double left;
     /**
-     * The y-offset of the scroll panel (including scroll)
+     * The y-offset of the scroll panel (including scroll).
      */
     double top;
 
@@ -57,12 +57,14 @@ public class Zoom {
      * Constructs a Zoom effect.
      *
      * @param scroll                The scroll panel
-     * @param nodes                 The nodes group
+     * @param sequences             The graph
      * @param currentLabelsProperty Property with the labels that are shown
      */
-    public Zoom(final ScrollPane scroll, final Group nodes, final ObjectProperty<List<AbstractLabel>> currentLabelsProperty) {
+    public Zoom(final ScrollPane scroll, final Group sequences,
+                final ObjectProperty<List<AbstractLabel>> currentLabelsProperty) {
+
         this.scroll = scroll;
-        this.nodes = nodes;
+        this.sequences = sequences;
 
         scroll.widthProperty().addListener(event -> calculateBounds());
         scroll.hvalueProperty().addListener(event -> calculateBounds());
@@ -96,7 +98,6 @@ public class Zoom {
             setMouse(event);
             applyAll(infoLabels);
         });
-        applyAll(infoLabels);
     }
 
     /**
@@ -116,7 +117,7 @@ public class Zoom {
      */
     public void applyAll(final List<AbstractLabel> infoLabels) {
         infoLabels.forEach(label ->
-                apply(label, mouseX - nodes.getLayoutX() + left, mouseY - nodes.getLayoutY() + top));
+                apply(label, mouseX - sequences.getLayoutX() + left, mouseY - sequences.getLayoutY() + top));
     }
 
     /**
