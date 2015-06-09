@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>geex-core</artifactId>
+    <artifactId>geex-workspace</artifactId>
 
     <dependencies>
         <dependency>
@@ -22,12 +22,6 @@
             <artifactId>geex-services</artifactId>
             <version>0.7</version>
         </dependency>
-        <dependency>
-            <groupId>nl.tudelft.context</groupId>
-            <artifactId>geex-workspace</artifactId>
-            <version>0.7</version>
-        </dependency>
     </dependencies>
-
 
 </project>

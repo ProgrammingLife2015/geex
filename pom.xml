@@ -9,6 +9,7 @@
         <module>geex-models</module>
         <module>geex-core</module>
         <module>geex-services</module>
+        <module>geex-workspace</module>
     </modules>
     <packaging>pom</packaging>
 
