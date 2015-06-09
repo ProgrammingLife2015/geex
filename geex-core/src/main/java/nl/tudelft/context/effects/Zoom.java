@@ -9,6 +9,8 @@ import javafx.scene.input.MouseEvent;
 import nl.tudelft.context.drawable.graph.AbstractLabel;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -61,7 +63,7 @@ public class Zoom {
      * @param currentLabelsProperty Property with the labels that are shown
      */
     public Zoom(final ScrollPane scroll, final Group sequences,
-                final ObjectProperty<List<AbstractLabel>> currentLabelsProperty) {
+                final ObjectProperty<Set<AbstractLabel>> currentLabelsProperty) {
 
         this.scroll = scroll;
         this.sequences = sequences;
@@ -71,7 +73,7 @@ public class Zoom {
         scroll.vvalueProperty().addListener(event -> calculateBounds());
 
         currentLabelsProperty.addListener((observable, oldValue, newValue) -> {
-            setEvents(newValue);
+            setEvents(newValue.stream().collect(Collectors.toList()));
         });
     }
 

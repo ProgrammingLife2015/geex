@@ -15,14 +15,15 @@ import nl.tudelft.context.effects.Zoom;
 import nl.tudelft.context.model.graph.StackGraph;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -76,7 +77,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     /**
      * Property containing the current shown labels.
      */
-    ObjectProperty<List<AbstractLabel>> currentLabelsProperty = new SimpleObjectProperty<>(new ArrayList<>());
+    ObjectProperty<Set<AbstractLabel>> currentLabelsProperty = new SimpleObjectProperty<>(new HashSet<>());
 
     /**
      * Create default graph controller.
@@ -142,6 +143,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
 
         currentLabelsProperty.addListener(((observable, oldValue, newValue) -> {
             newValue.forEach(AbstractLabel::init);
+            oldValue.removeAll(newValue);
+            newValue.removeAll(oldValue);
             sequences.getChildren().removeAll(oldValue);
             sequences.getChildren().addAll(newValue);
         }));
@@ -176,7 +179,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
                 .map(node -> node.getLabel(mainController, this))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
 
     }
 
