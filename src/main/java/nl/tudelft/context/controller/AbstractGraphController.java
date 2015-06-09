@@ -106,8 +106,13 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
 
         // Bind nodes
         List<AbstractLabel> nodeList = drawableGraph.vertexSet().stream()
-                .map(node -> node.getLabel(mainController, this))
-                .collect(Collectors.toList());
+                .map(node -> {
+                    if (node.getNode().isVariation() && drawableGraph.getMarkVariations()) {
+                        return node.getVariationLabel(mainController, this);
+                    } else {
+                        return node.getLabel(mainController, this);
+                    }
+                }).collect(Collectors.toList());
 
         sequences.getChildren().setAll(edgeList);
 

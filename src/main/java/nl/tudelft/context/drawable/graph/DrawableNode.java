@@ -2,6 +2,8 @@ package nl.tudelft.context.drawable.graph;
 
 import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.drawable.VariationLabel;
+import nl.tudelft.context.model.graph.GraphNode;
 import nl.tudelft.context.model.graph.Node;
 
 /**
@@ -22,5 +24,10 @@ public class DrawableNode extends AbstractDrawableNode {
     @Override
     public AbstractLabel getLabel(final MainController mainController, final AbstractGraphController graphController) {
         return new DrawableNodeLabel(mainController, graphController, this, (Node) getNode());
+    }
+
+    public VariationLabel getVariationLabel(final MainController mainController,
+                                            final AbstractGraphController graphController) {
+        return new VariationLabel(mainController, graphController, this,(Node) getNode());
     }
 }

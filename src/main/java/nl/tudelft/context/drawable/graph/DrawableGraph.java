@@ -26,6 +26,11 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
     private StackGraph graph;
 
     /**
+     * The boolean that marks if this graph should show all variations.
+     */
+    private boolean markVariations = false;
+
+    /**
      * Create a wrapper around a graph to draw the graph.
      *
      * @param graph Graph to draw
@@ -33,6 +38,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
     public DrawableGraph(final StackGraph graph) {
 
         this.graph = graph;
+        this.markVariations = graph.getMarkVariations();
 
         HashMap<DefaultNode, AbstractDrawableNode> added = new HashMap<>();
 
@@ -110,6 +116,22 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
      */
     public StackGraph getGraph() {
         return graph;
+    }
+
+    /**
+     * Get the markVariations.
+     * @return markVariations
+     */
+    public boolean getMarkVariations() {
+        return markVariations;
+    }
+
+    /**
+     * Set the markVariations.
+     * @param bool The boolean to be set.
+     */
+    public void setMarkVariations(final boolean bool) {
+        markVariations = bool;
     }
 
 }

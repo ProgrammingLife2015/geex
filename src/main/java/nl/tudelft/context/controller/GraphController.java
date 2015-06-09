@@ -7,10 +7,13 @@ import javafx.scene.control.MenuItem;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.model.graph.SinglePointGraph;
-import nl.tudelft.context.model.resistance.ResistanceMap;
 
 import java.net.URL;
+
+import nl.tudelft.context.model.graph.SinglePointGraph;
+import nl.tudelft.context.model.graph.VariationGraph;
+import nl.tudelft.context.model.resistance.ResistanceMap;
+
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -55,6 +58,11 @@ public final class GraphController extends AbstractGraphController {
      * Property with resistance map.
      */
     ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn;
+
+    /**
+     * The current depth of zoom level.
+     */
+    int depth = 0;
 
     /**
      * Init a controller at graph.fxml.
@@ -121,12 +129,20 @@ public final class GraphController extends AbstractGraphController {
 
         MenuController menuController = mainController.getMenuController();
 
+        depth = graphList.size() - 1;
+
         MenuItem zoomIn = menuController.getZoomIn();
-        zoomIn.setOnAction(event -> showGraph(new DrawableGraph(graphList.getFirst())));
+        zoomIn.setOnAction(event -> {
+            decrDepth();
+            showGraph(new DrawableGraph(graphList.get(depth)));
+        });
         zoomIn.disableProperty().bind(activeProperty.not());
 
         MenuItem zoomOut = menuController.getZoomOut();
-        zoomOut.setOnAction(event -> showGraph(new DrawableGraph(graphList.getLast())));
+        zoomOut.setOnAction(event -> {
+            incrDepth(graphList.size());
+            showGraph(new DrawableGraph(graphList.get(depth)));
+        });
         zoomOut.disableProperty().bind(activeProperty.not());
 
         MenuItem toggleSelect = menuController.getToggleSelect();
@@ -136,12 +152,34 @@ public final class GraphController extends AbstractGraphController {
     }
 
     /**
+     * Increment the zoom level. It can't get bigger than the amount of graphs
+     * @param size The amount of graphs in the graphList.
+     */
+    private void incrDepth(final int size) {
+        depth++;
+        if (depth > size - 1) {
+            depth = size - 1;
+        }
+    }
+
+    /**
+     * Decrement the zoom level. It can't get lower than 0.
+     */
+    private void decrDepth() {
+        depth--;
+        if (depth < 0) {
+            depth = 0;
+        }
+    }
+
+    /**
      * Load graph from source.
      *
      * @param graphMap The GraphMap which is loaded.
      */
     private void loadGraph(final GraphMap graphMap) {
         graphList.add(graphMap.flat(sources));
+        graphList.add(new VariationGraph(graphList.getLast()));
         graphList.add(new SinglePointGraph(graphList.getLast()));
         DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
         showGraph(drawableGraph);
@@ -163,7 +201,6 @@ public final class GraphController extends AbstractGraphController {
      */
     private void loadAnnotation(final AnnotationMap annotationMap) {
         mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
-        //
     }
 
     /**
@@ -179,4 +216,5 @@ public final class GraphController extends AbstractGraphController {
     public String getBreadcrumbName() {
         return "Genome graph (" + sources.size() + ")";
     }
+
 }

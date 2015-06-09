@@ -43,7 +43,7 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
     }
 
     @Override
-    public final void init() {
+    public void init() {
 
         getChildren().add(initMainLabel());
 
