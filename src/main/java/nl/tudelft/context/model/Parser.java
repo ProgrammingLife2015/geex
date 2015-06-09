@@ -62,6 +62,7 @@ public abstract class Parser<T> {
      * Abstract method to which a file is given to parse.
      * @param file File to parse.
      * @return Parsed object.
+     * @throws ResistanceFormatException If the data in the data isn't compliant with the specs.
      */
     protected abstract T parse(BufferedReader... file) throws ResistanceFormatException;
 }
