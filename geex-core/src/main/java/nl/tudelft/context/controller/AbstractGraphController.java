@@ -7,9 +7,9 @@ import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
-import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.effects.Zoom;
 import nl.tudelft.context.model.graph.StackGraph;
@@ -77,7 +77,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     /**
      * Property containing the current shown labels.
      */
-    ObjectProperty<Set<AbstractLabel>> currentLabelsProperty = new SimpleObjectProperty<>(new HashSet<>());
+    ObjectProperty<Set<Region>> currentLabelsProperty = new SimpleObjectProperty<>(new HashSet<>());
 
     /**
      * Create default graph controller.
@@ -142,7 +142,6 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         scroll.hvalueProperty().addListener(event -> updatePosition());
 
         currentLabelsProperty.addListener(((observable, oldValue, newValue) -> {
-            newValue.forEach(AbstractLabel::init);
             oldValue.removeAll(newValue);
             newValue.removeAll(oldValue);
             sequences.getChildren().removeAll(oldValue);

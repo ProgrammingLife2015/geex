@@ -4,6 +4,7 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Region;
 import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.graph.DrawableNodeLabel;
 import org.junit.BeforeClass;
@@ -27,10 +28,10 @@ public class ZoomTest {
 
     static ScrollPane scroll;
     static Group sequences;
-    static Map<Integer, Set<AbstractLabel>> map;
+    static Map<Integer, Set<Region>> map;
     static Zoom zoom;
     static AbstractLabel label;
-    static SimpleObjectProperty<Set<AbstractLabel>> labelProperty;
+    static SimpleObjectProperty<Set<Region>> labelProperty;
 
     @BeforeClass
     public static void beforeClass() {
@@ -39,7 +40,7 @@ public class ZoomTest {
 
         sequences = mock(Group.class);
         map = new HashMap<>();
-        Set<AbstractLabel> labels = new HashSet<>();
+        Set<Region> labels = new HashSet<>();
         map.put(1, labels);
         label = mock(DrawableNodeLabel.class);
         labels.add(label);

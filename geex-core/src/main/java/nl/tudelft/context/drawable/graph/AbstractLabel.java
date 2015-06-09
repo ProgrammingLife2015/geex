@@ -9,9 +9,4 @@ import javafx.scene.layout.VBox;
  */
 public abstract class AbstractLabel extends VBox {
 
-    /**
-     * Draw sub elements when needed.
-     */
-    public abstract void init();
-
 }

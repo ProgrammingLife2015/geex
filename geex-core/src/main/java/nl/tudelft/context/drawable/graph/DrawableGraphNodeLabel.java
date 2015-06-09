@@ -40,10 +40,14 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
         setOnMouseClicked(event -> mainController.setView(graphController,
                 new SubGraphController(mainController, graphController.getGraphList().getFirst(), node)));
 
+        init();
+
     }
 
-    @Override
-    public final void init() {
+    /**
+     * Draw sub elements.
+     */
+    private void init() {
 
         getChildren().add(initMainLabel());
 
