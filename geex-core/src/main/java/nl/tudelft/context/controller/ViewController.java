@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 
 /**
  * @param <T> fxml root type
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 14-5-2015
  */

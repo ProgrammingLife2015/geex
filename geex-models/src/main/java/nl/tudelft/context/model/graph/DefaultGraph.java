@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 /**
  * @param <T> Type of the nodes
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 31-5-2015
  */

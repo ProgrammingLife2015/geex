@@ -11,7 +11,7 @@ import javafx.scene.layout.Region;
 import java.util.List;
 
 /**
- * @author Jasper Boot <mrjasperboot@gmail.com>
+ * @author Jasper Boot
  * @version 1.0
  * @since 01-06-2015
  */

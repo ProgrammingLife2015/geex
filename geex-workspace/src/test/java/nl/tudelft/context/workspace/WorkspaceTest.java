@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import static junit.framework.TestCase.assertEquals;
 
 /**
- * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @author Gerben Oolbekkink
  * @version 1.1
  * @since 9-5-2015
  */

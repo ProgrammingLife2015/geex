@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 import static java.util.stream.Collectors.toList;
 
 /**
- * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @author Gerben Oolbekkink
  * @version 1.0
  * @since 18-5-2015
  */

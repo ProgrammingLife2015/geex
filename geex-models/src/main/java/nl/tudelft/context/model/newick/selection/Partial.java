@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.newick.selection;
 
 /**
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 22-5-2015
  */

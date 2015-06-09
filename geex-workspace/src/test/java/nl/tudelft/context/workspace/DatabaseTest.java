@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @author Gerben Oolbekkink
  * @version 1.0
  * @since 5-6-2015
  */

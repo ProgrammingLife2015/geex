@@ -10,7 +10,7 @@ import java.io.IOException;
 
 /**
  * @param <T> fxml root type
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 26-4-2015
  */

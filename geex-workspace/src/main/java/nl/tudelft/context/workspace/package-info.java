@@ -1,7 +1,7 @@
 /**
  * Package for the workspace.
  *
- * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @author Gerben Oolbekkink
  * @version 1.0
  * @since 12-5-2015
  */

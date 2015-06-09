@@ -1,7 +1,7 @@
 /**
  * This package is contains visual effects.
  *
- * @author Jasper Boot <mrjasperboot@gmail.com>
+ * @author Jasper Boot
  * @version 1.0
  * @since 03-06-2015
  */

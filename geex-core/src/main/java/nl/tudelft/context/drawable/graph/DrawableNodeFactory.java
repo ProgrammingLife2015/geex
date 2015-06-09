@@ -7,7 +7,7 @@ import nl.tudelft.context.model.graph.Node;
 /**
  * Create a Drawable from a Node.
  *
- * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @author Gerben Oolbekkink
  * @version 1.0
  * @since 7-6-2015
  */

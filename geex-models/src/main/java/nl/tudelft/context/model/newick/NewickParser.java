@@ -8,7 +8,7 @@ import nl.tudelft.context.model.Parser;
 import java.io.BufferedReader;
 
 /**
- * @author Jasper Boot <mrjasperboot@gmail.com>
+ * @author Jasper Boot
  * @version 1.0
  * @since 3-5-2015
  */

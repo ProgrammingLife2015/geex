@@ -7,7 +7,7 @@ import nl.tudelft.context.model.Parser;
 import java.io.File;
 
 /**
- * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @author Gerben Oolbekkink
  * @version 1.0
  * @since 24-5-2015
  * @param <T> The type of class to Load.
