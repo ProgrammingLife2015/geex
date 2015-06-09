@@ -3,7 +3,7 @@ package nl.tudelft.context.model.newick;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
 /**
- * @author Jasper Boot <mrjasperboot@gmail.com>
+ * @author Jasper Boot
  * @version 1.0
  * @since 3-5-2015
  */

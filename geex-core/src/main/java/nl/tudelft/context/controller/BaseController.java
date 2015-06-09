@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 8-5-2015
  */

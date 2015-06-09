@@ -6,7 +6,7 @@ import java.util.Queue;
 import java.util.Set;
 
 /**
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 1-6-2015
  */

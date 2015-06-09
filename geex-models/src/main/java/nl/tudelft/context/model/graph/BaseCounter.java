@@ -7,7 +7,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 /**
- * @author Jasper Nieuwdorp <jaspernieuwdorp@hotmail.com>
+ * @author Jasper Nieuwdorp
  * @version 1.2
  * @since 06-05-2015
  */

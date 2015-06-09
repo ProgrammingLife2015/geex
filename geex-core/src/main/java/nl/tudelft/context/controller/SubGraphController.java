@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 2-6-2015
  */

@@ -9,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * @param <T> The filetype this parser should parse to.
- * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @author Gerben Oolbekkink
  * @version 1.0
  * @since 24-5-2015
  */
