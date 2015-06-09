@@ -5,7 +5,11 @@
     <groupId>nl.tudelft.context</groupId>
     <artifactId>geex</artifactId>
     <version>0.7</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>geex-models</module>
+        <module>geex-core</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>Geex</name>
     <url>http://github.com/Vennik/contextproject</url>
