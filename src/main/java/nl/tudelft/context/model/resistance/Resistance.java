@@ -39,18 +39,6 @@ public class Resistance {
      */
     String drugName;
 
-    /**
-     * Create an resistance empty annotation.
-     */
-    public Resistance() {
-        this.geneName = "none";
-        this.typeOfMutation = "none";
-        this.change = "none";
-        this.genomePosition = Integer.MAX_VALUE;
-        this.filter = "none";
-        this.drugName = "none";
-
-    }
 
     /**
      * Create an resistance annotation.
