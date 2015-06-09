@@ -32,7 +32,7 @@ public class AnnotationParserTest {
 
         annotationMap1.put(1, annotation1);
         annotationMap1.put(2, annotation2);
-        annotationFile = new File(AnnotationParserTest.class.getResource("/annotation/test.ann.csv").getPath());
+        annotationFile = new File(AnnotationParserTest.class.getResource("/annotation/test.gff").getPath());
     }
 
     @Test

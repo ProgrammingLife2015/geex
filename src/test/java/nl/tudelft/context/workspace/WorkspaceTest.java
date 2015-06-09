@@ -41,7 +41,7 @@ public class WorkspaceTest {
         File edgePath = new File("mygraph.edge.graph");
         File nodePath = new File("mygraph.node.graph");
         File nwkPath = new File("mygraph.nwk");
-        File annPath = new File("mygraph.ann.csv");
+        File annPath = new File("mygraph.gff");
         File immPath = new File("mygraph.txt");
 
         pathList[0] = edgePath;
@@ -98,7 +98,7 @@ public class WorkspaceTest {
         File edgePath1 = new File("mygraph.edge.graph");
         File nodePath1 = new File("mygraph.node.graph");
         File nwkPath1 = new File("not");
-        File annPath1 = new File("mygraph.ann.csv");
+        File annPath1 = new File("mygraph.gff");
         File immPath1 = new File("mygraph.txt");
 
         pathList[0] = edgePath1;
@@ -121,7 +121,7 @@ public class WorkspaceTest {
         File edgePath1 = new File("mygraph.edge.graph");
         File nodePath1 = new File("not");
         File nwkPath1 = new File("mygraph.nwk");
-        File annPath1 = new File("mygraph.ann.csv");
+        File annPath1 = new File("mygraph.gff");
         File immPath1 = new File("mygraph.txt");
 
         pathList[0] = edgePath1;
@@ -143,7 +143,7 @@ public class WorkspaceTest {
         File edgePath1 = new File("not");
         File nodePath1 = new File("mygraph.node.graph");
         File nwkPath1 = new File("mygraph.nwk");
-        File annPath1 = new File("mygraph.ann.csv");
+        File annPath1 = new File("mygraph.gff");
 
         pathList[0] = edgePath1;
         pathList[1] = nodePath1;
