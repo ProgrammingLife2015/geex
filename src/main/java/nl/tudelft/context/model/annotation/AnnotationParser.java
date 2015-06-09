@@ -44,16 +44,16 @@ public class AnnotationParser extends Parser<AnnotationMap> {
      * @throws NumberFormatException when the data isn't correct
      */
     public final Annotation getAnnotation(final String[] splitLine) throws NumberFormatException {
-
-        String seqId = splitLine[0];
-        String source = splitLine[1];
-        String type = splitLine[2];
-        int start = Integer.parseInt(splitLine[3]);
-        int end = Integer.parseInt(splitLine[4]);
-        float score = Float.parseFloat(splitLine[5]);
-        char strand = splitLine[6].charAt(0);
-        char phase = splitLine[7].charAt(0);
-        String attributes = splitLine[8];
+        int index = 0;
+        String seqId = splitLine[index];
+        String source = splitLine[++index];
+        String type = splitLine[++index];
+        int start = Integer.parseInt(splitLine[++index]);
+        int end = Integer.parseInt(splitLine[++index]);
+        float score = Float.parseFloat(splitLine[++index]);
+        char strand = splitLine[++index].charAt(0);
+        char phase = splitLine[++index].charAt(0);
+        String attributes = splitLine[++index];
 
         Annotation annotation = new Annotation(seqId, source, type, start, end, score, strand, phase, attributes);
         return annotation;

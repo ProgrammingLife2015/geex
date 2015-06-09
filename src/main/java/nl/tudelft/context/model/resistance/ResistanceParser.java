@@ -55,12 +55,13 @@ public class ResistanceParser extends Parser<ResistanceMap> {
         Pattern p = Pattern.compile("(^.*):(.*),(.*),(.*),(\\d+)\\t([A-Z])");
         Matcher matcher = p.matcher(line);
         if (matcher.find()) {
-            String geneName = matcher.group(1);
-            String typeOfMutation = matcher.group(2);
-            String change = matcher.group(3);
-            String filter = matcher.group(4);
-            int genomePosition = Integer.parseInt(matcher.group(5));
-            String drugName = getDrugName(matcher.group(6).charAt(0));
+            int index = 1;
+            String geneName = matcher.group(index);
+            String typeOfMutation = matcher.group(++index);
+            String change = matcher.group(++index);
+            String filter = matcher.group(++index);
+            int genomePosition = Integer.parseInt(matcher.group(++index));
+            String drugName = getDrugName(matcher.group(++index).charAt(0));
             return new Resistance(geneName, typeOfMutation, change, filter, genomePosition, drugName);
         } else {
             throw new ResistanceFormatException();
