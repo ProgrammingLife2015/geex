@@ -7,7 +7,7 @@ import java.util.HashMap;
  * @version 1.0
  * @since 21-5-2015
  */
-public class AnnotationMap extends HashMap<String, Annotation> {
+public class AnnotationMap extends HashMap<Integer, Annotation> {
 
     /**
      * To string method for the AnnotationMap.

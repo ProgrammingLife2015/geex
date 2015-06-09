@@ -21,9 +21,9 @@ public class ResistanceTest {
      */
     @BeforeClass
     public static void BeforeClass() {
-        resistance1 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor");
-        resistance2 = new Resistance("set", "amet", "-11", 6, "consecteur");
-        resistance3 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor");
+        resistance1 = new Resistance("lorem", "ipsum", "Q264P", "dolor", 5, "set");
+        resistance2 = new Resistance("set", "amet", "-11", "consecteur", 6, "adipiscing");
+        resistance3 = new Resistance("lorem", "ipsum", "Q264P", "dolor", 5, "set");
     }
 
     @Test
@@ -53,8 +53,14 @@ public class ResistanceTest {
 
     @Test
     public void testGetDrugName() throws Exception {
-        assertEquals("dolor", resistance1.getDrugName());
-        assertEquals("consecteur", resistance2.getDrugName());
+        assertEquals("set", resistance1.getDrugName());
+        assertEquals("adipiscing", resistance2.getDrugName());
+    }
+
+    @Test
+    public void testGetFilter() throws Exception {
+        assertEquals("dolor", resistance1.getFilter());
+        assertEquals("consecteur", resistance2.getFilter());
     }
 
     @Test
@@ -69,42 +75,54 @@ public class ResistanceTest {
     public void testEqualsExtensive() throws Exception {
         assertTrue(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("different", "ipsum", "-Q264P", 5, "dolor");
+        resistance3 = new Resistance("Different", "ipsum", "Q264P", "dolor", 5, "set");
         assertFalse(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("lorem", "different", "-Q264P", 5, "dolor");
+        resistance3 = new Resistance("lorem", "Different", "Q264P", "dolor", 5, "set");
         assertFalse(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("lorem", "ipsum", "-different", 5, "dolor");
+        resistance3 = new Resistance("lorem", "ipsum", "Different", "dolor", 5, "set");
         assertFalse(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("lorem", "ipsum", "-Q264P", 6, "dolor");
+        resistance3 = new Resistance("lorem", "ipsum", "Q264P", "Different", 5, "set");
         assertFalse(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("lorem", "ipsum", "-Q264P", 5, "different");
+        resistance3 = new Resistance("lorem", "ipsum", "Q264P", "dolor", 9, "set");
         assertFalse(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor");
+        resistance3 = new Resistance("lorem", "ipsum", "Q264P", "dolor", 5, "Different");
+        assertFalse(resistance1.equals(resistance3));
+
+        resistance3 = new Resistance("lorem", "ipsum", "Q264P", "dolor", 5, "set");
     }
 
 
     @Test
-    public void testEqualsNotA() throws Exception {
+    public void testEqualsNotAResistance() throws Exception {
         assertFalse(resistance1.equals("not a resistance"));
+        Resistance resistance4 = new Resistance("set", "amet", "-11", "consecteur", 6, "adipiscing");
+        assertFalse(resistance1.equals(resistance4));
+    }
+
+    @Test
+    public void testEqualsFilter() throws Exception {
+        assertTrue(resistance1.equals(resistance1));
+        assertFalse(resistance1.equals(resistance2));
+        assertTrue(resistance1.equals(resistance3));
     }
 
 
     @Test
     public void testToString() throws Exception {
-        assertEquals("(lorem, ipsum, Q264P, 5, dolor)", resistance1.toString());
-        assertEquals("(set, amet, -11, 6, consecteur)", resistance2.toString());
+        assertEquals("(lorem, ipsum, Q264P, dolor, 5, set)", resistance1.toString());
+        assertEquals("(set, amet, -11, consecteur, 6, adipiscing)", resistance2.toString());
 
     }
 
     @Test
     public void testHashCode() throws Exception {
-        assertEquals(-648449560, resistance1.hashCode());
-        assertEquals(-1949895575, resistance2.hashCode());
+        assertEquals(107375902, resistance1.hashCode());
+        assertEquals(1346001911, resistance2.hashCode());
 
     }
 }
