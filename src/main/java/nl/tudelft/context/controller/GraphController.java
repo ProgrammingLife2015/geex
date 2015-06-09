@@ -7,13 +7,11 @@ import javafx.scene.control.MenuItem;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
-
-import java.net.URL;
-
 import nl.tudelft.context.model.graph.SinglePointGraph;
 import nl.tudelft.context.model.graph.VariationGraph;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
+import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -133,14 +131,14 @@ public final class GraphController extends AbstractGraphController {
 
         MenuItem zoomIn = menuController.getZoomIn();
         zoomIn.setOnAction(event -> {
-            decrDepth();
+            decrementDepth();
             showGraph(new DrawableGraph(graphList.get(depth)));
         });
         zoomIn.disableProperty().bind(activeProperty.not());
 
         MenuItem zoomOut = menuController.getZoomOut();
         zoomOut.setOnAction(event -> {
-            incrDepth(graphList.size());
+            incrementDepth();
             showGraph(new DrawableGraph(graphList.get(depth)));
         });
         zoomOut.disableProperty().bind(activeProperty.not());
@@ -153,23 +151,16 @@ public final class GraphController extends AbstractGraphController {
 
     /**
      * Increment the zoom level. It can't get bigger than the amount of graphs
-     * @param size The amount of graphs in the graphList.
      */
-    private void incrDepth(final int size) {
-        depth++;
-        if (depth > size - 1) {
-            depth = size - 1;
-        }
+    private void incrementDepth() {
+        depth = Math.max(graphList.size() - 1, depth + 1);
     }
 
     /**
      * Decrement the zoom level. It can't get lower than 0.
      */
-    private void decrDepth() {
-        depth--;
-        if (depth < 0) {
-            depth = 0;
-        }
+    private void decrementDepth() {
+        depth = Math.min(0, depth - 1);
     }
 
     /**
