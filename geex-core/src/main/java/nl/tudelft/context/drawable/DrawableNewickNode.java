@@ -9,8 +9,14 @@ import nl.tudelft.context.model.newick.Node;
  */
 public class DrawableNewickNode extends DrawablePosition {
 
+    /**
+     * Bind the the node to it's position.
+     *
+     * @param node Node to bind
+     */
     public DrawableNewickNode(Node node) {
         this.translateXProperty().bind(node.translateXProperty());
         this.translateYProperty().bind(node.translateYProperty());
     }
+    
 }
