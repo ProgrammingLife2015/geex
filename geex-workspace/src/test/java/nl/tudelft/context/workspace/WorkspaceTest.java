@@ -21,7 +21,7 @@ public class WorkspaceTest {
 
     @Test
     public void testDirectory() throws Exception {
-        File file = File.createTempFile("mydir","wp");
+        File file = File.createTempFile("mydir", "wp");
         Workspace workspace = new Workspace(file);
 
         assertEquals(file, workspace.directory);
@@ -41,8 +41,8 @@ public class WorkspaceTest {
         File edgePath = new File("mygraph.edge.graph");
         File nodePath = new File("mygraph.node.graph");
         File nwkPath = new File("mygraph.nwk");
-        File annPath = new File("mygraph.ann.csv");
-        File immPath = new File("mygraph.imm.csv");
+        File annPath = new File("mygraph.gff");
+        File immPath = new File("mygraph.txt");
 
         pathList[0] = edgePath;
         pathList[1] = nodePath;
@@ -77,7 +77,7 @@ public class WorkspaceTest {
         File nodePath1 = new File("mygraph.node.graph");
         File nwkPath1 = new File("mygraph.nwk");
         File annPath1 = new File("not");
-        File immPath1 = new File("mygraph.imm.csv");
+        File immPath1 = new File("mygraph.txt");
 
         pathList[0] = edgePath1;
         pathList[1] = nodePath1;
@@ -98,8 +98,8 @@ public class WorkspaceTest {
         File edgePath1 = new File("mygraph.edge.graph");
         File nodePath1 = new File("mygraph.node.graph");
         File nwkPath1 = new File("not");
-        File annPath1 = new File("mygraph.ann.csv");
-        File immPath1 = new File("mygraph.imm.csv");
+        File annPath1 = new File("mygraph.gff");
+        File immPath1 = new File("mygraph.txt");
 
         pathList[0] = edgePath1;
         pathList[1] = nodePath1;
@@ -121,8 +121,8 @@ public class WorkspaceTest {
         File edgePath1 = new File("mygraph.edge.graph");
         File nodePath1 = new File("not");
         File nwkPath1 = new File("mygraph.nwk");
-        File annPath1 = new File("mygraph.ann.csv");
-        File immPath1 = new File("mygraph.imm.csv");
+        File annPath1 = new File("mygraph.gff");
+        File immPath1 = new File("mygraph.txt");
 
         pathList[0] = edgePath1;
         pathList[1] = nodePath1;
@@ -143,8 +143,7 @@ public class WorkspaceTest {
         File edgePath1 = new File("not");
         File nodePath1 = new File("mygraph.node.graph");
         File nwkPath1 = new File("mygraph.nwk");
-        File annPath1 = new File("mygraph.ann.csv");
-        File immPath1 = new File("mygraph.imm.csv");
+        File annPath1 = new File("mygraph.gff");
 
         pathList[0] = edgePath1;
         pathList[1] = nodePath1;

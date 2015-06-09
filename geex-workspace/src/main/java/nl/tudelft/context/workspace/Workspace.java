@@ -118,8 +118,8 @@ public class Workspace {
         edgeFile = findFile(files, ".edge.graph");
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
-        annotationFile = findFile(files, ".ann.csv");
-        resistanceFile = findFile(files, ".imm.csv");
+        annotationFile = findFile(files, ".gff");
+        resistanceFile = findFile(files, ".txt");
     }
 
     /**
