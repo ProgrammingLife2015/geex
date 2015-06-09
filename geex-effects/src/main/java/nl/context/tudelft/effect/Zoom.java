@@ -1,4 +1,4 @@
-package nl.tudelft.context.effects;
+package nl.context.tudelft.effect;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Bounds;

@@ -1,12 +1,10 @@
-package nl.tudelft.context.effects;
+package nl.context.tudelft.effect;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
-import nl.tudelft.context.drawable.graph.AbstractLabel;
-import nl.tudelft.context.drawable.graph.DrawableNodeLabel;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +28,7 @@ public class ZoomTest {
     static Group sequences;
     static Map<Integer, Set<Region>> map;
     static Zoom zoom;
-    static AbstractLabel label;
+    static Region label;
     static SimpleObjectProperty<Set<Region>> labelProperty;
 
     @BeforeClass
@@ -42,7 +40,7 @@ public class ZoomTest {
         map = new HashMap<>();
         Set<Region> labels = new HashSet<>();
         map.put(1, labels);
-        label = mock(DrawableNodeLabel.class);
+        label = mock(Region.class);
         labels.add(label);
         labelProperty = new SimpleObjectProperty<>(labels);
 

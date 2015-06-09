@@ -10,6 +10,7 @@
         <module>geex-core</module>
         <module>geex-services</module>
         <module>geex-workspace</module>
+        <module>geex-effects</module>
     </modules>
     <packaging>pom</packaging>
 
