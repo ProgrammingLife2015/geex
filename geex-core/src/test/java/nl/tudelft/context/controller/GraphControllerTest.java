@@ -86,8 +86,8 @@ public class GraphControllerTest {
 
         CompletableFuture<Boolean> sequencesAdded = new CompletableFuture<>();
 
-        graphController.sequences.getChildren().addListener((ListChangeListener<? super Node>) event -> {
-            if (graphController.sequences.getChildren().size() == sequencesAmount) {
+        graphController.nodes.getChildren().addListener((ListChangeListener<? super Node>) event -> {
+            if (graphController.nodes.getChildren().size() == sequencesAmount) {
                 sequencesAdded.complete(true);
             }
         });

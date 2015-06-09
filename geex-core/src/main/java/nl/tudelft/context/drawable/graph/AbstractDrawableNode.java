@@ -34,6 +34,17 @@ public abstract class AbstractDrawableNode extends DrawablePosition {
     }
 
     /**
+     * Get the current column the label is displayed.
+     *
+     * @return Column index
+     */
+    public int currentColumn() {
+
+        return (int) translateXProperty().get() / DrawableGraph.LABEL_SPACING;
+
+    }
+
+    /**
      * Create a drawable node.
      *
      * @param node Node to draw

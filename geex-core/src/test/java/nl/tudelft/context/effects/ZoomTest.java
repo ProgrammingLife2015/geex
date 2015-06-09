@@ -1,6 +1,7 @@
 package nl.tudelft.context.effects;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import nl.tudelft.context.drawable.graph.AbstractLabel;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -29,6 +30,7 @@ public class ZoomTest {
     static Map<Integer, List<AbstractLabel>> map;
     static Zoom zoom;
     static AbstractLabel label;
+    static SimpleObjectProperty<List<AbstractLabel>> labelProperty;
 
     @BeforeClass
     public static void beforeClass() {
@@ -41,8 +43,9 @@ public class ZoomTest {
         map.put(1, labels);
         label = mock(DrawableNodeLabel.class);
         labels.add(label);
+        labelProperty = new SimpleObjectProperty<>(labels);
 
-        zoom = new Zoom(scroll, sequences, map);
+        zoom = new Zoom(scroll, sequences, labelProperty);
 
     }
 
@@ -52,7 +55,7 @@ public class ZoomTest {
     @Test
     public void testConstruct() {
 
-        zoom = new Zoom(scroll, sequences, map);
+        zoom = new Zoom(scroll, sequences, labelProperty);
 
     }
 

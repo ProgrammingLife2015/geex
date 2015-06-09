@@ -1,17 +1,21 @@
 package nl.tudelft.context.controller;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.DrawableEdge;
+import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
+import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.effects.Zoom;
 import nl.tudelft.context.model.graph.StackGraph;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -40,7 +44,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      * The container for the graph.
      */
     @FXML
-    Group sequences;
+    Group edges, nodes;
 
     /**
      * Scroll pane to monitor.
@@ -61,7 +65,12 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     /**
      * Map containing the labels indexed by position.
      */
-    Map<Integer, List<AbstractLabel>> labelMap = new HashMap<>();
+    ObjectProperty<Map<Integer, List<AbstractDrawableNode>>> labelMapProperty = new SimpleObjectProperty<>(new HashMap<>());
+
+    /**
+     * Property containing the current shown labels.
+     */
+    ObjectProperty<List<AbstractLabel>> currentLabelsProperty = new SimpleObjectProperty<>(new ArrayList<>());
 
     /**
      * Create default graph controller.
@@ -79,6 +88,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
+        new Zoom(scroll, nodes, currentLabelsProperty);
         initOnTheFlyLoading();
 
     }
@@ -104,23 +114,14 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .map(edge -> new DrawableEdge(drawableGraph, edge))
                 .collect(Collectors.toList());
 
-        // Bind nodes
-        List<AbstractLabel> nodeList = drawableGraph.vertexSet().stream()
-                .map(node -> node.getLabel(mainController, this))
-                .collect(Collectors.toList());
+        edges.getChildren().setAll(edgeList);
 
-        sequences.getChildren().setAll(edgeList);
-
-        labelMap = nodeList.parallelStream().collect(
+        labelMapProperty.setValue(drawableGraph.vertexSet().parallelStream().collect(
                 Collectors.groupingBy(
-                        AbstractLabel::currentColumn,
+                        AbstractDrawableNode::currentColumn,
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
-        );
-
-        new Zoom(scroll, sequences, new HashMap<>(labelMap));
-
-        showCurrentLabels();
+        ));
 
     }
 
@@ -129,14 +130,19 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      */
     private void initOnTheFlyLoading() {
 
+        labelMapProperty.addListener(event -> showCurrentLabels());
         scroll.widthProperty().addListener(event -> showCurrentLabels());
         scroll.hvalueProperty().addListener(event -> showCurrentLabels());
+
+        currentLabelsProperty.addListener(((observable, oldValue, newValue) -> {
+            newValue.forEach(AbstractLabel::init);
+            nodes.getChildren().setAll(newValue);
+        }));
 
     }
 
     /**
      * Show all the labels on current position.
-     *
      */
     private void showCurrentLabels() {
 
@@ -146,14 +152,14 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
         int indexTo = indexFrom + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
-        List<AbstractLabel> infoLabels = IntStream.rangeClosed(indexFrom, indexTo)
-                .mapToObj(labelMap::remove)
-                .filter(Objects::nonNull)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-
-        infoLabels.forEach(AbstractLabel::init);
-        sequences.getChildren().addAll(infoLabels);
+        final Map<Integer, List<AbstractDrawableNode>> labelMap = labelMapProperty.getValue();
+        currentLabelsProperty.setValue(
+                IntStream.rangeClosed(indexFrom, indexTo)
+                        .mapToObj(labelMap::get)
+                        .filter(Objects::nonNull)
+                        .flatMap(Collection::stream)
+                        .map(node -> node.getLabel(mainController, this))
+                        .collect(Collectors.toList()));
 
     }
 

@@ -1,19 +1,14 @@
 package nl.tudelft.context.effects;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Bounds;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import nl.tudelft.context.drawable.graph.AbstractLabel;
-import nl.tudelft.context.drawable.graph.DrawableGraph;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -26,13 +21,9 @@ public class Zoom {
      */
     final ScrollPane scroll;
     /**
-     * The sequences group, needed for calculating positions.
+     * The nodes group, needed for calculating positions.
      */
-    final Group sequences;
-    /**
-     * A map with all labels.
-     */
-    final Map<Integer, List<AbstractLabel>> labelsMap;
+    final Group nodes;
     /**
      * The mouse's last known x-position.
      */
@@ -53,79 +44,65 @@ public class Zoom {
      * Only labels that are MAX_DISTANCE away from the mouse are affected by the zoom.
      */
     public static final int MAX_DISTANCE = 120;
+    /**
+     * The x-offset of the scroll panel (including scroll)
+     */
+    double left;
+    /**
+     * The y-offset of the scroll panel (including scroll)
+     */
+    double top;
 
     /**
      * Constructs a Zoom effect.
      *
-     * @param scroll    The scroll panel
-     * @param sequences The sequences group
-     * @param labelsMap The map with all labels
+     * @param scroll                The scroll panel
+     * @param nodes                 The nodes group
+     * @param currentLabelsProperty Property with the labels that are shown
      */
-    public Zoom(final ScrollPane scroll, final Group sequences, final Map<Integer, List<AbstractLabel>> labelsMap) {
+    public Zoom(final ScrollPane scroll, final Group nodes, final ObjectProperty<List<AbstractLabel>> currentLabelsProperty) {
         this.scroll = scroll;
-        this.sequences = sequences;
-        this.labelsMap = labelsMap;
+        this.nodes = nodes;
 
-        scroll.widthProperty().addListener(event ->  bindEffect());
-        scroll.hvalueProperty().addListener(event -> bindEffect());
-        scroll.vvalueProperty().addListener(event -> bindEffect());
+        scroll.widthProperty().addListener(event -> calculateBounds());
+        scroll.hvalueProperty().addListener(event -> calculateBounds());
+        scroll.vvalueProperty().addListener(event -> calculateBounds());
+
+        currentLabelsProperty.addListener((observable, oldValue, newValue) -> {
+            setEvents(newValue);
+        });
     }
 
     /**
-     * Binds the effect to all visible labels.
+     * Calculate the bounds.
      */
-    public void bindEffect() {
+    public void calculateBounds() {
         Bounds layoutBounds = scroll.getContent().layoutBoundsProperty().getValue();
-        double left = (layoutBounds.getWidth() - scroll.getWidth())
-                * scroll.getHvalue();
-        double top = (layoutBounds.getHeight() - scroll.getHeight())
-                * scroll.getVvalue();
-        int indexFrom = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
-        int indexTo = indexFrom + (int) Math.ceil(scroll.getWidth() / DrawableGraph.LABEL_SPACING) + 1;
-
-        List<AbstractLabel> infoLabels = getLabels(indexFrom, indexTo);
-
-        setEvents(infoLabels, left, top);
+        left = (layoutBounds.getWidth() - scroll.getWidth()) * scroll.getHvalue();
+        top = (layoutBounds.getHeight() - scroll.getHeight()) * scroll.getVvalue();
     }
 
     /**
      * Tells the labels to apply this effect whenever the mouse moves or enters the scroll panel.
      *
      * @param infoLabels The labels that should zoom
-     * @param left       The x-offset of the scroll panel (including scroll)
-     * @param top        The y-offset of the scroll panel (including scroll)
      */
-    private void setEvents(final List<AbstractLabel> infoLabels, final double left, final double top) {
+    private void setEvents(final List<AbstractLabel> infoLabels) {
         scroll.setOnMouseEntered(event -> {
             setMouse(event);
-            applyAll(infoLabels, left, top);
+            applyAll(infoLabels);
         });
         scroll.setOnMouseMoved(event -> {
             setMouse(event);
-            applyAll(infoLabels, left, top);
+            applyAll(infoLabels);
         });
-        applyAll(infoLabels, left, top);
-    }
-
-    /**
-     * Get all labels that are currently visible.
-     *
-     * @param indexFrom The first column that is visible
-     * @param indexTo   The last column that is visible
-     * @return          A list of labels that are visible
-     */
-    private List<AbstractLabel> getLabels(final int indexFrom, final int indexTo) {
-        return IntStream.rangeClosed(indexFrom, indexTo)
-                .mapToObj(labelsMap::get)
-                .filter(Objects::nonNull)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+        applyAll(infoLabels);
     }
 
     /**
      * Sets the last known mouse position.
      *
-     * @param event      The event that triggered this
+     * @param event The event that triggered this
      */
     public void setMouse(final MouseEvent event) {
         mouseX = event.getX();
@@ -136,12 +113,10 @@ public class Zoom {
      * Applies the zoom effect to the labels.
      *
      * @param infoLabels The labels to apply the effect to
-     * @param left       The x-offset of the scroll panel (including scroll)
-     * @param top        The y-offset of the scroll panel (including scroll)
      */
-    public void applyAll(final List<AbstractLabel> infoLabels, final double left, final double top) {
+    public void applyAll(final List<AbstractLabel> infoLabels) {
         infoLabels.forEach(label ->
-                apply(label, mouseX - sequences.getLayoutX() + left,  mouseY - sequences.getLayoutY() + top));
+                apply(label, mouseX - nodes.getLayoutX() + left, mouseY - nodes.getLayoutY() + top));
     }
 
     /**

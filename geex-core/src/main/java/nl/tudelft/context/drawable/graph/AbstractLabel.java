@@ -14,11 +14,4 @@ public abstract class AbstractLabel extends VBox {
      */
     public abstract void init();
 
-    /**
-     * Get the current column the label is displayed.
-     *
-     * @return Column index
-     */
-    public abstract int currentColumn();
-
 }

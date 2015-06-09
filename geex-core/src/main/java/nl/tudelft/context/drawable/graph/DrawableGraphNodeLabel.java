@@ -49,13 +49,6 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
 
     }
 
-    @Override
-    public int currentColumn() {
-
-        return (int) translateXProperty().get() / DrawableGraph.LABEL_SPACING;
-
-    }
-
     /**
      * Initialize the Label without the BaseLabels shown.
      *
