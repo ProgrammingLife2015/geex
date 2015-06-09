@@ -153,14 +153,14 @@ public final class GraphController extends AbstractGraphController {
      * Increment the zoom level. It can't get bigger than the amount of graphs
      */
     private void incrementDepth() {
-        depth = Math.max(graphList.size() - 1, depth + 1);
+        depth = Math.min(graphList.size() - 1, depth + 1);
     }
 
     /**
      * Decrement the zoom level. It can't get lower than 0.
      */
     private void decrementDepth() {
-        depth = Math.min(0, depth - 1);
+        depth = Math.max(0, depth - 1);
     }
 
     /**
