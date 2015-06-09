@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import nl.context.tudelft.effect.Zoom;
 import nl.tudelft.context.controller.locator.LocatorController;
@@ -56,6 +57,12 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     ScrollPane scroll;
 
     /**
+     * The locator.
+     */
+    @FXML
+    Pane locator;
+
+    /**
      * List of graph views.
      */
     LinkedList<StackGraph> graphList = new LinkedList<>();
@@ -103,7 +110,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
             zoomLabelsProperty.setValue(newValue.stream().collect(Collectors.toList()));
         });
 
-        new LocatorController(labelMapProperty, currentLabelsProperty);
+        new LocatorController(locator, labelMapProperty, currentLabelsProperty);
 
         initOnTheFlyLoading();
 
