@@ -78,6 +78,7 @@ public class VariationGraph extends StackGraph {
     private DefaultNode checkVariation(final DefaultNode startNode) {
 
         Queue<DefaultNode> nextNodes =  new LinkedList<>();
+        HashSet<DefaultNode> currentVariation = new HashSet<>();
         nextNodes.addAll(getTargets(startNode));
 
         System.out.println(((Node) startNode).getId() + " goes to " + nextNodes.stream().map(node -> ((Node) node).getId()).collect(Collectors.toList()));
@@ -88,25 +89,27 @@ public class VariationGraph extends StackGraph {
 
             DefaultNode node = nextNodes.remove();
 
-            if (variations.contains(node) || nextNodes.contains(node)) {
+            if (currentVariation.contains(node) || nextNodes.contains(node)) {
 
                 amountOfBranches--;
                 if (amountOfBranches == 0) {
-                    variations.remove(node);
+                    currentVariation.removeIf(node2 -> node == node2);
+                    variations.addAll(currentVariation);
                     return node;
                 }
 
             } else {
 
-                variations.add(node);
+                currentVariation.add(node);
 
                 List<DefaultNode> setOfNextNodes = getTargets(node);
                 System.out.println(((Node) node).getId() + " leads to " + setOfNextNodes.stream().map(node2 -> ((Node) node2).getId()).collect(Collectors.toList()));
                 if (setOfNextNodes.size() > 1) {
                     nextNodes.add(checkVariation(node));
-                } else if (!setOfNextNodes.isEmpty() && !nextNodes.isEmpty() && !variations.containsAll(setOfNextNodes)) {
+                } else if (!setOfNextNodes.isEmpty() && !nextNodes.isEmpty() && !currentVariation.containsAll(setOfNextNodes)) {
                     nextNodes.addAll(setOfNextNodes);
                 } else {
+                    variations.addAll(currentVariation);
                     return node;
                 }
 
