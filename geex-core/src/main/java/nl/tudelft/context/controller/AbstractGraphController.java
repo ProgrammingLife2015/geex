@@ -122,12 +122,9 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      */
     protected void showGraph(final DrawableGraph drawableGraph) {
 
-        // Bind edges
-        List<DrawableEdge> edgeList = drawableGraph.edgeSet().stream()
+        sequences.getChildren().setAll(drawableGraph.edgeSet().stream()
                 .map(edge -> new DrawableEdge(drawableGraph, edge))
-                .collect(Collectors.toList());
-
-        sequences.getChildren().setAll(edgeList);
+                .collect(Collectors.toList()));
 
         labelMapProperty.setValue(drawableGraph.vertexSet().parallelStream().collect(
                 Collectors.groupingBy(
@@ -164,8 +161,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     private void updatePosition() {
 
         double width = scroll.getWidth();
-        double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width)
-                * scroll.getHvalue();
+        double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width) * scroll.getHvalue();
         int from = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
         int to = from + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
