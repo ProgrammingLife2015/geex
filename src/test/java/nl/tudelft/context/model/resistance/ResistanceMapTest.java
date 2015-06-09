@@ -21,8 +21,8 @@ public class ResistanceMapTest {
      */
     @BeforeClass
     public static void BeforeClass() {
-        resistance1 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor");
-        resistance2 = new Resistance("set", "amet", "-11", 6, "consecteur");
+        resistance1 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor", "set");
+        resistance2 = new Resistance("set", "amet", "-11", 6, "consecteur", "adipiscing");
         resistanceMap = new ResistanceMap();
         resistanceMap.put(1, resistance1);
         resistanceMap.put(2, resistance2);
@@ -30,9 +30,9 @@ public class ResistanceMapTest {
 
     @Test
     public void testToString() throws Exception {
-        assertEquals("(lorem, ipsum, Q264P, 5, dolor)"
+        assertEquals("(lorem, ipsum, Q264P, 5, dolor, set)"
                 + System.getProperty("line.separator")
-                + "(set, amet, -11, 6, consecteur)"
+                + "(set, amet, -11, 6, consecteur, adipiscing)"
                 + System.getProperty("line.separator")
                 , resistanceMap.toString());
 

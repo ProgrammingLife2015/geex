@@ -45,6 +45,7 @@ public class ResistanceParser extends Parser<ResistanceMap> {
      * @param line the line with information for the resistance.
      * @return Resistance
      * @throws NumberFormatException when the data isn't correct
+     * @throws ResistanceFormatException when the value of the data isn't spec compliant.
      */
     public final Resistance getResistance(final String line) throws NumberFormatException, ResistanceFormatException {
         Pattern p = Pattern.compile("(^.*):(.*),(.*),(.*),(\\d+)\\t([A-Z])");

@@ -25,8 +25,8 @@ public class AnnotationParserTest {
      */
     @BeforeClass
     public static void BeforeClass() throws Exception {
-        //annotation1 = new Annotation(1, "lorem", true, 0, 2, "ipsum");
-        //annotation2 = new Annotation(2, "dolor", false, 4, 6, "set");
+        annotation1 = new Annotation("seqId", "source", "type", 0, 1, 0f, '+', '.', "attributes=1;A=lotofthem; (1 or 3)");
+        annotation2 = new Annotation("seqId1", "source1", "type1", 2, 3, 1f, '-', '.', "attributes=2;B=evenmore; (1 or 4)");
 
         annotationMap1 = new AnnotationMap();
 

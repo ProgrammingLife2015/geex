@@ -21,9 +21,9 @@ public class ResistanceTest {
      */
     @BeforeClass
     public static void BeforeClass() {
-        resistance1 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor");
-        resistance2 = new Resistance("set", "amet", "-11", 6, "consecteur");
-        resistance3 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor");
+        resistance1 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor", "set");
+        resistance2 = new Resistance("set", "amet", "-11", 6, "consecteur", "adipiscing");
+        resistance3 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor", "set");
     }
 
     @Test
@@ -53,8 +53,14 @@ public class ResistanceTest {
 
     @Test
     public void testGetDrugName() throws Exception {
-        assertEquals("dolor", resistance1.getDrugName());
-        assertEquals("consecteur", resistance2.getDrugName());
+        assertEquals("set", resistance1.getDrugName());
+        assertEquals("adipiscing", resistance2.getDrugName());
+    }
+
+    @Test
+    public void testGetFilter() throws Exception {
+        assertEquals("dolor", resistance1.getFilter());
+        assertEquals("consecteur", resistance2.getFilter());
     }
 
     @Test
@@ -69,22 +75,22 @@ public class ResistanceTest {
     public void testEqualsExtensive() throws Exception {
         assertTrue(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("different", "ipsum", "-Q264P", 5, "dolor");
+        resistance3 = new Resistance("Different", "ipsum", "Q264P", 5, "dolor", "set");
         assertFalse(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("lorem", "different", "-Q264P", 5, "dolor");
+        resistance3 = new Resistance("lorem", "Different", "Q264P", 5, "dolor", "set");
         assertFalse(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("lorem", "ipsum", "-different", 5, "dolor");
+        resistance3 = new Resistance("lorem", "ipsum", "Different", 5, "dolor", "set");
         assertFalse(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("lorem", "ipsum", "-Q264P", 6, "dolor");
+        resistance3 = new Resistance("lorem", "ipsum", "Q264P", 9, "Different", "set");
         assertFalse(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("lorem", "ipsum", "-Q264P", 5, "different");
+        resistance3 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor", "Different");
         assertFalse(resistance1.equals(resistance3));
 
-        resistance3 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor");
+        resistance3 = new Resistance("lorem", "ipsum", "Q264P", 5, "dolor", "set");
     }
 
 
@@ -96,15 +102,15 @@ public class ResistanceTest {
 
     @Test
     public void testToString() throws Exception {
-        assertEquals("(lorem, ipsum, Q264P, 5, dolor)", resistance1.toString());
-        assertEquals("(set, amet, -11, 6, consecteur)", resistance2.toString());
+        assertEquals("(lorem, ipsum, Q264P, 5, dolor, set)", resistance1.toString());
+        assertEquals("(set, amet, -11, 6, consecteur, adipiscing)", resistance2.toString());
 
     }
 
     @Test
     public void testHashCode() throws Exception {
-        assertEquals(-648449560, resistance1.hashCode());
-        assertEquals(-1949895575, resistance2.hashCode());
+        assertEquals(107375902, resistance1.hashCode());
+        assertEquals(1346001911, resistance2.hashCode());
 
     }
 }

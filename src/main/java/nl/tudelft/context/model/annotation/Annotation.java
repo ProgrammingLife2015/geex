@@ -19,9 +19,11 @@ public class Annotation {
     String seqId;
 
     /**
-     * The source is a free text qualifier intended to describe the algorithm or operating procedure that generated this feature.
+     * The source is a free text qualifier intended to describe the algorithm
+     * or operating procedure that generated this feature.
      * Typically this is the name of a piece of software, such as "Genescan" or a database name, such as "Genbank."
-     * In effect, the source is used to extend the feature ontology by adding a qualifier to the type creating a new composite type
+     * In effect, the source is used to extend the feature ontology
+     * by adding a qualifier to the type creating a new composite type
      * that is a subclass of the type in the type column.
      */
     String source;
@@ -36,11 +38,15 @@ public class Annotation {
     String type;
 
     /**
-     * The start coordinates of the feature are given in positive 1-based integer coordinates, relative to the landmark given in column one.
+     * The start coordinates of the feature are given in positive 1-based integer coordinates,
+     * relative to the landmark given in column one.
      * Start is always less than or equal to end.
-     * For features that cross the origin of a circular feature (e.g. most bacterial genomes, plasmids, and some viral genomes),
-     * the requirement for start to be less than or equal to end is satisfied by making end = the position of the end + the length of the landmark feature.
-     * For zero-length features, such as insertion sites, start equals end and the implied site is to the right of the indicated base in the direction of the landmark.
+     * For features that cross the origin of a circular feature
+     * (e.g. most bacterial genomes, plasmids, and some viral genomes),
+     * the requirement for start to be less than or equal to end is satisfied
+     * by making end = the position of the end + the length of the landmark feature.
+     * For zero-length features, such as insertion sites,
+     * start equals end and the implied site is to the right of the indicated base in the direction of the landmark.
      */
     int start;
 
@@ -51,8 +57,10 @@ public class Annotation {
 
 
     /**
-     * The score of the feature, a floating point number. As in earlier versions of the format, the semantics of the score are ill-defined.
-     * It is strongly recommended that E-values be used for sequence similarity features, and that P-values be used for ab initio gene prediction features.
+     * The score of the feature, a floating point number. As in earlier versions of the format,
+     * the semantics of the score are ill-defined.
+     * It is strongly recommended that E-values be used for sequence similarity features,
+     * and that P-values be used for ab initio gene prediction features.
      */
     float score;
 
@@ -65,11 +73,16 @@ public class Annotation {
 
     /**
      * For features of type "CDS", the phase indicates where the feature begins with reference to the reading frame.
-     * The phase is one of the integers 0, 1, or 2, indicating the number of bases that should be removed from the beginning of this feature to reach the first base of the next codon.
-     * In other words, a phase of "0" indicates that the next codon begins at the first base of the region described by the current line,
-     * a phase of "1" indicates that the next codon begins at the second base of this region, and a phase of "2" indicates that the codon begins at the third base of this region.
+     * The phase is one of the integers 0, 1, or 2, indicating the number of bases
+     * that should be removed from the beginning of this feature
+     * to reach the first base of the next codon.
+     * In other words, a phase of "0" indicates that:
+     * the next codon begins at the first base of the region described by the current line,
+     * a phase of "1" indicates that the next codon begins at the second base of this region,
+     * and a phase of "2" indicates that the codon begins at the third base of this region.
      * This is NOT to be confused with the frame, which is simply start modulo 3.
-     * For forward strand features, phase is counted from the start field. For reverse strand features, phase is counted from the end field.
+     * For forward strand features, phase is counted from the start field. For reverse strand features,
+     * phase is counted from the end field.
      * The phase is REQUIRED for all CDS features.
      */
     char phase;
@@ -115,20 +128,40 @@ public class Annotation {
 
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Annotation that = (Annotation) o;
 
-        if (start != that.start) return false;
-        if (end != that.end) return false;
-        if (Float.compare(that.score, score) != 0) return false;
-        if (strand != that.strand) return false;
-        if (phase != that.phase) return false;
-        if (!seqId.equals(that.seqId)) return false;
-        if (source != null ? !source.equals(that.source) : that.source != null) return false;
-        if (!type.equals(that.type)) return false;
+        if (start != that.start) {
+            return false;
+        }
+        if (end != that.end) {
+            return false;
+        }
+        if (Float.compare(that.score, score) != 0) {
+            return false;
+        }
+        if (strand != that.strand) {
+            return false;
+        }
+        if (phase != that.phase) {
+            return false;
+        }
+        if (!seqId.equals(that.seqId)) {
+            return false;
+        }
+        if (!source.equals(that.source)) {
+            return false;
+        }
+        if (!type.equals(that.type)) {
+            return false;
+        }
         return attributes.equals(that.attributes);
 
     }
@@ -136,11 +169,10 @@ public class Annotation {
     @Override
     public int hashCode() {
         int result = seqId.hashCode();
-        result = 31 * result + (source != null ? source.hashCode() : 0);
+        result = 31 * result + source.hashCode();
         result = 31 * result + type.hashCode();
         result = 31 * result + start;
         result = 31 * result + end;
-        result = 31 * result + (score != +0.0f ? Float.floatToIntBits(score) : 0);
         result = 31 * result + (int) strand;
         result = 31 * result + (int) phase;
         result = 31 * result + attributes.hashCode();
@@ -154,17 +186,17 @@ public class Annotation {
      */
     @Override
     public String toString() {
-        return "Annotation(" +
-                "seqId:'" + seqId +
-                ", source:'" + source +
-                ", type:'" + type +
-                ", start:" + start +
-                ", end:" + end +
-                ", score:" + score +
-                ", strand:" + strand +
-                ", phase:" + phase +
-                ", attributes:'" + attributes +
-                ')';
+        return "Annotation("
+                + "seqId:'" + seqId
+                + ", source:'" + source
+                + ", type:'" + type
+                + ", start:" + start
+                + ", end:" + end
+                + ", score:" + score
+                + ", strand:" + strand
+                + ", phase:" + phase
+                + ", attributes:" + attributes
+                + ')';
     }
 
 }

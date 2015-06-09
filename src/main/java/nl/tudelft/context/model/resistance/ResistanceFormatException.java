@@ -7,11 +7,10 @@ package nl.tudelft.context.model.resistance;
  */
 public class ResistanceFormatException extends Exception {
 
+    /**
+     * Thrown when the data isn't compliant with specs.
+     */
     public ResistanceFormatException() {
-    }
-
-    public ResistanceFormatException(String message) {
-        super(message);
     }
 
 }

@@ -50,7 +50,12 @@ public abstract class Parser<T> {
      * @return Parsed object.
      */
     public T parse() {
-        return parse(readerList);
+        try {
+            return parse(readerList);
+        } catch (ResistanceFormatException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
