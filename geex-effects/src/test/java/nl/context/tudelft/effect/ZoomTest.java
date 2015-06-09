@@ -1,10 +1,10 @@
-package nl.tudelft.context.effects;
+package nl.context.tudelft.effect;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
-import nl.tudelft.context.drawable.graph.AbstractLabel;
-import nl.tudelft.context.drawable.graph.DrawableNodeLabel;
+import javafx.scene.layout.Region;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author Jasper Boot
@@ -26,9 +26,10 @@ public class ZoomTest {
 
     static ScrollPane scroll;
     static Group sequences;
-    static Map<Integer, List<AbstractLabel>> map;
+    static Map<Integer, List<Region>> map;
     static Zoom zoom;
-    static AbstractLabel label;
+    static Region label;
+    static SimpleObjectProperty<List<Region>> labelProperty;
 
     @BeforeClass
     public static void beforeClass() {
@@ -37,12 +38,13 @@ public class ZoomTest {
 
         sequences = mock(Group.class);
         map = new HashMap<>();
-        List<AbstractLabel> labels = new ArrayList<>();
+        List<Region> labels = new ArrayList<>();
         map.put(1, labels);
-        label = mock(DrawableNodeLabel.class);
+        label = mock(Region.class);
         labels.add(label);
+        labelProperty = new SimpleObjectProperty<>(labels);
 
-        zoom = new Zoom(scroll, sequences, map);
+        zoom = new Zoom(scroll, sequences, labelProperty);
 
     }
 
@@ -52,7 +54,7 @@ public class ZoomTest {
     @Test
     public void testConstruct() {
 
-        zoom = new Zoom(scroll, sequences, map);
+        zoom = new Zoom(scroll, sequences, labelProperty);
 
     }
 

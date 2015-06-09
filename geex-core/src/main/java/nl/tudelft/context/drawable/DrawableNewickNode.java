@@ -14,7 +14,7 @@ public class DrawableNewickNode extends DrawablePosition {
      *
      * @param node Node to bind
      */
-    public DrawableNewickNode(Node node) {
+    public DrawableNewickNode(final Node node) {
         this.translateXProperty().bind(node.translateXProperty());
         this.translateYProperty().bind(node.translateYProperty());
     }

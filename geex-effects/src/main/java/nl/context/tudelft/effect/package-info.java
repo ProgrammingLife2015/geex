@@ -5,4 +5,4 @@
  * @version 1.0
  * @since 03-06-2015
  */
-package nl.tudelft.context.effects;
+package nl.context.tudelft.effect;

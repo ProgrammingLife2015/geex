@@ -51,22 +51,19 @@ public class DrawableNodeLabel extends AbstractLabel {
         setOnMouseClicked(event -> mainController.setView(graphController,
                 new BaseController(graphController.getGraphList().getFirst(), node)));
 
+        init();
+
     }
 
-    @Override
-    public final void init() {
+    /**
+     * Draw sub elements.
+     */
+    private void init() {
 
         getChildren().addAll(
                 initMainLabel(),
                 initBaseLabels()
         );
-
-    }
-
-    @Override
-    public int currentColumn() {
-
-        return (int) translateXProperty().get() / DrawableGraph.LABEL_SPACING;
 
     }
 

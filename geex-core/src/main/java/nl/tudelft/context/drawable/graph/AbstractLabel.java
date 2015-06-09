@@ -9,16 +9,4 @@ import javafx.scene.layout.VBox;
  */
 public abstract class AbstractLabel extends VBox {
 
-    /**
-     * Draw sub elements when needed.
-     */
-    public abstract void init();
-
-    /**
-     * Get the current column the label is displayed.
-     *
-     * @return Column index
-     */
-    public abstract int currentColumn();
-
 }
