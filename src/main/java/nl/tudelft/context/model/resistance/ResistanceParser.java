@@ -35,6 +35,7 @@ public class ResistanceParser extends Parser<ResistanceMap> {
             try {
                 resistanceMap.put(index, getResistance(line));
             } catch (ResistanceFormatException e) {
+                e.toString(); //For sending to logger.
             }
             index++;
         }
