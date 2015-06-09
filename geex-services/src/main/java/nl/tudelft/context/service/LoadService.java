@@ -43,8 +43,6 @@ public class LoadService<T> extends Service<T> {
                 parser.setReader(files);
                 return parser.parse();
             }
-
-
         };
     }
 }
