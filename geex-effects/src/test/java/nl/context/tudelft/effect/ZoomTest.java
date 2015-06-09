@@ -9,10 +9,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static org.mockito.Mockito.mock;
 
@@ -26,10 +26,10 @@ public class ZoomTest {
 
     static ScrollPane scroll;
     static Group sequences;
-    static Map<Integer, Set<Region>> map;
+    static Map<Integer, List<Region>> map;
     static Zoom zoom;
     static Region label;
-    static SimpleObjectProperty<Set<Region>> labelProperty;
+    static SimpleObjectProperty<List<Region>> labelProperty;
 
     @BeforeClass
     public static void beforeClass() {
@@ -38,7 +38,7 @@ public class ZoomTest {
 
         sequences = mock(Group.class);
         map = new HashMap<>();
-        Set<Region> labels = new HashSet<>();
+        List<Region> labels = new ArrayList<>();
         map.put(1, labels);
         label = mock(Region.class);
         labels.add(label);

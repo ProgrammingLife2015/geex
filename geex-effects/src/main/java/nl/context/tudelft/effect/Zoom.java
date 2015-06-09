@@ -9,8 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -58,12 +56,12 @@ public class Zoom {
     /**
      * Constructs a Zoom effect.
      *
-     * @param scroll                The scroll panel
-     * @param sequences             The graph
-     * @param currentLabelsProperty Property with the labels that are shown
+     * @param scroll             The scroll panel
+     * @param sequences          The graph
+     * @param zoomLabelsProperty Property with the labels that need zoom
      */
     public Zoom(final ScrollPane scroll, final Group sequences,
-                final ObjectProperty<Set<Region>> currentLabelsProperty) {
+                final ObjectProperty<List<Region>> zoomLabelsProperty) {
 
         this.scroll = scroll;
         this.sequences = sequences;
@@ -72,8 +70,8 @@ public class Zoom {
         scroll.hvalueProperty().addListener(event -> calculateBounds());
         scroll.vvalueProperty().addListener(event -> calculateBounds());
 
-        currentLabelsProperty.addListener((observable, oldValue, newValue) -> {
-            setEvents(newValue.stream().collect(Collectors.toList()));
+        zoomLabelsProperty.addListener((observable, oldValue, newValue) -> {
+            setEvents(newValue);
         });
     }
 

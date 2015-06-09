@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import nl.context.tudelft.effect.Zoom;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
+import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.model.graph.StackGraph;
 
@@ -77,7 +78,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     /**
      * Property containing the current shown labels.
      */
-    ObjectProperty<Set<Region>> currentLabelsProperty = new SimpleObjectProperty<>(new HashSet<>());
+    ObjectProperty<Set<AbstractLabel>> currentLabelsProperty = new SimpleObjectProperty<>(new HashSet<>());
 
     /**
      * Create default graph controller.
@@ -95,7 +96,12 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
-        new Zoom(scroll, sequences, currentLabelsProperty);
+        ObjectProperty<List<Region>> zoomLabelsProperty = new SimpleObjectProperty<>();
+        new Zoom(scroll, sequences, zoomLabelsProperty);
+        currentLabelsProperty.addListener((observable, oldValue, newValue) -> {
+            zoomLabelsProperty.setValue(newValue.stream().collect(Collectors.toList()));
+        });
+
         initOnTheFlyLoading();
 
     }
