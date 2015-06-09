@@ -18,5 +18,5 @@ public class DrawableNewickNode extends DrawablePosition {
         this.translateXProperty().bind(node.translateXProperty());
         this.translateYProperty().bind(node.translateYProperty());
     }
-    
+
 }
