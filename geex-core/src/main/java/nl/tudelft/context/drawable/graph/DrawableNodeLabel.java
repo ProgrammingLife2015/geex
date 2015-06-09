@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * The Javafx part of DrawableNode.
  *
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 13-5-2015
  */

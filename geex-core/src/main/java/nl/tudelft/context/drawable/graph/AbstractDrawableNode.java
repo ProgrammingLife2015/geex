@@ -6,7 +6,7 @@ import nl.tudelft.context.drawable.DrawablePosition;
 import nl.tudelft.context.model.graph.DefaultNode;
 
 /**
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 1-5-2015
  */

@@ -3,7 +3,7 @@ package nl.tudelft.context.drawable;
 import nl.tudelft.context.model.newick.Node;
 
 /**
- * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @author Gerben Oolbekkink
  * @version 1.0
  * @since 8-6-2015
  */

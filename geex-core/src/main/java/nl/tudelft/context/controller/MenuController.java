@@ -10,7 +10,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 
 /**
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 8-5-2015
  */

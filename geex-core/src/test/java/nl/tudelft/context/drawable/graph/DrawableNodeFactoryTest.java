@@ -10,7 +10,7 @@ import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.mockito.Mockito.mock;
 
 /**
- * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @author Gerben Oolbekkink
  * @version 1.0
  * @since 7-6-2015
  */

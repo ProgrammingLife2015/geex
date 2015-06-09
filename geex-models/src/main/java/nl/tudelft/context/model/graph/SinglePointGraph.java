@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 1-6-2015
  */

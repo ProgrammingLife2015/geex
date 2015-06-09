@@ -9,7 +9,7 @@ import nl.tudelft.context.controller.MainController;
 /**
  * Entry point of the App.
  *
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 23-4-2015
  */

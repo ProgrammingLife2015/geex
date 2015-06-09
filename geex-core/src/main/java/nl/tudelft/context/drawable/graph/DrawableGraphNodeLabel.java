@@ -9,7 +9,7 @@ import nl.tudelft.context.model.graph.GraphNode;
 /**
  * The Javafx part of DrawableGraphNode.
  *
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 1-6-2015
  */
