@@ -1,5 +1,6 @@
 package nl.tudelft.context.drawable.graph;
 
+import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import nl.tudelft.context.controller.BaseController;
@@ -45,6 +46,7 @@ public class DrawableNodeLabel extends AbstractLabel {
         this.node = node;
 
         setCache(true);
+        setCacheHint(CacheHint.SCALE);
         translateXProperty().bind(abstractDrawableNode.translateXProperty());
         translateYProperty().bind(abstractDrawableNode.translateYProperty());
 
