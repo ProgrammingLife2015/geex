@@ -18,6 +18,11 @@ public class GraphNode extends DefaultNode {
     Set<DefaultNode> nodes = new HashSet<>();
 
     /**
+     * Start and and node.
+     */
+    DefaultNode start, end;
+
+    /**
      * Create a graph node.
      *
      * @param graph Master graph
@@ -25,6 +30,9 @@ public class GraphNode extends DefaultNode {
      * @param end   End of sub graph
      */
     public GraphNode(final StackGraph graph, final DefaultNode start, final DefaultNode end) {
+
+        this.start = start;
+        this.end = end;
 
         sources = start.getSources();
 
@@ -57,4 +65,15 @@ public class GraphNode extends DefaultNode {
     public Set<DefaultNode> getNodes() {
         return nodes;
     }
+
+    @Override
+    public int getRefStartPosition() {
+        return start.getRefStartPosition();
+    }
+
+    @Override
+    public int getRefEndPosition() {
+        return end.getRefEndPosition();
+    }
+
 }
