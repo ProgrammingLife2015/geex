@@ -9,7 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <name>Geex Models</name>
+
+    <description>Model package for the Geex project.</description>
+
     <artifactId>geex-models</artifactId>
-
-
 </project>
