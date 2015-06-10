@@ -37,7 +37,7 @@ public abstract class AbstractLabel extends VBox {
         if (CollectionUtils.containsAny(sources, node.getSources())) {
             getStyleClass().add("selected-label");
         } else {
-            getStyleClass().remove("selected-label");
+            getStyleClass().clear();
         }
 
     }
