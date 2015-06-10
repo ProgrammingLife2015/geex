@@ -1,11 +1,8 @@
 package nl.tudelft.context.drawable.graph;
 
-import javafx.beans.property.ObjectProperty;
 import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.Node;
-
-import java.util.Set;
 
 /**
  * @author Gerben Oolbekkink
@@ -24,9 +21,8 @@ public class DrawableNode extends AbstractDrawableNode {
 
     @Override
     public AbstractLabel getLabel(final MainController mainController,
-                                  final AbstractGraphController graphController,
-                                  final ObjectProperty<Set<String>> selectedSources) {
+                                  final AbstractGraphController graphController) {
 
-        return new DrawableNodeLabel(mainController, graphController, this, (Node) getNode(), selectedSources);
+        return new DrawableNodeLabel(mainController, graphController, this, (Node) getNode());
     }
 }

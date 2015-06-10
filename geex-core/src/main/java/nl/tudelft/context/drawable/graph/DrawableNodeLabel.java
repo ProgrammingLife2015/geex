@@ -1,6 +1,5 @@
 package nl.tudelft.context.drawable.graph;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -12,7 +11,6 @@ import nl.tudelft.context.model.graph.Node;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -41,17 +39,12 @@ public class DrawableNodeLabel extends AbstractLabel {
      * @param graphController      GraphController to place the next view on
      * @param abstractDrawableNode Node indicating drawable
      * @param node                 Node indicating the node
-     * @param selectedSources      Property containing the current sources
      */
     public DrawableNodeLabel(final MainController mainController, final AbstractGraphController graphController,
-                             final AbstractDrawableNode abstractDrawableNode, final Node node,
-                             final ObjectProperty<Set<String>> selectedSources) {
+                             final AbstractDrawableNode abstractDrawableNode, final Node node) {
 
         super(node);
         this.node = node;
-
-        selectedSources.addListener((observable, oldValue, newValue) -> updateSources(newValue));
-        updateSources(selectedSources.get());
 
         setCache(true);
         setCacheHint(CacheHint.SCALE);

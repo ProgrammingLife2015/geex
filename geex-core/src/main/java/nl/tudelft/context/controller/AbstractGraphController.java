@@ -113,7 +113,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         new Zoom(scroll, sequences, zoomLabelsProperty);
         currentLabelsProperty.addListener((observable, oldValue, newValue) -> {
             zoomLabelsProperty.setValue(newValue.stream().collect(Collectors.toList()));
+            newValue.stream().forEach(label -> label.updateSources(selectedSources.get()));
         });
+
+        selectedSources.addListener((observable, oldValue, newValue) ->
+                currentLabelsProperty.get().stream().forEach(label -> label.updateSources(newValue)));
 
         new LocatorController(locator, nodeMapProperty, positionProperty);
 
@@ -194,7 +198,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .map(labelMap::get)
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
-                .map(node -> node.getLabel(mainController, this, selectedSources))
+                .map(node -> node.getLabel(mainController, this))
                 .collect(Collectors.toSet()));
 
     }

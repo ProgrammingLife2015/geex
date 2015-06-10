@@ -32,12 +32,12 @@ public abstract class AbstractLabel extends VBox {
      *
      * @param sources New selected sources
      */
-    protected void updateSources(final Set<String> sources) {
+    public void updateSources(final Set<String> sources) {
 
         if (CollectionUtils.containsAny(sources, node.getSources())) {
-            getStyleClass().add("selected");
+            getStyleClass().add("selected-label");
         } else {
-            getStyleClass().remove("selected");
+            getStyleClass().remove("selected-label");
         }
 
     }
