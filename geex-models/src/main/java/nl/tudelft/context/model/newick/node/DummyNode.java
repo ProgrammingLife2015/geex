@@ -2,7 +2,6 @@ package nl.tudelft.context.model.newick.node;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -34,8 +33,8 @@ public class DummyNode extends AbstractNode {
     }
 
     @Override
-    public Set<String> getSources() {
-        return child.getSources();
+    public void updateSources() {
+        sources.set(child.getSources());
     }
 
     @Override

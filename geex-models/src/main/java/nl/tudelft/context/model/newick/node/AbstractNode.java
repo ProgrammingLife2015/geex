@@ -4,11 +4,11 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableDoubleValue;
-import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.model.newick.selection.None;
 import nl.tudelft.context.model.newick.selection.Selection;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -44,6 +44,11 @@ public abstract class AbstractNode {
     ObjectProperty<Selection> selection = new SimpleObjectProperty<>(new None());
 
     /**
+     * The sources in this node.
+     */
+    ObjectProperty<Set<String>> sources = new SimpleObjectProperty<>(new HashSet<>());
+
+    /**
      * Builds a new node with the corresponding name and weight.
      *
      * @param name   the name of the node
@@ -60,18 +65,14 @@ public abstract class AbstractNode {
      *
      * @param n the node to add as a child
      */
-    public void addChild(final AbstractNode n) {
-        this.children.add(n);
-    }
+    public abstract void addChild(final AbstractNode n);
 
     /**
      * Gets all the children inside this node.
      *
      * @return the children
      */
-    public List<AbstractNode> getChildren() {
-        return children;
-    }
+    public abstract List<AbstractNode> getChildren();
 
     /**
      * Checks if the node has a parent.
@@ -119,18 +120,35 @@ public abstract class AbstractNode {
     }
 
     /**
+     * Updates the sources that belong to the node and its children.
+     */
+    public abstract void updateSources();
+
+    /**
      * Gets the sources for the graph from this node and its children.
      *
      * @return name of this node and it's children
      */
-    public abstract Set<String> getSources();
+    public Set<String> getSources() {
+        return sources.get();
+    }
+
+    /**
+     * Gets the sources for the graph from this node and its children.
+     *
+     * @return name of this node and it's children
+     */
+    public ObjectProperty<Set<String>> getSourcesProperty() {
+        return sources;
+    }
 
     /**
      * Toggles the selection of the node. If the selection was ALL, the the new selection will be NONE; otherwise the
      * new selection will be ALL.
      */
-    public void toggleSelected() {
+    public void toggleSelection() {
         setSelection(selection.get().toggle());
+        parent.ifPresent(AbstractNode::updateSelection);
     }
 
     /**
@@ -139,8 +157,9 @@ public abstract class AbstractNode {
      * @param selection The new selection of the node and its children.
      */
     public void setSelection(final Selection selection) {
-        this.selection.setValue(selection);
+        this.selection.set(selection);
         getChildren().forEach(node -> node.setSelection(selection));
+        updateSources();
     }
 
     /**
@@ -170,12 +189,13 @@ public abstract class AbstractNode {
      * <p/>
      * If the node has a parent, it also calls this method on its parent.
      */
-    public void updateSelected() {
+    public void updateSelection() {
         selection.setValue(getChildren().stream()
                 .map(AbstractNode::getSelection)
-                .reduce(Selection::merge).orElse(new All()));
+                .reduce(Selection::merge).orElse(getSelection()));
+        updateSources();
 
-        parent.ifPresent(AbstractNode::updateSelected);
+        parent.ifPresent(AbstractNode::updateSelection);
     }
 
     /**

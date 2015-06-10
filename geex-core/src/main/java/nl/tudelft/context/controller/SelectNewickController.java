@@ -50,7 +50,7 @@ public class SelectNewickController extends AbstractNewickController {
     void showTree(final Newick newick) {
         try {
             DrawableNewick subNewick = new DrawableNewick(newick.getSelectedSubGraph());
-            subNewick.getNewick().getRoot().getSelectionProperty().addListener(event -> {
+            subNewick.getNewick().getRoot().getSourcesProperty().addListener(event -> {
                 graphController.updateSelectedSources(subNewick.getNewick().getRoot().getSources());
             });
 

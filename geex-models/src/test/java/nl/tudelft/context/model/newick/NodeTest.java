@@ -42,7 +42,7 @@ public class NodeTest {
     public void testToggleSelectionFromNoneToAll() {
         AbstractNode n = new StrandNode("", 1);
         n.setSelection(new None());
-        n.toggleSelected();
+        n.toggleSelection();
         assertThat(n.getSelection(), instanceOf(All.class));
     }
 
@@ -53,7 +53,7 @@ public class NodeTest {
     public void testToggleSelectionFromPartialToAll() {
         AbstractNode n = new StrandNode("", 1);
         n.setSelection(new Partial());
-        n.toggleSelected();
+        n.toggleSelection();
         assertThat(n.getSelection(), instanceOf(All.class));
     }
 
@@ -64,7 +64,7 @@ public class NodeTest {
     public void testToggleSelectionFromAllToNone() {
         AbstractNode n = new StrandNode("", 1);
         n.setSelection(new All());
-        n.toggleSelected();
+        n.toggleSelection();
         assertThat(n.getSelection(), instanceOf(None.class));
     }
 
@@ -93,7 +93,7 @@ public class NodeTest {
         n1.addChild(n3);
         n2.setSelection(new All());
         n3.setSelection(new All());
-        n1.updateSelected();
+        n1.updateSelection();
         assertThat(n1.getSelection(), instanceOf(All.class));
     }
 
@@ -109,7 +109,7 @@ public class NodeTest {
         n1.addChild(n3);
         n2.setSelection(new None());
         n3.setSelection(new None());
-        n1.updateSelected();
+        n1.updateSelection();
         assertThat(n1.getSelection(), instanceOf(None.class));
     }
 
@@ -125,7 +125,7 @@ public class NodeTest {
         n1.addChild(n3);
         n2.setSelection(new Partial());
         n3.setSelection(new None());
-        n1.updateSelected();
+        n1.updateSelection();
         assertThat(n1.getSelection(), instanceOf(Partial.class));
     }
 
@@ -141,7 +141,7 @@ public class NodeTest {
         n1.addChild(n3);
         n2.setSelection(new All());
         n3.setSelection(new None());
-        n1.updateSelected();
+        n1.updateSelection();
         assertThat(n1.getSelection(), instanceOf(Partial.class));
     }
 }

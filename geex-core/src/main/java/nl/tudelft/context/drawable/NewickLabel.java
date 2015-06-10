@@ -49,8 +49,8 @@ public class NewickLabel extends Label {
      */
     public void setEvents() {
         setOnMouseClicked(event -> {
-            node.toggleSelected();
-            node.updateSelected();
+            node.toggleSelection();
+            node.updateSelection();
         });
     }
 

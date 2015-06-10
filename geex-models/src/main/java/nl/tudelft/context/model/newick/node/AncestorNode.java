@@ -21,13 +21,22 @@ public class AncestorNode extends AbstractNode {
     }
 
     @Override
-    public Set<String> getSources() {
+    public void addChild(final AbstractNode n) {
+        this.children.add(n);
+    }
+
+    @Override
+    public List<AbstractNode> getChildren() {
+        return children;
+    }
+
+    @Override
+    public void updateSources() {
 
         Set<String> sources = new HashSet<>();
-
         children.forEach(node -> sources.addAll(node.getSources()));
+        this.sources.set(sources);
 
-        return sources;
     }
 
     @Override

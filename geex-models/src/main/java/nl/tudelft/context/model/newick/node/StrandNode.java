@@ -1,6 +1,8 @@
 package nl.tudelft.context.model.newick.node;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,15 +22,22 @@ public class StrandNode extends AbstractNode {
     }
 
     @Override
-    public Set<String> getSources() {
+    public void addChild(final AbstractNode n) {
+        // do nothing
+    }
+
+    @Override
+    public List<AbstractNode> getChildren() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public void updateSources() {
 
         Set<String> sources = new HashSet<>();
-
         selection.getValue().addSource(sources, name);
+        this.sources.set(sources);
 
-        children.forEach(node -> sources.addAll(node.getSources()));
-
-        return sources;
     }
 
     @Override
