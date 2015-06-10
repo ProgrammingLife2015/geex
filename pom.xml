@@ -141,9 +141,6 @@
                         <version>2.9</version>
                     </dependency>
                 </dependencies>
-                <configuration>
-                    <skipDeploy>true</skipDeploy>
-                </configuration>
             </plugin>
         </plugins>
     </build>
