@@ -117,7 +117,7 @@ public class LocatorController {
     /**
      * Sets the position of the indicator.
      */
-    public void setPosition() {
+    private void setPosition() {
 
         optionalTotalMap.ifPresent(totalMap -> {
             List<List<Integer>> list = positionProperty.get().stream()
