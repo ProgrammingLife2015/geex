@@ -131,28 +131,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version>0.12</version>
-                <configuration>
-                    <message>Creating site for ${project.version}</message>
-                    <repositoryName>geex.github.io</repositoryName>
-                    <repositoryOwner>geex</repositoryOwner>
-                    <branch>refs/heads/master</branch>
-                    <merge>true</merge>
-                    <path>${project.distributionManagement.site.url}</path>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>site</goal>
-                        </goals>
-                        <phase>site-deploy</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.4</version>
