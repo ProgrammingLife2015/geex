@@ -43,7 +43,7 @@ public class LocatorController {
     Optional<Map<Integer, List<Integer>>> optionalTotalMap = Optional.empty();
 
     /**
-     * Location currently shown (columns)
+     * Location currently shown (columns).
      */
     ObjectProperty<List<Integer>> positionProperty = new SimpleObjectProperty<>();
 
