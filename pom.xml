@@ -195,8 +195,49 @@
                 <version>3.4</version>
                 <configuration>
                     <skipEmptyReport>false</skipEmptyReport>
-                    <linkXRef>false</linkXRef>
+                    <linkXRef>true</linkXRef>
                 </configuration>
+                <reportSets>
+                    <reportSet>
+                        <!-- defines pmd reports in the modules -->
+                        <id>pmd-report</id>
+                        <reports>
+                            <report>pmd</report>
+                        </reports>
+                    </reportSet>
+
+                    <reportSet>
+                        <!-- defines pmd aggregate report -->
+                        <id>pmd-aggregate</id>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>pmd</report>
+                        </reports>
+                        <configuration>
+                            <aggregate>true</aggregate>
+                        </configuration>
+                    </reportSet>
+
+                    <reportSet>
+                        <!-- defines cpd reports in the modules -->
+                        <id>cpd-report</id>
+                        <reports>
+                            <report>cpd</report>
+                        </reports>
+                    </reportSet>
+
+                    <reportSet>
+                        <!-- defines cpd aggregate report -->
+                        <id>cpd-aggregate</id>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>cpd</report>
+                        </reports>
+                        <configuration>
+                            <aggregate>true</aggregate>
+                        </configuration>
+                    </reportSet>
+                </reportSets>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
