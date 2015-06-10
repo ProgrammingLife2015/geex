@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableDoubleValue;
+import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.model.newick.selection.None;
 import nl.tudelft.context.model.newick.selection.Selection;
 
@@ -172,7 +173,7 @@ public abstract class AbstractNode {
     public void updateSelected() {
         selection.setValue(getChildren().stream()
                 .map(AbstractNode::getSelection)
-                .reduce(Selection::merge).orElse(new None()));
+                .reduce(Selection::merge).orElse(new All()));
 
         parent.ifPresent(AbstractNode::updateSelected);
     }
