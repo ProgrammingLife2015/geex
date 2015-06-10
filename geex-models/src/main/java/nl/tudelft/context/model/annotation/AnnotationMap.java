@@ -15,7 +15,7 @@ public class AnnotationMap extends TreeMap<Integer, List<Annotation>> {
     /**
      * Add annotations to the AnnotationMap.
      *
-     * @param annotation
+     * @param annotation the annotation that should be added
      */
     public void addAnnotation(Annotation annotation) {
         int start = annotation.getStart();

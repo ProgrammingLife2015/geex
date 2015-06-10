@@ -1,6 +1,12 @@
 package nl.tudelft.context.model.graph;
 
+import nl.tudelft.context.model.annotation.Annotation;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik
@@ -88,6 +94,13 @@ public class Node extends DefaultNode {
 
         return refEndPosition;
 
+    }
+
+    public List<Annotation> getAnnoation(AnnotationMap annotationMap) {
+        List<Annotation> test = annotationMap.subMap(refStartPosition, true, refEndPosition, true).values().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        return test;
     }
 
     /**
