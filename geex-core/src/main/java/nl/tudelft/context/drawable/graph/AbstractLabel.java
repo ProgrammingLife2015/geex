@@ -18,11 +18,21 @@ public abstract class AbstractLabel extends VBox {
      */
     DefaultNode node;
 
-    public AbstractLabel(DefaultNode node) {
+    /**
+     * Create a abstract label on a node.
+     *
+     * @param node Node the label is based upon
+     */
+    public AbstractLabel(final DefaultNode node) {
         this.node = node;
     }
 
-    protected void updateSources(Set<String> sources) {
+    /**
+     * Update the sources and check if node is selected.
+     *
+     * @param sources New selected sources
+     */
+    protected void updateSources(final Set<String> sources) {
 
         if (CollectionUtils.containsAny(sources, node.getSources())) {
             getStyleClass().add("selected");
