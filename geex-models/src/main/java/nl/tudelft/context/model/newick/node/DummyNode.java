@@ -1,7 +1,8 @@
 package nl.tudelft.context.model.newick.node;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -13,7 +14,7 @@ public class DummyNode extends AbstractNode {
     /**
      * The child of the node.
      */
-    AbstractNode child;
+    Optional<AbstractNode> child = Optional.empty();
 
     /**
      * Builds a new dummy node.
@@ -24,17 +25,19 @@ public class DummyNode extends AbstractNode {
 
     @Override
     public void addChild(final AbstractNode n) {
-        this.child = n;
+        child = Optional.of(n);
     }
 
     @Override
     public List<AbstractNode> getChildren() {
-        return Arrays.asList(child);
+        List<AbstractNode> children = new ArrayList<>();
+        child.ifPresent(children::add);
+        return children;
     }
 
     @Override
     public void updateSources() {
-        sources.set(child.getSources());
+        sources.set(child.orElse(new DummyNode()).getSources());
     }
 
     @Override

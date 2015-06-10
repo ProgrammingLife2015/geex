@@ -16,10 +16,10 @@ import static org.mockito.Mockito.when;
  * @version 1.0
  * @since 10-06-2015
  */
-public class AncestorNodeTest {
-    AncestorNode parent = new AncestorNode(1.23);
-    AncestorNode child1 = new AncestorNode(2.34);
-    AncestorNode child2 = new AncestorNode(3.45);
+public class DummyNodeTest {
+    DummyNode parent = new DummyNode();
+    DummyNode child1 = new DummyNode();
+    DummyNode child2 = new DummyNode();
 
     @Before
     public void before() {
@@ -36,13 +36,13 @@ public class AncestorNodeTest {
 
     @Test
     public void testWeight() {
-        assertEquals(1.23, parent.getWeight(), 1e-12);
+        assertEquals(0, parent.getWeight(), 1e-12);
     }
 
     @Test
     public void testChildren() {
-        assertEquals(child1, parent.getChildren().get(0));
-        assertEquals(child2, parent.getChildren().get(1));
+        assertEquals(child2, parent.getChildren().get(0));
+        assertEquals(1, parent.getChildren().size());
         assertTrue(child1.getChildren().isEmpty());
         assertTrue(child2.getChildren().isEmpty());
     }
@@ -78,22 +78,12 @@ public class AncestorNodeTest {
     public void testGetSelected() {
         parent.setSelection(new All());
         AbstractNode root = parent.getSelectedNodes();
-        assertEquals(parent.getWeight(), root.getWeight(), 1e-12);
-        assertEquals(2, root.getChildren().size());
-    }
-
-    @Test
-    public void testGetSelectedSkipAncestor() {
-        parent.setSelection(new All());
-        child1.toggleSelection();
-        AbstractNode root = parent.getSelectedNodes();
-        assertEquals(child2.getWeight(), root.getWeight(), 1e-12);
-        assertTrue(root.getChildren().isEmpty());
+        assertEquals(1, root.getChildren().size());
     }
 
     @Test
     public void testClassName() {
-        assertEquals("newick-ancestor", parent.getClassName());
+        assertEquals("newick-dummy", parent.getClassName());
     }
 
     @Test
@@ -101,21 +91,17 @@ public class AncestorNodeTest {
         int minWeight = 3;
         double weightScale = 11;
         int yPos = 7;
-        child1.translate(minWeight, weightScale, yPos);
-        assertEquals(
-                minWeight + child1.getWeight() * weightScale,
-                child1.translateXProperty().doubleValue(), 1e-12);
-        assertEquals(yPos, child1.translateYProperty().intValue());
+        child2.translate(minWeight, weightScale, yPos);
+        assertEquals(0, child2.translateXProperty().doubleValue(), 1e-12);
+        assertEquals(yPos, child2.translateYProperty().intValue());
         parent.setTranslateX(3);
-        child1.translate(minWeight, weightScale, yPos);
-        assertEquals(
-                minWeight + child1.getWeight() * weightScale + 3,
-                child1.translateXProperty().doubleValue(), 1e-12);
+        child2.translate(minWeight, weightScale, yPos);
+        assertEquals(3, child2.translateXProperty().doubleValue(), 1e-12);
     }
 
     @Test
     public void testToString() {
-        assertEquals("AncestorNode<1.23>", parent.toString());
+        assertEquals("DummyNode", parent.toString());
     }
 
     /**
