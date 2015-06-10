@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
+
+    <ScrollPane fx:id="scroll" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0" fitToHeight="true" fitToWidth="true">
+        <StackPane>
+            <StackPane styleClass="margin">
+                <Group fx:id="sequences"/>
+            </StackPane>
+            <ProgressIndicator fx:id="progressIndicator"/>
+        </StackPane>
+    </ScrollPane>
+    <VBox styleClass="legend" AnchorPane.topAnchor="30" AnchorPane.rightAnchor="40">
+        <Label styleClass="header">Occurrence (in %)</Label>
+        <Label styleClass="base-A">Adenine</Label>
+        <Label styleClass="base-T">Thymine</Label>
+        <Label styleClass="base-C">Cytosine</Label>
+        <Label styleClass="base-G">Guanine</Label>
+        <Label styleClass="base-N">Unknown base</Label>
+    </VBox>
+
+</fx:root>
