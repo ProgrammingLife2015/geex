@@ -26,13 +26,6 @@
         <github.global.server>github</github.global.server>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>tmate</id>
-            <url>http://maven.tmatesoft.com/content/repositories/releases</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <!-- Testing -->
         <dependency>
