@@ -48,27 +48,23 @@ public class SelectNewickController extends AbstractNewickController {
 
     @Override
     void showTree(final Newick newick) {
-        try {
-            DrawableNewick subNewick = new DrawableNewick(newick.getSelectedSubGraph());
-            subNewick.getNewick().getRoot().getSourcesProperty().addListener(event -> {
-                graphController.updateSelectedSources(subNewick.getNewick().getRoot().getSources());
-            });
+        DrawableNewick subNewick = new DrawableNewick(newick.getSelectedSubGraph());
+        subNewick.getNewick().getRoot().getSourcesProperty().addListener(event -> {
+            graphController.updateSelectedSources(subNewick.getNewick().getRoot().getSources());
+        });
 
-            // Bind edges
-            List<DrawableEdge> edgeList = subNewick.edgeSet().stream()
-                    .map(edge -> new DrawableEdge(subNewick, edge))
-                    .collect(Collectors.toList());
+        // Bind edges
+        List<DrawableEdge> edgeList = subNewick.edgeSet().stream()
+                .map(edge -> new DrawableEdge(subNewick, edge))
+                .collect(Collectors.toList());
 
-            // Bind nodes
-            List<Label> nodeList = subNewick.vertexSet().stream()
-                    .map(NewickLabel::new)
-                    .collect(Collectors.toList());
+        // Bind nodes
+        List<Label> nodeList = subNewick.vertexSet().stream()
+                .map(NewickLabel::new)
+                .collect(Collectors.toList());
 
-            newickContainer.getChildren().addAll(edgeList);
-            newickContainer.getChildren().addAll(nodeList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        newickContainer.getChildren().addAll(edgeList);
+        newickContainer.getChildren().addAll(nodeList);
 
     }
 

@@ -50,9 +50,8 @@ public class Newick extends DefaultDirectedGraph<AbstractNode, DefaultEdge> {
      * Gets a copy of the newick, containing only the previously selected nodes.
      *
      * @return           A copy of the tree, containing the selected nodes
-     * @throws Exception When the tree has no selected nodes at all
      */
-    public Newick getSelectedSubGraph() throws Exception {
+    public Newick getSelectedSubGraph() {
         Newick subNewick = new Newick();
 
         subNewick.setRoot(root.getSelectedNodes());
