@@ -79,9 +79,9 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
             new SimpleObjectProperty<>(new HashMap<>());
 
     /**
-     * Property containing the position.
+     * Property containing the position by columns.
      */
-    ObjectProperty<IntStream> position = new SimpleObjectProperty<>();
+    ObjectProperty<List<Integer>> positionProperty = new SimpleObjectProperty<>();
 
     /**
      * Property containing the current shown labels.
@@ -110,7 +110,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
             zoomLabelsProperty.setValue(newValue.stream().collect(Collectors.toList()));
         });
 
-        new LocatorController(locator, labelMapProperty, currentLabelsProperty);
+        new LocatorController(locator, labelMapProperty, positionProperty);
 
         initOnTheFlyLoading();
 
@@ -161,7 +161,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
             sequences.getChildren().addAll(newValue);
         }));
 
-        position.addListener(event -> showCurrentLabels());
+        positionProperty.addListener(event -> showCurrentLabels());
 
     }
 
@@ -175,7 +175,9 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         int from = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
         int to = from + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
-        position.setValue(IntStream.rangeClosed(from, to));
+        positionProperty.setValue(IntStream.rangeClosed(from, to)
+                .boxed()
+                .collect(Collectors.toList()));
 
     }
 
@@ -185,8 +187,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     private void showCurrentLabels() {
 
         final Map<Integer, List<AbstractDrawableNode>> labelMap = labelMapProperty.getValue();
-        currentLabelsProperty.setValue(position.get()
-                .mapToObj(labelMap::get)
+        currentLabelsProperty.setValue(positionProperty.get().stream()
+                .map(labelMap::get)
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
                 .map(node -> node.getLabel(mainController, this))
