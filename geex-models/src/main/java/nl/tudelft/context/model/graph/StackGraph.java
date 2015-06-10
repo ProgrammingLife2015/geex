@@ -10,6 +10,11 @@ import java.util.Set;
 public abstract class StackGraph extends DefaultGraph<DefaultNode> {
 
     /**
+     * The boolean that marks if this graph should mark variations.
+     */
+    private boolean markVariations = false;
+
+    /**
      * Clone an other graph into this graph.
      *
      * @param stackGraph Graph to clone
@@ -56,6 +61,14 @@ public abstract class StackGraph extends DefaultGraph<DefaultNode> {
 
         return subGraph;
 
+    }
+
+    public void setMarkVariations(final boolean bool) {
+        markVariations = bool;
+    }
+
+    public boolean getMarkVariations() {
+        return markVariations;
     }
 
 }

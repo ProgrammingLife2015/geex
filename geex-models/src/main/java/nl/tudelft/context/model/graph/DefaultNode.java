@@ -20,6 +20,11 @@ public abstract class DefaultNode {
     String content;
 
     /**
+     * Boolean that tells if this node is a variation.
+     */
+    private boolean isVariation = false;
+
+    /**
      * Getter for sources.
      *
      * @return sources
@@ -36,4 +41,13 @@ public abstract class DefaultNode {
     public String getContent() {
         return content;
     }
+
+    public void setVariation(final boolean bool) {
+        isVariation = bool;
+    }
+
+    public boolean getVariation() {
+        return isVariation;
+    }
+
 }

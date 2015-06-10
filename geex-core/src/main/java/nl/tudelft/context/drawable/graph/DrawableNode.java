@@ -3,6 +3,7 @@ package nl.tudelft.context.drawable.graph;
 import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.Node;
+import org.jgrapht.graph.AbstractGraph;
 
 /**
  * @author Gerben Oolbekkink
@@ -17,10 +18,16 @@ public class DrawableNode extends AbstractDrawableNode {
      */
     public DrawableNode(final Node node) {
         super(node);
+        isVariation = node.getVariation();
     }
 
     @Override
     public AbstractLabel getLabel(final MainController mainController, final AbstractGraphController graphController) {
-        return new DrawableNodeLabel(mainController, graphController, this, (Node) getNode());
+        if(isVariation && graphController.getGraphList().get(graphController.getDepth()).getMarkVariations()) {
+            return new VariationLabel(mainController, graphController, this, (Node) getNode());
+        } else {
+            return new DrawableNodeLabel(mainController, graphController, this, (Node) getNode());
+        }
     }
+
 }

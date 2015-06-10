@@ -1,4 +1,4 @@
-package nl.tudelft.context.drawable;
+package nl.tudelft.context.drawable.graph;
 
 import javafx.scene.control.Label;
 import nl.tudelft.context.controller.AbstractGraphController;
@@ -31,11 +31,13 @@ public class VariationLabel extends DrawableNodeLabel {
         super(mainController, graphController, abstractNode, node);
         this.node = node;
 
+        init();
+
     }
 
-    @Override
-    public final void init() {
+    private void init() {
 
+        getChildren().clear();
         getChildren().add(initMainLabel());
 
     }

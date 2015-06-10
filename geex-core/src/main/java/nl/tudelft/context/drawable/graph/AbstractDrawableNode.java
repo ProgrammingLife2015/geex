@@ -22,6 +22,8 @@ public abstract class AbstractDrawableNode extends DrawablePosition {
      */
     int currentIncoming = 0;
 
+    boolean isVariation = false;
+
     /**
      * Increment current incoming and return.
      *

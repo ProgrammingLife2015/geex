@@ -80,6 +80,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      */
     ObjectProperty<Set<AbstractLabel>> currentLabelsProperty = new SimpleObjectProperty<>(new HashSet<>());
 
+    int depth = 0;
+
     /**
      * Create default graph controller.
      *
@@ -182,6 +184,10 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .map(node -> node.getLabel(mainController, this))
                 .collect(Collectors.toSet()));
 
+    }
+
+    public int getDepth() {
+        return depth;
     }
 
 }
