@@ -9,7 +9,7 @@ import nl.tudelft.context.model.graph.GraphNode;
 /**
  * The Javafx part of DrawableGraphNode.
  *
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 1-6-2015
  */
@@ -40,19 +40,16 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
         setOnMouseClicked(event -> mainController.setView(graphController,
                 new SubGraphController(mainController, graphController.getGraphList().getFirst(), node)));
 
+        init();
+
     }
 
-    @Override
-    public final void init() {
+    /**
+     * Draw sub elements.
+     */
+    private void init() {
 
         getChildren().add(initMainLabel());
-
-    }
-
-    @Override
-    public int currentColumn() {
-
-        return (int) translateXProperty().get() / DrawableGraph.LABEL_SPACING;
 
     }
 

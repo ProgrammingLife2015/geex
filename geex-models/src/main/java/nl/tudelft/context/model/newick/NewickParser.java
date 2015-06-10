@@ -10,7 +10,7 @@ import nl.tudelft.context.model.newick.node.DummyNode;
 import java.io.BufferedReader;
 
 /**
- * @author Jasper Boot <mrjasperboot@gmail.com>
+ * @author Jasper Boot
  * @version 1.0
  * @since 3-5-2015
  */

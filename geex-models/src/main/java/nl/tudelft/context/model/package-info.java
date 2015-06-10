@@ -1,7 +1,7 @@
 /**
  * This package is the root for all model classes.
  *
- * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @author Gerben Oolbekkink
  * @version 1.0
  * @since 24-5-2015
  */

@@ -6,7 +6,7 @@ import nl.tudelft.context.model.newick.node.AncestorNode;
 import nl.tudelft.context.model.newick.node.StrandNode;
 
 /**
- * @author Jasper Boot <mrjasperboot@gmail.com>
+ * @author Jasper Boot
  * @version 1.0
  * @since 3-5-2015
  */

@@ -3,7 +3,7 @@ package nl.tudelft.context.model.graph;
 /**
  * Graph.
  *
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 23-4-2015
  */

@@ -17,6 +17,21 @@
             <artifactId>geex-models</artifactId>
             <version>0.7</version>
         </dependency>
+        <dependency>
+            <groupId>nl.tudelft.context</groupId>
+            <artifactId>geex-services</artifactId>
+            <version>0.7</version>
+        </dependency>
+        <dependency>
+            <groupId>nl.tudelft.context</groupId>
+            <artifactId>geex-workspace</artifactId>
+            <version>0.7</version>
+        </dependency>
+        <dependency>
+            <groupId>nl.tudelft.context</groupId>
+            <artifactId>geex-effects</artifactId>
+            <version>0.7</version>
+        </dependency>
     </dependencies>
 
 

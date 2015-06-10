@@ -18,8 +18,8 @@ import static junit.framework.TestCase.*;
 import static org.mockito.Mockito.*;
 
 /**
- * @author René Vennik <renevennik@gmail.com>
- * @author Gerben Oolbekkink <g.j.w.oolbekkink@gmail.com>
+ * @author René Vennik
+ * @author Gerben Oolbekkink
  * @version 1.0
  * @since 26-4-2015
  */

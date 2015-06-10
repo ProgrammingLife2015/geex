@@ -15,6 +15,7 @@ public class AnnotationParser extends Parser<AnnotationMap> {
 
     /**
      * Parse the file into an AnnotationMap.
+     *
      * @param readerList Reader to read.
      * @return A parsed annotationmap.
      */
@@ -23,11 +24,13 @@ public class AnnotationParser extends Parser<AnnotationMap> {
         Scanner sc = new Scanner(reader);
         AnnotationMap annotationMap = new AnnotationMap();
         String line = "";
-        String cvsSplitBy = ",";
+        String fileSplitBy = "\\t";
+        int index = 0;
         while (sc.hasNextLine()) {
             line = sc.nextLine();
-            String[] splitLine = line.split(cvsSplitBy);
-            annotationMap.put(splitLine[1], getAnnotation(splitLine));
+            String[] splitLine = line.split(fileSplitBy);
+            annotationMap.put(index, getAnnotation(splitLine));
+            index++;
         }
 
         return annotationMap;
@@ -41,13 +44,18 @@ public class AnnotationParser extends Parser<AnnotationMap> {
      * @throws NumberFormatException when the data isn't correct
      */
     public final Annotation getAnnotation(final String[] splitLine) throws NumberFormatException {
-        int id = Integer.parseInt(splitLine[0]);
-        String name = splitLine[1];
-        Boolean strand = splitLine[2].equals("+");
-        int start = Integer.parseInt(splitLine[3]);
-        int end = Integer.parseInt(splitLine[4]);
-        String proteinName = splitLine[5];
-        Annotation annotation = new Annotation(id, name, strand, start, end, proteinName);
+        int index = 0;
+        String seqId = splitLine[index];
+        String source = splitLine[++index];
+        String type = splitLine[++index];
+        int start = Integer.parseInt(splitLine[++index]);
+        int end = Integer.parseInt(splitLine[++index]);
+        float score = Float.parseFloat(splitLine[++index]);
+        char strand = splitLine[++index].charAt(0);
+        char phase = splitLine[++index].charAt(0);
+        String attributes = splitLine[++index];
+
+        Annotation annotation = new Annotation(seqId, source, type, start, end, score, strand, phase, attributes);
         return annotation;
     }
 }

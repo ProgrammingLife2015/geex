@@ -6,7 +6,7 @@ import nl.tudelft.context.drawable.DrawablePosition;
 import nl.tudelft.context.model.graph.DefaultNode;
 
 /**
- * @author René Vennik <renevennik@gmail.com>
+ * @author René Vennik
  * @version 1.0
  * @since 1-5-2015
  */
@@ -30,6 +30,17 @@ public abstract class AbstractDrawableNode extends DrawablePosition {
     public final int incrementIncoming() {
 
         return ++currentIncoming;
+
+    }
+
+    /**
+     * Get the current column the label is displayed.
+     *
+     * @return Column index
+     */
+    public int currentColumn() {
+
+        return (int) translateXProperty().get() / DrawableGraph.LABEL_SPACING;
 
     }
 
