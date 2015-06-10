@@ -238,7 +238,8 @@
             <name>René Vennik</name>
             <email>renevennik@gmail.com</email>
             <roles>
-                <role>product owner, developer</role>
+                <role>product owner</role>
+                <role>developer</role>
             </roles>
         </developer>
         <developer>
@@ -246,7 +247,8 @@
             <name>Jasper Nieuwdorp</name>
             <email>nieuwdorp.jasper@gmail.com</email>
             <roles>
-                <role>scrum master, developer</role>
+                <role>scrum master</role>
+                <role>developer</role>
             </roles>
         </developer>
         <developer>
