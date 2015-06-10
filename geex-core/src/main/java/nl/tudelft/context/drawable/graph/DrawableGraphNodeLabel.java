@@ -1,5 +1,6 @@
 package nl.tudelft.context.drawable.graph;
 
+import javafx.scene.CacheHint;
 import javafx.scene.control.Label;
 import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
@@ -34,6 +35,7 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
         this.node = node;
 
         setCache(true);
+        setCacheHint(CacheHint.SCALE);
         translateXProperty().bind(abstractDrawableNode.translateXProperty());
         translateYProperty().bind(abstractDrawableNode.translateYProperty());
 
@@ -66,6 +68,16 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
 
         return label;
 
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return other instanceof DrawableGraphNodeLabel && node.equals(((DrawableGraphNodeLabel) other).node);
+    }
+
+    @Override
+    public int hashCode() {
+        return node.hashCode();
     }
 
 }
