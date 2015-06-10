@@ -21,6 +21,9 @@ public class AncestorNodeTest {
     AncestorNode child1 = new AncestorNode(2.34);
     AncestorNode child2 = new AncestorNode(3.45);
 
+    /**
+     * Set up basic structure.
+     */
     @Before
     public void before() {
         connect(
@@ -29,16 +32,25 @@ public class AncestorNodeTest {
         );
     }
 
+    /**
+     * Test the name.
+     */
     @Test
     public void testName() {
         assertEquals("", parent.getName());
     }
 
+    /**
+     * Test the weight.
+     */
     @Test
     public void testWeight() {
         assertEquals(1.23, parent.getWeight(), 1e-12);
     }
 
+    /**
+     * Parent should contain all children.
+     */
     @Test
     public void testChildren() {
         assertEquals(child1, parent.getChildren().get(0));
@@ -47,12 +59,18 @@ public class AncestorNodeTest {
         assertTrue(child2.getChildren().isEmpty());
     }
 
+    /**
+     * None selected; no sources.
+     */
     @Test
     public void testUpdateSources() {
         parent.updateSources();
         assertTrue(parent.getSources().isEmpty());
     }
 
+    /**
+     * One source should be returned.
+     */
     @Test
     public void testUpdateSourcesNotEmpty() {
         AbstractNode node = mock(AbstractNode.class);
@@ -66,6 +84,9 @@ public class AncestorNodeTest {
         assertTrue(child1.getSources().contains("cheese"));
     }
 
+    /**
+     * A new node should be returned with the same name and weight.
+     */
     @Test
     public void testCopy() {
         AbstractNode node = parent.getCopy();
@@ -74,6 +95,9 @@ public class AncestorNodeTest {
         assertFalse(node == parent);
     }
 
+    /**
+     * Should return all selected nodes.
+     */
     @Test
     public void testGetSelected() {
         parent.setSelection(new All());
@@ -82,6 +106,9 @@ public class AncestorNodeTest {
         assertEquals(2, root.getChildren().size());
     }
 
+    /**
+     * Should return all selected nodes, minus ancestors with only one child.
+     */
     @Test
     public void testGetSelectedSkipAncestor() {
         parent.setSelection(new All());
@@ -91,11 +118,17 @@ public class AncestorNodeTest {
         assertTrue(root.getChildren().isEmpty());
     }
 
+    /**
+     * The right class name should be returned.
+     */
     @Test
     public void testClassName() {
         assertEquals("newick-ancestor", parent.getClassName());
     }
 
+    /**
+     * Translate x, on top of the parent's location.
+     */
     @Test
     public void testTranslation() {
         int minWeight = 3;
@@ -113,6 +146,9 @@ public class AncestorNodeTest {
                 child1.translateXProperty().doubleValue(), 1e-12);
     }
 
+    /**
+     * Test toString().
+     */
     @Test
     public void testToString() {
         assertEquals("AncestorNode<1.23>", parent.toString());

@@ -4,12 +4,7 @@ import nl.tudelft.context.model.newick.selection.All;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * @author Jasper Boot <mrjasperboot@gmail.com>
@@ -21,6 +16,9 @@ public class StrandNodeTest {
     StrandNode child1 = new StrandNode("child1", 2.34);
     StrandNode child2 = new StrandNode("child2", 3.45);
 
+    /**
+     * Set up basic structure.
+     */
     @Before
     public void before() {
         connect(
@@ -29,6 +27,9 @@ public class StrandNodeTest {
         );
     }
 
+    /**
+     * Test the name.
+     */
     @Test
     public void testName() {
         assertEquals("parent", parent.getName());
@@ -36,6 +37,10 @@ public class StrandNodeTest {
         assertEquals("child2", child2.getName());
     }
 
+
+    /**
+     * Test the weight.
+     */
     @Test
     public void testWeight() {
         assertEquals(1.23, parent.getWeight(), 1e-12);
@@ -43,6 +48,9 @@ public class StrandNodeTest {
         assertEquals(3.45, child2.getWeight(), 1e-12);
     }
 
+    /**
+     * Parent should contain no children.
+     */
     @Test
     public void testChildren() {
         assertTrue(parent.getChildren().isEmpty());
@@ -50,12 +58,18 @@ public class StrandNodeTest {
         assertTrue(child2.getChildren().isEmpty());
     }
 
+    /**
+     * None selected; no sources.
+     */
     @Test
     public void testUpdateSources() {
         parent.updateSources();
         assertTrue(parent.getSources().isEmpty());
     }
 
+    /**
+     * One source should be returned.
+     */
     @Test
     public void testUpdateSourcesNotEmpty() {
         child1.setSelection(new All());
@@ -64,6 +78,9 @@ public class StrandNodeTest {
         assertTrue(child1.getSources().contains("child1"));
     }
 
+    /**
+     * A new node should be returned with the same name and weight.
+     */
     @Test
     public void testCopy() {
         AbstractNode node = parent.getCopy();
@@ -72,6 +89,9 @@ public class StrandNodeTest {
         assertFalse(node == parent);
     }
 
+    /**
+     * Should return all selected nodes.
+     */
     @Test
     public void testGetSelected() {
         parent.setSelection(new All());
@@ -80,11 +100,17 @@ public class StrandNodeTest {
         assertEquals(parent.getWeight(), root.getWeight(), 1e-12);
     }
 
+    /**
+     * The right class name should be returned.
+     */
     @Test
     public void testClassName() {
         assertEquals("newick-strand", parent.getClassName());
     }
 
+    /**
+     * Translate x, on top of the parent's location.
+     */
     @Test
     public void testTranslation() {
         int minWeight = 3;
@@ -102,6 +128,9 @@ public class StrandNodeTest {
                 child1.translateXProperty().doubleValue(), 1e-12);
     }
 
+    /**
+     * Test toString().
+     */
     @Test
     public void testToString() {
         assertEquals("StrandNode<parent,1.23>", parent.toString());

@@ -21,6 +21,9 @@ public class DummyNodeTest {
     DummyNode child1 = new DummyNode();
     DummyNode child2 = new DummyNode();
 
+    /**
+     * Set up basic structure.
+     */
     @Before
     public void before() {
         connect(
@@ -29,16 +32,27 @@ public class DummyNodeTest {
         );
     }
 
+    /**
+     * Test the name.
+     */
     @Test
     public void testName() {
         assertEquals("", parent.getName());
     }
 
+
+    /**
+     * Test the weight.
+     */
     @Test
     public void testWeight() {
         assertEquals(0, parent.getWeight(), 1e-12);
     }
 
+
+    /**
+     * Parent should contain last child.
+     */
     @Test
     public void testChildren() {
         assertEquals(child2, parent.getChildren().get(0));
@@ -47,12 +61,18 @@ public class DummyNodeTest {
         assertTrue(child2.getChildren().isEmpty());
     }
 
+    /**
+     * None selected; no sources.
+     */
     @Test
     public void testUpdateSources() {
         parent.updateSources();
         assertTrue(parent.getSources().isEmpty());
     }
 
+    /**
+     * One source should be returned.
+     */
     @Test
     public void testUpdateSourcesNotEmpty() {
         AbstractNode node = mock(AbstractNode.class);
@@ -66,6 +86,9 @@ public class DummyNodeTest {
         assertTrue(child1.getSources().contains("cheese"));
     }
 
+    /**
+     * A new node should be returned with the same name and weight.
+     */
     @Test
     public void testCopy() {
         AbstractNode node = parent.getCopy();
@@ -74,6 +97,9 @@ public class DummyNodeTest {
         assertFalse(node == parent);
     }
 
+    /**
+     * Should return all selected nodes.
+     */
     @Test
     public void testGetSelected() {
         parent.setSelection(new All());
@@ -81,11 +107,17 @@ public class DummyNodeTest {
         assertEquals(1, root.getChildren().size());
     }
 
+    /**
+     * The right class name should be returned.
+     */
     @Test
     public void testClassName() {
         assertEquals("newick-dummy", parent.getClassName());
     }
 
+    /**
+     * Don't translate x, keep the parent's location.
+     */
     @Test
     public void testTranslation() {
         int minWeight = 3;
@@ -99,6 +131,9 @@ public class DummyNodeTest {
         assertEquals(3, child2.translateXProperty().doubleValue(), 1e-12);
     }
 
+    /**
+     * Test toString().
+     */
     @Test
     public void testToString() {
         assertEquals("DummyNode", parent.toString());
