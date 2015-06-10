@@ -188,6 +188,18 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.7</version>
+                <reportSets>
+                    <reportSet>
+                        <!-- defines cobertura projects- and aggregate-report -->
+                        <id>cobertura</id>
+                        <reports>
+                            <report>cobertura</report>
+                        </reports>
+                        <configuration>
+                            <aggregate>true</aggregate>
+                        </configuration>
+                    </reportSet>
+                </reportSets>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
