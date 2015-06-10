@@ -1,9 +1,12 @@
 package nl.tudelft.context.drawable.graph;
 
+import javafx.beans.property.ObjectProperty;
 import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.drawable.DrawablePosition;
 import nl.tudelft.context.model.graph.DefaultNode;
+
+import java.util.Set;
 
 /**
  * @author René Vennik
@@ -69,12 +72,14 @@ public abstract class AbstractDrawableNode extends DrawablePosition {
     /**
      * Get the drawable javafx label for this node.
      *
-     * @param mainController Reference to mainController for keybinding and redirection.
-     * @param graphController Reference to graphController for redirection.
+     * @param mainController  Reference to mainController for key binding and redirection
+     * @param graphController Reference to graphController for redirection
+     * @param selectedSources Property containing the current sources
      * @return Javafx VBox to draw.
      */
     public abstract AbstractLabel getLabel(final MainController mainController,
-                                           final AbstractGraphController graphController);
+                                           final AbstractGraphController graphController,
+                                           final ObjectProperty<Set<String>> selectedSources);
 
     /**
      * Check if nodes are equal.

@@ -63,6 +63,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     Pane locator;
 
     /**
+     * Sources that are displayed in the graph.
+     */
+    ObjectProperty<Set<String>> selectedSources = new SimpleObjectProperty<>(new HashSet<>());
+
+    /**
      * List of graph views.
      */
     LinkedList<StackGraph> graphList = new LinkedList<>();
@@ -189,7 +194,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .map(labelMap::get)
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
-                .map(node -> node.getLabel(mainController, this))
+                .map(node -> node.getLabel(mainController, this, selectedSources))
                 .collect(Collectors.toSet()));
 
     }
