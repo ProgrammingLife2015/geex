@@ -34,7 +34,7 @@ public class Annotation {
      * - SOFA, a term from the full Sequence Ontology -
      * it must be an is_a child of sequence_feature (SO:0000110) or (c) a SOFA or SO accession number.
      * The latter alternative is distinguished using the syntax SO:000000.
-     */
+            */
     String type;
 
     /**
@@ -124,6 +124,9 @@ public class Annotation {
         this.strand = strand;
         this.phase = phase;
         this.attributes = attributes;
+    }
+    public int getStart(){
+        return start;
     }
 
 
