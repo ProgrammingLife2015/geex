@@ -1,6 +1,7 @@
 package nl.tudelft.context.model.newick;
 
 import nl.tudelft.context.model.newick.node.AbstractNode;
+import nl.tudelft.context.model.newick.node.AncestorNode;
 import nl.tudelft.context.model.newick.node.StrandNode;
 import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.model.newick.selection.None;
@@ -29,7 +30,7 @@ public class NodeTest {
      */
     @Test
     public void testChild() {
-        AbstractNode n = new StrandNode("a", 0);
+        AbstractNode n = new AncestorNode(0);
         AbstractNode m = new StrandNode("b", 1);
         n.addChild(m);
         assertEquals(n.getChildren(), Collections.singletonList(m));
@@ -73,7 +74,7 @@ public class NodeTest {
      */
     @Test
     public void testSetSelection() {
-        AbstractNode n1 = new StrandNode("", 1);
+        AbstractNode n1 = new AncestorNode(1);
         AbstractNode n2 = mock(AbstractNode.class);
         n1.addChild(n2);
         Selection selection = new All();
@@ -86,7 +87,7 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionAll() {
-        AbstractNode n1 = new StrandNode("", 1);
+        AbstractNode n1 = new AncestorNode(1);
         AbstractNode n2 = new StrandNode("a", 2);
         AbstractNode n3 = new StrandNode("b", 3);
         n1.addChild(n2);
@@ -102,7 +103,7 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionNone() {
-        AbstractNode n1 = new StrandNode("", 1);
+        AbstractNode n1 = new AncestorNode(1);
         AbstractNode n2 = new StrandNode("a", 2);
         AbstractNode n3 = new StrandNode("b", 3);
         n1.addChild(n2);
@@ -118,7 +119,7 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionPartialPartial() {
-        AbstractNode n1 = new StrandNode("", 1);
+        AbstractNode n1 = new AncestorNode(1);
         AbstractNode n2 = new StrandNode("a", 2);
         AbstractNode n3 = new StrandNode("b", 3);
         n1.addChild(n2);
@@ -134,7 +135,7 @@ public class NodeTest {
      */
     @Test
     public void testUpdateSelectionPartialAll() {
-        AbstractNode n1 = new StrandNode("", 1);
+        AbstractNode n1 = new AncestorNode(1);
         AbstractNode n2 = new StrandNode("a", 2);
         AbstractNode n3 = new StrandNode("b", 3);
         n1.addChild(n2);

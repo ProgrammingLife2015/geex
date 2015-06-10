@@ -1,6 +1,7 @@
 package nl.tudelft.context.model.newick;
 
 import nl.tudelft.context.model.newick.node.AbstractNode;
+import nl.tudelft.context.model.newick.node.AncestorNode;
 import nl.tudelft.context.model.newick.node.StrandNode;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,10 +40,10 @@ public class NewickTest {
     @Test
     public void testToString() {
         assertEquals("", newick.toString());
-        newick.setRoot(new StrandNode("Some name", 1.23));
-        assertEquals("StrandNode<Some name,1.23>\n", newick.toString());
+        newick.setRoot(new AncestorNode(1.23));
+        assertEquals("AncestorNode<1.23>\n", newick.toString());
         newick.getRoot().addChild(new StrandNode("Some other name", 2.34));
-        assertEquals("StrandNode<Some name,1.23>\n" +
+        assertEquals("AncestorNode<1.23>\n" +
                         "\tStrandNode<Some other name,2.34>\n",
                 newick.toString());
     }
