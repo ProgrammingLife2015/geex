@@ -80,8 +80,6 @@ public class VariationGraph extends StackGraph {
         HashSet<DefaultNode> currentVariation = new HashSet<>();
         nextNodes.addAll(getTargets(startNode));
 
-        System.out.println(((Node) startNode).getId() + " goes to " + nextNodes.stream().map(node -> ((Node) node).getId()).collect(Collectors.toList()));
-
         int amountOfBranches = nextNodes.size() - 1;
 
         while (!nextNodes.isEmpty()) {
@@ -102,7 +100,6 @@ public class VariationGraph extends StackGraph {
                 currentVariation.add(node);
 
                 List<DefaultNode> setOfNextNodes = getTargets(node);
-                System.out.println(((Node) node).getId() + " leads to " + setOfNextNodes.stream().map(node2 -> ((Node) node2).getId()).collect(Collectors.toList()));
                 if (setOfNextNodes.size() > 1) {
                     nextNodes.add(checkVariation(node));
                 } else if (!setOfNextNodes.isEmpty() && !nextNodes.isEmpty() && !currentVariation.containsAll(setOfNextNodes)) {

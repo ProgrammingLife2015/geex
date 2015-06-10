@@ -166,8 +166,8 @@ public final class GraphController extends AbstractGraphController {
      */
     private void loadGraph(final GraphMap graphMap) {
         graphList.add(graphMap.flat(sources));
-        graphList.add(new VariationGraph(graphList.getLast()));
         graphList.add(new SinglePointGraph(graphList.getLast()));
+        graphList.add(new VariationGraph(graphList.getLast()));
         DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
         showGraph(drawableGraph);
     }
