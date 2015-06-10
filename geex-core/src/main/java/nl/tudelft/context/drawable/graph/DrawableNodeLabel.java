@@ -47,7 +47,11 @@ public class DrawableNodeLabel extends AbstractLabel {
                              final AbstractDrawableNode abstractDrawableNode, final Node node,
                              final ObjectProperty<Set<String>> selectedSources) {
 
+        super(node);
         this.node = node;
+
+        selectedSources.addListener((observable, oldValue, newValue) -> updateSources(newValue));
+        updateSources(selectedSources.get());
 
         setCache(true);
         setCacheHint(CacheHint.SCALE);

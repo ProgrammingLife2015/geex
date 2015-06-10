@@ -20,11 +20,6 @@ import java.util.Set;
 public class DrawableGraphNodeLabel extends AbstractLabel {
 
     /**
-     * The node the label belongs to.
-     */
-    GraphNode node;
-
-    /**
      * Constructor for the single point mutation label.
      *
      * @param mainController       MainController indicating the controller
@@ -37,7 +32,10 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
                                   final AbstractDrawableNode abstractDrawableNode, final GraphNode node,
                                   final ObjectProperty<Set<String>> selectedSources) {
 
-        this.node = node;
+        super(node);
+
+        selectedSources.addListener((observable, oldValue, newValue) -> updateSources(newValue));
+        updateSources(selectedSources.get());
 
         setCache(true);
         setCacheHint(CacheHint.SCALE);
