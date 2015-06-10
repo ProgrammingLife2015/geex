@@ -70,4 +70,14 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
 
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof DrawableGraphNodeLabel && node.equals(((DrawableGraphNodeLabel) other).node);
+    }
+
+    @Override
+    public int hashCode() {
+        return node.hashCode();
+    }
+
 }

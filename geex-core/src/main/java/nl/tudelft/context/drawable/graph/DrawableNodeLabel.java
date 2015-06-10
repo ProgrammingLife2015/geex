@@ -3,8 +3,8 @@ package nl.tudelft.context.drawable.graph;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.AbstractGraphController;
+import nl.tudelft.context.controller.BaseController;
 import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.model.graph.BaseCounter;
 import nl.tudelft.context.model.graph.Node;
@@ -107,6 +107,16 @@ public class DrawableNodeLabel extends AbstractLabel {
         group.getChildren().addAll(baseLabels);
         return group;
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof DrawableNodeLabel && node.equals(((DrawableNodeLabel) other).node);
+    }
+
+    @Override
+    public int hashCode() {
+        return node.hashCode();
     }
 
 }

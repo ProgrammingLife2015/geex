@@ -73,9 +73,9 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     MainController mainController;
 
     /**
-     * Map containing the labels indexed by position.
+     * Map containing the nodes indexed by position.
      */
-    ObjectProperty<Map<Integer, List<AbstractDrawableNode>>> labelMapProperty =
+    ObjectProperty<Map<Integer, List<AbstractDrawableNode>>> nodeMapProperty =
             new SimpleObjectProperty<>(new HashMap<>());
 
     /**
@@ -110,7 +110,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
             zoomLabelsProperty.setValue(newValue.stream().collect(Collectors.toList()));
         });
 
-        new LocatorController(locator, labelMapProperty, positionProperty);
+        new LocatorController(locator, nodeMapProperty, positionProperty);
 
         initOnTheFlyLoading();
 
@@ -136,7 +136,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .map(edge -> new DrawableEdge(drawableGraph, edge))
                 .collect(Collectors.toList()));
 
-        labelMapProperty.setValue(drawableGraph.vertexSet().parallelStream().collect(
+        nodeMapProperty.setValue(drawableGraph.vertexSet().parallelStream().collect(
                 Collectors.groupingBy(
                         AbstractDrawableNode::currentColumn,
                         Collectors.mapping(Function.identity(), Collectors.toList())
@@ -150,13 +150,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      */
     private void initOnTheFlyLoading() {
 
-        labelMapProperty.addListener(event -> updatePosition());
+        nodeMapProperty.addListener(event -> updatePosition());
         scroll.widthProperty().addListener(event -> updatePosition());
         scroll.hvalueProperty().addListener(event -> updatePosition());
 
         currentLabelsProperty.addListener(((observable, oldValue, newValue) -> {
-            oldValue.removeAll(newValue);
-            newValue.removeAll(oldValue);
             sequences.getChildren().removeAll(oldValue);
             sequences.getChildren().addAll(newValue);
         }));
@@ -186,7 +184,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      */
     private void showCurrentLabels() {
 
-        final Map<Integer, List<AbstractDrawableNode>> labelMap = labelMapProperty.getValue();
+        final Map<Integer, List<AbstractDrawableNode>> labelMap = nodeMapProperty.getValue();
         currentLabelsProperty.setValue(positionProperty.get().stream()
                 .map(labelMap::get)
                 .filter(Objects::nonNull)
