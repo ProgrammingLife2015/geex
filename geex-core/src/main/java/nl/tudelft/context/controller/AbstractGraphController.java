@@ -154,10 +154,10 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         scroll.widthProperty().addListener(event -> updatePosition());
         scroll.hvalueProperty().addListener(event -> updatePosition());
 
-        currentLabelsProperty.addListener(((observable, oldValue, newValue) -> {
+        currentLabelsProperty.addListener((observable, oldValue, newValue) -> {
             sequences.getChildren().removeAll(oldValue);
             sequences.getChildren().addAll(newValue);
-        }));
+        });
 
         positionProperty.addListener(event -> showCurrentLabels());
 
