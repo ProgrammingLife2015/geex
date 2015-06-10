@@ -181,9 +181,17 @@
     -fx-text-fill: #2b2b2b;
 }
 
-.selected-label .info-label,
-.selected-label .single-label{
-    -fx-background-color: #fff;
+.selected-label .info-label {
+    -fx-border-width: 4px 4px 0;
+    -fx-border-color: #000;
+    -fx-border-style: dashed;
+}
+
+.selected-label .single-label {
+    -fx-border-width: 4px;
+    -fx-border-color: #000;
+    -fx-border-radius: 30px;
+    -fx-border-style: dashed;
 }
 
 /* Newick */
