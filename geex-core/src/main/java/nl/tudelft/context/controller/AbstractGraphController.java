@@ -63,6 +63,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     Pane locator;
 
     /**
+     * Sources that are displayed in the graph.
+     */
+    ObjectProperty<Set<String>> selectedSources = new SimpleObjectProperty<>(new HashSet<>());
+
+    /**
      * List of graph views.
      */
     LinkedList<StackGraph> graphList = new LinkedList<>();
@@ -108,7 +113,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         new Zoom(scroll, sequences, zoomLabelsProperty);
         currentLabelsProperty.addListener((observable, oldValue, newValue) -> {
             zoomLabelsProperty.setValue(newValue.stream().collect(Collectors.toList()));
+            newValue.stream().forEach(label -> label.updateSources(selectedSources.get()));
         });
+
+        selectedSources.addListener((observable, oldValue, newValue) ->
+                currentLabelsProperty.get().stream().forEach(label -> label.updateSources(newValue)));
 
         new LocatorController(locator, nodeMapProperty, positionProperty);
 

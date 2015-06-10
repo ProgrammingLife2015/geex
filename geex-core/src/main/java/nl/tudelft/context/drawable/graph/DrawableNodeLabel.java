@@ -43,6 +43,7 @@ public class DrawableNodeLabel extends AbstractLabel {
     public DrawableNodeLabel(final MainController mainController, final AbstractGraphController graphController,
                              final AbstractDrawableNode abstractDrawableNode, final Node node) {
 
+        super(node);
         this.node = node;
 
         setCache(true);
