@@ -71,7 +71,7 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         return other instanceof DrawableGraphNodeLabel && node.equals(((DrawableGraphNodeLabel) other).node);
     }
 
