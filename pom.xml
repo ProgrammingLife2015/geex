@@ -371,6 +371,23 @@
         </developer>
     </developers>
 
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/Vennik/contextproject/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:git@github.com:Vennik/contextproject.git</connection>
+        <developerConnection>scm:git:git@github.com:Vennik/contextproject.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/Vennik/contextproject</url>
+    </scm>
+
+    <ciManagement>
+        <system>travis-ci</system>
+        <url>https://travis-ci.org/Vennik/contextproject</url>
+        <notifiers/>
+    </ciManagement>
     <distributionManagement>
         <site>
             <id>github-pages-site</id>
