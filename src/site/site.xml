@@ -12,8 +12,6 @@
 
     <custom>
         <fluidoSkin>
-            <topBarEnabled>true</topBarEnabled>
-            <sideBarEnabled>false</sideBarEnabled>
             <topBarIcon>
                 <name>Geex</name>
                 <alt>Geex logo</alt>
