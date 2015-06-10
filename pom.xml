@@ -207,10 +207,22 @@
                 </configuration>
                 <reportSets>
                     <reportSet>
+                        <!-- define checkstyle reports in the modules -->
+                        <id>checkstyle</id>
                         <reports>
                             <report>checkstyle</report>
                         </reports>
                     </reportSet>
+                    <reportSet>
+                        <!-- define checkstyle aggregate report -->
+                        <id>aggregate</id>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>checkstyle-aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
                 </reportSets>
             </plugin>
             <plugin>
