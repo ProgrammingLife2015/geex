@@ -41,13 +41,13 @@ public class StrandNode extends AbstractNode {
     }
 
     @Override
-    public StrandNode clone() {
+    public StrandNode getCopy() {
         return new StrandNode(getName(), getWeight());
     }
 
     @Override
     public AbstractNode getSelectedNodes() {
-        AbstractNode node = clone();
+        AbstractNode node = getCopy();
         getChildren().stream()
                 .filter(n -> n.getSelection().isAny())
                 .map(AbstractNode::getSelectedNodes)

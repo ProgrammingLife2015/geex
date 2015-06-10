@@ -46,7 +46,7 @@ public abstract class AbstractNode {
     /**
      * The sources in this node.
      */
-    ObjectProperty<Set<String>> sources = new SimpleObjectProperty<>(new HashSet<>());
+    SimpleObjectProperty<Set<String>> sources = new SimpleObjectProperty<>(new HashSet<>());
 
     /**
      * Builds a new node with the corresponding name and weight.
@@ -73,15 +73,6 @@ public abstract class AbstractNode {
      * @return the children
      */
     public abstract List<AbstractNode> getChildren();
-
-    /**
-     * Checks if the node has a parent.
-     *
-     * @return true if the node has a parent; otherwise false.
-     */
-    public boolean hasParent() {
-        return parent.isPresent();
-    }
 
     /**
      * Sets the parent of the node.
@@ -203,7 +194,7 @@ public abstract class AbstractNode {
      *
      * @return A clone of the current node
      */
-    public abstract AbstractNode clone();
+    public abstract AbstractNode getCopy();
 
     /**
      * Should return a copy of all nodes that are (partially) selected.

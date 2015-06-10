@@ -40,13 +40,13 @@ public class AncestorNode extends AbstractNode {
     }
 
     @Override
-    public AncestorNode clone() {
+    public AncestorNode getCopy() {
         return new AncestorNode(getWeight());
     }
 
     @Override
     public AbstractNode getSelectedNodes() {
-        AbstractNode node = clone();
+        AbstractNode node = getCopy();
         List<AbstractNode> list = getChildren().stream()
                 .filter(n -> n.getSelection().isAny())
                 .map(AbstractNode::getSelectedNodes)

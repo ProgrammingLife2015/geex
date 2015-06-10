@@ -38,13 +38,13 @@ public class DummyNode extends AbstractNode {
     }
 
     @Override
-    public DummyNode clone() {
+    public DummyNode getCopy() {
         return new DummyNode();
     }
 
     @Override
     public AbstractNode getSelectedNodes() {
-        AbstractNode node = clone();
+        AbstractNode node = getCopy();
         getChildren().stream()
                 .filter(n -> n.getSelection().isAny())
                 .map(AbstractNode::getSelectedNodes)
