@@ -14,4 +14,13 @@
     <description>Model package for the Geex project.</description>
 
     <artifactId>geex-models</artifactId>
+
+    <dependencies>
+        <!-- Newick Parser -->
+        <dependency>
+            <groupId>com.github.qurben</groupId>
+            <artifactId>libnewicktree</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 </project>

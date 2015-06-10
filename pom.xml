@@ -52,12 +52,6 @@
             <artifactId>jgrapht-core</artifactId>
             <version>0.9.1</version>
         </dependency>
-        <!-- Newick Parser -->
-        <dependency>
-            <groupId>com.github.qurben</groupId>
-            <artifactId>libnewicktree</artifactId>
-            <version>1.0</version>
-        </dependency>
         <!-- Commons Lang -->
         <dependency>
             <groupId>commons-lang</groupId>
