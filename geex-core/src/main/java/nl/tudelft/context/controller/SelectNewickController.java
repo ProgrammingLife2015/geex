@@ -2,6 +2,7 @@ package nl.tudelft.context.controller;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableNewick;
 import nl.tudelft.context.drawable.NewickLabel;
@@ -20,6 +21,11 @@ import java.util.stream.Collectors;
 public class SelectNewickController extends AbstractNewickController {
 
     /**
+     * Main controller to set views
+     */
+    private final MainController mainController;
+
+    /**
      * Graph controller to update the selection.
      */
     private final GraphController graphController;
@@ -27,13 +33,16 @@ public class SelectNewickController extends AbstractNewickController {
     /**
      * Create s select Newick controller.
      *
+     * @param mainController  Main controller to set views
      * @param newickIn        Newick object from the workspace, might not be loaded
      * @param graphController Controller where to update the sources
      */
-    public SelectNewickController(final GraphController graphController,
+    public SelectNewickController(final MainController mainController,
+                                  final GraphController graphController,
                                   final ReadOnlyObjectProperty<Newick> newickIn) {
 
         super(newickIn);
+        this.mainController = mainController;
         this.graphController = graphController;
         this.showInBreadcrumb = false;
 
@@ -45,6 +54,14 @@ public class SelectNewickController extends AbstractNewickController {
     public void initialize(final URL location, final ResourceBundle resources) {
         super.initialize(location, resources);
         root.setId("newickSelectContainer");
+
+        MenuItem toggleSelect = mainController.getMenuController().getToggleSelect();
+        activeProperty.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                toggleSelect.setOnAction(event -> mainController.previousView());
+                toggleSelect.disableProperty().bind(activeProperty.not());
+            }
+        });
     }
 
     @Override
