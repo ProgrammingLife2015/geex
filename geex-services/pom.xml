@@ -16,12 +16,4 @@
     These services are used to run tasks in the background.</description>
 
     <artifactId>geex-services</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>nl.tudelft.context</groupId>
-            <artifactId>geex-models</artifactId>
-            <version>0.7</version>
-        </dependency>
-    </dependencies>
 </project>

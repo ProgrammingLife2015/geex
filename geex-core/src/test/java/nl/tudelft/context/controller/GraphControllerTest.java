@@ -75,7 +75,7 @@ public class GraphControllerTest {
         ReadOnlyObjectProperty<AnnotationMap> annotationMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
         ReadOnlyObjectProperty<ResistanceMap> resistanceMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
 
-        GraphMap graphMap = new GraphParser().setReader(nodeFile, edgeFile).parse();
+        GraphMap graphMap = new GraphParser().setFiles(nodeFile, edgeFile).load();
 
         GraphController graphController = new GraphController(
                 mainController,

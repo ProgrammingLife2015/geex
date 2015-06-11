@@ -2,7 +2,6 @@ package nl.tudelft.context.service;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import nl.tudelft.context.model.Parser;
 
 import java.io.File;
 
@@ -16,18 +15,18 @@ public class LoadService<T> extends Service<T> {
     /**
      * The class used for parsing the files.
      */
-    private Class<? extends Parser<T>> parserClass;
+    private Class<? extends Loadable<T>> parserClass;
     /**
-     * The files to parse.
+     * The files to load.
      */
     private File[] files;
 
     /**
      * Create a new Loader service.
      * @param parserClass Class used for parsing the files.
-     * @param files Files to parse.
+     * @param files Files to load.
      */
-    public LoadService(final Class<? extends Parser<T>> parserClass, final File... files) {
+    public LoadService(final Class<? extends Loadable<T>> parserClass, final File... files) {
         this.parserClass = parserClass;
         this.files = files;
 
@@ -39,9 +38,9 @@ public class LoadService<T> extends Service<T> {
         return new Task<T>() {
             @Override
             protected T call() throws Exception {
-                Parser<T> parser = parserClass.newInstance();
-                parser.setReader(files);
-                return parser.parse();
+                Loadable<T> parser = parserClass.newInstance();
+                parser.setFiles(files);
+                return parser.load();
             }
         };
     }

@@ -44,7 +44,7 @@ public class MainControllerTest {
         File nodeFile = new File(MainControllerTest.class.getResource("/graph/node.graph").getPath());
         File edgeFile = new File(MainControllerTest.class.getResource("/graph/edge.graph").getPath());
 
-        graph = new GraphParser().setReader(nodeFile, edgeFile).parse().flat(new HashSet<>(Arrays.asList("Cat", "Dog")));
+        graph = new GraphParser().setFiles(nodeFile, edgeFile).load().flat(new HashSet<>(Arrays.asList("Cat", "Dog")));
 
         mainController = new MainController();
 
