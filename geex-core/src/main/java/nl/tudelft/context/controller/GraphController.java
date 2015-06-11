@@ -91,10 +91,6 @@ public final class GraphController extends AbstractGraphController {
         });
         annotationMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get()));
 
-        annotationMapProperty.addListener((observable, oldValue, newValue) -> {
-            loadAnnotation(newValue);
-        });
-
         resistanceMapProperty.addListener((observable, oldValue, newValue) -> {
             loadResistance(newValue);
         });
@@ -157,14 +153,6 @@ public final class GraphController extends AbstractGraphController {
      */
     public void updateSelectedSources(final Set<String> sources) {
         selectedSources.setValue(sources);
-    }
-
-    /**
-     * Load annotation from source.
-     *
-     * @param annotationMap The annotation map which is loaded.
-     */
-    private void loadAnnotation(final AnnotationMap annotationMap) {
     }
 
     /**
