@@ -38,7 +38,7 @@ public class AnnotationMapTest {
                 + "Score: 0.0" + System.getProperty("line.separator")
                 + "Strand (Sense): A" + System.getProperty("line.separator")
                 + "Phase: B" + System.getProperty("line.separator")
-                + "Attributes:attributes" + System.getProperty("line.separator")
+                + "Attributes: attributes" + System.getProperty("line.separator")
                 + "]" + System.getProperty("line.separator")
                 + "[Sequence: seqId1" + System.getProperty("line.separator")
                 + "Source: source1" + System.getProperty("line.separator")
@@ -48,7 +48,7 @@ public class AnnotationMapTest {
                 + "Score: 1.0" + System.getProperty("line.separator")
                 + "Strand (Sense): C" + System.getProperty("line.separator")
                 + "Phase: D" + System.getProperty("line.separator")
-                + "Attributes:attributes2" + System.getProperty("line.separator")
+                + "Attributes: attributes2" + System.getProperty("line.separator")
                 + "]"
                 + System.getProperty("line.separator")
                 , annotationMap1.toString());
