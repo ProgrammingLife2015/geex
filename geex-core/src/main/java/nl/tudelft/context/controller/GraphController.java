@@ -51,6 +51,9 @@ public final class GraphController extends AbstractGraphController {
      */
     ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn;
 
+    boolean graphLoaded = false;
+    boolean annotationsLoaded = false;
+
     /**
      * Init a controller at graph.fxml.
      *
@@ -138,10 +141,14 @@ public final class GraphController extends AbstractGraphController {
      * @param graphMap The GraphMap which is loaded.
      */
     private void loadGraph(final GraphMap graphMap) {
-        graphList.add(graphMap.flat(sources));
-        graphList.add(new SinglePointGraph(graphList.getLast()));
-        DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
-        showGraph(drawableGraph);;
+        graphLoaded = true;
+        if (annotationsLoaded) {
+            graphMap.setAnnotations(annotationMapIn.get());
+            graphList.add(graphMap.flat(sources));
+            graphList.add(new SinglePointGraph(graphList.getLast()));
+            DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
+            showGraph(drawableGraph);
+        }
     }
 
     /**
@@ -159,8 +166,11 @@ public final class GraphController extends AbstractGraphController {
      * @param annotationMap The annotation map which is loaded.
      */
     private void loadAnnotation(final AnnotationMap annotationMap) {
+        annotationsLoaded = true;
         mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
-
+        if (graphLoaded) {
+            loadGraph(graphMapIn.get());
+        }
     }
 
     /**

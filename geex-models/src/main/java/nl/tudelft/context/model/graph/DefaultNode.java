@@ -1,5 +1,9 @@
 package nl.tudelft.context.model.graph;
 
+import nl.tudelft.context.model.annotation.Annotation;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -51,4 +55,17 @@ public abstract class DefaultNode {
      */
     public abstract int getRefEndPosition();
 
+    /**
+     * Sets the annotations that belong to this node.
+     *
+     * @param annotationMap The list of all annotations
+     */
+    public abstract void setAnnotations(final AnnotationMap annotationMap);
+
+    /**
+     * Get the list of annotations that are present in this node.
+     *
+     * @return The list of annotations present in this node
+     */
+    public abstract List<Annotation> getAnnotations();
 }

@@ -1,7 +1,12 @@
 package nl.tudelft.context.model.graph;
 
+import nl.tudelft.context.model.annotation.Annotation;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
@@ -74,6 +79,16 @@ public class GraphNode extends DefaultNode {
     @Override
     public int getRefEndPosition() {
         return end.getRefEndPosition();
+    }
+
+    @Override
+    public void setAnnotations(final AnnotationMap annotationMap) {
+        // do nothing
+    }
+
+    @Override
+    public List<Annotation> getAnnotations() {
+        return Collections.emptyList();
     }
 
 }

@@ -35,7 +35,7 @@ public class Node extends DefaultNode {
     /**
      * The annotations that belong to this node.
      */
-    List<Annotation> annotations = Collections.emptyList();;
+    List<Annotation> annotations = Collections.emptyList();
 
     /**
      * Create a node.
@@ -84,11 +84,7 @@ public class Node extends DefaultNode {
         return refEndPosition;
     }
 
-    /**
-     * Sets the annotations that belong to this node.
-     *
-     * @param annotationMap The list of all annotations
-     */
+    @Override
     public void setAnnotations(final AnnotationMap annotationMap) {
         if (sources.contains("TKK_REF")) {
             annotations = annotationMap.subMap(refStartPosition, refEndPosition).values().stream()
@@ -96,11 +92,8 @@ public class Node extends DefaultNode {
                     .collect(Collectors.toList());
         }
     }
-    /**
-     * Get the list of annotations that are present in this node.
-     *
-     * @return The list of annotations present in this node
-     */
+
+    @Override
     public List<Annotation> getAnnotations() {
         return annotations;
     }
