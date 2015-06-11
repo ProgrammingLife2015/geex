@@ -90,9 +90,11 @@ public class Node extends DefaultNode {
      * @param annotationMap The list of all annotations
      */
     public void setAnnotations(final AnnotationMap annotationMap) {
-        annotations = annotationMap.subMap(refStartPosition, refEndPosition).values().stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+        if(sources.contains("TKK_REF")){
+            annotations = annotationMap.subMap(refStartPosition, refEndPosition).values().stream()
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toList());
+        }
     }
     /**
      * Get the list of annotations that are present in this node.
