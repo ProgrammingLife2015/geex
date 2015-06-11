@@ -72,7 +72,7 @@ public class GraphControllerTest {
     @Test
     public void testUpdateGraph() throws Exception {
         SimpleObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
-        ReadOnlyObjectProperty<AnnotationMap> annotationMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
+        SimpleObjectProperty<AnnotationMap> annotationMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
         ReadOnlyObjectProperty<ResistanceMap> resistanceMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
 
         GraphMap graphMap = new GraphParser().setFiles(nodeFile, edgeFile).load();
@@ -93,8 +93,10 @@ public class GraphControllerTest {
         });
 
         graphMapReadOnlyObjectProperty.setValue(graphMap);
+        annotationMapReadOnlyObjectProperty.setValue(new AnnotationMap());
 
-        //assertEquals(true, sequencesAdded.get(50, TimeUnit.MILLISECONDS));
+
+        assertEquals(true, sequencesAdded.get(50, TimeUnit.MILLISECONDS));
     }
 
     /**
