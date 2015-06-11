@@ -33,7 +33,7 @@ public class ParserTest {
 
         assertNull(p.readerList);
 
-        p.setReader(f1, f2);
+        p.setFiles(f1, f2);
 
         assertEquals(2, p.readerList.length);
 
@@ -42,6 +42,6 @@ public class ParserTest {
     @Test
     public void testParse() throws Exception {
         MyParser p = new MyParser();
-        assertEquals(MYSTRING, p.parse());
+        assertEquals(MYSTRING, p.load());
     }
 }

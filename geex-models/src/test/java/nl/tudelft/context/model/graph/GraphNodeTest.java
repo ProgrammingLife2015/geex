@@ -37,7 +37,7 @@ public class GraphNodeTest {
         File nodeFile = new File(GraphTest.class.getResource("/graph/single-point-mutation.node.graph").getPath());
         File edgeFile = new File(GraphTest.class.getResource("/graph/single-point-mutation.edge.graph").getPath());
 
-        graph = new GraphParser().setReader(nodeFile, edgeFile).parse().flat(new HashSet<>(Arrays.asList("Cat", "Dog")));
+        graph = new GraphParser().setFiles(nodeFile, edgeFile).load().flat(new HashSet<>(Arrays.asList("Cat", "Dog")));
 
         graph.vertexSet().stream().forEach(vertex -> nodeMap.put(vertex.hashCode(), vertex)); // Ad by id (hashcode)
 

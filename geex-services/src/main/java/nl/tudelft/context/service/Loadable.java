@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
  * @version 1.0
  * @since 11-6-2015
  */
-public interface IParser<T> {
-    T parse();
-    IParser<T> setReader(final File... files) throws FileNotFoundException, UnsupportedEncodingException;
+public interface Loadable<T> {
+    T load();
+    Loadable<T> setFiles(final File... files) throws FileNotFoundException, UnsupportedEncodingException;
 }

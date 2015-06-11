@@ -15,18 +15,18 @@ public class LoadService<T> extends Service<T> {
     /**
      * The class used for parsing the files.
      */
-    private Class<? extends IParser<T>> parserClass;
+    private Class<? extends Loadable<T>> parserClass;
     /**
-     * The files to parse.
+     * The files to load.
      */
     private File[] files;
 
     /**
      * Create a new Loader service.
      * @param parserClass Class used for parsing the files.
-     * @param files Files to parse.
+     * @param files Files to load.
      */
-    public LoadService(final Class<? extends IParser<T>> parserClass, final File... files) {
+    public LoadService(final Class<? extends Loadable<T>> parserClass, final File... files) {
         this.parserClass = parserClass;
         this.files = files;
 
@@ -38,9 +38,9 @@ public class LoadService<T> extends Service<T> {
         return new Task<T>() {
             @Override
             protected T call() throws Exception {
-                IParser<T> parser = parserClass.newInstance();
-                parser.setReader(files);
-                return parser.parse();
+                Loadable<T> parser = parserClass.newInstance();
+                parser.setFiles(files);
+                return parser.load();
             }
         };
     }

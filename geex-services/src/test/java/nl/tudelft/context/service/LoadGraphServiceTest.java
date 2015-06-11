@@ -27,16 +27,16 @@ public class LoadGraphServiceTest {
     protected final static File edgeFile = new File(LoadGraphServiceTest.class.getResource("/graph/edge.graph").getPath());
 
 
-    public static class MyParser implements IParser<Boolean> {
+    public static class MyParser implements Loadable<Boolean> {
         public MyParser() {}
 
         @Override
-        public Boolean parse() {
+        public Boolean load() {
             return true;
         }
 
         @Override
-        public IParser<Boolean> setReader(File... files) throws FileNotFoundException, UnsupportedEncodingException {
+        public Loadable<Boolean> setFiles(File... files) throws FileNotFoundException, UnsupportedEncodingException {
             return this;
         }
     }
