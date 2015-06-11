@@ -19,6 +19,11 @@ public abstract class AbstractLabel extends VBox {
     DefaultNode node;
 
     /**
+     * Current active sources.
+     */
+    Set<String> sources;
+
+    /**
      * Create a abstract label on a node.
      *
      * @param node Node the label is based upon
@@ -33,6 +38,8 @@ public abstract class AbstractLabel extends VBox {
      * @param sources New selected sources
      */
     public void updateSources(final Set<String> sources) {
+
+        this.sources = sources;
 
         if (CollectionUtils.containsAny(sources, node.getSources())) {
             getStyleClass().add("selected-label");

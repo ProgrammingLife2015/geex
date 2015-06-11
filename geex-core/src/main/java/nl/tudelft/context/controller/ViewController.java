@@ -18,6 +18,11 @@ public abstract class ViewController<T extends Parent> extends AbstractControlle
     BooleanProperty activeProperty = new SimpleBooleanProperty(false);
 
     /**
+     * Show in breadcrumb.
+     */
+    boolean showInBreadcrumb = true;
+
+    /**
      * Create a generic controller with T as root.
      * <p>
      * T must be a possible root for fxml so T must extend Parent.
@@ -45,6 +50,15 @@ public abstract class ViewController<T extends Parent> extends AbstractControlle
      */
     public void setActivated(final boolean active) {
         activeProperty.set(active);
+    }
+
+    /**
+     * Check if view controller should be shown in breadcrumb.
+     *
+     * @return If breadcrumb should be shown in breadcrumb
+     */
+    public boolean getShowInBreadcrumb() {
+        return showInBreadcrumb;
     }
 
 }

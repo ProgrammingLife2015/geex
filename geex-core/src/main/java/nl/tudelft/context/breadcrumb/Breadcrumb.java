@@ -50,6 +50,7 @@ public final class Breadcrumb extends HBox {
     public void update() {
 
         List<HBox> items = viewList.stream()
+                .filter(ViewController::getShowInBreadcrumb)
                 .map(viewController -> {
                     final Label label = new Label(viewController.getBreadcrumbName());
                     label.setOnMouseClicked(event -> mainController.toView(viewController));
