@@ -101,6 +101,13 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
             row++;
         }
 
+        if (nodes.size() == 1) {
+            AbstractDrawableNode node = nodes.get(0);
+            if (node.getNode().isShift()) {
+                node.setTranslateY(-LABEL_SPACING);
+            }
+        }
+
     }
 
     /**

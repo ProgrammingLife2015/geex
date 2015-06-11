@@ -40,6 +40,7 @@ public class InsertDeleteGraph extends StackGraph {
         setGraph(graph);
 
         markInDel();
+        shift();
 
     }
 
@@ -67,6 +68,15 @@ public class InsertDeleteGraph extends StackGraph {
                     }
 
                 });
+
+    }
+
+    /**
+     * Shift in del parts parts.
+     */
+    private void shift() {
+
+        inDelPart.stream().forEach(DefaultNode::shift);
 
     }
 

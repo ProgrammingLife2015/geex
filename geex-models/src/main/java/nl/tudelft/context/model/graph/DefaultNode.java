@@ -10,6 +10,11 @@ import java.util.Set;
 public abstract class DefaultNode {
 
     /**
+     * Shift if alone in column.
+     */
+    boolean shift = false;
+
+    /**
      * Set of genomes that contain this Node.
      */
     Set<String> sources;
@@ -50,5 +55,21 @@ public abstract class DefaultNode {
      * @return reference end position
      */
     public abstract int getRefEndPosition();
+
+    /**
+     * Shift the node.
+     */
+    public void shift() {
+        shift = true;
+    }
+
+    /**
+     * Check if the node is shifted.
+     *
+     * @return If node is shifted
+     */
+    public boolean isShift() {
+        return shift;
+    }
 
 }
