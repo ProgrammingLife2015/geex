@@ -6,6 +6,7 @@ import nl.tudelft.context.model.graph.StackGraph;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * @author René Vennik
@@ -30,15 +31,17 @@ public class SubGraphController extends AbstractGraphController {
      * @param mainController Main controller to set views on.
      * @param stackGraph     Old graph
      * @param graphNode      Node containing sub graph
+     * @param sources        Current active sources
      */
     public SubGraphController(final MainController mainController,
                               final StackGraph stackGraph,
-                              final GraphNode graphNode) {
+                              final GraphNode graphNode, Set<String> sources) {
 
         super(mainController);
 
         this.stackGraph = stackGraph;
         this.graphNode = graphNode;
+        selectedSources.setValue(sources);
 
         loadFXML("/application/graph.fxml");
 
