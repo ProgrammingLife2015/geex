@@ -125,6 +125,12 @@ public class Annotation {
         this.phase = phase;
         this.attributes = attributes;
     }
+
+    /**
+     * Gets the start position of the annotation.
+     *
+     * @return The start position
+     */
     public int getStart(){
         return start;
     }
