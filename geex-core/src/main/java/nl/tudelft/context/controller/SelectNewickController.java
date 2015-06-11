@@ -3,6 +3,7 @@ package nl.tudelft.context.controller;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.Label;
 import nl.tudelft.context.drawable.DrawableEdge;
+import nl.tudelft.context.drawable.DrawableNewick;
 import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.model.newick.Newick;
 
@@ -42,28 +43,28 @@ public class SelectNewickController extends AbstractNewickController {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         super.initialize(location, resources);
-        root.setId("newick-select");
+        root.setId("newickSelectContainer");
     }
 
     @Override
     void showTree(final Newick newick) {
-
-        newick.getRoot().getSelectionProperty().addListener(event -> {
-            graphController.updateSelectedSources(newick.getRoot().getSources());
+        DrawableNewick subNewick = new DrawableNewick(newick.getSelectedSubGraph());
+        subNewick.getNewick().getRoot().getSourcesProperty().addListener(event -> {
+            graphController.updateSelectedSources(subNewick.getNewick().getRoot().getSources());
         });
 
         // Bind edges
-        List<DrawableEdge> edgeList = newick.edgeSet().stream()
-                .map(edge -> new DrawableEdge(newick, edge))
+        List<DrawableEdge> edgeList = subNewick.edgeSet().stream()
+                .map(edge -> new DrawableEdge(subNewick, edge))
                 .collect(Collectors.toList());
 
         // Bind nodes
-        List<Label> nodeList = newick.vertexSet().stream()
+        List<Label> nodeList = subNewick.vertexSet().stream()
                 .map(NewickLabel::new)
                 .collect(Collectors.toList());
 
-        this.newick.getChildren().addAll(edgeList);
-        this.newick.getChildren().addAll(nodeList);
+        newickContainer.getChildren().addAll(edgeList);
+        newickContainer.getChildren().addAll(nodeList);
 
     }
 

@@ -5,8 +5,9 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import nl.tudelft.context.model.newick.node.AbstractNode;
+import nl.tudelft.context.model.newick.node.StrandNode;
 import nl.tudelft.context.model.newick.Newick;
-import nl.tudelft.context.model.newick.Node;
 import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
@@ -49,7 +50,9 @@ public class NewickControllerTest {
         when(mainController.getWorkspace()).thenReturn(workspace);
 
         Newick newick = new Newick();
-        newick.setRoot(new Node("n1", 1.23));
+        AbstractNode node = new StrandNode("n1", 1.23);
+        newick.setRoot(node);
+        newick.addVertex(node);
         newickSimpleObjectProperty.set(newick);
 
         menuItem = spy(new MenuItem());
@@ -64,7 +67,9 @@ public class NewickControllerTest {
     @Test
     public void testMessageTreeLoaded() {
         Newick newick = new Newick();
-        newick.setRoot(new Node("a", 1));
+        AbstractNode node = new StrandNode("a", 1);
+        newick.setRoot(node);
+        newick.addVertex(node);
         newickController.showTree(newick);
         verify(mainController, atLeast(1)).displayMessage(MessageController.SUCCESS_LOAD_TREE);
     }
@@ -85,7 +90,7 @@ public class NewickControllerTest {
     @Test
     public void testLoadGraph() {
         Newick newick = new Newick();
-        Node node = new Node("n1", 1.23);
+        AbstractNode node = new StrandNode("n1", 1.23);
         newick.setRoot(node);
         newickController.loadGraph(newick);
         verify(mainController, never()).showGraph(newickController, node.getSources());

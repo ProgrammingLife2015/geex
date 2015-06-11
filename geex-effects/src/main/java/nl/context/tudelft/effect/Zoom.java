@@ -2,7 +2,6 @@ package nl.context.tudelft.effect;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Bounds;
-import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
@@ -146,7 +145,5 @@ public class Zoom {
 
         regions.setScaleX(scale);
         regions.setScaleY(scale);
-
-        regions.setCacheHint(CacheHint.SCALE);
     }
 }

@@ -1,6 +1,9 @@
 package nl.tudelft.context.model.newick;
 
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
+import nl.tudelft.context.model.newick.node.AbstractNode;
+import nl.tudelft.context.model.newick.node.AncestorNode;
+import nl.tudelft.context.model.newick.node.StrandNode;
 
 /**
  * @author Jasper Boot
@@ -12,9 +15,13 @@ public final class NodeParser {
      * Constructs the Node from a TreeNode.
      *
      * @param node A TreeNode from treejuxtaposer
-     * @return A nl.tudelft.context.newick.Node
+     * @return A Newick node.
      */
-    public Node getNode(final TreeNode node) {
-        return new Node(node.getName(), node.getWeight());
+    public AbstractNode getNode(final TreeNode node) {
+        if (node.getName().equals("")) {
+            return new AncestorNode(node.getWeight());
+        } else {
+            return new StrandNode(node.getName(), node.getWeight());
+        }
     }
 }

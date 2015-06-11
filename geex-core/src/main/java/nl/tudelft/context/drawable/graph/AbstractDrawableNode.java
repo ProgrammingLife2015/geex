@@ -69,8 +69,8 @@ public abstract class AbstractDrawableNode extends DrawablePosition {
     /**
      * Get the drawable javafx label for this node.
      *
-     * @param mainController Reference to mainController for keybinding and redirection.
-     * @param graphController Reference to graphController for redirection.
+     * @param mainController  Reference to mainController for key binding and redirection
+     * @param graphController Reference to graphController for redirection
      * @return Javafx VBox to draw.
      */
     public abstract AbstractLabel getLabel(final MainController mainController,

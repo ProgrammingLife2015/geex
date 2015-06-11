@@ -56,38 +56,22 @@ public class Node extends DefaultNode {
      * @return id
      */
     public int getId() {
-
         return id;
-
     }
 
     @Override
     public Set<String> getSources() {
-
         return sources;
-
     }
 
-    /**
-     * Getter for reference start position.
-     *
-     * @return reference start position
-     */
+    @Override
     public int getRefStartPosition() {
-
         return refStartPosition;
-
     }
 
-    /**
-     * Getter for reference end position.
-     *
-     * @return reference end position
-     */
+    @Override
     public int getRefEndPosition() {
-
         return refEndPosition;
-
     }
 
     /**

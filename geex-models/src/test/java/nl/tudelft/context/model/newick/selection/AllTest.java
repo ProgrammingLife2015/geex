@@ -2,6 +2,9 @@ package nl.tudelft.context.model.newick.selection;
 
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 
@@ -20,8 +23,10 @@ public class AllTest {
      * Sources should be used.
      */
     @Test
-    public void testUseSources() {
-        assertTrue(selection.useSources());
+    public void testAddSource() {
+        Set<String> set = new HashSet<>();
+        selection.addSource(set, "bla");
+        assertTrue(set.contains("bla"));
     }
 
     /**

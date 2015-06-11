@@ -1,5 +1,6 @@
 package nl.tudelft.context.drawable.graph;
 
+import javafx.scene.CacheHint;
 import javafx.scene.control.Label;
 import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.controller.MainController;
@@ -16,11 +17,6 @@ import nl.tudelft.context.model.graph.GraphNode;
 public class DrawableGraphNodeLabel extends AbstractLabel {
 
     /**
-     * The node the label belongs to.
-     */
-    GraphNode node;
-
-    /**
      * Constructor for the single point mutation label.
      *
      * @param mainController       MainController indicating the controller
@@ -31,9 +27,10 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
     public DrawableGraphNodeLabel(final MainController mainController, final AbstractGraphController graphController,
                                   final AbstractDrawableNode abstractDrawableNode, final GraphNode node) {
 
-        this.node = node;
+        super(node);
 
         setCache(true);
+        setCacheHint(CacheHint.SCALE);
         translateXProperty().bind(abstractDrawableNode.translateXProperty());
         translateYProperty().bind(abstractDrawableNode.translateYProperty());
 
@@ -66,6 +63,16 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
 
         return label;
 
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return other instanceof DrawableGraphNodeLabel && node.equals(((DrawableGraphNodeLabel) other).node);
+    }
+
+    @Override
+    public int hashCode() {
+        return node.hashCode();
     }
 
 }
