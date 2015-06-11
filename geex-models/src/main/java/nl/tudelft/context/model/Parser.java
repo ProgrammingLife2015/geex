@@ -1,5 +1,7 @@
 package nl.tudelft.context.model;
 
+import nl.tudelft.context.service.IParser;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,7 +15,7 @@ import java.io.UnsupportedEncodingException;
  * @version 1.0
  * @since 24-5-2015
  */
-public abstract class Parser<T> {
+public abstract class Parser<T> implements IParser<T> {
     /**
      * Reader used for reading the file.
      */
