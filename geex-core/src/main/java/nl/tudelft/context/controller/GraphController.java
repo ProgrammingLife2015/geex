@@ -141,7 +141,7 @@ public final class GraphController extends AbstractGraphController {
         graphList.add(graphMap.flat(sources));
         graphList.add(new SinglePointGraph(graphList.getLast()));
         DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
-        showGraph(drawableGraph);
+        showGraph(drawableGraph);;
     }
 
     /**
@@ -160,7 +160,7 @@ public final class GraphController extends AbstractGraphController {
      */
     private void loadAnnotation(final AnnotationMap annotationMap) {
         mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
-        //
+
     }
 
     /**
