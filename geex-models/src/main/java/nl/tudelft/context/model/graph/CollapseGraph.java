@@ -1,0 +1,112 @@
+package nl.tudelft.context.model.graph;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * @author René Vennik
+ * @version 1.0
+ * @since 11-6-2015
+ */
+public class CollapseGraph extends StackGraph {
+
+    /**
+     * Parts of a collapse.
+     */
+    Set<DefaultNode> collapsePart = new HashSet<>();
+
+    /**
+     * Map with start and end of a collapse.
+     */
+    Map<DefaultNode, DefaultNode> collapse = new HashMap<>();
+
+    /**
+     * Clean graph.
+     */
+    StackGraph graph;
+
+    /**
+     * Create a graph with collapses based on an other graph.
+     *
+     * @param graph Graph to calculate collapses on
+     */
+    public CollapseGraph(final StackGraph graph) {
+
+        setGraph(graph);
+        this.graph = graph;
+
+        markCollapses();
+        filterCollapses();
+        replaceCollapses();
+
+    }
+
+    /**
+     * Mark all the collapses.
+     */
+    private void markCollapses() {
+
+        vertexSet().stream()
+                .forEach(start -> {
+
+                    if (outDegreeOf(start) != 1) {
+                        return;
+                    }
+
+                    DefaultNode end = getTargets(start).get(0);
+                    if (inDegreeOf(end) == 1) {
+                        collapse.put(start, end);
+                    }
+
+                });
+
+    }
+
+    /**
+     * Remove duplicates in collapses start & and.
+     */
+    private void filterCollapses() {
+
+        Map<DefaultNode, DefaultNode> newSingle = new HashMap<>();
+
+        Set<DefaultNode> overlay = new HashSet<>(collapse.keySet());
+        overlay.retainAll(collapse.values());
+
+        collapse.keySet().stream()
+                .filter(node -> !overlay.contains(node))
+                .forEach(startNode -> {
+                    DefaultNode endNode = startNode;
+                    while (collapse.containsKey(endNode)) {
+                        endNode = collapse.get(endNode);
+                    }
+                    newSingle.put(startNode, endNode);
+                });
+
+        collapse = newSingle;
+        collapsePart.addAll(overlay);
+
+    }
+
+    /**
+     * Replace all single parts with a graph node.
+     */
+    private void replaceCollapses() {
+
+        collapsePart.forEach(this::removeVertex);
+        collapse.forEach((start, end) -> {
+            getTargets(end).stream()
+                    .forEach(node -> setEdgeWeight(
+                            addEdge(start, node),
+                            getEdgeWeight(getEdge(end, node))
+                    ));
+            removeVertex(end);
+            GraphNode graphNode = new GraphNode(graph, start, end, "collapse");
+            graphNode.addNode(end);
+            replace(start, graphNode);
+        });
+
+    }
+
+}

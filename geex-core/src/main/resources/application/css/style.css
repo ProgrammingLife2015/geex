@@ -168,7 +168,8 @@
 }
 
 .single-label,
-.insert-delete-label {
+.insert-delete-label,
+.collapse-label {
     -fx-cursor: hand;
     -fx-min-width: 60px;
     -fx-min-height: 60px;
@@ -189,13 +190,18 @@
     -fx-background-color: #4594e4;
 }
 
+.collapse-label {
+    -fx-background-color: #5ab000;
+}
+
 .selected-label .info-label {
     -fx-border-width: 4px 4px 0;
     -fx-border-color: #fff;
 }
 
 .selected-label .single-label,
-.selected-label .insert-delete-label {
+.selected-label .insert-delete-label,
+.selected-label .collapse-label {
     -fx-border-width: 4px;
     -fx-border-color: #fff;
     -fx-border-radius: 30px;

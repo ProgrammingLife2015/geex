@@ -13,6 +13,11 @@ import java.util.Set;
 public class GraphNode extends DefaultNode {
 
     /**
+     * Parent graph.
+     */
+    StackGraph parentGraph;
+
+    /**
      * Nodes of sub graph.
      */
     Set<DefaultNode> nodes = new HashSet<>();
@@ -30,13 +35,14 @@ public class GraphNode extends DefaultNode {
     /**
      * Create a graph node.
      *
-     * @param graph Master graph
-     * @param start Start of sub graph
-     * @param end   End of sub graph
-     * @param type  Type of the sub graph
+     * @param parentGraph Parent graph
+     * @param start       Start of sub graph
+     * @param end         End of sub graph
+     * @param type        Type of the sub graph
      */
-    public GraphNode(final StackGraph graph, final DefaultNode start, final DefaultNode end, final String type) {
+    public GraphNode(final StackGraph parentGraph, final DefaultNode start, final DefaultNode end, final String type) {
 
+        this.parentGraph = parentGraph;
         this.start = start;
         this.end = end;
         this.type = type;
@@ -51,7 +57,7 @@ public class GraphNode extends DefaultNode {
 
             DefaultNode node = queue.remove();
 
-            graph.getTargets(node).stream()
+            parentGraph.getTargets(node).stream()
                     .filter(n -> !nodes.contains(n) && !n.equals(end))
                     .forEach(n -> {
                         queue.add(n);
@@ -60,8 +66,25 @@ public class GraphNode extends DefaultNode {
 
         }
 
-        content = Integer.toString(nodes.size());
+    }
 
+    @Override
+    public int getSize() {
+        return nodes.stream().mapToInt(DefaultNode::getSize).sum();
+    }
+
+    @Override
+    public String getContent() {
+        return Integer.toString(getSize());
+    }
+
+    /**
+     * Get the parent graph of this graph.
+     *
+     * @return Parent graph of this graph
+     */
+    public StackGraph getParentGraph() {
+        return parentGraph;
     }
 
     /**
@@ -71,6 +94,15 @@ public class GraphNode extends DefaultNode {
      */
     public String getType() {
         return type;
+    }
+
+    /**
+     * Add a node to the sub graph.
+     *
+     * @param node Node to add.
+     */
+    public void addNode(final DefaultNode node) {
+        nodes.add(node);
     }
 
     /**
