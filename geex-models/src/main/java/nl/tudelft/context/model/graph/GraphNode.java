@@ -74,6 +74,15 @@ public class GraphNode extends DefaultNode {
     }
 
     /**
+     * Add a node to the sub graph.
+     *
+     * @param node Node to add.
+     */
+    public void addNode(final DefaultNode node) {
+        nodes.add(node);
+    }
+
+    /**
      * Get nodes of sub graph.
      *
      * @return Nodes of sub graph

@@ -50,7 +50,7 @@ public class InsertDeleteGraph extends StackGraph {
      */
     private void markInDel() {
 
-        graph.vertexSet().stream()
+        vertexSet().stream()
                 .forEach(startNode -> {
 
                     List<DefaultNode> targets = getTargets(startNode);
