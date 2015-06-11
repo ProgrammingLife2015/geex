@@ -1,6 +1,13 @@
 package nl.tudelft.context.model.graph;
 
+import nl.tudelft.context.model.annotation.Annotation;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik
@@ -25,6 +32,10 @@ public class Node extends DefaultNode {
      * The Counter for the number of ACTG.
      */
     BaseCounter baseCounter;
+    /**
+     * The annotations that belong to this node.
+     */
+    List<Annotation> annotations = Collections.emptyList();
 
     /**
      * Create a node.
@@ -47,7 +58,6 @@ public class Node extends DefaultNode {
         this.refEndPosition = refEndPosition;
         this.content = content;
         this.baseCounter = new BaseCounter(content);
-
     }
 
     /**
@@ -77,6 +87,34 @@ public class Node extends DefaultNode {
     @Override
     public int getRefEndPosition() {
         return refEndPosition;
+    }
+
+    @Override
+    public void setAnnotations(final AnnotationMap annotationMap) {
+        if (sources.contains("TKK_REF")) {
+            annotations = annotationMap.subMap(refStartPosition, refEndPosition).values().stream()
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Override
+    public List<Annotation> getAnnotations() {
+        return annotations;
+    }
+
+    /**
+     * Retrieve the text for the annotations in order, without surrounding brackets and with line seperators.
+     *
+     * @return String representing the Annotation list
+     */
+    public String getAnnotationText() {
+        StringBuilder result = new StringBuilder();
+        for (Annotation annotation : annotations) {
+            result.append(annotation.toString());
+            result.append(System.lineSeparator());
+        }
+        return result.toString();
     }
 
     /**

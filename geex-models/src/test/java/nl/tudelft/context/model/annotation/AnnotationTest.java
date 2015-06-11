@@ -106,12 +106,37 @@ public class AnnotationTest {
      */
     @Test
     public void testToString() throws Exception {
-        assertEquals("Annotation(seqId:'seqId, source:'source, type:'type, start:0, end:1, score:0.0, strand:A," +
-                " phase:B, attributes:attributes)", annotation1.toString());
-        assertEquals("Annotation(seqId:'seqId, source:'source, type:'type, start:0, end:1, score:0.0, strand:A," +
-                " phase:B, attributes:attributes)", annotation2.toString());
-        assertEquals("Annotation(seqId:'seqId1, source:'source1, type:'type1, start:2, end:3, score:1.0, strand:C," +
-                " phase:D, attributes:attributes2)", annotation3.toString());
+
+
+        assertEquals("Sequence: seqId" + System.lineSeparator()
+                + "Source: source" + System.lineSeparator()
+                + "Type: type" + System.lineSeparator()
+                + "Start: 0" + System.lineSeparator()
+                + "End: 1" + System.lineSeparator()
+                + "Score: 0.0" + System.lineSeparator()
+                + "Strand (Sense): A" + System.lineSeparator()
+                + "Phase: B" + System.lineSeparator()
+                + "Attributes: attributes" + System.lineSeparator(), annotation1.toString());
+
+        assertEquals("Sequence: seqId" + System.lineSeparator()
+                + "Source: source" + System.lineSeparator()
+                + "Type: type" + System.lineSeparator()
+                + "Start: 0" + System.lineSeparator()
+                + "End: 1" + System.lineSeparator()
+                + "Score: 0.0" + System.lineSeparator()
+                + "Strand (Sense): A" + System.lineSeparator()
+                + "Phase: B" + System.lineSeparator()
+                + "Attributes: attributes" + System.lineSeparator(), annotation2.toString());
+
+        assertEquals("Sequence: seqId1" + System.lineSeparator()
+                + "Source: source1" + System.lineSeparator()
+                + "Type: type1" + System.lineSeparator()
+                + "Start: 2" + System.lineSeparator()
+                + "End: 3" + System.lineSeparator()
+                + "Score: 1.0" + System.lineSeparator()
+                + "Strand (Sense): C" + System.lineSeparator()
+                + "Phase: D" + System.lineSeparator()
+                + "Attributes: attributes2" + System.lineSeparator(), annotation3.toString());
 
     }
 

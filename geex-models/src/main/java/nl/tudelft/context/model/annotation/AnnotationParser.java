@@ -23,14 +23,12 @@ public class AnnotationParser extends Parser<AnnotationMap> {
         BufferedReader reader = readerList[0];
         Scanner sc = new Scanner(reader);
         AnnotationMap annotationMap = new AnnotationMap();
-        String line = "";
+        String line;
         String fileSplitBy = "\\t";
-        int index = 0;
         while (sc.hasNextLine()) {
             line = sc.nextLine();
             String[] splitLine = line.split(fileSplitBy);
-            annotationMap.put(index, getAnnotation(splitLine));
-            index++;
+            annotationMap.addAnnotation(getAnnotation(splitLine));
         }
 
         return annotationMap;

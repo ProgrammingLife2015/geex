@@ -87,13 +87,11 @@ public final class GraphController extends AbstractGraphController {
         ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<ResistanceMap> resistanceMapProperty = new SimpleObjectProperty<>();
 
-        graphMapProperty.addListener((observable, oldValue, newValue) -> {
-            loadGraph(newValue);
+        graphMapProperty.addListener(event -> {
+            mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
+            loadGraph(graphMapProperty.get(), annotationMapProperty.get());
         });
-
-        annotationMapProperty.addListener((observable, oldValue, newValue) -> {
-            loadAnnotation(newValue);
-        });
+        annotationMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get()));
 
         resistanceMapProperty.addListener((observable, oldValue, newValue) -> {
             loadResistance(newValue);
@@ -137,16 +135,21 @@ public final class GraphController extends AbstractGraphController {
     /**
      * Load graph from source.
      *
-     * @param graphMap The GraphMap which is loaded.
+     * @param graphMap      The GraphMap which is loaded.
+     * @param annotationMap The AnnotationMap which is loaded.
      */
-    private void loadGraph(final GraphMap graphMap) {
-        graphList.add(graphMap.flat(sources));
-        graphList.add(new SinglePointGraph(graphList.getLast()));
-        graphList.add(new InsertDeleteGraph(graphList.getLast()));
-        graphList.add(new CollapseGraph(graphList.getLast()));
-        currentGraph = graphList.getLast();
-        DrawableGraph drawableGraph = new DrawableGraph(currentGraph);
-        showGraph(drawableGraph);
+    private void loadGraph(final GraphMap graphMap, final AnnotationMap annotationMap) {
+        if (graphMap != null && annotationMap != null) {
+            graphMap.setAnnotations(annotationMap);
+            graphList.add(graphMap.flat(sources));
+            graphList.add(new SinglePointGraph(graphList.getLast()));
+            graphList.add(new InsertDeleteGraph(graphList.getLast()));
+            graphList.add(new CollapseGraph(graphList.getLast()));
+
+            currentGraph = graphList.getLast();
+            DrawableGraph drawableGraph = new DrawableGraph(currentGraph);
+            showGraph(drawableGraph);
+        }
     }
 
     /**
@@ -156,16 +159,6 @@ public final class GraphController extends AbstractGraphController {
      */
     public void updateSelectedSources(final Set<String> sources) {
         selectedSources.setValue(sources);
-    }
-
-    /**
-     * Load annotation from source.
-     *
-     * @param annotationMap The annotation map which is loaded.
-     */
-    private void loadAnnotation(final AnnotationMap annotationMap) {
-        mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
-        //
     }
 
     /**

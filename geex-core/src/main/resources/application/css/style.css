@@ -265,9 +265,9 @@
     -fx-fill: #fff;
 }
 
-#occurrences, #sources {
+#occurrences, #sources, #annotations {
     -fx-fill: #fff;
-    -fx-font: 0.3cm 'Arial';
+    -fx-font: 0.35cm 'Arial';
 }
 
 /* Node labels */

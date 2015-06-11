@@ -126,6 +126,15 @@ public class Annotation {
         this.attributes = attributes;
     }
 
+    /**
+     * Gets the start position of the annotation.
+     *
+     * @return The start position
+     */
+    public int getStart() {
+        return start;
+    }
+
 
     @Override
     public boolean equals(final Object o) {
@@ -186,17 +195,15 @@ public class Annotation {
      */
     @Override
     public String toString() {
-        return "Annotation("
-                + "seqId:'" + seqId
-                + ", source:'" + source
-                + ", type:'" + type
-                + ", start:" + start
-                + ", end:" + end
-                + ", score:" + score
-                + ", strand:" + strand
-                + ", phase:" + phase
-                + ", attributes:" + attributes
-                + ')';
+        return "Sequence: " + seqId + System.getProperty("line.separator")
+                + "Source: " + source + System.getProperty("line.separator")
+                + "Type: " + type + System.getProperty("line.separator")
+                + "Start: " + start + System.getProperty("line.separator")
+                + "End: " + end + System.getProperty("line.separator")
+                + "Score: " + score + System.getProperty("line.separator")
+                + "Strand (Sense): " + strand + System.getProperty("line.separator")
+                + "Phase: " + phase + System.getProperty("line.separator")
+                + "Attributes: " + attributes + System.getProperty("line.separator");
     }
 
 }

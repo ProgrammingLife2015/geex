@@ -1,13 +1,46 @@
 package nl.tudelft.context.model.annotation;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 /**
  * @author Jasper Nieuwdorp
  * @version 1.0
  * @since 21-5-2015
  */
-public class AnnotationMap extends HashMap<Integer, Annotation> {
+public class AnnotationMap extends TreeMap<Integer, List<Annotation>> {
+
+    /**
+     * Add annotations to the AnnotationMap.
+     *
+     * @param annotation the annotation that should be added
+     */
+    public void addAnnotation(final Annotation annotation) {
+        int start = annotation.getStart();
+        List<Annotation> annotationList = get(start);
+        if (annotationList == null) {
+            annotationList = new ArrayList<>();
+            put(start, annotationList);
+        }
+
+        annotationList.add(annotation);
+
+    }
+
+    /**
+     * Inclusive subMap.
+     *
+     * @param fromKey From which key (inclusive)
+     * @param toKey   To which key (inclusive)
+     * @return        The created subMap
+     */
+    public NavigableMap<Integer, List<Annotation>> subMap(final Integer fromKey, final Integer toKey) {
+        return subMap(fromKey, true, toKey, true);
+    }
+
 
     /**
      * To string method for the AnnotationMap.
@@ -17,8 +50,8 @@ public class AnnotationMap extends HashMap<Integer, Annotation> {
     @Override
     public final String toString() {
         StringBuilder result = new StringBuilder();
-        for (Annotation a : values()) {
-            result.append(a.toString());
+        for (Map.Entry a : entrySet()) {
+            result.append(a.getValue().toString());
             result.append(System.getProperty("line.separator"));
         }
         return result.toString();

@@ -1,11 +1,9 @@
 package nl.tudelft.context.model.resistance;
 
-import nl.tudelft.context.model.resistance.Resistance;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Jasper on 26-5-2015.

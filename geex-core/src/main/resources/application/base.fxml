@@ -12,6 +12,10 @@
         <TextFlow>
             <Text fx:id="sources"/>
         </TextFlow>
+        <Label styleClass="h2">Annotations</Label>
+        <TextFlow>
+            <Text fx:id="annotations"/>
+        </TextFlow>
         <Label styleClass="h2">Bases</Label>
         <TextFlow>
             <Text fx:id="percentages"/>

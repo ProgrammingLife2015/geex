@@ -1,5 +1,6 @@
 package nl.tudelft.context.model.graph;
 
+import nl.tudelft.context.model.annotation.AnnotationMap;
 import org.jgrapht.graph.AbstractBaseGraph;
 
 import java.util.Arrays;
@@ -16,6 +17,15 @@ import java.util.stream.Collectors;
  * @since 20-5-2015
  */
 public class GraphMap extends ConcurrentHashMap<String, Graph> {
+
+    /**
+     * Load the annotations for this graph.
+     * @param annotationMap All the annotations.
+     */
+    public void setAnnotations(final AnnotationMap annotationMap) {
+        values().parallelStream()
+                .forEach(graph -> graph.setAnnotations(annotationMap));
+    }
 
     /**
      * Create a graph with graphs from sources flatten.
