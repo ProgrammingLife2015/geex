@@ -199,11 +199,11 @@ public class Annotation {
                 + "Source: " + source + System.getProperty("line.separator")
                 + "Type: " + type + System.getProperty("line.separator")
                 + "Start: " + start + System.getProperty("line.separator")
-                + "End:" + end + System.getProperty("line.separator")
+                + "End: " + end + System.getProperty("line.separator")
                 + "Score: " + score + System.getProperty("line.separator")
                 + "Strand (Sense): " + strand + System.getProperty("line.separator")
                 + "Phase: " + phase + System.getProperty("line.separator")
-                + "Attributes:" + attributes + System.getProperty("line.separator");
+                + "Attributes: " + attributes + System.getProperty("line.separator");
     }
 
 }

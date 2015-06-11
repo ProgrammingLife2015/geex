@@ -30,9 +30,26 @@ public class AnnotationMapTest {
 
     @Test
     public void testToString() throws Exception {
-        assertEquals("[Annotation(seqId:'seqId, source:'source, type:'type, start:0, end:1, score:0.0, strand:A, phase:B, attributes:attributes)]"
-                + System.getProperty("line.separator")
-                + "[Annotation(seqId:'seqId1, source:'source1, type:'type1, start:2, end:3, score:1.0, strand:C, phase:D, attributes:attributes2)]"
+        assertEquals("[Sequence: seqId" + System.getProperty("line.separator")
+                + "Source: source" + System.getProperty("line.separator")
+                + "Type: type" + System.getProperty("line.separator")
+                + "Start: 0" + System.getProperty("line.separator")
+                + "End: 1" + System.getProperty("line.separator")
+                + "Score: 0.0" + System.getProperty("line.separator")
+                + "Strand (Sense): A" + System.getProperty("line.separator")
+                + "Phase: B" + System.getProperty("line.separator")
+                + "Attributes:attributes" + System.getProperty("line.separator")
+                + "]" + System.getProperty("line.separator")
+                + "[Sequence: seqId1" + System.getProperty("line.separator")
+                + "Source: source1" + System.getProperty("line.separator")
+                + "Type: type1" + System.getProperty("line.separator")
+                + "Start: 2" + System.getProperty("line.separator")
+                + "End: 3" + System.getProperty("line.separator")
+                + "Score: 1.0" + System.getProperty("line.separator")
+                + "Strand (Sense): C" + System.getProperty("line.separator")
+                + "Phase: D" + System.getProperty("line.separator")
+                + "Attributes:attributes2" + System.getProperty("line.separator")
+                + "]"
                 + System.getProperty("line.separator")
                 , annotationMap1.toString());
     }
