@@ -6,7 +6,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuItem;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.GraphMap;
+import nl.tudelft.context.model.graph.InsertDeleteGraph;
 import nl.tudelft.context.model.graph.SinglePointGraph;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
@@ -113,11 +115,11 @@ public final class GraphController extends AbstractGraphController {
         MenuController menuController = mainController.getMenuController();
 
         MenuItem zoomIn = menuController.getZoomIn();
-        zoomIn.setOnAction(event -> showGraph(new DrawableGraph(graphList.getFirst())));
+        zoomIn.setOnAction(event -> zoomIn());
         zoomIn.disableProperty().bind(activeProperty.not());
 
         MenuItem zoomOut = menuController.getZoomOut();
-        zoomOut.setOnAction(event -> showGraph(new DrawableGraph(graphList.getLast())));
+        zoomOut.setOnAction(event -> zoomOut());
         zoomOut.disableProperty().bind(activeProperty.not());
 
         MenuItem toggleSelect = menuController.getToggleSelect();
@@ -133,7 +135,7 @@ public final class GraphController extends AbstractGraphController {
     /**
      * Load graph from source.
      *
-     * @param graphMap The GraphMap which is loaded.
+     * @param graphMap      The GraphMap which is loaded.
      * @param annotationMap The AnnotationMap which is loaded.
      */
     private void loadGraph(final GraphMap graphMap, final AnnotationMap annotationMap) {
@@ -141,7 +143,11 @@ public final class GraphController extends AbstractGraphController {
             graphMap.setAnnotations(annotationMap);
             graphList.add(graphMap.flat(sources));
             graphList.add(new SinglePointGraph(graphList.getLast()));
-            DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
+            graphList.add(new InsertDeleteGraph(graphList.getLast()));
+            graphList.add(new CollapseGraph(graphList.getLast()));
+
+            currentGraph = graphList.getLast();
+            DrawableGraph drawableGraph = new DrawableGraph(currentGraph);
             showGraph(drawableGraph);
         }
     }

@@ -14,6 +14,11 @@ import java.util.Set;
 public abstract class DefaultNode {
 
     /**
+     * Shift if alone in column.
+     */
+    boolean shift = false;
+
+    /**
      * Set of genomes that contain this Node.
      */
     Set<String> sources;
@@ -22,6 +27,13 @@ public abstract class DefaultNode {
      * The content of the current Node.
      */
     String content;
+
+    /**
+     * Get the size in nodes of the node.
+     *
+     * @return Size in nodes of the node
+     */
+    public abstract int getSize();
 
     /**
      * Getter for sources.
@@ -68,4 +80,21 @@ public abstract class DefaultNode {
      * @return The list of annotations present in this node
      */
     public abstract List<Annotation> getAnnotations();
+
+    /**
+     * Shift the node.
+     */
+    public void shift() {
+        shift = true;
+    }
+
+    /**
+     * Check if the node is shifted.
+     *
+     * @return If node is shifted
+     */
+    public boolean isShift() {
+        return shift;
+    }
+
 }

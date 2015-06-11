@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class DrawableNodeLabel extends AbstractLabel {
 
     /**
-     * The node the InfoLabel belongs to.
+     * The node the label belongs to.
      */
     Node node;
 

@@ -70,6 +70,11 @@ public class Node extends DefaultNode {
     }
 
     @Override
+    public int getSize() {
+        return 1;
+    }
+
+    @Override
     public Set<String> getSources() {
         return sources;
     }
