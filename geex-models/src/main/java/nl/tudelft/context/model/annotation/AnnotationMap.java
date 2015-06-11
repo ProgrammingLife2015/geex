@@ -3,6 +3,7 @@ package nl.tudelft.context.model.annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.TreeMap;
 
 /**
@@ -28,6 +29,18 @@ public class AnnotationMap extends TreeMap<Integer, List<Annotation>> {
         annotationList.add(annotation);
 
     }
+
+    /**
+     * Inclusive subMap.
+     *
+     * @param fromKey From which key (inclusive)
+     * @param toKey   To which key (inclusive)
+     * @return        The created subMap
+     */
+    public NavigableMap<Integer, List<Annotation>> subMap(final Integer fromKey, final Integer toKey) {
+        return subMap(fromKey, true, toKey, true);
+    }
+
 
     /**
      * To string method for the AnnotationMap.

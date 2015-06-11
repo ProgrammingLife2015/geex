@@ -4,6 +4,7 @@ import nl.tudelft.context.model.annotation.Annotation;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,6 +32,10 @@ public class Node extends DefaultNode {
      * The Counter for the number of ACTG.
      */
     BaseCounter baseCounter;
+    /**
+     * The annotations that belong to this node.
+     */
+    List<Annotation> annotations = Collections.emptyList();;
 
     /**
      * Create a node.
@@ -53,7 +58,6 @@ public class Node extends DefaultNode {
         this.refEndPosition = refEndPosition;
         this.content = content;
         this.baseCounter = new BaseCounter(content);
-
     }
 
     /**
@@ -81,16 +85,22 @@ public class Node extends DefaultNode {
     }
 
     /**
-     * Get the list of annotations that are present in this node.
+     * Sets the annotations that belong to this node.
      *
      * @param annotationMap The list of all annotations
-     * @return              The list of annotations present in this node
      */
-    public List<Annotation> getAnnoations(final AnnotationMap annotationMap) {
-        List<Annotation> test = annotationMap.subMap(refStartPosition, true, refEndPosition, true).values().stream()
+    public void setAnnotations(final AnnotationMap annotationMap) {
+        annotations = annotationMap.subMap(refStartPosition, refEndPosition).values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
-        return test;
+    }
+    /**
+     * Get the list of annotations that are present in this node.
+     *
+     * @return The list of annotations present in this node
+     */
+    public List<Annotation> getAnnoations() {
+        return annotations;
     }
 
     /**
