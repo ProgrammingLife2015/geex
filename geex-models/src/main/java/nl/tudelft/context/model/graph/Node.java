@@ -99,6 +99,20 @@ public class Node extends DefaultNode {
     }
 
     /**
+     * Retrieve the text for the annotations in order, without surrounding brackets and with line seperators.
+     *
+     * @return String representing the Annotation list
+     */
+    public String getAnnotationText() {
+        StringBuilder result = new StringBuilder();
+        for (Annotation annotation : annotations) {
+            result.append(annotation.toString());
+            result.append(System.lineSeparator());
+        }
+        return result.toString();
+    }
+
+    /**
      * Getter for baseCounter.
      *
      * @return baseCounter

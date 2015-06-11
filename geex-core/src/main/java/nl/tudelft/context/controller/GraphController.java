@@ -51,7 +51,16 @@ public final class GraphController extends AbstractGraphController {
      */
     ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn;
 
+    /**
+     * Boolean indicating whether the graph is loaded or not.
+     * True when loaded.
+     */
     boolean graphLoaded = false;
+
+    /**
+     * Boolean indicating whether the graph is loaded or not.
+     * True when loaded.
+     */
     boolean annotationsLoaded = false;
 
     /**

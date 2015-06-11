@@ -90,7 +90,7 @@ public final class BaseController extends ViewController<ScrollPane> {
                            final ResourceBundle resources) {
 
         String content = node.getContent();
-        annotations.setText(node.getAnnotations().toString());
+        annotations.setText(node.getAnnotationText());
         percentages.setText(node.getBaseCounter().toString() + "\n");
         bases.setText(content);
 

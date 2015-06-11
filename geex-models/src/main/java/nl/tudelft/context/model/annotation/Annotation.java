@@ -34,7 +34,7 @@ public class Annotation {
      * - SOFA, a term from the full Sequence Ontology -
      * it must be an is_a child of sequence_feature (SO:0000110) or (c) a SOFA or SO accession number.
      * The latter alternative is distinguished using the syntax SO:000000.
-            */
+     */
     String type;
 
     /**
@@ -131,7 +131,7 @@ public class Annotation {
      *
      * @return The start position
      */
-    public int getStart(){
+    public int getStart() {
         return start;
     }
 
@@ -195,17 +195,15 @@ public class Annotation {
      */
     @Override
     public String toString() {
-        return "Annotation("
-                + "seqId:'" + seqId
-                + ", source:'" + source
-                + ", type:'" + type
-                + ", start:" + start
-                + ", end:" + end
-                + ", score:" + score
-                + ", strand:" + strand
-                + ", phase:" + phase
-                + ", attributes:" + attributes
-                + ')';
+        return "Sequence: " + seqId + System.getProperty("line.separator")
+                + "Source: " + source + System.getProperty("line.separator")
+                + "Type: " + type + System.getProperty("line.separator")
+                + "Start: " + start + System.getProperty("line.separator")
+                + "End:" + end + System.getProperty("line.separator")
+                + "Score: " + score + System.getProperty("line.separator")
+                + "Strand (Sense): " + strand + System.getProperty("line.separator")
+                + "Phase: " + phase + System.getProperty("line.separator")
+                + "Attributes:" + attributes;
     }
 
 }

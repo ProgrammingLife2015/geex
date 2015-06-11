@@ -18,7 +18,11 @@ import java.util.stream.Collectors;
  */
 public class GraphMap extends ConcurrentHashMap<String, Graph> {
 
-    public void setAnnotations(AnnotationMap annotationMap) {
+    /**
+     * Load the annotations for this graph.
+     * @param annotationMap All the annotations.
+     */
+    public void setAnnotations(final AnnotationMap annotationMap) {
         values().parallelStream()
                 .forEach(graph -> graph.setAnnotations(annotationMap));
     }

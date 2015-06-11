@@ -3,7 +3,6 @@ package nl.tudelft.context.model.annotation;
 import nl.tudelft.context.model.Parser;
 
 import java.io.BufferedReader;
-import java.util.List;
 import java.util.Scanner;
 
 
