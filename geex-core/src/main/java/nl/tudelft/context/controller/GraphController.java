@@ -7,6 +7,7 @@ import javafx.scene.control.MenuItem;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.GraphMap;
+import nl.tudelft.context.model.graph.InsertDeleteGraph;
 import nl.tudelft.context.model.graph.SinglePointGraph;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
@@ -140,6 +141,7 @@ public final class GraphController extends AbstractGraphController {
     private void loadGraph(final GraphMap graphMap) {
         graphList.add(graphMap.flat(sources));
         graphList.add(new SinglePointGraph(graphList.getLast()));
+        graphList.add(new InsertDeleteGraph(graphList.getLast()));
         DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
         showGraph(drawableGraph);
     }
