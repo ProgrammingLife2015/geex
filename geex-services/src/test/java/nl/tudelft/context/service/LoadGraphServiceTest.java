@@ -2,22 +2,18 @@ package nl.tudelft.context.service;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.concurrent.Worker;
-import nl.tudelft.context.model.graph.Graph;
-import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.model.graph.GraphParser;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * @author René Vennik
@@ -30,40 +26,41 @@ public class LoadGraphServiceTest {
     protected final static File nodeFile = new File(LoadGraphServiceTest.class.getResource("/graph/node.graph").getPath());
     protected final static File edgeFile = new File(LoadGraphServiceTest.class.getResource("/graph/edge.graph").getPath());
 
-    protected static GraphMap graphFromFactory;
 
-    /**
-     * Set up comparing graphFromFactory.
-     */
-    @BeforeClass
-    public static void beforeClass() throws FileNotFoundException, UnsupportedEncodingException {
+    public static class MyParser implements Loadable<Boolean> {
+        public MyParser() {}
 
-        graphFromFactory = new GraphParser().setReader(nodeFile, edgeFile).parse();
+        @Override
+        public Boolean load() {
+            return true;
+        }
 
+        @Override
+        public Loadable<Boolean> setFiles(File... files) throws FileNotFoundException, UnsupportedEncodingException {
+            return this;
+        }
     }
-
     /**
      * Test if the graphFromFactory loadFXML succeeds.
      */
     @Test
-    public void testGraphLoadSucceeds() throws Exception {
+    public void testParse() throws Exception {
+        final LoadService<Boolean> loadGraphService = new LoadService<>(MyParser.class, nodeFile, edgeFile);
 
-        final LoadService<GraphMap> loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
-
-        CompletableFuture<Graph> completableFuture = new CompletableFuture<>();
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
 
         loadGraphService.stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == Worker.State.SUCCEEDED) {
-                completableFuture.complete(loadGraphService.getValue().flat(new HashSet<>(Arrays.asList("Dog", "Cat"))));
+                completableFuture.complete(true);
             }
         });
 
-        loadGraphService.restart();
+        loadGraphService.start();
 
         // Wait for graphFromFactory service
-        Graph graph = completableFuture.get(5000, TimeUnit.MILLISECONDS);
+        Boolean b = completableFuture.get(5000, TimeUnit.MILLISECONDS);
 
-        assertNotNull(graph);
+        assertTrue(b);
 
     }
 }

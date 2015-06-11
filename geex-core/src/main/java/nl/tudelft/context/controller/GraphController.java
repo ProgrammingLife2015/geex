@@ -30,6 +30,7 @@ public final class GraphController extends AbstractGraphController {
      * Select controller to select strains.
      */
     SelectNewickController selectNewickController = new SelectNewickController(
+            mainController,
             this,
             mainController.getWorkspace().getNewick()
     );
@@ -122,8 +123,12 @@ public final class GraphController extends AbstractGraphController {
         zoomOut.disableProperty().bind(activeProperty.not());
 
         MenuItem toggleSelect = menuController.getToggleSelect();
-        toggleSelect.setOnAction(event -> mainController.setView(this, selectNewickController));
-        toggleSelect.disableProperty().bind(activeProperty.not());
+        activeProperty.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                toggleSelect.setOnAction(event -> mainController.setView(this, selectNewickController));
+                toggleSelect.disableProperty().bind(activeProperty.not());
+            }
+        });
 
     }
 

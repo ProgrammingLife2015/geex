@@ -44,7 +44,7 @@ public class ResistanceParserTest {
 
     @Test
     public void testGetResistanceMap() throws Exception {
-        ResistanceMap resistanceMap2 = new ResistanceParser().setReader(resistanceFile).parse();
+        ResistanceMap resistanceMap2 = new ResistanceParser().setFiles(resistanceFile).load();
         assertEquals(resistanceMap1.toString(), resistanceMap2.toString());
 
     }

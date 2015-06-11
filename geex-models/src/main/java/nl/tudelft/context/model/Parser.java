@@ -1,5 +1,7 @@
 package nl.tudelft.context.model;
 
+import nl.tudelft.context.service.Loadable;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,12 +10,12 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 /**
- * @param <T> The filetype this parser should parse to.
+ * @param <T> The filetype this parser should load to.
  * @author Gerben Oolbekkink
  * @version 1.0
  * @since 24-5-2015
  */
-public abstract class Parser<T> {
+public abstract class Parser<T> implements Loadable<T> {
     /**
      * Reader used for reading the file.
      */
@@ -34,7 +36,7 @@ public abstract class Parser<T> {
      * @throws FileNotFoundException        If the file is not found.
      * @throws UnsupportedEncodingException If the file contains an unsupported encoding.
      */
-    public Parser<T> setReader(final File... files) throws FileNotFoundException, UnsupportedEncodingException {
+    public Parser<T> setFiles(final File... files) throws FileNotFoundException, UnsupportedEncodingException {
         readerList = new BufferedReader[files.length];
         for (int i = 0; i < files.length; i++) {
             File file = files[i];
@@ -49,15 +51,15 @@ public abstract class Parser<T> {
      *
      * @return Parsed object.
      */
-    public T parse() {
+    public T load() {
 
         return parse(readerList);
     }
 
     /**
-     * Abstract method to which a file is given to parse.
+     * Abstract method to which a file is given to load.
      *
-     * @param file File to parse.
+     * @param file File to load.
      * @return Parsed object.
      */
     protected abstract T parse(BufferedReader... file);

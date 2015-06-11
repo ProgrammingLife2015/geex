@@ -30,13 +30,13 @@ public class NewickFactoryTest {
     public static void loadFile() {
         file = new File(NewickTest.class.getResource("/newick/10strains.nwk").getPath());
         try {
-            treeParser = new NewickParser().setReader(file);
+            treeParser = new NewickParser().setFiles(file);
         } catch (FileNotFoundException e) {
             fail("File not found");
         } catch (UnsupportedEncodingException e) {
             fail("Unsupported encoding");
         }
-        newick = treeParser.parse();
+        newick = treeParser.load();
         assertTrue(newick.vertexSet().size() > 0);
         root = newick.getRoot();
         assertNotNull(root);
