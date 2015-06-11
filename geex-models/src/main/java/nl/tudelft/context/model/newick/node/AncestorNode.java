@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author Jasper Boot <mrjasperboot@gmail.com>
+ * @author Jasper Boot
  * @version 1.0
  * @since 05-06-2015
  */

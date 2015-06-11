@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @author Jasper Boot <mrjasperboot@gmail.com>
+ * @author Jasper Boot
  * @version 1.0
  * @since 05-06-2015
  */
