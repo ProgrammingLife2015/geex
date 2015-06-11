@@ -92,7 +92,7 @@ public class InsertDeleteGraph extends StackGraph {
         inDel.forEach((start, end) -> {
             setEdgeWeight(
                     getEdge(start, getTargets(start).get(0)),
-                    incomingEdgesOf(start).stream().mapToDouble(graph::getEdgeWeight).sum()
+                    graph.outgoingEdgesOf(end).stream().mapToDouble(graph::getEdgeWeight).sum()
             );
             replace(start, new GraphNode(graph, start, end, "insert-delete"));
         });
