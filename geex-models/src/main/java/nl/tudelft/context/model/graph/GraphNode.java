@@ -23,16 +23,23 @@ public class GraphNode extends DefaultNode {
     DefaultNode start, end;
 
     /**
+     * Type of graph node.
+     */
+    String type;
+
+    /**
      * Create a graph node.
      *
      * @param graph Master graph
      * @param start Start of sub graph
      * @param end   End of sub graph
+     * @param type  Type of the sub graph
      */
-    public GraphNode(final StackGraph graph, final DefaultNode start, final DefaultNode end) {
+    public GraphNode(final StackGraph graph, final DefaultNode start, final DefaultNode end, final String type) {
 
         this.start = start;
         this.end = end;
+        this.type = type;
 
         sources = start.getSources();
 
@@ -58,6 +65,15 @@ public class GraphNode extends DefaultNode {
     }
 
     /**
+     * Get the type of the graph.
+     *
+     * @return Type of graph.
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
      * Get nodes of sub graph.
      *
      * @return Nodes of sub graph
@@ -75,5 +91,4 @@ public class GraphNode extends DefaultNode {
     public int getRefEndPosition() {
         return end.getRefEndPosition();
     }
-
 }

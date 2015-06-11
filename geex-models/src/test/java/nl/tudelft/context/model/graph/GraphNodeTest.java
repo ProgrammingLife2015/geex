@@ -41,7 +41,7 @@ public class GraphNodeTest {
 
         graph.vertexSet().stream().forEach(vertex -> nodeMap.put(vertex.hashCode(), vertex)); // Ad by id (hashcode)
 
-        graphNode = new GraphNode(graph, nodeMap.get(0), nodeMap.get(3));
+        graphNode = new GraphNode(graph, nodeMap.get(0), nodeMap.get(3), "single");
 
     }
 
