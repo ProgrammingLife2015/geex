@@ -111,7 +111,7 @@ public class SinglePointGraph extends StackGraph {
         single.forEach((start, end) -> {
             setEdgeWeight(
                     addEdge(start, end),
-                    incomingEdgesOf(start).stream().mapToDouble(graph::getEdgeWeight).sum()
+                    graph.outgoingEdgesOf(end).stream().mapToDouble(graph::getEdgeWeight).sum()
             );
             replace(start, new GraphNode(graph, start, end, "single"));
         });
