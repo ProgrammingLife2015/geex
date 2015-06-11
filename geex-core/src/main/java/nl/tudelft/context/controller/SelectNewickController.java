@@ -35,6 +35,7 @@ public class SelectNewickController extends AbstractNewickController {
 
         super(newickIn);
         this.graphController = graphController;
+        this.showInBreadcrumb = false;
 
         loadFXML("/application/newick.fxml");
 
@@ -70,7 +71,7 @@ public class SelectNewickController extends AbstractNewickController {
 
     @Override
     public String getBreadcrumbName() {
-        return "Select strains (" + 0 + ")";
+        throw new UnsupportedOperationException();
     }
 
 }
