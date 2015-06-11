@@ -5,7 +5,7 @@ import nl.tudelft.context.model.newick.node.AbstractNode;
 import nl.tudelft.context.model.newick.node.DummyNode;
 
 /**
- * @author Jasper Boot <mrjasperboot@gmail.com>
+ * @author Jasper Boot
  * @version 1.0
  * @since 05-06-2015
  */

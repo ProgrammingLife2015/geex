@@ -5,11 +5,9 @@ before_install:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 - '[ "$TRAVIS_PULL_REQUEST" = "true" ] && git checkout HEAD^2 && echo "OCTOPULL_SHA=$(git rev-parse HEAD)"; true'
-- git clone -b travis `git config --get remote.origin.url` target/travis
 script:
 - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then mvn site -B; else true; fi;'
-- 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && ! [ "$TRAVIS_BRANCH" = "master" ]; then mvn test -B; else true; fi;'
-- 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then mvn site-deploy -B --settings target/travis/settings.xml; else true; fi;'
+- 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then mvn test -B; else true; fi;'
 notifications:
   webhooks:
   - http://octopull.rmhartog.me/api/travis/webhook
@@ -17,6 +15,3 @@ after_script:
 - echo "== CHECKSTYLE_RESULT ==" && cat "target/checkstyle-result.xml" && echo "== END_CHECKSTYLE_RESULT =="
 - echo "== PMD_RESULT ==" && cat "target/pmd.xml" && echo "== END_PMD_RESULT =="
 - echo "== FINDBUGS_RESULT ==" && cat "target/findbugsXml.xml" && echo "== END_FINDBUGS_RESULT =="
-env:
-  global:
-    secure: bFAgPq1WWX9VVV753DXfE3CrCjdj3StAUOdHINL20P9xdUsC4TiDsyJbR6PQyQo9Dy/7Gw04GbL8YcbXo2rHQgPrKBP8JWCVJ/dLqW07PbGQ+ma+v3FSs0YkfVjzTiDRr84DTZCEmj+TBqBn1l+M8NdVbi+VLl7tA5UhhVFzkHo=

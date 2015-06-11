@@ -5,8 +5,13 @@
 ## Programming Life (group 2)
 For more details about this project, the team and the application, visit the [Wiki pages](https://github.com/Vennik/contextproject/wiki).
 
-## Known issues
-If you get a StackOverflow, then upgrade to the latest Java 8.
+## Maven
+
+### Site
+To generate a site run `mvn site:site site:stage`. The staging site will be in `target/staging`. Just running `mvn site` will not create proper links between modules.
+
+### Package
+To create a runnable jar run `mvn package` in `geex-core`. `geex-core` is the only module which creates a runnable jar.
 
 ## Diagrams
 The diagrams are based on [PlantUML](http://plantuml.sourceforge.net/). Install the PlantUML Integration plugin from the IntelliJ plugin browser. The diagrams are also available in the Maven site.
