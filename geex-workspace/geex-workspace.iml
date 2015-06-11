@@ -11,6 +11,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
     <orderEntry type="module" module-name="geex-models" />
     <orderEntry type="module" module-name="geex-services" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />

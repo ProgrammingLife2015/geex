@@ -80,7 +80,13 @@ public class Node extends DefaultNode {
         return refEndPosition;
     }
 
-    public List<Annotation> getAnnoation(AnnotationMap annotationMap) {
+    /**
+     * Get the list of annotations that are present in this node.
+     *
+     * @param annotationMap The list of all annotations
+     * @return              The list of annotations present in this node
+     */
+    public List<Annotation> getAnnoations(final AnnotationMap annotationMap) {
         List<Annotation> test = annotationMap.subMap(refStartPosition, true, refEndPosition, true).values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
