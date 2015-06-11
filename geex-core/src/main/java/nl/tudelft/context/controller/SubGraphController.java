@@ -35,7 +35,8 @@ public class SubGraphController extends AbstractGraphController {
      */
     public SubGraphController(final MainController mainController,
                               final StackGraph stackGraph,
-                              final GraphNode graphNode, Set<String> sources) {
+                              final GraphNode graphNode,
+                              final Set<String> sources) {
 
         super(mainController);
 

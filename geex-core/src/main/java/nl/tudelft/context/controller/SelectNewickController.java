@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class SelectNewickController extends AbstractNewickController {
 
     /**
-     * Main controller to set views
+     * Main controller to set views.
      */
     private final MainController mainController;
 
