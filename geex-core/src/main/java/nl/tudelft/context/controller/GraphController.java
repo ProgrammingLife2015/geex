@@ -116,11 +116,11 @@ public final class GraphController extends AbstractGraphController {
         MenuController menuController = mainController.getMenuController();
 
         MenuItem zoomIn = menuController.getZoomIn();
-        zoomIn.setOnAction(event -> showGraph(new DrawableGraph(graphList.getFirst())));
+        zoomIn.setOnAction(event -> zoomIn());
         zoomIn.disableProperty().bind(activeProperty.not());
 
         MenuItem zoomOut = menuController.getZoomOut();
-        zoomOut.setOnAction(event -> showGraph(new DrawableGraph(graphList.getLast())));
+        zoomOut.setOnAction(event -> zoomOut());
         zoomOut.disableProperty().bind(activeProperty.not());
 
         MenuItem toggleSelect = menuController.getToggleSelect();
@@ -142,7 +142,8 @@ public final class GraphController extends AbstractGraphController {
         graphList.add(graphMap.flat(sources));
         graphList.add(new SinglePointGraph(graphList.getLast()));
         graphList.add(new InsertDeleteGraph(graphList.getLast()));
-        DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
+        currentGraph = graphList.getLast();
+        DrawableGraph drawableGraph = new DrawableGraph(currentGraph);
         showGraph(drawableGraph);
     }
 
