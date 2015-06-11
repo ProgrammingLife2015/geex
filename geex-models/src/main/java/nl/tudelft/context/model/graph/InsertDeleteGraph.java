@@ -41,6 +41,7 @@ public class InsertDeleteGraph extends StackGraph {
 
         markInDel();
         shift();
+        replaceInsertDeletes();
 
     }
 
@@ -59,10 +60,12 @@ public class InsertDeleteGraph extends StackGraph {
                     }
 
                     List<List<DefaultNode>> end = targets.stream().map(this::getTargets).collect(Collectors.toList());
-                    if (end.get(0).size() == 1 && end.get(0).get(0).equals(targets.get(1))) {
+                    if (end.get(0).size() == 1 && end.get(0).get(0).equals(targets.get(1))
+                            && inDegreeOf(targets.get(1)) == 2) {
                         inDelPart.add(targets.get(0));
                         inDel.put(startNode, targets.get(1));
-                    } else if (end.get(1).size() == 1 && end.get(1).get(0).equals(targets.get(0))) {
+                    } else if (end.get(1).size() == 1 && end.get(1).get(0).equals(targets.get(0))
+                            && inDegreeOf(targets.get(0)) == 2) {
                         inDelPart.add(targets.get(1));
                         inDel.put(startNode, targets.get(0));
                     }
@@ -77,6 +80,22 @@ public class InsertDeleteGraph extends StackGraph {
     private void shift() {
 
         inDelPart.stream().forEach(DefaultNode::shift);
+
+    }
+
+    /**
+     * Replace all insert deletes parts with a graph node.
+     */
+    private void replaceInsertDeletes() {
+
+        inDelPart.forEach(this::removeVertex);
+        inDel.forEach((start, end) -> {
+            setEdgeWeight(
+                    getEdge(start, getTargets(start).get(0)),
+                    incomingEdgesOf(start).stream().mapToDouble(graph::getEdgeWeight).sum()
+            );
+            replace(start, new GraphNode(graph, start, end));
+        });
 
     }
 
