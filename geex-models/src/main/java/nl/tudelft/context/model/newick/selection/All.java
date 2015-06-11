@@ -1,5 +1,7 @@
 package nl.tudelft.context.model.newick.selection;
 
+import java.util.Set;
+
 /**
  * @author René Vennik
  * @version 1.0
@@ -8,8 +10,8 @@ package nl.tudelft.context.model.newick.selection;
 public class All implements Selection {
 
     @Override
-    public boolean useSources() {
-        return true;
+    public void addSource(final Set<String> sources, final String name) {
+        sources.add(name);
     }
 
     @Override

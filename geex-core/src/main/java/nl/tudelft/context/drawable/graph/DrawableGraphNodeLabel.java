@@ -17,11 +17,6 @@ import nl.tudelft.context.model.graph.GraphNode;
 public class DrawableGraphNodeLabel extends AbstractLabel {
 
     /**
-     * The node the label belongs to.
-     */
-    GraphNode node;
-
-    /**
      * Constructor for the single point mutation label.
      *
      * @param mainController       MainController indicating the controller
@@ -32,7 +27,7 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
     public DrawableGraphNodeLabel(final MainController mainController, final AbstractGraphController graphController,
                                   final AbstractDrawableNode abstractDrawableNode, final GraphNode node) {
 
-        this.node = node;
+        super(node);
 
         setCache(true);
         setCacheHint(CacheHint.SCALE);

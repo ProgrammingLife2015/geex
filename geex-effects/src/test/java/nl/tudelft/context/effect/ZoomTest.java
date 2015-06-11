@@ -1,4 +1,4 @@
-package nl.context.tudelft.effect;
+package nl.tudelft.context.effect;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.SimpleObjectProperty;

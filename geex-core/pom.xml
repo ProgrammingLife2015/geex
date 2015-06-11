@@ -9,6 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <name>Geex Core</name>
+
+    <description>Core packages for the Geex project.</description>
+
     <artifactId>geex-core</artifactId>
 
     <dependencies>
@@ -33,6 +37,4 @@
             <version>0.7</version>
         </dependency>
     </dependencies>
-
-
 </project>

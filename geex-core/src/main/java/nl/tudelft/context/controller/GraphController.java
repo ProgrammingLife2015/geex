@@ -11,7 +11,6 @@ import nl.tudelft.context.model.graph.SinglePointGraph;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
 import java.net.URL;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -28,17 +27,12 @@ public final class GraphController extends AbstractGraphController {
     Set<String> sources;
 
     /**
-     * Sources that are displayed in the graph.
-     */
-    ObjectProperty<Set<String>> selectedSources = new SimpleObjectProperty<>(new HashSet<>());
-
-    /**
      * Select controller to select strains.
      */
     SelectNewickController selectNewickController = new SelectNewickController(
             this,
             mainController.getWorkspace().getNewick()
-    );;
+    );
 
     /**
      * Property with graph map.
@@ -101,8 +95,6 @@ public final class GraphController extends AbstractGraphController {
         resistanceMapProperty.addListener((observable, oldValue, newValue) -> {
             loadResistance(newValue);
         });
-
-        selectedSources.addListener(event -> System.out.println(selectedSources));
 
         graphMapProperty.bind(graphMapIn);
         annotationMapProperty.bind(annotationMapIn);
