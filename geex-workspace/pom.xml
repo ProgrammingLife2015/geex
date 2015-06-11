@@ -9,6 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <name>Geex Workspace</name>
+
+    <description>Workspace package for the Geex project.
+
+    The workspace is used for loading a directory of files and parsing them. This all happens in a background thread.</description>
+
     <artifactId>geex-workspace</artifactId>
 
     <dependencies>
@@ -23,5 +29,4 @@
             <version>0.7</version>
         </dependency>
     </dependencies>
-
 </project>

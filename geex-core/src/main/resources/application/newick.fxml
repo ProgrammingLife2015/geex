@@ -8,7 +8,7 @@
 
     <StackPane>
         <StackPane styleClass="margin">
-            <Group fx:id="newick"/>
+            <Group fx:id="newickContainer"/>
         </StackPane>
         <ProgressIndicator fx:id="progressIndicator"/>
     </StackPane>

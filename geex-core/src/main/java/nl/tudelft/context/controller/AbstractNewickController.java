@@ -1,5 +1,6 @@
 package nl.tudelft.context.controller;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -25,10 +26,10 @@ public abstract class AbstractNewickController extends ViewController<ScrollPane
     ProgressIndicator progressIndicator;
 
     /**
-     * The container of the newick tree.
+     * The container of the Newick tree.
      */
     @FXML
-    Group newick;
+    Group newickContainer;
 
     /**
      * Property with Newick tree.

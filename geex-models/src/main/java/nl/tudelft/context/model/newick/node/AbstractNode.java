@@ -1,4 +1,4 @@
-package nl.tudelft.context.model.newick;
+package nl.tudelft.context.model.newick.node;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -10,37 +10,43 @@ import nl.tudelft.context.model.newick.selection.Selection;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
  * @author Jasper Boot
  * @version 1.0
- * @since 3-5-2015
+ * @since 05-06-2015
  */
-public class Node {
+public abstract class AbstractNode {
 
     /**
-     * The name of the Node.
+     * The name of the node.
      */
-    private final String name;
+    final String name;
     /**
-     * The weight of the Node.
+     * The weight of the node.
      */
-    private final double weight;
+    final double weight;
     /**
-     * The children of the Node.
+     * The children of the node.
      */
-    private List<Node> children;
+    List<AbstractNode> children;
 
     /**
      * The parent node.
      */
-    private Node parent;
+    Optional<AbstractNode> parent = Optional.empty();
 
     /**
      * The selection of the node.
      */
-    private ObjectProperty<Selection> selection = new SimpleObjectProperty<>(new None());
+    ObjectProperty<Selection> selection = new SimpleObjectProperty<>(new None());
+
+    /**
+     * The sources in this node.
+     */
+    SimpleObjectProperty<Set<String>> sources = new SimpleObjectProperty<>(new HashSet<>());
 
     /**
      * Builds a new node with the corresponding name and weight.
@@ -48,7 +54,7 @@ public class Node {
      * @param name   the name of the node
      * @param weight the weight (distance from parent) of the node
      */
-    public Node(final String name, final double weight) {
+    public AbstractNode(final String name, final double weight) {
         this.name = name;
         this.weight = weight;
         children = new ArrayList<>(2);
@@ -59,35 +65,22 @@ public class Node {
      *
      * @param n the node to add as a child
      */
-    public void addChild(final Node n) {
-        this.children.add(n);
-    }
+    public abstract void addChild(final AbstractNode n);
 
     /**
      * Gets all the children inside this node.
      *
      * @return the children
      */
-    public List<Node> getChildren() {
-        return children;
-    }
-
-    /**
-     * Checks if the node has a parent.
-     *
-     * @return true if the node has a parent; otherwise false.
-     */
-    public boolean hasParent() {
-        return getParent() != null;
-    }
+    public abstract List<AbstractNode> getChildren();
 
     /**
      * Sets the parent of the node.
      *
      * @param parent the parent.
      */
-    public void setParent(final Node parent) {
-        this.parent = parent;
+    public void setParent(final AbstractNode parent) {
+        this.parent = Optional.of(parent);
     }
 
     /**
@@ -95,8 +88,8 @@ public class Node {
      *
      * @return the parent of the node.
      */
-    public Node getParent() {
-        return parent;
+    public AbstractNode getParent() {
+        return parent.get();
     }
 
     /**
@@ -118,13 +111,9 @@ public class Node {
     }
 
     /**
-     * Tells whether this node is an unknown ancestor or not.
-     *
-     * @return true if the node is an unknown ancestor; otherwise false
+     * Updates the sources that belong to the node and its children.
      */
-    public boolean isUnknown() {
-        return this.name.isEmpty();
-    }
+    public abstract void updateSources();
 
     /**
      * Gets the sources for the graph from this node and its children.
@@ -132,25 +121,25 @@ public class Node {
      * @return name of this node and it's children
      */
     public Set<String> getSources() {
+        return sources.get();
+    }
 
-        Set<String> sources = new HashSet<>();
-
-        if (!isUnknown() && selection.get().useSources()) {
-            sources.add(name);
-        }
-
-        children.forEach(node -> sources.addAll(node.getSources()));
-
+    /**
+     * Gets the sources for the graph from this node and its children.
+     *
+     * @return name of this node and it's children
+     */
+    public ObjectProperty<Set<String>> getSourcesProperty() {
         return sources;
-
     }
 
     /**
      * Toggles the selection of the node. If the selection was ALL, the the new selection will be NONE; otherwise the
      * new selection will be ALL.
      */
-    public void toggleSelected() {
+    public void toggleSelection() {
         setSelection(selection.get().toggle());
+        parent.ifPresent(AbstractNode::updateSelection);
     }
 
     /**
@@ -159,8 +148,9 @@ public class Node {
      * @param selection The new selection of the node and its children.
      */
     public void setSelection(final Selection selection) {
-        this.selection.setValue(selection);
+        this.selection.set(selection);
         getChildren().forEach(node -> node.setSelection(selection));
+        updateSources();
     }
 
     /**
@@ -183,38 +173,51 @@ public class Node {
 
     /**
      * Sets the selection of the node, based on the selection of its children;
-     * <p/>
+     *
      * All the children's selection is ALL: ALL
      * All the children's selection is NONE: NONE
      * Otherwise: PARTIAL
-     * <p/>
+     *
      * If the node has a parent, it also calls this method on its parent.
      */
-    public void updateSelected() {
+    public void updateSelection() {
         selection.setValue(getChildren().stream()
-                .map(Node::getSelection)
-                .reduce(Selection::merge).orElse(new None()));
+                .map(AbstractNode::getSelection)
+                .reduce(Selection::merge).orElse(getSelection()));
+        updateSources();
 
-        if (hasParent()) {
-            getParent().updateSelected();
-        }
+        parent.ifPresent(AbstractNode::updateSelection);
     }
 
-    @Override
-    public boolean equals(final Object other) {
-        if (other == null || !(other instanceof Node)) {
-            return false;
-        }
-        Node that = (Node) other;
-        return name.equals(that.name)
-                && weight == that.weight;
-    }
+    /**
+     * Creates a clone of the current node.
+     *
+     * @return A clone of the current node
+     */
+    public abstract AbstractNode getCopy();
 
-    @Override
-    public int hashCode() {
-        long c = Double.doubleToLongBits(weight);
-        return 37 * name.hashCode() + (int) (c ^ (c >>> 32));
-    }
+    /**
+     * Should return a copy of all nodes that are (partially) selected.
+     *
+     * @return A copy of the nodes that are selected
+     */
+    public abstract AbstractNode getSelectedNodes();
+
+    /**
+     * Returns the class name that belongs to the node.
+     *
+     * @return The class name
+     */
+    public abstract String getClassName();
+
+    /**
+     * Translates the position of the node, according to the given parameters.
+     *
+     * @param minWeight   The minimum horizontal distance to its parent
+     * @param weightScale A scalar to multiply the weight with
+     * @param yPos        The y-position of the node
+     */
+    public abstract void translate(final int minWeight, final double weightScale, final int yPos);
 
     @Override
     public String toString() {

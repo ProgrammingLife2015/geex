@@ -1,6 +1,6 @@
 package nl.tudelft.context.drawable;
 
-import nl.tudelft.context.model.newick.Node;
+import nl.tudelft.context.model.newick.node.AbstractNode;
 
 /**
  * @author Gerben Oolbekkink
@@ -8,13 +8,12 @@ import nl.tudelft.context.model.newick.Node;
  * @since 8-6-2015
  */
 public class DrawableNewickNode extends DrawablePosition {
-
     /**
-     * Bind the the node to it's position.
+     * Creates a drawable newick node, based on a newick node.
      *
-     * @param node Node to bind
+     * @param node The newick node
      */
-    public DrawableNewickNode(final Node node) {
+    public DrawableNewickNode(final AbstractNode node) {
         this.translateXProperty().bind(node.translateXProperty());
         this.translateYProperty().bind(node.translateYProperty());
     }
