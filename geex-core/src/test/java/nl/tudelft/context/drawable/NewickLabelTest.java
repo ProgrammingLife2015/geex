@@ -1,7 +1,9 @@
 package nl.tudelft.context.drawable;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.model.newick.Node;
+import nl.tudelft.context.model.newick.node.AbstractNode;
+import nl.tudelft.context.model.newick.node.AncestorNode;
+import nl.tudelft.context.model.newick.node.StrandNode;
 import nl.tudelft.context.model.newick.selection.All;
 import nl.tudelft.context.model.newick.selection.None;
 import nl.tudelft.context.model.newick.selection.Partial;
@@ -17,7 +19,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(JfxRunner.class)
 public class NewickLabelTest {
-    public Node node;
+    public AbstractNode node;
 
     /**
      * Gets a label based on a leaf node.
@@ -25,7 +27,7 @@ public class NewickLabelTest {
      * @return a newick label.
      */
     public NewickLabel getLabel() {
-        node = new Node("Test node", 1.23);
+        node = new StrandNode("Test node", 1.23);
         node.setTranslateX(2.34);
         node.setTranslateY(3.45);
         return new NewickLabel(node);
@@ -37,7 +39,7 @@ public class NewickLabelTest {
      * @return a newick label.
      */
     public NewickLabel getLabelUnknown() {
-        node = new Node("", 2.34);
+        node = new AncestorNode(2.34);
         node.setTranslateX(3.45);
         node.setTranslateY(4.56);
         return new NewickLabel(node);
@@ -74,12 +76,12 @@ public class NewickLabelTest {
     }
 
     /**
-     * Leaf nodes should not have the ancestor style class.
+     * Strand nodes should have strand class.
      */
     @Test
     public void testAncestor() {
         NewickLabel newickLabel = getLabel();
-        assertFalse(newickLabel.getStyleClass().contains("ancestor"));
+        assertTrue(newickLabel.getStyleClass().contains("newick-strand"));
     }
 
     /**
@@ -88,7 +90,7 @@ public class NewickLabelTest {
     @Test
     public void testAncestorUnknown() {
         NewickLabel newickLabel = getLabelUnknown();
-        assertTrue(newickLabel.getStyleClass().contains("ancestor"));
+        assertTrue(newickLabel.getStyleClass().contains("newick-ancestor"));
     }
 
     /**

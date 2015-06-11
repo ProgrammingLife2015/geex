@@ -1,5 +1,7 @@
 package nl.tudelft.context.model.newick.selection;
 
+import java.util.Set;
+
 /**
  * @author René Vennik
  * @version 1.0
@@ -8,11 +10,12 @@ package nl.tudelft.context.model.newick.selection;
 public interface Selection {
 
     /**
-     * Check if should use the sources of this selection.
+     * Adds the name to the sources, dependent on the class.
      *
-     * @return If sources should be used
+     * @param sources The set with sources
+     * @param name    The potentially new source
      */
-    boolean useSources();
+    void addSource(final Set<String> sources, final String name);
 
     /**
      * Checks if the selection includes at least one element.

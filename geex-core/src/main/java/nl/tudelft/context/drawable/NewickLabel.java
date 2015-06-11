@@ -1,7 +1,7 @@
 package nl.tudelft.context.drawable;
 
 import javafx.scene.control.Label;
-import nl.tudelft.context.model.newick.Node;
+import nl.tudelft.context.model.newick.node.AbstractNode;
 import nl.tudelft.context.model.newick.selection.Selection;
 
 /**
@@ -13,14 +13,14 @@ public class NewickLabel extends Label {
     /**
      * The node that the label is based on.
      */
-    Node node;
+    AbstractNode node;
 
     /**
      * Creates a label, based on a newick node.
      *
      * @param node The node to base the label on.
      */
-    public NewickLabel(final Node node) {
+    public NewickLabel(final AbstractNode node) {
         super(node.getName());
 
         this.node = node;
@@ -34,7 +34,7 @@ public class NewickLabel extends Label {
      */
     public void initialize() {
         setCache(true);
-        getStyleClass().add("newick-label");
+        getStyleClass().add(node.getClassName());
 
         translateXProperty().bind(node.translateXProperty());
         translateYProperty().bind(node.translateYProperty());
@@ -42,22 +42,13 @@ public class NewickLabel extends Label {
         node.getSelectionProperty().addListener(
                 (observable, oldValue, newValue) -> setSelectedClass(oldValue, newValue)
         );
-
-        if (node.isUnknown()) {
-            getStyleClass().add("ancestor");
-        }
     }
 
     /**
      * Sets the click events on the label.
      */
     public void setEvents() {
-        setOnMouseClicked(event -> {
-            node.toggleSelected();
-            if (node.hasParent()) {
-                node.getParent().updateSelected();
-            }
-        });
+        setOnMouseClicked(event -> node.toggleSelection());
     }
 
     /**
