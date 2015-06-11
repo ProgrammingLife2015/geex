@@ -24,15 +24,15 @@ public class AnnotationMapTest {
         annotation1 = new Annotation("seqId", "source", "type", 0, 1, 0f, 'A', 'B', "attributes");
         annotation2 = new Annotation("seqId1", "source1", "type1", 2, 3, 1f, 'C', 'D', "attributes2");
         annotationMap1 = new AnnotationMap();
-        annotationMap1.put(1, annotation1);
-        annotationMap1.put(2, annotation2);
+        annotationMap1.addAnnotation(annotation1);
+        annotationMap1.addAnnotation(annotation2);
     }
 
     @Test
     public void testToString() throws Exception {
-        assertEquals("Annotation(seqId:'seqId, source:'source, type:'type, start:0, end:1, score:0.0, strand:A, phase:B, attributes:attributes)"
+        assertEquals("[Annotation(seqId:'seqId, source:'source, type:'type, start:0, end:1, score:0.0, strand:A, phase:B, attributes:attributes)]"
                 + System.getProperty("line.separator")
-                + "Annotation(seqId:'seqId1, source:'source1, type:'type1, start:2, end:3, score:1.0, strand:C, phase:D, attributes:attributes2)"
+                + "[Annotation(seqId:'seqId1, source:'source1, type:'type1, start:2, end:3, score:1.0, strand:C, phase:D, attributes:attributes2)]"
                 + System.getProperty("line.separator")
                 , annotationMap1.toString());
     }

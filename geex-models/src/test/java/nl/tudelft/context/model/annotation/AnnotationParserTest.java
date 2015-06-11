@@ -29,9 +29,9 @@ public class AnnotationParserTest {
         annotation2 = new Annotation("seqId1", "source1", "type1", 2, 3, 1f, '-', '.', "attributes=2;B=evenmore; (1 or 4)");
 
         annotationMap1 = new AnnotationMap();
+        annotationMap1.addAnnotation(annotation1);
+        annotationMap1.addAnnotation(annotation2);
 
-        annotationMap1.put(1, annotation1);
-        annotationMap1.put(2, annotation2);
         annotationFile = new File(AnnotationParserTest.class.getResource("/annotation/test.gff").getPath());
     }
 
