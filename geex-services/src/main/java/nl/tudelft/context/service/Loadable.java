@@ -23,7 +23,7 @@ public interface Loadable<T> {
     T load();
 
     /**
-     * Set filesiles used for loading.
+     * Set files used for loading.
      *
      * @param files Files used for loading.
      * @return This object for chaining.
