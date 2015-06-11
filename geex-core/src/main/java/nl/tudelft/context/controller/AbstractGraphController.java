@@ -9,7 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import nl.context.tudelft.effect.Zoom;
+import nl.tudelft.context.effect.Zoom;
 import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
