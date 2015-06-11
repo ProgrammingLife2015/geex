@@ -52,18 +52,6 @@ public final class GraphController extends AbstractGraphController {
     ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn;
 
     /**
-     * Boolean indicating whether the graph is loaded or not.
-     * True when loaded.
-     */
-    boolean graphLoaded = false;
-
-    /**
-     * Boolean indicating whether the graph is loaded or not.
-     * True when loaded.
-     */
-    boolean annotationsLoaded = false;
-
-    /**
      * Init a controller at graph.fxml.
      *
      * @param mainController  MainController for the application
@@ -97,9 +85,11 @@ public final class GraphController extends AbstractGraphController {
         ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<ResistanceMap> resistanceMapProperty = new SimpleObjectProperty<>();
 
-        graphMapProperty.addListener((observable, oldValue, newValue) -> {
-            loadGraph(newValue);
+        graphMapProperty.addListener(event -> {
+            mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
+            loadGraph(graphMapProperty.get(), annotationMapProperty.get());
         });
+        annotationMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get()));
 
         annotationMapProperty.addListener((observable, oldValue, newValue) -> {
             loadAnnotation(newValue);
@@ -148,11 +138,11 @@ public final class GraphController extends AbstractGraphController {
      * Load graph from source.
      *
      * @param graphMap The GraphMap which is loaded.
+     * @param annotationMap The AnnotationMap which is loaded.
      */
-    private void loadGraph(final GraphMap graphMap) {
-        graphLoaded = true;
-        if (annotationsLoaded) {
-            graphMap.setAnnotations(annotationMapIn.get());
+    private void loadGraph(final GraphMap graphMap, final AnnotationMap annotationMap) {
+        if (graphMap != null && annotationMap != null) {
+            graphMap.setAnnotations(annotationMap);
             graphList.add(graphMap.flat(sources));
             graphList.add(new SinglePointGraph(graphList.getLast()));
             DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
@@ -175,11 +165,6 @@ public final class GraphController extends AbstractGraphController {
      * @param annotationMap The annotation map which is loaded.
      */
     private void loadAnnotation(final AnnotationMap annotationMap) {
-        annotationsLoaded = true;
-        mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
-        if (graphLoaded) {
-            loadGraph(graphMapIn.get());
-        }
     }
 
     /**
