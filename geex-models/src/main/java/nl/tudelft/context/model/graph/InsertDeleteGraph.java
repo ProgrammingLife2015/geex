@@ -61,11 +61,11 @@ public class InsertDeleteGraph extends StackGraph {
 
                     List<List<DefaultNode>> end = targets.stream().map(this::getTargets).collect(Collectors.toList());
                     if (end.get(0).size() == 1 && end.get(0).get(0).equals(targets.get(1))
-                            && inDegreeOf(targets.get(1)) == 2) {
+                            && inDegreeOf(targets.get(0)) == 1 && inDegreeOf(targets.get(1)) == 2) {
                         inDelPart.add(targets.get(0));
                         inDel.put(startNode, targets.get(1));
                     } else if (end.get(1).size() == 1 && end.get(1).get(0).equals(targets.get(0))
-                            && inDegreeOf(targets.get(0)) == 2) {
+                            && inDegreeOf(targets.get(1)) == 1 && inDegreeOf(targets.get(0)) == 2) {
                         inDelPart.add(targets.get(1));
                         inDel.put(startNode, targets.get(0));
                     }
