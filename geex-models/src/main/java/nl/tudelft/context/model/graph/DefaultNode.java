@@ -25,6 +25,13 @@ public abstract class DefaultNode {
     String content;
 
     /**
+     * Get the size in nodes of the node.
+     *
+     * @return Size in nodes of the node
+     */
+    public abstract int getSize();
+
+    /**
      * Getter for sources.
      *
      * @return sources

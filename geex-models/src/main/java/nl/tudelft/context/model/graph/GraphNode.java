@@ -60,8 +60,16 @@ public class GraphNode extends DefaultNode {
 
         }
 
-        content = Integer.toString(nodes.size());
+    }
 
+    @Override
+    public int getSize() {
+        return nodes.stream().mapToInt(DefaultNode::getSize).sum();
+    }
+
+    @Override
+    public String getContent() {
+        return Integer.toString(getSize());
     }
 
     /**
