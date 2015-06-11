@@ -73,6 +73,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     LinkedList<StackGraph> graphList = new LinkedList<>();
 
     /**
+     * Graph currently display.
+     */
+    StackGraph currentGraph;
+
+    /**
      * Reference to the MainController of the app.
      */
     MainController mainController;
@@ -151,6 +156,32 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         ));
+
+    }
+
+    /**
+     * Zoom in.
+     */
+    protected void zoomIn() {
+
+        StackGraph newGraph = graphList.get(Math.max(graphList.indexOf(currentGraph) - 1, 0));
+        if (!newGraph.equals(currentGraph)) {
+            currentGraph = newGraph;
+            showGraph(new DrawableGraph(currentGraph));
+        }
+
+    }
+
+    /**
+     * Zoom out.
+     */
+    protected void zoomOut() {
+
+        StackGraph newGraph = graphList.get(Math.min(graphList.indexOf(currentGraph) + 1, graphList.size() - 1));
+        if (!newGraph.equals(currentGraph)) {
+            currentGraph = newGraph;
+            showGraph(new DrawableGraph(currentGraph));
+        }
 
     }
 

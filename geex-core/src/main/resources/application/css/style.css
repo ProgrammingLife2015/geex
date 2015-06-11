@@ -167,8 +167,8 @@
     -fx-text-fill: #2b2b2b;
 }
 
-.single-label {
-    -fx-background-color: #e44544;
+.single-label,
+.insert-delete-label {
     -fx-cursor: hand;
     -fx-min-width: 60px;
     -fx-min-height: 60px;
@@ -181,14 +181,23 @@
     -fx-text-fill: #2b2b2b;
 }
 
-.selected-label .info-label {
-    -fx-border-width: 4px 4px 0;
-    -fx-border-color: #FFF;
+.single-label {
+    -fx-background-color: #e44544;
 }
 
-.selected-label .single-label {
+.insert-delete-label {
+    -fx-background-color: #4594e4;
+}
+
+.selected-label .info-label {
+    -fx-border-width: 4px 4px 0;
+    -fx-border-color: #fff;
+}
+
+.selected-label .single-label,
+.selected-label .insert-delete-label {
     -fx-border-width: 4px;
-    -fx-border-color: #FFF;
+    -fx-border-color: #fff;
     -fx-border-radius: 30px;
 }
 
