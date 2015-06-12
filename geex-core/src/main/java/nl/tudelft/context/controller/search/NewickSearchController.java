@@ -68,6 +68,8 @@ public class NewickSearchController {
 
         container.getChildren().setAll(searchField, searchNext, searchPrev);
 
+        selectedNodes = new ArrayList<>();
+
         searchField.setOnAction(event1 -> searchNext.fire());
         searchField.setOnKeyReleased(searchFieldEventHandler());
         searchNext.setOnAction(searchMoveEventHandler(1));
