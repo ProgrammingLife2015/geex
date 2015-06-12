@@ -103,7 +103,7 @@
                     <sourceFiles>
                         <directory>${basedir}</directory>
                         <includes>
-                            <include>diagrams/**/*.puml</include>
+                            <include>src/site/*.puml</include>
                         </includes>
                     </sourceFiles>
                     <outputDirectory>${basedir}/target/site/images</outputDirectory>
