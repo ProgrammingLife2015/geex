@@ -77,7 +77,7 @@ public class DrawableNodeLabel extends AbstractLabel {
      */
     private Label initMainLabel() {
 
-        final Label label = new Label(Integer.toString(node.getId()));
+        final Label label = new Label(Integer.toString(node.getContent().length()));
         label.setCache(true);
         label.getStyleClass().add("info-label");
 
