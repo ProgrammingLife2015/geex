@@ -1,0 +1,13 @@
+@startuml
+
+[geex-core] --> [geex-effects]
+[geex-core] --> [geex-workspace]
+[geex-core] --> [geex-models]
+[geex-core] --> [geex-services]
+
+[geex-models] --> [geex-services]
+
+[geex-workspace] --> [geex-models]
+[geex-workspace] --> [geex-services]
+
+@enduml

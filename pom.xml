@@ -46,12 +46,6 @@
             <version>1.1</version>
             <scope>test</scope>
         </dependency>
-        <!-- JGraphT -->
-        <dependency>
-            <groupId>org.jgrapht</groupId>
-            <artifactId>jgrapht-core</artifactId>
-            <version>0.9.1</version>
-        </dependency>
         <!-- Commons Lang -->
         <dependency>
             <groupId>commons-lang</groupId>
@@ -63,11 +57,6 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.tmatesoft.sqljet</groupId>
-            <artifactId>sqljet</artifactId>
-            <version>1.1.10</version>
         </dependency>
     </dependencies>
     <build>
@@ -101,7 +90,7 @@
                 <version>1.1</version>
                 <configuration>
                     <sourceFiles>
-                        <directory>${basedir}</directory>
+                        <directory>${basedir}/src/site</directory>
                         <includes>
                             <include>diagrams/**/*.puml</include>
                         </includes>

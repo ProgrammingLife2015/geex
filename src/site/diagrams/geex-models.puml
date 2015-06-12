@@ -1,28 +1,24 @@
 @startuml
-class DrawableNode {
-    currentIncoming : int
-    translateX : double
-    translateY : double
-
-    +incrementIncoming() : int
+package service {
+interface Loadable<T> {
+    load() : T
+    setFiles(files : File...) : Loadable<T>
+}
 }
 
-package model {
-abstract class Parser<T> {
-    readerList : BufferedReader[]
 
-    +setReader(files : File...) : Parser<T>
-    +parse() : T
+package model {
+abstract class Parser<T> implements Loadable {
+    readerList : BufferedReader[]
     + {abstract} parse(file : BufferedReader...) : T
 }
 
 package graph {
-    class BaseCounter<Character, MutableInt> extends java.util.HashMap {
+    class BaseCounter extends java.util.HashBag {
         {static} df : DecimalFormat
-        # baseSize : int
 
-        +getPercentage(c : char)
-        +getPercentageString(c : char)
+        +getRatio(c : char) : float
+        +getPercentageString(c : char) : String
     }
     abstract class DefaultGraph<T, DefaultWeightedEdge> extends org.jgrapht.graph.DefaultDirectedWeightedGraph {
         +getFirstNodes() : List<T>
@@ -34,15 +30,15 @@ package graph {
            sources : Set<String>
            content : String
 
-           +getLabel(mainController : MainController, graphController : DefaultGraphController, drawableNode : DrawableNode) : DefaultLabel
+           +{abstract}getRefStartPosition() : int
+           +{abstract}getRefEndPosition() : int
+
     }
-    class graph.Node extends DrawableNode {
-        # id : int
-        # sources : Set<String>
-        # refStartPosition : int
-        # refEndPosition : int
-        # content : String
-        # baseCounter : BaseCounter
+    class graph.Node extends DefaultNode {
+        id : int
+        refStartPosition : int
+        refEndPosition : int
+        baseCounter : BaseCounter
     }
     class graph.NodeParser {
         #getNodeId(sc : Scanner) : int
@@ -60,6 +56,8 @@ package graph {
     }
     class GraphNode extends DefaultNode {
         nodes : Set<DefaultNode>
+        start : DefaultNode
+        end : DefaultNode
     }
     class GraphParser<GraphMap> extends Parser {
         -parseNodes(nodeFile : File, graph : Graph) : List<Node>
@@ -86,38 +84,44 @@ package graph {
     GraphMap --> Graph : << contains >>
     GraphParser ..> graph.NodeParser
 
-    Graph --> graph.Node : << contains >>
-
     graph.NodeParser ..> graph.Node : << create >>
     graph.Node *-- BaseCounter
 
     StackGraph --> DefaultNode : << contains >>
-
-    DefaultNode --> DefaultNode : << contains >>
 }
 
 
 package newick {
-    class newick.Node extends DrawableNode {
-        - name : String
-        - weight : double
-        - children : List<Node>
-        - parent : Node
-        - selection : Selection
+    abstract class newick.AbstractNode {
+        name : String
+        weight : double
+        children : List<AbstractNode>
+        parent : Optional<AbstractNode>
+        selection : ObjectProperty<Selection>
+        sources : SimpleObjectProperty<Set<String>>
+
+        +{abstract}addChild(n : AbstractNode)
+        +{abstract}getChildren() : List<AbstractNode>
+        +{abstract}updateSources()
+        +toggleSelection()
+        +{abstract}getCopy() : AbstractNode
     }
+    class AncestorNode extends newick.AbstractNode
+    class DummyNode extends newick.AbstractNode
+    class StrandNode extends newick.AbstractNode
     class newick.NodeParser {
-        +getNode(node : TreeNode) : Node
+        +getNode(node : TreeNode) : AbstractNode
     }
-    class Newick<Node, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
-        root : newick.Node
+    class Newick<AbstractNode, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
+        root : AbstractNode
 
         +getFirstNode() : Node
         +toString(node : Node, level : int)
     }
-    class NewickParser<Tree> extends Parser {
+    class NewickParser<Newick> extends Parser {
         +getOffspring(node : TreeNode, parent : Node, tree : Tree) : int
-        +createNode(child : TreeNode, parent : Node, row : int) : Node
-        +addDummy(parent : Node, n : Node, tree : Tree
+        +createNode(child : TreeNode, parent : Node, row : int) : AbstractNode
+        +connectNodes(parent : AbstractNode, child : AbstractNode)
     }
 
     package selection {
@@ -137,9 +141,9 @@ package newick {
 
     NewickParser ..> Newick : << create >>
     NewickParser ..> newick.NodeParser
-    newick.NodeParser ..> newick.Node : << create >>
+    newick.NodeParser ..> newick.AbstractNode : << create >>
 
-    Newick --> newick.Node : << contains >>
+    Newick --> newick.AbstractNode : << contains >>
 }
 
 package annotation {

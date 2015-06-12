@@ -1,0 +1,17 @@
+@startuml
+class LoadService<T> extends javafx.concurrent.Service {
+    -parserClass : Class<? extends Loadable<T>>
+    -files : File[]
+}
+
+interface Loadable<T> {
+    load() : T
+    setFiles(files : File[]) : Loadable<T>
+}
+
+abstract class javafx.concurrent.Service<T> {
+    #{abstract}createTask() : Task<T>
+}
+
+LoadService --> Loadable : Loads
+@enduml

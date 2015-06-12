@@ -1,0 +1,17 @@
+@startuml
+class Zoom {
+    scroll : ScrollPane
+    sequences : Group
+    mouseX : int
+    mouseY : int
+    left : double
+    top : double
+
+    +calculateBounds()
+    -setEvents(regions : List<Region>)
+    +setMouse(event : MouseEvent)
+    +applyAll(regions : List<Region>)
+    +apply(regions : Region, mouseX : double, mouseY : double)
+    -addScale(regions : Region, ratio : double)
+}
+@enduml
