@@ -103,12 +103,14 @@ public class NewickSearchController {
      */
     public EventHandler<ActionEvent> searchMoveEventHandler(final int dir) {
         return event -> {
-            selectedNodes.forEach(label -> label.getStyleClass().remove("search-focus"));
+            if (selectedNodes.size() > 0) {
+                selectedNodes.forEach(label -> label.getStyleClass().remove("search-focus"));
 
-            searchIndex += dir;
-            searchIndex %= selectedNodes.size();
+                searchIndex += dir + selectedNodes.size();
+                searchIndex %= selectedNodes.size();
 
-            ensureVisible(selectedNodes.get(searchIndex));
+                ensureVisible(selectedNodes.get(searchIndex));
+            }
         };
     }
 
