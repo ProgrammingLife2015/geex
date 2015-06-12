@@ -101,9 +101,9 @@
                 <version>1.1</version>
                 <configuration>
                     <sourceFiles>
-                        <directory>${basedir}</directory>
+                        <directory>${basedir}/src/site</directory>
                         <includes>
-                            <include>src/site/*.puml</include>
+                            <include>diagrams/**/*.puml</include>
                         </includes>
                     </sourceFiles>
                     <outputDirectory>${basedir}/target/site/images</outputDirectory>
