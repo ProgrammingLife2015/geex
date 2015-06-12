@@ -1,10 +1,9 @@
 package nl.tudelft.context;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.window.Window;
 
 /**
  * Entry point of the App.
@@ -14,16 +13,6 @@ import nl.tudelft.context.controller.MainController;
  * @since 23-4-2015
  */
 public class App extends Application {
-
-    /**
-     * Minimum width in pixels of application.
-     */
-    protected static final int FRAME_WIDTH = 800;
-
-    /**
-     * Minimum height in pixels of application.
-     */
-    protected static final int FRAME_HEIGHT = 600;
 
     /**
      * @param args arguments
@@ -48,22 +37,7 @@ public class App extends Application {
     public final void start(final Stage stage) {
 
         MainController controller = new MainController();
-        Scene scene = new Scene(controller.getRoot());
-
-        stage.setTitle("Geex");
-        stage.getIcons().addAll(
-                new Image(App.class.getResourceAsStream("/application/images/icon_16.png")),
-                new Image(App.class.getResourceAsStream("/application/images/icon_32.png")),
-                new Image(App.class.getResourceAsStream("/application/images/icon_48.png")),
-                new Image(App.class.getResourceAsStream("/application/images/icon_64.png")),
-                new Image(App.class.getResourceAsStream("/application/images/icon_128.png")),
-                new Image(App.class.getResourceAsStream("/application/images/icon_256.png"))
-        );
-        stage.setScene(scene);
-        stage.setMinHeight(FRAME_HEIGHT);
-        stage.setMinWidth(FRAME_WIDTH);
-        stage.setMaximized(true);
-        stage.show();
+        new Window("Geex", controller.getRoot());
 
     }
 

@@ -3,6 +3,10 @@ package nl.tudelft.context.controller;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Parent;
+import nl.tudelft.context.window.Window;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @param <T> fxml root type
@@ -16,6 +20,11 @@ public abstract class ViewController<T extends Parent> extends AbstractControlle
      * Tells whether the controller is currently active (top view).
      */
     BooleanProperty activeProperty = new SimpleBooleanProperty(false);
+
+    /**
+     * Sub windows.
+     */
+    List<Window> windows = new ArrayList<>();
 
     /**
      * Show in breadcrumb.
@@ -59,6 +68,15 @@ public abstract class ViewController<T extends Parent> extends AbstractControlle
      */
     public boolean getShowInBreadcrumb() {
         return showInBreadcrumb;
+    }
+
+    /**
+     * Add a window to the list of sub windows.
+     *
+     * @param window Window to add
+     */
+    public void addWindow(Window window) {
+        windows.add(window);
     }
 
 }
