@@ -1,0 +1,33 @@
+@startuml
+class Database {
+    db : SqlJetDb
+    -{static}instance : Database
+    +{static}instance() : Database
+    +getList(tableName : String, columns : String[], limit : int) : List<String[]>
+    -open()
+    +remove(tableName : String, values : String[])
+    +insert(tableName : String, values : String[])
+    +replace(tableName : String, values : String[])
+}
+
+class Workspace {
+    directory : File
+    files : File[]
+    edgeFile : File
+    nodeFile : File
+    nwkFile : File
+    annotationFile : File
+    resistanceFile : File
+    loadNewickService : LoadService<Newick>
+    loadGraphService : LoadService<GraphMap>
+    loadAnnotationService : LoadService<AnnotationMap>
+    loadResistanceService : LoadService<ResistanceMap>
+
+    -findFile(files : File[], extension : String) : File
+    +load()
+    +save()
+    +preload()
+}
+
+Workspace --> Database : << Uses >>
+@enduml
