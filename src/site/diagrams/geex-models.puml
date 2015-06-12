@@ -1,0 +1,187 @@
+@startuml
+package service {
+interface Loadable<T> {
+    load() : T
+    setFiles(files : File...) : Loadable<T>
+}
+}
+
+
+package model {
+abstract class Parser<T> implements Loadable {
+    readerList : BufferedReader[]
+    + {abstract} parse(file : BufferedReader...) : T
+}
+
+package graph {
+    class BaseCounter extends java.util.HashBag {
+        {static} df : DecimalFormat
+
+        +getRatio(c : char) : float
+        +getPercentageString(c : char) : String
+    }
+    abstract class DefaultGraph<T, DefaultWeightedEdge> extends org.jgrapht.graph.DefaultDirectedWeightedGraph {
+        +getFirstNodes() : List<T>
+        +getTargets(node : T) : List<T>
+        +getSources(node : T) : List<T>
+        +replace(oldNode : T, newNode : T)
+    }
+    abstract class DefaultNode {
+           sources : Set<String>
+           content : String
+
+           +{abstract}getRefStartPosition() : int
+           +{abstract}getRefEndPosition() : int
+
+    }
+    class graph.Node extends DefaultNode {
+        id : int
+        refStartPosition : int
+        refEndPosition : int
+        baseCounter : BaseCounter
+    }
+    class graph.NodeParser {
+        #getNodeId(sc : Scanner) : int
+        +getNode(sc : Scanner) : Node
+    }
+
+    class Graph extends StackGraph
+    class GraphMap<String, Graph> extends java.util.concurrent.ConcurrentHashMap {
+        +flat(sources : Set<String>) : Graph
+        -getGraphList(sources : Set<String>) : List<Graph>
+        -getGraph(source : String) : Graph
+        +addVertex(node : Node)
+        +addEdge(source : Node, target : Node)
+        +filter()
+    }
+    class GraphNode extends DefaultNode {
+        nodes : Set<DefaultNode>
+        start : DefaultNode
+        end : DefaultNode
+    }
+    class GraphParser<GraphMap> extends Parser {
+        -parseNodes(nodeFile : File, graph : Graph) : List<Node>
+        -parseEdges(edgeFile : File, graph : Graph, nodeList : List<Node>)
+    }
+    class SinglePointGraph extends StackGraph {
+        singlePart : Set<DefaultNode>
+        single : Map<DefaultNode, DefaultNode>
+        graph : StackGraph
+
+        -markSingle()
+        -filterSingle()
+        -replaceSingle()
+    }
+
+    abstract class StackGraph<DefaultNode> extends DefaultGraph {
+        #setGraph(stackGraph : StackGraph)
+        +createSubGraph(nodes : Set<DefaultNode>) : Graph
+    }
+
+    'Relations
+
+    GraphParser ..> GraphMap : << create >>
+    GraphMap --> Graph : << contains >>
+    GraphParser ..> graph.NodeParser
+
+    graph.NodeParser ..> graph.Node : << create >>
+    graph.Node *-- BaseCounter
+
+    StackGraph --> DefaultNode : << contains >>
+}
+
+
+package newick {
+    abstract class newick.AbstractNode {
+        name : String
+        weight : double
+        children : List<AbstractNode>
+        parent : Optional<AbstractNode>
+        selection : ObjectProperty<Selection>
+        sources : SimpleObjectProperty<Set<String>>
+
+        +{abstract}addChild(n : AbstractNode)
+        +{abstract}getChildren() : List<AbstractNode>
+        +{abstract}updateSources()
+        +toggleSelection()
+        +{abstract}getCopy() : AbstractNode
+    }
+    class AncestorNode extends newick.AbstractNode
+    class DummyNode extends newick.AbstractNode
+    class StrandNode extends newick.AbstractNode
+    class newick.NodeParser {
+        +getNode(node : TreeNode) : AbstractNode
+    }
+    class Newick<AbstractNode, DefaultEdge> extends org.jgrapht.graph.DefaultDirectedGraph {
+        root : AbstractNode
+
+        +getFirstNode() : Node
+        +toString(node : Node, level : int)
+    }
+    class NewickParser<Newick> extends Parser {
+        +getOffspring(node : TreeNode, parent : Node, tree : Tree) : int
+        +createNode(child : TreeNode, parent : Node, row : int) : AbstractNode
+        +connectNodes(parent : AbstractNode, child : AbstractNode)
+    }
+
+    package selection {
+        interface Selection {
+            useSources() : boolean
+            isAny() : boolean
+
+            toggle() : Selection
+            merge(selection : Selection) : Selection
+            styleClass() : String
+        }
+
+        class All implements Selection
+        class None implements Selection
+        class Partial implements Selection
+    }
+
+    NewickParser ..> Newick : << create >>
+    NewickParser ..> newick.NodeParser
+    newick.NodeParser ..> newick.AbstractNode : << create >>
+
+    Newick --> newick.AbstractNode : << contains >>
+}
+
+package annotation {
+    class Annotation {
+        id : int
+        name : String
+        strand : boolean
+        start : int
+        end : int
+        proteinName : String
+
+        +equalsLoose(other : Annotation) : boolean
+    }
+    class AnnotationMap<String, Annotation> extends java.util.HashMap
+    class AnnotationParser<AnnotationMap> extends Parser {
+        +getAnnotation(splitLine : String) : Annotation
+    }
+
+    'Relations
+
+    AnnotationParser ..> AnnotationMap : << create >>
+    AnnotationMap "1" --> "*" Annotation : << contains >>
+}
+
+package resistance {
+    class Resistance {
+        geneName : String
+        typeOfMutation : String
+        change : String
+        genomePosition : int
+    }
+    class ResistanceMap<Integer, Resistance> extends java.util.HashMap
+    class ResistanceParser<ResistanceMap> extends Parser {
+        +getResistance(splitLine : String[]) : Resistance
+    }
+
+    ResistanceParser ..> ResistanceMap : << create >>
+    ResistanceMap "1" --> "*" Resistance : << contains >>
+}
+}
+@enduml
