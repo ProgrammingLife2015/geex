@@ -146,7 +146,7 @@ public class MainController extends AbstractController<StackPane> {
 
         if (shift || viewList.indexOf(on) == -1) {
 
-            on.addWindow(new Window(viewController.getBreadcrumbName(), viewController.getRoot()));
+            new Window(viewController.getBreadcrumbName(), viewController.getRoot());
             shift = false;
 
         } else {
