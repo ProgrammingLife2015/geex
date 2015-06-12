@@ -25,5 +25,8 @@
         <menu ref="modules" inherit="top"/>
         <menu ref="parent" inherit="top"/>
         <menu ref="reports" inherit="top"/>
+        <menu name="Architecture">
+            <item name="UML Diagram" href="/architecture.html"/>
+        </menu>
     </body>
 </project>
