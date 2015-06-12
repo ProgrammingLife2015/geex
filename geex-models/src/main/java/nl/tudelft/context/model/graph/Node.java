@@ -2,6 +2,7 @@ package nl.tudelft.context.model.graph;
 
 import nl.tudelft.context.model.annotation.Annotation;
 import nl.tudelft.context.model.annotation.AnnotationMap;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -109,12 +110,12 @@ public class Node extends DefaultNode {
      * @return String representing the Annotation list
      */
     public String getAnnotationText() {
-        StringBuilder result = new StringBuilder();
-        for (Annotation annotation : annotations) {
-            result.append(annotation.toString());
-            result.append(System.lineSeparator());
+        List<String> annotationList = annotations.stream().map(Annotation::toString).collect(Collectors.toList());
+        if (annotationList.size() == 0) {
+            return "None";
+        } else {
+            return StringUtils.join(annotationList, System.lineSeparator());
         }
-        return result.toString();
     }
 
     /**
