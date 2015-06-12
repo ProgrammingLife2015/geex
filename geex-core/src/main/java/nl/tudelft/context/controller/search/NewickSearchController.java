@@ -22,15 +22,42 @@ import java.util.stream.Collectors;
  */
 public class NewickSearchController {
 
+    /**
+     * List of nodes in the current Newick.
+     */
     private List<Label> nodes;
+
+    /**
+     * ScrollPane to move when focusing a label.
+     */
     private ScrollPane newickScroller;
 
+    /**
+     * TextField used for a search query.
+     */
     private TextField searchField;
+
+    /**
+     * Buttons used for moving the cursor to the previous/next label.
+     */
     private Button searchPrev, searchNext;
 
+    /**
+     * List of currently found nodes.
+     */
     private List<Label> selectedNodes;
+    /**
+     * Index of the active found node.
+     */
     private int searchIndex;
 
+    /**
+     * Create a new NewickSearchController.
+     *
+     * @param nodes Nodes to search in.
+     * @param container Container for the search bar.
+     * @param newickScroller Scroller containing the Labels in nodes.
+     */
     public NewickSearchController(final List<Label> nodes, HBox container, ScrollPane newickScroller) {
         this.nodes = nodes;
         this.newickScroller = newickScroller;
@@ -47,6 +74,11 @@ public class NewickSearchController {
         searchPrev.setOnAction(searchMoveEventHandler(-1));
     }
 
+    /**
+     * Create an eventhandler for searching.
+     *
+     * @return Code to be executed when searching.
+     */
     public EventHandler<KeyEvent> searchFieldEventHandler() {
         return event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -61,6 +93,12 @@ public class NewickSearchController {
         };
     }
 
+    /**
+     * Create an eventhandler for moving the search.
+     *
+     * @param dir Direction to move into. (1 or -1)
+     * @return Code to be executed when moving.
+     */
     public EventHandler<ActionEvent> searchMoveEventHandler(int dir) {
         return event -> {
             selectedNodes.forEach(label -> label.getStyleClass().remove("search-focus"));
@@ -72,6 +110,12 @@ public class NewickSearchController {
         };
     }
 
+    /**
+     * Perform a search operation.
+     *
+     * @param query Query to search for.
+     * @return A list of found Labels.
+     */
     public List<Label> search(String query) {
         nodes.stream().forEach(label -> label.getStyleClass().removeAll("search", "search-focus"));
         if (query.length() < 1) {
@@ -87,6 +131,10 @@ public class NewickSearchController {
         return selectedLabels;
     }
 
+    /**
+     * Make sure this Node is visible in the current scrollPane.
+     * @param node Node to be made visible.
+     */
     private void ensureVisible(Node node) {
         double width = newickScroller.getContent().getBoundsInLocal().getWidth();
         double height = newickScroller.getContent().getBoundsInLocal().getHeight();
