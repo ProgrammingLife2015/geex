@@ -38,6 +38,11 @@ public class GraphNode extends DefaultNode {
     String type;
 
     /**
+     * The Counter for the number of ACTG.
+     */
+    BaseCounter baseCounter = new BaseCounter();
+
+    /**
      * Create a graph node.
      *
      * @param parentGraph Parent graph
@@ -71,6 +76,10 @@ public class GraphNode extends DefaultNode {
 
         }
 
+        nodes.stream()
+                .map(DefaultNode::getBaseCounter)
+                .forEach(baseCounter::addBaseCounter);
+
     }
 
     @Override
@@ -81,6 +90,11 @@ public class GraphNode extends DefaultNode {
     @Override
     public String getContent() {
         return Integer.toString(getSize());
+    }
+
+    @Override
+    public BaseCounter getBaseCounter() {
+        return baseCounter;
     }
 
     /**
@@ -108,6 +122,7 @@ public class GraphNode extends DefaultNode {
      */
     public void addNode(final DefaultNode node) {
         nodes.add(node);
+        baseCounter.addBaseCounter(node.getBaseCounter());
     }
 
     /**

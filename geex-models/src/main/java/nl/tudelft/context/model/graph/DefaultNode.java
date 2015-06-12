@@ -54,6 +54,13 @@ public abstract class DefaultNode {
     }
 
     /**
+     * Getter for baseCounter.
+     *
+     * @return baseCounter
+     */
+    public abstract BaseCounter getBaseCounter();
+
+    /**
      * Getter for reference start position.
      *
      * @return reference start position
