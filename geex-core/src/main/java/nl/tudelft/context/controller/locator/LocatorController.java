@@ -70,6 +70,7 @@ public class LocatorController {
 
         labelMapProperty.addListener((observable, oldValue, newValue) -> {
             initLabelMap(newValue);
+            setPosition();
         });
 
         positionProperty.addListener(event -> setPosition());

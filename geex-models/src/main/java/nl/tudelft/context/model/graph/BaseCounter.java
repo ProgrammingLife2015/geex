@@ -81,7 +81,7 @@ public class BaseCounter extends HashBag {
      *
      * @param baseCounter Base counter to add.
      */
-    public void addBaseCounter(BaseCounter baseCounter) {
+    public void addBaseCounter(final BaseCounter baseCounter) {
         Arrays.asList('A', 'T', 'C', 'G', 'N').stream()
                 .forEach(base -> add(base, baseCounter.getCount(base)));
     }
