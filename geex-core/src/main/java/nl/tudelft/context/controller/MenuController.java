@@ -149,10 +149,10 @@ public final class MenuController {
     }
 
     /**
-     * The function that returns a menuItem with a title, shortcut and event attached.
+     * The function that returns a menuItem with a title, shift and event attached.
      *
      * @param title    The title of the menuItem.
-     * @param keyComb  The shortcut to this menuItem.
+     * @param keyComb  The shift to this menuItem.
      * @param event    Event that the item will use.
      * @param disabled If menu item is disabled
      * @return The menuItem with the parameters attached.

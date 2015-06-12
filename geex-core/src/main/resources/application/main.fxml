@@ -3,7 +3,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
-<?import java.net.URL?>
 <fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml">
 
     <BorderPane>
@@ -23,9 +22,5 @@
     </BorderPane>
 
     <StackPane fx:id="overlay"/>
-
-    <stylesheets>
-        <URL value="@css/style.css"/>
-    </stylesheets>
 
 </fx:root>

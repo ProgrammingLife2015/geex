@@ -5,10 +5,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.breadcrumb.Breadcrumb;
 import nl.tudelft.context.controller.overlay.OverlayController;
+import nl.tudelft.context.window.Window;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
@@ -70,6 +73,11 @@ public class MainController extends AbstractController<StackPane> {
     Optional<ViewController> previousTopView = Optional.empty();
 
     /**
+     * If shift key is down.
+     */
+    boolean shift;
+
+    /**
      * Init a controller at main.fxml.
      */
     public MainController() {
@@ -101,6 +109,17 @@ public class MainController extends AbstractController<StackPane> {
         setBaseView(new WelcomeController(this,
                 menuController.getSelectWorkspace(),
                 menuController.getSelectRecentWorkspace()));
+
+        root.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.SHIFT) {
+                shift = true;
+            }
+        });
+        root.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+            if (event.getCode() == KeyCode.SHIFT) {
+                shift = false;
+            }
+        });
     }
 
     /**
@@ -125,13 +144,22 @@ public class MainController extends AbstractController<StackPane> {
      */
     public void setView(final ViewController on, final ViewController viewController) {
 
-        viewList.remove(viewList.indexOf(on) + 1, viewList.size());
-        view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
-        viewList.add(viewController);
-        viewController.setVisibility(true);
-        view.getChildren().add(viewController.getRoot());
+        if (shift || viewList.indexOf(on) == -1) {
 
-        activateView();
+            new Window(viewController.getBreadcrumbName(), viewController.getRoot());
+            shift = false;
+
+        } else {
+
+            viewList.remove(viewList.indexOf(on) + 1, viewList.size());
+            view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
+            viewList.add(viewController);
+            viewController.setVisibility(true);
+            view.getChildren().add(viewController.getRoot());
+
+            activateView();
+
+        }
 
     }
 
