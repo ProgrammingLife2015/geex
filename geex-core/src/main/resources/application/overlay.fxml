@@ -24,6 +24,9 @@
 
         <Label GridPane.columnIndex="0" GridPane.rowIndex="5">Shortcuts</Label>
         <Label GridPane.columnIndex="1" GridPane.rowIndex="5">F1</Label>
+
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="6">Open Sequence View in new window</Label>
+        <Label GridPane.columnIndex="1" GridPane.rowIndex="6">Shift+Click</Label>
     </GridPane>
 
 </fx:root>
