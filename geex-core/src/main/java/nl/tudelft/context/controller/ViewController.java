@@ -3,10 +3,6 @@ package nl.tudelft.context.controller;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Parent;
-import nl.tudelft.context.window.Window;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @param <T> fxml root type

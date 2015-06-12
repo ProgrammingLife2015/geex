@@ -4,10 +4,8 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import nl.tudelft.context.model.newick.Newick;
@@ -34,9 +32,15 @@ public abstract class AbstractNewickController extends ViewController<AnchorPane
     @FXML
     Group newickContainer;
 
+    /**
+     * Scroll container.
+     */
     @FXML
     ScrollPane newickScroller;
 
+    /**
+     * Container for search bar.
+     */
     @FXML
     HBox search;
 

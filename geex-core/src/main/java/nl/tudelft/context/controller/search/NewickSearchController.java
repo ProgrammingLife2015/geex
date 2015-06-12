@@ -58,7 +58,7 @@ public class NewickSearchController {
      * @param container Container for the search bar.
      * @param newickScroller Scroller containing the Labels in nodes.
      */
-    public NewickSearchController(final List<Label> nodes, HBox container, ScrollPane newickScroller) {
+    public NewickSearchController(final List<Label> nodes, final HBox container, final ScrollPane newickScroller) {
         this.nodes = nodes;
         this.newickScroller = newickScroller;
 
@@ -99,7 +99,7 @@ public class NewickSearchController {
      * @param dir Direction to move into. (1 or -1)
      * @return Code to be executed when moving.
      */
-    public EventHandler<ActionEvent> searchMoveEventHandler(int dir) {
+    public EventHandler<ActionEvent> searchMoveEventHandler(final int dir) {
         return event -> {
             selectedNodes.forEach(label -> label.getStyleClass().remove("search-focus"));
 
@@ -116,7 +116,7 @@ public class NewickSearchController {
      * @param query Query to search for.
      * @return A list of found Labels.
      */
-    public List<Label> search(String query) {
+    public List<Label> search(final String query) {
         nodes.stream().forEach(label -> label.getStyleClass().removeAll("search", "search-focus"));
         if (query.length() < 1) {
             return new ArrayList<>();
@@ -135,7 +135,7 @@ public class NewickSearchController {
      * Make sure this Node is visible in the current scrollPane.
      * @param node Node to be made visible.
      */
-    private void ensureVisible(Node node) {
+    private void ensureVisible(final Node node) {
         double width = newickScroller.getContent().getBoundsInLocal().getWidth();
         double height = newickScroller.getContent().getBoundsInLocal().getHeight();
 
