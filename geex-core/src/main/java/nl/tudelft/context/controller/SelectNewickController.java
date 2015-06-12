@@ -3,6 +3,7 @@ package nl.tudelft.context.controller;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import nl.tudelft.context.controller.search.NewickSearchController;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableNewick;
 import nl.tudelft.context.drawable.NewickLabel;
@@ -83,6 +84,8 @@ public class SelectNewickController extends AbstractNewickController {
 
         newickContainer.getChildren().addAll(edgeList);
         newickContainer.getChildren().addAll(nodeList);
+
+        new NewickSearchController(nodeList, search, newickScroller);
 
     }
 
