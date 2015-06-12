@@ -4,7 +4,7 @@
 
     <groupId>nl.tudelft.context</groupId>
     <artifactId>geex</artifactId>
-    <version>0.7</version>
+    <version>0.8</version>
     <modules>
         <module>geex-models</module>
         <module>geex-core</module>
