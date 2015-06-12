@@ -117,11 +117,7 @@ public class Node extends DefaultNode {
         return result.toString();
     }
 
-    /**
-     * Getter for baseCounter.
-     *
-     * @return baseCounter
-     */
+    @Override
     public BaseCounter getBaseCounter() {
         return baseCounter;
     }

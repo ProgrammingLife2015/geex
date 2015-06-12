@@ -10,6 +10,7 @@ import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.InsertDeleteGraph;
 import nl.tudelft.context.model.graph.SinglePointGraph;
+import nl.tudelft.context.model.graph.UnknownGraph;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
 import java.net.URL;
@@ -145,6 +146,7 @@ public final class GraphController extends AbstractGraphController {
             graphList.add(new SinglePointGraph(graphList.getLast()));
             graphList.add(new InsertDeleteGraph(graphList.getLast()));
             graphList.add(new CollapseGraph(graphList.getLast()));
+            graphList.add(new UnknownGraph(graphList.getLast()));
 
             currentGraph = graphList.getLast();
             DrawableGraph drawableGraph = new DrawableGraph(currentGraph);

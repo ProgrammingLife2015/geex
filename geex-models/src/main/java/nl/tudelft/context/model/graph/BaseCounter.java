@@ -4,6 +4,7 @@ import org.apache.commons.collections.bag.HashBag;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -19,7 +20,13 @@ public class BaseCounter extends HashBag {
     static DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
 
     /**
-     * Constructor for the baseCounter.
+     * Constructor fot the empty base counter.
+     */
+    public BaseCounter() {
+    }
+
+    /**
+     * Constructor for the base counter.
      *
      * @param bases String with the dna sequence
      */
@@ -69,4 +76,13 @@ public class BaseCounter extends HashBag {
                 + "%";
     }
 
+    /**
+     * Add an other base counter to this base counter.
+     *
+     * @param baseCounter Base counter to add.
+     */
+    public void addBaseCounter(BaseCounter baseCounter) {
+        Arrays.asList('A', 'T', 'C', 'G', 'N').stream()
+                .forEach(base -> add(base, baseCounter.getCount(base)));
+    }
 }
