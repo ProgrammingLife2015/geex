@@ -143,7 +143,7 @@ public class Database {
      * @throws SqlJetException When the database fails.
      */
     public void insert(final String tableName, final String... values) throws SqlJetException {
-        db.runWriteTransaction(db1 -> db1.getTable(tableName).insert(values));
+        db.runWriteTransaction(db1 -> db1.getTable(tableName).insert((Object[]) values));
     }
 
     /**

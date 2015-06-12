@@ -18,6 +18,7 @@
     <artifactId>geex-workspace</artifactId>
 
     <dependencies>
+        <!-- Geex -->
         <dependency>
             <groupId>nl.tudelft.context</groupId>
             <artifactId>geex-models</artifactId>
@@ -27,6 +28,12 @@
             <groupId>nl.tudelft.context</groupId>
             <artifactId>geex-services</artifactId>
             <version>0.7</version>
+        </dependency>
+        <!-- Database -->
+        <dependency>
+            <groupId>org.tmatesoft.sqljet</groupId>
+            <artifactId>sqljet</artifactId>
+            <version>1.1.10</version>
         </dependency>
     </dependencies>
 </project>

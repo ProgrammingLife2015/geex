@@ -16,16 +16,23 @@
     <artifactId>geex-models</artifactId>
 
     <dependencies>
+        <!-- Geex -->
+        <dependency>
+            <groupId>nl.tudelft.context</groupId>
+            <artifactId>geex-services</artifactId>
+            <version>0.7</version>
+        </dependency>
         <!-- Newick Parser -->
         <dependency>
             <groupId>com.github.qurben</groupId>
             <artifactId>libnewicktree</artifactId>
             <version>1.0</version>
         </dependency>
+        <!-- JGraphT -->
         <dependency>
-            <groupId>nl.tudelft.context</groupId>
-            <artifactId>geex-services</artifactId>
-            <version>0.7</version>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+            <version>0.9.1</version>
         </dependency>
     </dependencies>
 </project>
