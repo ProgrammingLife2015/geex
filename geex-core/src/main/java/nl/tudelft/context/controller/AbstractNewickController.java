@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import nl.tudelft.context.model.newick.Newick;
 
 import java.net.URL;
@@ -16,7 +18,7 @@ import java.util.ResourceBundle;
  * @version 1.0
  * @since 5-6-2015
  */
-public abstract class AbstractNewickController extends ViewController<ScrollPane> {
+public abstract class AbstractNewickController extends ViewController<AnchorPane> {
 
     /**
      * ProgressIndicator to show when the tree is loading.
@@ -31,6 +33,18 @@ public abstract class AbstractNewickController extends ViewController<ScrollPane
     Group newickContainer;
 
     /**
+     * Scroll container.
+     */
+    @FXML
+    ScrollPane newickScroller;
+
+    /**
+     * Container for search bar.
+     */
+    @FXML
+    HBox search;
+
+    /**
      * Property with Newick tree.
      */
     ReadOnlyObjectProperty<Newick> newickIn;
@@ -42,7 +56,7 @@ public abstract class AbstractNewickController extends ViewController<ScrollPane
      */
     public AbstractNewickController(final ReadOnlyObjectProperty<Newick> newickIn) {
 
-        super(new ScrollPane());
+        super(new AnchorPane());
         this.newickIn = newickIn;
 
     }
@@ -59,7 +73,6 @@ public abstract class AbstractNewickController extends ViewController<ScrollPane
         newickObjectProperty.bind(newickIn);
 
         progressIndicator.visibleProperty().bind(newickObjectProperty.isNull());
-
     }
 
     /**
