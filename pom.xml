@@ -24,6 +24,86 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
+    <description>
+        The application will specialize in comparative DNA sequence analysis on a large numbers of genomes.
+        This can not only be used to find convergent evolution and parallel evolution
+        but also has shown potential for unraveling the function of noncoding sequence.
+        By making the genome browser interactive with semantic zooming we make it possible
+        to quickly identify which parts of the data are relevant for research and allow omitting
+        non-relevant information at certain levels. We can also use semantic zooming to annotate parts of the data.
+    </description>
+
+    <!-- List the core committers -->
+    <developers>
+        <developer>
+            <id>qurben</id>
+            <name>Gerben Oolbekkink</name>
+            <email>g.j.w.oolbekkink@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>Vennik</id>
+            <name>René Vennik</name>
+            <email>renevennik@gmail.com</email>
+            <roles>
+                <role>product owner</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>jnieuwdorp</id>
+            <name>Jasper Nieuwdorp</name>
+            <email>nieuwdorp.jasper@gmail.com</email>
+            <roles>
+                <role>scrum master</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>jboot</id>
+            <name>Jasper Boot</name>
+            <email>mrjasperboot@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>jimhommes</id>
+            <name>Jim Hommes</name>
+            <email>jim@homm.es</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/Vennik/contextproject/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:git@github.com:Vennik/contextproject.git</connection>
+        <developerConnection>scm:git:git@github.com:Vennik/contextproject.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/Vennik/contextproject</url>
+    </scm>
+
+    <ciManagement>
+        <system>travis-ci</system>
+        <url>https://travis-ci.org/Vennik/contextproject</url>
+        <notifiers/>
+    </ciManagement>
+
+    <distributionManagement>
+        <site>
+            <id>hup-geex</id>
+            <url>scpexe://hup.blue:/srv/geex</url>
+        </site>
+    </distributionManagement>
+
     <dependencies>
         <!-- Testing -->
         <dependency>
@@ -57,6 +137,7 @@
             <version>3.2.1</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -267,77 +348,4 @@
             </plugin>
         </plugins>
     </reporting>
-
-    <description>Genome explorer</description>
-
-    <!-- List the core committers -->
-    <developers>
-        <developer>
-            <id>qurben</id>
-            <name>Gerben Oolbekkink</name>
-            <email>g.j.w.oolbekkink@gmail.com</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>Vennik</id>
-            <name>René Vennik</name>
-            <email>renevennik@gmail.com</email>
-            <roles>
-                <role>product owner</role>
-                <role>developer</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>jnieuwdorp</id>
-            <name>Jasper Nieuwdorp</name>
-            <email>nieuwdorp.jasper@gmail.com</email>
-            <roles>
-                <role>scrum master</role>
-                <role>developer</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>jboot</id>
-            <name>Jasper Boot</name>
-            <email>mrjasperboot@gmail.com</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>jimhommes</id>
-            <name>Jim Hommes</name>
-            <email>jim@homm.es</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-        </developer>
-    </developers>
-
-    <issueManagement>
-        <system>Github</system>
-        <url>https://github.com/Vennik/contextproject/issues</url>
-    </issueManagement>
-
-    <scm>
-        <connection>scm:git:git@github.com:Vennik/contextproject.git</connection>
-        <developerConnection>scm:git:git@github.com:Vennik/contextproject.git</developerConnection>
-        <tag>HEAD</tag>
-        <url>https://github.com/Vennik/contextproject</url>
-    </scm>
-
-    <ciManagement>
-        <system>travis-ci</system>
-        <url>https://travis-ci.org/Vennik/contextproject</url>
-        <notifiers/>
-    </ciManagement>
-
-    <distributionManagement>
-        <site>
-            <id>hup-geex</id>
-            <url>scpexe://hup.blue:/srv/geex</url>
-        </site>
-    </distributionManagement>
 </project>
