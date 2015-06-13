@@ -9,12 +9,16 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.shape.Line;
+import nl.tudelft.context.drawable.DrawableLocatorMutation;
 import nl.tudelft.context.effect.Zoom;
 import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
 import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
+import nl.tudelft.context.model.graph.DefaultNode;
+import nl.tudelft.context.model.graph.GraphNode;
 import nl.tudelft.context.model.graph.StackGraph;
 
 import java.net.URL;
@@ -157,6 +161,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 )
         ));
 
+        showMutationsInLocator(drawableGraph);
+
     }
 
     /**
@@ -231,6 +237,16 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .flatMap(Collection::stream)
                 .map(node -> node.getLabel(mainController, this))
                 .collect(Collectors.toSet()));
+
+    }
+
+    private void showMutationsInLocator(DrawableGraph graph) {
+
+        graph.vertexSet().stream().forEach(node -> {
+            if (node.getNode() instanceof GraphNode) {
+                locator.getChildren().add(new DrawableLocatorMutation(node, locator));
+            }
+        });
 
     }
 
