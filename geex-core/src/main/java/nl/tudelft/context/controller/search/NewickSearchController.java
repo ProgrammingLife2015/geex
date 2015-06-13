@@ -23,19 +23,19 @@ import java.util.stream.Collectors;
 public class NewickSearchController {
 
     /**
-     * List of nodes in the current Newick.
+     * List of labels in the current Newick.
      */
-    private List<Label> nodes;
+    private List<Label> labels;
 
     /**
      * ScrollPane to move when focusing a label.
      */
-    private ScrollPane newickScroller;
+    private ScrollPane scrollPane;
 
     /**
      * TextField used for a search query.
      */
-    private TextField searchField;
+    TextField searchField;
 
     /**
      * Buttons used for moving the cursor to the previous/next label.
@@ -43,9 +43,9 @@ public class NewickSearchController {
     private Button searchPrev, searchNext;
 
     /**
-     * List of currently found nodes.
+     * List of currently found labels.
      */
-    private List<Label> selectedNodes;
+    private List<Label> selectedLabels;
     /**
      * Index of the active found node.
      */
@@ -54,21 +54,21 @@ public class NewickSearchController {
     /**
      * Create a new NewickSearchController.
      *
-     * @param nodes Nodes to search in.
-     * @param container Container for the search bar.
-     * @param newickScroller Scroller containing the Labels in nodes.
+     * @param labels          Nodes to search in.
+     * @param searchContainer Container for the search bar.
+     * @param scrollPane      Scroller containing the Labels in labels.
      */
-    public NewickSearchController(final List<Label> nodes, final HBox container, final ScrollPane newickScroller) {
-        this.nodes = nodes;
-        this.newickScroller = newickScroller;
+    public NewickSearchController(final List<Label> labels, final HBox searchContainer, final ScrollPane scrollPane) {
+        this.labels = labels;
+        this.scrollPane = scrollPane;
 
         searchField = new TextField();
         searchPrev = new Button("\u25b2");
         searchNext = new Button("\u25bc");
 
-        container.getChildren().setAll(searchField, searchNext, searchPrev);
+        searchContainer.getChildren().setAll(searchField, searchNext, searchPrev);
 
-        selectedNodes = new ArrayList<>();
+        selectedLabels = new ArrayList<>();
 
         searchField.setOnAction(event1 -> searchNext.fire());
         searchField.setOnKeyReleased(searchFieldEventHandler());
@@ -86,11 +86,11 @@ public class NewickSearchController {
             if (event.getCode() == KeyCode.ENTER) {
                 return;
             }
-            selectedNodes = NewickSearchController.this.search(searchField.getText());
+            selectedLabels = NewickSearchController.this.search(searchField.getText());
             searchIndex = 0;
 
-            if (selectedNodes.size() > 0) {
-                NewickSearchController.this.ensureVisible(selectedNodes.get(searchIndex));
+            if (selectedLabels.size() > 0) {
+                NewickSearchController.this.ensureVisible(selectedLabels.get(searchIndex));
             }
         };
     }
@@ -103,13 +103,13 @@ public class NewickSearchController {
      */
     public EventHandler<ActionEvent> searchMoveEventHandler(final int dir) {
         return event -> {
-            if (selectedNodes.size() > 0) {
-                selectedNodes.forEach(label -> label.getStyleClass().remove("search-focus"));
+            if (selectedLabels.size() > 0) {
+                selectedLabels.forEach(label -> label.getStyleClass().remove("search-focus"));
 
-                searchIndex += dir + selectedNodes.size();
-                searchIndex %= selectedNodes.size();
+                searchIndex += dir + selectedLabels.size();
+                searchIndex %= selectedLabels.size();
 
-                ensureVisible(selectedNodes.get(searchIndex));
+                ensureVisible(selectedLabels.get(searchIndex));
             }
         };
     }
@@ -121,12 +121,12 @@ public class NewickSearchController {
      * @return A list of found Labels.
      */
     public List<Label> search(final String query) {
-        nodes.stream().forEach(label -> label.getStyleClass().removeAll("search", "search-focus"));
+        labels.stream().forEach(label -> label.getStyleClass().removeAll("search", "search-focus"));
         if (query.length() < 1) {
             return new ArrayList<>();
         }
 
-        List<Label> selectedLabels = nodes.stream()
+        List<Label> selectedLabels = labels.stream()
                 .filter(label -> label.getText().contains(query))
                 .collect(Collectors.toList());
 
@@ -137,18 +137,19 @@ public class NewickSearchController {
 
     /**
      * Make sure this Node is visible in the current scrollPane.
+     *
      * @param node Node to be made visible.
      */
     private void ensureVisible(final Node node) {
-        double width = newickScroller.getContent().getBoundsInLocal().getWidth();
-        double height = newickScroller.getContent().getBoundsInLocal().getHeight();
+        double width = scrollPane.getContent().getBoundsInLocal().getWidth();
+        double height = scrollPane.getContent().getBoundsInLocal().getHeight();
 
         double x = node.getBoundsInParent().getMaxX();
         double y = node.getBoundsInParent().getMaxY();
 
         // scrolling values range from 0 to 1
-        newickScroller.setVvalue(y / height);
-        newickScroller.setHvalue(x / width);
+        scrollPane.setVvalue(y / height);
+        scrollPane.setHvalue(x / width);
 
         node.getStyleClass().add("search-focus");
     }
