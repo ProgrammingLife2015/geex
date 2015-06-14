@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import java.net.URL?>
-<fx:root type="javafx.scene.layout.VBox" styleClass="info" xmlns:fx="http://javafx.com/fxml">
+<fx:root type="javafx.scene.layout.VBox" fx:id="messageBox" styleClass="info" xmlns:fx="http://javafx.com/fxml">
     <Text fx:id="message"/>
 
     <stylesheets>
