@@ -10,7 +10,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import javafx.scene.shape.Line;
 import nl.tudelft.context.drawable.DrawableLocatorMutation;
 import nl.tudelft.context.effect.Zoom;
 import nl.tudelft.context.controller.locator.LocatorController;
@@ -103,8 +102,6 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      */
     ObjectProperty<Set<AbstractLabel>> currentLabelsProperty = new SimpleObjectProperty<>(new HashSet<>());
 
-    LocatorController locatorController;
-
     /**
      * Create default graph controller.
      *
@@ -131,7 +128,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         selectedSources.addListener((observable, oldValue, newValue) ->
                 currentLabelsProperty.get().stream().forEach(label -> label.updateSources(newValue)));
 
-        locatorController = new LocatorController(locator, nodeMapProperty, positionProperty, this);
+        new LocatorController(locator, nodeMapProperty, positionProperty, this);
 
         initOnTheFlyLoading();
 
@@ -243,6 +240,9 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
 
     }
 
+    /**
+     * The function that draws the mutations in the positionbar.
+     */
     public void showMutationsInLocator() {
 
         Set<DefaultNode> mutations = currentGraph.vertexSet().stream()
@@ -257,7 +257,9 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         locator.getChildren().clear();
         locator.getChildren().add(locatorIndicator);
 
-        mutations.forEach(node -> locator.getChildren().add(new DrawableLocatorMutation(node, locator.getWidth(), max)));
+        mutations.forEach(node -> locator
+                .getChildren()
+                .add(new DrawableLocatorMutation(node, locator.getWidth(), max)));
 
     }
 
