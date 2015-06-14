@@ -164,6 +164,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 )
         ));
 
+        showMutationsInLocator();
+
     }
 
     /**
@@ -254,6 +256,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         Node locatorIndicator = locator.getChildren().get(0);
         locator.getChildren().clear();
         locator.getChildren().add(locatorIndicator);
+
         mutations.forEach(node -> locator.getChildren().add(new DrawableLocatorMutation(node, locator.getWidth(), max)));
 
     }

@@ -150,7 +150,6 @@ public class LocatorController {
         if (width != locator.getWidth()) {
             width = locator.getWidth();
             graphController.showMutationsInLocator();
-            System.out.println("Drawn!");
         }
 
     }
