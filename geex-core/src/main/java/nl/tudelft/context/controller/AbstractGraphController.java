@@ -103,6 +103,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     ObjectProperty<Set<AbstractLabel>> currentLabelsProperty = new SimpleObjectProperty<>(new HashSet<>());
 
     /**
+     * The locator controller created by this GraphController.
+     */
+    LocatorController locatorController;
+
+    /**
      * Create default graph controller.
      *
      * @param mainController MainController to set views with
@@ -128,7 +133,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         selectedSources.addListener((observable, oldValue, newValue) ->
                 currentLabelsProperty.get().stream().forEach(label -> label.updateSources(newValue)));
 
-        new LocatorController(locator, nodeMapProperty, positionProperty, this);
+        locatorController = new LocatorController(locator, nodeMapProperty, positionProperty, this);
 
         initOnTheFlyLoading();
 
@@ -161,7 +166,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 )
         ));
 
-        showMutationsInLocator();
+        locatorController.showMutationsInLocator();
 
     }
 
@@ -241,26 +246,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     }
 
     /**
-     * The function that draws the mutations in the positionbar.
+     * Returns the graph in view.
+     * @return The graph in view.
      */
-    public void showMutationsInLocator() {
-
-        Set<DefaultNode> mutations = currentGraph.vertexSet().stream()
-                .filter(node -> node instanceof GraphNode).collect(Collectors.toSet());
-
-        int max = currentGraph.vertexSet().stream()
-                .mapToInt(DefaultNode::getRefEndPosition)
-                .max().getAsInt();
-
-
-        Node locatorIndicator = locator.getChildren().get(0);
-        locator.getChildren().clear();
-        locator.getChildren().add(locatorIndicator);
-
-        mutations.forEach(node -> locator
-                .getChildren()
-                .add(new DrawableLocatorMutation(node, locator.getWidth(), max)));
-
+    public StackGraph getCurrentGraph() {
+        return currentGraph;
     }
 
 }
