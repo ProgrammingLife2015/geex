@@ -5,6 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import nl.tudelft.context.controller.GraphController;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
 import nl.tudelft.context.drawable.graph.DrawableNode;
 import nl.tudelft.context.model.graph.Node;
@@ -33,6 +34,7 @@ public class LocatorControllerTest {
     static LocatorController locatorController;
     static ObjectProperty<Map<Integer, List<AbstractDrawableNode>>> labelMapProperty = new SimpleObjectProperty<>();
     static ObjectProperty<List<Integer>> positionProperty = new SimpleObjectProperty<>();
+    static GraphController graphController;
 
     /**
      * Set up the graph locator controller.
@@ -42,10 +44,13 @@ public class LocatorControllerTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
 
+        graphController = mock(GraphController.class);
+
         locatorController = new LocatorController(
                 new Pane(),
                 labelMapProperty,
-                positionProperty
+                positionProperty,
+                graphController
         );
         locatorController.locatorIndicator = spy(new Rectangle());
 
@@ -63,7 +68,8 @@ public class LocatorControllerTest {
         LocatorController lc = new LocatorController(
                 new Pane(),
                 new SimpleObjectProperty<>(),
-                pp
+                pp,
+                graphController
         );
 
         lc.locatorIndicator = mock(Rectangle.class);

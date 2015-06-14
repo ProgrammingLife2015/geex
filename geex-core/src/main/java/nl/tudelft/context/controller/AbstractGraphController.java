@@ -130,7 +130,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         selectedSources.addListener((observable, oldValue, newValue) ->
                 currentLabelsProperty.get().stream().forEach(label -> label.updateSources(newValue)));
 
-        locatorController = new LocatorController(locator, nodeMapProperty, positionProperty);
+        locatorController = new LocatorController(locator, nodeMapProperty, positionProperty, this);
 
         initOnTheFlyLoading();
 
@@ -162,8 +162,6 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         ));
-
-        showMutationsInLocator();
 
     }
 
@@ -252,7 +250,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .max().getAsInt();
 
         mutations.forEach(node -> {
-            locator.getChildren().add(new DrawableLocatorMutation(node, 1920, max));
+            locator.getChildren().add(new DrawableLocatorMutation(node, locator.getWidth(), max));
         });
 
     }

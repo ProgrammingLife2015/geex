@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
 import nl.tudelft.context.model.graph.DefaultNode;
 
@@ -52,6 +53,10 @@ public class LocatorController {
      */
     int minRefPosition = Integer.MAX_VALUE, maxRefPosition = Integer.MIN_VALUE;
 
+    double width = 0;
+
+    AbstractGraphController graphController;
+
     /**
      * Init the locator controller that shows the current position on the reference genome.
      *
@@ -61,10 +66,12 @@ public class LocatorController {
      */
     public LocatorController(final Pane locator,
                              final ObjectProperty<Map<Integer, List<AbstractDrawableNode>>> labelMapProperty,
-                             final ObjectProperty<List<Integer>> positionProperty) {
+                             final ObjectProperty<List<Integer>> positionProperty,
+                             final AbstractGraphController graphController) {
 
         this.locator = locator;
         this.positionProperty = positionProperty;
+        this.graphController = graphController;
 
         initIndicator();
 
@@ -139,6 +146,11 @@ public class LocatorController {
             locatorIndicator.setTranslateX(min * scale);
             locatorIndicator.setWidth((max - min) * scale);
         });
+
+        if (width != locator.getWidth()) {
+            width = locator.getWidth();
+            graphController.showMutationsInLocator();
+        }
 
     }
 

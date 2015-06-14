@@ -1,13 +1,7 @@
 package nl.tudelft.context.drawable;
 
-import javafx.scene.Parent;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
-import nl.tudelft.context.controller.locator.LocatorController;
-import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
 import nl.tudelft.context.model.graph.DefaultNode;
 
 
