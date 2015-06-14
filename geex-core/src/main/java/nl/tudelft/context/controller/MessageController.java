@@ -3,8 +3,10 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import nl.tudelft.context.controller.message.Message;
-import nl.tudelft.context.controller.message.MessageType;
+import nl.tudelft.context.logger.Log;
+import nl.tudelft.context.logger.Logger;
+import nl.tudelft.context.logger.message.Message;
+import nl.tudelft.context.logger.message.MessageType;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,12 +14,11 @@ import java.util.ResourceBundle;
 
 /**
  * @author Jim Hommes
- * @version 1.0
+ * @author Gerben Oolbekkink
+ * @version 2.0
  * @since 19-05-2015
  */
-public class MessageController extends AbstractController<VBox> {
-
-
+public class MessageController extends AbstractController<VBox> implements Logger {
     /**
      * The text that is shown.
      */
@@ -38,28 +39,23 @@ public class MessageController extends AbstractController<VBox> {
     }
 
     /**
-     * Show a standard Info message.
-     *
-     * @param msg Message to display
-     */
-    public final void displayMessage(final Message msg) {
-        displayMessage(msg, MessageType.INFO);
-    }
-
-    /**
      * The function used to display a message and remove the previous one.
      *
      * @param msg  Message to display.
-     * @param type Type of the message
+     * @param messageType Type of this message.
      */
-    public final void displayMessage(final Message msg, final MessageType type) {
+    public final void log(final Message msg, final MessageType messageType) {
         root.getStyleClass().removeAll(MessageType.types());
-        root.getStyleClass().add(type.getType());
-        message.setText(msg.getMessage());
+        root.getStyleClass().add(messageType.toString());
+        message.setText(msg.toString());
+    }
+
+    public final MessageType getLevel() {
+        return MessageType.INFO;
     }
 
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
-        displayMessage(Message.MESSAGE_READY);
+        Log.instance().addLogger(this);
     }
 }

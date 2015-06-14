@@ -49,7 +49,6 @@ public class NewickControllerTest {
         when(workspace.getResistance()).thenReturn(new SimpleObjectProperty<>());
 
         when(mainController.getWorkspace()).thenReturn(workspace);
-        when(mainController.getMessageController()).thenReturn(messageController);
 
         Newick newick = new Newick();
         AbstractNode node = new StrandNode("n1", 1.23);
@@ -73,7 +72,7 @@ public class NewickControllerTest {
         newick.setRoot(node);
         newick.addVertex(node);
         newickController.showTree(newick);
-        verify(mainController, atLeast(1)).getMessageController();
+        //verify(mainController, atLeast(1)).getMessageController();
     }
 
     /**

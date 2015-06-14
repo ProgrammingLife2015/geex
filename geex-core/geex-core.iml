@@ -26,5 +26,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: de.saxsys:jfx-testrunner:1.1" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="module" module-name="geex-logger" />
   </component>
 </module>

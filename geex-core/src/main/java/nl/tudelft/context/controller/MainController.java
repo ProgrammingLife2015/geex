@@ -263,13 +263,6 @@ public class MainController extends AbstractController<StackPane> {
     }
 
     /**
-     * Get a reference to the messageController.
-     */
-    public MessageController getMessageController() {
-        return messageController;
-    }
-
-    /**
      * Show the graph.
      *
      * @param on      Controller to place it on
