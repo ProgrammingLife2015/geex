@@ -32,5 +32,8 @@ public interface Loadable<T> {
      */
     Loadable<T> setFiles(final File... files) throws FileNotFoundException, UnsupportedEncodingException;
 
+    /**
+     * Set the state of this Loadable to cancelled.
+     */
     void cancelled();
 }
