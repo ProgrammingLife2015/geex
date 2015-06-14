@@ -22,7 +22,7 @@ public class StdOutLogger implements Logger {
     public void log(Message message, MessageType messageType) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        getStream(messageType).printf("%-23s [%s] %s\n", timestamp, messageType, message);
+        getStream(messageType).printf("%-23s [%s] %s%n", timestamp, messageType, message);
     }
 
     PrintStream getStream(MessageType type) {
