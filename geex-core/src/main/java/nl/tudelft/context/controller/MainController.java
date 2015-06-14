@@ -144,6 +144,10 @@ public class MainController extends AbstractController<StackPane> {
      */
     public void setView(final ViewController on, final ViewController viewController) {
 
+        if (overlay.isVisible()) {
+            menuController.getToggleOverlay().fire();
+        }
+
         if (shift || viewList.indexOf(on) == -1) {
 
             new Window(viewController.getBreadcrumbName(), viewController.getRoot());
@@ -177,12 +181,20 @@ public class MainController extends AbstractController<StackPane> {
      */
     public final void previousView() {
 
-        getVisibleStream()
-                .skip(1)
-                .reduce((previous, current) -> current)
-                .ifPresent(viewController -> viewController.setVisibility(false));
+        if (overlay.isVisible()) {
 
-        activateView();
+            menuController.getToggleOverlay().fire();
+
+        } else {
+
+            getVisibleStream()
+                    .skip(1)
+                    .reduce((previous, current) -> current)
+                    .ifPresent(viewController -> viewController.setVisibility(false));
+
+            activateView();
+
+        }
 
     }
 
