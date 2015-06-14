@@ -22,7 +22,7 @@ public class MessageControllerTest {
     @Test
     public void testDisplayText() {
         MessageController mc = new MessageController();
-        String text = Message.MESSAGE_READY.getMessage();
+        String text = Message.MESSAGE_READY.toString();
 
         mc.log(Message.MESSAGE_READY, MessageType.INFO);
 

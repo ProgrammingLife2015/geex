@@ -11,7 +11,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.message.Message;
-import nl.tudelft.context.logger.message.MessageType;
 import nl.tudelft.context.workspace.Database;
 import nl.tudelft.context.workspace.Workspace;
 import org.tmatesoft.sqljet.core.SqlJetException;

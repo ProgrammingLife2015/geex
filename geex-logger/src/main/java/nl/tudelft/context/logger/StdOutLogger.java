@@ -14,18 +14,28 @@ import java.sql.Timestamp;
  * @since 14-6-2015
  */
 public class StdOutLogger implements Logger {
-    public StdOutLogger(ObservableLog log) {
+    /**
+     * Create a new StdOutLogger.
+     *
+     * @param log Log to observe.
+     */
+    public StdOutLogger(final ObservableLog log) {
         log.addLogger(this);
     }
 
     @Override
-    public void log(Message message, MessageType messageType) {
+    public void log(final Message message, final MessageType messageType) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         getStream(messageType).printf("%-23s [%s] %s%n", timestamp, messageType, message);
     }
 
-    PrintStream getStream(MessageType type) {
+    /**
+     * Get a proper stream for each {@link MessageType}.
+     * @param type MessageType which is logged
+     * @return A PrintStream for this type of message
+     */
+    PrintStream getStream(final MessageType type) {
         if (type == MessageType.WARNING) {
             return System.err;
         }

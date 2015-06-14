@@ -9,6 +9,20 @@ import nl.tudelft.context.logger.message.MessageType;
  * @since 14-6-2015
  */
 public interface Logger {
-    MessageType getLevel();
+    /**
+     * Function used when a log message is to be shown.
+     *
+     * @param message Message to show
+     * @param messageType Type of this message
+     */
     void log(Message message, MessageType messageType);
+
+    /**
+     * The ObservableLogger looks at this to choose if a log message is relevant for this Logger.
+     *
+     * This level and levels worse are included.
+     *
+     * @return The level relevant for this logger.
+     */
+    MessageType getLevel();
 }

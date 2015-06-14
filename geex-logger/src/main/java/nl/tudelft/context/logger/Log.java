@@ -7,12 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Concrete Log class for Geex.
+ *
  * @author Gerben Oolbekkink
  * @version 1.0
  * @since 14-6-2015
  */
-public class Log implements ObservableLog {
-
+public final class Log implements ObservableLog {
+    /**
+     * Instance of the singleton log.
+     */
     private static volatile Log instance;
 
     /**
@@ -31,33 +35,69 @@ public class Log implements ObservableLog {
         return instance;
     }
 
+    /**
+     * Create a new Log.
+     */
     private Log() {
         listeners = new ArrayList<>();
     }
 
+    /**
+     * The current loggers to log to.
+     */
     List<Logger> listeners;
 
-    public void addLogger(Logger listener) {
+    /**
+     * Register a new logger.
+     * @param listener logger to register.
+     */
+    public void addLogger(final Logger listener) {
         listeners.add(listener);
     }
 
-    public void removeLogger(Logger listener) {
+    /**
+     * Remove an existing logger.
+     *
+     * @param listener logger to remove.
+     */
+    public void removeLogger(final Logger listener) {
         listeners.remove(listener);
     }
 
-    public static void info(Message message) {
+    /**
+     * Log a message of type {@link MessageType}.INFO.
+     *
+     * @param message Message to log.
+     */
+    public static void info(final Message message) {
         instance().message(message, MessageType.INFO);
     }
 
-    public static void warning(Message message) {
+    /**
+     * Log a message of type {@link MessageType}.WARNING.
+     *
+     * @param message Message to log.
+     */
+    public static void warning(final Message message) {
         instance().message(message, MessageType.WARNING);
     }
 
-    public static void debug(Message message) {
+    /**
+     * Log a message of type {@link MessageType}.DEBUG.
+     *
+     * @param message Message to log.
+     */
+    public static void debug(final Message message) {
         instance().message(message, MessageType.DEBUG);
     }
 
-    public void message(Message message, MessageType type) {
+    /**
+     * Notify listeners which qualify to the type.
+     *
+     * @param message Message to log
+     * @param type Type of message
+     */
+    private void message(final Message message, final MessageType type) {
         listeners.stream()
                 .filter(logger -> logger.getLevel().getLevel() <= type.getLevel())
                 .forEach(logger -> logger.log(message, type));
