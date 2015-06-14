@@ -13,7 +13,7 @@ import java.sql.Timestamp;
  * @version 1.0
  * @since 14-6-2015
  */
-public class StdOutLogger implements Logger {
+public final class StdOutLogger implements Logger {
     /**
      * Create a new StdOutLogger.
      *
