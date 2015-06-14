@@ -63,19 +63,6 @@ public class NewickControllerTest {
     }
 
     /**
-     * MainController should receive a message that the tree is loaded.
-     */
-    @Test
-    public void testMessageTreeLoaded() {
-        Newick newick = new Newick();
-        AbstractNode node = new StrandNode("a", 1);
-        newick.setRoot(node);
-        newick.addVertex(node);
-        newickController.showTree(newick);
-        //verify(mainController, atLeast(1)).getMessageController();
-    }
-
-    /**
      * Test RuntimeException on wrong FXML file.
      */
     @Test(expected = RuntimeException.class)
