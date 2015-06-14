@@ -59,11 +59,6 @@ public class LocatorController {
     int minRefPosition = Integer.MAX_VALUE, maxRefPosition = Integer.MIN_VALUE;
 
     /**
-     * The initial width of the locator bar.
-     */
-    double width = 0;
-
-    /**
      * The graphController that created this locatorController.
      */
     AbstractGraphController graphController;
@@ -74,7 +69,7 @@ public class LocatorController {
      * @param locator          The locator pane
      * @param labelMapProperty Currently active nodes
      * @param positionProperty Location currently shown (columns)
-     * @param graphController The graphController that created this locatorController.
+     * @param graphController  The graphController that created this locatorController.
      */
     public LocatorController(final Pane locator,
                              final ObjectProperty<Map<Integer, List<AbstractDrawableNode>>> labelMapProperty,
