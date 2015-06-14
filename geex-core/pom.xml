@@ -36,5 +36,10 @@
             <artifactId>geex-effects</artifactId>
             <version>0.8</version>
         </dependency>
+        <dependency>
+            <groupId>nl.tudelft.context</groupId>
+            <artifactId>geex-logger</artifactId>
+            <version>0.8</version>
+        </dependency>
     </dependencies>
 </project>
