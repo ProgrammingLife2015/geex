@@ -25,7 +25,7 @@ public class AnnotationParser extends Parser<AnnotationMap> {
         AnnotationMap annotationMap = new AnnotationMap();
         String line;
         String fileSplitBy = "\\t";
-        while (sc.hasNextLine()) {
+        while (sc.hasNextLine() && !cancelled) {
             line = sc.nextLine();
             String[] splitLine = line.split(fileSplitBy);
             annotationMap.addAnnotation(getAnnotation(splitLine));

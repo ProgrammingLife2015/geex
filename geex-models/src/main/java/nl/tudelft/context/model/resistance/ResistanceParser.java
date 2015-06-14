@@ -27,7 +27,7 @@ public class ResistanceParser extends Parser<ResistanceMap> {
         ResistanceMap resistanceMap = new ResistanceMap();
         String line;
         int index = 0;
-        while (sc.hasNextLine()) {
+        while (sc.hasNextLine() && !cancelled) {
             line = sc.nextLine();
             while (line.matches("^##.*$")) {
                 line = sc.nextLine();
