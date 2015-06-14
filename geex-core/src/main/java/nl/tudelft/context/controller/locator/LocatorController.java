@@ -12,7 +12,13 @@ import nl.tudelft.context.model.graph.DefaultNode;
 import nl.tudelft.context.model.graph.GraphNode;
 import nl.tudelft.context.model.graph.StackGraph;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -165,7 +171,7 @@ public class LocatorController {
 
         StackGraph currentGraph = graphController.getCurrentGraph();
 
-        if(currentGraph != null) {
+        if (currentGraph != null) {
             Set<DefaultNode> mutations = currentGraph.vertexSet().stream()
                     .filter(node -> node instanceof GraphNode).collect(Collectors.toSet());
 
@@ -174,14 +180,14 @@ public class LocatorController {
                     .max().getAsInt();
 
 
-            Node locatorIndicator = locator.getChildren().get(locator.getChildren().size() - 1);
+            Node indicator = locator.getChildren().get(locator.getChildren().size() - 1);
             locator.getChildren().clear();
 
             mutations.forEach(node -> locator
                     .getChildren()
                     .add(new DrawableLocatorMutation(node, locator.getWidth(), max)));
 
-            locator.getChildren().add(locatorIndicator);
+            locator.getChildren().add(indicator);
         }
 
     }
