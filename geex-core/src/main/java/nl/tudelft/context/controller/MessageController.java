@@ -3,6 +3,8 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import nl.tudelft.context.controller.message.Message;
+import nl.tudelft.context.controller.message.MessageType;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,68 +17,6 @@ import java.util.ResourceBundle;
  */
 public class MessageController extends AbstractController<VBox> {
 
-    /**
-     * Message used when loading previous workspaces fails.
-     */
-    public static final String FAIL_LOAD_PREVIOUS = "Could not load previous workspaces.";
-
-    /**
-     * Message used when graph loading fails.
-     */
-    public static final String FAIL_LOAD_GRAPH = "Could not load genome graph.";
-
-    /**
-     * Message used when graph loading succeeds.
-     */
-    public static final String SUCCESS_LOAD_GRAPH = "Genome graph loaded successfully.";
-
-    /**
-     * Message used when workspace loading fails.
-     */
-    public static final String FAIL_LOAD_WORKSPACE = "Could not load workspace.";
-
-    /**
-     * Message used when workspace loading succeeds.
-     */
-    public static final String SUCCESS_LOAD_WORKSPACE = "Workspace loaded successfully.";
-
-    /**
-     * Message used when tree loading fails.
-     */
-    public static final String FAIL_LOAD_TREE = "Could not load phylogenetic tree.";
-
-    /**
-     * Message used when tree loading succeeds.
-     */
-    public static final String SUCCESS_LOAD_TREE = "Phylogenetic tree loaded successfully.";
-
-    /**
-     * Message used when annotation loading fails.
-     */
-    public static final String FAIL_LOAD_ANNOTATION = "Could not load annotations.";
-
-    /**
-     * Message used when annotation loading succeeds.
-     */
-    public static final String SUCCESS_LOAD_ANNOTATION = "Annotations loaded successfully.";
-    /**
-     * The text that is shown.
-     */
-
-    /**
-     * Message used when resistance loading fails.
-     */
-    public static final String FAIL_LOAD_RESISTANCE = "Could not load resistance annotations.";
-
-    /**
-     * Message used when annotation loading succeeds.
-     */
-    public static final String SUCCESS_LOAD_RESISTANCE = "Resistance Annotations loaded successfully.";
-
-    /**
-     * Message used when annotation loading succeeds.
-     */
-    public static final String FAIL_LOAD_RECENTWORKSPACE = "Could not load recent workspace.";
 
     /**
      * The text that is shown.
@@ -92,23 +32,34 @@ public class MessageController extends AbstractController<VBox> {
      * A reference to the main controller.
      */
     public MessageController() {
-
         super(new VBox());
 
         loadFXML("/application/footer.fxml");
     }
 
     /**
+     * Show a standard Info message.
+     *
+     * @param msg Message to display
+     */
+    public final void displayMessage(final Message msg) {
+        displayMessage(msg, MessageType.INFO);
+    }
+
+    /**
      * The function used to display a message and remove the previous one.
      *
-     * @param text The string to display.
+     * @param msg  Message to display.
+     * @param type Type of the message
      */
-    public final void displayMessage(final String text) {
-        message.setText(text);
+    public final void displayMessage(final Message msg, final MessageType type) {
+        root.getStyleClass().removeAll(MessageType.types());
+        root.getStyleClass().add(type.getType());
+        message.setText(msg.getMessage());
     }
 
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
-        displayMessage("Ready");
+        displayMessage(Message.MESSAGE_READY);
     }
 }
