@@ -174,13 +174,14 @@ public class LocatorController {
                     .max().getAsInt();
 
 
-            Node locatorIndicator = locator.getChildren().get(0);
+            Node locatorIndicator = locator.getChildren().get(locator.getChildren().size() - 1);
             locator.getChildren().clear();
-            locator.getChildren().add(locatorIndicator);
 
             mutations.forEach(node -> locator
                     .getChildren()
                     .add(new DrawableLocatorMutation(node, locator.getWidth(), max)));
+
+            locator.getChildren().add(locatorIndicator);
         }
 
     }
