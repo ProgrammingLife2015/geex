@@ -31,4 +31,6 @@ public interface Loadable<T> {
      * @throws UnsupportedEncodingException Unsupported encoding
      */
     Loadable<T> setFiles(final File... files) throws FileNotFoundException, UnsupportedEncodingException;
+
+    void cancelled();
 }

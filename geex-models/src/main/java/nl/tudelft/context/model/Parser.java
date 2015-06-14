@@ -21,6 +21,8 @@ public abstract class Parser<T> implements Loadable<T> {
      */
     BufferedReader[] readerList;
 
+    protected boolean cancelled = false;
+
     /**
      * Empty constructor for child classes which extend functionality.
      */
@@ -44,6 +46,10 @@ public abstract class Parser<T> implements Loadable<T> {
         }
 
         return this;
+    }
+
+    public void cancelled() {
+        this.cancelled = true;
     }
 
     /**
