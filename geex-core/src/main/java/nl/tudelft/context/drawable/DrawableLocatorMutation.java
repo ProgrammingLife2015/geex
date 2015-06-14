@@ -41,8 +41,8 @@ public class DrawableLocatorMutation extends Line {
         setStroke(Paint.valueOf("blue"));
 
         setStartX(getXPosition(node.getRefStartPosition()));
-        setEndX(node.getRefStartPosition() / maxRefPosition * width);
-        setStartY(0);
+        setEndX(getXPosition(node.getRefStartPosition()));
+        setStartY(2);
         setEndY(LOCATOR_HEIGHT);
 
     }
