@@ -48,6 +48,12 @@ public class StdOutLoggerTest {
         assertThat(errContent.toString(), CoreMatchers.containsString("[" + MessageType.WARNING + "] " + Message.MESSAGE_READY));
     }
 
+    @Test
+    public void testLevel() throws Exception {
+        Logger logger = new StdOutLogger(mock(ObservableLog.class));
+        assertEquals(MessageType.DEBUG, logger.getLevel());
+    }
+
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
