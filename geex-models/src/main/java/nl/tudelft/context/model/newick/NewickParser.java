@@ -51,9 +51,6 @@ public final class NewickParser extends Parser<Newick> {
      * @param newick the tree to add the nodes and edges to
      */
     public void getOffspring(final TreeNode node, final AbstractNode parent, final Newick newick) {
-        if (cancelled) {
-            return;
-        }
         for (int i = 0; i < node.numberLeaves; i += 1) {
             TreeNode child = node.getChild(i);
             if (child != null) {
