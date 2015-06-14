@@ -1,5 +1,6 @@
 package nl.tudelft.context.drawable.graph;
 
+import nl.tudelft.context.drawable.DrawableLocatorMutation;
 import nl.tudelft.context.model.graph.DefaultNode;
 import nl.tudelft.context.model.graph.GraphNode;
 import nl.tudelft.context.model.graph.Node;
@@ -32,6 +33,13 @@ public class DrawableNodeFactoryTest {
     @Test(expected = RuntimeException.class)
     public void testCreateFalse() throws Exception {
         DrawableNodeFactory.create(mock(DefaultNode.class));
+    }
+
+    @Test
+    public void testCreateLocatorMutation() throws Exception {
+        DrawableLocatorMutation mutation = new DrawableLocatorMutation(mock(GraphNode.class), 1920, 40000);
+
+        assertThat(mutation, instanceOf(DrawableLocatorMutation.class));
     }
 
 }
