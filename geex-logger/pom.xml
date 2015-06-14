@@ -9,7 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <name>Geex Logger</name>
+
+    <description>Logger package for the Geex project.</description>
+
     <artifactId>geex-logger</artifactId>
-
-
 </project>
