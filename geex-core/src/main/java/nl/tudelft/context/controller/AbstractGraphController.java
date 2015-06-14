@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -249,9 +250,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .mapToInt(DefaultNode::getRefEndPosition)
                 .max().getAsInt();
 
-        mutations.forEach(node -> {
-            locator.getChildren().add(new DrawableLocatorMutation(node, locator.getWidth(), max));
-        });
+
+        Node locatorIndicator = locator.getChildren().get(0);
+        locator.getChildren().clear();
+        locator.getChildren().add(locatorIndicator);
+        mutations.forEach(node -> locator.getChildren().add(new DrawableLocatorMutation(node, locator.getWidth(), max)));
 
     }
 

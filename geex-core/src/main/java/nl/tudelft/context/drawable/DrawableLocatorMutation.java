@@ -22,10 +22,6 @@ public class DrawableLocatorMutation extends Line {
 
         setStroke(Paint.valueOf("blue"));
 
-        System.out.println("X: " + getXPosition(node.getRefEndPosition()));
-        System.out.println(width);
-        System.out.println("maxRef: " + maxRefPosition);
-
         setStartX(getXPosition(node.getRefStartPosition()));
         setEndX(node.getRefStartPosition() / maxRefPosition * width);
         setStartY(0);
