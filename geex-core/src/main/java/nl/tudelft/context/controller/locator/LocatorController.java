@@ -87,7 +87,10 @@ public class LocatorController {
         });
 
         positionProperty.addListener(event -> setPosition());
-        locator.widthProperty().addListener(event -> setPosition());
+        locator.widthProperty().addListener(event -> {
+            setPosition();
+            showMutationsInLocator();
+        });
 
     }
 
@@ -152,11 +155,6 @@ public class LocatorController {
             locatorIndicator.setTranslateX(min * scale);
             locatorIndicator.setWidth((max - min) * scale);
         });
-
-        if (width != locator.getWidth()) {
-            width = locator.getWidth();
-            showMutationsInLocator();
-        }
 
     }
 
