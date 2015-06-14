@@ -1,4 +1,4 @@
-package nl.tudelft.context.controller.message;
+package nl.tudelft.context.logger.message;
 
 /**
  * @author Gerben Oolbekkink
@@ -19,7 +19,7 @@ public enum Message {
     SUCCESS_LOAD_RESISTANCE("Resistance Annotations loaded successfully."),
     FAIL_LOAD_RECENTWORKSPACE("Could not load recent workspace."),
     MESSAGE_READY("Ready"),
-    ;
+    DEBUGGER_READY("Debug logger ready.");
 
     private String message;
 
@@ -28,6 +28,11 @@ public enum Message {
     }
 
     public String getMessage() {
+        return message;
+    }
+
+    @Override
+    public String toString() {
         return message;
     }
 }
