@@ -107,7 +107,6 @@
                 </dependencies>
                 <executions>
                     <execution>
-                        <inherited>false</inherited>
                         <phase>pre-site</phase>
                         <goals>
                             <goal>generate</goal>
