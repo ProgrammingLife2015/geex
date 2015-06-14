@@ -182,4 +182,15 @@ public class Workspace {
         return loadResistanceService.valueProperty();
     }
 
+    /**
+     * Close this workspace.
+     *
+     * Cancel all the running services, in order to clean up all the threads.
+     */
+    public void close() {
+        loadAnnotationService.cancel();
+        loadGraphService.cancel();
+        loadNewickService.cancel();
+        loadResistanceService.cancel();
+    }
 }
