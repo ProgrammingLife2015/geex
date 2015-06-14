@@ -144,6 +144,10 @@ public class MainController extends AbstractController<StackPane> {
      */
     public void setView(final ViewController on, final ViewController viewController) {
 
+        if (overlay.isVisible()) {
+            menuController.getToggleOverlay().fire();
+        }
+
         if (shift || viewList.indexOf(on) == -1) {
 
             new Window(viewController.getBreadcrumbName(), viewController.getRoot());
