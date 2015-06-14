@@ -263,12 +263,10 @@ public class MainController extends AbstractController<StackPane> {
     }
 
     /**
-     * The function that is used to display a message in the footer.
-     *
-     * @param text The text that will be displayed.
+     * Get a reference to the messageController.
      */
-    public void displayMessage(final String text) {
-        messageController.displayMessage(text);
+    public MessageController getMessageController() {
+        return messageController;
     }
 
     /**

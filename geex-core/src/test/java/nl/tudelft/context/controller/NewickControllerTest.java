@@ -41,6 +41,7 @@ public class NewickControllerTest {
         when(mainController.getMenuController()).thenReturn(new MenuController(mainController, new MenuBar()));
 
         Workspace workspace = mock(Workspace.class);
+        MessageController messageController = mock(MessageController.class);
 
         when(workspace.getGraph()).thenReturn(new SimpleObjectProperty<>());
         when(workspace.getAnnotation()).thenReturn(new SimpleObjectProperty<>());
@@ -48,6 +49,7 @@ public class NewickControllerTest {
         when(workspace.getResistance()).thenReturn(new SimpleObjectProperty<>());
 
         when(mainController.getWorkspace()).thenReturn(workspace);
+        when(mainController.getMessageController()).thenReturn(messageController);
 
         Newick newick = new Newick();
         AbstractNode node = new StrandNode("n1", 1.23);
@@ -71,7 +73,7 @@ public class NewickControllerTest {
         newick.setRoot(node);
         newick.addVertex(node);
         newickController.showTree(newick);
-        verify(mainController, atLeast(1)).displayMessage(MessageController.SUCCESS_LOAD_TREE);
+        verify(mainController, atLeast(1)).getMessageController();
     }
 
     /**

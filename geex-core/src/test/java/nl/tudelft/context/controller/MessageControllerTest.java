@@ -2,6 +2,7 @@ package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.scene.text.Text;
+import nl.tudelft.context.controller.message.Message;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -21,12 +22,10 @@ public class MessageControllerTest {
     @Test
     public void testDisplayText() {
         MessageController mc = new MessageController();
-        String text = "Display Test";
+        String text = Message.MESSAGE_READY.getMessage();
 
-        mc.displayMessage(text);
+        mc.displayMessage(Message.MESSAGE_READY);
 
         assertEquals(mc.message.getText(), text);
     }
-
-
 }

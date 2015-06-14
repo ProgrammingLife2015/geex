@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuItem;
+import nl.tudelft.context.controller.message.Message;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.CollapseGraph;
@@ -89,7 +90,7 @@ public final class GraphController extends AbstractGraphController {
         ObjectProperty<ResistanceMap> resistanceMapProperty = new SimpleObjectProperty<>();
 
         graphMapProperty.addListener(event -> {
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_ANNOTATION);
+            mainController.getMessageController().displayMessage(Message.SUCCESS_LOAD_ANNOTATION);
             loadGraph(graphMapProperty.get(), annotationMapProperty.get());
         });
         annotationMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get()));
@@ -169,7 +170,7 @@ public final class GraphController extends AbstractGraphController {
      * @param resistanceMap The resistance map which is loaded.
      */
     private void loadResistance(final ResistanceMap resistanceMap) {
-        mainController.displayMessage(MessageController.SUCCESS_LOAD_RESISTANCE);
+        mainController.getMessageController().displayMessage(Message.SUCCESS_LOAD_RESISTANCE);
     }
 
     @Override
