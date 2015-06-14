@@ -35,7 +35,7 @@ public class Window extends Stage {
      * @param title  Title of the window
      * @param parent Parent containing the view
      */
-    public Window(String title, Parent parent) {
+    public Window(final String title, final Parent parent) {
 
 
         final Scene scene = new Scene(parent, SCENE_BACKGROUND);
