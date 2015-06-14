@@ -102,6 +102,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      */
     ObjectProperty<Set<AbstractLabel>> currentLabelsProperty = new SimpleObjectProperty<>(new HashSet<>());
 
+    LocatorController locatorController;
+
     /**
      * Create default graph controller.
      *
@@ -128,7 +130,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         selectedSources.addListener((observable, oldValue, newValue) ->
                 currentLabelsProperty.get().stream().forEach(label -> label.updateSources(newValue)));
 
-        new LocatorController(locator, nodeMapProperty, positionProperty);
+        locatorController = new LocatorController(locator, nodeMapProperty, positionProperty);
 
         initOnTheFlyLoading();
 
@@ -161,7 +163,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 )
         ));
 
-        showMutationsInLocator(drawableGraph);
+        showMutationsInLocator();
 
     }
 
@@ -240,12 +242,17 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
 
     }
 
-    private void showMutationsInLocator(DrawableGraph graph) {
+    public void showMutationsInLocator() {
 
-        graph.vertexSet().stream().forEach(node -> {
-            if (node.getNode() instanceof GraphNode) {
-                locator.getChildren().add(new DrawableLocatorMutation(node, locator));
-            }
+        Set<DefaultNode> mutations = currentGraph.vertexSet().stream()
+                .filter(node -> node instanceof GraphNode).collect(Collectors.toSet());
+
+        int max = currentGraph.vertexSet().stream()
+                .mapToInt(DefaultNode::getRefEndPosition)
+                .max().getAsInt();
+
+        mutations.forEach(node -> {
+            locator.getChildren().add(new DrawableLocatorMutation(node, 1920, max));
         });
 
     }

@@ -1,9 +1,14 @@
 package nl.tudelft.context.drawable;
 
+import javafx.scene.Parent;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
+import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
+import nl.tudelft.context.model.graph.DefaultNode;
 
 
 /**
@@ -12,18 +17,30 @@ import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
  */
 public class DrawableLocatorMutation extends Line {
 
-    public DrawableLocatorMutation(final AbstractDrawableNode node, final Pane locator) {
+    double maxRefPosition;
+
+    double width;
+    
+    public DrawableLocatorMutation(final DefaultNode node, final double width, final double maxRefPosition) {
+
+        this.maxRefPosition = maxRefPosition;
+        this.width = width;
 
         setStroke(Paint.valueOf("blue"));
 
-        System.out.println("X: " + node.translateXProperty().getValue());
-        System.out.println("Y: " + locator.getHeight());
+        System.out.println("X: " + getXPosition(node.getRefEndPosition()));
+        System.out.println(width);
+        System.out.println("maxRef: " + maxRefPosition);
 
-        setStartX(node.translateXProperty().getValue());
-        setEndX(node.translateXProperty().getValue());
+        setStartX(getXPosition(node.getRefStartPosition()));
+        setEndX(node.getRefStartPosition() / maxRefPosition * width);
         setStartY(0);
         setEndY(43);
 
+    }
+
+    private double getXPosition(final int pos) {
+        return pos / maxRefPosition * width;
     }
 
 }
