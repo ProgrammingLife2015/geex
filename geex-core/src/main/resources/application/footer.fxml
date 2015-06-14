@@ -3,14 +3,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import java.net.URL?>
-<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml">
-
-    <VBox fx:id="messageBox">
-        <Text fx:id="message"/>
-    </VBox>
+<fx:root type="javafx.scene.layout.VBox" styleClass="info" xmlns:fx="http://javafx.com/fxml">
+    <Text fx:id="message"/>
 
     <stylesheets>
-        <URL value="@css/style.css"/>
+        <URL value="@css/footer.css"/>
     </stylesheets>
-
 </fx:root>
