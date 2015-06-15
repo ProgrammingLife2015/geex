@@ -137,20 +137,6 @@ public class MainControllerTest {
     }
 
     /**
-     * Test viewing text.
-     */
-    @Test
-    public void testFooterText() {
-        MainController mc = new MainController();
-        mc.setWorkspace(workspace);
-
-        String text = "This is a test.";
-        mc.displayMessage(text);
-
-        assertEquals(mc.messageController.message.getText(), text);
-    }
-
-    /**
      * Test the workspace getter.
      */
     @Test

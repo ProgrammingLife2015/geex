@@ -9,6 +9,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
+import nl.tudelft.context.logger.Log;
+import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.workspace.Database;
 import nl.tudelft.context.workspace.Workspace;
 import org.tmatesoft.sqljet.core.SqlJetException;
@@ -97,7 +99,7 @@ public class WelcomeController extends ViewController<GridPane> {
                 previous.setDisable(true);
             }
         } catch (SqlJetException e) {
-            mainController.displayMessage(MessageController.FAIL_LOAD_PREVIOUS);
+            Log.instance().warning(Message.FAIL_LOAD_PREVIOUS);
             // Continue, this doesn't break the software.
         }
     }
@@ -148,13 +150,13 @@ public class WelcomeController extends ViewController<GridPane> {
 
             mainController.setWorkspace(workspace);
             mainController.setBaseView(new NewickController(mainController, workspace.getNewick()));
-            mainController.displayMessage(MessageController.SUCCESS_LOAD_WORKSPACE);
+            Log.info(Message.SUCCESS_LOAD_WORKSPACE);
         } catch (FileNotFoundException | SqlJetException ex) {
-            mainController.displayMessage(MessageController.FAIL_LOAD_WORKSPACE);
+            Log.warning(Message.FAIL_LOAD_WORKSPACE);
             try {
                 Database.instance().remove("workspace", directory.getAbsolutePath());
             } catch (SqlJetException | NullPointerException ignored) {
-                mainController.displayMessage(MessageController.FAIL_LOAD_RECENTWORKSPACE);
+                Log.warning(Message.FAIL_LOAD_RECENTWORKSPACE);
             }
         }
         reloadListView();

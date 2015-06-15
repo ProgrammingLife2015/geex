@@ -41,6 +41,7 @@ public class NewickControllerTest {
         when(mainController.getMenuController()).thenReturn(new MenuController(mainController, new MenuBar()));
 
         Workspace workspace = mock(Workspace.class);
+        MessageController messageController = mock(MessageController.class);
 
         when(workspace.getGraph()).thenReturn(new SimpleObjectProperty<>());
         when(workspace.getAnnotation()).thenReturn(new SimpleObjectProperty<>());
@@ -59,19 +60,6 @@ public class NewickControllerTest {
 
         newickController = new NewickController(mainController, newickSimpleObjectProperty);
 
-    }
-
-    /**
-     * MainController should receive a message that the tree is loaded.
-     */
-    @Test
-    public void testMessageTreeLoaded() {
-        Newick newick = new Newick();
-        AbstractNode node = new StrandNode("a", 1);
-        newick.setRoot(node);
-        newick.addVertex(node);
-        newickController.showTree(newick);
-        verify(mainController, atLeast(1)).displayMessage(MessageController.SUCCESS_LOAD_TREE);
     }
 
     /**

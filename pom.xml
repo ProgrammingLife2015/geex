@@ -11,6 +11,7 @@
         <module>geex-services</module>
         <module>geex-workspace</module>
         <module>geex-effects</module>
+        <module>geex-logger</module>
     </modules>
     <packaging>pom</packaging>
 

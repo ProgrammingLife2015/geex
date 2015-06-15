@@ -278,15 +278,6 @@ public class MainController extends AbstractController<StackPane> {
     }
 
     /**
-     * The function that is used to display a message in the footer.
-     *
-     * @param text The text that will be displayed.
-     */
-    public void displayMessage(final String text) {
-        messageController.displayMessage(text);
-    }
-
-    /**
      * Show the graph.
      *
      * @param on      Controller to place it on

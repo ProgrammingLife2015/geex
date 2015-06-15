@@ -1,0 +1,41 @@
+@startuml
+
+interface ObservableLog {
+    addLogger(logger : Logger)
+    removeLogger(logger : Logger)
+}
+class Log implements ObservableLog {
+    -{static}instance
+    -listeners : List<Logger>
+
+    +{static}instance()
+    +{static}info(message : Message)
+    +{static}warning(message : Message)
+    +{static}debug(message : Message)
+    -message(message : Message, type : MessageType)
+}
+
+interface Logger {
+    log(message : Message, messageType : MessageType)
+    getLevel() : MessageType
+}
+class StdOutLogger implements Logger {
+    getStream(type : MessageType) : PrintStream
+}
+
+enum Message {
+    -message : String
+}
+enum MessageType {
+    -type : String
+    -level : int
+}
+
+Logger --> Message
+Logger --> MessageType
+
+Log --> Message
+Log --> MessageType
+
+ObservableLog <-- Logger : observes
+@enduml

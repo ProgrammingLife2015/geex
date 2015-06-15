@@ -1,0 +1,19 @@
+/* Messages */
+#messageBox {
+    -fx-padding: 2px 7px;
+    -fx-border-width: 1px 0 0;
+    -fx-border-color: #848484;
+}
+
+#message {
+    -fx-font: 0.3cm 'Arial';
+    -fx-fill: #848484;
+}
+
+.info {
+    -fx-background-color: #2b2b2b;
+}
+
+.warning {
+    -fx-background-color: #9b0d00;
+}

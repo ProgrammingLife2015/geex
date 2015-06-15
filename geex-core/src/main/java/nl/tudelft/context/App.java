@@ -3,6 +3,9 @@ package nl.tudelft.context;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import nl.tudelft.context.controller.MainController;
+import nl.tudelft.context.logger.Log;
+import nl.tudelft.context.logger.StdOutLogger;
+import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.window.Window;
 
 /**
@@ -35,6 +38,11 @@ public class App extends Application {
      */
     @Override
     public final void start(final Stage stage) {
+        if (Boolean.getBoolean("debug")) {
+            new StdOutLogger(Log.instance());
+
+            Log.debug(Message.DEBUGGER_READY);
+        }
 
         MainController controller = new MainController();
         new Window("Geex", controller.getRoot());

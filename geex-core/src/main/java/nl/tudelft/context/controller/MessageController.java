@@ -3,6 +3,10 @@ package nl.tudelft.context.controller;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import nl.tudelft.context.logger.Log;
+import nl.tudelft.context.logger.Logger;
+import nl.tudelft.context.logger.message.Message;
+import nl.tudelft.context.logger.message.MessageType;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -10,74 +14,11 @@ import java.util.ResourceBundle;
 
 /**
  * @author Jim Hommes
- * @version 1.0
+ * @author Gerben Oolbekkink
+ * @version 2.0
  * @since 19-05-2015
  */
-public class MessageController extends AbstractController<VBox> {
-
-    /**
-     * Message used when loading previous workspaces fails.
-     */
-    public static final String FAIL_LOAD_PREVIOUS = "Could not load previous workspaces.";
-
-    /**
-     * Message used when graph loading fails.
-     */
-    public static final String FAIL_LOAD_GRAPH = "Could not load genome graph.";
-
-    /**
-     * Message used when graph loading succeeds.
-     */
-    public static final String SUCCESS_LOAD_GRAPH = "Genome graph loaded successfully.";
-
-    /**
-     * Message used when workspace loading fails.
-     */
-    public static final String FAIL_LOAD_WORKSPACE = "Could not load workspace.";
-
-    /**
-     * Message used when workspace loading succeeds.
-     */
-    public static final String SUCCESS_LOAD_WORKSPACE = "Workspace loaded successfully.";
-
-    /**
-     * Message used when tree loading fails.
-     */
-    public static final String FAIL_LOAD_TREE = "Could not load phylogenetic tree.";
-
-    /**
-     * Message used when tree loading succeeds.
-     */
-    public static final String SUCCESS_LOAD_TREE = "Phylogenetic tree loaded successfully.";
-
-    /**
-     * Message used when annotation loading fails.
-     */
-    public static final String FAIL_LOAD_ANNOTATION = "Could not load annotations.";
-
-    /**
-     * Message used when annotation loading succeeds.
-     */
-    public static final String SUCCESS_LOAD_ANNOTATION = "Annotations loaded successfully.";
-    /**
-     * The text that is shown.
-     */
-
-    /**
-     * Message used when resistance loading fails.
-     */
-    public static final String FAIL_LOAD_RESISTANCE = "Could not load resistance annotations.";
-
-    /**
-     * Message used when annotation loading succeeds.
-     */
-    public static final String SUCCESS_LOAD_RESISTANCE = "Resistance Annotations loaded successfully.";
-
-    /**
-     * Message used when annotation loading succeeds.
-     */
-    public static final String FAIL_LOAD_RECENTWORKSPACE = "Could not load recent workspace.";
-
+public class MessageController extends AbstractController<VBox> implements Logger {
     /**
      * The text that is shown.
      */
@@ -92,7 +33,6 @@ public class MessageController extends AbstractController<VBox> {
      * A reference to the main controller.
      */
     public MessageController() {
-
         super(new VBox());
 
         loadFXML("/application/footer.fxml");
@@ -101,14 +41,21 @@ public class MessageController extends AbstractController<VBox> {
     /**
      * The function used to display a message and remove the previous one.
      *
-     * @param text The string to display.
+     * @param msg  Message to display.
+     * @param messageType Type of this message.
      */
-    public final void displayMessage(final String text) {
-        message.setText(text);
+    public final void log(final Message msg, final MessageType messageType) {
+        root.getStyleClass().removeAll(MessageType.types());
+        root.getStyleClass().add(messageType.toString());
+        message.setText(msg.toString());
+    }
+
+    public final MessageType getLevel() {
+        return MessageType.INFO;
     }
 
     @Override
     public final void initialize(final URL location, final ResourceBundle resources) {
-        displayMessage("Ready");
+        Log.instance().addLogger(this);
     }
 }
