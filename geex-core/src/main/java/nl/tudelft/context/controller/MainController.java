@@ -137,6 +137,22 @@ public class MainController extends AbstractController<StackPane> {
     }
 
     /**
+     * Hide overlay.
+     *
+     * @return If overlay was shown.
+     */
+    public boolean hideOverlay() {
+
+        boolean visible = overlay.isVisible();
+        if (visible) {
+            menuController.getToggleOverlay().fire();
+        }
+
+        return visible;
+
+    }
+
+    /**
      * Set a new main view and push it on the view stack.
      *
      * @param on             Controller to stack this view on
@@ -144,9 +160,7 @@ public class MainController extends AbstractController<StackPane> {
      */
     public void setView(final ViewController on, final ViewController viewController) {
 
-        if (overlay.isVisible()) {
-            menuController.getToggleOverlay().fire();
-        }
+        hideOverlay();
 
         if (shift || viewList.indexOf(on) == -1) {
 
@@ -181,11 +195,7 @@ public class MainController extends AbstractController<StackPane> {
      */
     public final void previousView() {
 
-        if (overlay.isVisible()) {
-
-            menuController.getToggleOverlay().fire();
-
-        } else {
+        if (!hideOverlay()) {
 
             getVisibleStream()
                     .skip(1)
@@ -204,6 +214,8 @@ public class MainController extends AbstractController<StackPane> {
      * @param viewController View to go to
      */
     public void toView(final ViewController viewController) {
+
+        hideOverlay();
 
         int index = viewList.indexOf(viewController) + 1;
         viewList.stream()
