@@ -25,7 +25,7 @@ public class AnnotationParser extends Parser<AnnotationMap> {
         AnnotationMap annotationMap = new AnnotationMap();
         String line;
         String fileSplitBy = "\\t";
-        while (sc.hasNextLine()) {
+        while (sc.hasNextLine() && !isCancelled()) {
             line = sc.nextLine();
             String[] splitLine = line.split(fileSplitBy);
             annotationMap.addAnnotation(getAnnotation(splitLine));
@@ -53,7 +53,6 @@ public class AnnotationParser extends Parser<AnnotationMap> {
         char phase = splitLine[++index].charAt(0);
         String attributes = splitLine[++index];
 
-        Annotation annotation = new Annotation(seqId, source, type, start, end, score, strand, phase, attributes);
-        return annotation;
+        return new Annotation(seqId, source, type, start, end, score, strand, phase, attributes);
     }
 }

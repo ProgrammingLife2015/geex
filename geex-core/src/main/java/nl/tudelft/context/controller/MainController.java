@@ -270,6 +270,9 @@ public class MainController extends AbstractController<StackPane> {
      * @param workspace The new workspace
      */
     public final void setWorkspace(final Workspace workspace) {
+        if (this.workspace != null) {
+            this.workspace.close();
+        }
         this.workspace = workspace;
         workspace.preload();
     }

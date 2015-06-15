@@ -43,7 +43,7 @@ public final class GraphParser extends Parser<GraphMap> {
         NodeParser nodeParser = new NodeParser();
         List<Node> nodes = new ArrayList<>();
 
-        while (sc.hasNext()) {
+        while (sc.hasNext() && !isCancelled()) {
             Node n = nodeParser.getNode(sc);
             nodes.add(n);
             graphMap.addVertex(n);
@@ -65,7 +65,7 @@ public final class GraphParser extends Parser<GraphMap> {
 
         Scanner sc = new Scanner(edgeReader);
 
-        while (sc.hasNext()) {
+        while (sc.hasNext() && !isCancelled()) {
             graphMap.addEdge(nodeList.get(sc.nextInt()), nodeList.get(sc.nextInt()));
         }
 

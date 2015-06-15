@@ -12,8 +12,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 /**
  * @author René Vennik
@@ -28,7 +26,8 @@ public class LoadGraphServiceTest {
 
 
     public static class MyParser implements Loadable<Boolean> {
-        public MyParser() {}
+        public MyParser() {
+        }
 
         @Override
         public Boolean load() {
@@ -39,10 +38,42 @@ public class LoadGraphServiceTest {
         public Loadable<Boolean> setFiles(File... files) throws FileNotFoundException, UnsupportedEncodingException {
             return this;
         }
+
+        @Override
+        public void cancelled() {
+
+        }
     }
-    /**
-     * Test if the graphFromFactory loadFXML succeeds.
-     */
+
+    public static class InfiniteParser implements Loadable<Boolean> {
+        private boolean cancelled = false;
+
+        public InfiniteParser() {
+        }
+
+        /**
+         * This function is infinite, unless it is canceled.
+         *
+         * @return true
+         */
+        @Override
+        public Boolean load() {
+            while (!cancelled) ;
+
+            return true;
+        }
+
+        @Override
+        public Loadable<Boolean> setFiles(File... files) throws FileNotFoundException, UnsupportedEncodingException {
+            return this;
+        }
+
+        @Override
+        public void cancelled() {
+            this.cancelled = true;
+        }
+    }
+
     @Test
     public void testParse() throws Exception {
         final LoadService<Boolean> loadGraphService = new LoadService<>(MyParser.class, nodeFile, edgeFile);
@@ -62,5 +93,28 @@ public class LoadGraphServiceTest {
 
         assertTrue(b);
 
+    }
+
+    @Test
+    public void testInfiniteParser() throws Exception {
+        final LoadService<Boolean> loadGraphService = new LoadService<>(MyParser.class, nodeFile, edgeFile);
+
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+
+        // Stop the service when it starts running.
+        loadGraphService.setOnRunning(event -> loadGraphService.cancel());
+
+        loadGraphService.stateProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == Worker.State.CANCELLED) {
+                completableFuture.complete(true);
+            }
+        });
+
+        loadGraphService.start();
+
+        // Wait for graphFromFactory service
+        Boolean b = completableFuture.get(5000, TimeUnit.MILLISECONDS);
+
+        assertTrue(b);
     }
 }

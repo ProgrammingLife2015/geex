@@ -22,6 +22,11 @@ public abstract class Parser<T> implements Loadable<T> {
     BufferedReader[] readerList;
 
     /**
+     * The state of this parser.
+     */
+    private boolean cancelled = false;
+
+    /**
      * Empty constructor for child classes which extend functionality.
      */
     protected Parser() {
@@ -44,6 +49,21 @@ public abstract class Parser<T> implements Loadable<T> {
         }
 
         return this;
+    }
+
+    /**
+     * Set the state of this parser to cancelled.
+     */
+    public void cancelled() {
+        this.cancelled = true;
+    }
+
+    /**
+     * Check the state of the Parser.
+     * @return If the parser is cancelled
+     */
+    protected boolean isCancelled() {
+        return cancelled;
     }
 
     /**

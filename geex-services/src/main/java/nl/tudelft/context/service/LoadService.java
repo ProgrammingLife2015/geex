@@ -6,10 +6,10 @@ import javafx.concurrent.Task;
 import java.io.File;
 
 /**
+ * @param <T> The type of class to Load.
  * @author Gerben Oolbekkink
  * @version 1.0
  * @since 24-5-2015
- * @param <T> The type of class to Load.
  */
 public class LoadService<T> extends Service<T> {
     /**
@@ -23,8 +23,9 @@ public class LoadService<T> extends Service<T> {
 
     /**
      * Create a new Loader service.
+     *
      * @param parserClass Class used for parsing the files.
-     * @param files Files to load.
+     * @param files       Files to load.
      */
     public LoadService(final Class<? extends Loadable<T>> parserClass, final File... files) {
         this.parserClass = parserClass;
@@ -36,11 +37,18 @@ public class LoadService<T> extends Service<T> {
     @Override
     protected Task<T> createTask() {
         return new Task<T>() {
+            private Loadable<T> parser;
+
             @Override
             protected T call() throws Exception {
-                Loadable<T> parser = parserClass.newInstance();
+                parser = parserClass.newInstance();
                 parser.setFiles(files);
                 return parser.load();
+            }
+
+            @Override
+            protected void cancelled() {
+                parser.cancelled();
             }
         };
     }
