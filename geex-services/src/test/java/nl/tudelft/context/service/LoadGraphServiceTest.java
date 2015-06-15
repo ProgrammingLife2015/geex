@@ -97,7 +97,7 @@ public class LoadGraphServiceTest {
 
     @Test
     public void testInfiniteParser() throws Exception {
-        final LoadService<Boolean> loadGraphService = new LoadService<>(MyParser.class, nodeFile, edgeFile);
+        final LoadService<Boolean> loadGraphService = new LoadService<>(InfiniteParser.class, nodeFile, edgeFile);
 
         CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
 
