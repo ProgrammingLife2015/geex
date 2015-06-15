@@ -2,10 +2,15 @@ package nl.tudelft.context.controller.locator;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import nl.tudelft.context.controller.AbstractGraphController;
+import nl.tudelft.context.drawable.DrawableLocatorMutation;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
 import nl.tudelft.context.model.graph.DefaultNode;
+import nl.tudelft.context.model.graph.GraphNode;
+import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -53,18 +59,26 @@ public class LocatorController {
     int minRefPosition = Integer.MAX_VALUE, maxRefPosition = Integer.MIN_VALUE;
 
     /**
+     * The graphController that created this locatorController.
+     */
+    AbstractGraphController graphController;
+
+    /**
      * Init the locator controller that shows the current position on the reference genome.
      *
      * @param locator          The locator pane
      * @param labelMapProperty Currently active nodes
      * @param positionProperty Location currently shown (columns)
+     * @param graphController  The graphController that created this locatorController.
      */
     public LocatorController(final Pane locator,
                              final ObjectProperty<Map<Integer, List<AbstractDrawableNode>>> labelMapProperty,
-                             final ObjectProperty<List<Integer>> positionProperty) {
+                             final ObjectProperty<List<Integer>> positionProperty,
+                             final AbstractGraphController graphController) {
 
         this.locator = locator;
         this.positionProperty = positionProperty;
+        this.graphController = graphController;
 
         initIndicator();
 
@@ -74,7 +88,10 @@ public class LocatorController {
         });
 
         positionProperty.addListener(event -> setPosition());
-        locator.widthProperty().addListener(event -> setPosition());
+        locator.widthProperty().addListener(event -> {
+            setPosition();
+            showMutationsInLocator();
+        });
 
     }
 
@@ -139,6 +156,34 @@ public class LocatorController {
             locatorIndicator.setTranslateX(min * scale);
             locatorIndicator.setWidth((max - min) * scale);
         });
+
+    }
+
+    /**
+     * The function that draws the mutations in the positionbar.
+     */
+    public void showMutationsInLocator() {
+
+        StackGraph currentGraph = graphController.getCurrentGraph();
+
+        if (currentGraph != null) {
+            Set<DefaultNode> mutations = currentGraph.vertexSet().stream()
+                    .filter(node -> node instanceof GraphNode).collect(Collectors.toSet());
+
+            int max = currentGraph.vertexSet().stream()
+                    .mapToInt(DefaultNode::getRefEndPosition)
+                    .max().getAsInt();
+
+
+            Node indicator = locator.getChildren().get(locator.getChildren().size() - 1);
+            locator.getChildren().clear();
+
+            mutations.forEach(node -> locator
+                    .getChildren()
+                    .add(new DrawableLocatorMutation(node, locator.getWidth(), max)));
+
+            locator.getChildren().add(indicator);
+        }
 
     }
 

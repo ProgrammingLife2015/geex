@@ -99,6 +99,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     ObjectProperty<Set<AbstractLabel>> currentLabelsProperty = new SimpleObjectProperty<>(new HashSet<>());
 
     /**
+     * The locator controller created by this GraphController.
+     */
+    LocatorController locatorController;
+
+    /**
      * Create default graph controller.
      *
      * @param mainController MainController to set views with
@@ -124,7 +129,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         selectedSources.addListener((observable, oldValue, newValue) ->
                 currentLabelsProperty.get().stream().forEach(label -> label.updateSources(newValue)));
 
-        new LocatorController(locator, nodeMapProperty, positionProperty);
+        locatorController = new LocatorController(locator, nodeMapProperty, positionProperty, this);
 
         initOnTheFlyLoading();
 
@@ -156,6 +161,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         ));
+
+        locatorController.showMutationsInLocator();
 
     }
 
@@ -232,6 +239,14 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .map(node -> node.getLabel(mainController, this))
                 .collect(Collectors.toSet()));
 
+    }
+
+    /**
+     * Returns the graph in view.
+     * @return The graph in view.
+     */
+    public StackGraph getCurrentGraph() {
+        return currentGraph;
     }
 
 }
