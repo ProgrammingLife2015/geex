@@ -157,7 +157,7 @@
                                 <id>verify-style</id>
                                 <phase>process-classes</phase>
                                 <goals>
-                                    <goal>check</goal>
+                                    <goal>checkstyle-aggregate</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -168,6 +168,7 @@
                         <version>3.4</version>
                         <configuration>
                             <format>xml</format>
+                            <aggregate>true</aggregate>
                         </configuration>
                         <executions>
                             <execution>
