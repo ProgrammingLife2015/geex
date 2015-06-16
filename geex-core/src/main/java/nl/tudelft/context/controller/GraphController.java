@@ -187,7 +187,10 @@ public final class GraphController extends AbstractGraphController {
      * Function that resets the view to the most zoomed out level.
      */
     private void resetView() {
-        showGraph(new DrawableGraph(graphList.getLast()));
+        if (graphList.indexOf(currentGraph) != graphList.size() - 1) {
+            currentGraph = graphList.getLast();
+            showGraph(new DrawableGraph(currentGraph));
+        }
         scroll.setHvalue(0);
     }
 }
