@@ -133,6 +133,10 @@ public final class GraphController extends AbstractGraphController {
             }
         });
 
+        MenuItem resetView = menuController.getResetView();
+        resetView.setOnAction(event -> resetView());
+        resetView.disableProperty().bind(activeProperty.not());
+
     }
 
     /**
@@ -177,5 +181,10 @@ public final class GraphController extends AbstractGraphController {
     @Override
     public String getBreadcrumbName() {
         return "Genome graph (" + sources.size() + ")";
+    }
+
+    private void resetView() {
+        showGraph(new DrawableGraph(graphList.getLast()));
+        scroll.setHvalue(0);
     }
 }

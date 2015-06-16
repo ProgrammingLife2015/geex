@@ -108,7 +108,7 @@ public final class MenuController {
                 true);
 
         resetView = createMenuItem("Reset the view",
-                new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN),
+                new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN),
                 null,
                 true);
 
