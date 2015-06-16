@@ -183,6 +183,9 @@ public final class GraphController extends AbstractGraphController {
         return "Genome graph (" + sources.size() + ")";
     }
 
+    /**
+     * Function that resets the view to the most zoomed out level.
+     */
     private void resetView() {
         showGraph(new DrawableGraph(graphList.getLast()));
         scroll.setHvalue(0);
