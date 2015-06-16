@@ -6,7 +6,7 @@ before_install:
 - sh -e /etc/init.d/xvfb start
 - '[ "$TRAVIS_PULL_REQUEST" = "true" ] && git checkout HEAD^2 && echo "OCTOPULL_SHA=$(git rev-parse HEAD)"; true'
 script:
-- 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then mvn site -B; else true; fi;'
+- 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then mvn test -Ptravis -B; else true; fi;'
 - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then mvn test -B; else true; fi;'
 notifications:
   webhooks:
