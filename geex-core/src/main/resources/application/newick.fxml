@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
     <ScrollPane styleClass="transparent" fx:id="newickScroller" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
-                AnchorPane.bottomAnchor="45"
+                AnchorPane.bottomAnchor="0"
                 AnchorPane.leftAnchor="0" fitToHeight="true" fitToWidth="true">
         <StackPane>
             <StackPane styleClass="margin">
