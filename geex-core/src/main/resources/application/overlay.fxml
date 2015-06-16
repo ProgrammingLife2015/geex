@@ -27,6 +27,19 @@
 
         <Label GridPane.columnIndex="0" GridPane.rowIndex="6">Open Sequence View in new window</Label>
         <Label GridPane.columnIndex="1" GridPane.rowIndex="6">Shift+Click</Label>
+
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="7">Zoom in on Graph</Label>
+        <Label GridPane.columnIndex="1" GridPane.rowIndex="7">Ctrl+UpArrow</Label>
+
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="8">Zoom out on Graph</Label>
+        <Label GridPane.columnIndex="1" GridPane.rowIndex="8">Ctrl+DownArrow</Label>
+
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="9">Reset the view</Label>
+        <Label GridPane.columnIndex="1" GridPane.rowIndex="9">Ctrl+R</Label>
+
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="10">Open a new window</Label>
+        <Label GridPane.columnIndex="1" GridPane.rowIndex="10">Shift+Click on a node</Label>
+
     </GridPane>
 
 </fx:root>
