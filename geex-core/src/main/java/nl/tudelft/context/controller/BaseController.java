@@ -26,10 +26,10 @@ public final class BaseController extends ViewController<ScrollPane> {
     Text sources;
 
     /**
-     * JavaFX Text holder for annotations.
+     * JavaFX Text holder for coding sequences.
      */
     @FXML
-    Text annotations;
+    Text codingsequences;
 
     /**
      * JavaFX Text holder for bases.
@@ -90,7 +90,7 @@ public final class BaseController extends ViewController<ScrollPane> {
                            final ResourceBundle resources) {
 
         String content = node.getContent();
-        annotations.setText(node.getAnnotationText());
+        codingsequences.setText(node.getCodingSequenceText());
         percentages.setText(node.getBaseCounter().toString() + "\n");
         bases.setText(content);
 

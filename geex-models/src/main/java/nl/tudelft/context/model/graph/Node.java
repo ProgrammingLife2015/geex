@@ -1,5 +1,6 @@
 package nl.tudelft.context.model.graph;
 
+import nl.tudelft.context.model.annotation.Annotation;
 import nl.tudelft.context.model.annotation.CodingSequence;
 import nl.tudelft.context.model.annotation.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.Resistance;
@@ -111,25 +112,44 @@ public class Node extends DefaultNode {
     }
 
     @Override
-    public void setResistance(final ResistanceMap resistanceMap) {
+    public void setResistances(final ResistanceMap resistanceMap) {
         resistance = resistanceMap.subMap(refStartPosition, refEndPosition).values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Resistance> getResistance() {
+    public List<Resistance> getResistances() {
         return resistance;
     }
 
     /**
-     * Retrieve the text for the codingSequences in order, without surrounding brackets and with line seperators.
+     * Retrieve the text for the codingSequences in order, without surrounding brackets and with line separators.
      *
      * @return String representing the CodingSequence list
      */
-    public String getAnnotationText() {
-        List<String> annotationList = codingSequences.stream()
-                .map(CodingSequence::toString)
+    public String getCodingSequenceText() {
+        return getAnnotationsText(codingSequences);
+    }
+
+    /**
+     * Retrieve the text for the Resistance in order, without surrounding brackets and with line separators.
+     *
+     * @return String representing the Resistance list
+     */
+    public String getResistancesText() {
+        return getAnnotationsText(resistance);
+    }
+
+    /**
+     * Retrieve the text for the annotations in order.
+     *
+     * @param annotations The annotations to turn into text.
+     * @return            String representation of the annotations.
+     */
+    public String getAnnotationsText(final List<? extends Annotation> annotations) {
+        List<String> annotationList = annotations.stream()
+                .map(Annotation::toString)
                 .collect(Collectors.toList());
         if (annotationList.isEmpty()) {
             return "None";

@@ -95,14 +95,14 @@ public abstract class DefaultNode {
      *
      * @param resistanceMap The list of all resistance mutations
      */
-    public abstract void setResistance(final ResistanceMap resistanceMap);
+    public abstract void setResistances(final ResistanceMap resistanceMap);
 
     /**
      * Get the list of resistance mutations that are present in this node.
      *
      * @return The list of resistance mutations present in this node
      */
-    public abstract List<Resistance> getResistance();
+    public abstract List<Resistance> getResistances();
 
     /**
      * Shift the node.

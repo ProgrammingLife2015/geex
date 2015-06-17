@@ -162,12 +162,12 @@ public class GraphNode extends DefaultNode {
     }
 
     @Override
-    public  void setResistance(final ResistanceMap resistanceMap) {
+    public  void setResistances(final ResistanceMap resistanceMap) {
         // do nothing
     }
 
     @Override
-    public List<Resistance> getResistance() {
+    public List<Resistance> getResistances() {
         return Collections.emptyList();
     }
 

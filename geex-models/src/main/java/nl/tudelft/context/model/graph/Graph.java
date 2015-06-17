@@ -36,7 +36,7 @@ public class Graph extends StackGraph {
      */
     public void setResistance(final ResistanceMap resistanceMap) {
         vertexSet().parallelStream()
-                .forEach(node -> node.setResistance(resistanceMap));
+                .forEach(node -> node.setResistances(resistanceMap));
     }
 
 }
