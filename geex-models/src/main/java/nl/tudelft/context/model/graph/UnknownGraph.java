@@ -92,7 +92,7 @@ public class UnknownGraph extends StackGraph {
 
     @Override
     public String getName() {
-        return "Hide unknown (" + (REMOVE_RATIO * 100) + "%)";
+        return "Unknown bases (" + (REMOVE_RATIO * 100) + "%)";
     }
 
 }

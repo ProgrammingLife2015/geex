@@ -30,7 +30,7 @@ public class Graph extends StackGraph {
 
     @Override
     public String getName() {
-        return "Clean graph";
+        return "Default";
     }
 
 }
