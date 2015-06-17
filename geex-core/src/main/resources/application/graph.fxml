@@ -16,24 +16,24 @@
         </StackPane>
     </ScrollPane>
     <HBox styleClass="legend" AnchorPane.topAnchor="30" AnchorPane.rightAnchor="40">
-        <VBox styleClass="legend" spacing="5">
+        <VBox spacing="5">
             <Label styleClass="header">Collapsed Nodes</Label>
             <HBox>
-                <Circle styleClass="circle" radius="10.0" fill="#e44544"/>
+                <Circle radius="10.0" fill="#e44544"/>
                 <Label styleClass="singlepoint">Point mutation</Label>
             </HBox>
 
             <HBox>
-                <Circle styleClass="circle" radius="10.0" fill="#4594e4"/>
+                <Circle radius="10.0" fill="#4594e4"/>
                 <Label styleClass="indel">Insertion / Deletion</Label>
             </HBox>
 
             <HBox>
-                <Circle styleClass="circle" radius="10.0" fill="#5ab000"/>
+                <Circle radius="10.0" fill="#5ab000"/>
                 <Label styleClass="collapse">Straigth sequence</Label>
             </HBox>
         </VBox>
-        <VBox styleClass="legend">
+        <VBox>
             <Label styleClass="header">Occurrence (in %)</Label>
             <Label styleClass="base-A">Adenine</Label>
             <Label styleClass="base-T">Thymine</Label>
