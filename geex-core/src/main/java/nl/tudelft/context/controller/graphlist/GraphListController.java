@@ -41,6 +41,7 @@ public class GraphListController {
                             if (graph.equals(getActiveGraph())) {
                                 pane.getStyleClass().add("active");
                             }
+                            pane.setOnMouseClicked(event1 -> activeGraph.set(graph));
                             pane.getChildren().add(new Label(graph.getName()));
                             return pane;
                         })
