@@ -33,6 +33,9 @@ public class Window extends Stage {
      */
     public static final Color SCENE_BACKGROUND = new Color(0.1686, 0.1686, 0.1686, 1);
 
+    /**
+     * Different icon sizes for the logo.
+     */
     public static final List<String> ICONS = Arrays.asList(
             "/application/images/icon_16.png",
             "/application/images/icon_32.png",
@@ -68,7 +71,13 @@ public class Window extends Stage {
 
     }
 
-    public Image getImage(String source) {
+    /**
+     * Gets the image that belongs to the given source.
+     *
+     * @param source The source of the image
+     * @return       The image
+     */
+    public Image getImage(final String source) {
         return new Image(getClass().getResourceAsStream(source));
     }
 
