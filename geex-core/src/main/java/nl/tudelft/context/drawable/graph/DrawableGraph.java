@@ -33,6 +33,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
      */
     public DrawableGraph(final StackGraph graph) {
 
+        super();
         this.graph = graph;
 
         final Map<DefaultNode, AbstractDrawableNode> added = new HashMap<>();
