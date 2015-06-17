@@ -3,7 +3,6 @@ package nl.tudelft.context.controller.graphlist;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import nl.tudelft.context.model.graph.StackGraph;
 
@@ -35,16 +34,7 @@ public class GraphListController {
     public GraphListController(final Pane graphs) {
         activeGraph.addListener(event ->
                 graphs.getChildren().setAll(graphList.stream()
-                        .map(graph -> {
-                            Pane pane = new Pane();
-                            pane.getStyleClass().add("graph-item");
-                            if (graph.equals(getActiveGraph())) {
-                                pane.getStyleClass().add("active");
-                            }
-                            pane.setOnMouseClicked(event1 -> activeGraph.set(graph));
-                            pane.getChildren().add(new Label(graph.getName()));
-                            return pane;
-                        })
+                        .map(graph -> new GraphListItem(graph, activeGraph))
                         .collect(Collectors.toList())));
     }
 
