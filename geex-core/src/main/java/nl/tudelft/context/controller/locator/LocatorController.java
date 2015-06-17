@@ -97,7 +97,7 @@ public class LocatorController {
      */
     private void initLabelMap(final Map<Integer, List<AbstractDrawableNode>> labelMap) {
 
-        HashMap<Integer, List<Integer>> totalMap = new HashMap<>();
+        Map<Integer, List<Integer>> totalMap = new HashMap<>();
         labelMap.forEach((column, labels) -> {
             int min = labels.stream()
                     .map(AbstractDrawableNode::getNode)

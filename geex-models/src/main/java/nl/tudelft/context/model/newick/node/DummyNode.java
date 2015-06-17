@@ -46,19 +46,6 @@ public class DummyNode extends AbstractNode {
     }
 
     @Override
-    public AbstractNode getSelectedNodes() {
-        AbstractNode node = getCopy();
-        getChildren().stream()
-                .filter(n -> n.getSelection().isAny())
-                .map(AbstractNode::getSelectedNodes)
-                .forEach(opt -> {
-                    node.addChild(opt);
-                    opt.setParent(node);
-                });
-        return node;
-    }
-
-    @Override
     public String getClassName() {
         return "newick-dummy";
     }
