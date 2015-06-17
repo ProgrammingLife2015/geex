@@ -35,11 +35,11 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
 
         this.graph = graph;
 
-        Map<DefaultNode, AbstractDrawableNode> added = new HashMap<>();
+        final Map<DefaultNode, AbstractDrawableNode> added = new HashMap<>();
 
         graph.vertexSet().stream()
                 .forEach(node -> {
-                    AbstractDrawableNode abstractDrawableNode = DrawableNodeFactory.create(node);
+                    final AbstractDrawableNode abstractDrawableNode = DrawableNodeFactory.create(node);
                     added.put(node, abstractDrawableNode);
                     addVertex(abstractDrawableNode);
                 });
@@ -96,20 +96,20 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
      */
     private boolean positionNodes(final List<AbstractDrawableNode> nodes, final int column, final boolean prevShifted) {
 
-        double shift = nodes.size() * LABEL_SPACING / 2;
+        final double shift = nodes.size() * LABEL_SPACING / 2;
 
         int row = 0;
-        for (AbstractDrawableNode node : nodes) {
+        for (final AbstractDrawableNode node : nodes) {
             node.setTranslateX(column * LABEL_SPACING);
             node.setTranslateY(row * LABEL_SPACING - shift);
             row++;
         }
 
         if (nodes.size() == 1) {
-            AbstractDrawableNode node = nodes.get(0);
-            long in = getSources(node).stream().mapToInt(this::outDegreeOf).filter(x -> x > 1).count();
-            long out = getTargets(node).stream().mapToInt(this::inDegreeOf).filter(x -> x > 1).count();
-            boolean drawShift = inDegreeOf(node) == 1 && outDegreeOf(node) >= 1 && in > 0 && out > 0;
+            final AbstractDrawableNode node = nodes.get(0);
+            final long in = getSources(node).stream().mapToInt(this::outDegreeOf).filter(x -> x > 1).count();
+            final long out = getTargets(node).stream().mapToInt(this::inDegreeOf).filter(x -> x > 1).count();
+            final boolean drawShift = inDegreeOf(node) == 1 && outDegreeOf(node) >= 1 && in > 0 && out > 0;
             if (node.getNode().isShift() || drawShift) {
                 node.setTranslateY(prevShifted ? 0 : -LABEL_SPACING);
                 return !prevShifted;
