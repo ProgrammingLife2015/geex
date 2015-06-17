@@ -19,7 +19,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
     /**
      * Define the amount of spacing for the nodes.
      */
-    public static final double LABEL_SPACING = 100;
+    public static final int LABEL_SPACING = 100;
 
     /**
      * Graph that is drawn.
