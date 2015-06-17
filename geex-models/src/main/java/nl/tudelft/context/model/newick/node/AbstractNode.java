@@ -201,7 +201,17 @@ public abstract class AbstractNode {
      *
      * @return A copy of the nodes that are selected
      */
-    public abstract AbstractNode getSelectedNodes();
+    public AbstractNode getSelectedNodes() {
+        AbstractNode node = getCopy();
+        getChildren().stream()
+                .filter(n -> n.getSelection().isAny())
+                .map(AbstractNode::getSelectedNodes)
+                .forEach(opt -> {
+                    node.addChild(opt);
+                    opt.setParent(node);
+                });
+        return node;
+    }
 
     /**
      * Returns the class name that belongs to the node.
@@ -217,7 +227,11 @@ public abstract class AbstractNode {
      * @param weightScale A scalar to multiply the weight with
      * @param yPos        The y-position of the node
      */
-    public abstract void translate(final int minWeight, final double weightScale, final int yPos);
+    public void translate(final int minWeight, final double weightScale, final int yPos) {
+        setTranslateX(minWeight + weight * weightScale
+                + parent.orElse(new DummyNode()).translateXProperty().doubleValue());
+        setTranslateY(yPos);
+    }
 
     @Override
     public String toString() {
