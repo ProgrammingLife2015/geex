@@ -16,14 +16,6 @@
         </StackPane>
     </ScrollPane>
     <HBox styleClass="legend" AnchorPane.topAnchor="30" AnchorPane.rightAnchor="40">
-        <VBox styleClass="legend">
-            <Label styleClass="header">Occurrence (in %)</Label>
-            <Label styleClass="base-A">Adenine</Label>
-            <Label styleClass="base-T">Thymine</Label>
-            <Label styleClass="base-C">Cytosine</Label>
-            <Label styleClass="base-G">Guanine</Label>
-            <Label styleClass="base-N">Unknown base</Label>
-        </VBox>
         <VBox styleClass="legend" spacing="5">
             <Label styleClass="header">Collapsed Nodes</Label>
             <HBox>
@@ -32,16 +24,22 @@
             </HBox>
 
             <HBox>
-                <Circle styleClass="circle" radius="10.0" fill="#4594e4" />
-                <Label styleClass="indel">Indel</Label>
+                <Circle styleClass="circle" radius="10.0" fill="#4594e4"/>
+                <Label styleClass="indel">Insertion / Deletion</Label>
             </HBox>
 
             <HBox>
                 <Circle styleClass="circle" radius="10.0" fill="#5ab000"/>
-                <Label styleClass="collapse">Filter</Label>
+                <Label styleClass="collapse">Straigth sequence</Label>
             </HBox>
-
-
+        </VBox>
+        <VBox styleClass="legend">
+            <Label styleClass="header">Occurrence (in %)</Label>
+            <Label styleClass="base-A">Adenine</Label>
+            <Label styleClass="base-T">Thymine</Label>
+            <Label styleClass="base-C">Cytosine</Label>
+            <Label styleClass="base-G">Guanine</Label>
+            <Label styleClass="base-N">Unknown base</Label>
         </VBox>
     </HBox>
 

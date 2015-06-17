@@ -300,6 +300,11 @@
 }
 
 /* Legend */
+.legend {
+    -fx-background-color: rgba(43, 43, 43, .8);
+    -fx-padding: 20px;
+}
+
 .legend Label {
     -fx-font: 0.3cm 'Arial';
     -fx-text-fill: #fff;
@@ -333,15 +338,12 @@
     -fx-border-color: #ff7f00;
 }
 
+/* Collapse */
+
 .legend .indel,
 .legend .collapse,
 .legend .singlepoint {
     -fx-padding: 3px 0 0 10px;
-}
-
-.legend {
-    -fx-background-color: rgba(43, 43, 43, .8);
-    -fx-padding: 20px;
 }
 
 /* Breadcrumb */
