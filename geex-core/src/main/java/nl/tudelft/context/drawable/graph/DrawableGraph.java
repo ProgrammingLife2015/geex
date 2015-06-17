@@ -117,7 +117,11 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
             final boolean drawShift = inDegreeOf(node) == 1 && outDegreeOf(node) >= 1
                     && sourcesEdges > 0 && targetEdges > 0;
             if (node.getNode().isShift() || drawShift) {
-                node.setTranslateY(prevShifted ? 0 : -LABEL_SPACING);
+                if (prevShifted) {
+                    node.setTranslateY(0);
+                } else {
+                    node.setTranslateY(-LABEL_SPACING);
+                }
                 return !prevShifted;
             }
         }
