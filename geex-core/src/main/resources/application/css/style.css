@@ -307,7 +307,6 @@
     -fx-border-width: 0 0 0 5px;
 }
 
-/* Legend */
 .legend .header {
     -fx-font-weight: bold;
     -fx-padding: 0 0 5px 0;
@@ -334,9 +333,15 @@
     -fx-border-color: #ff7f00;
 }
 
+.legend .indel,
+.legend .collapse,
+.legend .singlepoint {
+    -fx-padding: 3px 0 0 10px;
+}
+
 .legend {
     -fx-background-color: rgba(43, 43, 43, .8);
-    -fx-padding: 10px;
+    -fx-padding: 20px;
 }
 
 /* Breadcrumb */
