@@ -10,6 +10,7 @@ import java.util.TreeMap;
  * @author Jasper Boot
  * @version 1.0
  * @since 17-06-2015
+ * @param <T> The type of list, as values in the tree map.
  */
 public abstract class AnnotationMap<T extends Annotation> extends TreeMap<Integer, List<T>> {
     /**

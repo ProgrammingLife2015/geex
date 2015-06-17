@@ -145,7 +145,8 @@ public final class GraphController extends AbstractGraphController {
      * @param codingSequenceMap The CodingSequenceMap which is loaded.
      * @param resistanceMap The ResistanceMap which is loaded.
      */
-    private void loadGraph(final GraphMap graphMap, final CodingSequenceMap codingSequenceMap, final ResistanceMap resistanceMap) {
+    private void loadGraph(final GraphMap graphMap, final CodingSequenceMap codingSequenceMap,
+                           final ResistanceMap resistanceMap) {
         if (graphMap != null && codingSequenceMap != null && resistanceMap != null) {
             graphMap.setAnnotations(codingSequenceMap);
             graphMap.setResistance(resistanceMap);

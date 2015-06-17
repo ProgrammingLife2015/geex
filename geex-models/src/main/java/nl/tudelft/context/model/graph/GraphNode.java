@@ -1,6 +1,5 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.annotation.CodingSequence;
 import nl.tudelft.context.model.annotation.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.Resistance;
