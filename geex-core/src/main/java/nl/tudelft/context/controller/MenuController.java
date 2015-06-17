@@ -30,7 +30,8 @@ public final class MenuController {
             toggleSelect,
             zoomIn,
             zoomOut,
-            selectWorkspace;
+            selectWorkspace,
+            resetView;
 
     /**
      * The menu's.
@@ -106,6 +107,11 @@ public final class MenuController {
                 null,
                 true);
 
+        resetView = createMenuItem("Reset the view",
+                new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN),
+                null,
+                true);
+
         menuBar.getMenus().add(createMenu("_Navigate",
                 createMenuItem("Previous view",
                         new KeyCodeCombination(KeyCode.ESCAPE),
@@ -114,7 +120,8 @@ public final class MenuController {
                 toggleSelect,
                 loadGenomeGraph,
                 zoomIn,
-                zoomOut));
+                zoomOut,
+                resetView));
 
     }
 
@@ -232,6 +239,15 @@ public final class MenuController {
      */
     public MenuItem getToggleSelect() {
         return toggleSelect;
+    }
+
+    /**
+     * Get the menu item that resets the view.
+     *
+     * @return The menu item that sets the view.
+     */
+    public MenuItem getResetView() {
+        return resetView;
     }
 
 }

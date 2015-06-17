@@ -133,6 +133,10 @@ public final class GraphController extends AbstractGraphController {
             }
         });
 
+        MenuItem resetView = menuController.getResetView();
+        resetView.setOnAction(event -> resetView());
+        resetView.disableProperty().bind(activeProperty.not());
+
     }
 
     /**
@@ -177,5 +181,16 @@ public final class GraphController extends AbstractGraphController {
     @Override
     public String getBreadcrumbName() {
         return "Genome graph (" + sources.size() + ")";
+    }
+
+    /**
+     * Function that resets the view to the most zoomed out level.
+     */
+    private void resetView() {
+        if (graphList.indexOf(currentGraph) != graphList.size() - 1) {
+            currentGraph = graphList.getLast();
+            showGraph(new DrawableGraph(currentGraph));
+        }
+        scroll.setHvalue(0);
     }
 }
