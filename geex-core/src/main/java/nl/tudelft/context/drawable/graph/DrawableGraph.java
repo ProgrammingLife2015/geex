@@ -19,7 +19,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
     /**
      * Define the amount of spacing for the nodes.
      */
-    public static final int LABEL_SPACING = 100;
+    public static final double LABEL_SPACING = 100;
 
     /**
      * Graph that is drawn.
@@ -93,7 +93,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
      */
     private void positionNodes(final List<AbstractDrawableNode> nodes, final int column) {
 
-        int shift = nodes.size() * LABEL_SPACING / 2;
+        double shift = nodes.size() * LABEL_SPACING / 2;
 
         int row = 0;
         for (AbstractDrawableNode node : nodes) {
