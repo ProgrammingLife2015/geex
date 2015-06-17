@@ -1,4 +1,4 @@
-package nl.tudelft.context.model.resistance;
+package nl.tudelft.context.model.annotation.resistance;
 
 import java.util.List;
 import java.util.Map;

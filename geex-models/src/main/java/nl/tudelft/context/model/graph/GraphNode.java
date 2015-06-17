@@ -1,9 +1,9 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.annotation.Annotation;
-import nl.tudelft.context.model.annotation.AnnotationMap;
-import nl.tudelft.context.model.resistance.Resistance;
-import nl.tudelft.context.model.resistance.ResistanceMap;
+import nl.tudelft.context.model.annotation.coding_sequence.Annotation;
+import nl.tudelft.context.model.annotation.coding_sequence.AnnotationMap;
+import nl.tudelft.context.model.annotation.resistance.Resistance;
+import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
 
 import java.util.Collection;
 import java.util.HashSet;

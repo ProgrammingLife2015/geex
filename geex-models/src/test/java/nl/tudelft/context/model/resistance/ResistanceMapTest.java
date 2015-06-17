@@ -1,5 +1,7 @@
 package nl.tudelft.context.model.resistance;
 
+import nl.tudelft.context.model.annotation.resistance.Resistance;
+import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

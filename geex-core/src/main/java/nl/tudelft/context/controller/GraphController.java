@@ -7,13 +7,13 @@ import javafx.scene.control.MenuItem;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
-import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.coding_sequence.AnnotationMap;
 import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.InsertDeleteGraph;
 import nl.tudelft.context.model.graph.SinglePointGraph;
 import nl.tudelft.context.model.graph.UnknownGraph;
-import nl.tudelft.context.model.resistance.ResistanceMap;
+import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -1,4 +1,4 @@
-package nl.tudelft.context.model.annotation;
+package nl.tudelft.context.model.annotation.coding_sequence;
 
 import nl.tudelft.context.model.Parser;
 

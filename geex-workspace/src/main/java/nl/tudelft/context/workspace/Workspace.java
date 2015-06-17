@@ -1,14 +1,14 @@
 package nl.tudelft.context.workspace;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
-import nl.tudelft.context.model.annotation.AnnotationMap;
-import nl.tudelft.context.model.annotation.AnnotationParser;
+import nl.tudelft.context.model.annotation.coding_sequence.AnnotationMap;
+import nl.tudelft.context.model.annotation.coding_sequence.AnnotationParser;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.NewickParser;
-import nl.tudelft.context.model.resistance.ResistanceMap;
-import nl.tudelft.context.model.resistance.ResistanceParser;
+import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
+import nl.tudelft.context.model.annotation.resistance.ResistanceParser;
 import nl.tudelft.context.service.LoadService;
 import org.tmatesoft.sqljet.core.SqlJetException;
 
