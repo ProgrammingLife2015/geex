@@ -126,13 +126,13 @@ public class NewickSearchController {
             return new ArrayList<>();
         }
 
-        List<Label> selectedLabels = labels.stream()
+        List<Label> selected = labels.stream()
                 .filter(label -> label.getText().contains(query))
                 .collect(Collectors.toList());
 
-        selectedLabels.forEach(label -> label.getStyleClass().add("search"));
+        selected.forEach(label -> label.getStyleClass().add("search"));
 
-        return selectedLabels;
+        return selected;
     }
 
     /**
