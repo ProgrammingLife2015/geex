@@ -99,7 +99,7 @@ public class WelcomeController extends ViewController<GridPane> {
                 previous.setDisable(true);
             }
         } catch (SqlJetException e) {
-            Log.instance().warning(Message.FAIL_LOAD_PREVIOUS);
+            Log.warning(Message.FAIL_LOAD_PREVIOUS);
             // Continue, this doesn't break the software.
         }
     }
