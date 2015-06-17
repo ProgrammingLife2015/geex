@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.annotation.coding_sequence.Annotation;
-import nl.tudelft.context.model.annotation.coding_sequence.AnnotationMap;
+import nl.tudelft.context.model.annotation.coding_sequence.CodingSequence;
+import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.resistance.Resistance;
 import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
 
@@ -77,18 +77,18 @@ public abstract class DefaultNode {
     public abstract int getRefEndPosition();
 
     /**
-     * Sets the annotations that belong to this node.
+     * Sets the codingSequences that belong to this node.
      *
-     * @param annotationMap The list of all annotations
+     * @param codingSequenceMap The list of all codingSequences
      */
-    public abstract void setAnnotations(final AnnotationMap annotationMap);
+    public abstract void setCodingSequences(final CodingSequenceMap codingSequenceMap);
 
     /**
-     * Get the list of annotations that are present in this node.
+     * Get the list of codingSequences that are present in this node.
      *
-     * @return The list of annotations present in this node
+     * @return The list of codingSequences present in this node
      */
-    public abstract List<Annotation> getAnnotations();
+    public abstract List<CodingSequence> getCodingSequences();
 
     /**
      * Sets the resistance mutations that belong to this node.

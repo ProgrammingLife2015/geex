@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.annotation.coding_sequence.Annotation;
-import nl.tudelft.context.model.annotation.coding_sequence.AnnotationMap;
+import nl.tudelft.context.model.annotation.coding_sequence.CodingSequence;
+import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.resistance.Resistance;
 import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
 
@@ -148,14 +148,14 @@ public class GraphNode extends DefaultNode {
     }
 
     @Override
-    public void setAnnotations(final AnnotationMap annotationMap) {
+    public void setCodingSequences(final CodingSequenceMap codingSequenceMap) {
         // do nothing
     }
 
     @Override
-    public List<Annotation> getAnnotations() {
+    public List<CodingSequence> getCodingSequences() {
         return nodes.stream()
-                .map(DefaultNode::getAnnotations)
+                .map(DefaultNode::getCodingSequences)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }

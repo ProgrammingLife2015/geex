@@ -8,7 +8,7 @@ package nl.tudelft.context.model.annotation.coding_sequence;
  * @version 1.1
  * @since 21-5-2015
  */
-public class Annotation {
+public class CodingSequence {
 
 
     /**
@@ -106,15 +106,15 @@ public class Annotation {
      * @param phase      for CDS, indication if it has reference to read1ing frame.
      * @param attributes list of attributes.
      */
-    public Annotation(final String seqId,
-                      final String source,
-                      final String type,
-                      final int start,
-                      final int end,
-                      final float score,
-                      final char strand,
-                      final char phase,
-                      final String attributes) {
+    public CodingSequence(final String seqId,
+                          final String source,
+                          final String type,
+                          final int start,
+                          final int end,
+                          final float score,
+                          final char strand,
+                          final char phase,
+                          final String attributes) {
         this.seqId = seqId;
         this.source = source;
         this.type = type;
@@ -145,7 +145,7 @@ public class Annotation {
             return false;
         }
 
-        Annotation that = (Annotation) o;
+        CodingSequence that = (CodingSequence) o;
 
         if (start != that.start) {
             return false;

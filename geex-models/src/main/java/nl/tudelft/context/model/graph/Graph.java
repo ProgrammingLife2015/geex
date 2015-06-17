@@ -1,6 +1,6 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.annotation.coding_sequence.AnnotationMap;
+import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
 
 /**
@@ -20,13 +20,13 @@ public class Graph extends StackGraph {
     }
 
     /**
-     * Sets the annotations to all of the graph's nodes.
+     * Sets the codingSequences to all of the graph's nodes.
      *
-     * @param annotationMap The map with annotations to add
+     * @param codingSequenceMap The map with codingSequences to add
      */
-    public void setAnnotations(final AnnotationMap annotationMap) {
+    public void setAnnotations(final CodingSequenceMap codingSequenceMap) {
         vertexSet().parallelStream()
-                .forEach(node -> node.setAnnotations(annotationMap));
+                .forEach(node -> node.setCodingSequences(codingSequenceMap));
     }
 
     /**

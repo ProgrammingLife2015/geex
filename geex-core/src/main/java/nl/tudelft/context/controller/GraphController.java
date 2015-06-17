@@ -7,7 +7,7 @@ import javafx.scene.control.MenuItem;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
-import nl.tudelft.context.model.annotation.coding_sequence.AnnotationMap;
+import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceMap;
 import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.InsertDeleteGraph;
@@ -49,7 +49,7 @@ public final class GraphController extends AbstractGraphController {
      * Sources that are displayed in the graph.
      * Property with annotation map.
      */
-    ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
+    ReadOnlyObjectProperty<CodingSequenceMap> annotationMapIn;
 
     /**
      * Property with resistance map.
@@ -62,13 +62,13 @@ public final class GraphController extends AbstractGraphController {
      * @param mainController  MainController for the application
      * @param sources         Sources to display
      * @param graphMapIn      The graphMap from the workspace, might not be loaded.
-     * @param annotationMapIn The AnnotationMap from the workspace, might not be loaded.
+     * @param annotationMapIn The CodingSequenceMap from the workspace, might not be loaded.
      * @param resistanceMapIn The ResistanceMap from the workspace, might not be loaded.
      */
     public GraphController(final MainController mainController,
                            final Set<String> sources,
                            final ReadOnlyObjectProperty<GraphMap> graphMapIn,
-                           final ReadOnlyObjectProperty<AnnotationMap> annotationMapIn,
+                           final ReadOnlyObjectProperty<CodingSequenceMap> annotationMapIn,
                            final ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn) {
 
         super(mainController);
@@ -87,7 +87,7 @@ public final class GraphController extends AbstractGraphController {
         super.initialize(location, resources);
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
-        ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<CodingSequenceMap> annotationMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<ResistanceMap> resistanceMapProperty = new SimpleObjectProperty<>();
 
         graphMapProperty.addListener(event -> {
@@ -144,12 +144,12 @@ public final class GraphController extends AbstractGraphController {
      * Load graph from source.
      *
      * @param graphMap      The GraphMap which is loaded.
-     * @param annotationMap The AnnotationMap which is loaded.
+     * @param codingSequenceMap The CodingSequenceMap which is loaded.
      * @param resistanceMap The ResistanceMap which is loaded.
      */
-    private void loadGraph(final GraphMap graphMap, final AnnotationMap annotationMap, final ResistanceMap resistanceMap) {
-        if (graphMap != null && annotationMap != null && resistanceMap != null) {
-            graphMap.setAnnotations(annotationMap);
+    private void loadGraph(final GraphMap graphMap, final CodingSequenceMap codingSequenceMap, final ResistanceMap resistanceMap) {
+        if (graphMap != null && codingSequenceMap != null && resistanceMap != null) {
+            graphMap.setAnnotations(codingSequenceMap);
             graphMap.setResistance(resistanceMap);
             graphList.add(graphMap.flat(sources));
             graphList.add(new SinglePointGraph(graphList.getLast()));

@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.annotation.resistance;
 
 /**
- * Annotation for drug resistance causing mutations.
+ * CodingSequence for drug resistance causing mutations.
  * filter is always pass.
  *
  * @author Jasper on 26-5-2015.

@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.annotation.coding_sequence.Annotation;
-import nl.tudelft.context.model.annotation.coding_sequence.AnnotationMap;
+import nl.tudelft.context.model.annotation.coding_sequence.CodingSequence;
+import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.resistance.Resistance;
 import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
 import org.apache.commons.lang.StringUtils;
@@ -36,9 +36,9 @@ public class Node extends DefaultNode {
      */
     BaseCounter baseCounter;
     /**
-     * The annotations that belong to this node.
+     * The codingSequences that belong to this node.
      */
-    List<Annotation> annotations = Collections.emptyList();
+    List<CodingSequence> codingSequences = Collections.emptyList();
     /**
      * The resistance mutations that belong to this node.
      */
@@ -97,17 +97,17 @@ public class Node extends DefaultNode {
     }
 
     @Override
-    public void setAnnotations(final AnnotationMap annotationMap) {
+    public void setCodingSequences(final CodingSequenceMap codingSequenceMap) {
         if (sources.contains("TKK_REF")) {
-            annotations = annotationMap.subMap(refStartPosition, refEndPosition).values().stream()
+            codingSequences = codingSequenceMap.subMap(refStartPosition, refEndPosition).values().stream()
                     .flatMap(Collection::stream)
                     .collect(Collectors.toList());
         }
     }
 
     @Override
-    public List<Annotation> getAnnotations() {
-        return annotations;
+    public List<CodingSequence> getCodingSequences() {
+        return codingSequences;
     }
 
     @Override
@@ -123,12 +123,12 @@ public class Node extends DefaultNode {
     }
 
     /**
-     * Retrieve the text for the annotations in order, without surrounding brackets and with line seperators.
+     * Retrieve the text for the codingSequences in order, without surrounding brackets and with line seperators.
      *
-     * @return String representing the Annotation list
+     * @return String representing the CodingSequence list
      */
     public String getAnnotationText() {
-        List<String> annotationList = annotations.stream().map(Annotation::toString).collect(Collectors.toList());
+        List<String> annotationList = codingSequences.stream().map(CodingSequence::toString).collect(Collectors.toList());
         if (annotationList.size() == 0) {
             return "None";
         } else {

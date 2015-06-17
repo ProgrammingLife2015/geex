@@ -1,8 +1,8 @@
 package nl.tudelft.context.workspace;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
-import nl.tudelft.context.model.annotation.coding_sequence.AnnotationMap;
-import nl.tudelft.context.model.annotation.coding_sequence.AnnotationParser;
+import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceMap;
+import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceParser;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.newick.Newick;
@@ -68,9 +68,9 @@ public class Workspace {
     LoadService<GraphMap> loadGraphService;
 
     /**
-     * The service used for parsing an Annotation.
+     * The service used for parsing an CodingSequence.
      */
-    LoadService<AnnotationMap> loadAnnotationService;
+    LoadService<CodingSequenceMap> loadAnnotationService;
 
     /**
      * The service used for parsing the Resistance.
@@ -136,7 +136,7 @@ public class Workspace {
      */
     public final void preload() {
         loadNewickService = new LoadService<>(NewickParser.class, nwkFile);
-        loadAnnotationService = new LoadService<>(AnnotationParser.class, annotationFile);
+        loadAnnotationService = new LoadService<>(CodingSequenceParser.class, annotationFile);
         loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
         loadResistanceService = new LoadService<>(ResistanceParser.class, resistanceFile);
 
@@ -156,11 +156,11 @@ public class Workspace {
     }
 
     /**
-     * Get the AnnotationMap Property.
+     * Get the CodingSequenceMap Property.
      *
-     * @return A ReadOnlyObjectProperty containing, or not yet containing an AnnotationMap.
+     * @return A ReadOnlyObjectProperty containing, or not yet containing an CodingSequenceMap.
      */
-    public ReadOnlyObjectProperty<AnnotationMap> getAnnotation() {
+    public ReadOnlyObjectProperty<CodingSequenceMap> getAnnotation() {
         return loadAnnotationService.valueProperty();
     }
 

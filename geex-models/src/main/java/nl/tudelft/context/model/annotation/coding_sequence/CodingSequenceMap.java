@@ -11,22 +11,22 @@ import java.util.TreeMap;
  * @version 1.0
  * @since 21-5-2015
  */
-public class AnnotationMap extends TreeMap<Integer, List<Annotation>> {
+public class CodingSequenceMap extends TreeMap<Integer, List<CodingSequence>> {
 
     /**
-     * Add annotations to the AnnotationMap.
+     * Add annotations to the CodingSequenceMap.
      *
-     * @param annotation the annotation that should be added
+     * @param codingSequence the codingSequence that should be added
      */
-    public void addAnnotation(final Annotation annotation) {
-        int start = annotation.getStart();
-        List<Annotation> annotationList = get(start);
-        if (annotationList == null) {
-            annotationList = new ArrayList<>();
-            put(start, annotationList);
+    public void addAnnotation(final CodingSequence codingSequence) {
+        int start = codingSequence.getStart();
+        List<CodingSequence> codingSequenceList = get(start);
+        if (codingSequenceList == null) {
+            codingSequenceList = new ArrayList<>();
+            put(start, codingSequenceList);
         }
 
-        annotationList.add(annotation);
+        codingSequenceList.add(codingSequence);
 
     }
 
@@ -37,15 +37,15 @@ public class AnnotationMap extends TreeMap<Integer, List<Annotation>> {
      * @param toKey   To which key (inclusive)
      * @return        The created subMap
      */
-    public NavigableMap<Integer, List<Annotation>> subMap(final Integer fromKey, final Integer toKey) {
+    public NavigableMap<Integer, List<CodingSequence>> subMap(final Integer fromKey, final Integer toKey) {
         return subMap(fromKey, true, toKey, true);
     }
 
 
     /**
-     * To string method for the AnnotationMap.
+     * To string method for the CodingSequenceMap.
      *
-     * @return String representing the values in the AnnotationMap, each annotation on a new line
+     * @return String representing the values in the CodingSequenceMap, each annotation on a new line
      */
     @Override
     public final String toString() {
