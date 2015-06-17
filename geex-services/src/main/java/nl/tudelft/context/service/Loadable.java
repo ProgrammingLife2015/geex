@@ -2,6 +2,7 @@ package nl.tudelft.context.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 
@@ -30,7 +31,7 @@ public interface Loadable<T> {
      * @throws FileNotFoundException        File not found
      * @throws UnsupportedEncodingException Unsupported encoding
      */
-    Loadable<T> setFiles(final File... files) throws FileNotFoundException, UnsupportedEncodingException;
+    Loadable<T> setFiles(final File... files) throws IOException;
 
     /**
      * Set the state of this Loadable to cancelled.
