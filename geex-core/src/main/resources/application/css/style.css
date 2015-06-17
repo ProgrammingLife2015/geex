@@ -383,12 +383,32 @@
     -fx-stroke-width: 1px;
 }
 
-/* Stack */
-#stack {
-    -fx-pref-width: 150px;
-    -fx-background-color: #1a1a1a;
+/* Graph list */
+#graphs {
+    -fx-pref-width: 180px;
+    -fx-background-color: #222;
     -fx-border-width: 0 1px 0 0;
     -fx-border-color: #848484;
+}
+
+#graphs .graph-item {
+    -fx-border-width: 0 0 1px;
+    -fx-border-color: #848484;
+    -fx-cursor: hand;
+}
+
+#graphs .graph-item.active {
+    -fx-background-color: #848484;
+    -fx-cursor: default;
+}
+
+#graphs .graph-item Label {
+    -fx-text-fill: #fff;
+    -fx-padding: 10px;
+}
+
+#graphs .graph-item.active Label {
+    -fx-text-fill: #000;
 }
 
 /* Search */

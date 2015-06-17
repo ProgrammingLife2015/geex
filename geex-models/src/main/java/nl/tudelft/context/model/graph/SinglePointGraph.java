@@ -118,4 +118,9 @@ public class SinglePointGraph extends StackGraph {
 
     }
 
+    @Override
+    public String getName() {
+        return "Single point mutation";
+    }
+
 }

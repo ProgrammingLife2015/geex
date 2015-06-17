@@ -109,4 +109,9 @@ public class CollapseGraph extends StackGraph {
 
     }
 
+    @Override
+    public String getName() {
+        return "Collapse nodes";
+    }
+
 }

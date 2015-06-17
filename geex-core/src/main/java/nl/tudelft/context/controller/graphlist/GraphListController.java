@@ -3,9 +3,12 @@ package nl.tudelft.context.controller.graphlist;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik
@@ -23,6 +26,26 @@ public class GraphListController {
      * Active graph property.
      */
     ObjectProperty<StackGraph> activeGraph = new SimpleObjectProperty<>();
+
+    /**
+     * Create a graph list controller.
+     *
+     * @param graphs FXML Pane to add graphs labels to.
+     */
+    public GraphListController(final Pane graphs) {
+        activeGraph.addListener(event ->
+                graphs.getChildren().setAll(graphList.stream()
+                        .map(graph -> {
+                            Pane pane = new Pane();
+                            pane.getStyleClass().add("graph-item");
+                            if (graph.equals(getActiveGraph())) {
+                                pane.getStyleClass().add("active");
+                            }
+                            pane.getChildren().add(new Label(graph.getName()));
+                            return pane;
+                        })
+                        .collect(Collectors.toList())));
+    }
 
     /**
      * Get the current active graph.
@@ -56,20 +79,16 @@ public class GraphListController {
      * Zoom in.
      */
     public void zoomIn() {
-
         StackGraph newGraph = graphList.get(Math.max(graphList.indexOf(getActiveGraph()) - 1, 0));
         activeGraph.setValue(newGraph);
-
     }
 
     /**
      * Zoom out.
      */
     public void zoomOut() {
-
         StackGraph newGraph = graphList.get(Math.min(graphList.indexOf(getActiveGraph()) + 1, graphList.size() - 1));
         activeGraph.setValue(newGraph);
-
     }
 
     /**

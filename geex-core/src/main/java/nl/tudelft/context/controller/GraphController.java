@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import nl.tudelft.context.controller.graphlist.GraphListController;
 import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
@@ -29,6 +30,12 @@ import java.util.Set;
  * @since 7-5-2015
  */
 public final class GraphController extends AbstractGraphController {
+
+    /**
+     * The graph list.
+     */
+    @FXML
+    VBox graphs;
 
     /**
      * The locator.
@@ -69,7 +76,7 @@ public final class GraphController extends AbstractGraphController {
     /**
      * Controller for the current graph.
      */
-    GraphListController graphListController = new GraphListController();
+    GraphListController graphListController;
 
     /**
      * Init a controller at graph.fxml.
@@ -101,6 +108,7 @@ public final class GraphController extends AbstractGraphController {
 
         super.initialize(location, resources);
 
+        graphListController = new GraphListController(graphs);
         new LocatorController(locator, nodeMapProperty, positionProperty);
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
