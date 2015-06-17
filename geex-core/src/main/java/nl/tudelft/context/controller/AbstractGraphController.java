@@ -117,7 +117,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         ObjectProperty<List<Region>> zoomLabelsProperty = new SimpleObjectProperty<>();
         new Zoom(scroll, sequences, zoomLabelsProperty);
         currentLabelsProperty.addListener((observable, oldValue, newValue) -> {
-            zoomLabelsProperty.setValue(newValue.stream().collect(Collectors.toList()));
+            zoomLabelsProperty.set(newValue.stream().collect(Collectors.toList()));
             newValue.stream().forEach(label -> label.updateSources(selectedSources.get()));
         });
 
@@ -150,7 +150,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                 .map(edge -> new DrawableEdge(drawableGraph, edge))
                 .collect(Collectors.toList()));
 
-        nodeMapProperty.setValue(drawableGraph.vertexSet().parallelStream().collect(
+        currentLabelsProperty.set(new HashSet<>());
+        nodeMapProperty.set(drawableGraph.vertexSet().parallelStream().collect(
                 Collectors.groupingBy(
                         AbstractDrawableNode::currentColumn,
                         Collectors.mapping(Function.identity(), Collectors.toList())
@@ -209,11 +210,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     private void updatePosition() {
 
         double width = scroll.getWidth();
-        double left = (scroll.getContent().layoutBoundsProperty().getValue().getWidth() - width) * scroll.getHvalue();
+        double left = (scroll.getContent().layoutBoundsProperty().get().getWidth() - width) * scroll.getHvalue();
         int from = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
         int to = from + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
-        positionProperty.setValue(IntStream.rangeClosed(from, to)
+        positionProperty.set(IntStream.rangeClosed(from, to)
                 .boxed()
                 .collect(Collectors.toList()));
 
@@ -224,8 +225,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      */
     private void showCurrentLabels() {
 
-        final Map<Integer, List<AbstractDrawableNode>> labelMap = nodeMapProperty.getValue();
-        currentLabelsProperty.setValue(positionProperty.get().stream()
+        final Map<Integer, List<AbstractDrawableNode>> labelMap = nodeMapProperty.get();
+        currentLabelsProperty.set(positionProperty.get().stream()
                 .map(labelMap::get)
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
