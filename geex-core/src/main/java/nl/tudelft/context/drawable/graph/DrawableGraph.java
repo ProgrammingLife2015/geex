@@ -62,8 +62,9 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
         List<AbstractDrawableNode> start = getFirstNodes();
 
         int i = 0;
+        boolean shifted = false;
         while (!start.isEmpty()) {
-            positionNodes(start, i++);
+            shifted = positionNodes(start, i++, shifted);
             start = nextColumn(start);
         }
 
@@ -88,10 +89,12 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
     /**
      * Positions the nodes of a column.
      *
-     * @param nodes  nodes to draw
-     * @param column column to draw at
+     * @param nodes       nodes to draw
+     * @param column      column to draw at
+     * @param prevShifted If previous column is shifted
+     * @return If column is shifted
      */
-    private void positionNodes(final List<AbstractDrawableNode> nodes, final int column) {
+    private boolean positionNodes(final List<AbstractDrawableNode> nodes, final int column, final boolean prevShifted) {
 
         double shift = nodes.size() * LABEL_SPACING / 2;
 
@@ -104,10 +107,16 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
 
         if (nodes.size() == 1) {
             AbstractDrawableNode node = nodes.get(0);
-            if (node.getNode().isShift()) {
-                node.setTranslateY(-LABEL_SPACING);
+            long in = getSources(node).stream().mapToInt(this::outDegreeOf).filter(x -> x > 1).count();
+            long out = getTargets(node).stream().mapToInt(this::inDegreeOf).filter(x -> x > 1).count();
+            boolean drawShift = (inDegreeOf(node) == 1 && outDegreeOf(node) >= 1) && (in > 0 && out > 0);
+            if (node.getNode().isShift() || drawShift) {
+                node.setTranslateY(prevShifted ? 0 : -LABEL_SPACING);
+                return !prevShifted;
             }
         }
+
+        return false;
 
     }
 
