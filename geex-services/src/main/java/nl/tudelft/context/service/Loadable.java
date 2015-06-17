@@ -1,9 +1,7 @@
 package nl.tudelft.context.service;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 
 /**
@@ -28,8 +26,7 @@ public interface Loadable<T> {
      *
      * @param files Files used for loading.
      * @return This object for chaining.
-     * @throws FileNotFoundException        File not found
-     * @throws UnsupportedEncodingException Unsupported encoding
+     * @throws IOException File not found or has an unsupported encoding
      */
     Loadable<T> setFiles(final File... files) throws IOException;
 
