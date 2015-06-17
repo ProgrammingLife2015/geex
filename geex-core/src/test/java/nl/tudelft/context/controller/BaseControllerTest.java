@@ -39,7 +39,7 @@ public class BaseControllerTest {
 
         graph = new GraphParser().setFiles(nodeFile, edgeFile).load().flat(new HashSet<>(Arrays.asList("Cat", "Dog")));
 
-        baseController = new BaseController(graph, node1);
+        baseController = new BaseController(node1);
 
     }
 

@@ -52,7 +52,7 @@ public class DrawableNodeLabel extends AbstractLabel {
         translateYProperty().bind(abstractDrawableNode.translateYProperty());
 
         setOnMouseClicked(event -> mainController.setView(graphController,
-                new BaseController(graphController.getGraphList().getFirst(), node)));
+                new BaseController(node)));
 
         init();
 

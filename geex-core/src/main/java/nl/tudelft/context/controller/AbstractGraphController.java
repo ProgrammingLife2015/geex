@@ -7,21 +7,17 @@ import javafx.scene.Group;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import nl.tudelft.context.effect.Zoom;
-import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
 import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
-import nl.tudelft.context.model.graph.StackGraph;
+import nl.tudelft.context.effect.Zoom;
 
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -60,16 +56,6 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      * Sources that are displayed in the graph.
      */
     ObjectProperty<Set<String>> selectedSources = new SimpleObjectProperty<>(new HashSet<>());
-
-    /**
-     * List of graph views.
-     */
-    LinkedList<StackGraph> graphList = new LinkedList<>();
-
-    /**
-     * Graph currently display.
-     */
-    StackGraph currentGraph;
 
     /**
      * Reference to the MainController of the app.
@@ -123,15 +109,6 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     }
 
     /**
-     * Get the graph list.
-     *
-     * @return Graph list
-     */
-    public LinkedList<StackGraph> getGraphList() {
-        return graphList;
-    }
-
-    /**
      * Show graph with reference points.
      *
      * @param drawableGraph Graph to show
@@ -148,32 +125,6 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         ));
-
-    }
-
-    /**
-     * Zoom in.
-     */
-    protected void zoomIn() {
-
-        StackGraph newGraph = graphList.get(Math.max(graphList.indexOf(currentGraph) - 1, 0));
-        if (!newGraph.equals(currentGraph)) {
-            currentGraph = newGraph;
-            showGraph(new DrawableGraph(currentGraph));
-        }
-
-    }
-
-    /**
-     * Zoom out.
-     */
-    protected void zoomOut() {
-
-        StackGraph newGraph = graphList.get(Math.min(graphList.indexOf(currentGraph) + 1, graphList.size() - 1));
-        if (!newGraph.equals(currentGraph)) {
-            currentGraph = newGraph;
-            showGraph(new DrawableGraph(currentGraph));
-        }
 
     }
 

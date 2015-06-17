@@ -4,13 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.text.Text;
 import nl.tudelft.context.model.graph.Node;
-import nl.tudelft.context.model.graph.StackGraph;
 import org.apache.commons.lang.StringUtils;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 /**
  * @author René Vennik
@@ -44,17 +41,6 @@ public final class BaseController extends ViewController<ScrollPane> {
     Text percentages;
 
     /**
-     * JavaFX Text holder for occurrences.
-     */
-    @FXML
-    Text occurrences;
-
-    /**
-     * Graph containing the node to display.
-     */
-    private StackGraph stackGraph;
-
-    /**
      * Node that is displayed.
      */
     private Node node;
@@ -62,14 +48,12 @@ public final class BaseController extends ViewController<ScrollPane> {
     /**
      * Init a controller at graph.fxml.
      *
-     * @param stackGraph Graph containing the node
-     * @param node       Node to display
+     * @param node Node to display
      */
-    public BaseController(final StackGraph stackGraph, final Node node) {
+    public BaseController(final Node node) {
 
         super(new ScrollPane());
 
-        this.stackGraph = stackGraph;
         this.node = node;
 
         loadFXML("/application/base.fxml");
@@ -95,19 +79,6 @@ public final class BaseController extends ViewController<ScrollPane> {
         bases.setText(content);
 
         sources.setText(StringUtils.join(node.getSources(), ", "));
-
-        List<String> otherOccurrences = stackGraph.vertexSet().parallelStream()
-                .filter(vertex -> vertex.getContent().equals(content) && !vertex.equals(node))
-                .map(node -> (Node) node)
-                .map(Node::getId)
-                .map(String::valueOf)
-                .collect(Collectors.toList());
-
-        if (!otherOccurrences.isEmpty()) {
-            occurrences.setText(StringUtils.join(otherOccurrences, ", "));
-        } else {
-            occurrences.setText("None");
-        }
 
     }
 
