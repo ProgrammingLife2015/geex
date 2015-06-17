@@ -1,5 +1,6 @@
 package nl.tudelft.context.controller;
 
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -126,6 +127,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
                         Collectors.mapping(Function.identity(), Collectors.toList())
                 )
         ));
+
+        Platform.runLater(this::updatePosition);
 
     }
 
