@@ -104,4 +104,11 @@ public abstract class DefaultNode {
         return shift;
     }
 
+    /**
+     * Reset the node.
+     */
+    public void reset() {
+        shift = false;
+    }
+
 }

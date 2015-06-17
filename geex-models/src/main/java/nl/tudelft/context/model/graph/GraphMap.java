@@ -20,6 +20,7 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
 
     /**
      * Load the annotations for this graph.
+     *
      * @param annotationMap All the annotations.
      */
     public void setAnnotations(final AnnotationMap annotationMap) {
@@ -43,7 +44,10 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
         graphs.stream()
                 .map(AbstractBaseGraph::vertexSet)
                 .flatMap(Collection::stream)
-                .forEach(graph::addVertex);
+                .forEach(node -> {
+                    node.reset();
+                    graph.addVertex(node);
+                });
 
         graphs.parallelStream()
                 .map(AbstractBaseGraph::edgeSet)
@@ -131,7 +135,7 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
         values().parallelStream().forEach(graph -> {
 
             List<DefaultNode> current = new LinkedList<>(graph.getFirstNodes());
-            while (current.size() > 0) {
+            while (!current.isEmpty()) {
 
                 DefaultNode start = current.get(0);
                 if (graph.outDegreeOf(start) > 1) {

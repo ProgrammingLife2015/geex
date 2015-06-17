@@ -35,6 +35,6 @@ public class OverlayController extends AbstractController<StackPane> {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-
+        // Empty method
     }
 }

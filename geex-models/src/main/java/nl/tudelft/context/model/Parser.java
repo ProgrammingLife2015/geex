@@ -41,6 +41,7 @@ public abstract class Parser<T> implements Loadable<T> {
      * @throws FileNotFoundException        If the file is not found.
      * @throws UnsupportedEncodingException If the file contains an unsupported encoding.
      */
+    @Override
     public Parser<T> setFiles(final File... files) throws FileNotFoundException, UnsupportedEncodingException {
         readerList = new BufferedReader[files.length];
         for (int i = 0; i < files.length; i++) {
@@ -54,6 +55,7 @@ public abstract class Parser<T> implements Loadable<T> {
     /**
      * Set the state of this parser to cancelled.
      */
+    @Override
     public void cancelled() {
         this.cancelled = true;
     }
@@ -71,6 +73,7 @@ public abstract class Parser<T> implements Loadable<T> {
      *
      * @return Parsed object.
      */
+    @Override
     public T load() {
 
         return parse(readerList);
