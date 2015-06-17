@@ -95,7 +95,7 @@ public class GraphControllerTest {
 
         graphMapReadOnlyObjectProperty.setValue(graphMap);
         annotationMapReadOnlyObjectProperty.setValue(new AnnotationMap<>());
-
+        resistanceMapReadOnlyObjectProperty.setValue(new AnnotationMap<>());
 
         assertEquals(true, sequencesAdded.get(50, TimeUnit.MILLISECONDS));
     }

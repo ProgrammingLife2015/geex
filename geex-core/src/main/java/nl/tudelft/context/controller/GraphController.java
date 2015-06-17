@@ -88,8 +88,8 @@ public final class GraphController extends AbstractGraphController {
         super.initialize(location, resources);
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
-        ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
-        ObjectProperty<AnnotationMap> resistanceMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<AnnotationMap<CodingSequence>> annotationMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<AnnotationMap<Resistance>> resistanceMapProperty = new SimpleObjectProperty<>();
 
         graphMapProperty.addListener(event -> {
             Log.info(Message.SUCCESS_LOAD_ANNOTATION);
@@ -97,10 +97,6 @@ public final class GraphController extends AbstractGraphController {
         });
         annotationMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get(), resistanceMapProperty.get()));
         resistanceMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get(), resistanceMapProperty.get()));
-
-        resistanceMapProperty.addListener((observable, oldValue, newValue) -> {
-            loadResistance(newValue);
-        });
 
         graphMapProperty.bind(graphMapIn);
         annotationMapProperty.bind(annotationMapIn);
@@ -148,7 +144,7 @@ public final class GraphController extends AbstractGraphController {
      * @param codingSequenceMap The CodingSequenceMap which is loaded.
      * @param resistanceMap The ResistanceMap which is loaded.
      */
-    private void loadGraph(final GraphMap graphMap, final AnnotationMap codingSequenceMap, final AnnotationMap resistanceMap) {
+    private void loadGraph(final GraphMap graphMap, final AnnotationMap<CodingSequence> codingSequenceMap, final AnnotationMap<Resistance> resistanceMap) {
         if (graphMap != null && codingSequenceMap != null && resistanceMap != null) {
             graphMap.setAnnotations(codingSequenceMap);
             graphMap.setResistance(resistanceMap);
@@ -171,15 +167,6 @@ public final class GraphController extends AbstractGraphController {
      */
     public void updateSelectedSources(final Set<String> sources) {
         selectedSources.setValue(sources);
-    }
-
-    /**
-     * Load resistances from source.
-     *
-     * @param resistanceMap The resistance map which is loaded.
-     */
-    private void loadResistance(final AnnotationMap resistanceMap) {
-        Log.info(Message.SUCCESS_LOAD_RESISTANCE);
     }
 
     @Override
