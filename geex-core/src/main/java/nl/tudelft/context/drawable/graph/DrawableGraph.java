@@ -39,9 +39,9 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
 
         graph.vertexSet().stream()
                 .forEach(node -> {
-                    final AbstractDrawableNode abstractDrawableNode = DrawableNodeFactory.create(node);
-                    added.put(node, abstractDrawableNode);
-                    addVertex(abstractDrawableNode);
+                    final AbstractDrawableNode drawableNode = DrawableNodeFactory.create(node);
+                    added.put(node, drawableNode);
+                    addVertex(drawableNode);
                 });
 
         graph.edgeSet().stream()
@@ -61,10 +61,10 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
 
         List<AbstractDrawableNode> start = getFirstNodes();
 
-        int i = 0;
+        int column = 0;
         boolean shifted = false;
         while (!start.isEmpty()) {
-            shifted = positionNodes(start, i++, shifted);
+            shifted = positionNodes(start, column++, shifted);
             start = nextColumn(start);
         }
 
@@ -81,7 +81,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
         return nodes.stream()
                 .flatMap(node -> outgoingEdgesOf(node).stream()
                         .map(this::getEdgeTarget)
-                        .filter(x -> x.incrementIncoming() == inDegreeOf(x)))
+                        .filter(target -> target.incrementIncoming() == inDegreeOf(target)))
                 .collect(Collectors.toList());
 
     }
@@ -107,9 +107,14 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
 
         if (nodes.size() == 1) {
             final AbstractDrawableNode node = nodes.get(0);
-            final long in = getSources(node).stream().mapToInt(this::outDegreeOf).filter(x -> x > 1).count();
-            final long out = getTargets(node).stream().mapToInt(this::inDegreeOf).filter(x -> x > 1).count();
-            final boolean drawShift = inDegreeOf(node) == 1 && outDegreeOf(node) >= 1 && in > 0 && out > 0;
+            final long sourcesEdges = getSources(node).stream()
+                    .mapToInt(this::outDegreeOf).filter(source -> source > 1)
+                    .count();
+            final long targetEdges = getTargets(node).stream()
+                    .mapToInt(this::inDegreeOf).filter(target -> target > 1)
+                    .count();
+            final boolean drawShift = inDegreeOf(node) == 1 && outDegreeOf(node) >= 1
+                    && sourcesEdges > 0 && targetEdges > 0;
             if (node.getNode().isShift() || drawShift) {
                 node.setTranslateY(prevShifted ? 0 : -LABEL_SPACING);
                 return !prevShifted;
