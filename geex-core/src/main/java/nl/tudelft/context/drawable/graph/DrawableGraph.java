@@ -108,7 +108,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
             AbstractDrawableNode node = nodes.get(0);
             long in = getSources(node).stream().mapToInt(this::outDegreeOf).filter(x -> x > 1).count();
             long out = getTargets(node).stream().mapToInt(this::inDegreeOf).filter(x -> x > 1).count();
-            boolean drawShift = (inDegreeOf(node) == 1 && outDegreeOf(node) >= 1) && (in > 0 || out > 0);
+            boolean drawShift = (inDegreeOf(node) == 1 && outDegreeOf(node) >= 1) && (in > 0 && out > 0);
             if (node.getNode().isShift() || drawShift) {
                 node.setTranslateY(prevShifted ? 0 : -LABEL_SPACING);
                 return !prevShifted;
