@@ -24,12 +24,11 @@ public class ResistanceParser extends Parser<AnnotationMap<Resistance>> {
      * @return A parsed resistanceMap.
      */
     @Override
-    protected AnnotationMap<Resistance> parse(final BufferedReader... readerList) {
+    public AnnotationMap<Resistance> parse(final BufferedReader... readerList) {
         BufferedReader reader = readerList[0];
         Scanner sc = new Scanner(reader);
         AnnotationMap<Resistance> resistanceMap = new AnnotationMap<>();
         String line;
-        int index = 0;
         while (sc.hasNextLine() && !isCancelled()) {
             line = sc.nextLine();
             while (line.matches("^##.*$")) {
@@ -40,7 +39,6 @@ public class ResistanceParser extends Parser<AnnotationMap<Resistance>> {
             } catch (ResistanceFormatException e) {
                 e.toString(); //For sending to logger.
             }
-            index++;
         }
 
         return resistanceMap;

@@ -8,6 +8,8 @@ import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.CodingSequence;
+import nl.tudelft.context.model.annotation.Resistance;
 import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.InsertDeleteGraph;
@@ -48,12 +50,12 @@ public final class GraphController extends AbstractGraphController {
      * Sources that are displayed in the graph.
      * Property with annotation map.
      */
-    ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
+    ReadOnlyObjectProperty<AnnotationMap<CodingSequence>> annotationMapIn;
 
     /**
      * Property with resistance map.
      */
-    ReadOnlyObjectProperty<AnnotationMap> resistanceMapIn;
+    ReadOnlyObjectProperty<AnnotationMap<Resistance>> resistanceMapIn;
 
     /**
      * Init a controller at graph.fxml.
@@ -67,8 +69,8 @@ public final class GraphController extends AbstractGraphController {
     public GraphController(final MainController mainController,
                            final Set<String> sources,
                            final ReadOnlyObjectProperty<GraphMap> graphMapIn,
-                           final ReadOnlyObjectProperty<AnnotationMap> annotationMapIn,
-                           final ReadOnlyObjectProperty<AnnotationMap> resistanceMapIn) {
+                           final ReadOnlyObjectProperty<AnnotationMap<CodingSequence>> annotationMapIn,
+                           final ReadOnlyObjectProperty<AnnotationMap<Resistance>> resistanceMapIn) {
 
         super(mainController);
         this.sources = sources;

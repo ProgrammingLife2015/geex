@@ -1,8 +1,8 @@
 package nl.tudelft.context.model.resistance;
 
+import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.annotation.Resistance;
 import nl.tudelft.context.model.annotation.resistance.ResistanceFormatException;
-import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
 import nl.tudelft.context.model.annotation.resistance.ResistanceParser;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileReader;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 /**
  * @author Jasper on 9-6-2015.
@@ -23,7 +22,7 @@ public class ResistanceParserTest {
 
 
     protected static Resistance resistance1, resistance2;
-    protected static ResistanceMap resistanceMap1;
+    protected static AnnotationMap<Resistance> resistanceMap1;
     protected static File resistanceFile, resistanceFile2;
     protected static ResistanceParser resistanceParser;
 
@@ -36,10 +35,10 @@ public class ResistanceParserTest {
         resistance2 = new Resistance("geneName1", "TypeOfMutation1", "change1", "filter1", 1, "ethionomide");
 
 
-        resistanceMap1 = new ResistanceMap();
+        resistanceMap1 = new AnnotationMap<>();
 
-        resistanceMap1.put(0, resistance1);
-        resistanceMap1.put(1, resistance2);
+        resistanceMap1.addAnnotation(resistance1);
+        resistanceMap1.addAnnotation(resistance2);
 
         resistanceParser = new ResistanceParser();
         resistanceFile = new File(ResistanceParserTest.class.getResource("/resistance/test.txt").getPath());
@@ -48,7 +47,7 @@ public class ResistanceParserTest {
 
     @Test
     public void testGetResistanceMap() throws Exception {
-        ResistanceMap resistanceMap2 = new ResistanceParser().setFiles(resistanceFile).load();
+        AnnotationMap<Resistance> resistanceMap2 = new ResistanceParser().setFiles(resistanceFile).load();
         assertEquals(resistanceMap1.toString(), resistanceMap2.toString());
 
     }
