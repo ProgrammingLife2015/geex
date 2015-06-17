@@ -24,7 +24,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
     /**
      * Graph that is drawn.
      */
-    final StackGraph graph;
+    private final StackGraph graph;
 
     /**
      * Create a wrapper around a graph to draw the graph.
@@ -58,7 +58,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
     /**
      * Calculate all the position of the graph elements.
      */
-    final void position() {
+    public final void position() {
 
         List<AbstractDrawableNode> start = getFirstNodes();
 
