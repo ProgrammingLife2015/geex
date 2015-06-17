@@ -57,12 +57,6 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     ScrollPane scroll;
 
     /**
-     * The locator.
-     */
-    @FXML
-    Pane locator;
-
-    /**
      * Sources that are displayed in the graph.
      */
     ObjectProperty<Set<String>> selectedSources = new SimpleObjectProperty<>(new HashSet<>());
@@ -123,8 +117,6 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
 
         selectedSources.addListener((observable, oldValue, newValue) ->
                 currentLabelsProperty.get().stream().forEach(label -> label.updateSources(newValue)));
-
-        new LocatorController(locator, nodeMapProperty, positionProperty);
 
         initOnTheFlyLoading();
 

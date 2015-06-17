@@ -44,7 +44,7 @@ public class SubGraphController extends AbstractGraphController {
         this.graphNode = graphNode;
         selectedSources.setValue(sources);
 
-        loadFXML("/application/graph.fxml");
+        loadFXML("/application/sub-graph.fxml");
 
     }
 

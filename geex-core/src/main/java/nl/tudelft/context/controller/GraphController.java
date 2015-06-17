@@ -3,7 +3,10 @@ package nl.tudelft.context.controller;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.Pane;
+import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
@@ -25,6 +28,12 @@ import java.util.Set;
  * @since 7-5-2015
  */
 public final class GraphController extends AbstractGraphController {
+
+    /**
+     * The locator.
+     */
+    @FXML
+    Pane locator;
 
     /**
      * Sources that are displayed in the graph.
@@ -85,6 +94,8 @@ public final class GraphController extends AbstractGraphController {
     public void initialize(final URL location, final ResourceBundle resources) {
 
         super.initialize(location, resources);
+
+        new LocatorController(locator, nodeMapProperty, positionProperty);
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
