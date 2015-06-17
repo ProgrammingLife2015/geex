@@ -131,7 +131,7 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
         values().parallelStream().forEach(graph -> {
 
             List<DefaultNode> current = new LinkedList<>(graph.getFirstNodes());
-            while (current.size() > 0) {
+            while (!current.isEmpty()) {
 
                 DefaultNode start = current.get(0);
                 if (graph.outDegreeOf(start) > 1) {

@@ -89,7 +89,7 @@ public class NewickSearchController {
             selectedLabels = NewickSearchController.this.search(searchField.getText());
             searchIndex = 0;
 
-            if (selectedLabels.size() > 0) {
+            if (!selectedLabels.isEmpty()) {
                 NewickSearchController.this.ensureVisible(selectedLabels.get(searchIndex));
             }
         };
@@ -103,7 +103,7 @@ public class NewickSearchController {
      */
     public EventHandler<ActionEvent> searchMoveEventHandler(final int dir) {
         return event -> {
-            if (selectedLabels.size() > 0) {
+            if (!selectedLabels.isEmpty()) {
                 selectedLabels.forEach(label -> label.getStyleClass().remove("search-focus"));
 
                 searchIndex += dir + selectedLabels.size();

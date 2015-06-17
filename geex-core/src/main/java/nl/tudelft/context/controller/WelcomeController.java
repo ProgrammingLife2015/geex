@@ -95,7 +95,7 @@ public class WelcomeController extends ViewController<GridPane> {
             previous.setOnMouseClicked(event -> previous.getSelectionModel().getSelectedIndices().stream()
                     .forEach(x -> loadWorkspace(new File(workspaces.get(x)[0]))));
 
-            if (previous.getItems().size() == 0) {
+            if (previous.getItems().isEmpty()) {
                 previous.setDisable(true);
             }
         } catch (SqlJetException e) {
@@ -120,7 +120,7 @@ public class WelcomeController extends ViewController<GridPane> {
                 .collect(toList());
 
         selectRecentWorkspace.getItems().setAll(items);
-        selectRecentWorkspace.setDisable(items.size() == 0);
+        selectRecentWorkspace.setDisable(items.isEmpty());
 
     }
 
