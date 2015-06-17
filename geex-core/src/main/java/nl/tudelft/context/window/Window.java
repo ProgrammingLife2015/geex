@@ -5,7 +5,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import nl.tudelft.context.App;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * @author René Vennik
@@ -30,6 +34,17 @@ public class Window extends Stage {
     public static final Color SCENE_BACKGROUND = new Color(0.1686, 0.1686, 0.1686, 1);
 
     /**
+     * Different icon sizes for the logo.
+     */
+    public static final List<String> ICONS = Arrays.asList(
+            "/application/images/icon_16.png",
+            "/application/images/icon_32.png",
+            "/application/images/icon_48.png",
+            "/application/images/icon_64.png",
+            "/application/images/icon_128.png",
+            "/application/images/icon_256.png");
+
+    /**
      * Create a window with a view.
      *
      * @param title  Title of the window
@@ -43,12 +58,9 @@ public class Window extends Stage {
 
         setTitle(title);
         getIcons().addAll(
-                new Image(App.class.getResourceAsStream("/application/images/icon_16.png")),
-                new Image(App.class.getResourceAsStream("/application/images/icon_32.png")),
-                new Image(App.class.getResourceAsStream("/application/images/icon_48.png")),
-                new Image(App.class.getResourceAsStream("/application/images/icon_64.png")),
-                new Image(App.class.getResourceAsStream("/application/images/icon_128.png")),
-                new Image(App.class.getResourceAsStream("/application/images/icon_256.png"))
+                ICONS.stream()
+                        .map(this::getImage)
+                        .collect(toList())
         );
 
         setMinWidth(FRAME_WIDTH);
@@ -57,6 +69,16 @@ public class Window extends Stage {
         setScene(scene);
         show();
 
+    }
+
+    /**
+     * Gets the image that belongs to the given source.
+     *
+     * @param source The source of the image
+     * @return       The image
+     */
+    public Image getImage(final String source) {
+        return new Image(getClass().getResourceAsStream(source));
     }
 
 }

@@ -8,6 +8,7 @@ import org.tmatesoft.sqljet.core.table.SqlJetDb;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -82,7 +83,7 @@ public class Database {
 
             cursor.close();
 
-            return null;
+            return Collections.emptyList();
         });
 
         return out;

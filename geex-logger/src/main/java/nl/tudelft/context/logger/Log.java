@@ -51,6 +51,7 @@ public final class Log implements ObservableLog {
      * Register a new logger.
      * @param listener logger to register.
      */
+    @Override
     public void addLogger(final Logger listener) {
         listeners.add(listener);
     }
@@ -60,6 +61,7 @@ public final class Log implements ObservableLog {
      *
      * @param listener logger to remove.
      */
+    @Override
     public void removeLogger(final Logger listener) {
         listeners.remove(listener);
     }

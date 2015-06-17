@@ -46,28 +46,8 @@ public class StrandNode extends AbstractNode {
     }
 
     @Override
-    public AbstractNode getSelectedNodes() {
-        AbstractNode node = getCopy();
-        getChildren().stream()
-                .filter(n -> n.getSelection().isAny())
-                .map(AbstractNode::getSelectedNodes)
-                .forEach(opt -> {
-                    node.addChild(opt);
-                    opt.setParent(node);
-                });
-        return node;
-    }
-
-    @Override
     public String getClassName() {
         return "newick-strand";
-    }
-
-    @Override
-    public void translate(final int minWeight, final double weightScale, final int yPos) {
-        setTranslateX(minWeight + weight * weightScale
-                + parent.orElse(new DummyNode()).translateXProperty().doubleValue());
-        setTranslateY(yPos);
     }
 
     @Override

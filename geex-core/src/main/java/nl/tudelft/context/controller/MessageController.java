@@ -44,12 +44,14 @@ public class MessageController extends AbstractController<VBox> implements Logge
      * @param msg  Message to display.
      * @param messageType Type of this message.
      */
+    @Override
     public final void log(final Message msg, final MessageType messageType) {
         root.getStyleClass().removeAll(MessageType.types());
         root.getStyleClass().add(messageType.toString());
         message.setText(msg.toString());
     }
 
+    @Override
     public final MessageType getLevel() {
         return MessageType.INFO;
     }

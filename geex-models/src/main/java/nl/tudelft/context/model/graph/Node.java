@@ -128,7 +128,7 @@ public class Node extends DefaultNode {
      */
     public String getAnnotationText() {
         List<String> annotationList = codingSequences.stream().map(CodingSequence::toString).collect(Collectors.toList());
-        if (annotationList.size() == 0) {
+        if (annotationList.isEmpty()) {
             return "None";
         } else {
             return StringUtils.join(annotationList, System.lineSeparator());
