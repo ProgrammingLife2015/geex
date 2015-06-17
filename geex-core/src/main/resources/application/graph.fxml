@@ -28,6 +28,9 @@
         <Label styleClass="base-N">Unknown base</Label>
     </VBox>
     <Pane fx:id="locator" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
-    <VBox fx:id="graphs" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="45" AnchorPane.leftAnchor="0"/>
+    <VBox styleClass="graphs-holder" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="45" AnchorPane.leftAnchor="0">
+        <Label styleClass="title">Collapse / hide:</Label>
+        <VBox fx:id="graphs"/>
+    </VBox>
 
 </fx:root>

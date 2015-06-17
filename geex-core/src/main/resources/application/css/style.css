@@ -384,10 +384,21 @@
 }
 
 /* Graph list */
-#graphs {
+.graphs-holder {
     -fx-pref-width: 180px;
     -fx-background-color: #222;
     -fx-border-width: 0 1px 0 0;
+    -fx-border-color: #848484;
+}
+
+.graphs-holder .title {
+    -fx-font: bold 0.35cm 'Arial';
+    -fx-padding: 20px 10px 10px;
+    -fx-text-fill: #fff;
+}
+
+#graphs {
+    -fx-border-width: 1px 0 0;
     -fx-border-color: #848484;
 }
 
