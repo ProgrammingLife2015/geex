@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -32,10 +33,16 @@ public class GraphListController {
      * @param graphs FXML Pane to add graphs labels to.
      */
     public GraphListController(final Pane graphs) {
-        activeGraph.addListener(event ->
-                graphs.getChildren().setAll(graphList.stream()
-                        .map(graph -> new GraphListItem(graph, activeGraph))
-                        .collect(Collectors.toList())));
+        activeGraph.addListener((observable, oldValue, newValue) -> {
+            List<GraphListItem> listItems = graphList.stream()
+                    .map(graph -> new GraphListItem(graph, activeGraph))
+                    .collect(Collectors.toList());
+            listItems.stream()
+                    .limit(graphList.indexOf(newValue) + 1)
+                    .forEach(GraphListItem::setActive);
+            graphs.getChildren().setAll(listItems);
+        });
+
     }
 
     /**

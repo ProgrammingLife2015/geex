@@ -398,17 +398,12 @@
 }
 
 #graphs .graph-item.active {
-    -fx-background-color: #848484;
-    -fx-cursor: default;
+    -fx-background-color: #494949;
 }
 
 #graphs .graph-item Label {
     -fx-text-fill: #fff;
     -fx-padding: 10px;
-}
-
-#graphs .graph-item.active Label {
-    -fx-text-fill: #000;
 }
 
 /* Search */

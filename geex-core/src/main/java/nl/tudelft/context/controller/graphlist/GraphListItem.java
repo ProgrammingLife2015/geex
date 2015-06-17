@@ -15,12 +15,13 @@ public class GraphListItem extends Pane {
     public GraphListItem(StackGraph graph, ObjectProperty<StackGraph> activeGraphProperty) {
 
         getStyleClass().add("graph-item");
-        if (graph.equals(activeGraphProperty.get())) {
-            getStyleClass().add("active");
-        }
         setOnMouseClicked(event -> activeGraphProperty.set(graph));
         getChildren().add(new Label(graph.getName()));
 
+    }
+
+    public void setActive() {
+        getStyleClass().add("active");
     }
 
 }
