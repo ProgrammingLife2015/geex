@@ -68,9 +68,8 @@ public class SelectNewickController extends AbstractNewickController {
     @Override
     void showTree(final Newick newick) {
         DrawableNewick subNewick = new DrawableNewick(newick.getSelectedSubGraph());
-        subNewick.getNewick().getRoot().getSourcesProperty().addListener(event -> {
-            graphController.updateSelectedSources(subNewick.getNewick().getRoot().getSources());
-        });
+        subNewick.getNewick().getRoot().getSourcesProperty().addListener(event -> graphController
+                        .updateSelectedSources(subNewick.getNewick().getRoot().getSources()));
 
         // Bind edges
         List<DrawableEdge> edgeList = subNewick.edgeSet().stream()
