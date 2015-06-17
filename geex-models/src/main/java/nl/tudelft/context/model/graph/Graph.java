@@ -1,6 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.resistance.ResistanceMap;
 
 /**
  * Graph.
@@ -26,6 +27,16 @@ public class Graph extends StackGraph {
     public void setAnnotations(final AnnotationMap annotationMap) {
         vertexSet().parallelStream()
                 .forEach(node -> node.setAnnotations(annotationMap));
+    }
+
+    /**
+     * Sets the resistance to all of the graph's nodes.
+     *
+     * @param resistanceMap The map with resistance mutations to add
+     */
+    public void setResistance(final ResistanceMap resistanceMap) {
+        vertexSet().parallelStream()
+                .forEach(node -> node.setResistance(resistanceMap));
     }
 
 }

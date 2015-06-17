@@ -2,6 +2,8 @@ package nl.tudelft.context.model.graph;
 
 import nl.tudelft.context.model.annotation.Annotation;
 import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.resistance.Resistance;
+import nl.tudelft.context.model.resistance.ResistanceMap;
 
 import java.util.List;
 import java.util.Set;
@@ -87,6 +89,20 @@ public abstract class DefaultNode {
      * @return The list of annotations present in this node
      */
     public abstract List<Annotation> getAnnotations();
+
+    /**
+     * Sets the resistance mutations that belong to this node.
+     *
+     * @param resistanceMap The list of all resistance mutations
+     */
+    public abstract void setResistance(final ResistanceMap resistanceMap);
+
+    /**
+     * Get the list of resistance mutations that are present in this node.
+     *
+     * @return The list of resistance mutations present in this node
+     */
+    public abstract List<Resistance> getResistance();
 
     /**
      * Shift the node.

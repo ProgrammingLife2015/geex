@@ -2,6 +2,8 @@ package nl.tudelft.context.model.graph;
 
 import nl.tudelft.context.model.annotation.Annotation;
 import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.resistance.Resistance;
+import nl.tudelft.context.model.resistance.ResistanceMap;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -151,6 +153,16 @@ public class GraphNode extends DefaultNode {
 
     @Override
     public List<Annotation> getAnnotations() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public  void setResistance(final ResistanceMap resistanceMap) {
+        // do nothing
+    }
+
+    @Override
+    public List<Resistance> getResistance() {
         return Collections.emptyList();
     }
 

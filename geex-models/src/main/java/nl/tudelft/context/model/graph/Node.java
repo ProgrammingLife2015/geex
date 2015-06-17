@@ -2,6 +2,8 @@ package nl.tudelft.context.model.graph;
 
 import nl.tudelft.context.model.annotation.Annotation;
 import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.resistance.Resistance;
+import nl.tudelft.context.model.resistance.ResistanceMap;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Collection;
@@ -37,6 +39,10 @@ public class Node extends DefaultNode {
      * The annotations that belong to this node.
      */
     List<Annotation> annotations = Collections.emptyList();
+    /**
+     * The resistance mutations that belong to this node.
+     */
+    List<Resistance> resistance = Collections.emptyList();
 
     /**
      * Create a node.
@@ -102,6 +108,18 @@ public class Node extends DefaultNode {
     @Override
     public List<Annotation> getAnnotations() {
         return annotations;
+    }
+
+    @Override
+    public void setResistance(final ResistanceMap resistanceMap) {
+        resistance = resistanceMap.subMap(refStartPosition, refEndPosition).values().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Resistance> getResistance() {
+        return resistance;
     }
 
     /**

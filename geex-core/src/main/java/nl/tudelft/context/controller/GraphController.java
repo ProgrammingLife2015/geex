@@ -92,9 +92,10 @@ public final class GraphController extends AbstractGraphController {
 
         graphMapProperty.addListener(event -> {
             Log.info(Message.SUCCESS_LOAD_ANNOTATION);
-            loadGraph(graphMapProperty.get(), annotationMapProperty.get());
+            loadGraph(graphMapProperty.get(), annotationMapProperty.get(), resistanceMapProperty.get());
         });
-        annotationMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get()));
+        annotationMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get(), resistanceMapProperty.get()));
+        resistanceMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get(), resistanceMapProperty.get()));
 
         resistanceMapProperty.addListener((observable, oldValue, newValue) -> {
             loadResistance(newValue);
@@ -144,10 +145,12 @@ public final class GraphController extends AbstractGraphController {
      *
      * @param graphMap      The GraphMap which is loaded.
      * @param annotationMap The AnnotationMap which is loaded.
+     * @param resistanceMap The ResistanceMap which is loaded.
      */
-    private void loadGraph(final GraphMap graphMap, final AnnotationMap annotationMap) {
-        if (graphMap != null && annotationMap != null) {
+    private void loadGraph(final GraphMap graphMap, final AnnotationMap annotationMap, final ResistanceMap resistanceMap) {
+        if (graphMap != null && annotationMap != null && resistanceMap != null) {
             graphMap.setAnnotations(annotationMap);
+            graphMap.setResistance(resistanceMap);
             graphList.add(graphMap.flat(sources));
             graphList.add(new SinglePointGraph(graphList.getLast()));
             graphList.add(new InsertDeleteGraph(graphList.getLast()));
