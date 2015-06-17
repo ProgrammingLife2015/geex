@@ -1,4 +1,4 @@
-package nl.tudelft.context.model.annotation.coding_sequence;
+package nl.tudelft.context.model.annotation;
 
 /**
  * Annotations for coding part of genome.
@@ -8,7 +8,7 @@ package nl.tudelft.context.model.annotation.coding_sequence;
  * @version 1.1
  * @since 21-5-2015
  */
-public class CodingSequence {
+public class CodingSequence extends Annotation {
 
 
     /**
@@ -36,24 +36,6 @@ public class CodingSequence {
      * The latter alternative is distinguished using the syntax SO:000000.
      */
     String type;
-
-    /**
-     * The start coordinates of the feature are given in positive 1-based integer coordinates,
-     * relative to the landmark given in column one.
-     * Start is always less than or equal to end.
-     * For features that cross the origin of a circular feature
-     * (e.g. most bacterial genomes, plasmids, and some viral genomes),
-     * the requirement for start to be less than or equal to end is satisfied
-     * by making end = the position of the end + the length of the landmark feature.
-     * For zero-length features, such as insertion sites,
-     * start equals end and the implied site is to the right of the indicated base in the direction of the landmark.
-     */
-    int start;
-
-    /**
-     * the end coordinate, see start.
-     */
-    int end;
 
 
     /**
@@ -125,16 +107,6 @@ public class CodingSequence {
         this.phase = phase;
         this.attributes = attributes;
     }
-
-    /**
-     * Gets the start position of the annotation.
-     *
-     * @return The start position
-     */
-    public int getStart() {
-        return start;
-    }
-
 
     @Override
     public boolean equals(final Object o) {

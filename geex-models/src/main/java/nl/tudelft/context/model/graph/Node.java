@@ -1,9 +1,8 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.annotation.coding_sequence.CodingSequence;
-import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceMap;
-import nl.tudelft.context.model.annotation.resistance.Resistance;
-import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.CodingSequence;
+import nl.tudelft.context.model.annotation.Resistance;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Collection;
@@ -97,7 +96,7 @@ public class Node extends DefaultNode {
     }
 
     @Override
-    public void setCodingSequences(final CodingSequenceMap codingSequenceMap) {
+    public void setCodingSequences(final AnnotationMap<CodingSequence> codingSequenceMap) {
         if (sources.contains("TKK_REF")) {
             codingSequences = codingSequenceMap.subMap(refStartPosition, refEndPosition).values().stream()
                     .flatMap(Collection::stream)
@@ -111,7 +110,7 @@ public class Node extends DefaultNode {
     }
 
     @Override
-    public void setResistance(final ResistanceMap resistanceMap) {
+    public void setResistance(final AnnotationMap<Resistance> resistanceMap) {
         resistance = resistanceMap.subMap(refStartPosition, refEndPosition).values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());

@@ -1,7 +1,5 @@
 package nl.tudelft.context.model.annotation;
 
-import nl.tudelft.context.model.annotation.coding_sequence.CodingSequence;
-import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceMap;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 public class CodingSequenceMapTest {
 
     protected static CodingSequence codingSequence1, codingSequence2;
-    protected static CodingSequenceMap codingSequenceMap1;
+    protected static AnnotationMap<CodingSequence> codingSequenceMap1;
 
 
     /**
@@ -25,7 +23,7 @@ public class CodingSequenceMapTest {
     public static void BeforeClass() {
         codingSequence1 = new CodingSequence("seqId", "source", "type", 0, 1, 0f, 'A', 'B', "attributes");
         codingSequence2 = new CodingSequence("seqId1", "source1", "type1", 2, 3, 1f, 'C', 'D', "attributes2");
-        codingSequenceMap1 = new CodingSequenceMap();
+        codingSequenceMap1 = new AnnotationMap<>();
         codingSequenceMap1.addAnnotation(codingSequence1);
         codingSequenceMap1.addAnnotation(codingSequence2);
     }

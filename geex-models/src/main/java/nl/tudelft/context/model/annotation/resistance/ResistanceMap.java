@@ -1,5 +1,7 @@
 package nl.tudelft.context.model.annotation.resistance;
 
+import nl.tudelft.context.model.annotation.Resistance;
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;

@@ -1,4 +1,4 @@
-package nl.tudelft.context.model.annotation.resistance;
+package nl.tudelft.context.model.annotation;
 
 /**
  * CodingSequence for drug resistance causing mutations.
@@ -8,7 +8,7 @@ package nl.tudelft.context.model.annotation.resistance;
  * @version 1.0
  * @since 26-5-2015
  */
-public class Resistance {
+public class Resistance extends Annotation {
     /**
      * The name of the gene.
      */

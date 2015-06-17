@@ -1,5 +1,7 @@
 package nl.tudelft.context.model.annotation.coding_sequence;
 
+import nl.tudelft.context.model.annotation.CodingSequence;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

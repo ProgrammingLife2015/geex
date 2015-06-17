@@ -1,6 +1,5 @@
 package nl.tudelft.context.model.annotation;
 
-import nl.tudelft.context.model.annotation.coding_sequence.CodingSequence;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

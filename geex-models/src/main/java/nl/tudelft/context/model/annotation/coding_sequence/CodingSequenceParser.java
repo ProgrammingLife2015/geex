@@ -1,6 +1,8 @@
 package nl.tudelft.context.model.annotation.coding_sequence;
 
 import nl.tudelft.context.model.Parser;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.CodingSequence;
 
 import java.io.BufferedReader;
 import java.util.Scanner;
@@ -11,7 +13,7 @@ import java.util.Scanner;
  * @version 1.0
  * @since 21-5-2015
  */
-public class CodingSequenceParser extends Parser<CodingSequenceMap> {
+public class CodingSequenceParser extends Parser<AnnotationMap<CodingSequence>> {
 
     /**
      * Parse the file into an CodingSequenceMap.
@@ -19,10 +21,11 @@ public class CodingSequenceParser extends Parser<CodingSequenceMap> {
      * @param readerList Reader to read.
      * @return A parsed annotationmap.
      */
-    public CodingSequenceMap parse(final BufferedReader... readerList) {
+    @Override
+    public AnnotationMap<CodingSequence> parse(final BufferedReader... readerList) {
         BufferedReader reader = readerList[0];
         Scanner sc = new Scanner(reader);
-        CodingSequenceMap codingSequenceMap = new CodingSequenceMap();
+        AnnotationMap<CodingSequence> codingSequenceMap = new AnnotationMap<>();
         String line;
         String fileSplitBy = "\\t";
         while (sc.hasNextLine() && !isCancelled()) {

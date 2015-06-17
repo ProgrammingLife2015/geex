@@ -1,14 +1,15 @@
 package nl.tudelft.context.workspace;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
-import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceMap;
+import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.CodingSequence;
+import nl.tudelft.context.model.annotation.Resistance;
 import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceParser;
+import nl.tudelft.context.model.annotation.resistance.ResistanceParser;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.NewickParser;
-import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
-import nl.tudelft.context.model.annotation.resistance.ResistanceParser;
 import nl.tudelft.context.service.LoadService;
 import org.tmatesoft.sqljet.core.SqlJetException;
 
@@ -70,12 +71,12 @@ public class Workspace {
     /**
      * The service used for parsing an CodingSequence.
      */
-    LoadService<CodingSequenceMap> loadAnnotationService;
+    LoadService<AnnotationMap<CodingSequence>> loadAnnotationService;
 
     /**
      * The service used for parsing the Resistance.
      */
-    LoadService<ResistanceMap> loadResistanceService;
+    LoadService<AnnotationMap<Resistance>> loadResistanceService;
 
     /**
      * Create a new workspace on the directory.
@@ -160,7 +161,7 @@ public class Workspace {
      *
      * @return A ReadOnlyObjectProperty containing, or not yet containing an CodingSequenceMap.
      */
-    public ReadOnlyObjectProperty<CodingSequenceMap> getAnnotation() {
+    public ReadOnlyObjectProperty<AnnotationMap<CodingSequence>> getAnnotation() {
         return loadAnnotationService.valueProperty();
     }
 
@@ -178,7 +179,7 @@ public class Workspace {
      *
      * @return A ReadOnlyObjectProperty containing, or not yet containing a ResistanceMap.
      */
-    public ReadOnlyObjectProperty<ResistanceMap> getResistance() {
+    public ReadOnlyObjectProperty<AnnotationMap<Resistance>> getResistance() {
         return loadResistanceService.valueProperty();
     }
 

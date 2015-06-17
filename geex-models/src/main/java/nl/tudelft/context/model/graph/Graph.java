@@ -1,7 +1,6 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceMap;
-import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
+import nl.tudelft.context.model.annotation.AnnotationMap;
 
 /**
  * Graph.
@@ -24,7 +23,7 @@ public class Graph extends StackGraph {
      *
      * @param codingSequenceMap The map with codingSequences to add
      */
-    public void setAnnotations(final CodingSequenceMap codingSequenceMap) {
+    public void setAnnotations(final AnnotationMap codingSequenceMap) {
         vertexSet().parallelStream()
                 .forEach(node -> node.setCodingSequences(codingSequenceMap));
     }
@@ -34,7 +33,7 @@ public class Graph extends StackGraph {
      *
      * @param resistanceMap The map with resistance mutations to add
      */
-    public void setResistance(final ResistanceMap resistanceMap) {
+    public void setResistance(final AnnotationMap resistanceMap) {
         vertexSet().parallelStream()
                 .forEach(node -> node.setResistance(resistanceMap));
     }

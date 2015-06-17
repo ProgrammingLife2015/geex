@@ -4,16 +4,15 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuItem;
+import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.message.Message;
-import nl.tudelft.context.drawable.graph.DrawableGraph;
-import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceMap;
+import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.InsertDeleteGraph;
 import nl.tudelft.context.model.graph.SinglePointGraph;
 import nl.tudelft.context.model.graph.UnknownGraph;
-import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -49,12 +48,12 @@ public final class GraphController extends AbstractGraphController {
      * Sources that are displayed in the graph.
      * Property with annotation map.
      */
-    ReadOnlyObjectProperty<CodingSequenceMap> annotationMapIn;
+    ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
 
     /**
      * Property with resistance map.
      */
-    ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn;
+    ReadOnlyObjectProperty<AnnotationMap> resistanceMapIn;
 
     /**
      * Init a controller at graph.fxml.
@@ -68,8 +67,8 @@ public final class GraphController extends AbstractGraphController {
     public GraphController(final MainController mainController,
                            final Set<String> sources,
                            final ReadOnlyObjectProperty<GraphMap> graphMapIn,
-                           final ReadOnlyObjectProperty<CodingSequenceMap> annotationMapIn,
-                           final ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn) {
+                           final ReadOnlyObjectProperty<AnnotationMap> annotationMapIn,
+                           final ReadOnlyObjectProperty<AnnotationMap> resistanceMapIn) {
 
         super(mainController);
         this.sources = sources;
@@ -87,8 +86,8 @@ public final class GraphController extends AbstractGraphController {
         super.initialize(location, resources);
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
-        ObjectProperty<CodingSequenceMap> annotationMapProperty = new SimpleObjectProperty<>();
-        ObjectProperty<ResistanceMap> resistanceMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<AnnotationMap> resistanceMapProperty = new SimpleObjectProperty<>();
 
         graphMapProperty.addListener(event -> {
             Log.info(Message.SUCCESS_LOAD_ANNOTATION);
@@ -147,7 +146,7 @@ public final class GraphController extends AbstractGraphController {
      * @param codingSequenceMap The CodingSequenceMap which is loaded.
      * @param resistanceMap The ResistanceMap which is loaded.
      */
-    private void loadGraph(final GraphMap graphMap, final CodingSequenceMap codingSequenceMap, final ResistanceMap resistanceMap) {
+    private void loadGraph(final GraphMap graphMap, final AnnotationMap codingSequenceMap, final AnnotationMap resistanceMap) {
         if (graphMap != null && codingSequenceMap != null && resistanceMap != null) {
             graphMap.setAnnotations(codingSequenceMap);
             graphMap.setResistance(resistanceMap);
@@ -177,7 +176,7 @@ public final class GraphController extends AbstractGraphController {
      *
      * @param resistanceMap The resistance map which is loaded.
      */
-    private void loadResistance(final ResistanceMap resistanceMap) {
+    private void loadResistance(final AnnotationMap resistanceMap) {
         Log.info(Message.SUCCESS_LOAD_RESISTANCE);
     }
 

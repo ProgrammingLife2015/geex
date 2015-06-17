@@ -1,6 +1,6 @@
 package nl.tudelft.context.model.resistance;
 
-import nl.tudelft.context.model.annotation.resistance.Resistance;
+import nl.tudelft.context.model.annotation.Resistance;
 import nl.tudelft.context.model.annotation.resistance.ResistanceFormatException;
 import nl.tudelft.context.model.annotation.resistance.ResistanceMap;
 import nl.tudelft.context.model.annotation.resistance.ResistanceParser;
