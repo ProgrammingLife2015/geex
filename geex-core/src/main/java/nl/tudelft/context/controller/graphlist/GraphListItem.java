@@ -12,7 +12,11 @@ import nl.tudelft.context.model.graph.StackGraph;
  */
 public class GraphListItem extends Pane {
 
-    public GraphListItem(StackGraph graph, ObjectProperty<StackGraph> activeGraphProperty) {
+    /**
+     * @param graph               the StackGraph.
+     * @param activeGraphProperty Property for the StackGraph.
+     */
+    public GraphListItem(final StackGraph graph, final ObjectProperty<StackGraph> activeGraphProperty) {
 
         getStyleClass().add("graph-item");
         setOnMouseClicked(event -> activeGraphProperty.set(graph));
@@ -20,6 +24,9 @@ public class GraphListItem extends Pane {
 
     }
 
+    /**
+     * Set the current GraphListItem to active.
+     */
     public void setActive() {
         getStyleClass().add("active");
     }
