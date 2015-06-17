@@ -383,6 +383,14 @@
     -fx-stroke-width: 1px;
 }
 
+/* Stack */
+#stack {
+    -fx-pref-width: 150px;
+    -fx-background-color: #1a1a1a;
+    -fx-border-width: 0 1px 0 0;
+    -fx-border-color: #848484;
+}
+
 /* Search */
 .search {
     -fx-border-color: #7b0000;

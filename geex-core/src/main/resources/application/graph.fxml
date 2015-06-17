@@ -8,10 +8,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
 
     <ScrollPane fx:id="scroll" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="45"
-                AnchorPane.leftAnchor="0" fitToHeight="true" fitToWidth="true">
+                AnchorPane.leftAnchor="151" fitToHeight="true" fitToWidth="true">
         <StackPane>
             <StackPane styleClass="margin">
                 <Group fx:id="sequences"/>
@@ -28,5 +29,9 @@
         <Label styleClass="base-N">Unknown base</Label>
     </VBox>
     <Pane fx:id="locator" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+    <VBox fx:id="stack" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="45" AnchorPane.leftAnchor="0">
+        <Rectangle width="150" height="30" stroke="blue"/>
+        <Rectangle width="150" height="30" stroke="red"/>
+    </VBox>
 
 </fx:root>
