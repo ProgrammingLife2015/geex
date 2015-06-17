@@ -5,12 +5,13 @@ import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.resistance.Resistance;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
-import java.util.Collections;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik
@@ -153,7 +154,10 @@ public class GraphNode extends DefaultNode {
 
     @Override
     public List<Annotation> getAnnotations() {
-        return Collections.emptyList();
+        return nodes.stream()
+                .map(DefaultNode::getAnnotations)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
     @Override

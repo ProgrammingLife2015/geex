@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +33,7 @@ public class LocatorControllerTest {
 
     static LocatorController locatorController;
     static ObjectProperty<Map<Integer, List<AbstractDrawableNode>>> labelMapProperty = new SimpleObjectProperty<>();
-    static ObjectProperty<List<Integer>> positionProperty = new SimpleObjectProperty<>();
+    static ObjectProperty<List<Integer>> positionProperty = new SimpleObjectProperty<>(Collections.singletonList(1));
 
     /**
      * Set up the graph locator controller.
@@ -49,7 +50,21 @@ public class LocatorControllerTest {
         );
         locatorController.locatorIndicator = spy(new Rectangle());
 
-        labelMapProperty.setValue(new HashMap<>());
+        Map<Integer, List<AbstractDrawableNode>> map = new HashMap<>();
+        map.put(0, Arrays.asList(
+                getNode(0, 34),
+                getNode(12, 23)
+        ));
+        map.put(1, Arrays.asList(
+                getNode(42, 234),
+                getNode(35, 344)
+        ));
+        map.put(2, Arrays.asList(
+                getNode(200, 500),
+                getNode(325, 800)
+        ));
+        labelMapProperty.set(map);
+        positionProperty.set(Arrays.asList(0, 1));
 
     }
 
@@ -83,22 +98,6 @@ public class LocatorControllerTest {
     @Test
     public void testPositionUpdate() throws Exception {
 
-        Map<Integer, List<AbstractDrawableNode>> map = new HashMap<>();
-        map.put(0, Arrays.asList(
-                getNode(0, 34),
-                getNode(12, 23)
-        ));
-        map.put(1, Arrays.asList(
-                getNode(42, 234),
-                getNode(35, 344)
-        ));
-        map.put(2, Arrays.asList(
-                getNode(200, 500),
-                getNode(325, 800)
-        ));
-        labelMapProperty.set(map);
-        positionProperty.set(Arrays.asList(0, 1));
-
         assertEquals(0, locatorController.minRefPosition);
         assertEquals(800, locatorController.maxRefPosition);
 
@@ -109,7 +108,7 @@ public class LocatorControllerTest {
      *
      * @return Node
      */
-    public DrawableNode getNode(int refStart, int refEnd) {
+    public static DrawableNode getNode(int refStart, int refEnd) {
 
         return new DrawableNode(new Node(0, new HashSet<>(), refStart, refEnd, "ATC"));
 
