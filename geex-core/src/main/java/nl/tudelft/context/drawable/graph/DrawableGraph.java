@@ -6,6 +6,7 @@ import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -34,7 +35,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
 
         this.graph = graph;
 
-        HashMap<DefaultNode, AbstractDrawableNode> added = new HashMap<>();
+        Map<DefaultNode, AbstractDrawableNode> added = new HashMap<>();
 
         graph.vertexSet().stream()
                 .forEach(node -> {
