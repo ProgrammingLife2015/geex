@@ -347,6 +347,10 @@
     -fx-padding: 3px 0 0 10px;
 }
 
+.legend HBox {
+    -fx-padding: 0 0 5px;
+}
+
 /* Breadcrumb */
 .breadcrumb {
     -fx-border-width: 0 0 1px;

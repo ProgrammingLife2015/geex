@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.Group?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
 
@@ -16,18 +22,16 @@
         </StackPane>
     </ScrollPane>
     <HBox styleClass="legend" AnchorPane.topAnchor="30" AnchorPane.rightAnchor="40">
-        <VBox spacing="5">
+        <VBox>
             <Label styleClass="header">Collapsed Nodes</Label>
             <HBox>
                 <Circle radius="10.0" fill="#e44544"/>
                 <Label styleClass="singlepoint">Point mutation</Label>
             </HBox>
-
             <HBox>
                 <Circle radius="10.0" fill="#4594e4"/>
                 <Label styleClass="indel">Insertion / Deletion</Label>
             </HBox>
-
             <HBox>
                 <Circle radius="10.0" fill="#5ab000"/>
                 <Label styleClass="collapse">Straigth sequence</Label>
