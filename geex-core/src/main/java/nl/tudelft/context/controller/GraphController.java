@@ -7,9 +7,8 @@ import javafx.scene.control.MenuItem;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.message.Message;
-import nl.tudelft.context.model.annotation.AnnotationMap;
-import nl.tudelft.context.model.annotation.CodingSequence;
-import nl.tudelft.context.model.annotation.Resistance;
+import nl.tudelft.context.model.annotation.CodingSequenceMap;
+import nl.tudelft.context.model.annotation.ResistanceMap;
 import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.InsertDeleteGraph;
@@ -50,12 +49,12 @@ public final class GraphController extends AbstractGraphController {
      * Sources that are displayed in the graph.
      * Property with annotation map.
      */
-    ReadOnlyObjectProperty<AnnotationMap<CodingSequence>> annotationMapIn;
+    ReadOnlyObjectProperty<CodingSequenceMap> annotationMapIn;
 
     /**
      * Property with resistance map.
      */
-    ReadOnlyObjectProperty<AnnotationMap<Resistance>> resistanceMapIn;
+    ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn;
 
     /**
      * Init a controller at graph.fxml.
@@ -69,8 +68,8 @@ public final class GraphController extends AbstractGraphController {
     public GraphController(final MainController mainController,
                            final Set<String> sources,
                            final ReadOnlyObjectProperty<GraphMap> graphMapIn,
-                           final ReadOnlyObjectProperty<AnnotationMap<CodingSequence>> annotationMapIn,
-                           final ReadOnlyObjectProperty<AnnotationMap<Resistance>> resistanceMapIn) {
+                           final ReadOnlyObjectProperty<CodingSequenceMap> annotationMapIn,
+                           final ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn) {
 
         super(mainController);
         this.sources = sources;
@@ -88,15 +87,17 @@ public final class GraphController extends AbstractGraphController {
         super.initialize(location, resources);
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
-        ObjectProperty<AnnotationMap<CodingSequence>> annotationMapProperty = new SimpleObjectProperty<>();
-        ObjectProperty<AnnotationMap<Resistance>> resistanceMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<CodingSequenceMap> annotationMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<ResistanceMap> resistanceMapProperty = new SimpleObjectProperty<>();
 
         graphMapProperty.addListener(event -> {
             Log.info(Message.SUCCESS_LOAD_ANNOTATION);
             loadGraph(graphMapProperty.get(), annotationMapProperty.get(), resistanceMapProperty.get());
         });
-        annotationMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get(), resistanceMapProperty.get()));
-        resistanceMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get(), resistanceMapProperty.get()));
+        annotationMapProperty.addListener(event ->
+                loadGraph(graphMapProperty.get(), annotationMapProperty.get(), resistanceMapProperty.get()));
+        resistanceMapProperty.addListener(event ->
+                loadGraph(graphMapProperty.get(), annotationMapProperty.get(), resistanceMapProperty.get()));
 
         graphMapProperty.bind(graphMapIn);
         annotationMapProperty.bind(annotationMapIn);
@@ -144,7 +145,7 @@ public final class GraphController extends AbstractGraphController {
      * @param codingSequenceMap The CodingSequenceMap which is loaded.
      * @param resistanceMap The ResistanceMap which is loaded.
      */
-    private void loadGraph(final GraphMap graphMap, final AnnotationMap<CodingSequence> codingSequenceMap, final AnnotationMap<Resistance> resistanceMap) {
+    private void loadGraph(final GraphMap graphMap, final CodingSequenceMap codingSequenceMap, final ResistanceMap resistanceMap) {
         if (graphMap != null && codingSequenceMap != null && resistanceMap != null) {
             graphMap.setAnnotations(codingSequenceMap);
             graphMap.setResistance(resistanceMap);

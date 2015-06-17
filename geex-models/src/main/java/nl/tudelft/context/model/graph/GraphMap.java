@@ -1,6 +1,8 @@
 package nl.tudelft.context.model.graph;
 
 import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.CodingSequenceMap;
+import nl.tudelft.context.model.annotation.ResistanceMap;
 import org.jgrapht.graph.AbstractBaseGraph;
 
 import java.util.Arrays;
@@ -23,7 +25,7 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
      *
      * @param codingSequenceMap All the codingSequences.
      */
-    public void setAnnotations(final AnnotationMap codingSequenceMap) {
+    public void setAnnotations(final CodingSequenceMap codingSequenceMap) {
         values().parallelStream()
                 .forEach(graph -> graph.setAnnotations(codingSequenceMap));
     }
@@ -33,7 +35,7 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
      *
      * @param resistanceMap All the resistance mutations.
      */
-    public void setResistance(final AnnotationMap resistanceMap) {
+    public void setResistance(final ResistanceMap resistanceMap) {
         values().parallelStream()
                 .forEach(graph -> graph.setResistance(resistanceMap));
     }

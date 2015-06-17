@@ -1,8 +1,9 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.annotation.CodingSequence;
+import nl.tudelft.context.model.annotation.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.Resistance;
+import nl.tudelft.context.model.annotation.ResistanceMap;
 
 import java.util.List;
 import java.util.Set;
@@ -80,7 +81,7 @@ public abstract class DefaultNode {
      *
      * @param codingSequenceMap The list of all codingSequences
      */
-    public abstract void setCodingSequences(final AnnotationMap<CodingSequence> codingSequenceMap);
+    public abstract void setCodingSequences(final CodingSequenceMap codingSequenceMap);
 
     /**
      * Get the list of codingSequences that are present in this node.
@@ -94,7 +95,7 @@ public abstract class DefaultNode {
      *
      * @param resistanceMap The list of all resistance mutations
      */
-    public abstract void setResistance(final AnnotationMap<Resistance> resistanceMap);
+    public abstract void setResistance(final ResistanceMap resistanceMap);
 
     /**
      * Get the list of resistance mutations that are present in this node.

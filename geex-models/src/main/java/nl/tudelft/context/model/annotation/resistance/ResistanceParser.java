@@ -1,8 +1,8 @@
 package nl.tudelft.context.model.annotation.resistance;
 
 import nl.tudelft.context.model.Parser;
-import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.annotation.Resistance;
+import nl.tudelft.context.model.annotation.ResistanceMap;
 
 import java.io.BufferedReader;
 import java.util.Scanner;
@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  * @version 1.1
  * @since 08-6-2015
  */
-public class ResistanceParser extends Parser<AnnotationMap<Resistance>> {
+public class ResistanceParser extends Parser<ResistanceMap> {
 
     /**
      * Parse the file into an ResistanceMap.
@@ -24,10 +24,10 @@ public class ResistanceParser extends Parser<AnnotationMap<Resistance>> {
      * @return A parsed resistanceMap.
      */
     @Override
-    public AnnotationMap<Resistance> parse(final BufferedReader... readerList) {
+    public ResistanceMap parse(final BufferedReader... readerList) {
         BufferedReader reader = readerList[0];
         Scanner sc = new Scanner(reader);
-        AnnotationMap<Resistance> resistanceMap = new AnnotationMap<>();
+        ResistanceMap resistanceMap = new ResistanceMap();
         String line;
         while (sc.hasNextLine() && !isCancelled()) {
             line = sc.nextLine();

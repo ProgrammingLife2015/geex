@@ -2,7 +2,9 @@ package nl.tudelft.context.model.graph;
 
 import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.annotation.CodingSequence;
+import nl.tudelft.context.model.annotation.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.Resistance;
+import nl.tudelft.context.model.annotation.ResistanceMap;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -148,7 +150,7 @@ public class GraphNode extends DefaultNode {
     }
 
     @Override
-    public void setCodingSequences(final AnnotationMap codingSequenceMap) {
+    public void setCodingSequences(final CodingSequenceMap codingSequenceMap) {
         // do nothing
     }
 
@@ -161,7 +163,7 @@ public class GraphNode extends DefaultNode {
     }
 
     @Override
-    public  void setResistance(final AnnotationMap resistanceMap) {
+    public  void setResistance(final ResistanceMap resistanceMap) {
         // do nothing
     }
 

@@ -7,8 +7,8 @@ import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
 import nl.tudelft.context.model.annotation.AnnotationMap;
-import nl.tudelft.context.model.annotation.CodingSequence;
-import nl.tudelft.context.model.annotation.Resistance;
+import nl.tudelft.context.model.annotation.CodingSequenceMap;
+import nl.tudelft.context.model.annotation.ResistanceMap;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.workspace.Workspace;
@@ -55,8 +55,8 @@ public class GraphControllerTest {
         when(mainController.getMenuController()).thenReturn(new MenuController(mainController, new MenuBar()));
 
         ReadOnlyObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
-        ReadOnlyObjectProperty<AnnotationMap<CodingSequence>> annotationMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
-        ReadOnlyObjectProperty<AnnotationMap<Resistance>> resistanceMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
+        ReadOnlyObjectProperty<CodingSequenceMap> annotationMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
+        ReadOnlyObjectProperty<ResistanceMap> resistanceMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
 
         Workspace workspace = mock(Workspace.class);
 
@@ -73,8 +73,8 @@ public class GraphControllerTest {
     @Test
     public void testUpdateGraph() throws Exception {
         SimpleObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
-        SimpleObjectProperty<AnnotationMap<CodingSequence>> annotationMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
-        SimpleObjectProperty<AnnotationMap<Resistance>> resistanceMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
+        SimpleObjectProperty<CodingSequenceMap> annotationMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
+        SimpleObjectProperty<ResistanceMap> resistanceMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
 
         GraphMap graphMap = new GraphParser().setFiles(nodeFile, edgeFile).load();
 
@@ -94,8 +94,8 @@ public class GraphControllerTest {
         });
 
         graphMapReadOnlyObjectProperty.setValue(graphMap);
-        annotationMapReadOnlyObjectProperty.setValue(new AnnotationMap<>());
-        resistanceMapReadOnlyObjectProperty.setValue(new AnnotationMap<>());
+        annotationMapReadOnlyObjectProperty.setValue(new CodingSequenceMap());
+        resistanceMapReadOnlyObjectProperty.setValue(new ResistanceMap());
 
         assertEquals(true, sequencesAdded.get(50, TimeUnit.MILLISECONDS));
     }

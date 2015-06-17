@@ -1,9 +1,8 @@
 package nl.tudelft.context.workspace;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
-import nl.tudelft.context.model.annotation.AnnotationMap;
-import nl.tudelft.context.model.annotation.CodingSequence;
-import nl.tudelft.context.model.annotation.Resistance;
+import nl.tudelft.context.model.annotation.CodingSequenceMap;
+import nl.tudelft.context.model.annotation.ResistanceMap;
 import nl.tudelft.context.model.annotation.coding_sequence.CodingSequenceParser;
 import nl.tudelft.context.model.annotation.resistance.ResistanceParser;
 import nl.tudelft.context.model.graph.GraphMap;
@@ -71,12 +70,12 @@ public class Workspace {
     /**
      * The service used for parsing an CodingSequence.
      */
-    LoadService<AnnotationMap<CodingSequence>> loadAnnotationService;
+    LoadService<CodingSequenceMap> loadAnnotationService;
 
     /**
      * The service used for parsing the Resistance.
      */
-    LoadService<AnnotationMap<Resistance>> loadResistanceService;
+    LoadService<ResistanceMap> loadResistanceService;
 
     /**
      * Create a new workspace on the directory.
@@ -161,7 +160,7 @@ public class Workspace {
      *
      * @return A ReadOnlyObjectProperty containing, or not yet containing an CodingSequenceMap.
      */
-    public ReadOnlyObjectProperty<AnnotationMap<CodingSequence>> getAnnotation() {
+    public ReadOnlyObjectProperty<CodingSequenceMap> getAnnotation() {
         return loadAnnotationService.valueProperty();
     }
 
@@ -179,7 +178,7 @@ public class Workspace {
      *
      * @return A ReadOnlyObjectProperty containing, or not yet containing a ResistanceMap.
      */
-    public ReadOnlyObjectProperty<AnnotationMap<Resistance>> getResistance() {
+    public ReadOnlyObjectProperty<ResistanceMap> getResistance() {
         return loadResistanceService.valueProperty();
     }
 

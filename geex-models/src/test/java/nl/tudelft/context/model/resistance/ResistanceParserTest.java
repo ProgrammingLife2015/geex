@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.resistance;
 
-import nl.tudelft.context.model.annotation.AnnotationMap;
 import nl.tudelft.context.model.annotation.Resistance;
+import nl.tudelft.context.model.annotation.ResistanceMap;
 import nl.tudelft.context.model.annotation.resistance.ResistanceFormatException;
 import nl.tudelft.context.model.annotation.resistance.ResistanceParser;
 import org.junit.BeforeClass;
@@ -22,7 +22,7 @@ public class ResistanceParserTest {
 
 
     protected static Resistance resistance1, resistance2;
-    protected static AnnotationMap<Resistance> resistanceMap1;
+    protected static ResistanceMap resistanceMap1;
     protected static File resistanceFile, resistanceFile2;
     protected static ResistanceParser resistanceParser;
 
@@ -35,7 +35,7 @@ public class ResistanceParserTest {
         resistance2 = new Resistance("geneName1", "TypeOfMutation1", "change1", "filter1", 1, "ethionomide");
 
 
-        resistanceMap1 = new AnnotationMap<>();
+        resistanceMap1 = new ResistanceMap();
 
         resistanceMap1.addAnnotation(resistance1);
         resistanceMap1.addAnnotation(resistance2);
@@ -47,7 +47,7 @@ public class ResistanceParserTest {
 
     @Test
     public void testGetResistanceMap() throws Exception {
-        AnnotationMap<Resistance> resistanceMap2 = new ResistanceParser().setFiles(resistanceFile).load();
+        ResistanceMap resistanceMap2 = new ResistanceParser().setFiles(resistanceFile).load();
         assertEquals(resistanceMap1.toString(), resistanceMap2.toString());
 
     }

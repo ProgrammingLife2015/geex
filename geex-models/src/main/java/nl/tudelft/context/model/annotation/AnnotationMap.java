@@ -11,7 +11,7 @@ import java.util.TreeMap;
  * @version 1.0
  * @since 17-06-2015
  */
-public class AnnotationMap<T extends Annotation> extends TreeMap<Integer, List<T>> {
+public abstract class AnnotationMap<T extends Annotation> extends TreeMap<Integer, List<T>> {
     /**
      * Add annotations to the AnnotationMap.
      *
