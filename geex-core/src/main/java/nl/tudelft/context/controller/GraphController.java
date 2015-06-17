@@ -171,10 +171,8 @@ public final class GraphController extends AbstractGraphController {
             graphListController.add(new CollapseGraph(graphListController.getActiveGraph()));
             graphListController.add(new UnknownGraph(graphListController.getActiveGraph()));
 
-            graphListController.getActiveGraphProperty().addListener((observable, oldValue, newValue) -> {
-                    showGraph(new DrawableGraph(newValue));
-                System.out.println(123);
-            });
+            graphListController.getActiveGraphProperty().addListener((observable, oldValue, newValue) ->
+                    showGraph(new DrawableGraph(newValue)));
             showGraph(new DrawableGraph(graphListController.getActiveGraph()));
         }
     }
