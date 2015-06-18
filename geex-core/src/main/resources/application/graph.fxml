@@ -53,9 +53,9 @@
         <VBox fx:id="graphs"/>
     </VBox>
 
-    <VBox fx:id="viewheader" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="180" AnchorPane.leftAnchor="180"
-          fillWidth="true">
-        <Label styleClass="headertext">Viewing the Genome</Label>
-    </VBox>
+
+    <Label styleClass="header" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="180" AnchorPane.leftAnchor="180">
+        Viewing the genome
+    </Label>
 
 </fx:root>

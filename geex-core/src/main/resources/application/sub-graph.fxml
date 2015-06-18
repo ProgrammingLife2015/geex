@@ -27,9 +27,8 @@
         <Label styleClass="base-N">Unknown base</Label>
     </VBox>
 
-    <VBox fx:id="viewheader" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="180" AnchorPane.leftAnchor="180"
-          fillWidth="true">
-        <Label styleClass="headertext">Viewing a Sub-Graph</Label>
-    </VBox>
+    <Label styleClass="header" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="180" AnchorPane.leftAnchor="180">
+        Viewing a sub graph
+    </Label>
 
 </fx:root>
