@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import nl.tudelft.context.controller.graphlist.GraphFilterEnum;
 import nl.tudelft.context.controller.graphlist.GraphListController;
 import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
@@ -174,10 +175,11 @@ public final class GraphController extends AbstractGraphController {
         if (graphMap != null && annotationMap != null) {
             graphMap.setAnnotations(annotationMap);
             graphListController.add(graphMap.flat(sources));
-            graphListController.add(new SinglePointGraph(graphListController.getActiveGraph()));
-            graphListController.add(new InsertDeleteGraph(graphListController.getActiveGraph()));
-            graphListController.add(new CollapseGraph(graphListController.getActiveGraph()));
-            graphListController.add(new UnknownGraph(graphListController.getActiveGraph()));
+            graphListController.addAll(GraphFilterEnum.values());
+//            graphListController.add(new SinglePointGraph(graphListController.getActiveGraph()));
+//            graphListController.add(new InsertDeleteGraph(graphListController.getActiveGraph()));
+//            graphListController.add(new CollapseGraph(graphListController.getActiveGraph()));
+//            graphListController.add(new UnknownGraph(graphListController.getActiveGraph()));
 
             graphListController.getActiveGraphProperty().addListener((observable, oldValue, newValue) ->
                     showGraph(new DrawableGraph(newValue)));

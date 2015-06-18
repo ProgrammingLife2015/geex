@@ -96,4 +96,17 @@ public class GraphListController {
         activeGraph.setValue(graphList.getLast());
     }
 
+    public void addAll(GraphFilterEnum[] values) {
+        Arrays.stream(values).forEach(graphFilterEnum -> {
+            try {
+                Class<? extends StackGraph> clazz = graphFilterEnum.getGraph();
+                Constructor<? extends StackGraph> constructor = clazz.getDeclaredConstructor(StackGraph.class);
+                StackGraph stackGraph = constructor.newInstance(activeGraph.get());
+
+                add(stackGraph);
+            } catch (ReflectiveOperationException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }
