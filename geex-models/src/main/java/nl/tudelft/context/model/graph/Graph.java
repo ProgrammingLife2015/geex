@@ -39,4 +39,9 @@ public class Graph extends StackGraph {
                 .forEach(node -> node.setResistances(resistanceMap));
     }
 
+    @Override
+    public String getName() {
+        return "Default";
+    }
+
 }

@@ -24,7 +24,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
     /**
      * Graph that is drawn.
      */
-    private StackGraph graph;
+    private final StackGraph graph;
 
     /**
      * Create a wrapper around a graph to draw the graph.
@@ -33,15 +33,16 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
      */
     public DrawableGraph(final StackGraph graph) {
 
+        super();
         this.graph = graph;
 
-        Map<DefaultNode, AbstractDrawableNode> added = new HashMap<>();
+        final Map<DefaultNode, AbstractDrawableNode> added = new HashMap<>();
 
         graph.vertexSet().stream()
                 .forEach(node -> {
-                    AbstractDrawableNode abstractDrawableNode = DrawableNodeFactory.create(node);
-                    added.put(node, abstractDrawableNode);
-                    addVertex(abstractDrawableNode);
+                    final AbstractDrawableNode drawableNode = DrawableNodeFactory.create(node);
+                    added.put(node, drawableNode);
+                    addVertex(drawableNode);
                 });
 
         graph.edgeSet().stream()
@@ -57,14 +58,14 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
     /**
      * Calculate all the position of the graph elements.
      */
-    public void position() {
+    public final void position() {
 
         List<AbstractDrawableNode> start = getFirstNodes();
 
-        int i = 0;
+        int column = 0;
         boolean shifted = false;
         while (!start.isEmpty()) {
-            shifted = positionNodes(start, i++, shifted);
+            shifted = positionNodes(start, column++, shifted);
             start = nextColumn(start);
         }
 
@@ -81,7 +82,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
         return nodes.stream()
                 .flatMap(node -> outgoingEdgesOf(node).stream()
                         .map(this::getEdgeTarget)
-                        .filter(x -> x.incrementIncoming() == inDegreeOf(x)))
+                        .filter(target -> target.incrementIncoming() == inDegreeOf(target)))
                 .collect(Collectors.toList());
 
     }
@@ -96,22 +97,31 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
      */
     private boolean positionNodes(final List<AbstractDrawableNode> nodes, final int column, final boolean prevShifted) {
 
-        double shift = nodes.size() * LABEL_SPACING / 2;
+        final double shift = nodes.size() * LABEL_SPACING / 2;
 
         int row = 0;
-        for (AbstractDrawableNode node : nodes) {
+        for (final AbstractDrawableNode node : nodes) {
             node.setTranslateX(column * LABEL_SPACING);
             node.setTranslateY(row * LABEL_SPACING - shift);
             row++;
         }
 
         if (nodes.size() == 1) {
-            AbstractDrawableNode node = nodes.get(0);
-            long in = getSources(node).stream().mapToInt(this::outDegreeOf).filter(x -> x > 1).count();
-            long out = getTargets(node).stream().mapToInt(this::inDegreeOf).filter(x -> x > 1).count();
-            boolean drawShift = (inDegreeOf(node) == 1 && outDegreeOf(node) >= 1) && (in > 0 && out > 0);
+            final AbstractDrawableNode node = nodes.get(0);
+            final long sourcesEdges = getSources(node).stream()
+                    .mapToInt(this::outDegreeOf).filter(source -> source > 1)
+                    .count();
+            final long targetEdges = getTargets(node).stream()
+                    .mapToInt(this::inDegreeOf).filter(target -> target > 1)
+                    .count();
+            final boolean drawShift = inDegreeOf(node) == 1 && outDegreeOf(node) >= 1
+                    && sourcesEdges > 0 && targetEdges > 0;
             if (node.getNode().isShift() || drawShift) {
-                node.setTranslateY(prevShifted ? 0 : -LABEL_SPACING);
+                if (prevShifted) {
+                    node.setTranslateY(0);
+                } else {
+                    node.setTranslateY(-LABEL_SPACING);
+                }
                 return !prevShifted;
             }
         }

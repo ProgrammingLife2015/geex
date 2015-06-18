@@ -73,8 +73,8 @@ public class MainControllerTest {
         MainController mc = new MainController();
         mc.setWorkspace(workspace);
 
-        BaseController baseController1 = new BaseController(graph, node1);
-        BaseController baseController2 = new BaseController(graph, node2);
+        BaseController baseController1 = new BaseController(node1);
+        BaseController baseController2 = new BaseController(node2);
 
         mc.setBaseView(baseController1);
         mc.setView(baseController1, baseController2);
@@ -95,8 +95,8 @@ public class MainControllerTest {
         MainController mc = new MainController();
         mc.setWorkspace(workspace);
 
-        BaseController baseController1 = new BaseController(graph, node1);
-        BaseController baseController2 = new BaseController(graph, node2);
+        BaseController baseController1 = new BaseController(node1);
+        BaseController baseController2 = new BaseController(node2);
 
         mc.setBaseView(baseController1);
         mc.setView(baseController1, baseController2);
@@ -120,8 +120,8 @@ public class MainControllerTest {
         MainController mc = new MainController();
         mc.setWorkspace(workspace);
 
-        BaseController baseController1 = new BaseController(graph, node1);
-        BaseController baseController2 = new BaseController(graph, node2);
+        BaseController baseController1 = new BaseController(node1);
+        BaseController baseController2 = new BaseController(node2);
 
         mc.setBaseView(baseController1);
         mc.setView(baseController1, baseController2);
@@ -159,7 +159,7 @@ public class MainControllerTest {
     public void testTopView() {
         Node node = mock(Node.class);
         when(node.getBaseCounter()).thenReturn(mock(BaseCounter.class));
-        ViewController baseView = new BaseController(mock(Graph.class), node);
+        ViewController baseView = new BaseController(node);
 
         mainController.setBaseView(baseView);
         assertEquals(baseView, mainController.topView().get());

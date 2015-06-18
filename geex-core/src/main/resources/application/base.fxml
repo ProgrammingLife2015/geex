@@ -23,10 +23,6 @@
         <TextFlow>
             <Text fx:id="bases"/>
         </TextFlow>
-        <Label styleClass="h2">Other occurrences</Label>
-        <TextFlow>
-            <Text fx:id="occurrences"/>
-        </TextFlow>
     </VBox>
 
 </fx:root>

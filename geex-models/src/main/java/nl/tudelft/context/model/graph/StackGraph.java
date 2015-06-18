@@ -58,4 +58,11 @@ public abstract class StackGraph extends DefaultGraph<DefaultNode> {
 
     }
 
+    /**
+     * Get the name for the graph list view.
+     *
+     * @return The name for the graph list view
+     */
+    public abstract String getName();
+
 }
