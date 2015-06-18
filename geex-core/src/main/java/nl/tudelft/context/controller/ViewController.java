@@ -2,7 +2,9 @@ package nl.tudelft.context.controller;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.layout.VBox;
 
 /**
  * @param <T> fxml root type

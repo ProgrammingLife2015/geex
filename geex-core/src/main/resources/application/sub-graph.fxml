@@ -7,7 +7,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 <fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
+
+    <VBox styleClass="viewheader" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0" fillWidth="true"><Label styleClass="headertext">Fawakaaaaa</Label></VBox>
 
     <ScrollPane fx:id="scroll" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="45"
                 AnchorPane.leftAnchor="0" fitToHeight="true" fitToWidth="true">

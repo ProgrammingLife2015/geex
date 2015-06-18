@@ -34,7 +34,7 @@
             </HBox>
             <HBox>
                 <Circle radius="10.0" fill="#5ab000"/>
-                <Label styleClass="collapse">Straigth sequence</Label>
+                <Label styleClass="collapse">Straight sequence</Label>
             </HBox>
         </VBox>
         <VBox>
@@ -51,6 +51,10 @@
     <VBox styleClass="graphs-holder" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="45" AnchorPane.leftAnchor="0">
         <Label styleClass="title">Collapse / hide:</Label>
         <VBox fx:id="graphs"/>
+    </VBox>
+
+    <VBox fx:id="viewheader" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="180" fillWidth="true">
+        <Label styleClass="headertext">Viewing the Genome</Label>
     </VBox>
 
 </fx:root>
