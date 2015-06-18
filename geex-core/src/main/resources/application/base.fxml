@@ -7,6 +7,10 @@
 <?import javafx.scene.text.TextFlow?>
 <fx:root styleClass="transparent" type="javafx.scene.control.ScrollPane" xmlns:fx="http://javafx.com/fxml">
 
+    <VBox alignment="TOP_CENTER" fillWidth="true" prefHeight="10000">
+        <Label styleClass="header">
+            View specific details on a base
+        </Label>
     <VBox styleClass="base-margin-top">
         <Label styleClass="h2">Sources</Label>
         <TextFlow>
@@ -23,6 +27,7 @@
         <TextFlow>
             <Text fx:id="bases"/>
         </TextFlow>
+    </VBox>
     </VBox>
 
 </fx:root>
