@@ -44,7 +44,7 @@ public class SubGraphController extends AbstractGraphController {
         this.graphNode = graphNode;
         selectedSources.setValue(sources);
 
-        loadFXML("/application/graph.fxml");
+        loadFXML("/application/sub-graph.fxml");
 
     }
 
@@ -56,9 +56,8 @@ public class SubGraphController extends AbstractGraphController {
         progressIndicator.setVisible(false);
 
         StackGraph subGraph = stackGraph.createSubGraph(graphNode.getNodes());
-        graphList.add(subGraph);
 
-        DrawableGraph drawableGraph = new DrawableGraph(graphList.getLast());
+        DrawableGraph drawableGraph = new DrawableGraph(subGraph);
         showGraph(drawableGraph);
 
     }

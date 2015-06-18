@@ -126,18 +126,20 @@ public class LocatorController {
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
 
-            int min = list.stream()
-                    .mapToInt(x -> x.get(0))
-                    .min().getAsInt() - minRefPosition;
+            if (!list.isEmpty()) {
+                int min = list.stream()
+                        .mapToInt(x -> x.get(0))
+                        .min().getAsInt() - minRefPosition;
 
-            int max = list.stream()
-                    .mapToInt(x -> x.get(1))
-                    .max().getAsInt();
+                int max = list.stream()
+                        .mapToInt(x -> x.get(1))
+                        .max().getAsInt();
 
-            double scale = locator.getWidth() / maxRefPosition;
+                double scale = locator.getWidth() / maxRefPosition;
 
-            locatorIndicator.setTranslateX(min * scale);
-            locatorIndicator.setWidth((max - min) * scale);
+                locatorIndicator.setTranslateX(min * scale);
+                locatorIndicator.setWidth((max - min) * scale);
+            }
         });
 
     }

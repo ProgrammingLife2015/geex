@@ -90,4 +90,9 @@ public class UnknownGraph extends StackGraph {
 
     }
 
+    @Override
+    public String getName() {
+        return "Unknown bases (" + (REMOVE_RATIO * 100) + "%)";
+    }
+
 }

@@ -28,4 +28,9 @@ public class Graph extends StackGraph {
                 .forEach(node -> node.setAnnotations(annotationMap));
     }
 
+    @Override
+    public String getName() {
+        return "Default";
+    }
+
 }
