@@ -19,10 +19,10 @@
         </StackPane>
     </ScrollPane>
 
-    <HBox fx:id="search" AnchorPane.topAnchor="30" AnchorPane.rightAnchor="40"/>
-
-    <Label styleClass="header" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="180" AnchorPane.leftAnchor="180">
+    <Label styleClass="header" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0">
         Select strains from the Phylogenetic tree
     </Label>
+
+    <HBox fx:id="search" AnchorPane.topAnchor="30" AnchorPane.rightAnchor="40"/>
 
 </fx:root>

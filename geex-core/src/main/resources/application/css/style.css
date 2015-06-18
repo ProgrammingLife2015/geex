@@ -448,4 +448,6 @@
     -fx-padding: 20px 0 0;
     -fx-font: 0.5cm 'Arial';
     -fx-text-fill: #fff;
+    -fx-background-color: #2b2b2b;
+    -fx-opacity: 80%;
 }
