@@ -29,14 +29,14 @@ import static org.junit.Assert.assertTrue;
  * @since 18-6-2015
  */
 @RunWith(JfxRunner.class)
-public class InsertDeleteGraphTest {
+public class SinglePointGraphTest {
 
-    File nodeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/insert-delete-graph.node.graph").getPath());
-    File edgeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/insert-delete-graph.edge.graph").getPath());
+    File nodeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/single-point-mutation.node.graph").getPath());
+    File edgeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/single-point-mutation.edge.graph").getPath());
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
-    InsertDeleteGraph insertDeleteGraph;
+    SinglePointGraph singlePointGraph;
 
     /**
      * Set up the graphs and node map.
@@ -57,7 +57,7 @@ public class InsertDeleteGraphTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        insertDeleteGraph = new InsertDeleteGraph(graph);
+        singlePointGraph = new SinglePointGraph(graph);
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),
@@ -72,7 +72,7 @@ public class InsertDeleteGraphTest {
     @Test
     public void testName() {
 
-        assertTrue(insertDeleteGraph.getName().length() > 0);
+        assertTrue(singlePointGraph.getName().length() > 0);
 
     }
 
@@ -82,15 +82,10 @@ public class InsertDeleteGraphTest {
     @Test
     public void testCollapsed() {
 
-        assertTrue(insertDeleteGraph.containsVertex(nodeMap.get(0)));
-        assertTrue(insertDeleteGraph.containsVertex(nodeMap.get(1)));
-        assertTrue(insertDeleteGraph.containsVertex(nodeMap.get(2)));
-
-        assertFalse(insertDeleteGraph.containsVertex(nodeMap.get(3))); // Collapsed node
-        assertFalse(insertDeleteGraph.containsVertex(nodeMap.get(4))); // Collapsed node
-
-        assertTrue(insertDeleteGraph.containsVertex(nodeMap.get(5)));
-        assertTrue(insertDeleteGraph.containsVertex(nodeMap.get(6)));
+        assertFalse(singlePointGraph.containsVertex(nodeMap.get(0))); // Collapsed node
+        assertFalse(singlePointGraph.containsVertex(nodeMap.get(1))); // Collapsed node
+        assertFalse(singlePointGraph.containsVertex(nodeMap.get(2))); // Collapsed node
+        assertTrue(singlePointGraph.containsVertex(nodeMap.get(3)));
 
     }
 
@@ -100,14 +95,14 @@ public class InsertDeleteGraphTest {
     @Test
     public void testGraphNode() {
 
-        List<GraphNode> graphNodes = insertDeleteGraph.vertexSet().stream()
+        List<GraphNode> graphNodes = singlePointGraph.vertexSet().stream()
                 .filter(node -> node instanceof GraphNode)
                 .map(node -> (GraphNode) node)
                 .collect(Collectors.toList());
 
         assertEquals(1, graphNodes.size());
 
-        Set<DefaultNode> expectedNodes = new HashSet<>(Arrays.asList(nodeMap.get(3), nodeMap.get(4)));
+        Set<DefaultNode> expectedNodes = new HashSet<>(Arrays.asList(nodeMap.get(0), nodeMap.get(1), nodeMap.get(2)));
 
         assertEquals(expectedNodes, graphNodes.get(0).nodes);
 
