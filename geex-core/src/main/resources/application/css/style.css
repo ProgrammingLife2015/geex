@@ -23,6 +23,10 @@
     -fx-padding: 30px 50px 50px;
 }
 
+/* Used in the base view */
+.base-margin-top {
+    -fx-padding: 30px 200px 50px;
+}
 /* Overlay */
 #overlay {
     -fx-padding: 100px;
