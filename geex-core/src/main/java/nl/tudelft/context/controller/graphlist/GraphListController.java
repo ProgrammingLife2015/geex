@@ -105,7 +105,7 @@ public class GraphListController {
 
                 add(stackGraph);
             } catch (ReflectiveOperationException e) {
-                e.printStackTrace();
+                Log.debug(e.getMessage());
             }
         });
     }
