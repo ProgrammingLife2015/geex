@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 /**
  * @param <T> The type of list, as values in the tree map.
  * @author Jasper Boot
+ * @author René Vennik
  * @version 1.0
  * @since 17-06-2015
  */
