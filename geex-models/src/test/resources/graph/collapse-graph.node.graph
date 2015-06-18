@@ -1,0 +1,16 @@
+>0 | Cat,Dog | 5 | 7
+ A
+ >1 | Dog | 7 | 10
+ C
+ >2 | Cat | 7 | 10
+ GA
+ >3 | Cat,Dog | 10 | 13
+ T
+ >4 | Cat,Dog | 14 | 19
+ C
+ >5 | Cat,Dog | 19 | 20
+ T
+ >6 | Cat | 20 | 28
+ G
+ >7 | Dog | 20 | 28
+ A
