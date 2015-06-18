@@ -67,8 +67,12 @@ public class InsertDeleteGraph extends StackGraph {
 
     /**
      * Check if nodes are part of an insert delete and add it to map if so.
+     *
+     * @param start Possible start node
+     * @param end   Possible end node
+     * @param part  Possible node between start and end
      */
-    public void isInsertDelete(DefaultNode start, DefaultNode end, DefaultNode part) {
+    public void isInsertDelete(final DefaultNode start, final DefaultNode end, final DefaultNode part) {
 
         List<DefaultNode> ends = getTargets(part);
         if (ends.size() == 1 && ends.get(0).equals(end) && inDegreeOf(part) == 1 && inDegreeOf(end) == 2) {
