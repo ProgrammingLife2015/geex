@@ -5,6 +5,8 @@ import nl.tudelft.context.model.annotation.CodingSequence;
 import nl.tudelft.context.model.annotation.CodingSequenceMap;
 
 import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -25,16 +27,16 @@ public class CodingSequenceParser extends Parser<CodingSequenceMap> {
     public CodingSequenceMap parse(final BufferedReader... readerList) {
         BufferedReader reader = readerList[0];
         Scanner sc = new Scanner(reader);
-        CodingSequenceMap codingSequenceMap = new CodingSequenceMap();
+        List<CodingSequence> codingSequences = new ArrayList<>();
         String line;
         String fileSplitBy = "\\t";
         while (sc.hasNextLine() && !isCancelled()) {
             line = sc.nextLine();
             String[] splitLine = line.split(fileSplitBy);
-            codingSequenceMap.addAnnotation(getAnnotation(splitLine));
+            codingSequences.add(getAnnotation(splitLine));
         }
 
-        return codingSequenceMap;
+        return new CodingSequenceMap(codingSequences);
     }
 
     /**

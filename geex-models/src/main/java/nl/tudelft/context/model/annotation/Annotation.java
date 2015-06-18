@@ -33,4 +33,13 @@ public abstract class Annotation {
     public int getStart() {
         return start;
     }
+
+    /**
+     * Gets the end position of the annotation.
+     *
+     * @return The end position
+     */
+    public int getEnd() {
+        return end;
+    }
 }

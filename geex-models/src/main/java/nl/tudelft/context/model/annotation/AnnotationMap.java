@@ -1,60 +1,73 @@
 package nl.tudelft.context.model.annotation;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.NavigableMap;
 import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
+ * @param <T> The type of list, as values in the tree map.
  * @author Jasper Boot
  * @version 1.0
  * @since 17-06-2015
- * @param <T> The type of list, as values in the tree map.
  */
-public abstract class AnnotationMap<T extends Annotation> extends TreeMap<Integer, List<T>> {
-    /**
-     * Add annotations to the AnnotationMap.
-     *
-     * @param annotation The annotation that should be added
-     */
-    public void addAnnotation(final T annotation) {
-        int start = annotation.getStart();
-        List<T> annotationList = get(start);
-        if (annotationList == null) {
-            annotationList = new ArrayList<>();
-            put(start, annotationList);
-        }
+public abstract class AnnotationMap<T extends Annotation> {
 
-        annotationList.add(annotation);
+    /**
+     * Annotations grouped by ref start.
+     */
+    TreeMap<Integer, List<T>> annotationsByStart;
+
+    /**
+     * Annotations grouped by ref end.
+     */
+    TreeMap<Integer, List<T>> annotationsByEnd;
+
+    /**
+     * Create annotation map based on the annotations indexed by ref start and ref end.
+     *
+     * @param annotations List containing annotations.
+     */
+    public AnnotationMap(List<T> annotations) {
+
+        annotationsByStart = groupBy(annotations, Annotation::getStart);
+        annotationsByEnd = groupBy(annotations, Annotation::getEnd);
 
     }
 
     /**
-     * Inclusive subMap.
+     * Group the annotations by start or end position.
      *
-     * @param fromKey From which key (inclusive)
-     * @param toKey   To which key (inclusive)
-     * @return        The created subMap
+     * @param annotations Annotations to group
+     * @param position    Position to group by
+     * @return Grouped annotations in tree map
      */
-    public NavigableMap<Integer, List<T>> subMap(final Integer fromKey, final Integer toKey) {
-        return subMap(fromKey, true, toKey, true);
-    }
+    private TreeMap<Integer, List<T>> groupBy(List<T> annotations, Function<Annotation, Integer> position) {
 
+        return annotations.stream().collect(Collectors.groupingBy(
+                position,
+                TreeMap::new,
+                Collectors.mapping(Function.identity(), Collectors.toList())
+        ));
+
+    }
 
     /**
-     * To string method for the AnnotationMap.
+     * Get annotations between ref start and end position.
      *
-     * @return String representing the values in the AnnotationMap, each annotation on a new line
+     * @param refStart From which ref start (inclusive)
+     * @param refEnd   To which ref end (inclusive)
+     * @return Annotations between ref start and end position
      */
-    @Override
-    public final String toString() {
-        StringBuilder result = new StringBuilder();
-        for (Map.Entry a : entrySet()) {
-            result.append(a.getValue().toString());
-            result.append(System.getProperty("line.separator"));
-        }
-        return result.toString();
-
+    public List<T> annotationsBetween(final Integer refStart, final Integer refEnd) {
+        return Stream.concat(
+                annotationsByStart.subMap(refStart, true, refEnd, true).values().stream().flatMap(Collection::stream),
+                annotationsByEnd.subMap(refStart, true, refEnd, true).values().stream().flatMap(Collection::stream)
+        ).collect(Collectors.toList());
     }
+
+
+
 }

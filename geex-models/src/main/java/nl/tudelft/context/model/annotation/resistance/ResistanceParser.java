@@ -5,6 +5,8 @@ import nl.tudelft.context.model.annotation.Resistance;
 import nl.tudelft.context.model.annotation.ResistanceMap;
 
 import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +29,7 @@ public class ResistanceParser extends Parser<ResistanceMap> {
     public ResistanceMap parse(final BufferedReader... readerList) {
         BufferedReader reader = readerList[0];
         Scanner sc = new Scanner(reader);
-        ResistanceMap resistanceMap = new ResistanceMap();
+        List<Resistance> resistances = new ArrayList<>();
         String line;
         while (sc.hasNextLine() && !isCancelled()) {
             line = sc.nextLine();
@@ -35,13 +37,13 @@ public class ResistanceParser extends Parser<ResistanceMap> {
                 line = sc.nextLine();
             }
             try {
-                resistanceMap.addAnnotation(getResistance(line));
+                resistances.add(getResistance(line));
             } catch (ResistanceFormatException e) {
                 e.toString(); //For sending to logger.
             }
         }
 
-        return resistanceMap;
+        return new ResistanceMap(resistances);
     }
 
     /**
@@ -77,22 +79,22 @@ public class ResistanceParser extends Parser<ResistanceMap> {
      */
     public final String getDrugName(final char letter) {
         switch (letter) {
-            case 'R' :
+            case 'R':
                 return "rifampicin";
-            case 'T' :
-            case 'M' :
+            case 'T':
+            case 'M':
                 return "ethionomide";
-            case 'I' :
+            case 'I':
                 return "isoniazid";
-            case 'O' :
+            case 'O':
                 return "ofloxacin";
-            case 'S' :
+            case 'S':
                 return "streptomycin";
-            case 'K' :
+            case 'K':
                 return "kanamycin";
-            case 'P' :
+            case 'P':
                 return "pyrazinamide";
-            case 'E' :
+            case 'E':
                 return "ethambutol";
             default:
                 return "none";
