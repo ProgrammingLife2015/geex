@@ -64,11 +64,12 @@ public abstract class AnnotationMap<T extends Annotation> {
      */
     public List<T> annotationsBetween(final Integer refStart, final Integer refEnd) {
         return Stream.concat(
-                annotationsByStart.subMap(refStart, true, refEnd, true).values().stream().flatMap(Collection::stream),
-                annotationsByEnd.subMap(refStart, true, refEnd, true).values().stream().flatMap(Collection::stream)
-        ).collect(Collectors.toList());
+                annotationsByStart.subMap(refStart, true, refEnd, true).values().stream(),
+                annotationsByEnd.subMap(refStart, true, refEnd, true).values().stream())
+                .flatMap(Collection::stream)
+                .distinct()
+                .collect(Collectors.toList());
     }
-
 
 
 }
