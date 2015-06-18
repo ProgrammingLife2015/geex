@@ -55,7 +55,7 @@
 
 
     <Label styleClass="header" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="180" AnchorPane.leftAnchor="180">
-        Viewing the genome
+        Inspect and filter the genome
     </Label>
 
 </fx:root>

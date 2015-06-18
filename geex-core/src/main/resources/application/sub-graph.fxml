@@ -28,7 +28,7 @@
     </VBox>
 
     <Label styleClass="header" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="180" AnchorPane.leftAnchor="180">
-        Viewing a sub graph
+        Inspect a part of the genome
     </Label>
 
 </fx:root>
