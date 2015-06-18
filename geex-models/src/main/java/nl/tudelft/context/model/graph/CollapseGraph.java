@@ -56,7 +56,7 @@ public class CollapseGraph extends StackGraph {
     }
 
     /**
-     * Get the end node of a collapse if the end node had an indegree of 1.
+     * Get the end node of a collapse if the end node had an in degree of 1.
      *
      * @param start Start node of a collapse
      * @return Optional end node of a collapse
