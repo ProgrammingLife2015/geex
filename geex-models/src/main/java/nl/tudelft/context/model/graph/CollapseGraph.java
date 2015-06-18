@@ -3,6 +3,7 @@ package nl.tudelft.context.model.graph;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -49,18 +50,22 @@ public class CollapseGraph extends StackGraph {
     private void markCollapses() {
 
         vertexSet().stream()
-                .forEach(start -> {
+                .filter(node -> outDegreeOf(node) == 1)
+                .forEach(start -> getEnd(start).ifPresent(end -> collapse.put(start, end)));
 
-                    if (outDegreeOf(start) != 1) {
-                        return;
-                    }
+    }
 
-                    DefaultNode end = getTargets(start).get(0);
-                    if (inDegreeOf(end) == 1) {
-                        collapse.put(start, end);
-                    }
+    /**
+     * Get the end node of a collapse if the end node had an indegree of 1.
+     *
+     * @param start Start node of a collapse
+     * @return Optional end node of a collapse
+     */
+    private Optional<DefaultNode> getEnd(final DefaultNode start) {
 
-                });
+        return getTargets(start).stream()
+                .filter(node -> inDegreeOf(node) == 1)
+                .findFirst();
 
     }
 
