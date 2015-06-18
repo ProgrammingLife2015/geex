@@ -10,8 +10,6 @@
 <?import javafx.scene.text.Text?>
 <fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
 
-    <VBox styleClass="viewheader" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0" fillWidth="true"><Label styleClass="headertext">Fawakaaaaa</Label></VBox>
-
     <ScrollPane fx:id="scroll" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="45"
                 AnchorPane.leftAnchor="0" fitToHeight="true" fitToWidth="true">
         <StackPane>
@@ -28,6 +26,10 @@
         <Label styleClass="base-C">Cytosine</Label>
         <Label styleClass="base-G">Guanine</Label>
         <Label styleClass="base-N">Unknown base</Label>
+    </VBox>
+
+    <VBox fx:id="viewheader" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0" fillWidth="true">
+        <Label styleClass="headertext">Viewing a Sub-Graph</Label>
     </VBox>
 
 </fx:root>
