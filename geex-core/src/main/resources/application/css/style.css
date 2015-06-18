@@ -440,13 +440,11 @@
 
 /* Header */
 #viewheader {
-    -fx-background-color: red;
     -fx-min-height: 30px;
-    -fx-fill-width: true;
     -fx-alignment: center;
 }
 
 .headertext {
     -fx-font: 0.5cm 'Arial';
-    -fx-fill: #848484;
+    -fx-text-fill: #848484;
 }
