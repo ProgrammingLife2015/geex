@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author René Vennik
@@ -59,18 +58,27 @@ public class InsertDeleteGraph extends StackGraph {
                         return;
                     }
 
-                    List<List<DefaultNode>> end = targets.stream().map(this::getTargets).collect(Collectors.toList());
-                    if (end.get(0).size() == 1 && end.get(0).get(0).equals(targets.get(1))
-                            && inDegreeOf(targets.get(0)) == 1 && inDegreeOf(targets.get(1)) == 2) {
-                        inDelPart.add(targets.get(0));
-                        inDel.put(startNode, targets.get(1));
-                    } else if (end.get(1).size() == 1 && end.get(1).get(0).equals(targets.get(0))
-                            && inDegreeOf(targets.get(1)) == 1 && inDegreeOf(targets.get(0)) == 2) {
-                        inDelPart.add(targets.get(1));
-                        inDel.put(startNode, targets.get(0));
-                    }
+                    isInsertDelete(startNode, targets.get(1), targets.get(0));
+                    isInsertDelete(startNode, targets.get(0), targets.get(1));
 
                 });
+
+    }
+
+    /**
+     * Check if nodes are part of an insert delete and add it to map if so.
+     *
+     * @param start Possible start node
+     * @param end   Possible end node
+     * @param part  Possible node between start and end
+     */
+    public void isInsertDelete(final DefaultNode start, final DefaultNode end, final DefaultNode part) {
+
+        List<DefaultNode> ends = getTargets(part);
+        if (ends.size() == 1 && ends.get(0).equals(end) && inDegreeOf(part) == 1 && inDegreeOf(end) == 2) {
+            inDelPart.add(part);
+            inDel.put(start, end);
+        }
 
     }
 
