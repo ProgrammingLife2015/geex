@@ -139,7 +139,7 @@ public class Workspace {
     /**
      * Preload the workspace, makes sure all the services are started.
      */
-    public final void preload() {
+    public void preload() {
         loadNewickService.start();
         loadAnnotationService.start();
         loadGraphService.start();
