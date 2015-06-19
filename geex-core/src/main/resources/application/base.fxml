@@ -12,9 +12,12 @@
         <TextFlow>
             <Text fx:id="sources"/>
         </TextFlow>
-        <Label styleClass="h2">Annotations</Label>
+        <Label styleClass="h2">Coding Sequence Annotations</Label>
         <TextFlow>
             <Text fx:id="codingsequences"/>
+        </TextFlow>
+        <Label styleClass="h2">Resistance Causing Mutations</Label>
+        <TextFlow>
             <Text fx:id="resistances"/>
         </TextFlow>
         <Label styleClass="h2">Bases</Label>

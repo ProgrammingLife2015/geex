@@ -265,7 +265,7 @@
     -fx-fill: #fff;
 }
 
-#occurrences, #sources, #codingsequences {
+#occurrences, #sources, #codingsequences, #resistances {
     -fx-fill: #fff;
     -fx-font: 0.35cm 'Arial';
 }
