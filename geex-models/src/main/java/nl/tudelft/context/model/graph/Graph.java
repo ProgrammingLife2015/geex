@@ -24,7 +24,7 @@ public class Graph extends StackGraph {
      *
      * @param codingSequenceMap The map with codingSequences to add
      */
-    public void setAnnotations(final CodingSequenceMap codingSequenceMap) {
+    public void setCodingSequence(final CodingSequenceMap codingSequenceMap) {
         vertexSet().parallelStream()
                 .forEach(node -> node.setCodingSequences(codingSequenceMap));
     }

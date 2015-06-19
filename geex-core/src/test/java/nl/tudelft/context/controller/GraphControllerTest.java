@@ -57,7 +57,7 @@ public class GraphControllerTest {
         when(mainController.getMenuController()).thenReturn(new MenuController(mainController, new MenuBar()));
 
         ReadOnlyObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
-        ReadOnlyObjectProperty<CodingSequenceMap> annotationMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
+        ReadOnlyObjectProperty<CodingSequenceMap> codingSequenceMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
         ReadOnlyObjectProperty<ResistanceMap> resistanceMapReadOnlyObjectProperty = mock(ReadOnlyObjectProperty.class);
 
         Workspace workspace = mock(Workspace.class);
@@ -67,7 +67,7 @@ public class GraphControllerTest {
         when(mainController.getWorkspace()).thenReturn(workspace);
 
         graphController = new GraphController(mainController, new HashSet<>(Arrays.asList("Cat", "Dog")),
-                graphMapReadOnlyObjectProperty, annotationMapReadOnlyObjectProperty, resistanceMapReadOnlyObjectProperty);
+                graphMapReadOnlyObjectProperty, codingSequenceMapReadOnlyObjectProperty, resistanceMapReadOnlyObjectProperty);
 
     }
 
@@ -75,7 +75,7 @@ public class GraphControllerTest {
     @Test
     public void testUpdateGraph() throws Exception {
         SimpleObjectProperty<GraphMap> graphMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
-        SimpleObjectProperty<CodingSequenceMap> annotationMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
+        SimpleObjectProperty<CodingSequenceMap> codingSequenceMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
         SimpleObjectProperty<ResistanceMap> resistanceMapReadOnlyObjectProperty = new SimpleObjectProperty<>();
 
         GraphMap graphMap = new GraphParser().setFiles(nodeFile, edgeFile).load();
@@ -84,7 +84,7 @@ public class GraphControllerTest {
                 mainController,
                 new HashSet<>(Arrays.asList("Cat", "Dog")),
                 graphMapReadOnlyObjectProperty,
-                annotationMapReadOnlyObjectProperty,
+                codingSequenceMapReadOnlyObjectProperty,
                 resistanceMapReadOnlyObjectProperty);
 
         CompletableFuture<Boolean> sequencesAdded = new CompletableFuture<>();
@@ -96,7 +96,7 @@ public class GraphControllerTest {
         });
 
         graphMapReadOnlyObjectProperty.setValue(graphMap);
-        annotationMapReadOnlyObjectProperty.setValue(new CodingSequenceMap(Collections.<CodingSequence>emptyList()));
+        codingSequenceMapReadOnlyObjectProperty.setValue(new CodingSequenceMap(Collections.<CodingSequence>emptyList()));
         resistanceMapReadOnlyObjectProperty.setValue(new ResistanceMap(Collections.<Resistance>emptyList()));
 
         assertEquals(true, sequencesAdded.get(50, TimeUnit.MILLISECONDS));

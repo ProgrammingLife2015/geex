@@ -1,4 +1,4 @@
-package nl.tudelft.context.model.annotation.resistance;
+package nl.tudelft.context.model.annotation;
 
 /**
  * @author Jasper Nieuwdorp.

@@ -298,7 +298,7 @@ public class MainController extends AbstractController<StackPane> {
     public void showGraph(final NewickController on, final Set<String> sources) {
         this.setView(on, new GraphController(this, sources,
                 workspace.getGraph(),
-                workspace.getAnnotation(),
+                workspace.getCodingSequence(),
                 workspace.getResistance()));
     }
 }

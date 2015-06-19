@@ -1,8 +1,6 @@
-package nl.tudelft.context.model.annotation.resistance;
+package nl.tudelft.context.model.annotation;
 
 import nl.tudelft.context.model.Parser;
-import nl.tudelft.context.model.annotation.Resistance;
-import nl.tudelft.context.model.annotation.ResistanceMap;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;

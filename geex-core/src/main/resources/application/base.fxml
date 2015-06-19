@@ -15,6 +15,7 @@
         <Label styleClass="h2">Annotations</Label>
         <TextFlow>
             <Text fx:id="codingsequences"/>
+            <Text fx:id="resistances"/>
         </TextFlow>
         <Label styleClass="h2">Bases</Label>
         <TextFlow>

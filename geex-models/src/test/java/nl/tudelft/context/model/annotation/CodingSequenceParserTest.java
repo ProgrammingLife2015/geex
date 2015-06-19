@@ -16,11 +16,11 @@ public class CodingSequenceParserTest {
 
     protected static CodingSequence codingSequence1, codingSequence2;
     protected static CodingSequenceMap codingSequenceMap1;
-    protected static File annotationFile;
+    protected static File codingSequenceFile;
 
 
     /**
-     * Set up by creating two annotations, adding them to an annotationMap, to compare to parsed input..
+     * Set up by creating two codingSequences, adding them to an codingSequenceMap, to compare to parsed input..
      */
     @BeforeClass
     public static void BeforeClass() throws Exception {
@@ -29,12 +29,12 @@ public class CodingSequenceParserTest {
 
         codingSequenceMap1 = new CodingSequenceMap(Arrays.asList(codingSequence1, codingSequence2));
 
-        annotationFile = new File(CodingSequenceParserTest.class.getResource("/annotation/test.gff").getPath());
+        codingSequenceFile = new File(CodingSequenceParserTest.class.getResource("/annotation/test.gff").getPath());
     }
 
     @Test
-    public void testGetAnnotationMap() throws Exception {
-//        CodingSequenceMap codingSequenceMap2 = new CodingSequenceParser().setFiles(annotationFile).load();
+    public void testGetCodingSequenceMap() throws Exception {
+//        CodingSequenceMap codingSequenceMap2 = new CodingSequenceParser().setFiles(codingSequenceFile).load();
 //        assertEquals(codingSequenceMap1.toString(), codingSequenceMap2.toString());
 
         // ???

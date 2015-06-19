@@ -24,9 +24,9 @@ public class GraphMap extends ConcurrentHashMap<String, Graph> {
      *
      * @param codingSequenceMap All the codingSequences.
      */
-    public void setAnnotations(final CodingSequenceMap codingSequenceMap) {
+    public void setCodingSequence(final CodingSequenceMap codingSequenceMap) {
         values().parallelStream()
-                .forEach(graph -> graph.setAnnotations(codingSequenceMap));
+                .forEach(graph -> graph.setCodingSequence(codingSequenceMap));
     }
 
     /**

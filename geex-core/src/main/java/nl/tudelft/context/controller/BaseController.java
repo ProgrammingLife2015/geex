@@ -29,6 +29,12 @@ public final class BaseController extends ViewController<ScrollPane> {
     Text codingsequences;
 
     /**
+     * JavaFX Text holder for resistance causing mutations.
+     */
+    @FXML
+    Text resistances;
+
+    /**
      * JavaFX Text holder for bases.
      */
     @FXML
@@ -75,6 +81,7 @@ public final class BaseController extends ViewController<ScrollPane> {
 
         String content = node.getContent();
         codingsequences.setText(node.getCodingSequenceText());
+        resistances.setText(node.getResistancesText());
         percentages.setText(node.getBaseCounter().toString() + "\n");
         bases.setText(content);
 
