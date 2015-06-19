@@ -14,11 +14,7 @@ import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.model.annotation.AnnotationMap;
-import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.model.graph.InsertDeleteGraph;
-import nl.tudelft.context.model.graph.SinglePointGraph;
-import nl.tudelft.context.model.graph.UnknownGraph;
 import nl.tudelft.context.model.resistance.ResistanceMap;
 
 import java.net.URL;
@@ -144,11 +140,11 @@ public final class GraphController extends AbstractGraphController {
         MenuController menuController = mainController.getMenuController();
 
         MenuItem zoomIn = menuController.getZoomIn();
-        zoomIn.setOnAction(event -> graphListController.zoomIn());
+        //zoomIn.setOnAction(event -> graphListController.zoomIn());
         zoomIn.disableProperty().bind(activeProperty.not());
 
         MenuItem zoomOut = menuController.getZoomOut();
-        zoomOut.setOnAction(event -> graphListController.zoomOut());
+        //zoomOut.setOnAction(event -> graphListController.zoomOut());
         zoomOut.disableProperty().bind(activeProperty.not());
 
         MenuItem toggleSelect = menuController.getToggleSelect();
@@ -174,7 +170,7 @@ public final class GraphController extends AbstractGraphController {
     private void loadGraph(final GraphMap graphMap, final AnnotationMap annotationMap) {
         if (graphMap != null && annotationMap != null) {
             graphMap.setAnnotations(annotationMap);
-            graphListController.add(graphMap.flat(sources));
+            graphListController.setBaseGraph(graphMap.flat(sources));
             graphListController.addAll(GraphFilterEnum.values());
 //            graphListController.add(new SinglePointGraph(graphListController.getActiveGraph()));
 //            graphListController.add(new InsertDeleteGraph(graphListController.getActiveGraph()));

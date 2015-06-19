@@ -5,7 +5,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.Logger;
-import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.logger.message.MessageType;
 
 import java.net.URL;
