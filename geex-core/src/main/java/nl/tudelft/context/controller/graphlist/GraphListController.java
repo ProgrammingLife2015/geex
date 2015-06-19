@@ -1,5 +1,7 @@
 package nl.tudelft.context.controller.graphlist;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -12,7 +14,6 @@ import nl.tudelft.context.model.graph.StackGraph;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -20,12 +21,12 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 17-6-2015
  */
-public class GraphListController {
+public class GraphListController implements InvalidationListener {
 
     /**
      * List of graph views.
      */
-    ObservableList<GraphFilterEnum> graphList;
+    ObservableList<GraphListItem> graphList;
 
     /**
      * Active graph property.
@@ -36,6 +37,7 @@ public class GraphListController {
      * Base of this StackGraph.
      */
     private StackGraph baseGraph;
+    private Pane graphs;
 
 
     /**
@@ -44,27 +46,40 @@ public class GraphListController {
      * @param graphs FXML Pane to add graphs labels to.
      */
     public GraphListController(final Pane graphs) {
+        this.graphs = graphs;
         graphList = FXCollections.observableArrayList();
 
         activeGraph.addListener((observable, oldValue, newValue) -> {
 
         });
 
-        graphList.addListener((ListChangeListener<GraphFilterEnum>) c -> {
-            List<GraphListItem> graphListItemList = graphList.stream()
-                    .map(graphFilter -> new GraphListItem(graphFilter, graphList))
-                    .collect(Collectors.toList());
+        graphList.addListener((ListChangeListener<GraphListItem>) c -> {
+            while (c.next()) {
+                if (c.wasPermutated()) {
+                    for (int i = c.getFrom(); i < c.getTo(); ++i) {
+                        //permutate
+                    }
+                } else if (c.wasUpdated()) {
+                    //update item
+                } else {
+                    for (GraphListItem remitem : c.getRemoved()) {
+                        remitem.removeListener(this);
+                    }
+                    for (GraphListItem additem : c.getAddedSubList()) {
+                        additem.addListener(this);
+                    }
+                }
+            }
 
-            graphs.getChildren().setAll(graphListItemList);
+            graphs.getChildren().setAll(graphList);
 
             activeGraph.set(createGraphFromFilter(graphList, baseGraph));
-
-            Log.debug("Updating graphlist");
         });
     }
 
     /**
      * Set the base of this graph.
+     *
      * @param baseGraph New base StackGraph
      */
     public void setBaseGraph(final StackGraph baseGraph) {
@@ -78,17 +93,19 @@ public class GraphListController {
      * @param baseGraph Graph to use as base.
      * @return A combined graph.
      */
-    private StackGraph createGraphFromFilter(final ObservableList<GraphFilterEnum> graphs, final StackGraph baseGraph) {
+    private StackGraph createGraphFromFilter(final ObservableList<GraphListItem> graphs, final StackGraph baseGraph) {
         StackGraph newGraph = baseGraph;
-        for (GraphFilterEnum gfe : graphs) {
+        for (GraphListItem gli : graphs) {
+            GraphFilterEnum gfe = gli.getGraph();
             if (!gfe.isActive()) {
-                break;
+                continue;
             }
             try {
                 Class<? extends StackGraph> clazz = gfe.getGraph();
                 Constructor<? extends StackGraph> constructor = clazz.getDeclaredConstructor(StackGraph.class);
                 newGraph = constructor.newInstance(newGraph);
             } catch (ReflectiveOperationException e) {
+                // Something went VERY wrong.
                 Log.debug(e.getMessage());
             }
         }
@@ -123,9 +140,21 @@ public class GraphListController {
 
     /**
      * Add a list of GraphFilterEnum.
+     *
      * @param values GraphFilters to add
      */
     public void addAll(final GraphFilterEnum[] values) {
-        graphList.setAll(Arrays.asList(values));
+        graphList.setAll(Arrays.asList(values).stream()
+                .map(graphFilterEnum -> new GraphListItem(graphFilterEnum, graphList))
+                .collect(Collectors.toList()));
+    }
+
+    @Override
+    public void invalidated(Observable observable) {
+        graphs.getChildren().setAll(graphList);
+
+        activeGraph.set(createGraphFromFilter(graphList, baseGraph));
+
+        Log.debug("Updating graphlist");
     }
 }

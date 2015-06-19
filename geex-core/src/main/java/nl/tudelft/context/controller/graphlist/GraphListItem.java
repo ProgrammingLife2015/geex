@@ -1,10 +1,15 @@
 package nl.tudelft.context.controller.graphlist;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import nl.tudelft.context.logger.Log;
 
@@ -13,13 +18,9 @@ import nl.tudelft.context.logger.Log;
  * @version 1.0
  * @since 17-6-2015
  */
-public class GraphListItem extends Label {
-    static DataFormat df = new DataFormat("mycell");
-
-
-    public GraphFilterEnum getGraph() {
-        return graph;
-    }
+public class GraphListItem extends Label implements Observable {
+    private static DataFormat df = new DataFormat("GraphListItem");
+    private InvalidationListener listener;
 
     private final GraphFilterEnum graph;
 
@@ -27,28 +28,35 @@ public class GraphListItem extends Label {
      * @param graph               Graph it represents
      * @param graphList ObservableList of filters.
      */
-    public GraphListItem(final GraphFilterEnum graph, final ObservableList<GraphFilterEnum> graphList) {
+    public GraphListItem(final GraphFilterEnum graph, final ObservableList<GraphListItem> graphList) {
         this.graph = graph;
-
         getStyleClass().add("graph-item");
-        //setOnMouseClicked(event -> activeGraphProperty.set(graph));
         setText(graph.toString());
-        //getChildren().add(new Label(graph.getName()));
 
-        setOnMouseClicked(event1 -> {
-            graphList.forEach(graphFilterEnum -> {
-                if (!graphFilterEnum.equals(graph)) {
-                    graphFilterEnum.setActive(true);
-                    setActive();
-                } else {
-                    graphFilterEnum.setActive(false);
-                }
-            });
+        setOnMouseClicked(mouseClicked(graphList));
+        setOnDragDetected(dragDetected());
+        setOnDragDropped(dragDropped(graphList));
+    }
 
-            graphList.removeAll((GraphFilterEnum) null);
-        });
+    private EventHandler<DragEvent> dragDropped(ObservableList<GraphListItem> graphList) {
+        return event -> {
+            Log.debug("Drag dropped");
+            graphList.forEach(GraphListItem::deactivate);
+            GraphListItem self = (GraphListItem) event.getGestureSource();
+            // If landed on another GraphListItem
+            if (event.getGestureTarget() instanceof GraphListItem) {
+                GraphListItem other = (GraphListItem) event.getGestureTarget();
+                final int i = graphList.indexOf(other);
+                graphList.remove(self);
+                graphList.add(i, self);
+            }
+            listener.invalidated(self);
+            event.consume();
+        };
+    }
 
-        setOnDragDetected(event -> {
+    private EventHandler<MouseEvent> dragDetected() {
+        return event -> {
             Log.debug("Drag detected");
 
             GraphListItem item = (GraphListItem) event.getSource();
@@ -59,43 +67,51 @@ public class GraphListItem extends Label {
             db.setContent(content);
 
             event.consume();
-        });
+        };
+    }
 
-        setOnDragOver(event -> {
-            Log.debug("Drag over");
+    private EventHandler<MouseEvent> mouseClicked(ObservableList<GraphListItem> graphList) {
+        return event -> {
+            GraphListItem source = (GraphListItem) event.getSource();
 
-
-            this.setStyle("-fx-padding-bottom: 30px;");
-
-            event.acceptTransferModes(TransferMode.MOVE);
-
-            event.consume();
-        });
-
-        setOnDragDropped(event -> {
-            Log.debug("Drag dropped");
-            if (event.getGestureTarget() instanceof GraphListItem) {
-                GraphListItem other = (GraphListItem) event.getGestureTarget();
-                GraphListItem self = (GraphListItem) event.getGestureSource();
-                final int i = graphList.indexOf(other.getGraph());
-
-                graphList.remove(self.getGraph());
-                graphList.add(i, self.getGraph());
-
-                System.out.println("From: " + self.toString());
-                System.out.println("To: " + other.toString());
-                graphList.forEach(stackGraph -> System.out.println(stackGraph.toString()));
+            int index = graphList.indexOf(source);
+            if (source.getGraph().isActive()) {
+                index--;
             }
-            event.consume();
-        });
 
+            graphList.forEach(GraphListItem::deactivate);
+            graphList.stream()
+                    .limit(index+1)
+                    .forEach(GraphListItem::activate);
+
+            listener.invalidated(source);
+        };
+    }
+
+    private void deactivate() {
+        getStyleClass().remove("active");
+        graph.setActive(false);
     }
 
     /**
      * Make this item active.
      */
-    public void setActive() {
+    public void activate() {
         getStyleClass().add("active");
+        graph.setActive(true);
     }
 
+    public GraphFilterEnum getGraph() {
+        return graph;
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        this.listener = null;
+    }
 }
