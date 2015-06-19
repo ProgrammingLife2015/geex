@@ -78,4 +78,32 @@ public class DatabaseTest {
 
         assertArrayEquals(data.get(0), result.get(0));
     }
+
+    @Test
+    public void testReplaceDb() throws Exception {
+        Database db = Database.instance();
+
+        List<String[]> data = new ArrayList<>();
+
+        data.add(new String[]{"MyLocation", "MyName"});
+        data.add(new String[]{"MyOtherLocation", "MyUniqueName"});
+        data.add(new String[]{"MyFinalLocation", "MyCoolName"});
+
+        for (String[] strings : data) {
+            db.insert("workspace", strings);
+        }
+
+        List<String[]> result = db.getList("workspace", new String[]{"location", "name"}, 2);
+
+        assertEquals(2, result.size());
+
+        db.replace("workspace", data.get(0));
+
+        result = db.getList("workspace", new String[]{"location", "name"}, 2);
+
+        assertEquals(2, result.size());
+
+        assertArrayEquals(data.get(0), result.get(0));
+        assertArrayEquals(data.get(2), result.get(1));
+    }
 }
