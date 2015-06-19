@@ -58,6 +58,20 @@ public class Database {
     }
 
     /**
+     * Close the database instance.
+     *
+     * @throws SqlJetException When the closing fails
+     */
+    public static void close() throws SqlJetException {
+        synchronized (Database.class) {
+            if (instance != null) {
+                instance.db.close();
+                instance = null;
+            }
+        }
+    }
+
+    /**
      * Get the contents of a table from the database.
      * @param tableName The table to select form.
      * @param columns The columns to select.
