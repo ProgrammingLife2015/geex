@@ -102,8 +102,12 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
             newValue.stream().forEach(label -> label.updateSources(selectedSources.get()));
         });
 
-        selectedSources.addListener((observable, oldValue, newValue) ->
-                currentLabelsProperty.get().stream().forEach(label -> label.updateSources(newValue)));
+        selectedSources.addListener((observable, oldValue, newValue) -> {
+            Set<AbstractLabel> labels = currentLabelsProperty.get();
+            sequences.getChildren().removeAll(labels);
+            sequences.getChildren().addAll(labels);
+            labels.stream().forEach(label -> label.updateSources(newValue));
+        });
 
         initOnTheFlyLoading();
 
