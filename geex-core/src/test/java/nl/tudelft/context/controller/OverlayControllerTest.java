@@ -1,11 +1,15 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.controller.overlay.OverlayController;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Gerben Oolbekkink
@@ -15,16 +19,18 @@ import org.junit.runner.RunWith;
 @RunWith(JfxRunner.class)
 public class OverlayControllerTest {
 
-    protected static OverlayController overlayController;
+    protected MainController mainController = new MainController();
+    protected OverlayController overlayController;
 
     /**
-     * Setup Overlaycontrollertest
+     * Setup overlay controller.
+     *
      * @throws Exception
      */
-    @BeforeClass
-    public static void beforeClass() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
-        overlayController = new OverlayController(new MainController(), new StackPane());
+        overlayController = new OverlayController(mainController, new StackPane());
 
     }
 
@@ -37,4 +43,22 @@ public class OverlayControllerTest {
         overlayController.loadFXML("");
 
     }
+
+    /**
+     * Test toggle.
+     */
+    @Test
+    public void testToggle() {
+
+        MenuItem toggleOverlay = mainController.getMenuController().getToggleOverlay();
+        assertFalse(overlayController.getVisibilityProperty().get());
+
+        toggleOverlay.fire();
+        assertTrue(overlayController.getVisibilityProperty().get());
+
+        toggleOverlay.fire();
+        assertFalse(overlayController.getVisibilityProperty().get());
+
+    }
+
 }

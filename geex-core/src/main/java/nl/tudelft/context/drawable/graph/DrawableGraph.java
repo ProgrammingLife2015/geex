@@ -7,6 +7,7 @@ import nl.tudelft.context.model.graph.StackGraph;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
 /**
@@ -108,14 +109,11 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
 
         if (nodes.size() == 1) {
             final AbstractDrawableNode node = nodes.get(0);
-            final long sourcesEdges = getSources(node).stream()
-                    .mapToInt(this::outDegreeOf).filter(source -> source > 1)
-                    .count();
-            final long targetEdges = getTargets(node).stream()
-                    .mapToInt(this::inDegreeOf).filter(target -> target > 1)
-                    .count();
-            final boolean drawShift = inDegreeOf(node) == 1 && outDegreeOf(node) >= 1
-                    && sourcesEdges > 0 && targetEdges > 0;
+
+            final boolean sourcesSingle = countEdges(getSources(node), this::outDegreeOf) > 0;
+            final boolean targetSingle = countEdges(getTargets(node), this::inDegreeOf) > 0;
+            final boolean drawShift = inDegreeOf(node) == 1 && outDegreeOf(node) >= 1 && sourcesSingle && targetSingle;
+
             if (node.getNode().isShift() || drawShift) {
                 if (prevShifted) {
                     node.setTranslateY(0);
@@ -127,6 +125,23 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
         }
 
         return false;
+
+    }
+
+    /**
+     * Count the nodes with more then 1 incoming or outgoing edges.
+     *
+     * @param nodes       Nodes to count from
+     * @param degreeCount Function that returns the degree of edges
+     * @return Amount of nodes with a higher than 1 edge degree
+     */
+    private long countEdges(final List<AbstractDrawableNode> nodes,
+                            final ToIntFunction<AbstractDrawableNode> degreeCount) {
+
+        return nodes.stream()
+                .mapToInt(degreeCount)
+                .filter(source -> source > 1)
+                .count();
 
     }
 

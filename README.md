@@ -7,6 +7,14 @@ For more details about this project, the team and the application, visit the [Wi
 
 ## Maven
 
+## Sites
+
+* [Maven Site](http://geex.hup.blue/) (Updated hourly)
+* [Sonarqube](http://sonar.hup.blue/) (Updated manually)
+
+### Install
+Before using any of the MVN lifecycle aspects, run `mvn install`
+
 ### Site
 To generate a site run `mvn site:site site:stage`. The staging site will be in `target/staging`. Just running `mvn site` will not create proper links between modules.
 
