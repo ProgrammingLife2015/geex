@@ -120,6 +120,11 @@ public class Workspace {
         nwkFile = findFile(files, ".nwk");
         annotationFile = findFile(files, ".gff");
         resistanceFile = findFile(files, ".txt");
+
+        loadNewickService = new LoadService<>(NewickParser.class, nwkFile);
+        loadAnnotationService = new LoadService<>(AnnotationParser.class, annotationFile);
+        loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
+        loadResistanceService = new LoadService<>(ResistanceParser.class, resistanceFile);
     }
 
     /**
@@ -135,11 +140,6 @@ public class Workspace {
      * Preload the workspace, makes sure all the services are started.
      */
     public final void preload() {
-        loadNewickService = new LoadService<>(NewickParser.class, nwkFile);
-        loadAnnotationService = new LoadService<>(AnnotationParser.class, annotationFile);
-        loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
-        loadResistanceService = new LoadService<>(ResistanceParser.class, resistanceFile);
-
         loadNewickService.start();
         loadAnnotationService.start();
         loadGraphService.start();
