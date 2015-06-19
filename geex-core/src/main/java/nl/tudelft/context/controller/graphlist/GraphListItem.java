@@ -131,7 +131,7 @@ public class GraphListItem extends Label implements Observable {
     /**
      * Make this item active.
      */
-    public void activate() {
+    private void activate() {
         getStyleClass().add("active");
         graph.setActive(true);
     }
