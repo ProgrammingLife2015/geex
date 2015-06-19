@@ -19,7 +19,7 @@
         </StackPane>
     </ScrollPane>
 
-    <Label styleClass="header" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0">
+    <Label fx:id="newickheader" styleClass="header" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0">
         Select strains from the Phylogenetic tree
     </Label>
 

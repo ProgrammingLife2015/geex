@@ -1,6 +1,7 @@
 package nl.tudelft.context.controller;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import nl.tudelft.context.controller.search.NewickSearchController;
@@ -20,6 +21,9 @@ import java.util.stream.Collectors;
  * @since 5-6-2015
  */
 public class SelectNewickController extends AbstractNewickController {
+
+    @FXML
+    Label newickheader;
 
     /**
      * Main controller to set views.
@@ -55,6 +59,8 @@ public class SelectNewickController extends AbstractNewickController {
     public void initialize(final URL location, final ResourceBundle resources) {
         super.initialize(location, resources);
         root.setId("newickSelectContainer");
+
+        newickheader.setText("Mark strains from the Phylogenetic tree");
 
         MenuItem toggleSelect = mainController.getMenuController().getToggleSelect();
         activeProperty.addListener((observable, oldValue, newValue) -> {
