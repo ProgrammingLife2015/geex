@@ -4,8 +4,11 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.Pane;
+import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.model.graph.StackGraph;
 
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
