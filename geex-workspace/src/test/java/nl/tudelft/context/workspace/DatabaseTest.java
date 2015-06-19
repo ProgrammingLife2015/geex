@@ -1,24 +1,29 @@
 package nl.tudelft.context.workspace;
 
+import org.junit.After;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.tmatesoft.sqljet.core.table.ISqlJetTable;
-import org.tmatesoft.sqljet.core.table.ISqlJetTransaction;
-import org.tmatesoft.sqljet.core.table.SqlJetDb;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * @author Gerben Oolbekkink
- * @version 1.0
+ * @version 2.0
  * @since 5-6-2015
  */
 public class DatabaseTest {
+
+    @After
+    public void breakDown() throws Exception {
+        System.out.println("Run after class");
+        Database.close();
+        Files.delete(new File("geex.db").toPath());
+    }
 
     @Test
     public void testInstance() throws Exception {
@@ -26,59 +31,51 @@ public class DatabaseTest {
     }
 
     @Test
-    public void testGetList() throws Exception {
-        Database db = new Database();
-        db.db = mock(SqlJetDb.class);
+    public void testGetListDb() throws Exception {
+        Database db = Database.instance();
 
-        db.getList("table", new String[] {"column"}, 5);
+        List<String[]> data = new ArrayList<>();
 
-        verify(db.db).runReadTransaction(any());
+        data.add(new String[]{"MyLocation", "MyName"});
+        data.add(new String[]{"MyOtherLocation", "MyUniqueName"});
+        data.add(new String[]{"MyFinalLocation", "MyCoolName"});
+
+        for (String[] strings : data) {
+            db.insert("workspace", strings);
+        }
+
+        List<String[]> result = db.getList("workspace", new String[]{"location", "name"}, 2);
+
+        assertEquals(2, result.size());
+        assertArrayEquals(data.get(2), result.get(0));
+        assertArrayEquals(data.get(1), result.get(1));
     }
 
     @Test
-    public void testRemove() throws Exception {
-        Database db = new Database();
-        db.db = mock(SqlJetDb.class);
+    public void testRemoveDb() throws Exception {
+        Database db = Database.instance();
 
-        db.remove("table", "value1");
+        List<String[]> data = new ArrayList<>();
 
-        verify(db.db).runWriteTransaction(any());
-    }
+        data.add(new String[]{"MyLocation", "MyName"});
+        data.add(new String[]{"MyOtherLocation", "MyUniqueName"});
+        data.add(new String[]{"MyFinalLocation", "MyCoolName"});
 
-    @Test
-    public void testInsert() throws Exception {
-        Database db = new Database();
-        db.db = mock(SqlJetDb.class);
+        for (String[] strings : data) {
+            db.insert("workspace", strings);
+        }
 
-        ArgumentCaptor<ISqlJetTransaction> dbCaptor = ArgumentCaptor.forClass(ISqlJetTransaction.class);
+        List<String[]> result = db.getList("workspace", new String[]{"location", "name"}, 2);
 
-        db.insert("table", "value1");
+        assertEquals(2, result.size());
 
-        verify(db.db).runWriteTransaction(dbCaptor.capture());
+        db.remove("workspace", data.get(2));
+        db.remove("workspace", data.get(1));
 
-        testInsertTransaction(dbCaptor.getValue());
-    }
+        result = db.getList("workspace", new String[]{"location", "name"}, 2);
 
-    private void testInsertTransaction(ISqlJetTransaction transaction) throws Exception {
-        SqlJetDb db = mock(SqlJetDb.class);
-        ISqlJetTable table = mock(ISqlJetTable.class);
+        assertEquals(1, result.size());
 
-        when(db.getTable(any())).thenReturn(table);
-        transaction.run(db);
-
-        verify(db).getTable("table");
-
-        verify(table).insert("value1");
-    }
-
-    @Test
-    public void testReplace() throws Exception {
-        Database db = mock(Database.class);
-        doCallRealMethod().when(db).replace(any());
-
-        db.replace("test");
-
-        verify(db).remove("test");
-        verify(db).insert("test");
+        assertArrayEquals(data.get(0), result.get(0));
     }
 }
