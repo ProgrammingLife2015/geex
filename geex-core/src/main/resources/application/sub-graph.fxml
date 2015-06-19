@@ -27,7 +27,7 @@
         <Label styleClass="base-N">Unknown base</Label>
     </VBox>
 
-    <Label styleClass="header" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="180" AnchorPane.leftAnchor="180">
+    <Label styleClass="header-text" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="180" AnchorPane.leftAnchor="180">
         Inspect a part of the genome
     </Label>
 

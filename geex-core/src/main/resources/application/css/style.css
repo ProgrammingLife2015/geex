@@ -27,6 +27,7 @@
 .base-margin-top {
     -fx-padding: 30px 200px 50px;
 }
+
 /* Overlay */
 #overlay {
     -fx-padding: 100px;
@@ -304,9 +305,11 @@
 }
 
 /* Legend */
+.legend {
+    -fx-background-color: rgba(43, 43, 43, .8);
+}
 .legend,
 .legend VBox {
-    -fx-background-color: rgba(43, 43, 43, .8);
     -fx-padding: 20px;
 }
 
@@ -443,11 +446,10 @@
 }
 
 /* Header */
-.header {
+.header-text {
     -fx-alignment: center;
     -fx-padding: 20px 0 0;
     -fx-font: 0.5cm 'Arial';
     -fx-text-fill: #fff;
-    -fx-background-color: #2b2b2b;
-    -fx-opacity: 80%;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 1), 1, 10, 0, 0);
 }
