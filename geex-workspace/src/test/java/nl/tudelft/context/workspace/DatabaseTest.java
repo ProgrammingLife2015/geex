@@ -20,7 +20,6 @@ public class DatabaseTest {
 
     @After
     public void breakDown() throws Exception {
-        System.out.println("Run after class");
         Database.close();
         Files.delete(new File("geex.db").toPath());
     }
