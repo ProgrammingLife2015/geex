@@ -88,8 +88,8 @@ public class GraphNode extends DefaultNode {
                 .map(DefaultNode::getBaseCounter)
                 .forEach(baseCounter::addBaseCounter);
 
-        refStart = nodes.stream().mapToInt(DefaultNode::getRefStartPosition).max().getAsInt();
-        refEnd = nodes.stream().mapToInt(DefaultNode::getRefEndPosition).min().getAsInt();
+        refStart = nodes.stream().mapToInt(DefaultNode::getRefStartPosition).min().getAsInt();
+        refEnd = nodes.stream().mapToInt(DefaultNode::getRefEndPosition).max().getAsInt();
 
     }
 
