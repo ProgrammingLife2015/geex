@@ -47,6 +47,7 @@ public class DatabaseTest {
         List<String[]> result = db.getList("workspace", new String[]{"location", "name"}, 2);
 
         assertEquals(2, result.size());
+        // Note the reverse in db.getList
         assertArrayEquals(data.get(2), result.get(0));
         assertArrayEquals(data.get(1), result.get(1));
     }
