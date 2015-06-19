@@ -32,15 +32,23 @@ public enum GraphFilterEnum {
         return name;
     }
 
-    GraphFilterEnum(Class<? extends StackGraph> graph, String name) {
+    GraphFilterEnum(final Class<? extends StackGraph> graph, final String name) {
         this.graph = graph;
         this.name = name;
     }
 
-    public void setActive(boolean active) {
+    /**
+     * Set the active state of this GraphFilter.
+     * @param active New state.
+     */
+    public void setActive(final boolean active) {
         this.active = active;
     }
 
+    /**
+     * Get if this filter is active.
+     * @return State of this filter.
+     */
     public boolean isActive() {
         return active;
     }

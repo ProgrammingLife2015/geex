@@ -25,7 +25,7 @@ public class GraphListItem extends Label {
 
     /**
      * @param graph               Graph it represents
-     * @param activeGraphProperty Active graph property to set the active graph
+     * @param graphList ObservableList of filters.
      */
     public GraphListItem(final GraphFilterEnum graph, final ObservableList<GraphFilterEnum> graphList) {
         this.graph = graph;

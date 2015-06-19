@@ -32,6 +32,9 @@ public class GraphListController {
      */
     ObjectProperty<StackGraph> activeGraph = new SimpleObjectProperty<>();
 
+    /**
+     * Base of this StackGraph.
+     */
     private StackGraph baseGraph;
 
 
@@ -60,7 +63,11 @@ public class GraphListController {
         });
     }
 
-    public void setBaseGraph(StackGraph baseGraph) {
+    /**
+     * Set the base of this graph.
+     * @param baseGraph New base StackGraph
+     */
+    public void setBaseGraph(final StackGraph baseGraph) {
         this.baseGraph = baseGraph;
     }
 
@@ -69,7 +76,7 @@ public class GraphListController {
      *
      * @param graphs    List of filters
      * @param baseGraph Graph to use as base.
-     * @return
+     * @return A combined graph.
      */
     private StackGraph createGraphFromFilter(final ObservableList<GraphFilterEnum> graphs, final StackGraph baseGraph) {
         StackGraph newGraph = baseGraph;
@@ -114,7 +121,11 @@ public class GraphListController {
         activeGraph.setValue(baseGraph);
     }
 
-    public void addAll(GraphFilterEnum[] values) {
+    /**
+     * Add a list of GraphFilterEnum.
+     * @param values GraphFilters to add
+     */
+    public void addAll(final GraphFilterEnum[] values) {
         graphList.setAll(Arrays.asList(values));
     }
 }
