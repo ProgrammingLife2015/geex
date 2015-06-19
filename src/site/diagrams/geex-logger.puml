@@ -32,7 +32,6 @@ enum MessageType {
     -level : int
 }
 
-Logger --> Message
 Logger --> MessageType
 
 Log --> Message
