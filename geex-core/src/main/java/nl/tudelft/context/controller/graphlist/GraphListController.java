@@ -37,6 +37,9 @@ public class GraphListController implements InvalidationListener {
      * Base of this StackGraph.
      */
     private StackGraph baseGraph;
+    /**
+     * Pane containing the javafx labels.
+     */
     private Pane graphs;
 
 
@@ -55,13 +58,7 @@ public class GraphListController implements InvalidationListener {
 
         graphList.addListener((ListChangeListener<GraphListItem>) c -> {
             while (c.next()) {
-                if (c.wasPermutated()) {
-                    for (int i = c.getFrom(); i < c.getTo(); ++i) {
-                        //permutate
-                    }
-                } else if (c.wasUpdated()) {
-                    //update item
-                } else {
+                if (!c.wasPermutated() && !c.wasUpdated()) {
                     for (GraphListItem remitem : c.getRemoved()) {
                         remitem.removeListener(this);
                     }
@@ -150,7 +147,7 @@ public class GraphListController implements InvalidationListener {
     }
 
     @Override
-    public void invalidated(Observable observable) {
+    public void invalidated(final Observable observable) {
         graphs.getChildren().setAll(graphList);
 
         activeGraph.set(createGraphFromFilter(graphList, baseGraph));

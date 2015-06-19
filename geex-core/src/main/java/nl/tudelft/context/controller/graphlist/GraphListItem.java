@@ -19,13 +19,22 @@ import nl.tudelft.context.logger.Log;
  * @since 17-6-2015
  */
 public class GraphListItem extends Label implements Observable {
+    /**
+     * In order to make this drag and drop work.
+     */
     private static DataFormat df = new DataFormat("GraphListItem");
+    /**
+     * The class which is listening to this item.
+     */
     private InvalidationListener listener;
 
+    /**
+     * The filter for this item.
+     */
     private final GraphFilterEnum graph;
 
     /**
-     * @param graph               Graph it represents
+     * @param graph     Graph it represents
      * @param graphList ObservableList of filters.
      */
     public GraphListItem(final GraphFilterEnum graph, final ObservableList<GraphListItem> graphList) {
@@ -38,7 +47,15 @@ public class GraphListItem extends Label implements Observable {
         setOnDragDropped(dragDropped(graphList));
     }
 
-    private EventHandler<DragEvent> dragDropped(ObservableList<GraphListItem> graphList) {
+    /**
+     * Eventhandler for dragDropped.
+     *
+     * Will move the active element to the right position in the list.
+     *
+     * @param graphList List containing all the items.
+     * @return A new eventhandler for dragdropped.
+     */
+    private EventHandler<DragEvent> dragDropped(final ObservableList<GraphListItem> graphList) {
         return event -> {
             Log.debug("Drag dropped");
             graphList.forEach(GraphListItem::deactivate);
@@ -55,6 +72,13 @@ public class GraphListItem extends Label implements Observable {
         };
     }
 
+    /**
+     * An eventhandler for dragDetected.
+     *
+     * Will init a new drag and drop.
+     *
+     * @return Eventhandler used for dragdetected.
+     */
     private EventHandler<MouseEvent> dragDetected() {
         return event -> {
             Log.debug("Drag detected");
@@ -70,7 +94,15 @@ public class GraphListItem extends Label implements Observable {
         };
     }
 
-    private EventHandler<MouseEvent> mouseClicked(ObservableList<GraphListItem> graphList) {
+    /**
+     * Eventhandler for mouseClicked.
+     *
+     * Will activate the item and make the listener reload.
+     *
+     * @param graphList List of items to change.
+     * @return An eventhandler.
+     */
+    private EventHandler<MouseEvent> mouseClicked(final ObservableList<GraphListItem> graphList) {
         return event -> {
             GraphListItem source = (GraphListItem) event.getSource();
 
@@ -81,13 +113,16 @@ public class GraphListItem extends Label implements Observable {
 
             graphList.forEach(GraphListItem::deactivate);
             graphList.stream()
-                    .limit(index+1)
+                    .limit(index + 1)
                     .forEach(GraphListItem::activate);
 
             listener.invalidated(source);
         };
     }
 
+    /**
+     * Deactivate this item.
+     */
     private void deactivate() {
         getStyleClass().remove("active");
         graph.setActive(false);
@@ -106,12 +141,12 @@ public class GraphListItem extends Label implements Observable {
     }
 
     @Override
-    public void addListener(InvalidationListener listener) {
+    public void addListener(final InvalidationListener listener) {
         this.listener = listener;
     }
 
     @Override
-    public void removeListener(InvalidationListener listener) {
+    public void removeListener(final InvalidationListener listener) {
         this.listener = null;
     }
 }
