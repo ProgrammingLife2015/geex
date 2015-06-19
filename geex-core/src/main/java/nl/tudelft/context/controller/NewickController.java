@@ -50,7 +50,7 @@ public final class NewickController extends AbstractNewickController {
         super(newickIn);
         this.mainController = mainController;
 
-        loadFXML("/application/pick-newick.fxml");
+        loadFXML("/application/newick.fxml");
     }
 
     @Override

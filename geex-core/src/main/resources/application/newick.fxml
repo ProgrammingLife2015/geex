@@ -22,7 +22,7 @@
 
     <Label styleClass="header-text" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
            AnchorPane.leftAnchor="0">
-        Mark strains from the Phylogenetic tree
+        Select strains from the Phylogenetic tree
     </Label>
 
     <HBox fx:id="search" AnchorPane.topAnchor="30" AnchorPane.rightAnchor="40"/>
