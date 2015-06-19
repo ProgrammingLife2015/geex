@@ -69,6 +69,21 @@ public class NewickSearchControllerTest {
     }
 
     @Test
+    public void testNoSearch() throws Exception {
+        nwc.searchField.setText("thing");
+        EventHandler<KeyEvent> sfeh = nwc.searchFieldEventHandler();
+
+        KeyEvent key = new KeyEvent(null, null, KeyEvent.KEY_RELEASED, "C", "Hello", KeyCode.C, false, false, false, false);
+
+        sfeh.handle(key);
+
+        assertFalse(search.getStyleClass().contains("search"));
+        assertFalse(search.getStyleClass().contains("search-focus"));
+        assertFalse(search2.getStyleClass().contains("search"));
+        assertFalse(find.getStyleClass().contains("search"));
+    }
+
+    @Test
     public void testNotFoundSearch() throws Exception {
         nwc.searchField.setText("sea");
         EventHandler<KeyEvent> sfeh = nwc.searchFieldEventHandler();
@@ -105,6 +120,27 @@ public class NewickSearchControllerTest {
         assertTrue(search.getStyleClass().contains("search"));
         assertTrue(search2.getStyleClass().contains("search"));
         assertTrue(search2.getStyleClass().contains("search-focus"));
+        assertFalse(find.getStyleClass().contains("search"));
+    }
+
+    @Test
+    public void testEmptyNextSearch() throws Exception {
+        nwc.searchField.setText("thing");
+        EventHandler<KeyEvent> sfeh = nwc.searchFieldEventHandler();
+
+        KeyEvent key = new KeyEvent(null, null, KeyEvent.KEY_RELEASED, "C", "Hello", KeyCode.C, false, false, false, false);
+
+        sfeh.handle(key);
+
+        EventHandler<ActionEvent> smeh = nwc.searchMoveEventHandler(1);
+
+        ActionEvent action = new ActionEvent(null, null);
+
+        smeh.handle(action);
+
+        assertFalse(search.getStyleClass().contains("search"));
+        assertFalse(search2.getStyleClass().contains("search"));
+        assertFalse(search2.getStyleClass().contains("search-focus"));
         assertFalse(find.getStyleClass().contains("search"));
     }
 
