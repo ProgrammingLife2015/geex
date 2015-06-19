@@ -15,21 +15,26 @@ class Breadcrumb {
     +update()
 }
 
-class DrawableEdge extends javafx.scene.shape.Line
-class BaseLabel extends javafx.scene.shape.Rectangle {
+class DrawableEdge
+class BaseLabel {
     {static}+BASE_HEIGHT : int
 }
-abstract class DefaultLabel extends javafx.scene.layout.VBox {
+abstract class AbstractLabel {
     +init()
     +currentColumn() : int
 }
-class InfoLabel extends DefaultLabel {
+class DrawableNodeLabel extends AbstractLabel {
     node : Node
     {static}+LABEL_WIDTH : int
 
     +init()
     -initMainLabel() : Label
     -initBaseLabels() : Group
+}
+class DrawableGraphNodeLabel extends AbstractLabel {
+    +node : GraphNode
+    -init()
+    -initMainLabel() : Label
 }
 class NewickLabel extends javafx.scene.control.Label {
     node : Node
@@ -185,11 +190,12 @@ MainController --> WelcomeController
 AbstractNewickController ..> DrawableEdge
 AbstractNewickController ..> NewickLabel
 
-AbstractGraphController ..> InfoLabel
+AbstractGraphController ..> DrawableNodeLabel
+AbstractGraphController ..> DrawableGraphNodeLabel
 AbstractGraphController ..> DrawableEdge
 
-InfoLabel ..> BaseLabel
-InfoLabel --> BaseController
+DrawableNodeLabel ..> BaseLabel
+DrawableNodeLabel --> BaseController
 
 NewickController --> GraphController
 
