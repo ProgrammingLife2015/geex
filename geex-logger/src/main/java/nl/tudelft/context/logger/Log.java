@@ -49,6 +49,7 @@ public final class Log implements ObservableLog {
 
     /**
      * Register a new logger.
+     *
      * @param listener logger to register.
      */
     @Override
@@ -93,13 +94,27 @@ public final class Log implements ObservableLog {
         instance().message(message, MessageType.DEBUG);
     }
 
+    public static void debug(final String message) {
+        instance().message(message, MessageType.DEBUG);
+    }
+
+    /**
+     * Extract message.
+     *
+     * @param message Message to log
+     * @param type    Type of message
+     */
+    private void message(final Message message, final MessageType type) {
+        message(message.toString(), type);
+    }
+
     /**
      * Notify listeners which qualify to the type.
      *
-     * @param message Message to log
+     * @param message Message string
      * @param type Type of message
      */
-    private void message(final Message message, final MessageType type) {
+    private void message(final String message, final MessageType type) {
         listeners.stream()
                 .filter(logger -> logger.getLevel().getLevel() <= type.getLevel())
                 .forEach(logger -> logger.log(message, type));

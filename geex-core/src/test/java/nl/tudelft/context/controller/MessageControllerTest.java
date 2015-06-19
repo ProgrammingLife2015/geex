@@ -24,7 +24,7 @@ public class MessageControllerTest {
         MessageController mc = new MessageController();
         String text = Message.MESSAGE_READY.toString();
 
-        mc.log(Message.MESSAGE_READY, MessageType.INFO);
+        mc.log(Message.MESSAGE_READY.toString(), MessageType.INFO);
 
         assertEquals(mc.message.getText(), text);
     }

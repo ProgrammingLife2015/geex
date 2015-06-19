@@ -24,7 +24,7 @@ public final class StdOutLogger implements Logger {
     }
 
     @Override
-    public void log(final Message message, final MessageType messageType) {
+    public void log(final String message, final MessageType messageType) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         getStream(messageType).printf("%-23s [%s] %s%n", timestamp, messageType, message);

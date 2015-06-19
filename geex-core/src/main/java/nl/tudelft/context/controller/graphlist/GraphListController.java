@@ -3,10 +3,15 @@ package nl.tudelft.context.controller.graphlist;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
+import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.model.graph.StackGraph;
 
-import java.util.LinkedList;
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +25,7 @@ public class GraphListController {
     /**
      * List of graph views.
      */
-    LinkedList<StackGraph> graphList = new LinkedList<>();
+    ObservableList<GraphFilterEnum> graphList;
 
     /**
      * Active graph property.
@@ -28,21 +33,67 @@ public class GraphListController {
     ObjectProperty<StackGraph> activeGraph = new SimpleObjectProperty<>();
 
     /**
+     * Base of this StackGraph.
+     */
+    private StackGraph baseGraph;
+
+
+    /**
      * Create a graph list controller.
      *
      * @param graphs FXML Pane to add graphs labels to.
      */
     public GraphListController(final Pane graphs) {
+        graphList = FXCollections.observableArrayList();
+
         activeGraph.addListener((observable, oldValue, newValue) -> {
-            List<GraphListItem> listItems = graphList.stream()
-                    .map(graph -> new GraphListItem(graph, activeGraph))
-                    .collect(Collectors.toList());
-            listItems.stream()
-                    .limit(graphList.indexOf(newValue) + 1)
-                    .forEach(GraphListItem::setActive);
-            graphs.getChildren().setAll(listItems);
+
         });
 
+        graphList.addListener((ListChangeListener<GraphFilterEnum>) c -> {
+            List<GraphListItem> graphListItemList = graphList.stream()
+                    .map(graphFilter -> new GraphListItem(graphFilter, graphList))
+                    .collect(Collectors.toList());
+
+            graphs.getChildren().setAll(graphListItemList);
+
+            activeGraph.set(createGraphFromFilter(graphList, baseGraph));
+
+            Log.debug("Updating graphlist");
+        });
+    }
+
+    /**
+     * Set the base of this graph.
+     * @param baseGraph New base StackGraph
+     */
+    public void setBaseGraph(final StackGraph baseGraph) {
+        this.baseGraph = baseGraph;
+    }
+
+    /**
+     * Use the filters in graphs, to create a new StackGraph.
+     *
+     * @param graphs    List of filters
+     * @param baseGraph Graph to use as base.
+     * @return A combined graph.
+     */
+    private StackGraph createGraphFromFilter(final ObservableList<GraphFilterEnum> graphs, final StackGraph baseGraph) {
+        StackGraph newGraph = baseGraph;
+        for (GraphFilterEnum gfe : graphs) {
+            if (!gfe.isActive()) {
+                break;
+            }
+            try {
+                Class<? extends StackGraph> clazz = gfe.getGraph();
+                Constructor<? extends StackGraph> constructor = clazz.getDeclaredConstructor(StackGraph.class);
+                newGraph = constructor.newInstance(newGraph);
+            } catch (ReflectiveOperationException e) {
+                Log.debug(e.getMessage());
+            }
+        }
+
+        return newGraph;
     }
 
     /**
@@ -64,36 +115,17 @@ public class GraphListController {
     }
 
     /**
-     * Add a graph to the graph list.
-     *
-     * @param stackGraph Graph to add
-     */
-    public void add(final StackGraph stackGraph) {
-        graphList.add(stackGraph);
-        activeGraph.set(stackGraph);
-    }
-
-    /**
-     * Zoom in.
-     */
-    public void zoomIn() {
-        StackGraph newGraph = graphList.get(Math.max(graphList.indexOf(getActiveGraph()) - 1, 0));
-        activeGraph.setValue(newGraph);
-    }
-
-    /**
-     * Zoom out.
-     */
-    public void zoomOut() {
-        StackGraph newGraph = graphList.get(Math.min(graphList.indexOf(getActiveGraph()) + 1, graphList.size() - 1));
-        activeGraph.setValue(newGraph);
-    }
-
-    /**
      * Reset the view.
      */
     public void reset() {
-        activeGraph.setValue(graphList.getLast());
+        activeGraph.setValue(baseGraph);
     }
 
+    /**
+     * Add a list of GraphFilterEnum.
+     * @param values GraphFilters to add
+     */
+    public void addAll(final GraphFilterEnum[] values) {
+        graphList.setAll(Arrays.asList(values));
+    }
 }
