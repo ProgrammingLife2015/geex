@@ -76,7 +76,8 @@
     -fx-text-fill: #2b2b2b;
 }
 
-.margin-top .h2 {
+.margin-top .h2,
+.base-margin-top .h2{
     -fx-padding: 20px 0 10px;
     -fx-text-fill: #fff;
 }
