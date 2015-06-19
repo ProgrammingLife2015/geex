@@ -57,7 +57,7 @@ public class WorkspaceTest {
         assertEquals(nodePath, workspace.nodeFile);
         assertEquals(edgePath, workspace.edgeFile);
         assertEquals(nwkPath, workspace.nwkFile);
-        assertEquals(annPath, workspace.annotationFile);
+        assertEquals(annPath, workspace.codingSequenceFile);
         assertEquals(immPath, workspace.resistanceFile);
     }
 
