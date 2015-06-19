@@ -75,6 +75,15 @@ public class GraphNode extends DefaultNode {
 
         }
 
+        calculateProperties();
+
+    }
+
+    /**
+     * Calculate the node properties: base counter, reference positions.
+     */
+    private void calculateProperties() {
+
         nodes.stream()
                 .map(DefaultNode::getBaseCounter)
                 .forEach(baseCounter::addBaseCounter);
