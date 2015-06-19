@@ -202,14 +202,14 @@
 
 .selected-label .info-label {
     -fx-border-width: 4px 4px 0;
-    -fx-border-color: #fff;
+    -fx-border-color: #00ffff;
 }
 
 .selected-label .single-label,
 .selected-label .insert-delete-label,
 .selected-label .collapse-label {
     -fx-border-width: 4px;
-    -fx-border-color: #fff;
+    -fx-border-color: #00ffff;
     -fx-border-radius: 30px;
 }
 
