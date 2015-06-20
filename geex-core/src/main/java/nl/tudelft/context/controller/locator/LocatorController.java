@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
 import nl.tudelft.context.model.graph.DefaultNode;
 
@@ -58,10 +59,12 @@ public class LocatorController {
      * @param locator          The locator pane
      * @param labelMapProperty Currently active nodes
      * @param positionProperty Location currently shown (columns)
+     * @param graphController  Graph controller to update the position
      */
     public LocatorController(final Pane locator,
                              final ObjectProperty<Map<Integer, List<AbstractDrawableNode>>> labelMapProperty,
-                             final ObjectProperty<List<Integer>> positionProperty) {
+                             final ObjectProperty<List<Integer>> positionProperty,
+                             final AbstractGraphController graphController) {
 
         this.locator = locator;
         this.positionProperty = positionProperty;
@@ -76,6 +79,8 @@ public class LocatorController {
         positionProperty.addListener(event -> setPosition());
         locator.widthProperty().addListener(event -> setPosition());
 
+        initInteraction(graphController);
+
     }
 
     /**
@@ -88,6 +93,41 @@ public class LocatorController {
         locatorIndicator.setTranslateY(2);
         locator.getChildren().setAll(locatorIndicator);
 
+    }
+
+    /**
+     * Init the mouse clicks on the locator.
+     *
+     * @param graphController Graph controller to update the position
+     */
+    private void initInteraction(final AbstractGraphController graphController) {
+
+        locator.setOnMouseClicked(event -> optionalTotalMap.ifPresent(totalMap -> {
+            int refPosition = (int) (event.getX() / getScale());
+            int column = totalMap.entrySet().stream()
+                    .reduce((a, b) -> {
+                        if (getRefDeviation(a, refPosition) < getRefDeviation(b, refPosition)) {
+                            return a;
+                        } else {
+                            return b;
+                        }
+                    }).get().getKey();
+            graphController.setPosition(column);
+        }));
+
+    }
+
+    /**
+     * Get deviation from ref position of a column.
+     *
+     * @param column      Map entry representing a column
+     * @param refPosition Position that is deviated from
+     * @return Deviation from ref position of a column
+     */
+    private int getRefDeviation(final Map.Entry<Integer, List<Integer>> column, final int refPosition) {
+        List<Integer> positions = column.getValue();
+        int refColumn = positions.get(0) + (positions.get(1) - positions.get(0)) / 2;
+        return Math.abs(refColumn - refPosition);
     }
 
     /**
@@ -116,6 +156,15 @@ public class LocatorController {
     }
 
     /**
+     * Get the scale based on the locator width and the max ref position.
+     *
+     * @return Scale based on the locator width and the max ref position
+     */
+    private double getScale() {
+        return locator.getWidth() / maxRefPosition;
+    }
+
+    /**
      * Sets the position of the indicator.
      */
     private void setPosition() {
@@ -135,7 +184,7 @@ public class LocatorController {
                         .mapToInt(x -> x.get(1))
                         .max().getAsInt();
 
-                double scale = locator.getWidth() / maxRefPosition;
+                double scale = getScale();
 
                 locatorIndicator.setTranslateX(min * scale);
                 locatorIndicator.setWidth((max - min) * scale);

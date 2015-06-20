@@ -109,7 +109,7 @@ public final class GraphController extends AbstractGraphController {
         super.initialize(location, resources);
 
         graphListController = new GraphListController(graphs);
-        new LocatorController(locator, nodeMapProperty, positionProperty);
+        new LocatorController(locator, nodeMapProperty, positionProperty, this);
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
