@@ -116,7 +116,7 @@ public class CodingSequenceTest {
                 + "Score: 0.0" + System.lineSeparator()
                 + "Strand (Sense): A" + System.lineSeparator()
                 + "Phase: B" + System.lineSeparator()
-                + "Attributes: attributes" + System.lineSeparator(), codingSequence1.toString());
+                + "Attributes: attributes", codingSequence1.toString());
 
         assertEquals("Sequence: seqId" + System.lineSeparator()
                 + "Source: source" + System.lineSeparator()
@@ -126,7 +126,7 @@ public class CodingSequenceTest {
                 + "Score: 0.0" + System.lineSeparator()
                 + "Strand (Sense): A" + System.lineSeparator()
                 + "Phase: B" + System.lineSeparator()
-                + "Attributes: attributes" + System.lineSeparator(), codingSequence2.toString());
+                + "Attributes: attributes", codingSequence2.toString());
 
         assertEquals("Sequence: seqId1" + System.lineSeparator()
                 + "Source: source1" + System.lineSeparator()
@@ -136,7 +136,7 @@ public class CodingSequenceTest {
                 + "Score: 1.0" + System.lineSeparator()
                 + "Strand (Sense): C" + System.lineSeparator()
                 + "Phase: D" + System.lineSeparator()
-                + "Attributes: attributes2" + System.lineSeparator(), codingSequence3.toString());
+                + "Attributes: attributes2", codingSequence3.toString());
 
     }
 
