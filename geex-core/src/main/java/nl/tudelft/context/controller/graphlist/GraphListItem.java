@@ -44,12 +44,20 @@ public class GraphListItem extends Label implements Observable {
 
         setOnMouseClicked(mouseClicked(graphList));
         setOnDragDetected(dragDetected());
+        setOnDragOver(dragOver());
         setOnDragDropped(dragDropped(graphList));
+    }
+
+    private EventHandler<? super DragEvent> dragOver() {
+        return event -> {
+            event.acceptTransferModes(TransferMode.MOVE);
+            event.consume();
+        };
     }
 
     /**
      * Eventhandler for dragDropped.
-     *
+     * <p/>
      * Will move the active element to the right position in the list.
      *
      * @param graphList List containing all the items.
@@ -74,7 +82,7 @@ public class GraphListItem extends Label implements Observable {
 
     /**
      * An eventhandler for dragDetected.
-     *
+     * <p/>
      * Will init a new drag and drop.
      *
      * @return Eventhandler used for dragdetected.
@@ -96,7 +104,7 @@ public class GraphListItem extends Label implements Observable {
 
     /**
      * Eventhandler for mouseClicked.
-     *
+     * <p/>
      * Will activate the item and make the listener reload.
      *
      * @param graphList List of items to change.
