@@ -68,7 +68,7 @@ class GraphController extends AbstractGraphController {
 
     -initMenu()
     -loadGraph(graphMap : GraphMap)
-    -loadAnnotation(annotationMap : AnnotationMap)
+    -loadAnnotation(codingSequenceMap : AnnotationMap)
     -loadResistance(resistanceMap : ResistanceMap)
     +updateSelectedSources(sources : Set<String>)
 

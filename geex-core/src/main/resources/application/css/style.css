@@ -271,7 +271,7 @@
     -fx-fill: #fff;
 }
 
-#occurrences, #sources, #annotations {
+#occurrences, #sources, #codingSequences, #resistances {
     -fx-fill: #fff;
     -fx-font: 0.35cm 'Arial';
 }

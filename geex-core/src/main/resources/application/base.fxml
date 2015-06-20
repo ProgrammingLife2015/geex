@@ -11,14 +11,18 @@
         <Label styleClass="header-text">
             View specific details on a base
         </Label>
-        <VBox styleClass="base-margin-top">
+        <VBox styleClass="margin-top">
             <Label styleClass="h2">Sources</Label>
             <TextFlow>
                 <Text fx:id="sources"/>
             </TextFlow>
-            <Label styleClass="h2">Annotations</Label>
+            <Label styleClass="h2">Coding Sequence Annotations</Label>
             <TextFlow>
-                <Text fx:id="annotations"/>
+                <Text fx:id="codingSequences"/>
+            </TextFlow>
+            <Label styleClass="h2">Resistance Causing Mutations</Label>
+            <TextFlow>
+                <Text fx:id="resistances"/>
             </TextFlow>
             <Label styleClass="h2">Bases</Label>
             <TextFlow>

@@ -93,7 +93,7 @@ public final class NewickController extends AbstractNewickController {
                 graphController = new GraphController(mainController,
                         newSelection,
                         mainController.getWorkspace().getGraph(),
-                        mainController.getWorkspace().getAnnotation(),
+                        mainController.getWorkspace().getCodingSequence(),
                         mainController.getWorkspace().getResistance());
                 mainController.setView(this, graphController);
             } else {
