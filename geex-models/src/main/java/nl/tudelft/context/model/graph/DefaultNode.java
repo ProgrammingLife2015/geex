@@ -1,7 +1,9 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.annotation.Annotation;
-import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.CodingSequence;
+import nl.tudelft.context.model.annotation.CodingSequenceMap;
+import nl.tudelft.context.model.annotation.Resistance;
+import nl.tudelft.context.model.annotation.ResistanceMap;
 
 import java.util.List;
 import java.util.Set;
@@ -75,18 +77,32 @@ public abstract class DefaultNode {
     public abstract int getRefEndPosition();
 
     /**
-     * Sets the annotations that belong to this node.
+     * Sets the codingSequences that belong to this node.
      *
-     * @param annotationMap The list of all annotations
+     * @param codingSequenceMap The list of all codingSequences
      */
-    public abstract void setAnnotations(final AnnotationMap annotationMap);
+    public abstract void setCodingSequences(final CodingSequenceMap codingSequenceMap);
 
     /**
-     * Get the list of annotations that are present in this node.
+     * Get the list of codingSequences that are present in this node.
      *
-     * @return The list of annotations present in this node
+     * @return The list of codingSequences present in this node
      */
-    public abstract List<Annotation> getAnnotations();
+    public abstract List<CodingSequence> getCodingSequences();
+
+    /**
+     * Sets the resistance mutations that belong to this node.
+     *
+     * @param resistanceMap The list of all resistance mutations
+     */
+    public abstract void setResistances(final ResistanceMap resistanceMap);
+
+    /**
+     * Get the list of resistance mutations that are present in this node.
+     *
+     * @return The list of resistance mutations present in this node
+     */
+    public abstract List<Resistance> getResistances();
 
     /**
      * Shift the node.

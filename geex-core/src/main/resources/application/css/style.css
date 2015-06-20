@@ -23,6 +23,11 @@
     -fx-padding: 30px 50px 50px;
 }
 
+/* Used in the base view */
+.base-margin-top {
+    -fx-padding: 30px 210px 50px;
+}
+
 /* Overlay */
 #overlay {
     -fx-padding: 100px;
@@ -71,7 +76,8 @@
     -fx-text-fill: #2b2b2b;
 }
 
-.margin-top .h2 {
+.margin-top .h2,
+.base-margin-top .h2{
     -fx-padding: 20px 0 10px;
     -fx-text-fill: #fff;
 }
@@ -196,14 +202,14 @@
 
 .selected-label .info-label {
     -fx-border-width: 4px 4px 0;
-    -fx-border-color: #fff;
+    -fx-border-color: #00ffff;
 }
 
 .selected-label .single-label,
 .selected-label .insert-delete-label,
 .selected-label .collapse-label {
     -fx-border-width: 4px;
-    -fx-border-color: #fff;
+    -fx-border-color: #00ffff;
     -fx-border-radius: 30px;
 }
 
@@ -265,7 +271,7 @@
     -fx-fill: #fff;
 }
 
-#occurrences, #sources, #annotations {
+#occurrences, #sources, #codingSequences, #resistances {
     -fx-fill: #fff;
     -fx-font: 0.35cm 'Arial';
 }
@@ -300,9 +306,11 @@
 }
 
 /* Legend */
+.legend {
+    -fx-background-color: rgba(43, 43, 43, .8);
+}
 .legend,
 .legend VBox {
-    -fx-background-color: rgba(43, 43, 43, .8);
     -fx-padding: 20px;
 }
 
@@ -437,4 +445,13 @@
 
 .search-focus {
     -fx-border-color: #ef8caf;
+}
+
+/* Header */
+.header-text {
+    -fx-alignment: center;
+    -fx-padding: 20px 0 0;
+    -fx-font: 0.5cm 'Arial';
+    -fx-text-fill: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 1), 1, 10, 0, 0);
 }

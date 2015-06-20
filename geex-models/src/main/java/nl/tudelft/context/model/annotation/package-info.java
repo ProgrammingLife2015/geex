@@ -1,8 +1,10 @@
 /**
- * A package containing the annotation object, storage structure and parser.
+ * Contains annotations in two different forms.
+ * - Coding sequences
+ * - Drug resistance causing mutations
  *
- * @author Jasper Nieuwdorp
+ * @author Jasper Boot
  * @version 1.0
- * @since 21-5-2015
+ * @since 17-06-2015
  */
 package nl.tudelft.context.model.annotation;

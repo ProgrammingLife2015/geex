@@ -47,14 +47,13 @@ public class SelectNewickController extends AbstractNewickController {
         this.graphController = graphController;
         this.showInBreadcrumb = false;
 
-        loadFXML("/application/newick.fxml");
+        loadFXML("/application/select-newick.fxml");
 
     }
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         super.initialize(location, resources);
-        root.setId("newickSelectContainer");
 
         MenuItem toggleSelect = mainController.getMenuController().getToggleSelect();
         activeProperty.addListener((observable, oldValue, newValue) -> {
@@ -69,7 +68,7 @@ public class SelectNewickController extends AbstractNewickController {
     void showTree(final Newick newick) {
         DrawableNewick subNewick = new DrawableNewick(newick.getSelectedSubGraph());
         subNewick.getNewick().getRoot().getSourcesProperty().addListener(event -> graphController
-                        .updateSelectedSources(subNewick.getNewick().getRoot().getSources()));
+                .updateSelectedSources(subNewick.getNewick().getRoot().getSources()));
 
         // Bind edges
         List<DrawableEdge> edgeList = subNewick.edgeSet().stream()

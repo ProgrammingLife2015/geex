@@ -40,6 +40,7 @@ public class Database {
 
     /**
      * Get or Create the database.
+     *
      * @return The database for this application.
      * @throws SqlJetException When the creation fails.
      */
@@ -58,10 +59,25 @@ public class Database {
     }
 
     /**
+     * Close the database instance.
+     *
+     * @throws SqlJetException When the closing fails
+     */
+    public static void close() throws SqlJetException {
+        synchronized (Database.class) {
+            if (instance != null) {
+                instance.db.close();
+                instance = null;
+            }
+        }
+    }
+
+    /**
      * Get the contents of a table from the database.
+     *
      * @param tableName The table to select form.
-     * @param columns The columns to select.
-     * @param limit The limit of the selection.
+     * @param columns   The columns to select.
+     * @param limit     The limit of the selection.
      * @return A list of rows.
      * @throws SqlJetException When the database fails.
      */
@@ -91,6 +107,7 @@ public class Database {
 
     /**
      * Open the database and create the proper tables if they don't exist.
+     *
      * @throws SqlJetException Something went wrong.
      */
     private void open() throws SqlJetException {
@@ -117,8 +134,9 @@ public class Database {
     /**
      * Remove the specified values from te database. Does not fail
      * when the record is not found.
+     *
      * @param tableName The table to remove data from
-     * @param values The data to remove
+     * @param values    The data to remove
      * @throws SqlJetException When there is a database error.
      */
     public void remove(final String tableName, final String... values) throws SqlJetException {
@@ -139,8 +157,9 @@ public class Database {
 
     /**
      * Insert a new row into a table.
+     *
      * @param tableName Table to insert data into
-     * @param values Values to insert into the table
+     * @param values    Values to insert into the table
      * @throws SqlJetException When the database fails.
      */
     public void insert(final String tableName, final String... values) throws SqlJetException {
@@ -149,8 +168,9 @@ public class Database {
 
     /**
      * Replace data in a table, does not fail when the original doesn't exist.
+     *
      * @param tableName Table to replace data in.
-     * @param values Values to replace
+     * @param values    Values to replace
      * @throws SqlJetException When the database fails.
      */
     public void replace(final String tableName, final String... values) throws SqlJetException {

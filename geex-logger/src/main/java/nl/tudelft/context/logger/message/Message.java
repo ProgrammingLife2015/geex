@@ -42,14 +42,14 @@ public enum Message {
     SUCCESS_LOAD_TREE("Phylogenetic tree loaded successfully."),
 
     /**
-     * Message used when annotation loading fails.
+     * Message used when coding sequence loading fails.
      */
-    FAIL_LOAD_ANNOTATION("Could not load annotations."),
+    FAIL_LOAD_CODING_SEQUENCE("Could not load coding sequences."),
 
     /**
-     * Message used when annotation loading succeeds.
+     * Message used when coding sequence loading succeeds.
      */
-    SUCCESS_LOAD_ANNOTATION("Annotations loaded successfully."),
+    SUCCESS_LOAD_CODING_SEQUENCE("Coding sequences loaded successfully."),
     /**
      * The text that is shown.
      */
@@ -62,7 +62,7 @@ public enum Message {
     /**
      * Message used when annotation loading succeeds.
      */
-    SUCCESS_LOAD_RESISTANCE("Resistance Annotations loaded successfully."),
+    SUCCESS_LOAD_RESISTANCE("Resistance annotations loaded successfully."),
 
     /**
      * Message used when annotation loading succeeds.

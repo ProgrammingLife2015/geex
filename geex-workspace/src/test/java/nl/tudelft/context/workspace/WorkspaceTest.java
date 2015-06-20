@@ -1,17 +1,28 @@
 package nl.tudelft.context.workspace;
 
+import de.saxsys.javafx.test.JfxRunner;
+import nl.tudelft.context.model.annotation.CodingSequenceParser;
+import nl.tudelft.context.model.annotation.ResistanceParser;
+import nl.tudelft.context.model.graph.GraphParser;
+import nl.tudelft.context.model.newick.NewickParser;
+import nl.tudelft.context.service.LoadService;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import static junit.framework.Assert.assertNull;
 import static junit.framework.TestCase.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * @author Gerben Oolbekkink
  * @version 1.1
  * @since 9-5-2015
  */
+@RunWith(value = JfxRunner.class)
 public class WorkspaceTest {
 
     @Test(expected = FileNotFoundException.class)
@@ -57,7 +68,7 @@ public class WorkspaceTest {
         assertEquals(nodePath, workspace.nodeFile);
         assertEquals(edgePath, workspace.edgeFile);
         assertEquals(nwkPath, workspace.nwkFile);
-        assertEquals(annPath, workspace.annotationFile);
+        assertEquals(annPath, workspace.codingSequenceFile);
         assertEquals(immPath, workspace.resistanceFile);
     }
 
@@ -154,6 +165,55 @@ public class WorkspaceTest {
 
         workspace1.load();
 
+    }
+
+    @Test
+    public void testPreload() throws Exception {
+        Workspace workspace = new Workspace(File.createTempFile("favourite", "dir"));
+
+        workspace.loadNewickService = mock(LoadService.class);
+        workspace.loadCodingSequenceService = mock(LoadService.class);
+        workspace.loadGraphService = mock(LoadService.class);
+        workspace.loadResistanceService = mock(LoadService.class);
+
+        workspace.preload();
+
+        verify(workspace.loadNewickService).start();
+        verify(workspace.loadCodingSequenceService).start();
+        verify(workspace.loadGraphService).start();
+        verify(workspace.loadResistanceService).start();
+    }
+
+    @Test
+    public void testClose() throws Exception {
+        Workspace workspace = new Workspace(File.createTempFile("favourite", "dir"));
+
+        workspace.loadNewickService = mock(LoadService.class);
+        workspace.loadCodingSequenceService = mock(LoadService.class);
+        workspace.loadGraphService = mock(LoadService.class);
+        workspace.loadResistanceService = mock(LoadService.class);
+
+        workspace.close();
+
+        verify(workspace.loadNewickService).cancel();
+        verify(workspace.loadCodingSequenceService).cancel();
+        verify(workspace.loadGraphService).cancel();
+        verify(workspace.loadResistanceService).cancel();
+    }
+
+    @Test
+    public void testProperties() throws Exception {
+        Workspace workspace = new Workspace(File.createTempFile("favourite", "dir"));
+
+        workspace.loadNewickService = new LoadService<>(NewickParser.class);
+        workspace.loadCodingSequenceService = new LoadService<>(CodingSequenceParser.class);
+        workspace.loadGraphService = new LoadService<>(GraphParser.class);
+        workspace.loadResistanceService = new LoadService<>(ResistanceParser.class);
+
+        assertNull(workspace.getNewick().get());
+        assertNull(workspace.getCodingSequence().get());
+        assertNull(workspace.getGraph().get());
+        assertNull(workspace.getResistance().get());
     }
 
 }

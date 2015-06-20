@@ -13,9 +13,9 @@ import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.message.Message;
-import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.CodingSequenceMap;
+import nl.tudelft.context.model.annotation.ResistanceMap;
 import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.model.resistance.ResistanceMap;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -61,9 +61,9 @@ public final class GraphController extends AbstractGraphController {
 
     /**
      * Sources that are displayed in the graph.
-     * Property with annotation map.
+     * Property with codingSequence map.
      */
-    ReadOnlyObjectProperty<AnnotationMap> annotationMapIn;
+    ReadOnlyObjectProperty<CodingSequenceMap> codingSequenceMapIn;
 
     /**
      * Property with resistance map.
@@ -78,23 +78,23 @@ public final class GraphController extends AbstractGraphController {
     /**
      * Init a controller at graph.fxml.
      *
-     * @param mainController  MainController for the application
-     * @param sources         Sources to display
-     * @param graphMapIn      The graphMap from the workspace, might not be loaded.
-     * @param annotationMapIn The AnnotationMap from the workspace, might not be loaded.
-     * @param resistanceMapIn The ResistanceMap from the workspace, might not be loaded.
+     * @param mainController      MainController for the application
+     * @param sources             Sources to display
+     * @param graphMapIn          The graphMap from the workspace, might not be loaded.
+     * @param codingSequenceMapIn The CodingSequenceMap from the workspace, might not be loaded.
+     * @param resistanceMapIn     The ResistanceMap from the workspace, might not be loaded.
      */
     public GraphController(final MainController mainController,
                            final Set<String> sources,
                            final ReadOnlyObjectProperty<GraphMap> graphMapIn,
-                           final ReadOnlyObjectProperty<AnnotationMap> annotationMapIn,
+                           final ReadOnlyObjectProperty<CodingSequenceMap> codingSequenceMapIn,
                            final ReadOnlyObjectProperty<ResistanceMap> resistanceMapIn) {
 
         super(mainController);
         this.sources = sources;
 
         this.graphMapIn = graphMapIn;
-        this.annotationMapIn = annotationMapIn;
+        this.codingSequenceMapIn = codingSequenceMapIn;
         this.resistanceMapIn = resistanceMapIn;
 
         loadFXML("/application/graph.fxml");
@@ -109,21 +109,20 @@ public final class GraphController extends AbstractGraphController {
         new LocatorController(locator, nodeMapProperty, positionProperty);
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
-        ObjectProperty<AnnotationMap> annotationMapProperty = new SimpleObjectProperty<>();
+        ObjectProperty<CodingSequenceMap> codingSequenceMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<ResistanceMap> resistanceMapProperty = new SimpleObjectProperty<>();
 
         graphMapProperty.addListener(event -> {
-            Log.info(Message.SUCCESS_LOAD_ANNOTATION);
-            loadGraph(graphMapProperty.get(), annotationMapProperty.get());
+            Log.info(Message.SUCCESS_LOAD_CODING_SEQUENCE);
+            loadGraph(graphMapProperty.get(), codingSequenceMapProperty.get(), resistanceMapProperty.get());
         });
-        annotationMapProperty.addListener(event -> loadGraph(graphMapProperty.get(), annotationMapProperty.get()));
-
-        resistanceMapProperty.addListener((observable, oldValue, newValue) -> {
-            loadResistance(newValue);
-        });
+        codingSequenceMapProperty.addListener(event ->
+                loadGraph(graphMapProperty.get(), codingSequenceMapProperty.get(), resistanceMapProperty.get()));
+        resistanceMapProperty.addListener(event ->
+                loadGraph(graphMapProperty.get(), codingSequenceMapProperty.get(), resistanceMapProperty.get()));
 
         graphMapProperty.bind(graphMapIn);
-        annotationMapProperty.bind(annotationMapIn);
+        codingSequenceMapProperty.bind(codingSequenceMapIn);
         resistanceMapProperty.bind(resistanceMapIn);
 
         progressIndicator.visibleProperty().bind(graphMapProperty.isNull());
@@ -165,17 +164,16 @@ public final class GraphController extends AbstractGraphController {
      * Load graph from source.
      *
      * @param graphMap      The GraphMap which is loaded.
-     * @param annotationMap The AnnotationMap which is loaded.
+     * @param codingSequenceMap The CodingSequenceMap which is loaded.
+     * @param resistanceMap The ResistanceMap which is loaded.
      */
-    private void loadGraph(final GraphMap graphMap, final AnnotationMap annotationMap) {
-        if (graphMap != null && annotationMap != null) {
-            graphMap.setAnnotations(annotationMap);
+    private void loadGraph(final GraphMap graphMap, final CodingSequenceMap codingSequenceMap,
+            final ResistanceMap resistanceMap) {
+        if (graphMap != null && codingSequenceMap != null && resistanceMap != null) {
+            graphMap.setCodingSequence(codingSequenceMap);
+            graphMap.setResistance(resistanceMap);
             graphListController.setBaseGraph(graphMap.flat(sources));
             graphListController.addAll(GraphFilterEnum.values());
-//            graphListController.add(new SinglePointGraph(graphListController.getActiveGraph()));
-//            graphListController.add(new InsertDeleteGraph(graphListController.getActiveGraph()));
-//            graphListController.add(new CollapseGraph(graphListController.getActiveGraph()));
-//            graphListController.add(new UnknownGraph(graphListController.getActiveGraph()));
 
             graphListController.getActiveGraphProperty().addListener((observable, oldValue, newValue) ->
                     showGraph(new DrawableGraph(newValue)));
@@ -190,15 +188,6 @@ public final class GraphController extends AbstractGraphController {
      */
     public void updateSelectedSources(final Set<String> sources) {
         selectedSources.setValue(sources);
-    }
-
-    /**
-     * Load resistances from source.
-     *
-     * @param resistanceMap The resistance map which is loaded.
-     */
-    private void loadResistance(final ResistanceMap resistanceMap) {
-        Log.info(Message.SUCCESS_LOAD_RESISTANCE);
     }
 
     @Override

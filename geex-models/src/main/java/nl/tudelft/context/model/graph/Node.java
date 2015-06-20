@@ -1,10 +1,12 @@
 package nl.tudelft.context.model.graph;
 
 import nl.tudelft.context.model.annotation.Annotation;
-import nl.tudelft.context.model.annotation.AnnotationMap;
+import nl.tudelft.context.model.annotation.CodingSequence;
+import nl.tudelft.context.model.annotation.CodingSequenceMap;
+import nl.tudelft.context.model.annotation.Resistance;
+import nl.tudelft.context.model.annotation.ResistanceMap;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -34,9 +36,13 @@ public class Node extends DefaultNode {
      */
     BaseCounter baseCounter;
     /**
-     * The annotations that belong to this node.
+     * The codingSequences that belong to this node.
      */
-    List<Annotation> annotations = Collections.emptyList();
+    List<CodingSequence> codingSequences = Collections.emptyList();
+    /**
+     * The resistance mutations that belong to this node.
+     */
+    List<Resistance> resistance = Collections.emptyList();
 
     /**
      * Create a node.
@@ -91,30 +97,59 @@ public class Node extends DefaultNode {
     }
 
     @Override
-    public void setAnnotations(final AnnotationMap annotationMap) {
+    public void setCodingSequences(final CodingSequenceMap codingSequenceMap) {
         if (sources.contains("TKK_REF")) {
-            annotations = annotationMap.subMap(refStartPosition, refEndPosition).values().stream()
-                    .flatMap(Collection::stream)
-                    .collect(Collectors.toList());
+            codingSequences = codingSequenceMap.annotationsBetween(refStartPosition, refEndPosition);
         }
     }
 
     @Override
-    public List<Annotation> getAnnotations() {
-        return annotations;
+    public List<CodingSequence> getCodingSequences() {
+        return codingSequences;
+    }
+
+    @Override
+    public void setResistances(final ResistanceMap resistanceMap) {
+        resistance = resistanceMap.annotationsBetween(refStartPosition, refEndPosition);
+    }
+
+    @Override
+    public List<Resistance> getResistances() {
+        return resistance;
     }
 
     /**
-     * Retrieve the text for the annotations in order, without surrounding brackets and with line seperators.
+     * Retrieve the text for the codingSequences in order, without surrounding brackets and with line separators.
      *
-     * @return String representing the Annotation list
+     * @return String representing the CodingSequence list
      */
-    public String getAnnotationText() {
-        List<String> annotationList = annotations.stream().map(Annotation::toString).collect(Collectors.toList());
+    public String getCodingSequenceText() {
+        return getAnnotationsText(codingSequences);
+    }
+
+    /**
+     * Retrieve the text for the Resistance in order, without surrounding brackets and with line separators.
+     *
+     * @return String representing the Resistance list
+     */
+    public String getResistancesText() {
+        return getAnnotationsText(resistance);
+    }
+
+    /**
+     * Retrieve the text for the annotations in order.
+     *
+     * @param annotations The annotations to turn into text.
+     * @return            String representation of the annotations.
+     */
+    public String getAnnotationsText(final List<? extends Annotation> annotations) {
+        List<String> annotationList = annotations.stream()
+                .map(Annotation::toString)
+                .collect(Collectors.toList());
         if (annotationList.isEmpty()) {
             return "None";
         } else {
-            return StringUtils.join(annotationList, System.lineSeparator());
+            return StringUtils.join(annotationList, System.lineSeparator() + System.lineSeparator());
         }
     }
 

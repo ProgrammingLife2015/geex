@@ -7,22 +7,31 @@
 <?import javafx.scene.text.TextFlow?>
 <fx:root styleClass="transparent" type="javafx.scene.control.ScrollPane" xmlns:fx="http://javafx.com/fxml">
 
-    <VBox styleClass="margin-top">
-        <Label styleClass="h2">Sources</Label>
-        <TextFlow>
-            <Text fx:id="sources"/>
-        </TextFlow>
-        <Label styleClass="h2">Annotations</Label>
-        <TextFlow>
-            <Text fx:id="annotations"/>
-        </TextFlow>
-        <Label styleClass="h2">Bases</Label>
-        <TextFlow>
-            <Text fx:id="percentages"/>
-        </TextFlow>
-        <TextFlow>
-            <Text fx:id="bases"/>
-        </TextFlow>
+    <VBox alignment="top_center">
+        <Label styleClass="header-text">
+            View specific details on a base
+        </Label>
+        <VBox styleClass="margin-top">
+            <Label styleClass="h2">Sources</Label>
+            <TextFlow>
+                <Text fx:id="sources"/>
+            </TextFlow>
+            <Label styleClass="h2">Coding Sequence Annotations</Label>
+            <TextFlow>
+                <Text fx:id="codingSequences"/>
+            </TextFlow>
+            <Label styleClass="h2">Resistance Causing Mutations</Label>
+            <TextFlow>
+                <Text fx:id="resistances"/>
+            </TextFlow>
+            <Label styleClass="h2">Bases</Label>
+            <TextFlow>
+                <Text fx:id="percentages"/>
+            </TextFlow>
+            <TextFlow>
+                <Text fx:id="bases"/>
+            </TextFlow>
+        </VBox>
     </VBox>
 
 </fx:root>

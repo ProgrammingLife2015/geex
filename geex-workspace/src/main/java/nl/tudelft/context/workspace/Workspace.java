@@ -1,14 +1,14 @@
 package nl.tudelft.context.workspace;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
-import nl.tudelft.context.model.annotation.AnnotationMap;
-import nl.tudelft.context.model.annotation.AnnotationParser;
+import nl.tudelft.context.model.annotation.CodingSequenceMap;
+import nl.tudelft.context.model.annotation.ResistanceMap;
+import nl.tudelft.context.model.annotation.CodingSequenceParser;
+import nl.tudelft.context.model.annotation.ResistanceParser;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.NewickParser;
-import nl.tudelft.context.model.resistance.ResistanceMap;
-import nl.tudelft.context.model.resistance.ResistanceParser;
 import nl.tudelft.context.service.LoadService;
 import org.tmatesoft.sqljet.core.SqlJetException;
 
@@ -48,9 +48,9 @@ public class Workspace {
     File nwkFile;
 
     /**
-     * The annotation file in the workspace.
+     * The codingSequence file in the workspace.
      */
-    File annotationFile;
+    File codingSequenceFile;
 
     /**
      * The resistance file in the workspace.
@@ -68,9 +68,9 @@ public class Workspace {
     LoadService<GraphMap> loadGraphService;
 
     /**
-     * The service used for parsing an Annotation.
+     * The service used for parsing an CodingSequence.
      */
-    LoadService<AnnotationMap> loadAnnotationService;
+    LoadService<CodingSequenceMap> loadCodingSequenceService;
 
     /**
      * The service used for parsing the Resistance.
@@ -118,8 +118,13 @@ public class Workspace {
         edgeFile = findFile(files, ".edge.graph");
         nodeFile = findFile(files, ".node.graph");
         nwkFile = findFile(files, ".nwk");
-        annotationFile = findFile(files, ".gff");
+        codingSequenceFile = findFile(files, ".gff");
         resistanceFile = findFile(files, ".txt");
+
+        loadNewickService = new LoadService<>(NewickParser.class, nwkFile);
+        loadCodingSequenceService = new LoadService<>(CodingSequenceParser.class, codingSequenceFile);
+        loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
+        loadResistanceService = new LoadService<>(ResistanceParser.class, resistanceFile);
     }
 
     /**
@@ -134,14 +139,9 @@ public class Workspace {
     /**
      * Preload the workspace, makes sure all the services are started.
      */
-    public final void preload() {
-        loadNewickService = new LoadService<>(NewickParser.class, nwkFile);
-        loadAnnotationService = new LoadService<>(AnnotationParser.class, annotationFile);
-        loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
-        loadResistanceService = new LoadService<>(ResistanceParser.class, resistanceFile);
-
+    public void preload() {
         loadNewickService.start();
-        loadAnnotationService.start();
+        loadCodingSequenceService.start();
         loadGraphService.start();
         loadResistanceService.start();
     }
@@ -156,12 +156,12 @@ public class Workspace {
     }
 
     /**
-     * Get the AnnotationMap Property.
+     * Get the CodingSequenceMap Property.
      *
-     * @return A ReadOnlyObjectProperty containing, or not yet containing an AnnotationMap.
+     * @return A ReadOnlyObjectProperty containing, or not yet containing an CodingSequenceMap.
      */
-    public ReadOnlyObjectProperty<AnnotationMap> getAnnotation() {
-        return loadAnnotationService.valueProperty();
+    public ReadOnlyObjectProperty<CodingSequenceMap> getCodingSequence() {
+        return loadCodingSequenceService.valueProperty();
     }
 
     /**
@@ -188,7 +188,7 @@ public class Workspace {
      * Cancel all the running services, in order to clean up all the threads.
      */
     public void close() {
-        loadAnnotationService.cancel();
+        loadCodingSequenceService.cancel();
         loadGraphService.cancel();
         loadNewickService.cancel();
         loadResistanceService.cancel();

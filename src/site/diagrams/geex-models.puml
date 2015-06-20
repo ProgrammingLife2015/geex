@@ -146,7 +146,7 @@ package newick {
     Newick --> newick.AbstractNode : << contains >>
 }
 
-package annotation {
+package codingSequence {
     class Annotation {
         id : int
         name : String

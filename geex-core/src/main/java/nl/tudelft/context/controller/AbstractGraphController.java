@@ -54,6 +54,11 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     ScrollPane scroll;
 
     /**
+     * Center for the scrollbar.
+     */
+    private static final double CENTER = .5;
+
+    /**
      * Sources that are displayed in the graph.
      */
     ObjectProperty<Set<String>> selectedSources = new SimpleObjectProperty<>(new HashSet<>());
@@ -102,8 +107,12 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
             newValue.stream().forEach(label -> label.updateSources(selectedSources.get()));
         });
 
-        selectedSources.addListener((observable, oldValue, newValue) ->
-                currentLabelsProperty.get().stream().forEach(label -> label.updateSources(newValue)));
+        selectedSources.addListener((observable, oldValue, newValue) -> {
+            Set<AbstractLabel> labels = currentLabelsProperty.get();
+            sequences.getChildren().removeAll(labels);
+            sequences.getChildren().addAll(labels);
+            labels.stream().forEach(label -> label.updateSources(newValue));
+        });
 
         initOnTheFlyLoading();
 
@@ -129,6 +138,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         ));
 
         Platform.runLater(this::updatePosition);
+        Platform.runLater(() -> scroll.setVvalue(CENTER));
 
     }
 
