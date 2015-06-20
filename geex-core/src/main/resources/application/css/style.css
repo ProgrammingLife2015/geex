@@ -25,7 +25,7 @@
 
 /* Used in the base view */
 .base-margin-top {
-    -fx-padding: 30px 200px 50px;
+    -fx-padding: 30px 210px 50px;
 }
 
 /* Overlay */
@@ -202,14 +202,14 @@
 
 .selected-label .info-label {
     -fx-border-width: 4px 4px 0;
-    -fx-border-color: #fff;
+    -fx-border-color: #00ffff;
 }
 
 .selected-label .single-label,
 .selected-label .insert-delete-label,
 .selected-label .collapse-label {
     -fx-border-width: 4px;
-    -fx-border-color: #fff;
+    -fx-border-color: #00ffff;
     -fx-border-radius: 30px;
 }
 

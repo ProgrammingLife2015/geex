@@ -32,9 +32,9 @@ public class GraphNode extends DefaultNode {
     Set<DefaultNode> nodes = new HashSet<>();
 
     /**
-     * Start and and node.
+     * Reference start and end node.
      */
-    DefaultNode start, end;
+    int refStart, refEnd;
 
     /**
      * Type of graph node.
@@ -57,8 +57,6 @@ public class GraphNode extends DefaultNode {
     public GraphNode(final StackGraph parentGraph, final DefaultNode start, final DefaultNode end, final String type) {
 
         this.parentGraph = parentGraph;
-        this.start = start;
-        this.end = end;
         this.type = type;
 
         sources = start.getSources();
@@ -80,9 +78,21 @@ public class GraphNode extends DefaultNode {
 
         }
 
+        calculateProperties();
+
+    }
+
+    /**
+     * Calculate the node properties: base counter, reference positions.
+     */
+    private void calculateProperties() {
+
         nodes.stream()
                 .map(DefaultNode::getBaseCounter)
                 .forEach(baseCounter::addBaseCounter);
+
+        refStart = nodes.stream().mapToInt(DefaultNode::getRefStartPosition).min().getAsInt();
+        refEnd = nodes.stream().mapToInt(DefaultNode::getRefEndPosition).max().getAsInt();
 
     }
 
@@ -127,6 +137,8 @@ public class GraphNode extends DefaultNode {
     public void addNode(final DefaultNode node) {
         nodes.add(node);
         baseCounter.addBaseCounter(node.getBaseCounter());
+        refStart = Math.min(refStart, node.getRefStartPosition());
+        refEnd = Math.max(refEnd, node.getRefStartPosition());
     }
 
     /**
@@ -140,12 +152,12 @@ public class GraphNode extends DefaultNode {
 
     @Override
     public int getRefStartPosition() {
-        return start.getRefStartPosition();
+        return refStart;
     }
 
     @Override
     public int getRefEndPosition() {
-        return end.getRefEndPosition();
+        return refEnd;
     }
 
     @Override
