@@ -175,7 +175,7 @@ public class CodingSequence extends Annotation {
                 + "Score: " + score + System.getProperty("line.separator")
                 + "Strand (Sense): " + strand + System.getProperty("line.separator")
                 + "Phase: " + phase + System.getProperty("line.separator")
-                + "Attributes: " + attributes + System.getProperty("line.separator");
+                + "Attributes: " + attributes;
     }
 
 }

@@ -149,7 +149,7 @@ public class Node extends DefaultNode {
         if (annotationList.isEmpty()) {
             return "None";
         } else {
-            return StringUtils.join(annotationList, System.lineSeparator());
+            return StringUtils.join(annotationList, System.lineSeparator() + System.lineSeparator());
         }
     }
 
