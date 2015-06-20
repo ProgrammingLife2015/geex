@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -41,9 +42,10 @@ public class GraphListItemTest {
 
         MouseEvent myMouseEvent = new MouseEvent(gli1, gli1, MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true, true, true, true, true, true, true, null);
 
+        assertTrue(gli1.getStyleClass().contains("active"));
         eh.handle(myMouseEvent);
 
-        assertTrue(gli1.getStyleClass().contains("active"));
+        assertFalse(gli1.getStyleClass().contains("active"));
         assertTrue(gli1.getGraph().isActive());
         verify(mockListener).invalidated(gli1);
     }
