@@ -14,7 +14,7 @@ public class ResistanceMap extends AnnotationMap<Resistance> {
      *
      * @param resistances List containing resistances.
      */
-    public ResistanceMap(List<Resistance> resistances) {
+    public ResistanceMap(final List<Resistance> resistances) {
         super(resistances);
     }
 

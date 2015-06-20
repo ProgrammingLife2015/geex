@@ -1,4 +1,4 @@
-package nl.tudelft.context.model.resistance;
+package nl.tudelft.context.model.annotation;
 
 import nl.tudelft.context.model.annotation.Resistance;
 import org.junit.BeforeClass;

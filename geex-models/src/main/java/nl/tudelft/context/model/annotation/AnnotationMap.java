@@ -31,7 +31,7 @@ public abstract class AnnotationMap<T extends Annotation> {
      *
      * @param annotations List containing annotations.
      */
-    public AnnotationMap(List<T> annotations) {
+    public AnnotationMap(final List<T> annotations) {
 
         annotationsByStart = groupBy(annotations, Annotation::getStart);
         annotationsByEnd = groupBy(annotations, Annotation::getEnd);
@@ -45,7 +45,7 @@ public abstract class AnnotationMap<T extends Annotation> {
      * @param position    Position to group by
      * @return Grouped annotations in tree map
      */
-    private TreeMap<Integer, List<T>> groupBy(List<T> annotations, Function<Annotation, Integer> position) {
+    private TreeMap<Integer, List<T>> groupBy(final List<T> annotations, final Function<Annotation, Integer> position) {
 
         return annotations.stream().collect(Collectors.groupingBy(
                 position,

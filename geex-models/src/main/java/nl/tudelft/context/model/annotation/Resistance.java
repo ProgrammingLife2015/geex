@@ -30,11 +30,6 @@ public class Resistance extends Annotation {
     String filter;
 
     /**
-     * The position in the genome.
-     */
-    int genomePosition;
-
-    /**
      * The name of the drug for which the mutation causes resistance.
      */
     String drugName;
@@ -60,7 +55,8 @@ public class Resistance extends Annotation {
         this.typeOfMutation = typeOfMutation;
         this.change = change;
         this.filter = filter;
-        this.genomePosition = genomePosition;
+        this.start = genomePosition;
+        this.end = genomePosition;
         this.drugName = drugName;
 
     }
@@ -98,7 +94,7 @@ public class Resistance extends Annotation {
      * @return genomePosition
      */
     public int getGenomePosition() {
-        return genomePosition;
+        return start;
     }
 
     /**
@@ -133,7 +129,7 @@ public class Resistance extends Annotation {
                     && typeOfMutation.equals(that.typeOfMutation)
                     && change.equals(that.change)
                     && filter.equals(that.filter)
-                    && genomePosition == that.genomePosition
+                    && start == that.start
                     && drugName.equals(that.drugName);
         }
         return false;
@@ -163,7 +159,7 @@ public class Resistance extends Annotation {
      */
     @Override
     public final int hashCode() {
-        return getGeneName().hashCode() + 37 * getDrugName().hashCode() + 37 * 37 * genomePosition;
+        return getGeneName().hashCode() + 37 * getDrugName().hashCode() + 37 * 37 * start;
     }
 
 

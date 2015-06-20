@@ -14,7 +14,7 @@ public class CodingSequenceMap extends AnnotationMap<CodingSequence> {
      *
      * @param codingSequences List containing coding sequences.
      */
-    public CodingSequenceMap(List<CodingSequence> codingSequences) {
+    public CodingSequenceMap(final List<CodingSequence> codingSequences) {
         super(codingSequences);
     }
 

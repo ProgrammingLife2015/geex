@@ -1,8 +1,6 @@
 package nl.tudelft.context.model.annotation;
 
 import nl.tudelft.context.model.Parser;
-import nl.tudelft.context.model.annotation.CodingSequence;
-import nl.tudelft.context.model.annotation.CodingSequenceMap;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class CodingSequenceParser extends Parser<CodingSequenceMap> {
         while (sc.hasNextLine() && !isCancelled()) {
             line = sc.nextLine();
             String[] splitLine = line.split(fileSplitBy);
-            codingSequences.add(getAnnotation(splitLine));
+            codingSequences.add(getCodingSequence(splitLine));
         }
 
         return new CodingSequenceMap(codingSequences);
@@ -46,7 +44,8 @@ public class CodingSequenceParser extends Parser<CodingSequenceMap> {
      * @return CodingSequence
      * @throws NumberFormatException when the data isn't correct
      */
-    public final CodingSequence getAnnotation(final String[] splitLine) throws NumberFormatException {
+    public final CodingSequence getCodingSequence(final String[] splitLine)
+            throws NumberFormatException {
         int index = 0;
         String seqId = splitLine[index];
         String source = splitLine[++index];
