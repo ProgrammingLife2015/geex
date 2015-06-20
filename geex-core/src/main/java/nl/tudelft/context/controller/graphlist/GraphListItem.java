@@ -39,6 +39,7 @@ public class GraphListItem extends Label implements Observable {
      */
     public GraphListItem(final GraphFilterEnum graph, final ObservableList<GraphListItem> graphList) {
         this.graph = graph;
+        activate();
         getStyleClass().add("graph-item");
         setText(graph.toString());
 
