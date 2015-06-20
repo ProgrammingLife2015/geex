@@ -167,7 +167,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      */
     public void setPosition(final int column) {
 
-        double width = (scroll.getContent().layoutBoundsProperty().get().getWidth() - scroll.getWidth());
+        double width = scroll.getContent().layoutBoundsProperty().get().getWidth() - scroll.getWidth();
         double left = column * DrawableGraph.LABEL_SPACING;
         scroll.setHvalue(left / width);
 
