@@ -5,12 +5,11 @@
 ## Programming Life (group 2)
 For more details about this project, the team and the application, visit the [Wiki pages](https://github.com/Vennik/contextproject/wiki).
 
-## Maven
 
 ## Sites
-
 * [Maven Site](http://geex.hup.blue/) (Updated hourly)
 * [Sonarqube](http://sonar.hup.blue/) (Updated manually)
+## Maven
 
 ### Install
 Before using any of the MVN lifecycle aspects, run `mvn install`
