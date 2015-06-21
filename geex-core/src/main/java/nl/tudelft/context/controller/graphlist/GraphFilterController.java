@@ -86,7 +86,8 @@ public class GraphFilterController implements InvalidationListener {
      * @param baseGraph Graph to use as base.
      * @return A combined graph.
      */
-    private StackGraph createGraphFromFilter(final ObservableList<GraphFilterLabel> graphs, final StackGraph baseGraph) {
+    private StackGraph createGraphFromFilter(final ObservableList<GraphFilterLabel> graphs,
+                                             final StackGraph baseGraph) {
         StackGraph newGraph = baseGraph;
         for (GraphFilterLabel gli : graphs) {
             if (!gli.isActive()) {

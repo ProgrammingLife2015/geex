@@ -32,6 +32,10 @@ public class GraphFilterLabel extends Label implements Observable {
      * The filter for this item.
      */
     private final GraphFilter graph;
+
+    /**
+     * Whether this filter is active.
+     */
     private boolean active;
 
     /**
@@ -151,6 +155,11 @@ public class GraphFilterLabel extends Label implements Observable {
         active = true;
     }
 
+    /**
+     * Check the active state of this filter.
+     *
+     * @return whether this filter is active
+     */
     public boolean isActive() {
         return active;
     }
