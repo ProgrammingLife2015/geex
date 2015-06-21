@@ -6,9 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
-import nl.tudelft.context.model.annotation.CodingSequence;
 import nl.tudelft.context.model.annotation.CodingSequenceMap;
-import nl.tudelft.context.model.annotation.Resistance;
 import nl.tudelft.context.model.annotation.ResistanceMap;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
@@ -96,8 +94,8 @@ public class GraphControllerTest {
         });
 
         graphMapReadOnlyObjectProperty.setValue(graphMap);
-        codingSequenceMapReadOnlyObjectProperty.setValue(new CodingSequenceMap(Collections.<CodingSequence>emptyList()));
-        resistanceMapReadOnlyObjectProperty.setValue(new ResistanceMap(Collections.<Resistance>emptyList()));
+        codingSequenceMapReadOnlyObjectProperty.setValue(new CodingSequenceMap(Collections.emptyList()));
+        resistanceMapReadOnlyObjectProperty.setValue(new ResistanceMap(Collections.emptyList()));
 
         assertEquals(true, sequencesAdded.get(50, TimeUnit.MILLISECONDS));
     }

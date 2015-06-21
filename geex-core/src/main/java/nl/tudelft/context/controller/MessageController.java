@@ -5,7 +5,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.Logger;
-import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.logger.message.MessageType;
 
 import java.net.URL;
@@ -45,10 +44,10 @@ public class MessageController extends AbstractController<VBox> implements Logge
      * @param messageType Type of this message.
      */
     @Override
-    public final void log(final Message msg, final MessageType messageType) {
+    public final void log(final String  msg, final MessageType messageType) {
         root.getStyleClass().removeAll(MessageType.types());
         root.getStyleClass().add(messageType.toString());
-        message.setText(msg.toString());
+        message.setText(msg);
     }
 
     @Override

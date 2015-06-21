@@ -26,14 +26,4 @@ public class CodingSequenceGraph extends StackGraph {
 
     }
 
-    /**
-     * Get the name for the graph list view.
-     *
-     * @return The name for the graph list view
-     */
-    @Override
-    public String getName() {
-        return "Coding sequences";
-    }
-
 }

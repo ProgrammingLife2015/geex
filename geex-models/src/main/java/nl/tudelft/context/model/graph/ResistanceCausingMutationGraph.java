@@ -23,14 +23,4 @@ public class ResistanceCausingMutationGraph extends StackGraph {
         setGraph(graph);
 
     }
-
-    /**
-     * Get the name for the graph list view.
-     *
-     * @return The name for the graph list view
-     */
-    @Override
-    public String getName() {
-        return "Drug resistance";
-    }
 }

@@ -30,13 +30,13 @@ public class LogTest {
         Log.instance().addLogger(logger);
 
         Log.info(Message.MESSAGE_READY);
-        verify(logger).log(Message.MESSAGE_READY, MessageType.INFO);
+        verify(logger).log(Message.MESSAGE_READY.toString(), MessageType.INFO);
 
         Log.debug(Message.MESSAGE_READY);
-        verify(logger).log(Message.MESSAGE_READY, MessageType.DEBUG);
+        verify(logger).log(Message.MESSAGE_READY.toString(), MessageType.DEBUG);
 
         Log.warning(Message.MESSAGE_READY);
-        verify(logger).log(Message.MESSAGE_READY, MessageType.WARNING);
+        verify(logger).log(Message.MESSAGE_READY.toString(), MessageType.WARNING);
     }
 
     @Test
@@ -48,13 +48,13 @@ public class LogTest {
         Log.instance().addLogger(logger);
 
         Log.info(Message.MESSAGE_READY);
-        verify(logger).log(Message.MESSAGE_READY, MessageType.INFO);
+        verify(logger).log(Message.MESSAGE_READY.toString(), MessageType.INFO);
 
         Log.debug(Message.MESSAGE_READY);
-        verify(logger, never()).log(Message.MESSAGE_READY, MessageType.DEBUG);
+        verify(logger, never()).log(Message.MESSAGE_READY.toString(), MessageType.DEBUG);
 
         Log.warning(Message.MESSAGE_READY);
-        verify(logger).log(Message.MESSAGE_READY, MessageType.WARNING);
+        verify(logger).log(Message.MESSAGE_READY.toString(), MessageType.WARNING);
     }
 
     @Test
@@ -66,13 +66,13 @@ public class LogTest {
         Log.instance().addLogger(logger);
 
         Log.info(Message.MESSAGE_READY);
-        verify(logger, never()).log(Message.MESSAGE_READY, MessageType.INFO);
+        verify(logger, never()).log(Message.MESSAGE_READY.toString(), MessageType.INFO);
 
         Log.debug(Message.MESSAGE_READY);
-        verify(logger, never()).log(Message.MESSAGE_READY, MessageType.DEBUG);
+        verify(logger, never()).log(Message.MESSAGE_READY.toString(), MessageType.DEBUG);
 
         Log.warning(Message.MESSAGE_READY);
-        verify(logger).log(Message.MESSAGE_READY, MessageType.WARNING);
+        verify(logger).log(Message.MESSAGE_READY.toString(), MessageType.WARNING);
     }
 
     @Test
@@ -84,11 +84,11 @@ public class LogTest {
         Log.instance().addLogger(logger);
 
         Log.info(Message.MESSAGE_READY);
-        verify(logger).log(Message.MESSAGE_READY, MessageType.INFO);
+        verify(logger).log(Message.MESSAGE_READY.toString(), MessageType.INFO);
 
         Log.instance().removeLogger(logger);
 
         Log.debug(Message.MESSAGE_READY);
-        verify(logger, never()).log(Message.MESSAGE_READY, MessageType.DEBUG);
+        verify(logger, never()).log(Message.MESSAGE_READY.toString(), MessageType.DEBUG);
     }
 }

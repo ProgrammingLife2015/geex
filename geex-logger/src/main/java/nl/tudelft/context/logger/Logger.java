@@ -1,6 +1,5 @@
 package nl.tudelft.context.logger;
 
-import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.logger.message.MessageType;
 
 /**
@@ -15,7 +14,7 @@ public interface Logger {
      * @param message Message to show
      * @param messageType Type of this message
      */
-    void log(Message message, MessageType messageType);
+    void log(String message, MessageType messageType);
 
     /**
      * The ObservableLogger looks at this to choose if a log message is relevant for this Logger.
