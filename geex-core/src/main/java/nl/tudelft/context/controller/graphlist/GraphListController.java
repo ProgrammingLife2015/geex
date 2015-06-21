@@ -52,10 +52,6 @@ public class GraphListController implements InvalidationListener {
         this.graphs = graphs;
         graphList = FXCollections.observableArrayList();
 
-        activeGraph.addListener((observable, oldValue, newValue) -> {
-
-        });
-
         graphList.addListener((ListChangeListener<GraphListItem>) c -> {
             while (c.next()) {
                 if (!c.wasPermutated() && !c.wasUpdated()) {
@@ -151,7 +147,5 @@ public class GraphListController implements InvalidationListener {
         graphs.getChildren().setAll(graphList);
 
         activeGraph.set(createGraphFromFilter(graphList, baseGraph));
-
-        Log.debug("Updating graphlist");
     }
 }

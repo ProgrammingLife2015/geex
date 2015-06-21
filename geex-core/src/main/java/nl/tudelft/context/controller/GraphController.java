@@ -138,14 +138,6 @@ public final class GraphController extends AbstractGraphController {
 
         MenuController menuController = mainController.getMenuController();
 
-        MenuItem zoomIn = menuController.getZoomIn();
-        //zoomIn.setOnAction(event -> graphListController.zoomIn());
-        zoomIn.disableProperty().bind(activeProperty.not());
-
-        MenuItem zoomOut = menuController.getZoomOut();
-        //zoomOut.setOnAction(event -> graphListController.zoomOut());
-        zoomOut.disableProperty().bind(activeProperty.not());
-
         MenuItem toggleSelect = menuController.getToggleSelect();
         activeProperty.addListener((observable, oldValue, newValue) -> {
             if (newValue) {

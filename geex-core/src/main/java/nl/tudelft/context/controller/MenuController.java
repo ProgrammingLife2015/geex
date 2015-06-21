@@ -28,8 +28,6 @@ public final class MenuController {
             loadGenomeGraph,
             toggleOverlay,
             toggleSelect,
-            zoomIn,
-            zoomOut,
             selectWorkspace,
             resetView;
 
@@ -92,16 +90,6 @@ public final class MenuController {
                 null,
                 true);
 
-        zoomIn = createMenuItem("Zoom in on graph",
-                new KeyCodeCombination(KeyCode.UP, KeyCombination.SHORTCUT_DOWN),
-                null,
-                true);
-
-        zoomOut = createMenuItem("Zoom out on graph",
-                new KeyCodeCombination(KeyCode.DOWN, KeyCombination.SHORTCUT_DOWN),
-                null,
-                true);
-
         toggleSelect = createMenuItem("Show Phylogenetic tree",
                 new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN),
                 null,
@@ -119,8 +107,6 @@ public final class MenuController {
                         false),
                 toggleSelect,
                 loadGenomeGraph,
-                zoomIn,
-                zoomOut,
                 resetView));
 
     }
@@ -203,24 +189,6 @@ public final class MenuController {
      */
     public MenuItem getLoadGenomeGraph() {
         return loadGenomeGraph;
-    }
-
-    /**
-     * Get the menu item to zoom in the graph.
-     *
-     * @return The menu item to zoom in the graph
-     */
-    public MenuItem getZoomIn() {
-        return zoomIn;
-    }
-
-    /**
-     * Get the menu item to zoom out the graph.
-     *
-     * @return The menu item to zoom out the graph
-     */
-    public MenuItem getZoomOut() {
-        return zoomOut;
     }
 
     /**
