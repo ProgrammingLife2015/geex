@@ -45,7 +45,7 @@ public class GraphFilterLabelTest {
         eh.handle(myMouseEvent);
 
         assertFalse(gli1.getStyleClass().contains("active"));
-        assertFalse(gli1.getFilter().isActive());
+        assertFalse(gli1.isActive());
         verify(mockListener).invalidated(gli1);
     }
 }
