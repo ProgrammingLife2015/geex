@@ -94,6 +94,11 @@ public final class Log implements ObservableLog {
         instance().message(message, MessageType.DEBUG);
     }
 
+    /**
+     * Log a message of type {@link MessageType}.DEBUG.
+     *
+     * @param message Massage to log.
+     */
     public static void debug(final String message) {
         instance().message(message, MessageType.DEBUG);
     }

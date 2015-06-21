@@ -1,6 +1,5 @@
 package nl.tudelft.context.logger;
 
-import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.logger.message.MessageType;
 
 import java.io.PrintStream;

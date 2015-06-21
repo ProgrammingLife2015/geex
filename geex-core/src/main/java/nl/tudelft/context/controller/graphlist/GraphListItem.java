@@ -49,6 +49,11 @@ public class GraphListItem extends Label implements Observable {
         setOnDragDropped(dragDropped(graphList));
     }
 
+    /**
+     * Response to the drag over event, by moving the item.
+     *
+     * @return The event handler, associated with it.
+     */
     private EventHandler<? super DragEvent> dragOver() {
         return event -> {
             event.acceptTransferModes(TransferMode.MOVE);
@@ -145,6 +150,11 @@ public class GraphListItem extends Label implements Observable {
         graph.setActive(true);
     }
 
+    /**
+     * Get the graph of this item.
+     *
+     * @return The graph of this item.
+     */
     public GraphFilterEnum getGraph() {
         return graph;
     }
