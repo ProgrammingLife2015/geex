@@ -14,9 +14,11 @@ import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.model.annotation.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.ResistanceMap;
+import nl.tudelft.context.model.graph.CodingSequenceGraph;
 import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.InsertDeleteGraph;
+import nl.tudelft.context.model.graph.ResistanceCausingMutationGraph;
 import nl.tudelft.context.model.graph.SinglePointGraph;
 import nl.tudelft.context.model.graph.UnknownGraph;
 
@@ -180,6 +182,8 @@ public class GraphController extends AbstractGraphController {
             graphListController.add(new InsertDeleteGraph(graphListController.getActiveGraph()));
             graphListController.add(new CollapseGraph(graphListController.getActiveGraph()));
             graphListController.add(new UnknownGraph(graphListController.getActiveGraph()));
+            graphListController.add(new CodingSequenceGraph(graphListController.getActiveGraph()));
+            graphListController.add(new ResistanceCausingMutationGraph(graphListController.getActiveGraph()));
 
             graphListController.getActiveGraphProperty().addListener((observable, oldValue, newValue) ->
                     showGraph(new DrawableGraph(newValue)));

@@ -30,7 +30,7 @@ public class UnknownGraph extends StackGraph {
     /**
      * Create a graph with filtered unknown on an other graph.
      *
-     * @param graph Graph to remove unkowns form.
+     * @param graph Graph to remove unknowns from
      */
     public UnknownGraph(final StackGraph graph) {
 

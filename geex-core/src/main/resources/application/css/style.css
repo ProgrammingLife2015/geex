@@ -422,6 +422,7 @@
     -fx-min-height: 45px;
     -fx-min-width: 100%;
     -fx-background-color: #595959;
+    -fx-cursor: hand;
 }
 
 #locator Rectangle {

@@ -2,7 +2,6 @@ package nl.tudelft.context.controller.locator;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.Cursor;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import nl.tudelft.context.controller.AbstractGraphController;
@@ -72,7 +71,7 @@ public class LocatorController {
         this.locator = locator;
         this.positionProperty = positionProperty;
 
-        locator.setCursor(Cursor.HAND);
+        initIndicator();
 
         labelMapProperty.addListener((observable, oldValue, newValue) -> {
             initIndicator();
@@ -82,7 +81,10 @@ public class LocatorController {
         });
 
         positionProperty.addListener(event -> setPosition());
-        locator.widthProperty().addListener(event -> setPosition());
+        locator.widthProperty().addListener(event -> {
+            initResistances(labelMapProperty.get());
+            setPosition();
+        });
 
         initInteraction(graphController);
 
@@ -170,6 +172,7 @@ public class LocatorController {
 
         final double scale = getScale();
 
+        locator.getChildren().removeIf(node -> !node.getStyleClass().contains("indicator"));
         locator.getChildren().addAll(labelMap.values().stream()
                 .flatMap(Collection::stream)
                 .map(AbstractDrawableNode::getNode)
