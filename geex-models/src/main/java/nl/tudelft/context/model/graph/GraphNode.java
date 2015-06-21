@@ -169,6 +169,7 @@ public class GraphNode extends DefaultNode {
         return nodes.stream()
                 .map(DefaultNode::getCodingSequences)
                 .flatMap(Collection::stream)
+                .distinct()
                 .collect(Collectors.toList());
     }
 
@@ -182,6 +183,7 @@ public class GraphNode extends DefaultNode {
         return nodes.stream()
                 .map(DefaultNode::getResistances)
                 .flatMap(Collection::stream)
+                .distinct()
                 .collect(Collectors.toList());
     }
 

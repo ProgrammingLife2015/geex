@@ -6,10 +6,12 @@ import javafx.scene.Cursor;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import nl.tudelft.context.controller.AbstractGraphController;
+import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
 import nl.tudelft.context.model.graph.DefaultNode;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,10 +74,10 @@ public class LocatorController {
 
         locator.setCursor(Cursor.HAND);
 
-        initIndicator();
-
         labelMapProperty.addListener((observable, oldValue, newValue) -> {
+            initIndicator();
             initLabelMap(newValue);
+            initResistances(newValue);
             setPosition();
         });
 
@@ -92,6 +94,7 @@ public class LocatorController {
     private void initIndicator() {
 
         locatorIndicator = new Rectangle();
+        locatorIndicator.getStyleClass().add("indicator");
         locatorIndicator.setHeight(LOCATOR_HEIGHT);
         locatorIndicator.setTranslateY(2);
         locator.getChildren().setAll(locatorIndicator);
@@ -155,6 +158,36 @@ public class LocatorController {
             maxRefPosition = Math.max(maxRefPosition, max);
         });
         optionalTotalMap = Optional.of(totalMap);
+
+    }
+
+    /**
+     * Display the resistances on the locator.
+     *
+     * @param labelMap Map containing all the nodes with possible resistances
+     */
+    private void initResistances(final Map<Integer, List<AbstractDrawableNode>> labelMap) {
+
+        final double scale = getScale();
+
+        locator.getChildren().addAll(labelMap.values().stream()
+                .flatMap(Collection::stream)
+                .map(AbstractDrawableNode::getNode)
+                .map(DefaultNode::getResistances)
+                .flatMap(Collection::stream)
+                .map(resistance -> {
+                    final Rectangle rectangle = new Rectangle();
+                    double start = resistance.getStart() * scale;
+                    double end = resistance.getEnd() * scale;
+                    rectangle.setTranslateY(1);
+                    rectangle.setHeight(LOCATOR_HEIGHT);
+                    rectangle.setWidth(Math.max(DrawableEdge.MINIMUM_LINE_WIDTH, end - start));
+                    rectangle.setTranslateX(start);
+                    return rectangle;
+                })
+                .collect(Collectors.toList()));
+
+        locatorIndicator.toFront();
 
     }
 

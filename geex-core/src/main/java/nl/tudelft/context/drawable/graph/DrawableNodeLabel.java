@@ -68,6 +68,8 @@ public class DrawableNodeLabel extends AbstractLabel {
                 initBaseLabels()
         );
 
+        initAnnotations();
+
     }
 
     /**
