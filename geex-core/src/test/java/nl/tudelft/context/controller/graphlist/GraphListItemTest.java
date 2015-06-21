@@ -46,7 +46,7 @@ public class GraphListItemTest {
         eh.handle(myMouseEvent);
 
         assertFalse(gli1.getStyleClass().contains("active"));
-        assertTrue(gli1.getGraph().isActive());
+        assertFalse(gli1.getGraph().isActive());
         verify(mockListener).invalidated(gli1);
     }
 }
