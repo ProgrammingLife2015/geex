@@ -1,5 +1,6 @@
-package nl.tudelft.context.model.resistance;
+package nl.tudelft.context.model.annotation;
 
+import nl.tudelft.context.model.annotation.Resistance;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -112,8 +113,8 @@ public class ResistanceTest {
 
     @Test
     public void testToString() throws Exception {
-        assertEquals("(lorem, ipsum, Q264P, dolor, 5, set)", resistance1.toString());
-        assertEquals("(set, amet, -11, consecteur, 6, adipiscing)", resistance2.toString());
+        assertEquals("(Gene name: lorem, Mutation type: ipsum, Change: Q264P, Filter: dolor, Position: 5, Drug name: set)", resistance1.toString());
+        assertEquals("(Gene name: set, Mutation type: amet, Change: -11, Filter: consecteur, Position: 6, Drug name: adipiscing)", resistance2.toString());
 
     }
 

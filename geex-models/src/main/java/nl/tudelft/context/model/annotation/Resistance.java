@@ -1,14 +1,14 @@
-package nl.tudelft.context.model.resistance;
+package nl.tudelft.context.model.annotation;
 
 /**
- * Annotation for drug resistance causing mutations.
+ * CodingSequence for drug resistance causing mutations.
  * filter is always pass.
  *
  * @author Jasper on 26-5-2015.
  * @version 1.0
  * @since 26-5-2015
  */
-public class Resistance {
+public class Resistance extends Annotation {
     /**
      * The name of the gene.
      */
@@ -28,11 +28,6 @@ public class Resistance {
      * The filter that was used to get the data.
      */
     String filter;
-
-    /**
-     * The position in the genome.
-     */
-    int genomePosition;
 
     /**
      * The name of the drug for which the mutation causes resistance.
@@ -60,7 +55,8 @@ public class Resistance {
         this.typeOfMutation = typeOfMutation;
         this.change = change;
         this.filter = filter;
-        this.genomePosition = genomePosition;
+        this.start = genomePosition;
+        this.end = genomePosition;
         this.drugName = drugName;
 
     }
@@ -98,7 +94,7 @@ public class Resistance {
      * @return genomePosition
      */
     public int getGenomePosition() {
-        return genomePosition;
+        return start;
     }
 
     /**
@@ -133,7 +129,7 @@ public class Resistance {
                     && typeOfMutation.equals(that.typeOfMutation)
                     && change.equals(that.change)
                     && filter.equals(that.filter)
-                    && genomePosition == that.genomePosition
+                    && start == that.start
                     && drugName.equals(that.drugName);
         }
         return false;
@@ -147,12 +143,12 @@ public class Resistance {
     @Override
     public final String toString() {
         return "("
-                + this.getGeneName() + ", "
-                + this.getTypeOfMutation() + ", "
-                + this.getChange() + ", "
-                + this.getFilter() + ", "
-                + this.getGenomePosition() + ", "
-                + this.getDrugName()
+                + "Gene name: " + this.getGeneName() + ", "
+                + "Mutation type: " + this.getTypeOfMutation() + ", "
+                + "Change: " + this.getChange() + ", "
+                + "Filter: " + this.getFilter() + ", "
+                + "Position: " + this.getGenomePosition() + ", "
+                + "Drug name: " + this.getDrugName()
                 + ")";
     }
 
@@ -163,7 +159,7 @@ public class Resistance {
      */
     @Override
     public final int hashCode() {
-        return getGeneName().hashCode() + 37 * getDrugName().hashCode() + 37 * 37 * genomePosition;
+        return getGeneName().hashCode() + 37 * getDrugName().hashCode() + 37 * 37 * start;
     }
 
 
