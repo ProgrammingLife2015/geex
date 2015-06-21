@@ -98,7 +98,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
      */
     private boolean positionNodes(final List<AbstractDrawableNode> nodes, final int column, final boolean prevShifted) {
 
-        final double shift = nodes.size() * LABEL_SPACING / 2;
+        final double shift = nodes.size() * LABEL_SPACING / 2d;
 
         int row = 0;
         for (final AbstractDrawableNode node : nodes) {

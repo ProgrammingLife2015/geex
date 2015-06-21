@@ -36,7 +36,7 @@ public class Window extends Stage {
     /**
      * Different icon sizes for the logo.
      */
-    public static final List<String> ICONS = Arrays.asList(
+    private static final List<String> ICONS = Arrays.asList(
             "/application/images/icon_16.png",
             "/application/images/icon_32.png",
             "/application/images/icon_48.png",

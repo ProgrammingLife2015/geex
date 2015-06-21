@@ -5,20 +5,20 @@
 ## Programming Life (group 2)
 For more details about this project, the team and the application, visit the [Wiki pages](https://github.com/Vennik/contextproject/wiki).
 
-
 ## Sites
 * [Maven Site](http://geex.hup.blue/) (Updated hourly)
 * [Sonarqube](http://sonar.hup.blue/) (Updated manually)
+
 ## Maven
 
 ### Install
-Before using any of the MVN lifecycle aspects, run `mvn install`
+Before using any of the MVN lifecycle aspects for the first time or after an update, run `mvn install`
 
 ### Site
 To generate a site run `mvn site:site site:stage`. The staging site will be in `target/staging`. Just running `mvn site` will not create proper links between modules.
 
 ### Package
-To create a runnable jar run `mvn package` in `geex-core`. `geex-core` is the only module which creates a runnable jar.
+To create a runnable jar run `mvn package`, the runnable jar is created in `geex-core/target/geex-core-<VERSION>-jar-with-dependencies.jar`.
 
 ## Diagrams
 The diagrams are based on [PlantUML](http://plantuml.sourceforge.net/). Install the PlantUML Integration plugin from the IntelliJ plugin browser. The diagrams are also available in the Maven site.

@@ -161,6 +161,19 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     }
 
     /**
+     * Set the position of the graph by column.
+     *
+     * @param column The colum to set the position to
+     */
+    public void setPosition(final int column) {
+
+        double width = scroll.getContent().layoutBoundsProperty().get().getWidth() - scroll.getWidth();
+        double left = column * DrawableGraph.LABEL_SPACING;
+        scroll.setHvalue(left / width);
+
+    }
+
+    /**
      * Update the current position.
      */
     private void updatePosition() {
