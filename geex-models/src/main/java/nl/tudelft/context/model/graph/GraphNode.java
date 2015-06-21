@@ -6,7 +6,6 @@ import nl.tudelft.context.model.annotation.Resistance;
 import nl.tudelft.context.model.annotation.ResistanceMap;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -174,13 +173,16 @@ public class GraphNode extends DefaultNode {
     }
 
     @Override
-    public  void setResistances(final ResistanceMap resistanceMap) {
+    public void setResistances(final ResistanceMap resistanceMap) {
         // do nothing
     }
 
     @Override
     public List<Resistance> getResistances() {
-        return Collections.emptyList();
+        return nodes.stream()
+                .map(DefaultNode::getResistances)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
 }
