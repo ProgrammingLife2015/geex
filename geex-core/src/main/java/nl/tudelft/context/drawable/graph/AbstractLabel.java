@@ -51,6 +51,9 @@ public abstract class AbstractLabel extends VBox {
 
     }
 
+    /**
+     * Show the annotations bubbles below the node.
+     */
     protected void initAnnotations() {
 
         final HBox annotationsHolder = new HBox();
