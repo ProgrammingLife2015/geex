@@ -7,18 +7,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import nl.tudelft.context.controller.graphlist.GraphListController;
+import nl.tudelft.context.controller.graphlist.GraphFilter;
+import nl.tudelft.context.controller.graphlist.GraphFilterController;
 import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.model.annotation.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.ResistanceMap;
-import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.model.graph.InsertDeleteGraph;
-import nl.tudelft.context.model.graph.SinglePointGraph;
-import nl.tudelft.context.model.graph.UnknownGraph;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -76,7 +73,7 @@ public class GraphController extends AbstractGraphController {
     /**
      * Controller for the current graph.
      */
-    GraphListController graphListController;
+    GraphFilterController graphFilterController;
 
     /**
      * Init a controller at graph.fxml.
@@ -108,7 +105,7 @@ public class GraphController extends AbstractGraphController {
 
         super.initialize(location, resources);
 
-        graphListController = new GraphListController(graphs);
+        graphFilterController = new GraphFilterController(graphs);
         new LocatorController(locator, nodeMapProperty, positionProperty, this);
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
@@ -141,14 +138,6 @@ public class GraphController extends AbstractGraphController {
 
         MenuController menuController = mainController.getMenuController();
 
-        MenuItem zoomIn = menuController.getZoomIn();
-        zoomIn.setOnAction(event -> graphListController.zoomIn());
-        zoomIn.disableProperty().bind(activeProperty.not());
-
-        MenuItem zoomOut = menuController.getZoomOut();
-        zoomOut.setOnAction(event -> graphListController.zoomOut());
-        zoomOut.disableProperty().bind(activeProperty.not());
-
         MenuItem toggleSelect = menuController.getToggleSelect();
         activeProperty.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -175,15 +164,12 @@ public class GraphController extends AbstractGraphController {
         if (graphMap != null && codingSequenceMap != null && resistanceMap != null) {
             graphMap.setCodingSequence(codingSequenceMap);
             graphMap.setResistance(resistanceMap);
-            graphListController.add(graphMap.flat(sources));
-            graphListController.add(new SinglePointGraph(graphListController.getActiveGraph()));
-            graphListController.add(new InsertDeleteGraph(graphListController.getActiveGraph()));
-            graphListController.add(new CollapseGraph(graphListController.getActiveGraph()));
-            graphListController.add(new UnknownGraph(graphListController.getActiveGraph()));
+            graphFilterController.setBaseGraph(graphMap.flat(sources));
+            graphFilterController.addAll(GraphFilter.values());
 
-            graphListController.getActiveGraphProperty().addListener((observable, oldValue, newValue) ->
+            graphFilterController.getActiveGraphProperty().addListener((observable, oldValue, newValue) ->
                     showGraph(new DrawableGraph(newValue)));
-            showGraph(new DrawableGraph(graphListController.getActiveGraph()));
+            showGraph(new DrawableGraph(graphFilterController.getActiveGraph()));
         }
     }
 
@@ -205,6 +191,6 @@ public class GraphController extends AbstractGraphController {
      * Function that resets the view to the most zoomed out level.
      */
     private void resetView() {
-        graphListController.reset();
+        graphFilterController.reset();
     }
 }

@@ -1,5 +1,6 @@
 package nl.tudelft.context.model.annotation;
 
+import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.model.Parser;
 
 import java.io.BufferedReader;
@@ -37,7 +38,7 @@ public class ResistanceParser extends Parser<ResistanceMap> {
             try {
                 resistances.add(getResistance(line));
             } catch (ResistanceFormatException e) {
-                e.toString(); //For sending to logger.
+                Log.debug(e.toString()); //For sending to logger.
             }
         }
 

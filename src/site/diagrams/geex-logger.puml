@@ -12,11 +12,12 @@ class Log implements ObservableLog {
     +{static}info(message : Message)
     +{static}warning(message : Message)
     +{static}debug(message : Message)
+    +{static}debug(message : String)
     -message(message : Message, type : MessageType)
 }
 
 interface Logger {
-    log(message : Message, messageType : MessageType)
+    log(message : String, messageType : MessageType)
     getLevel() : MessageType
 }
 class StdOutLogger implements Logger {
@@ -31,7 +32,6 @@ enum MessageType {
     -level : int
 }
 
-Logger --> Message
 Logger --> MessageType
 
 Log --> Message
