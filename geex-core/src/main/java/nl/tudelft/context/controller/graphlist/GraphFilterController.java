@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 17-6-2015
  */
-public class GraphListController implements InvalidationListener {
+public class GraphFilterController implements InvalidationListener {
 
     /**
      * List of graph views.
      */
-    ObservableList<GraphListItem> graphList;
+    ObservableList<GraphFilterLabel> graphList;
 
     /**
      * Active graph property.
@@ -48,17 +48,17 @@ public class GraphListController implements InvalidationListener {
      *
      * @param graphs FXML Pane to add graphs labels to.
      */
-    public GraphListController(final Pane graphs) {
+    public GraphFilterController(final Pane graphs) {
         this.graphs = graphs;
         graphList = FXCollections.observableArrayList();
 
-        graphList.addListener((ListChangeListener<GraphListItem>) c -> {
+        graphList.addListener((ListChangeListener<GraphFilterLabel>) c -> {
             while (c.next()) {
                 if (!c.wasPermutated() && !c.wasUpdated()) {
-                    for (GraphListItem remitem : c.getRemoved()) {
+                    for (GraphFilterLabel remitem : c.getRemoved()) {
                         remitem.removeListener(this);
                     }
-                    for (GraphListItem additem : c.getAddedSubList()) {
+                    for (GraphFilterLabel additem : c.getAddedSubList()) {
                         additem.addListener(this);
                     }
                 }
@@ -86,15 +86,14 @@ public class GraphListController implements InvalidationListener {
      * @param baseGraph Graph to use as base.
      * @return A combined graph.
      */
-    private StackGraph createGraphFromFilter(final ObservableList<GraphListItem> graphs, final StackGraph baseGraph) {
+    private StackGraph createGraphFromFilter(final ObservableList<GraphFilterLabel> graphs, final StackGraph baseGraph) {
         StackGraph newGraph = baseGraph;
-        for (GraphListItem gli : graphs) {
-            GraphFilterEnum gfe = gli.getGraph();
-            if (!gfe.isActive()) {
+        for (GraphFilterLabel gli : graphs) {
+            if (!gli.isActive()) {
                 continue;
             }
             try {
-                Class<? extends StackGraph> clazz = gfe.getGraph();
+                Class<? extends StackGraph> clazz = gli.getFilter().getGraph();
                 Constructor<? extends StackGraph> constructor = clazz.getDeclaredConstructor(StackGraph.class);
                 newGraph = constructor.newInstance(newGraph);
             } catch (ReflectiveOperationException e) {
@@ -136,9 +135,9 @@ public class GraphListController implements InvalidationListener {
      *
      * @param values GraphFilters to add
      */
-    public void addAll(final GraphFilterEnum[] values) {
+    public void addAll(final GraphFilter[] values) {
         graphList.setAll(Arrays.asList(values).stream()
-                .map(graphFilterEnum -> new GraphListItem(graphFilterEnum, graphList))
+                .map(graphFilterEnum -> new GraphFilterLabel(graphFilterEnum, graphList))
                 .collect(Collectors.toList()));
     }
 

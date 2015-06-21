@@ -7,8 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import nl.tudelft.context.controller.graphlist.GraphFilterEnum;
-import nl.tudelft.context.controller.graphlist.GraphListController;
+import nl.tudelft.context.controller.graphlist.GraphFilter;
+import nl.tudelft.context.controller.graphlist.GraphFilterController;
 import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.logger.Log;
@@ -73,7 +73,7 @@ public final class GraphController extends AbstractGraphController {
     /**
      * Controller for the current graph.
      */
-    GraphListController graphListController;
+    GraphFilterController graphFilterController;
 
     /**
      * Init a controller at graph.fxml.
@@ -105,7 +105,7 @@ public final class GraphController extends AbstractGraphController {
 
         super.initialize(location, resources);
 
-        graphListController = new GraphListController(graphs);
+        graphFilterController = new GraphFilterController(graphs);
         new LocatorController(locator, nodeMapProperty, positionProperty);
 
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
@@ -164,12 +164,12 @@ public final class GraphController extends AbstractGraphController {
         if (graphMap != null && codingSequenceMap != null && resistanceMap != null) {
             graphMap.setCodingSequence(codingSequenceMap);
             graphMap.setResistance(resistanceMap);
-            graphListController.setBaseGraph(graphMap.flat(sources));
-            graphListController.addAll(GraphFilterEnum.values());
+            graphFilterController.setBaseGraph(graphMap.flat(sources));
+            graphFilterController.addAll(GraphFilter.values());
 
-            graphListController.getActiveGraphProperty().addListener((observable, oldValue, newValue) ->
+            graphFilterController.getActiveGraphProperty().addListener((observable, oldValue, newValue) ->
                     showGraph(new DrawableGraph(newValue)));
-            showGraph(new DrawableGraph(graphListController.getActiveGraph()));
+            showGraph(new DrawableGraph(graphFilterController.getActiveGraph()));
         }
     }
 
@@ -191,6 +191,6 @@ public final class GraphController extends AbstractGraphController {
      * Function that resets the view to the most zoomed out level.
      */
     private void resetView() {
-        graphListController.reset();
+        graphFilterController.reset();
     }
 }

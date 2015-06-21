@@ -2,7 +2,6 @@ package nl.tudelft.context.controller.graphlist;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -23,14 +22,14 @@ import static org.mockito.Mockito.verify;
  * @since 19-6-2015
  */
 @RunWith(value = JfxRunner.class)
-public class GraphListItemTest {
+public class GraphFilterLabelTest {
 
     @Test
     public void testMouseClicked() throws Exception {
-        ObservableList<GraphListItem> list = FXCollections.observableArrayList();
-        GraphListItem gli1 = new GraphListItem(GraphFilterEnum.COLLAPSE, list);
-        GraphListItem gli2 = new GraphListItem(GraphFilterEnum.INSERT_DELETE, list);
-        GraphListItem gli3 = new GraphListItem(GraphFilterEnum.SINGLE_POINT, list);
+        ObservableList<GraphFilterLabel> list = FXCollections.observableArrayList();
+        GraphFilterLabel gli1 = new GraphFilterLabel(GraphFilter.COLLAPSE, list);
+        GraphFilterLabel gli2 = new GraphFilterLabel(GraphFilter.INSERT_DELETE, list);
+        GraphFilterLabel gli3 = new GraphFilterLabel(GraphFilter.SINGLE_POINT, list);
 
         list.addAll(gli1, gli2, gli3);
 
@@ -46,7 +45,7 @@ public class GraphListItemTest {
         eh.handle(myMouseEvent);
 
         assertFalse(gli1.getStyleClass().contains("active"));
-        assertFalse(gli1.getGraph().isActive());
+        assertFalse(gli1.getFilter().isActive());
         verify(mockListener).invalidated(gli1);
     }
 }

@@ -13,7 +13,7 @@ import nl.tudelft.context.model.graph.UnknownGraph;
  * @version 1.0
  * @since 18-6-2015
  */
-public enum GraphFilterEnum {
+public enum GraphFilter {
     /**
      * Class for filtering a Single Point mutation graph.
      */
@@ -34,26 +34,22 @@ public enum GraphFilterEnum {
     /**
      * Class with filter.
      */
-    private Class<? extends StackGraph> graph;
+    private final Class<? extends StackGraph> graph;
     /**
      * Name of this filter.
      */
-    private String name;
-    /**
-     * Whether this filter is active.
-     */
-    private boolean active;
+    private final String name;
 
     /**
      * Get the filter for this enum.
      * @return The filter
      */
-    public Class<? extends StackGraph> getGraph() {
+    public final Class<? extends StackGraph> getGraph() {
         return graph;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return name;
     }
 
@@ -63,24 +59,8 @@ public enum GraphFilterEnum {
      * @param graph Class of the filter.
      * @param name Name of the filter.
      */
-    GraphFilterEnum(final Class<? extends StackGraph> graph, final String name) {
+    GraphFilter(final Class<? extends StackGraph> graph, final String name) {
         this.graph = graph;
         this.name = name;
-    }
-
-    /**
-     * Set the active state of this GraphFilter.
-     * @param active New state.
-     */
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
-
-    /**
-     * Get if this filter is active.
-     * @return State of this filter.
-     */
-    public boolean isActive() {
-        return active;
     }
 }

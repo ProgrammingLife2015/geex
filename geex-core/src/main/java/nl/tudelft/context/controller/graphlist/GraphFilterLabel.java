@@ -14,11 +14,11 @@ import javafx.scene.input.TransferMode;
 import nl.tudelft.context.logger.Log;
 
 /**
- * @author René Vennik
- * @version 1.0
+ * @author Gerben Oolbekkink
+ * @version 2.0
  * @since 17-6-2015
  */
-public class GraphListItem extends Label implements Observable {
+public class GraphFilterLabel extends Label implements Observable {
     /**
      * In order to make this drag and drop work.
      */
@@ -31,13 +31,14 @@ public class GraphListItem extends Label implements Observable {
     /**
      * The filter for this item.
      */
-    private final GraphFilterEnum graph;
+    private final GraphFilter graph;
+    private boolean active;
 
     /**
      * @param graph     Graph it represents
      * @param graphList ObservableList of filters.
      */
-    public GraphListItem(final GraphFilterEnum graph, final ObservableList<GraphListItem> graphList) {
+    public GraphFilterLabel(final GraphFilter graph, final ObservableList<GraphFilterLabel> graphList) {
         this.graph = graph;
         activate();
         getStyleClass().add("graph-item");
@@ -62,21 +63,21 @@ public class GraphListItem extends Label implements Observable {
     }
 
     /**
-     * Eventhandler for dragDropped.
+     * EventHandler for dragDropped.
      * <p/>
      * Will move the active element to the right position in the list.
      *
      * @param graphList List containing all the items.
      * @return A new eventhandler for dragdropped.
      */
-    private EventHandler<DragEvent> dragDropped(final ObservableList<GraphListItem> graphList) {
+    private EventHandler<DragEvent> dragDropped(final ObservableList<GraphFilterLabel> graphList) {
         return event -> {
             Log.debug("Drag dropped");
-            graphList.forEach(GraphListItem::deactivate);
-            GraphListItem self = (GraphListItem) event.getGestureSource();
+            graphList.forEach(GraphFilterLabel::deactivate);
+            GraphFilterLabel self = (GraphFilterLabel) event.getGestureSource();
             // If landed on another GraphListItem
-            if (event.getGestureTarget() instanceof GraphListItem) {
-                GraphListItem other = (GraphListItem) event.getGestureTarget();
+            if (event.getGestureTarget() instanceof GraphFilterLabel) {
+                GraphFilterLabel other = (GraphFilterLabel) event.getGestureTarget();
                 final int i = graphList.indexOf(other);
                 graphList.remove(self);
                 graphList.add(i, self);
@@ -87,17 +88,17 @@ public class GraphListItem extends Label implements Observable {
     }
 
     /**
-     * An eventhandler for dragDetected.
+     * An eventHandler for dragDetected.
      * <p/>
      * Will init a new drag and drop.
      *
-     * @return Eventhandler used for dragdetected.
+     * @return EventHandler used for dragDetected.
      */
     private EventHandler<MouseEvent> dragDetected() {
         return event -> {
             Log.debug("Drag detected");
 
-            GraphListItem item = (GraphListItem) event.getSource();
+            GraphFilterLabel item = (GraphFilterLabel) event.getSource();
             Dragboard db = item.startDragAndDrop(TransferMode.MOVE);
 
             ClipboardContent content = new ClipboardContent();
@@ -109,26 +110,26 @@ public class GraphListItem extends Label implements Observable {
     }
 
     /**
-     * Eventhandler for mouseClicked.
+     * EventHandler for mouseClicked.
      * <p/>
      * Will activate the item and make the listener reload.
      *
      * @param graphList List of items to change.
-     * @return An eventhandler.
+     * @return An eventHandler.
      */
-    private EventHandler<MouseEvent> mouseClicked(final ObservableList<GraphListItem> graphList) {
+    private EventHandler<MouseEvent> mouseClicked(final ObservableList<GraphFilterLabel> graphList) {
         return event -> {
-            GraphListItem source = (GraphListItem) event.getSource();
+            GraphFilterLabel source = (GraphFilterLabel) event.getSource();
 
             int index = graphList.indexOf(source);
-            if (source.getGraph().isActive()) {
+            if (source.isActive()) {
                 index--;
             }
 
-            graphList.forEach(GraphListItem::deactivate);
+            graphList.forEach(GraphFilterLabel::deactivate);
             graphList.stream()
                     .limit(index + 1)
-                    .forEach(GraphListItem::activate);
+                    .forEach(GraphFilterLabel::activate);
 
             listener.invalidated(source);
         };
@@ -139,7 +140,7 @@ public class GraphListItem extends Label implements Observable {
      */
     private void deactivate() {
         getStyleClass().remove("active");
-        graph.setActive(false);
+        active = false;
     }
 
     /**
@@ -147,7 +148,11 @@ public class GraphListItem extends Label implements Observable {
      */
     private void activate() {
         getStyleClass().add("active");
-        graph.setActive(true);
+        active = true;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     /**
@@ -155,7 +160,7 @@ public class GraphListItem extends Label implements Observable {
      *
      * @return The graph of this item.
      */
-    public GraphFilterEnum getGraph() {
+    public GraphFilter getFilter() {
         return graph;
     }
 
