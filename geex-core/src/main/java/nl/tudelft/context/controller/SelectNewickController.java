@@ -70,15 +70,8 @@ public class SelectNewickController extends AbstractNewickController {
         subNewick.getNewick().getRoot().getSourcesProperty().addListener(event -> graphController
                 .updateSelectedSources(subNewick.getNewick().getRoot().getSources()));
 
-        // Bind edges
-        List<DrawableEdge> edgeList = subNewick.edgeSet().stream()
-                .map(edge -> new DrawableEdge(subNewick, edge))
-                .collect(Collectors.toList());
-
-        // Bind nodes
-        List<Label> nodeList = subNewick.vertexSet().stream()
-                .map(NewickLabel::new)
-                .collect(Collectors.toList());
+        List<DrawableEdge> edgeList = createDrawableEdges(subNewick);
+        List<Label> nodeList = createNewickLabels(subNewick);
 
         newickContainer.getChildren().addAll(edgeList);
         newickContainer.getChildren().addAll(nodeList);

@@ -57,15 +57,8 @@ public final class NewickController extends AbstractNewickController {
     protected void showTree(final Newick newick) {
         DrawableNewick drawableNewick = new DrawableNewick(newick);
 
-        // Bind edges
-        List<DrawableEdge> edgeList = drawableNewick.edgeSet().stream()
-                .map(edge -> new DrawableEdge(drawableNewick, edge))
-                .collect(Collectors.toList());
-
-        // Bind nodes
-        List<Label> nodeList = drawableNewick.vertexSet().stream()
-                .map(NewickLabel::new)
-                .collect(Collectors.toList());
+        List<DrawableEdge> edgeList = createDrawableEdges(drawableNewick);
+        List<Label> nodeList = createNewickLabels(drawableNewick);
 
         newickContainer.getChildren().addAll(edgeList);
         newickContainer.getChildren().addAll(nodeList);

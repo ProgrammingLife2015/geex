@@ -4,14 +4,20 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import nl.tudelft.context.drawable.DrawableEdge;
+import nl.tudelft.context.drawable.DrawableNewick;
+import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.model.newick.Newick;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik
@@ -73,6 +79,19 @@ public abstract class AbstractNewickController extends ViewController<AnchorPane
         newickObjectProperty.bind(newickIn);
 
         progressIndicator.visibleProperty().bind(newickObjectProperty.isNull());
+    }
+
+
+    protected List<Label> createNewickLabels(DrawableNewick subNewick) {
+        return subNewick.vertexSet().stream()
+                .map(NewickLabel::new)
+                .collect(Collectors.toList());
+    }
+
+    protected List<DrawableEdge> createDrawableEdges(DrawableNewick subNewick) {
+        return subNewick.edgeSet().stream()
+                .map(edge -> new DrawableEdge(subNewick, edge))
+                .collect(Collectors.toList());
     }
 
     /**
