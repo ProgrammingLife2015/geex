@@ -8,7 +8,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.model.graph.StackGraph;
 
@@ -52,6 +57,7 @@ public class GraphFilterController implements InvalidationListener {
         graphList = FXCollections.observableArrayList();
 
         filterList = new VBox();
+
         graphList.addListener((ListChangeListener<GraphFilterLabel>) c -> {
             while (c.next()) {
                 if (!c.wasPermutated() && !c.wasUpdated()) {
@@ -68,7 +74,23 @@ public class GraphFilterController implements InvalidationListener {
 
             activeGraph.set(createGraphFromFilter(graphList, baseGraph));
         });
+
         graphs.getChildren().add(new ScrollPane(filterList));
+
+        HBox newFilter = new HBox();
+
+        ObservableList<GraphFilter> filters = FXCollections.observableArrayList(GraphFilter.values());
+
+        ComboBox<GraphFilter> newFilterList = new ComboBox<>(filters);
+        Button createNewFilter = new Button("+");
+        createNewFilter.setOnMouseClicked(event -> graphList.add(new GraphFilterLabel(newFilterList.getSelectionModel().getSelectedItem(), graphList)));
+
+        createNewFilter.setMinWidth(createNewFilter.getPrefWidth());
+
+        newFilter.getChildren().addAll(newFilterList, createNewFilter);
+
+        graphs.getChildren().add(newFilter);
+
         graphs.getChildren().add(new TrashCan());
     }
 
