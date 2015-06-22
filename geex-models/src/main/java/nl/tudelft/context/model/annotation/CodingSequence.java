@@ -167,15 +167,16 @@ public class CodingSequence extends Annotation {
      */
     @Override
     public String toString() {
-        return "Sequence: " + seqId + System.getProperty("line.separator")
-                + "Source: " + source + System.getProperty("line.separator")
-                + "Type: " + type + System.getProperty("line.separator")
-                + "Start: " + start + System.getProperty("line.separator")
-                + "End: " + end + System.getProperty("line.separator")
-                + "Score: " + score + System.getProperty("line.separator")
-                + "Strand (Sense): " + strand + System.getProperty("line.separator")
-                + "Phase: " + phase + System.getProperty("line.separator")
-                + "Attributes: " + attributes;
+        return String.format("Sequence: %s%n"
+                        + "Source: %s%n"
+                        + "Type: %s%n"
+                        + "Start: %s%n"
+                        + "End: %s%n"
+                        + "Score: %s%n"
+                        + "Strand (Sense): %s%n"
+                        + "Phase: %s%n"
+                        + "Attributes: %s",
+                seqId, source, type, start, end, score, strand, phase, attributes);
     }
 
 }
