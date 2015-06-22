@@ -64,10 +64,8 @@ public final class MenuController {
      */
     private void initFileMenu() {
 
-        selectWorkspace = createMenuItem("Select workspace folder",
-                new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN),
-                null,
-                false);
+        selectWorkspace = createDisabledMenuItem("Select workspace folder",
+                new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
 
         selectRecentWorkspace = new Menu("_Select recent workspace");
         selectRecentWorkspace.setDisable(true);
@@ -85,20 +83,14 @@ public final class MenuController {
      */
     private void initNavigateMenu() {
 
-        loadGenomeGraph = createMenuItem("Load Genome graph",
-                new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN),
-                null,
-                true);
+        loadGenomeGraph = createDisabledMenuItem("Load Genome graph",
+                new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN));
 
-        toggleSelect = createMenuItem("Show Phylogenetic tree",
-                new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN),
-                null,
-                true);
+        toggleSelect = createDisabledMenuItem("Show Phylogenetic tree",
+                new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN));
 
-        resetView = createMenuItem("Reset the view",
-                new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN),
-                null,
-                true);
+        resetView = createDisabledMenuItem("Reset the view",
+                new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN));
 
         menuBar.getMenus().add(createMenu("_Navigate",
                 createMenuItem("Previous view",
@@ -139,6 +131,17 @@ public final class MenuController {
         menu.getItems().addAll(menuItems);
         return menu;
 
+    }
+
+    /**
+     * Create a disabled menu item, all of these don't have an action yet and are disabled.
+     *
+     * @param title The title of the menuItem
+     * @param keyComb The keycombination for this menuItem
+     * @return A new menuItem
+     */
+    private MenuItem createDisabledMenuItem(final String title, final KeyCombination keyComb) {
+        return createMenuItem(title, keyComb, null, true);
     }
 
     /**
