@@ -81,14 +81,24 @@ public abstract class AbstractNewickController extends ViewController<AnchorPane
         progressIndicator.visibleProperty().bind(newickObjectProperty.isNull());
     }
 
-
-    protected List<Label> createNewickLabels(DrawableNewick subNewick) {
+    /**
+     * Create a list of newickLabels based on a DrawableNewick.
+     *
+     * @param subNewick DrawableNewick containing vertices.
+     * @return A list of NewickLabels.
+     */
+    protected List<Label> createNewickLabels(final DrawableNewick subNewick) {
         return subNewick.vertexSet().stream()
                 .map(NewickLabel::new)
                 .collect(Collectors.toList());
     }
 
-    protected List<DrawableEdge> createDrawableEdges(DrawableNewick subNewick) {
+    /**
+     * Create a list of DrawableEdges based on a DrawableNewick.
+     * @param subNewick DrawableNewick containing edges.
+     * @return A list of DrawableEdges.
+     */
+    protected List<DrawableEdge> createDrawableEdges(final DrawableNewick subNewick) {
         return subNewick.edgeSet().stream()
                 .map(edge -> new DrawableEdge(subNewick, edge))
                 .collect(Collectors.toList());

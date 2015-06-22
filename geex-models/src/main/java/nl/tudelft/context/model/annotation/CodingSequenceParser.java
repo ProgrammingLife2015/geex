@@ -90,8 +90,7 @@ public class CodingSequenceParser extends Parser<CodingSequenceMap> {
      * @return CodingSequence
      * @throws NumberFormatException when the data isn't correct
      */
-    public final CodingSequence getCodingSequence(final String[] splitLine)
-            throws NumberFormatException {
+    public final CodingSequence getCodingSequence(final String[] splitLine) {
         String seqId = splitLine[SEQ_ID_INDEX];
         String source = splitLine[SOURCE_INDEX];
         String type = splitLine[TYPE_INDEX];

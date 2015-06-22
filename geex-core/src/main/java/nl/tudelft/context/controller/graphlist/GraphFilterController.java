@@ -55,7 +55,13 @@ public class GraphFilterController implements InvalidationListener {
         graphList.addListener(onGraphListChange(graphs));
     }
 
-    private ListChangeListener<GraphFilterLabel> onGraphListChange(Pane graphs) {
+    /**
+     * Add and remove listeners, update the graphs list when the graph list changes.
+     *
+     * @param graphs List of graphs to put the list in.
+     * @return ChangeListener, to use when graphList updates.
+     */
+    private ListChangeListener<GraphFilterLabel> onGraphListChange(final Pane graphs) {
         return c -> {
             while (c.next()) {
                 if (!c.wasPermutated() && !c.wasUpdated()) {

@@ -173,7 +173,7 @@ public class MainController extends AbstractController<StackPane> {
      *
      * @param viewController ViewController to show in this Window.
      */
-    private void openWindow(ViewController viewController) {
+    private void openWindow(final ViewController viewController) {
         new Window(viewController.getBreadcrumbName(), viewController.getRoot());
         // When creating a new window our control over the keyboard is lost
         // and the state of the shift key is stuck.
@@ -185,7 +185,7 @@ public class MainController extends AbstractController<StackPane> {
      * @param on Previous view
      * @param viewController Next view
      */
-    private void setLocalView(ViewController on, ViewController viewController) {
+    private void setLocalView(final ViewController on, ViewController viewController) {
         viewList.remove(viewList.indexOf(on) + 1, viewList.size());
         view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
         viewList.add(viewController);
