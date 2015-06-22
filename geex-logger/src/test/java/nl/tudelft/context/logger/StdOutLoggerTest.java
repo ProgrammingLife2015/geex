@@ -34,7 +34,7 @@ public class StdOutLoggerTest {
     public void testDebugLog() throws Exception {
         Logger logger = new StdOutLogger(mock(ObservableLog.class));
 
-        logger.log(Message.MESSAGE_READY, MessageType.DEBUG);
+        logger.log(Message.MESSAGE_READY.toString(), MessageType.DEBUG);
 
         assertThat(outContent.toString(), CoreMatchers.containsString("[" + MessageType.DEBUG + "] " + Message.MESSAGE_READY));
     }
@@ -43,7 +43,7 @@ public class StdOutLoggerTest {
     public void testWarningLog() throws Exception {
         Logger logger = new StdOutLogger(mock(ObservableLog.class));
 
-        logger.log(Message.MESSAGE_READY, MessageType.WARNING);
+        logger.log(Message.MESSAGE_READY.toString(), MessageType.WARNING);
 
         assertThat(errContent.toString(), CoreMatchers.containsString("[" + MessageType.WARNING + "] " + Message.MESSAGE_READY));
     }

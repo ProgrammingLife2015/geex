@@ -6,6 +6,7 @@
 [geex-core] --> [geex-logger]
 
 [geex-models] --> [geex-services]
+[geex-models] --> [geex-logger]
 
 [geex-workspace] --> [geex-models]
 [geex-workspace] --> [geex-services]

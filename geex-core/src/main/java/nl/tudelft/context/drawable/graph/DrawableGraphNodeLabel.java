@@ -54,6 +54,8 @@ public class DrawableGraphNodeLabel extends AbstractLabel {
 
         getChildren().add(initMainLabel());
 
+        initAnnotations();
+
     }
 
     /**
