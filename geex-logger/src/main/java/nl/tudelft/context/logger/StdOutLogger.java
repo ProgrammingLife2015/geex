@@ -15,11 +15,9 @@ import java.sql.Timestamp;
 public final class StdOutLogger implements Logger {
     /**
      * Create a new StdOutLogger.
-     *
-     * @param log Log to observe.
      */
-    public StdOutLogger(final ObservableLog log) {
-        log.addLogger(this);
+    public StdOutLogger() {
+
     }
 
     @Override
@@ -31,6 +29,7 @@ public final class StdOutLogger implements Logger {
 
     /**
      * Get a proper stream for each {@link MessageType}.
+     *
      * @param type MessageType which is logged
      * @return A PrintStream for this type of message
      */

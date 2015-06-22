@@ -77,7 +77,7 @@ public enum Message {
     /**
      * Message used to show debugging is enabled.
      */
-    DEBUGGER_READY("Debug logger enabled.");
+    APPLICATION_STARTING("Application starting.");
 
     /**
      * Message string in this message.
