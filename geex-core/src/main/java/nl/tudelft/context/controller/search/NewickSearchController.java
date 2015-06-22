@@ -21,6 +21,10 @@ import java.util.stream.Collectors;
  * @since 12-6-2015
  */
 public class NewickSearchController {
+    /**
+     * Classname for buttons.
+     */
+    private static String buttonClass = "my-button";
 
     /**
      * List of labels in the current Newick.
@@ -66,9 +70,9 @@ public class NewickSearchController {
         searchPrev = new Button("\u25b2");
         searchNext = new Button("\u25bc");
 
-        searchField.getStyleClass().add("my-button");
-        searchPrev.getStyleClass().add("my-button");
-        searchNext.getStyleClass().add("my-button");
+        searchField.getStyleClass().add(buttonClass);
+        searchPrev.getStyleClass().add(buttonClass);
+        searchNext.getStyleClass().add(buttonClass);
 
         searchContainer.getChildren().setAll(searchField, searchNext, searchPrev);
 
