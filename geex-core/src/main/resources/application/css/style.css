@@ -427,15 +427,17 @@
     -fx-border-width: 0 0 1px;
     -fx-border-color: #848484;
     -fx-cursor: hand;
+
+    -fx-background-image:url('../images/move-drag.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+    -fx-text-fill: #fff;
+    -fx-padding: 10px;
 }
+
 
 #graphs .graph-item.active {
     -fx-background-color: #494949;
-}
-
-#graphs .graph-item {
-    -fx-text-fill: #fff;
-    -fx-padding: 10px;
 }
 
 /* Search */
