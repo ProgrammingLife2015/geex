@@ -25,6 +25,14 @@ public class NewickSearchController {
      * Classname for buttons.
      */
     private static String buttonClass = "my-button";
+    /**
+     * Class name for focused search.
+     */
+    private static String focusSearchClass = "search-focus";
+    /**
+     * Class name for found search.
+     */
+    private static String searchClass = "search";
 
     /**
      * List of labels in the current Newick.
@@ -112,7 +120,7 @@ public class NewickSearchController {
     public EventHandler<ActionEvent> searchMoveEventHandler(final int dir) {
         return event -> {
             if (!selectedLabels.isEmpty()) {
-                selectedLabels.forEach(label -> label.getStyleClass().remove("search-focus"));
+                selectedLabels.forEach(label -> label.getStyleClass().remove(focusSearchClass));
 
                 searchIndex += dir + selectedLabels.size();
                 searchIndex %= selectedLabels.size();
@@ -129,7 +137,7 @@ public class NewickSearchController {
      * @return A list of found Labels.
      */
     public List<Label> search(final String query) {
-        labels.stream().forEach(label -> label.getStyleClass().removeAll("search", "search-focus"));
+        labels.stream().forEach(label -> label.getStyleClass().removeAll(searchClass, focusSearchClass));
         if (query.length() < 1) {
             return new ArrayList<>();
         }
@@ -138,7 +146,7 @@ public class NewickSearchController {
                 .filter(label -> label.getText().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
 
-        selected.forEach(label -> label.getStyleClass().add("search"));
+        selected.forEach(label -> label.getStyleClass().add(searchClass));
 
         return selected;
     }
@@ -159,6 +167,6 @@ public class NewickSearchController {
         scrollPane.setVvalue(y / height);
         scrollPane.setHvalue(x / width);
 
-        node.getStyleClass().add("search-focus");
+        node.getStyleClass().add(focusSearchClass);
     }
 }
