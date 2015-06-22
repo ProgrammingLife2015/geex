@@ -6,13 +6,11 @@ import javafx.scene.control.MenuItem;
 import nl.tudelft.context.controller.search.NewickSearchController;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableNewick;
-import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.model.newick.Newick;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 /**
  * @author René Vennik

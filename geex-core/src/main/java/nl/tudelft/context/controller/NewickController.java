@@ -3,18 +3,16 @@ package nl.tudelft.context.controller;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import nl.tudelft.context.logger.Log;
-import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.controller.search.NewickSearchController;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableNewick;
-import nl.tudelft.context.drawable.NewickLabel;
+import nl.tudelft.context.logger.Log;
+import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.selection.None;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author René Vennik
