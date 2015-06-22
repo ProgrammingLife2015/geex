@@ -66,6 +66,10 @@ public class NewickSearchController {
         searchPrev = new Button("\u25b2");
         searchNext = new Button("\u25bc");
 
+        searchField.getStyleClass().add("my-button");
+        searchPrev.getStyleClass().add("my-button");
+        searchNext.getStyleClass().add("my-button");
+
         searchContainer.getChildren().setAll(searchField, searchNext, searchPrev);
 
         selectedLabels = new ArrayList<>();
@@ -127,7 +131,7 @@ public class NewickSearchController {
         }
 
         List<Label> selected = labels.stream()
-                .filter(label -> label.getText().contains(query))
+                .filter(label -> label.getText().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
 
         selected.forEach(label -> label.getStyleClass().add("search"));

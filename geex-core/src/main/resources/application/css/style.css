@@ -472,11 +472,47 @@
 
 /* Search */
 .search {
-    -fx-border-color: #7b0000;
+    -fx-border-color: #646464;
+    -fx-border-width: 2px;
 }
 
 .search-focus {
-    -fx-border-color: #ef8caf;
+    -fx-border-color: #F3F315;
+    -fx-border-width: 2px;
+}
+
+.my-button {
+    -fx-background-color: #3c3f41;
+    -fx-border-width: 2px;
+    -fx-border-color: #646464;
+    -fx-text-fill: #58a5c8;
+}
+
+.my-button:hover {
+    -fx-background-color: #5b5d5f;
+    -fx-border-color: #7a8084;
+}
+
+.my-button:armed {
+    -fx-background-color: #555a5c;
+}
+
+/* previous workspace list*/
+
+.list-cell:even {
+    -fx-background-color: #cdcbcb;
+}
+
+.list-cell:odd {
+    -fx-background-color: #c0c0c0;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #58a5c8;
+}
+
+#previous Label {
+    -fx-text-fill: black;
 }
 
 /* Header */
