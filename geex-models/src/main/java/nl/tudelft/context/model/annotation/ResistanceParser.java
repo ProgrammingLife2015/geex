@@ -64,7 +64,7 @@ public class ResistanceParser extends Parser<ResistanceMap> {
             String change = matcher.group(++index);
             String filter = matcher.group(++index);
             int genomePosition = Integer.parseInt(matcher.group(++index));
-            String drugName = getDrugName(matcher.group(++index).charAt(0));
+            String drugName = getDrugName(matcher.group(++index));
             return new Resistance(geneName, typeOfMutation, change, filter, genomePosition, drugName);
         } else {
             throw new ResistanceFormatException();
@@ -77,29 +77,8 @@ public class ResistanceParser extends Parser<ResistanceMap> {
      * @param letter String that represents the single letter code
      * @return String the name of the drug
      */
-    public final String getDrugName(final char letter) {
-        switch (letter) {
-            case 'R':
-                return "rifampicin";
-            case 'T':
-            case 'M':
-                return "ethionomide";
-            case 'I':
-                return "isoniazid";
-            case 'O':
-                return "ofloxacin";
-            case 'S':
-                return "streptomycin";
-            case 'K':
-                return "kanamycin";
-            case 'P':
-                return "pyrazinamide";
-            case 'E':
-                return "ethambutol";
-            default:
-                return "none";
-
-        }
+    public final String getDrugName(final String letter) {
+        return DrugName.valueOf(letter).toString();
     }
 
 }
