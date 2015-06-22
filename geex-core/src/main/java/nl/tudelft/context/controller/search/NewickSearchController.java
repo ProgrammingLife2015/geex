@@ -55,7 +55,7 @@ public class NewickSearchController {
      * Create a new NewickSearchController.
      *
      * @param labels          Nodes to search in.
-     * @param searchContainer Container for the search bar.
+     * @param searchContainer Container fo      r the search bar.
      * @param scrollPane      Scroller containing the Labels in labels.
      */
     public NewickSearchController(final List<Label> labels, final HBox searchContainer, final ScrollPane scrollPane) {
@@ -65,6 +65,10 @@ public class NewickSearchController {
         searchField = new TextField();
         searchPrev = new Button("\u25b2");
         searchNext = new Button("\u25bc");
+
+        searchField.getStyleClass().add("my-button");
+        searchPrev.getStyleClass().add("my-button");
+        searchNext.getStyleClass().add("my-button");
 
         searchContainer.getChildren().setAll(searchField, searchNext, searchPrev);
 

@@ -470,15 +470,49 @@
     -fx-padding: 10px;
 }
 
+
 /* Search */
 .search {
-    -fx-border-color: #b50000;
-    -fx-border-width: 3px;
+    -fx-border-color: #646464;
+    -fx-border-width: 2px;
 }
 
 .search-focus {
     -fx-border-color: #F3F315;
-    -fx-border-width: 3px;
+    -fx-border-width: 2px;
+}
+
+.my-button {
+    -fx-background-color: #3c3f41;
+    -fx-border-width: 2px;
+    -fx-border-color: #646464;
+    -fx-text-fill: #58a5c8;
+}
+
+.my-button:hover {
+    -fx-background-color: #5b5d5f;
+    -fx-border-color: #7a8084;
+}
+
+.my-button:armed {
+    -fx-background-color: #555a5c;
+}
+
+/* previous workspace list*/
+.list-cell:odd {
+    -fx-background-color: #646464;
+}
+
+.list-cell:even {
+    -fx-background-color: #3c3f41;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #0093ff;
+}
+
+#previous Label {
+    -fx-text-fill: white;
 }
 
 /* Header */
