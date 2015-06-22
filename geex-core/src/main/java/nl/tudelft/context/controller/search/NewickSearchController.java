@@ -55,7 +55,7 @@ public class NewickSearchController {
      * Create a new NewickSearchController.
      *
      * @param labels          Nodes to search in.
-     * @param searchContainer Container fo      r the search bar.
+     * @param searchContainer Container for the search bar.
      * @param scrollPane      Scroller containing the Labels in labels.
      */
     public NewickSearchController(final List<Label> labels, final HBox searchContainer, final ScrollPane scrollPane) {
