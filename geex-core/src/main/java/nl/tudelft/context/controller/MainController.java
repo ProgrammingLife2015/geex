@@ -185,7 +185,7 @@ public class MainController extends AbstractController<StackPane> {
      * @param on Previous view
      * @param viewController Next view
      */
-    private void setLocalView(final ViewController on, ViewController viewController) {
+    private void setLocalView(final ViewController on, final ViewController viewController) {
         viewList.remove(viewList.indexOf(on) + 1, viewList.size());
         view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
         viewList.add(viewController);
