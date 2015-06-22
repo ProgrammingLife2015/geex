@@ -37,7 +37,7 @@ public class GraphControllerTest {
     protected final static File nodeFile = new File(GraphControllerTest.class.getResource("/graph/node.graph").getPath());
     protected final static File edgeFile = new File(GraphControllerTest.class.getResource("/graph/edge.graph").getPath());
 
-    protected static final int sequencesAmount = 4;
+    protected static final int sequencesAmount = 1;
 
     protected static GraphController graphController;
 
