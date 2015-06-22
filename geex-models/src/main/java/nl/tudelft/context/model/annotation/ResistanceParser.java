@@ -17,6 +17,35 @@ import java.util.regex.Pattern;
  * @since 08-6-2015
  */
 public class ResistanceParser extends Parser<ResistanceMap> {
+    /**
+     * The index of the group that holds the geneName.
+     */
+    public static final int GENE_NAME_INDEX = 1;
+
+    /**
+     * The index of the group that holds the typeOfMutation.
+     */
+    public static final int TYPE_OF_MUTATION_INDEX = 2;
+
+    /**
+     * The index of the group that holds the change.
+     */
+    public static final int CHANGE_INDEX = 3;
+
+    /**
+     * The index of the group that holds the filter.
+     */
+    public static final int FILTER_INDEX = 4;
+
+    /**
+     * The index of the group that holds the genomePosition.
+     */
+    public static final int GENOME_POSITION_SHIFT = 5;
+
+    /**
+     * The index of the group that holds the drugName.
+     */
+    public static final int DRUG_NAME_INDEX = 6;
 
     /**
      * Parse the file into an ResistanceMap.
@@ -58,13 +87,12 @@ public class ResistanceParser extends Parser<ResistanceMap> {
         Pattern p = Pattern.compile("(^.*):(.*),(.*),(.*),(\\d+)\\t([A-Z])");
         Matcher matcher = p.matcher(line);
         if (matcher.find()) {
-            int index = 1;
-            String geneName = matcher.group(index);
-            String typeOfMutation = matcher.group(++index);
-            String change = matcher.group(++index);
-            String filter = matcher.group(++index);
-            int genomePosition = Integer.parseInt(matcher.group(++index));
-            String drugName = getDrugName(matcher.group(++index));
+            String geneName = matcher.group(GENE_NAME_INDEX);
+            String typeOfMutation = matcher.group(TYPE_OF_MUTATION_INDEX);
+            String change = matcher.group(CHANGE_INDEX);
+            String filter = matcher.group(FILTER_INDEX);
+            int genomePosition = Integer.parseInt(matcher.group(GENOME_POSITION_SHIFT));
+            String drugName = getDrugName(matcher.group(DRUG_NAME_INDEX));
             return new Resistance(geneName, typeOfMutation, change, filter, genomePosition, drugName);
         } else {
             throw new ResistanceFormatException();
