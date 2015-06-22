@@ -83,7 +83,7 @@ public class ResistanceParserTest {
     @Test
     public void testParserCanceled() throws FileNotFoundException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(resistanceFile));
-        resistanceParser.cancelled();
+        resistanceParser.cancel();
         ResistanceMap map = resistanceParser.parse(bufferedReader);
         assertEquals(0, map.annotationsByStart.size());
     }

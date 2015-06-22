@@ -73,7 +73,7 @@ public class CodingSequenceParserTest {
     @Test
     public void testParserCanceled() throws FileNotFoundException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(codingSequenceFile));
-        codingSequenceParser.cancelled();
+        codingSequenceParser.cancel();
         CodingSequenceMap map = codingSequenceParser.parse(bufferedReader);
         assertEquals(0, map.annotationsByStart.size());
     }

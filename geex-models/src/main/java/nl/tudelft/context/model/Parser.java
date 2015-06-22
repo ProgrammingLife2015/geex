@@ -56,7 +56,7 @@ public abstract class Parser<T> implements Loadable<T> {
      * Set the state of this parser to cancelled.
      */
     @Override
-    public void cancelled() {
+    public void cancel() {
         this.cancelled = true;
     }
 
