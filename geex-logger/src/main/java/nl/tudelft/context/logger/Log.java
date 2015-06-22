@@ -17,7 +17,7 @@ public final class Log implements ObservableLog {
     /**
      * Instance of the singleton log.
      */
-    private static volatile Log LOGGER;
+    private static volatile Log instance;
 
     /**
      * The current loggers to log to.
@@ -37,14 +37,14 @@ public final class Log implements ObservableLog {
      * @return The logger for this application.
      */
     public static Log instance() {
-        if (LOGGER == null) {
+        if (instance == null) {
             synchronized (Log.class) {
-                if (LOGGER == null) {
-                    LOGGER = new Log();
+                if (instance == null) {
+                    instance = new Log();
                 }
             }
         }
-        return LOGGER;
+        return instance;
     }
 
     /**
