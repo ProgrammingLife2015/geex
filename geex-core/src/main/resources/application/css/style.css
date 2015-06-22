@@ -201,7 +201,8 @@
 
 .single-label,
 .insert-delete-label,
-.collapse-label {
+.collapse-label,
+.coding-sequence-label {
     -fx-cursor: hand;
     -fx-min-width: 60px;
     -fx-min-height: 60px;
@@ -224,6 +225,10 @@
 
 .collapse-label {
     -fx-background-color: #5ab000;
+}
+
+.coding-sequence-label {
+    -fx-background-color: #ffb800;
 }
 
 .selected-label .info-label {

@@ -14,9 +14,9 @@ public class ResistanceCausingMutationGraph extends StackGraph {
      */
     public ResistanceCausingMutationGraph(final StackGraph graph) {
 
-        BubbleReduction bubbleReduction = new BubbleReduction(graph);
-        bubbleReduction.applyFilter(defaultNode -> defaultNode.getResistances().size() > 0);
-        bubbleReduction.fillGraph(this);
+        BubbleReduction bubbleReduction = new BubbleReduction(graph, this);
+        bubbleReduction.markBubbles(defaultNode -> defaultNode.getResistances().size() == 0);
+//        bubbleReduction.fillGraph(this, "resistance");
 
     }
 }

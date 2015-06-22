@@ -13,8 +13,7 @@ import java.util.stream.Collectors;
  */
 public class BubbleReduction {
 
-    Set<DefaultNode> startNodes;
-    Set<DefaultNode> endNodes;
+    Set<DefaultNode> remove;
 
     /**
      * Graph to reduce.
@@ -22,24 +21,29 @@ public class BubbleReduction {
     StackGraph stackGraph;
 
     /**
+     * Graph to fill.
+     */
+    StackGraph graph;
+
+    /**
      * Init a bubble reduction filter.
      *
      * @param stackGraph Graph to filter
+     * @param graph      Graph to fill
      */
-    public BubbleReduction(final StackGraph stackGraph) {
+    public BubbleReduction(final StackGraph stackGraph, final StackGraph graph) {
 
         this.stackGraph = stackGraph;
+        this.graph = graph;
 
-        startNodes = getBubblePositions(node -> stackGraph.inDegreeOf(node) == 1);
-        endNodes = getBubblePositions(node -> stackGraph.outDegreeOf(node) == 1);
+        stackGraph.vertexSet().stream()
+                .forEach(graph::addVertex);
 
-    }
-
-    public Set<DefaultNode> getBubblePositions(final Predicate<DefaultNode> bubbleNodeFilter) {
-
-        return stackGraph.vertexSet().stream()
-                .filter(bubbleNodeFilter)
-                .collect(Collectors.toSet());
+        stackGraph.edgeSet().stream()
+                .forEach(edge -> graph.setEdgeWeight(graph.addEdge(
+                        stackGraph.getEdgeSource(edge),
+                        stackGraph.getEdgeTarget(edge)
+                ), stackGraph.getEdgeWeight(edge)));
 
     }
 
@@ -48,32 +52,34 @@ public class BubbleReduction {
      *
      * @param filterFunction Function to determine if a node should be kept
      */
-    public void applyFilter(final Predicate<DefaultNode> filterFunction) {
+    public void markBubbles(final Predicate<DefaultNode> filterFunction) {
+
+        try {
+
+            remove = stackGraph.vertexSet().stream()
+                    .filter(filterFunction)
+                    .collect(Collectors.toSet());
+
+            remove.stream()
+                    .forEach(node -> {
+
+                        graph.getSources(node).stream().forEach(source -> {
+                            graph.getTargets(node).stream().forEach(target -> {
+                                DefaultWeightedEdge edge = graph.addEdge(source, target);
+                                if (edge != null) {
+                                    graph.setEdgeWeight(edge, .5d);
+                                }
+                            });
+                        });
+                        graph.removeVertex(node);
+
+                    });
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
-    private Set<DefaultNode> getNodes() {
-
-        return stackGraph.vertexSet();
-
-    }
-
-    private Set<DefaultWeightedEdge> getEdges() {
-
-        return stackGraph.edgeSet();
-
-    }
-
-    public void fillGraph(StackGraph graph) {
-
-        getNodes().stream()
-                .forEach(graph::addVertex);
-
-        getEdges().stream()
-                .forEach(edge -> graph.setEdgeWeight(graph.addEdge(
-                        stackGraph.getEdgeSource(edge),
-                        stackGraph.getEdgeTarget(edge)
-                ), stackGraph.getEdgeWeight(edge)));
-
-    }
 }

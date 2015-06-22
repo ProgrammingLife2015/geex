@@ -82,6 +82,23 @@ public class GraphNode extends DefaultNode {
     }
 
     /**
+     * Create a graph node.
+     *
+     * @param parentGraph Parent graph
+     * @param start       Start of sub graph
+     * @param type        Type of the sub graph
+     */
+    public GraphNode(final StackGraph parentGraph, final DefaultNode start, final String type) {
+
+        this.parentGraph = parentGraph;
+        this.type = type;
+
+        addNode(start);
+        sources = start.getSources();
+
+    }
+
+    /**
      * Calculate the node properties: base counter, reference positions.
      */
     private void calculateProperties() {
