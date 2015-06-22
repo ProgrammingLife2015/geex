@@ -88,6 +88,7 @@ public class GraphFilterController implements InvalidationListener {
 
         ComboBox<GraphFilter> newFilterList = new ComboBox<>(filters);
         Button createNewFilter = new Button("+");
+        createNewFilter.getStyleClass().add("my-button");
 
         createNewFilter.setOnMouseClicked(event -> {
             if (newFilterList.getSelectionModel().getSelectedItem() != null) {

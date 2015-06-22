@@ -437,7 +437,9 @@
 
 /* Graph list */
 .graphs-holder {
-    -fx-pref-width: 180px;
+    -fx-min-width: 243px;
+    -fx-max-width: 243px;
+    -fx-pref-width: 243px;
     -fx-background-color: #222;
     -fx-border-width: 0 1px 0 0;
     -fx-border-color: #848484;
@@ -474,6 +476,18 @@
 #graphs .trashcan {
     -fx-background-image: url('../images/trashclosed.png');
 }
+
+#graphs ComboBox {
+    -fx-background-color: #3c3f41;
+    -fx-background-radius: 0px;
+    -fx-border-width: 2px;
+    -fx-border-color: #646464;
+}
+
+#graphs .arrow {
+    -fx-background-color: #58a5c8;
+}
+
 
 /* Search */
 .search {
