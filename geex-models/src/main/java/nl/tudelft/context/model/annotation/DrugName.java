@@ -12,9 +12,9 @@ public enum DrugName {
      */
     R("rifampicin"),
     /**
-     * ethonomide.
+     * ethionomide.
      */
-    T("ethonomide"),
+    T("ethionomide"),
     /**
      * ethionomide.
      */
