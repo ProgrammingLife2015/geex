@@ -142,14 +142,8 @@ public class Resistance extends Annotation {
      */
     @Override
     public final String toString() {
-        return "("
-                + "Gene name: " + this.getGeneName() + ", "
-                + "Mutation type: " + this.getTypeOfMutation() + ", "
-                + "Change: " + this.getChange() + ", "
-                + "Filter: " + this.getFilter() + ", "
-                + "Position: " + this.getGenomePosition() + ", "
-                + "Drug name: " + this.getDrugName()
-                + ")";
+        return String.format("(Gene name: %s, Mutation type: %s, Change: %s, Filter: %s, Position: %s, Drug name: %s)",
+                geneName, typeOfMutation, change, filter, start, drugName);
     }
 
     /**
