@@ -2,6 +2,7 @@ package nl.tudelft.context.effect;
 
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
@@ -61,7 +62,8 @@ public class ZoomTest {
     public void testListeners() {
         assertNull(scroll.getOnMouseEntered());
         assertNull(scroll.getOnMouseMoved());
-        zoom.setEvents(Collections.emptyList());
+        ChangeListener<List<Region>> changeListener = zoom.setEvents();
+        changeListener.changed(null, null, Collections.emptyList());
         assertNotNull(scroll.getOnMouseEntered());
         assertNotNull(scroll.getOnMouseMoved());
     }

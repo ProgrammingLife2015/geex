@@ -1,6 +1,7 @@
 package nl.tudelft.context.effect;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
@@ -69,9 +70,7 @@ public class Zoom {
         scroll.hvalueProperty().addListener(event -> calculateBounds());
         scroll.vvalueProperty().addListener(event -> calculateBounds());
 
-        zoomLabelsProperty.addListener((observable, oldValue, newValue) -> {
-            setEvents(newValue);
-        });
+        zoomLabelsProperty.addListener(setEvents());
     }
 
     /**
@@ -91,19 +90,19 @@ public class Zoom {
     }
 
     /**
-     * Tells the labels to apply this effect whenever the mouse moves or enters the scroll panel.
-     *
-     * @param regions The regions that should zoom
+     * ChangeListener to tell the labels to apply this effect whenever the mouse moves or enters the scroll panel.
      */
-    public void setEvents(final List<Region> regions) {
-        scroll.setOnMouseEntered(event -> {
-            setMouse(event);
-            applyAll(regions);
-        });
-        scroll.setOnMouseMoved(event -> {
-            setMouse(event);
-            applyAll(regions);
-        });
+    public ChangeListener<List<Region>> setEvents() {
+        return (observable, oldValue, newValue) -> {
+            scroll.setOnMouseEntered(event -> {
+                setMouse(event);
+                applyAll(newValue);
+            });
+            scroll.setOnMouseMoved(event -> {
+                setMouse(event);
+                applyAll(newValue);
+            });
+        };
     }
 
     /**
