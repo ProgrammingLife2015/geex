@@ -40,7 +40,7 @@ public class GraphFilterController implements InvalidationListener {
     /**
      * Pane containing the javafx labels.
      */
-    private Pane graphs;
+    private Pane filterList;
 
 
     /**
@@ -49,9 +49,9 @@ public class GraphFilterController implements InvalidationListener {
      * @param graphs FXML Pane to add graphs labels to.
      */
     public GraphFilterController(final Pane graphs) {
-        this.graphs = graphs;
         graphList = FXCollections.observableArrayList();
 
+        filterList = new VBox();
         graphList.addListener((ListChangeListener<GraphFilterLabel>) c -> {
             while (c.next()) {
                 if (!c.wasPermutated() && !c.wasUpdated()) {
@@ -64,10 +64,12 @@ public class GraphFilterController implements InvalidationListener {
                 }
             }
 
-            graphs.getChildren().setAll(graphList);
+            filterList.getChildren().setAll(graphList);
 
             activeGraph.set(createGraphFromFilter(graphList, baseGraph));
         });
+        graphs.getChildren().add(new ScrollPane(filterList));
+        graphs.getChildren().add(new TrashCan());
     }
 
     /**
@@ -144,7 +146,7 @@ public class GraphFilterController implements InvalidationListener {
 
     @Override
     public void invalidated(final Observable observable) {
-        graphs.getChildren().setAll(graphList);
+        filterList.getChildren().setAll(graphList);
 
         activeGraph.set(createGraphFromFilter(graphList, baseGraph));
     }
