@@ -75,23 +75,29 @@ public class GraphFilterController implements InvalidationListener {
             activeGraph.set(createGraphFromFilter(graphList, baseGraph));
         });
 
-        graphs.getChildren().add(new ScrollPane(filterList));
+        graphs.getChildren().addAll(
+                new ScrollPane(filterList),
+                createNewFilter(),
+                new TrashCan());
+    }
 
+    private HBox createNewFilter() {
         HBox newFilter = new HBox();
 
         ObservableList<GraphFilter> filters = FXCollections.observableArrayList(GraphFilter.values());
 
         ComboBox<GraphFilter> newFilterList = new ComboBox<>(filters);
         Button createNewFilter = new Button("+");
-        createNewFilter.setOnMouseClicked(event -> graphList.add(new GraphFilterLabel(newFilterList.getSelectionModel().getSelectedItem(), graphList)));
 
-        createNewFilter.setMinWidth(createNewFilter.getPrefWidth());
+        createNewFilter.setOnMouseClicked(event -> {
+            if (newFilterList.getSelectionModel().getSelectedItem() != null) {
+                graphList.add(new GraphFilterLabel(newFilterList.getSelectionModel().getSelectedItem(), graphList));
+            }
+        });
 
         newFilter.getChildren().addAll(newFilterList, createNewFilter);
 
-        graphs.getChildren().add(newFilter);
-
-        graphs.getChildren().add(new TrashCan());
+        return newFilter;
     }
 
     /**
