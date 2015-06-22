@@ -127,7 +127,7 @@ public class NewickSearchController {
         }
 
         List<Label> selected = labels.stream()
-                .filter(label -> label.getText().contains(query))
+                .filter(label -> label.getText().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
 
         selected.forEach(label -> label.getStyleClass().add("search"));
