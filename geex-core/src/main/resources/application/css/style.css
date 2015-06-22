@@ -472,11 +472,13 @@
 
 /* Search */
 .search {
-    -fx-border-color: #7b0000;
+    -fx-border-color: #b50000;
+    -fx-border-width: 3px;
 }
 
 .search-focus {
-    -fx-border-color: #ef8caf;
+    -fx-border-color: #F3F315;
+    -fx-border-width: 3px;
 }
 
 /* Header */
