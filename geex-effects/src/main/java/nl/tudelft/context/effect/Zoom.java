@@ -153,7 +153,7 @@ public class Zoom {
      * @param region The region to scale
      * @param ratio  The ratio to add to the scale
      */
-    private void addScale(final Region region, final double ratio) {
+    public void addScale(final Region region, final double ratio) {
         double scale = 1 + SCALE_ADDED * (Math.cos(ratio * Math.PI) + 1);
 
         region.setScaleX(scale);

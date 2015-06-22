@@ -4,6 +4,9 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,6 +40,7 @@ public class ZoomTest {
     public static void beforeClass() {
         scroll = new ScrollPane();
         scroll.setMinWidth(1024);
+        scroll.setContent(new Pane());
         sequences = mock(Group.class);
         map = new HashMap<>();
         List<Region> labels = new ArrayList<>();
@@ -67,6 +71,31 @@ public class ZoomTest {
         assertEquals(0, zoom.getScale(5, 10, 15, 20, 25, 30), 1e-6);
         assertEquals(.416992, zoom.getScale(25, 50, 75, 100, 125, 150), 1e-6);
         assertEquals(1, zoom.getScale(50, 100, 150, 200, 250, 300), 1e-6);
+    }
+
+    @Test
+    public void testAddScale() {
+        Region region = new Region();
+        zoom.addScale(region, .5);
+        assertEquals(1.25, region.getScaleX(), 1e-12);
+        assertEquals(1.25, region.getScaleY(), 1e-12);
+    }
+
+    @Test
+    public void testMouse() {
+        MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 7, 13, 11, 17, MouseButton.PRIMARY, 1,
+                true, true, true, true, true, true, true, true, true, true, null);
+        zoom.setMouse(mouseEvent);
+        assertEquals(7, zoom.mouseX, 1e-12);
+        assertEquals(13, zoom.mouseY, 1e-12);
+    }
+
+    @Test
+    public void testBounds() {
+        zoom.left = zoom.top = 11;
+        zoom.calculateBounds();
+        assertEquals(0, zoom.left, 1e-12);
+        assertEquals(0, zoom.top, 1e-12);
     }
 
 }
