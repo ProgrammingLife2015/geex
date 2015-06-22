@@ -27,12 +27,12 @@ public class DrawableEdge extends Line {
     /**
      * Min width of line.
      */
-    private static final double MINIMUM_LINE_WIDTH = .25;
+    public static final double MINIMUM_LINE_WIDTH = .25;
 
     /**
      * Max width of line.
      */
-    private static final double MAXIMUM_LINE_WIDTH = 8;
+    public static final double MAXIMUM_LINE_WIDTH = 8;
 
     /**
      * Creates edge for graph and bind it to nodes.
