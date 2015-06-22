@@ -23,6 +23,17 @@ public abstract class AbstractDrawableNode extends DrawablePosition {
     int currentIncoming = 0;
 
     /**
+     * Create a drawable node.
+     *
+     * @param node Node to draw
+     */
+    public AbstractDrawableNode(final DefaultNode node) {
+
+        this.node = node;
+
+    }
+
+    /**
      * Increment current incoming and return.
      *
      * @return current incoming
@@ -41,17 +52,6 @@ public abstract class AbstractDrawableNode extends DrawablePosition {
     public int currentColumn() {
 
         return (int) translateXProperty().get() / DrawableGraph.LABEL_SPACING;
-
-    }
-
-    /**
-     * Create a drawable node.
-     *
-     * @param node Node to draw
-     */
-    public AbstractDrawableNode(final DefaultNode node) {
-
-        this.node = node;
 
     }
 
