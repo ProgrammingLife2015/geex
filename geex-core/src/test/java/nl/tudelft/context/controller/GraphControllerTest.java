@@ -1,6 +1,7 @@
 package nl.tudelft.context.controller;
 
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
@@ -8,8 +9,10 @@ import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
 import nl.tudelft.context.model.annotation.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.ResistanceMap;
+import nl.tudelft.context.model.annotation.ResistanceParser;
 import nl.tudelft.context.model.graph.GraphMap;
 import nl.tudelft.context.model.graph.GraphParser;
+import nl.tudelft.context.service.LoadService;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,7 +40,9 @@ public class GraphControllerTest {
     protected final static File nodeFile = new File(GraphControllerTest.class.getResource("/graph/node.graph").getPath());
     protected final static File edgeFile = new File(GraphControllerTest.class.getResource("/graph/edge.graph").getPath());
 
-    protected static final int sequencesAmount = 1;
+    protected final static File resistanceFile = new File(GraphControllerTest.class.getResource("/annotation/test.cs.txt").getPath());
+
+    protected static final int sequencesAmount = 5;
 
     protected static GraphController graphController;
 
@@ -80,7 +85,7 @@ public class GraphControllerTest {
 
         GraphController graphController = new GraphController(
                 mainController,
-                new HashSet<>(Arrays.asList("Cat", "Dog")),
+                new HashSet<>(Arrays.asList("Cat", "TKK_REF")),
                 graphMapReadOnlyObjectProperty,
                 codingSequenceMapReadOnlyObjectProperty,
                 resistanceMapReadOnlyObjectProperty);
@@ -93,11 +98,14 @@ public class GraphControllerTest {
             }
         });
 
+        LoadService<ResistanceMap> resistanceMapLoadService = new LoadService<>(ResistanceParser.class, resistanceFile);
+        Platform.runLater(resistanceMapLoadService::start);
+
         graphMapReadOnlyObjectProperty.setValue(graphMap);
         codingSequenceMapReadOnlyObjectProperty.setValue(new CodingSequenceMap(Collections.emptyList()));
-        resistanceMapReadOnlyObjectProperty.setValue(new ResistanceMap(Collections.emptyList()));
+        Platform.runLater(() -> resistanceMapReadOnlyObjectProperty.bind(resistanceMapLoadService.valueProperty()));
 
-        assertEquals(true, sequencesAdded.get(50, TimeUnit.MILLISECONDS));
+        assertEquals(true, sequencesAdded.get(5000, TimeUnit.MILLISECONDS));
     }
 
     /**
