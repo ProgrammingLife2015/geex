@@ -16,7 +16,7 @@ public class CodingSequence extends Annotation {
      * IDs may contain any characters, but must escape any characters not in the set [a-zA-Z0-9.:^*$@!+_?-|].
      * In particular, IDs may not contain unescaped whitespace and must not begin with an unescaped ">".
      */
-    String seqId;
+    final String seqId;
 
     /**
      * The source is a free text qualifier intended to describe the algorithm
@@ -26,7 +26,7 @@ public class CodingSequence extends Annotation {
      * by adding a qualifier to the type creating a new composite type
      * that is a subclass of the type in the type column.
      */
-    String source;
+    final String source;
 
     /**
      * The type of the feature (previously called the "method").
@@ -35,7 +35,7 @@ public class CodingSequence extends Annotation {
      * it must be an is_a child of sequence_feature (SO:0000110) or (c) a SOFA or SO accession number.
      * The latter alternative is distinguished using the syntax SO:000000.
      */
-    String type;
+    final String type;
 
 
     /**
@@ -44,14 +44,14 @@ public class CodingSequence extends Annotation {
      * It is strongly recommended that E-values be used for sequence similarity features,
      * and that P-values be used for ab initio gene prediction features.
      */
-    float score;
+    final float score;
 
     /**
      * The strand of the feature.
      * + for positive strand (relative to the landmark), - for minus strand, and . for features that are not stranded.
      * In addition, ? can be used for features whose strandedness is relevant, but unknown.
      */
-    char strand;
+    final char strand;
 
     /**
      * For features of type "CDS", the phase indicates where the feature begins with reference to the reading frame.
@@ -67,13 +67,13 @@ public class CodingSequence extends Annotation {
      * phase is counted from the end field.
      * The phase is REQUIRED for all CDS features.
      */
-    char phase;
+    final char phase;
 
 
     /**
      * A list of feature attributes in the format tag=value.
      */
-    String attributes;
+    final String attributes;
 
     /**
      * Create an annotation.
