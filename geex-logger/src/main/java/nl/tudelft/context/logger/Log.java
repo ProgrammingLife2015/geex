@@ -17,23 +17,12 @@ public final class Log implements ObservableLog {
     /**
      * Instance of the singleton log.
      */
-    private static volatile Log instance;
+    private static volatile Log LOGGER;
 
     /**
-     * Get or Create the logger.
-     *
-     * @return The logger for this application.
+     * The current loggers to log to.
      */
-    public static Log instance() {
-        if (instance == null) {
-            synchronized (Log.class) {
-                if (instance == null) {
-                    instance = new Log();
-                }
-            }
-        }
-        return instance;
-    }
+    List<Logger> listeners;
 
     /**
      * Create a new Log.
@@ -43,28 +32,19 @@ public final class Log implements ObservableLog {
     }
 
     /**
-     * The current loggers to log to.
-     */
-    List<Logger> listeners;
-
-    /**
-     * Register a new logger.
+     * Get or Create the logger.
      *
-     * @param listener logger to register.
+     * @return The logger for this application.
      */
-    @Override
-    public void addLogger(final Logger listener) {
-        listeners.add(listener);
-    }
-
-    /**
-     * Remove an existing logger.
-     *
-     * @param listener logger to remove.
-     */
-    @Override
-    public void removeLogger(final Logger listener) {
-        listeners.remove(listener);
+    public static Log instance() {
+        if (LOGGER == null) {
+            synchronized (Log.class) {
+                if (LOGGER == null) {
+                    LOGGER = new Log();
+                }
+            }
+        }
+        return LOGGER;
     }
 
     /**
@@ -123,5 +103,25 @@ public final class Log implements ObservableLog {
         listeners.stream()
                 .filter(logger -> logger.getLevel().getLevel() <= type.getLevel())
                 .forEach(logger -> logger.log(message, type));
+    }
+
+    /**
+     * Register a new logger.
+     *
+     * @param listener logger to register.
+     */
+    @Override
+    public void addLogger(final Logger listener) {
+        listeners.add(listener);
+    }
+
+    /**
+     * Remove an existing logger.
+     *
+     * @param listener logger to remove.
+     */
+    @Override
+    public void removeLogger(final Logger listener) {
+        listeners.remove(listener);
     }
 }

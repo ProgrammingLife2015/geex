@@ -41,6 +41,17 @@ public enum GraphFilter {
     private final String name;
 
     /**
+     * Create a new GraphFilterEnum, this enum is used for creating filters on the graph.
+     *
+     * @param graph Class of the filter.
+     * @param name Name of the filter.
+     */
+    GraphFilter(final Class<? extends StackGraph> graph, final String name) {
+        this.graph = graph;
+        this.name = name;
+    }
+
+    /**
      * Get the filter for this enum.
      * @return The filter
      */
@@ -51,16 +62,5 @@ public enum GraphFilter {
     @Override
     public final String toString() {
         return name;
-    }
-
-    /**
-     * Create a new GraphFilterEnum, this enum is used for creating filters on the graph.
-     *
-     * @param graph Class of the filter.
-     * @param name Name of the filter.
-     */
-    GraphFilter(final Class<? extends StackGraph> graph, final String name) {
-        this.graph = graph;
-        this.name = name;
     }
 }
