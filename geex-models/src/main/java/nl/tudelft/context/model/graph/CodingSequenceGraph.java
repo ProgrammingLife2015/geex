@@ -20,8 +20,9 @@ public class CodingSequenceGraph extends StackGraph {
     public CodingSequenceGraph(final StackGraph graph) {
 
         BubbleReduction bubbleReduction = new BubbleReduction(graph, this);
-        bubbleReduction.markBubbles(defaultNode -> defaultNode.getCodingSequences().size() == 0);
-//        bubbleReduction.fillGraph(this, );
+        bubbleReduction.markBubbles(defaultNode -> defaultNode.getCodingSequences().size() == 0
+                && defaultNode.getResistances().size() == 0);
+//        bubbleReduction.fillGraph(this, "coding-sequence");
 
     }
 

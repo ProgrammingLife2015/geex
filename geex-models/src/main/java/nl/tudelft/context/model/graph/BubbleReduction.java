@@ -63,14 +63,13 @@ public class BubbleReduction {
             remove.stream()
                     .forEach(node -> {
 
-                        graph.getSources(node).stream().forEach(source -> {
-                            graph.getTargets(node).stream().forEach(target -> {
-                                DefaultWeightedEdge edge = graph.addEdge(source, target);
-                                if (edge != null) {
-                                    graph.setEdgeWeight(edge, .5d);
-                                }
-                            });
-                        });
+                        graph.getSources(node).stream().forEach(source ->
+                                graph.getTargets(node).stream().forEach(target -> {
+                                    DefaultWeightedEdge edge = graph.addEdge(source, target);
+                                    if (edge != null) {
+                                        graph.setEdgeWeight(edge, .5d);
+                                    }
+                                }));
                         graph.removeVertex(node);
 
                     });
