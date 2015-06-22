@@ -82,19 +82,19 @@ public enum Message {
     /**
      * Message string in this message.
      */
-    private String message;
+    private String text;
 
     /**
      * Create a new Message.
      *
-     * @param message Message string
+     * @param text Message string
      */
-    Message(final String message) {
-        this.message = message;
+    Message(final String text) {
+        this.text = text;
     }
 
     @Override
     public String toString() {
-        return message;
+        return text;
     }
 }
