@@ -6,9 +6,17 @@ package nl.tudelft.context.drawable.graph;
  * @since 22-6-2015
  */
 public class DrawableNodeException extends RuntimeException {
-    private String message;
+    /**
+     * Message belonging to this exception.
+     */
+    private final String message;
 
-    public DrawableNodeException(String message) {
+    /**
+     * Create a new DrawableNodeException, used when trying to create a DrawableNdoe from a Node fails.
+     *
+     * @param message What exactly failed.
+     */
+    public DrawableNodeException(final String message) {
         this.message = message;
     }
 
