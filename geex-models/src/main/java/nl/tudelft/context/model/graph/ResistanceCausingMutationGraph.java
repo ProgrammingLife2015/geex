@@ -8,19 +8,15 @@ package nl.tudelft.context.model.graph;
 public class ResistanceCausingMutationGraph extends StackGraph {
 
     /**
-     * Clean graph.
-     */
-    StackGraph graph;
-
-    /**
      * Create a graph with showing the resistance causing mutations only.
      *
      * @param graph Graph to remove not resistance causing mutations from
      */
     public ResistanceCausingMutationGraph(final StackGraph graph) {
 
-        this.graph = graph;
-        setGraph(graph);
+        BubbleReduction bubbleReduction = new BubbleReduction(graph);
+        bubbleReduction.applyFilter(defaultNode -> defaultNode.getResistances().size() > 0);
+        bubbleReduction.fillGraph(this);
 
     }
 }
