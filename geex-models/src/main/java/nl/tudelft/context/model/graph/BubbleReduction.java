@@ -3,7 +3,8 @@ package nl.tudelft.context.model.graph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
 import java.util.Set;
-import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * @author René Vennik
@@ -11,6 +12,9 @@ import java.util.function.Function;
  * @since 21-6-2015
  */
 public class BubbleReduction {
+
+    Set<DefaultNode> startNodes;
+    Set<DefaultNode> endNodes;
 
     /**
      * Graph to reduce.
@@ -22,9 +26,20 @@ public class BubbleReduction {
      *
      * @param stackGraph Graph to filter
      */
-    public BubbleReduction(StackGraph stackGraph) {
+    public BubbleReduction(final StackGraph stackGraph) {
 
         this.stackGraph = stackGraph;
+
+        startNodes = getBubblePositions(node -> stackGraph.inDegreeOf(node) == 1);
+        endNodes = getBubblePositions(node -> stackGraph.outDegreeOf(node) == 1);
+
+    }
+
+    public Set<DefaultNode> getBubblePositions(final Predicate<DefaultNode> bubbleNodeFilter) {
+
+        return stackGraph.vertexSet().stream()
+                .filter(bubbleNodeFilter)
+                .collect(Collectors.toSet());
 
     }
 
@@ -33,17 +48,17 @@ public class BubbleReduction {
      *
      * @param filterFunction Function to determine if a node should be kept
      */
-    public void applyFilter(Function<DefaultNode, Boolean> filterFunction) {
+    public void applyFilter(final Predicate<DefaultNode> filterFunction) {
 
     }
 
-    public Set<DefaultNode> getNodes() {
+    private Set<DefaultNode> getNodes() {
 
         return stackGraph.vertexSet();
 
     }
 
-    public Set<DefaultWeightedEdge> getEdges() {
+    private Set<DefaultWeightedEdge> getEdges() {
 
         return stackGraph.edgeSet();
 

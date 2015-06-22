@@ -105,7 +105,7 @@ public class LocatorControllerTest {
     }
 
     /**
-     * Get node to test with.
+     * Get node to getBubblePostions with.
      *
      * @return Node
      */
