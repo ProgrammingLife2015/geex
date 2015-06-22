@@ -470,7 +470,6 @@
     -fx-padding: 10px;
 }
 
-
 /* Search */
 .search {
     -fx-border-color: #646464;
@@ -499,20 +498,21 @@
 }
 
 /* previous workspace list*/
-.list-cell:odd {
-    -fx-background-color: #646464;
-}
 
 .list-cell:even {
-    -fx-background-color: #3c3f41;
+    -fx-background-color: #cdcbcb;
+}
+
+.list-cell:odd {
+    -fx-background-color: #c0c0c0;
 }
 
 .list-cell:filled:hover {
-    -fx-background-color: #0093ff;
+    -fx-background-color: #58a5c8;
 }
 
 #previous Label {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 /* Header */
