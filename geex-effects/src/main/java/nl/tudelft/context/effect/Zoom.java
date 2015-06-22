@@ -122,8 +122,14 @@ public class Zoom {
      */
     public void applyAll(final List<Region> regions) {
         regions.forEach(label ->
-                addScale(label, getScale(label.getTranslateX(), label.getTranslateY(), label.getWidth(), label.getHeight(),
-                        mouseX - sequences.getLayoutX() + left, mouseY - sequences.getLayoutY() + top)));
+                addScale(label,
+                        getScale(
+                                label.getTranslateX(),
+                                label.getTranslateY(),
+                                label.getWidth(),
+                                label.getHeight(),
+                                mouseX - sequences.getLayoutX() + left,
+                                mouseY - sequences.getLayoutY() + top)));
     }
 
     /**
