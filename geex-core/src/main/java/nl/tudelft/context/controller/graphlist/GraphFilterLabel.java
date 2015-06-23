@@ -148,7 +148,7 @@ public class GraphFilterLabel extends Label implements Observable, Destroyable {
      * Deactivate this item.
      */
     public void deactivate() {
-        getStyleClass().remove("active");
+        getStyleClass().removeAll("active");
         active = false;
     }
 
