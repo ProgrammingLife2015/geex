@@ -52,22 +52,28 @@ public class GraphFilterController implements InvalidationListener {
         this.graphs = graphs;
         graphList = FXCollections.observableArrayList();
 
-        graphList.addListener((ListChangeListener<GraphFilterLabel>) c -> {
+        graphList.addListener(onGraphListChange(graphs));
+    }
+
+    /**
+     * Add and remove listeners, update the graphs list when the graph list changes.
+     *
+     * @param graphs List of graphs to put the list in.
+     * @return ChangeListener, to use when graphList updates.
+     */
+    private ListChangeListener<GraphFilterLabel> onGraphListChange(final Pane graphs) {
+        return c -> {
             while (c.next()) {
                 if (!c.wasPermutated() && !c.wasUpdated()) {
-                    for (GraphFilterLabel remitem : c.getRemoved()) {
-                        remitem.removeListener(this);
-                    }
-                    for (GraphFilterLabel additem : c.getAddedSubList()) {
-                        additem.addListener(this);
-                    }
+                    c.getRemoved().forEach(graphFilterLabel -> graphFilterLabel.removeListener(this));
+                    c.getAddedSubList().forEach(graphFilterLabel -> graphFilterLabel.addListener(this));
                 }
             }
 
             graphs.getChildren().setAll(graphList);
 
             activeGraph.set(createGraphFromFilter(graphList, baseGraph));
-        });
+        };
     }
 
     /**

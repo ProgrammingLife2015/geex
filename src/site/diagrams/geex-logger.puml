@@ -25,7 +25,7 @@ class StdOutLogger implements Logger {
 }
 
 enum Message {
-    -message : String
+    -text : String
 }
 enum MessageType {
     -type : String

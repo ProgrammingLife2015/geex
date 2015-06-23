@@ -159,26 +159,40 @@ public class MainController extends AbstractController<StackPane> {
      * @param viewController Controller containing JavaFX root
      */
     public void setView(final ViewController on, final ViewController viewController) {
-
         hideOverlay();
 
         if (shift || viewList.indexOf(on) == -1) {
-
-            new Window(viewController.getBreadcrumbName(), viewController.getRoot());
-            shift = false;
-
+            openWindow(viewController);
         } else {
-
-            viewList.remove(viewList.indexOf(on) + 1, viewList.size());
-            view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
-            viewList.add(viewController);
-            viewController.setVisibility(true);
-            view.getChildren().add(viewController.getRoot());
-
-            activateView();
-
+            setLocalView(on, viewController);
         }
+    }
 
+    /**
+     * Create a new window for this viewController.
+     *
+     * @param viewController ViewController to show in this Window.
+     */
+    private void openWindow(final ViewController viewController) {
+        new Window(viewController.getBreadcrumbName(), viewController.getRoot());
+        // When creating a new window our control over the keyboard is lost
+        // and the state of the shift key is stuck.
+        shift = false;
+    }
+
+    /**
+     * Navigate to a new view.
+     * @param on Previous view
+     * @param viewController Next view
+     */
+    private void setLocalView(final ViewController on, final ViewController viewController) {
+        viewList.remove(viewList.indexOf(on) + 1, viewList.size());
+        view.getChildren().retainAll(viewList.stream().map(ViewController::getRoot).collect(Collectors.toList()));
+        viewList.add(viewController);
+        viewController.setVisibility(true);
+        view.getChildren().add(viewController.getRoot());
+
+        activateView();
     }
 
     /**

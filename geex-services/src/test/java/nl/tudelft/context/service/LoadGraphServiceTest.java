@@ -40,7 +40,7 @@ public class LoadGraphServiceTest {
         }
 
         @Override
-        public void cancelled() {
+        public void cancel() {
 
         }
     }
@@ -69,7 +69,7 @@ public class LoadGraphServiceTest {
         }
 
         @Override
-        public void cancelled() {
+        public void cancel() {
             this.cancelled = true;
         }
     }
