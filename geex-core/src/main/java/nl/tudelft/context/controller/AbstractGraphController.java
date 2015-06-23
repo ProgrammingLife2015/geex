@@ -14,6 +14,7 @@ import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
 import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
 import nl.tudelft.context.effect.Zoom;
+import nl.tudelft.context.effect.ZoomFactory;
 
 import java.net.URL;
 import java.util.Collection;
@@ -101,7 +102,7 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
     public void initialize(final URL location, final ResourceBundle resources) {
 
         ObjectProperty<List<Region>> zoomLabelsProperty = new SimpleObjectProperty<>();
-        new Zoom(scroll, sequences, zoomLabelsProperty);
+        ZoomFactory.create(scroll, sequences, zoomLabelsProperty);
         currentLabelsProperty.addListener((observable, oldValue, newValue) -> {
             zoomLabelsProperty.set(newValue.stream().collect(Collectors.toList()));
             newValue.stream().forEach(label -> label.updateSources(selectedSources.get()));

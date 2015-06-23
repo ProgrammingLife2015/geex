@@ -88,7 +88,7 @@ public class WindowFactory {
      *
      * @param window The window to style
      */
-    public static void styleWindow(Stage window) {
+    public static void styleWindow(final Stage window) {
         window.getIcons().addAll(
                 ICONS.stream()
                         .map(WindowFactory::getImage)
