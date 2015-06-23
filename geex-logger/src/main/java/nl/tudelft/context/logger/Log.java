@@ -83,6 +83,10 @@ public final class Log implements ObservableLog {
         instance().message(message, MessageType.DEBUG);
     }
 
+    public static void debug(final Exception e) {
+        instance().message(e.getMessage(), MessageType.DEBUG);
+    }
+
     /**
      * Extract message.
      *

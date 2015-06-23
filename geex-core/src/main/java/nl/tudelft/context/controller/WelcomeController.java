@@ -100,6 +100,7 @@ public class WelcomeController extends ViewController<GridPane> {
             }
         } catch (SqlJetException e) {
             Log.warning(Message.FAIL_LOAD_PREVIOUS);
+            Log.debug(e);
             // Continue, this doesn't break the software.
         }
     }
