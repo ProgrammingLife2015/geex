@@ -55,7 +55,7 @@
             <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="1"><Text>1. This box represents a node in the graph. The digit inside it tells how many bases are present within the node. The colors below represent the percentages of the different bases.</Text></TextFlow>
 
             <VBox GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="selected-label">
-                <Label styleClass="info-label">1</Label>
+                <Label styleClass="info-label">2</Label>
                 <HBox>
                     <Rectangle styleClass="node-label-A" height="5" width="12"/>
                     <Rectangle styleClass="node-label-T" height="5" width="12"/>
