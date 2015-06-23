@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import nl.tudelft.context.controller.graphlist.GraphFilter;
 import nl.tudelft.context.controller.graphlist.GraphFilterController;
 import nl.tudelft.context.controller.locator.LocatorController;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
@@ -155,17 +154,17 @@ public class GraphController extends AbstractGraphController {
     /**
      * Load graph from source.
      *
-     * @param graphMap      The GraphMap which is loaded.
+     * @param graphMap          The GraphMap which is loaded.
      * @param codingSequenceMap The CodingSequenceMap which is loaded.
-     * @param resistanceMap The ResistanceMap which is loaded.
+     * @param resistanceMap     The ResistanceMap which is loaded.
      */
     private void loadGraph(final GraphMap graphMap, final CodingSequenceMap codingSequenceMap,
-            final ResistanceMap resistanceMap) {
+                           final ResistanceMap resistanceMap) {
         if (graphMap != null && codingSequenceMap != null && resistanceMap != null) {
             graphMap.setCodingSequence(codingSequenceMap);
             graphMap.setResistance(resistanceMap);
             graphFilterController.setBaseGraph(graphMap.flat(sources));
-            graphFilterController.addAll(GraphFilter.values());
+            graphFilterController.reset();
 
             graphFilterController.getActiveGraphProperty().addListener((observable, oldValue, newValue) ->
                     showGraph(new DrawableGraph(newValue)));

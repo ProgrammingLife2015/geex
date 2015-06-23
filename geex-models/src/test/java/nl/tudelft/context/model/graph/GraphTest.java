@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Unit test for Graph.
+ * Unit tests for Graph.
  *
  * @author René Vennik
  * @version 1.1

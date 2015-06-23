@@ -168,7 +168,7 @@ public class GraphFilterController implements InvalidationListener {
      * Reset the view.
      */
     public void reset() {
-        activeGraph.setValue(baseGraph);
+        addAll(GraphFilter.values());
     }
 
     /**

@@ -67,16 +67,6 @@ public class InsertDeleteGraphTest {
     }
 
     /**
-     * Test if there is a name returned for the insert delete graph.
-     */
-    @Test
-    public void testName() {
-
-        assertTrue(insertDeleteGraph.getName().length() > 0);
-
-    }
-
-    /**
      * Test that the insert delete graph doesn't contain the nodes that are collapsed but contains the other nodes.
      */
     @Test
