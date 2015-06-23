@@ -113,7 +113,7 @@ public class Zoom {
      * @param labels Labels to interact with
      * @return Mouse event handler to will update the labels
      */
-    private EventHandler<MouseEvent> getMouseEventEventHandler(List<Region> labels) {
+    private EventHandler<MouseEvent> getMouseEventEventHandler(final List<Region> labels) {
         return event -> {
             setMouse(event);
             applyAll(labels);
