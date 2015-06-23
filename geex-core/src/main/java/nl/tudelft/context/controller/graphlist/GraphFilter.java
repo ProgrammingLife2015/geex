@@ -5,7 +5,7 @@ import nl.tudelft.context.model.graph.filter.ResistanceCausingMutationGraph;
 import nl.tudelft.context.model.graph.filter.BaseLengthFilter;
 import nl.tudelft.context.model.graph.filter.CollapseGraph;
 import nl.tudelft.context.model.graph.filter.InsertDeleteFilter;
-import nl.tudelft.context.model.graph.filter.SinglePointGraph;
+import nl.tudelft.context.model.graph.filter.SinglePointFilter;
 import nl.tudelft.context.model.graph.filter.StackGraphFilter;
 import nl.tudelft.context.model.graph.filter.UnknownFilter;
 
@@ -20,7 +20,7 @@ public enum GraphFilter {
     /**
      * Class for filtering a Single Point mutation graph.
      */
-    SINGLE_POINT(SinglePointGraph.class, "Point mutations"),
+    SINGLE_POINT(SinglePointFilter.class, "Point mutations"),
     /**
      * Class for filtering indels.
      */

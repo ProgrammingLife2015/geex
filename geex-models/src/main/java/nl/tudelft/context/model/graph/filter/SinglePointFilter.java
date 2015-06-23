@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 1-6-2015
  */
-public class SinglePointGraph implements StackGraphFilter {
+public class SinglePointFilter implements StackGraphFilter {
 
     /**
      * Parts of a single base mutation.
@@ -40,7 +40,7 @@ public class SinglePointGraph implements StackGraphFilter {
      *
      * @param graph Graph to calculate single point mutations on
      */
-    public SinglePointGraph(final StackGraph graph) {
+    public SinglePointFilter(final StackGraph graph) {
         this.filtered = graph.deepClone();
         this.previous = graph;
     }

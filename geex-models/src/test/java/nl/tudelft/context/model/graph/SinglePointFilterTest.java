@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.model.graph.filter.SinglePointGraph;
+import nl.tudelft.context.model.graph.filter.SinglePointFilter;
 import nl.tudelft.context.model.graph.parser.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
@@ -31,7 +31,7 @@ import static org.junit.Assert.assertTrue;
  * @since 18-6-2015
  */
 @RunWith(JfxRunner.class)
-public class SinglePointGraphTest {
+public class SinglePointFilterTest {
 
     File nodeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/single-point-mutation.node.graph").getPath());
     File edgeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/single-point-mutation.edge.graph").getPath());
@@ -59,7 +59,7 @@ public class SinglePointGraphTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        singlePointGraph = new SinglePointGraph(graph).getFilterGraph();
+        singlePointGraph = new SinglePointFilter(graph).getFilterGraph();
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),
