@@ -13,7 +13,6 @@ import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
 import nl.tudelft.context.drawable.graph.AbstractLabel;
 import nl.tudelft.context.drawable.graph.DrawableGraph;
-import nl.tudelft.context.effect.Zoom;
 import nl.tudelft.context.effect.ZoomFactory;
 
 import java.net.URL;
