@@ -1,6 +1,7 @@
 package nl.tudelft.context.model.graph.filter;
 
 import nl.tudelft.context.model.graph.DefaultNode;
+import nl.tudelft.context.model.graph.Node;
 import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.function.Predicate;
@@ -27,7 +28,7 @@ public final class BaseLengthFilter extends FilterGraph {
 
     @Override
     protected Predicate<DefaultNode> filter() {
-        return defaultNode -> defaultNode.getContent().length() <= THRESHOLD;
+        return defaultNode -> defaultNode instanceof Node && defaultNode.getContent().length() <= THRESHOLD;
     }
 
 }

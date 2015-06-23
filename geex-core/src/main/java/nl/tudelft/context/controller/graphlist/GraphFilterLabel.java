@@ -18,7 +18,7 @@ import nl.tudelft.context.logger.Log;
  * @version 2.0
  * @since 17-6-2015
  */
-public class GraphFilterLabel extends Label implements Observable {
+public class GraphFilterLabel extends Label implements Observable, Destroyable {
     /**
      * In order to make this drag and drop work.
      */
@@ -32,6 +32,10 @@ public class GraphFilterLabel extends Label implements Observable {
      * The filter for this item.
      */
     private final GraphFilter graph;
+    /**
+     * List containing graphFilterLabels.
+     */
+    private ObservableList<GraphFilterLabel> graphList;
 
     /**
      * Whether this filter is active.
@@ -44,6 +48,7 @@ public class GraphFilterLabel extends Label implements Observable {
      */
     public GraphFilterLabel(final GraphFilter graph, final ObservableList<GraphFilterLabel> graphList) {
         this.graph = graph;
+        this.graphList = graphList;
         activate();
         getStyleClass().add("graph-item");
         setText(graph.toString());
@@ -142,15 +147,15 @@ public class GraphFilterLabel extends Label implements Observable {
     /**
      * Deactivate this item.
      */
-    private void deactivate() {
-        getStyleClass().remove("active");
+    public void deactivate() {
+        getStyleClass().removeAll("active");
         active = false;
     }
 
     /**
      * Make this item active.
      */
-    private void activate() {
+    public void activate() {
         getStyleClass().add("active");
         active = true;
     }
@@ -181,5 +186,10 @@ public class GraphFilterLabel extends Label implements Observable {
     @Override
     public void removeListener(final InvalidationListener listener) {
         this.listener = null;
+    }
+
+    @Override
+    public void destroy() {
+        graphList.remove(this);
     }
 }

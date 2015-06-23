@@ -78,9 +78,12 @@ public class NewickSearchController {
         searchPrev = new Button("\u25b2");
         searchNext = new Button("\u25bc");
 
-        searchField.getStyleClass().add(buttonClass);
+
+        searchField.setPromptText("Search strains...");
+        searchField.getStyleClass().add("searchbox");
         searchPrev.getStyleClass().add(buttonClass);
         searchNext.getStyleClass().add(buttonClass);
+
 
         searchContainer.getChildren().setAll(searchField, searchNext, searchPrev);
 

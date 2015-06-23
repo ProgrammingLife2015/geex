@@ -11,7 +11,7 @@
         <Label styleClass="header-text">
             View specific details on a base
         </Label>
-        <VBox styleClass="margin-top">
+        <VBox styleClass="base-margin-top">
             <Label styleClass="h2">Sources</Label>
             <TextFlow>
                 <Text fx:id="sources"/>
