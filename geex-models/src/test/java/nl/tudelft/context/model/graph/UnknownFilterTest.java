@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.model.graph.filter.UnknownGraph;
+import nl.tudelft.context.model.graph.filter.UnknownFilter;
 import nl.tudelft.context.model.graph.parser.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
@@ -28,10 +28,10 @@ import static org.junit.Assert.*;
  * @since 18-6-2015
  */
 @RunWith(JfxRunner.class)
-public class UnknownGraphOuterTest {
+public class UnknownFilterTest {
 
-    File nodeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/unknown-graph-outer.node.graph").getPath());
-    File edgeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/unknown-graph-outer.edge.graph").getPath());
+    File nodeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/unknown-graph.node.graph").getPath());
+    File edgeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/unknown-graph.edge.graph").getPath());
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
@@ -56,7 +56,7 @@ public class UnknownGraphOuterTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        unknownGraph = new UnknownGraph(graph).getFilterGraph();
+        unknownGraph = new UnknownFilter(graph).getFilterGraph();
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),
@@ -71,10 +71,13 @@ public class UnknownGraphOuterTest {
     @Test
     public void testCollapsed() {
 
-        assertFalse(unknownGraph.containsVertex(nodeMap.get(0))); // Deleted node
-        assertTrue(unknownGraph.containsVertex(nodeMap.get(1)));
+        assertTrue(unknownGraph.containsVertex(nodeMap.get(0)));
+        assertFalse(unknownGraph.containsVertex(nodeMap.get(1))); // Deleted node
         assertTrue(unknownGraph.containsVertex(nodeMap.get(2)));
-        assertFalse(unknownGraph.containsVertex(nodeMap.get(3))); // Deleted node
+        assertTrue(unknownGraph.containsVertex(nodeMap.get(3)));
+        assertFalse(unknownGraph.containsVertex(nodeMap.get(4))); // Deleted node
+        assertTrue(unknownGraph.containsVertex(nodeMap.get(5)));
+        assertTrue(unknownGraph.containsVertex(nodeMap.get(6)));
 
     }
 
@@ -92,4 +95,5 @@ public class UnknownGraphOuterTest {
         assertEquals(0, graphNodes.size());
 
     }
+
 }

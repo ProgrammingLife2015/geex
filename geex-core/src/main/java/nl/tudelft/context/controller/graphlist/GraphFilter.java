@@ -7,7 +7,7 @@ import nl.tudelft.context.model.graph.filter.CollapseGraph;
 import nl.tudelft.context.model.graph.filter.InsertDeleteGraph;
 import nl.tudelft.context.model.graph.filter.SinglePointGraph;
 import nl.tudelft.context.model.graph.filter.StackGraphFilter;
-import nl.tudelft.context.model.graph.filter.UnknownGraph;
+import nl.tudelft.context.model.graph.filter.UnknownFilter;
 
 /**
  * List the available graph filters.
@@ -32,7 +32,7 @@ public enum GraphFilter {
     /**
      * Class for hiding nodes with too many unknowns.
      */
-    UNKNOWN(UnknownGraph.class, "Unknown bases (" + (UnknownGraph.REMOVE_RATIO * 100) + "%)"),
+    UNKNOWN(UnknownFilter.class, "Unknown bases (" + (UnknownFilter.REMOVE_RATIO * 100) + "%)"),
     /**
      * Class for hiding nodes that don't contain coding sequences.
      */
