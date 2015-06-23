@@ -125,7 +125,13 @@ public class LocatorController {
 
     }
 
-    private void goToRefPosition(int refPosition, AbstractGraphController graphController) {
+    /**
+     * Let a graph go to a certain ref position.
+     *
+     * @param refPosition     Ref position to go to
+     * @param graphController Graph to move
+     */
+    private void goToRefPosition(final int refPosition, final AbstractGraphController graphController) {
         optionalTotalMap.ifPresent(totalMap -> {
             int column = totalMap.entrySet().stream()
                     .reduce((a, b) -> {
@@ -161,11 +167,11 @@ public class LocatorController {
 
         Map<Integer, List<Integer>> totalMap = new HashMap<>();
         labelMap.forEach((column, labels) -> {
-            int min = labels.stream()
+            min = labels.stream()
                     .map(AbstractDrawableNode::getNode)
                     .mapToInt(DefaultNode::getRefStartPosition)
                     .min().getAsInt();
-            int max = labels.stream()
+            max = labels.stream()
                     .map(AbstractDrawableNode::getNode)
                     .mapToInt(DefaultNode::getRefEndPosition)
                     .max().getAsInt();
