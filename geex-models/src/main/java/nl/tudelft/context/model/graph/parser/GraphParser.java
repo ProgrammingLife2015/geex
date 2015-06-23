@@ -1,6 +1,8 @@
-package nl.tudelft.context.model.graph;
+package nl.tudelft.context.model.graph.parser;
 
 import nl.tudelft.context.model.Parser;
+import nl.tudelft.context.model.graph.GraphMap;
+import nl.tudelft.context.model.graph.Node;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;

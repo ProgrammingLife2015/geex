@@ -6,7 +6,7 @@ import nl.tudelft.context.model.annotation.ResistanceMap;
 import nl.tudelft.context.model.annotation.CodingSequenceParser;
 import nl.tudelft.context.model.annotation.ResistanceParser;
 import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.model.graph.GraphParser;
+import nl.tudelft.context.model.graph.parser.GraphParser;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.NewickParser;
 import nl.tudelft.context.service.LoadService;
