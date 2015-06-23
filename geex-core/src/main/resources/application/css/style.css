@@ -477,14 +477,20 @@
     -fx-background-image: url('../images/trashclosed.png');
 }
 
+.createNewFilter {
+    -fx-min-width: 205px; /* 243 - 37 - 1, graphs holder width - my-button - border */
+    -fx-max-width: 205px;
+    -fx-pref-width: 205px;
+}
+
 #graphs ComboBox {
     -fx-background-color: #3c3f41;
     -fx-background-radius: 0px;
     -fx-border-width: 2px;
     -fx-border-color: #646464;
-    -fx-pref-width: 207px;
-    -fx-min-width: 207px;
-    -fx-max-width: 207px;
+    -fx-pref-width: inherit;
+    -fx-min-width: inherit;
+    -fx-max-width: inherit;
 }
 
 #graphs .arrow {
@@ -502,20 +508,32 @@
     -fx-border-width: 2px;
 }
 
-.my-button {
+.my-button,
+.searchbox{
     -fx-background-color: #3c3f41;
     -fx-border-width: 2px;
     -fx-border-color: #646464;
     -fx-text-fill: #58a5c8;
+    -fx-min-width: 37px;
+    -fx-pref-width: 37px;
+    -fx-max-width: 37px;
 }
 
-.my-button:hover {
+.my-button:hover,
+.searchbox:hover {
     -fx-background-color: #5b5d5f;
     -fx-border-color: #7a8084;
 }
 
-.my-button:armed {
+.my-button:armed,
+.searchbox:armed {
     -fx-background-color: #555a5c;
+}
+
+.searchbox {
+    -fx-min-width: 200px;
+    -fx-pref-width: 200px;
+    -fx-max-width: 200px;
 }
 
 /* previous workspace list*/

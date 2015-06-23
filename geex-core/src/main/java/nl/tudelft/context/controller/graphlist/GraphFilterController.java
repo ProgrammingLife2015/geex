@@ -83,6 +83,7 @@ public class GraphFilterController implements InvalidationListener {
 
     private HBox createNewFilter() {
         HBox newFilter = new HBox();
+        newFilter.getStyleClass().add("createNewFilter");
 
         ObservableList<GraphFilter> filters = FXCollections.observableArrayList(GraphFilter.values());
 
