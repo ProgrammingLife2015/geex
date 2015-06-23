@@ -79,11 +79,17 @@ public class GraphFilterController implements InvalidationListener {
                     c.getAddedSubList().forEach(graphFilterLabel -> graphFilterLabel.addListener(this));
                 }
             }
+            graphList.forEach(GraphFilterLabel::deactivate);
             filterList.getChildren().setAll(graphList);
             activeGraph.set(createGraphFromFilter(graphList, baseGraph));
         };
     }
 
+    /**
+     * Create a new filter dialog.
+     *
+     * @return HBox for new filter
+     */
     private HBox createNewFilter() {
         HBox newFilter = new HBox();
         newFilter.getStyleClass().add("createNewFilter");
