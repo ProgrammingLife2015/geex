@@ -2,6 +2,7 @@ package nl.tudelft.context.effect;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
@@ -85,8 +86,8 @@ public class Zoom {
     /**
      * Calculate the bounds.
      *
-     * @param boundSize The size of the bound
-     * @param scrollSize The size of the scroll
+     * @param boundSize    The size of the bound
+     * @param scrollSize   The size of the scroll
      * @param scrollScalar The scale of the scroll
      * @return Returns the calculated bounds.
      */
@@ -101,14 +102,21 @@ public class Zoom {
      */
     public ChangeListener<List<Region>> setEvents() {
         return (observable, oldValue, newValue) -> {
-            scroll.setOnMouseEntered(event -> {
-                setMouse(event);
-                applyAll(newValue);
-            });
-            scroll.setOnMouseMoved(event -> {
-                setMouse(event);
-                applyAll(newValue);
-            });
+            scroll.setOnMouseEntered(getMouseEventEventHandler(newValue));
+            scroll.setOnMouseMoved(getMouseEventEventHandler(newValue));
+        };
+    }
+
+    /**
+     * Create an event handler for the mouse to interact with the labels.
+     *
+     * @param labels Labels to interact with
+     * @return Mouse event handler to will update the labels
+     */
+    private EventHandler<MouseEvent> getMouseEventEventHandler(List<Region> labels) {
+        return event -> {
+            setMouse(event);
+            applyAll(labels);
         };
     }
 
@@ -142,13 +150,13 @@ public class Zoom {
     /**
      * Gets the scale to add to the label.
      *
-     * @param labelX  The label's x-position
-     * @param labelY  The label's y-position
-     * @param labelW  The label's width
-     * @param labelH  The label's height
-     * @param mouseX  The mouse's x-position
-     * @param mouseY  The mouse's y-position
-     * @return        The scale to add.
+     * @param labelX The label's x-position
+     * @param labelY The label's y-position
+     * @param labelW The label's width
+     * @param labelH The label's height
+     * @param mouseX The mouse's x-position
+     * @param mouseY The mouse's y-position
+     * @return The scale to add.
      */
     public double getScale(final double labelX, final double labelY, final double labelW, final double labelH,
                            final double mouseX, final double mouseY) {
