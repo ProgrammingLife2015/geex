@@ -11,7 +11,7 @@ public class BaseLengthGraph extends FilterGraph {
     /**
      * Minimum unknown ratio to remove.
      */
-    public static final double THRESHOLD = 10;
+    public static final double THRESHOLD = 30;
 
     /**
      * Create a graph with filtered unknown on an other graph.
