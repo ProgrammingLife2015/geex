@@ -1,39 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
 <fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml" mouseTransparent="true">
+    <HBox styleClass="overlay" spacing="40">
+        <GridPane hgap="30" minWidth="400">
+            <Label styleClass="h2"
+                   GridPane.rowIndex="0" GridPane.columnSpan="2">
+                Shortcuts &amp; Help
+            </Label>
 
-    <GridPane styleClass="overlay" hgap="10">
-        <Label styleClass="h2"
-               GridPane.rowIndex="0" GridPane.columnSpan="2">
-            Shortcuts &amp; Help
-        </Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="1">Open workspace folder</Label>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="1"><Text>Ctrl+O</Text></TextFlow>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="1">Open workspace folder</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="1">Ctrl+O</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="2">Previous view</Label>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="2"><Text>Escape</Text></TextFlow>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="2">Previous view</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="2">Escape</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="3">Show Phylogenetic tree</Label>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="3"><Text>Ctrl+T</Text></TextFlow>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="3">Show Phylogenetic tree</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="3">Ctrl+T</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="4">Load Genome graph</Label>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="4"><Text>Ctrl+L</Text></TextFlow>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="4">Load Genome graph</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="4">Ctrl+L</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="5">Shortcuts</Label>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="5"><Text>F1</Text></TextFlow>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="5">Shortcuts</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="5">F1</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="6">Open Sequence View in new window</Label>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="6"><Text>Shift+Click</Text></TextFlow>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="6">Open Sequence View in new window</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="6">Shift+Click</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="9">Reset the view</Label>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="9"><Text>Ctrl+R</Text></TextFlow>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="9">Reset the view</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="9">Ctrl+R</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="10">Open a new window</Label>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="10"><Text>Shift+Click on a node</Text></TextFlow>
+        </GridPane>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="10">Open a new window</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="10">Shift+Click on a node</Label>
+        <GridPane vgap="10" hgap="30" minWidth="400">
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="h2">Legend</Label>
 
-    </GridPane>
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label styleClass="info-label">1</Label>
+                <HBox>
+                    <Rectangle styleClass="node-label-A" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-T" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-C" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-G" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-N" height="5" width="12"/>
+                </HBox>
+            </VBox>
+
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="1"><Text>1. This box represents a node in the graph. The digit inside it tells how many bases are present within the node. The colors below represent the percentages of the different bases.</Text></TextFlow>
+
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="selected-label">
+                <Label styleClass="info-label">2</Label>
+                <HBox>
+                    <Rectangle styleClass="node-label-A" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-T" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-C" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-G" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-N" height="5" width="12"/>
+                </HBox>
+            </VBox>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="2" textAlignment="JUSTIFY"><Text>2. When a strain has been selected in the phylogenetic tree, the nodes in the strain are highlighted like the node to the left.</Text></TextFlow>
+
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="single-label">3</Label>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="3"><Text>3. This is a collapsed node. The specific kind is the legend that can be seen to the right of the graph. This is for example a Single-point mutation. The digit on it represents the amount of nodes inside.</Text></TextFlow>
+
+
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="resistance-label">4</Label>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="4"><Text>4. Number of drug resistance causing mutations loaded from the annotations file specified. (extension .txt)</Text></TextFlow>
+
+
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="coding-sequences-label">5</Label>
+            <TextFlow GridPane.columnIndex="1" GridPane.rowIndex="5"><Text>5. Number of coding sequences loaded from the annotations file specified. (extension .gff)</Text></TextFlow>
+
+
+        </GridPane>
+    </HBox>
 
 </fx:root>
