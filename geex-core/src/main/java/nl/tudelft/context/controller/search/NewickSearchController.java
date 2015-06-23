@@ -80,7 +80,7 @@ public class NewickSearchController {
 
 
         searchField.setPromptText("Search strains...");
-        searchField.getStyleClass().add(buttonClass);
+        searchField.getStyleClass().add("searchbox");
         searchPrev.getStyleClass().add(buttonClass);
         searchNext.getStyleClass().add(buttonClass);
 
