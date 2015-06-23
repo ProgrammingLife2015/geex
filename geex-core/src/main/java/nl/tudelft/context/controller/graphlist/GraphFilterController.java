@@ -91,7 +91,6 @@ public class GraphFilterController implements InvalidationListener {
         ObservableList<GraphFilter> filters = FXCollections.observableArrayList(GraphFilter.values());
 
         ComboBox<GraphFilter> newFilterList = new ComboBox<>(filters);
-        newFilterList.setPromptText("Add a filter..");
         Button createNewFilter = new Button("+");
         createNewFilter.getStyleClass().add("my-button");
 

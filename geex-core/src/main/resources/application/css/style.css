@@ -491,6 +491,18 @@
     -fx-pref-width: inherit;
     -fx-min-width: inherit;
     -fx-max-width: inherit;
+    -fx-prompt-text-fill: #58a5c8;
+}
+
+.combo-box-popup .list-view .list-cell:selected {
+    -fx-text-fill: #323232;
+}
+
+.combo-box-base   {
+
+    -fx-prompt-text-fill: #100fe4;
+    -fx-text-fill: #100fe4;
+    -fx-border-color: #100fe4;
 }
 
 #graphs .arrow {
@@ -509,7 +521,7 @@
 }
 
 .my-button,
-.searchbox{
+.searchbox {
     -fx-background-color: #3c3f41;
     -fx-border-width: 2px;
     -fx-border-color: #646464;
