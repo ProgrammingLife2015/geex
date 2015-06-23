@@ -10,7 +10,7 @@ import nl.tudelft.context.model.graph.filter.StackGraphFilter;
  * @version 1.0
  * @since 21-6-2015
  */
-public class ResistanceCausingMutationGraph implements StackGraphFilter {
+public class ResistanceCausingMutationFilter implements StackGraphFilter {
 
     private final StackGraph filtered;
     private final StackGraph previous;
@@ -20,7 +20,7 @@ public class ResistanceCausingMutationGraph implements StackGraphFilter {
      *
      * @param graph Graph to remove not resistance causing mutations from
      */
-    public ResistanceCausingMutationGraph(final StackGraph graph) {
+    public ResistanceCausingMutationFilter(final StackGraph graph) {
         this.previous = graph;
         this.filtered = new Graph();
     }

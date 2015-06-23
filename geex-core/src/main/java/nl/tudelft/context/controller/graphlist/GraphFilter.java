@@ -1,7 +1,7 @@
 package nl.tudelft.context.controller.graphlist;
 
 import nl.tudelft.context.model.graph.filter.CodingSequenceFilter;
-import nl.tudelft.context.model.graph.filter.ResistanceCausingMutationGraph;
+import nl.tudelft.context.model.graph.filter.ResistanceCausingMutationFilter;
 import nl.tudelft.context.model.graph.filter.BaseLengthFilter;
 import nl.tudelft.context.model.graph.filter.StraightFilter;
 import nl.tudelft.context.model.graph.filter.InsertDeleteFilter;
@@ -40,7 +40,7 @@ public enum GraphFilter {
     /**
      * Class for hiding nodes that don't contain resistance causing mutations.
      */
-    RESISTANCE_CAUSING(ResistanceCausingMutationGraph.class, "Drug resistance"),
+    RESISTANCE_CAUSING(ResistanceCausingMutationFilter.class, "Drug resistance"),
     /**
      * Class for hiding nodes which are too short.
      */
