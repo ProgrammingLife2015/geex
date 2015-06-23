@@ -3,7 +3,7 @@ package nl.tudelft.context.workspace;
 import de.saxsys.javafx.test.JfxRunner;
 import nl.tudelft.context.model.annotation.CodingSequenceParser;
 import nl.tudelft.context.model.annotation.ResistanceParser;
-import nl.tudelft.context.model.graph.parser.GraphParser;
+import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.newick.NewickParser;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Test;

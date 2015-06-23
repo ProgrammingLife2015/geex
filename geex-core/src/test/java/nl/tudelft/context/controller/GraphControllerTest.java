@@ -11,7 +11,7 @@ import nl.tudelft.context.model.annotation.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.ResistanceMap;
 import nl.tudelft.context.model.annotation.ResistanceParser;
 import nl.tudelft.context.model.graph.GraphMap;
-import nl.tudelft.context.model.graph.parser.GraphParser;
+import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;

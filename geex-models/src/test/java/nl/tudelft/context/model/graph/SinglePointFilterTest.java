@@ -2,7 +2,6 @@ package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
 import nl.tudelft.context.model.graph.filter.SinglePointFilter;
-import nl.tudelft.context.model.graph.parser.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
 import org.junit.Test;

@@ -3,7 +3,7 @@ package nl.tudelft.context.controller;
 import de.saxsys.javafx.test.JfxRunner;
 import nl.tudelft.context.model.graph.BaseCounter;
 import nl.tudelft.context.model.graph.Graph;
-import nl.tudelft.context.model.graph.parser.GraphParser;
+import nl.tudelft.context.model.graph.GraphParser;
 import nl.tudelft.context.model.graph.Node;
 import nl.tudelft.context.workspace.Workspace;
 import org.junit.BeforeClass;

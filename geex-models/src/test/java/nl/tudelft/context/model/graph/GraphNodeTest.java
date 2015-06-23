@@ -1,7 +1,6 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.model.graph.parser.GraphParser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,6 +1,5 @@
 package nl.tudelft.context.model.graph;
 
-import nl.tudelft.context.model.graph.parser.NodeParser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
