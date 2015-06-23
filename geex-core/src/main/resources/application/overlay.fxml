@@ -7,57 +7,73 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.geometry.Insets?>
 <fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml" mouseTransparent="true">
+    <HBox styleClass="overlay">
+        <GridPane hgap="10">
+            <Label styleClass="h2"
+                   GridPane.rowIndex="0" GridPane.columnSpan="2">
+                Shortcuts &amp; Help
+            </Label>
 
-    <GridPane styleClass="overlay" hgap="10">
-        <Label styleClass="h2"
-               GridPane.rowIndex="0" GridPane.columnSpan="2">
-            Shortcuts &amp; Help
-        </Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="1">Open workspace folder</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="1">Ctrl+O</Label>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="1">Open workspace folder</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="1">Ctrl+O</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="2">Previous view</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="2">Escape</Label>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="2">Previous view</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="2">Escape</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="3">Show Phylogenetic tree</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="3">Ctrl+T</Label>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="3">Show Phylogenetic tree</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="3">Ctrl+T</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="4">Load Genome graph</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="4">Ctrl+L</Label>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="4">Load Genome graph</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="4">Ctrl+L</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="5">Shortcuts</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="5">F1</Label>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="5">Shortcuts</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="5">F1</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="6">Open Sequence View in new window</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="6">Shift+Click</Label>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="6">Open Sequence View in new window</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="6">Shift+Click</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="9">Reset the view</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="9">Ctrl+R</Label>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="9">Reset the view</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="9">Ctrl+R</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="10">Open a new window</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="10">Shift+Click on a node</Label>
+        </GridPane>
 
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="10">Open a new window</Label>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="10">Shift+Click on a node</Label>
-
-        <Label GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="h2">Legend</Label>
-        
-        <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
-            <Label styleClass="info-label">1.</Label>
-            <HBox>
-                <Rectangle styleClass="node-label-A" height="5" width="12"/>
-                <Rectangle styleClass="node-label-T" height="5" width="12"/>
-                <Rectangle styleClass="node-label-C" height="5" width="12"/>
-                <Rectangle styleClass="node-label-G" height="5" width="12"/>
-                <Rectangle styleClass="node-label-N" height="5" width="12"/>
-            </HBox>
-        </VBox>
-        <VBox GridPane.columnIndex="3" GridPane.rowIndex="1">
-            <Label>1. Number of bases</Label>
-        </VBox>
-
-        <Label GridPane.columnIndex="2" GridPane.rowIndex="2" styleClass="single-label">2.</Label>
-        <Label GridPane.columnIndex="3" GridPane.rowIndex="2">2. Number of underlying nodes</Label>
+        <GridPane vgap="10">
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="h2">Legend</Label>
 
 
-    </GridPane>
+                <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label styleClass="info-label">1</Label>
+                    <HBox>
+                        <Rectangle styleClass="node-label-A" height="5" width="12"/>
+                        <Rectangle styleClass="node-label-T" height="5" width="12"/>
+                        <Rectangle styleClass="node-label-C" height="5" width="12"/>
+                        <Rectangle styleClass="node-label-G" height="5" width="12"/>
+                        <Rectangle styleClass="node-label-N" height="5" width="12"/>
+                    </HBox>
+                </VBox>
+
+                    <Label GridPane.columnIndex="1" GridPane.rowIndex="1">1. Number of bases</Label>
+
+
+
+
+                <Label GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="single-label">2</Label>
+                <Label GridPane.columnIndex="1" GridPane.rowIndex="2">2. Number of underlying nodes</Label>
+
+
+
+                <Label GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="resistance-label">3</Label>
+                <Label GridPane.columnIndex="1" GridPane.rowIndex="3">3. Number of drug resistance causing mutations</Label>
+
+
+                <Label GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="coding-sequences-label">4</Label>
+                <Label GridPane.columnIndex="1" GridPane.rowIndex="4">4. Number of coding sequences</Label>
+
+
+
+        </GridPane>
+    </HBox>
 
 </fx:root>
