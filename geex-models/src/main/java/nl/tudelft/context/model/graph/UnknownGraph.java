@@ -17,7 +17,7 @@ public class UnknownGraph extends FilterGraph {
     /**
      * Create a graph with filtered unknown on an other graph.
      *
-     * @param graph Graph to remove unkowns form.
+     * @param graph Graph to remove unknowns from
      */
     public UnknownGraph(final StackGraph graph) {
         super(graph);
@@ -26,11 +26,6 @@ public class UnknownGraph extends FilterGraph {
     @Override
     protected Predicate<DefaultNode> filter() {
         return defaultNode -> defaultNode.getBaseCounter().getRatio('N') >= REMOVE_RATIO;
-    }
-
-    @Override
-    public String getName() {
-        return "Unknown bases (" + (REMOVE_RATIO * 100) + "%)";
     }
 
 }

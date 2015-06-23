@@ -27,9 +27,4 @@ public class BaseLengthGraph extends FilterGraph {
         return defaultNode -> defaultNode.getContent().length() <= THRESHOLD;
     }
 
-    @Override
-    public String getName() {
-        return "Unknown bases (" + (THRESHOLD * 100) + "%)";
-    }
-
 }

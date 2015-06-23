@@ -5,6 +5,7 @@ import nl.tudelft.context.model.annotation.CodingSequenceMap;
 import nl.tudelft.context.model.annotation.Resistance;
 import nl.tudelft.context.model.annotation.ResistanceMap;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public abstract class DefaultNode {
     /**
      * Set of genomes that contain this Node.
      */
-    Set<String> sources;
+    Set<String> sources = new HashSet<>();
 
     /**
      * The content of the current Node.

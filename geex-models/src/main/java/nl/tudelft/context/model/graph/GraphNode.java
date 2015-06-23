@@ -58,7 +58,7 @@ public class GraphNode extends DefaultNode {
         this.parentGraph = parentGraph;
         this.type = type;
 
-        sources = start.getSources();
+        sources.addAll(start.getSources());
 
         Queue<DefaultNode> queue = new LinkedList<>();
         queue.add(start);
@@ -82,6 +82,22 @@ public class GraphNode extends DefaultNode {
     }
 
     /**
+     * Create a graph node.
+     *
+     * @param parentGraph Parent graph
+     * @param start       Start of sub graph
+     * @param type        Type of the sub graph
+     */
+    public GraphNode(final StackGraph parentGraph, final DefaultNode start, final String type) {
+
+        this.parentGraph = parentGraph;
+        this.type = type;
+
+        addNode(start);
+
+    }
+
+    /**
      * Calculate the node properties: base counter, reference positions.
      */
     private void calculateProperties() {
@@ -89,6 +105,10 @@ public class GraphNode extends DefaultNode {
         nodes.stream()
                 .map(DefaultNode::getBaseCounter)
                 .forEach(baseCounter::addBaseCounter);
+
+        nodes.stream()
+                .map(DefaultNode::getSources)
+                .forEach(sources::addAll);
 
         refStart = nodes.stream().mapToInt(DefaultNode::getRefStartPosition).min().getAsInt();
         refEnd = nodes.stream().mapToInt(DefaultNode::getRefEndPosition).max().getAsInt();
@@ -135,6 +155,7 @@ public class GraphNode extends DefaultNode {
      */
     public void addNode(final DefaultNode node) {
         nodes.add(node);
+        sources.addAll(node.getSources());
         baseCounter.addBaseCounter(node.getBaseCounter());
         refStart = Math.min(refStart, node.getRefStartPosition());
         refEnd = Math.max(refEnd, node.getRefStartPosition());

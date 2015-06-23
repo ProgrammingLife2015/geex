@@ -64,16 +64,6 @@ public class BaseLengthGraphTest {
     }
 
     /**
-     * Test if there is a name returned for the unknown graph.
-     */
-    @Test
-    public void testName() {
-
-        assertTrue(baseLengthGraph.getName().length() > 0);
-
-    }
-
-    /**
      * Test that the insert delete graph doesn't contain the nodes that are collapsed but contains the other nodes.
      */
     @Test

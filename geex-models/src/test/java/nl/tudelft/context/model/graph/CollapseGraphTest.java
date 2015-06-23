@@ -65,16 +65,6 @@ public class CollapseGraphTest {
     }
 
     /**
-     * Test if there is a name returned for the collapse graph.
-     */
-    @Test
-    public void testName() {
-
-        assertTrue(collapseGraph.getName().length() > 0);
-
-    }
-
-    /**
      * Test that the collapsed graph doesn't contain the nodes that are collapsed but contains the other nodes.
      */
     @Test
