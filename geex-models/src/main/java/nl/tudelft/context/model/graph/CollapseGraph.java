@@ -16,12 +16,12 @@ public class CollapseGraph extends StackGraph {
     /**
      * Parts of a collapse.
      */
-    Set<DefaultNode> collapsePart = new HashSet<>();
+    transient Set<DefaultNode> collapsePart = new HashSet<>();
 
     /**
      * Map with start and end of a collapse.
      */
-    Map<DefaultNode, DefaultNode> collapse = new HashMap<>();
+    transient Map<DefaultNode, DefaultNode> collapse = new HashMap<>();
 
     /**
      * Clean graph.
