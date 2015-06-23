@@ -74,8 +74,7 @@ public final class MenuController {
                 selectWorkspace,
                 selectRecentWorkspace,
                 createMenuItem("Exit", null,
-                        event -> mainController.exitProgram(),
-                        false)));
+                        event -> mainController.exitProgram())));
     }
 
     /**
@@ -95,8 +94,7 @@ public final class MenuController {
         menuBar.getMenus().add(createMenu("_Navigate",
                 createMenuItem("Previous view",
                         new KeyCodeCombination(KeyCode.ESCAPE),
-                        event -> mainController.previousView(),
-                        false),
+                        event -> mainController.previousView()),
                 toggleSelect,
                 loadGenomeGraph,
                 resetView));
@@ -110,8 +108,7 @@ public final class MenuController {
 
         toggleOverlay = createMenuItem("Shortcuts",
                 new KeyCodeCombination(KeyCode.F1),
-                null,
-                false);
+                null);
 
         menuBar.getMenus().add(createMenu("_Help",
                 toggleOverlay));
@@ -136,34 +133,33 @@ public final class MenuController {
     /**
      * Create a disabled menu item, all of these don't have an action yet and are disabled.
      *
-     * @param title The title of the menuItem
+     * @param title   The title of the menuItem
      * @param keyComb The keycombination for this menuItem
      * @return A new menuItem
      */
     private MenuItem createDisabledMenuItem(final String title, final KeyCombination keyComb) {
-        return createMenuItem(title, keyComb, null, true);
+        MenuItem menuItem = createMenuItem(title, keyComb, null);
+        menuItem.setDisable(true);
+        return menuItem;
     }
 
     /**
      * The function that returns a menuItem with a title, shift and event attached.
      *
-     * @param title    The title of the menuItem.
-     * @param keyComb  The shift to this menuItem.
-     * @param event    Event that the item will use.
-     * @param disabled If menu item is disabled
+     * @param title   The title of the menuItem.
+     * @param keyComb The shift to this menuItem.
+     * @param event   Event that the item will use.
      * @return The menuItem with the parameters attached.
      */
     private MenuItem createMenuItem(final String title,
                                     final KeyCombination keyComb,
-                                    final EventHandler<ActionEvent> event,
-                                    final boolean disabled) {
+                                    final EventHandler<ActionEvent> event) {
 
-        final MenuItem res = new MenuItem(title);
-        res.setAccelerator(keyComb);
-        res.setOnAction(event);
-        res.setDisable(disabled);
+        final MenuItem menuItem = new MenuItem(title);
+        menuItem.setAccelerator(keyComb);
+        menuItem.setOnAction(event);
 
-        return res;
+        return menuItem;
 
     }
 
