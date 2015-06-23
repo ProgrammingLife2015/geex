@@ -31,15 +31,11 @@ public abstract class FilterGraph extends StackGraph {
      */
     public FilterGraph(final StackGraph graph) {
 
-        try {
-            this.graph = graph;
-            setGraph(graph);
+        this.graph = graph;
+        setGraph(graph);
 
-            markFiltered();
-            removeAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        markFiltered();
+        removeAll();
 
     }
 
