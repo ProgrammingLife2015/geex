@@ -40,6 +40,10 @@ public abstract class FilterGraph extends StackGraph {
 
     }
 
+    /**
+     * The filter used to remove objects.
+     * @return filter (predicate)
+     */
     protected abstract Predicate<DefaultNode> filter();
 
     /**
