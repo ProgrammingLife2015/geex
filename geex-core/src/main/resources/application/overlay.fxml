@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
 <fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml" mouseTransparent="true">
 
     <GridPane styleClass="overlay" hgap="10">
@@ -33,6 +37,26 @@
 
         <Label GridPane.columnIndex="0" GridPane.rowIndex="10">Open a new window</Label>
         <Label GridPane.columnIndex="1" GridPane.rowIndex="10">Shift+Click on a node</Label>
+
+        <Label GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="h2">Legend</Label>
+        
+        <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Label styleClass="info-label">1.</Label>
+            <HBox>
+                <Rectangle styleClass="node-label-A" height="5" width="12"/>
+                <Rectangle styleClass="node-label-T" height="5" width="12"/>
+                <Rectangle styleClass="node-label-C" height="5" width="12"/>
+                <Rectangle styleClass="node-label-G" height="5" width="12"/>
+                <Rectangle styleClass="node-label-N" height="5" width="12"/>
+            </HBox>
+        </VBox>
+        <VBox GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Label>1. Number of bases</Label>
+        </VBox>
+
+        <Label GridPane.columnIndex="2" GridPane.rowIndex="2" styleClass="single-label">2.</Label>
+        <Label GridPane.columnIndex="3" GridPane.rowIndex="2">2. Number of underlying nodes</Label>
+
 
     </GridPane>
 
