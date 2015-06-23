@@ -1,7 +1,5 @@
 package nl.tudelft.context.window;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -48,13 +46,9 @@ public class Window extends Stage {
      * Create a window with a view.
      *
      * @param title  Title of the window
-     * @param parent Parent containing the view
      */
-    public Window(final String title, final Parent parent) {
+    public Window(final String title) {
 
-
-        final Scene scene = new Scene(parent, SCENE_BACKGROUND);
-        scene.getStylesheets().add("/application/css/style.css");
 
         setTitle(title);
         getIcons().addAll(
@@ -66,8 +60,6 @@ public class Window extends Stage {
         setMinWidth(FRAME_WIDTH);
         setMinHeight(FRAME_HEIGHT);
         setMaximized(true);
-        setScene(scene);
-        show();
 
     }
 

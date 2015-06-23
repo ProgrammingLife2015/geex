@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.breadcrumb.Breadcrumb;
 import nl.tudelft.context.controller.overlay.OverlayController;
-import nl.tudelft.context.window.Window;
+import nl.tudelft.context.window.WindowFactory;
 import nl.tudelft.context.workspace.Workspace;
 
 import java.net.URL;
@@ -174,7 +174,7 @@ public class MainController extends AbstractController<StackPane> {
      * @param viewController ViewController to show in this Window.
      */
     private void openWindow(final ViewController viewController) {
-        new Window(viewController.getBreadcrumbName(), viewController.getRoot());
+        WindowFactory.create(viewController.getBreadcrumbName(), viewController.getRoot());
         // When creating a new window our control over the keyboard is lost
         // and the state of the shift key is stuck.
         shift = false;

@@ -35,7 +35,7 @@ public class WindowTest {
     public void setUp() {
 
         content = new Pane();
-        Platform.runLater(() -> window = new Window(TEST_TITLE, content));
+        Platform.runLater(() -> window = WindowFactory.create(TEST_TITLE, content));
 
     }
 
