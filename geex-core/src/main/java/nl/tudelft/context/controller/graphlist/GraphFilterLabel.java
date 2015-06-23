@@ -32,6 +32,9 @@ public class GraphFilterLabel extends Label implements Observable, Destroyable {
      * The filter for this item.
      */
     private final GraphFilter graph;
+    /**
+     * List containing graphFilterLabels.
+     */
     private ObservableList<GraphFilterLabel> graphList;
 
     /**
@@ -144,7 +147,7 @@ public class GraphFilterLabel extends Label implements Observable, Destroyable {
     /**
      * Deactivate this item.
      */
-    private void deactivate() {
+    public void deactivate() {
         getStyleClass().remove("active");
         active = false;
     }
@@ -152,7 +155,7 @@ public class GraphFilterLabel extends Label implements Observable, Destroyable {
     /**
      * Make this item active.
      */
-    private void activate() {
+    public void activate() {
         getStyleClass().add("active");
         active = true;
     }
@@ -185,6 +188,7 @@ public class GraphFilterLabel extends Label implements Observable, Destroyable {
         this.listener = null;
     }
 
+    @Override
     public void destroy() {
         graphList.remove(this);
     }
