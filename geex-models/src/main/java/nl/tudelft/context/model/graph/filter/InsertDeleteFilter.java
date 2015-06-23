@@ -17,21 +17,20 @@ import java.util.Set;
  */
 public class InsertDeleteFilter implements StackGraphFilter {
 
-    private final StackGraph previous;
     /**
      * Parts of a insert deletion.
      */
-    Set<DefaultNode> inDelPart = new HashSet<>();
+    private Set<DefaultNode> inDelPart = new HashSet<>();
 
     /**
      * Map with start and end of insert deletions.
      */
-    Map<DefaultNode, DefaultNode> inDel = new HashMap<>();
+    private Map<DefaultNode, DefaultNode> inDel = new HashMap<>();
 
     /**
-     * Clean graph.
+     * Filtered and input graph.
      */
-    StackGraph filtered;
+    private StackGraph filtered, previous;
 
     /**
      * Create a graph with insert deletes single point mutations based on an other graph.
@@ -51,7 +50,6 @@ public class InsertDeleteFilter implements StackGraphFilter {
 
         return filtered;
     }
-
 
 
     /**
@@ -84,7 +82,10 @@ public class InsertDeleteFilter implements StackGraphFilter {
      */
     public void isInsertDelete(final DefaultNode start, final DefaultNode end, final DefaultNode part) {
         List<DefaultNode> ends = filtered.getTargets(part);
-        if (ends.size() == 1 && ends.get(0).equals(end) && filtered.inDegreeOf(part) == 1 && filtered.inDegreeOf(end) == 2) {
+        if (ends.size() == 1
+                && ends.get(0).equals(end)
+                && filtered.inDegreeOf(part) == 1
+                && filtered.inDegreeOf(end) == 2) {
             inDelPart.add(part);
             inDel.put(start, end);
         }

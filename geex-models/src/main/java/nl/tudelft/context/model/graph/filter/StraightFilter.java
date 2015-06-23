@@ -18,20 +18,17 @@ import java.util.Set;
 public class StraightFilter implements StackGraphFilter {
 
     /**
+     * Filtered and input graph.
+     */
+    private final StackGraph previous, filtered;
+    /**
      * Parts of a collapse.
      */
-    Set<DefaultNode> collapsePart = new HashSet<>();
-
+    private Set<DefaultNode> collapsePart = new HashSet<>();
     /**
      * Map with start and end of a collapse.
      */
-    Map<DefaultNode, DefaultNode> collapse = new HashMap<>();
-
-    /**
-     * Clean previous.
-     */
-    StackGraph previous;
-    StackGraph filtered;
+    private Map<DefaultNode, DefaultNode> collapse = new HashMap<>();
 
     /**
      * Create a previous with collapses based on an other previous.

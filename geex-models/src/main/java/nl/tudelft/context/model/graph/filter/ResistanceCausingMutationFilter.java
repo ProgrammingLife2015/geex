@@ -2,8 +2,6 @@ package nl.tudelft.context.model.graph.filter;
 
 import nl.tudelft.context.model.graph.Graph;
 import nl.tudelft.context.model.graph.StackGraph;
-import nl.tudelft.context.model.graph.filter.BubbleReduction;
-import nl.tudelft.context.model.graph.filter.StackGraphFilter;
 
 /**
  * @author René Vennik
@@ -12,8 +10,10 @@ import nl.tudelft.context.model.graph.filter.StackGraphFilter;
  */
 public class ResistanceCausingMutationFilter implements StackGraphFilter {
 
-    private final StackGraph filtered;
-    private final StackGraph previous;
+    /**
+     * Filtered and input graph.
+     */
+    private final StackGraph filtered, previous;
 
     /**
      * Create a graph with showing the resistance causing mutations only.

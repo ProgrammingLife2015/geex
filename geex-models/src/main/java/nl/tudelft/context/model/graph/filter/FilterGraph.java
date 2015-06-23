@@ -16,16 +16,14 @@ import java.util.stream.Collectors;
  * @since 23-6-2015
  */
 public abstract class FilterGraph implements StackGraphFilter {
-    private final StackGraph filteredGraph;
     /**
-     * Unknown nodes (75% or more).
+     * Filtered and input graph.
      */
-    Set<DefaultNode> filtered;
-
+    private final StackGraph previous, filtered;
     /**
-     * Clean graph.
+     * Nodes which are candidate for removal.
      */
-    StackGraph previous;
+    Set<DefaultNode> candidate;
 
     /**
      * Create a graph with filtered filtered on an other graph.
@@ -33,7 +31,7 @@ public abstract class FilterGraph implements StackGraphFilter {
      * @param graph Graph to remove unkowns form.
      */
     public FilterGraph(final StackGraph graph) {
-        this.filteredGraph = graph.deepClone();
+        this.filtered = graph.deepClone();
         this.previous = graph;
     }
 
@@ -42,12 +40,13 @@ public abstract class FilterGraph implements StackGraphFilter {
         markFiltered();
         removeAll();
 
-        return filteredGraph;
+        return filtered;
     }
 
 
     /**
      * The filter used to remove objects.
+     *
      * @return filter (predicate)
      */
     protected abstract Predicate<DefaultNode> filter();
@@ -57,9 +56,9 @@ public abstract class FilterGraph implements StackGraphFilter {
      */
     private void markFiltered() {
 
-        filtered = filteredGraph.vertexSet().stream()
+        candidate = filtered.vertexSet().stream()
                 .filter(filter())
-                .filter(node -> filteredGraph.outDegreeOf(node) <= 1 && filteredGraph.inDegreeOf(node) <= 1)
+                .filter(node -> filtered.outDegreeOf(node) <= 1 && filtered.inDegreeOf(node) <= 1)
                 .collect(Collectors.toSet());
 
     }
@@ -69,20 +68,20 @@ public abstract class FilterGraph implements StackGraphFilter {
      */
     private void removeAll() {
 
-        filtered.stream()
+        candidate.stream()
                 .forEach(node -> {
-                    if (filteredGraph.outDegreeOf(node) != 0 && filteredGraph.inDegreeOf(node) != 0) {
-                        DefaultNode start = filteredGraph.getSources(node).get(0);
-                        DefaultNode end = filteredGraph.getTargets(node).get(0);
-                        DefaultWeightedEdge edge = filteredGraph.getEdge(start, end);
-                        double weight = filteredGraph.getEdgeWeight(filteredGraph.getEdge(start, node));
+                    if (filtered.outDegreeOf(node) != 0 && filtered.inDegreeOf(node) != 0) {
+                        DefaultNode start = filtered.getSources(node).get(0);
+                        DefaultNode end = filtered.getTargets(node).get(0);
+                        DefaultWeightedEdge edge = filtered.getEdge(start, end);
+                        double weight = filtered.getEdgeWeight(filtered.getEdge(start, node));
                         if (edge != null) {
-                            filteredGraph.setEdgeWeight(edge, weight);
+                            filtered.setEdgeWeight(edge, weight);
                         } else {
-                            filteredGraph.setEdgeWeight(filteredGraph.addEdge(start, end), weight);
+                            filtered.setEdgeWeight(filtered.addEdge(start, end), weight);
                         }
                     }
-                    filteredGraph.removeVertex(node);
+                    filtered.removeVertex(node);
                 });
 
     }

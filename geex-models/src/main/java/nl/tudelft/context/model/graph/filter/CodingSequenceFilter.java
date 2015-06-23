@@ -10,8 +10,10 @@ import nl.tudelft.context.model.graph.StackGraph;
  */
 public class CodingSequenceFilter implements StackGraphFilter {
 
-    private final StackGraph filtered;
-    private final StackGraph previous;
+    /**
+     * Filtered and input graph.
+     */
+    private final StackGraph filtered, previous;
 
     /**
      * Create a graph with showing coding sequences only.

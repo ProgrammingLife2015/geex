@@ -10,7 +10,7 @@ import java.util.function.Predicate;
  * @version 1.0
  * @since 12-6-2015
  */
-public class UnknownFilter extends FilterGraph {
+public final class UnknownFilter extends FilterGraph {
 
     /**
      * Minimum unknown ratio to remove.

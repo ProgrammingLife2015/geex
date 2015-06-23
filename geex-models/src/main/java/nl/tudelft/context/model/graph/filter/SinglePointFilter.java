@@ -20,20 +20,17 @@ import java.util.stream.Collectors;
 public class SinglePointFilter implements StackGraphFilter {
 
     /**
+     * Filtered and input graph.
+     */
+    private final StackGraph previous, filtered;
+    /**
      * Parts of a single base mutation.
      */
-    Set<DefaultNode> singlePart = new HashSet<>();
-
+    private Set<DefaultNode> singlePart = new HashSet<>();
     /**
      * Map with start and end of single mutation.
      */
-    Map<DefaultNode, DefaultNode> single = new HashMap<>();
-
-    /**
-     * Clean graph.
-     */
-    StackGraph previous;
-    StackGraph filtered;
+    private Map<DefaultNode, DefaultNode> single = new HashMap<>();
 
     /**
      * Create a graph with single point mutations based on an other graph.

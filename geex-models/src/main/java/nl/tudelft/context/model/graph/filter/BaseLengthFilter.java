@@ -10,7 +10,7 @@ import java.util.function.Predicate;
  * @version 1.0
  * @since 23-06-2015
  */
-public class BaseLengthFilter extends FilterGraph {
+public final class BaseLengthFilter extends FilterGraph {
     /**
      * Minimum unknown ratio to remove.
      */
