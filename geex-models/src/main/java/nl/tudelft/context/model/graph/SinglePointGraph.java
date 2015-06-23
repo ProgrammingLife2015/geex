@@ -18,12 +18,12 @@ public class SinglePointGraph extends StackGraph {
     /**
      * Parts of a single base mutation.
      */
-    Set<DefaultNode> singlePart = new HashSet<>();
+    transient Set<DefaultNode> singlePart = new HashSet<>();
 
     /**
      * Map with start and end of single mutation.
      */
-    Map<DefaultNode, DefaultNode> single = new HashMap<>();
+    transient Map<DefaultNode, DefaultNode> single = new HashMap<>();
 
     /**
      * Clean graph.

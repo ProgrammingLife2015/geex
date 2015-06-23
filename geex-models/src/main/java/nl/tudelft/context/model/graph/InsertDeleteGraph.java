@@ -16,12 +16,12 @@ public class InsertDeleteGraph extends StackGraph {
     /**
      * Parts of a insert deletion.
      */
-    Set<DefaultNode> inDelPart = new HashSet<>();
+    transient Set<DefaultNode> inDelPart = new HashSet<>();
 
     /**
      * Map with start and end of insert deletions.
      */
-    Map<DefaultNode, DefaultNode> inDel = new HashMap<>();
+    transient Map<DefaultNode, DefaultNode> inDel = new HashMap<>();
 
     /**
      * Clean graph.
