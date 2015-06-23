@@ -31,12 +31,15 @@ public abstract class FilterGraph extends StackGraph {
      */
     public FilterGraph(final StackGraph graph) {
 
-        this.graph = graph;
-        setGraph(graph);
+        try {
+            this.graph = graph;
+            setGraph(graph);
 
-        markFiltered();
-        removeEasy();
-        removeAll();
+            markFiltered();
+            removeAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -59,34 +62,22 @@ public abstract class FilterGraph extends StackGraph {
     }
 
     /**
-     * Remove nodes that can be remove without having to to anything else.
-     */
-    private void removeEasy() {
-
-        filtered.removeAll(filtered.stream()
-                .filter(node -> outDegreeOf(node) == 0 || inDegreeOf(node) == 0)
-                .map(node -> {
-                    removeVertex(node);
-                    return node;
-                }).collect(Collectors.toList()));
-
-    }
-
-    /**
      * Remove all the filtered nodes.
      */
     private void removeAll() {
 
         filtered.stream()
                 .forEach(node -> {
-                    DefaultNode start = getSources(node).get(0);
-                    DefaultNode end = getTargets(node).get(0);
-                    DefaultWeightedEdge edge = getEdge(start, end);
-                    double weight = getEdgeWeight(getEdge(start, node));
-                    if (edge != null) {
-                        setEdgeWeight(edge, weight);
-                    } else {
-                        setEdgeWeight(addEdge(start, end), weight);
+                    if (outDegreeOf(node) != 0 && inDegreeOf(node) != 0) {
+                        DefaultNode start = getSources(node).get(0);
+                        DefaultNode end = getTargets(node).get(0);
+                        DefaultWeightedEdge edge = getEdge(start, end);
+                        double weight = getEdgeWeight(getEdge(start, node));
+                        if (edge != null) {
+                            setEdgeWeight(edge, weight);
+                        } else {
+                            setEdgeWeight(addEdge(start, end), weight);
+                        }
                     }
                     this.removeVertex(node);
                 });
