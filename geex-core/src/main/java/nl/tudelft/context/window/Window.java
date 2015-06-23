@@ -67,7 +67,6 @@ public class Window extends Stage {
         setMinHeight(FRAME_HEIGHT);
         setMaximized(true);
         setScene(scene);
-        show();
 
     }
 
