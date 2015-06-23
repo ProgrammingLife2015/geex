@@ -33,8 +33,8 @@ import static org.junit.Assert.assertTrue;
 @RunWith(JfxRunner.class)
 public class SinglePointGraphTest {
 
-    File nodeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/single-point-mutation.node.graph").getPath());
-    File edgeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/single-point-mutation.edge.graph").getPath());
+    File nodeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/single-point-mutation.node.graph").getPath());
+    File edgeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/single-point-mutation.edge.graph").getPath());
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;

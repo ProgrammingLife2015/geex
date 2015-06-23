@@ -4,7 +4,7 @@ import nl.tudelft.context.model.graph.filter.CodingSequenceGraph;
 import nl.tudelft.context.model.graph.filter.ResistanceCausingMutationGraph;
 import nl.tudelft.context.model.graph.filter.BaseLengthFilter;
 import nl.tudelft.context.model.graph.filter.CollapseGraph;
-import nl.tudelft.context.model.graph.filter.InsertDeleteGraph;
+import nl.tudelft.context.model.graph.filter.InsertDeleteFilter;
 import nl.tudelft.context.model.graph.filter.SinglePointGraph;
 import nl.tudelft.context.model.graph.filter.StackGraphFilter;
 import nl.tudelft.context.model.graph.filter.UnknownFilter;
@@ -24,7 +24,7 @@ public enum GraphFilter {
     /**
      * Class for filtering indels.
      */
-    INSERT_DELETE(InsertDeleteGraph.class, "Insertions / Deletions"),
+    INSERT_DELETE(InsertDeleteFilter.class, "Insertions / Deletions"),
     /**
      * Class for collapsing straight lines.
      */

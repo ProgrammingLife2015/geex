@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.model.graph.filter.InsertDeleteGraph;
+import nl.tudelft.context.model.graph.filter.InsertDeleteFilter;
 import nl.tudelft.context.model.graph.parser.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
@@ -31,10 +31,10 @@ import static org.junit.Assert.assertTrue;
  * @since 18-6-2015
  */
 @RunWith(JfxRunner.class)
-public class InsertDeleteGraphTest {
+public class InsertDeleteFilterTest {
 
-    File nodeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/insert-delete-graph.node.graph").getPath());
-    File edgeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/insert-delete-graph.edge.graph").getPath());
+    File nodeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/insert-delete-graph.node.graph").getPath());
+    File edgeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/insert-delete-graph.edge.graph").getPath());
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
@@ -59,7 +59,7 @@ public class InsertDeleteGraphTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        insertDeleteGraph = new InsertDeleteGraph(graph).getFilterGraph();
+        insertDeleteGraph = new InsertDeleteFilter(graph).getFilterGraph();
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),

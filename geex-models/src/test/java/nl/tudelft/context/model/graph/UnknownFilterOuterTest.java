@@ -30,8 +30,8 @@ import static org.junit.Assert.*;
 @RunWith(JfxRunner.class)
 public class UnknownFilterOuterTest {
 
-    File nodeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/unknown-graph-outer.node.graph").getPath());
-    File edgeFile = new File(InsertDeleteGraphTest.class.getResource("/graph/unknown-graph-outer.edge.graph").getPath());
+    File nodeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/unknown-graph-outer.node.graph").getPath());
+    File edgeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/unknown-graph-outer.edge.graph").getPath());
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;

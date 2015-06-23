@@ -15,7 +15,7 @@ import java.util.Set;
  * @version 1.0
  * @since 11-6-2015
  */
-public class InsertDeleteGraph implements StackGraphFilter {
+public class InsertDeleteFilter implements StackGraphFilter {
 
     private final StackGraph previous;
     /**
@@ -38,7 +38,7 @@ public class InsertDeleteGraph implements StackGraphFilter {
      *
      * @param graph Graph to calculate insert deletes on
      */
-    public InsertDeleteGraph(final StackGraph graph) {
+    public InsertDeleteFilter(final StackGraph graph) {
         this.previous = graph;
         this.filtered = graph.deepClone();
     }
