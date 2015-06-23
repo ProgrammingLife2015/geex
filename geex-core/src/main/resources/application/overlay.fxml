@@ -62,18 +62,18 @@
                     <Rectangle styleClass="node-label-N" height="5" width="12"/>
                 </HBox>
             </VBox>
-            <Label GridPane.columnIndex="1" GridPane.rowIndex="2">5. Node in a selected strain</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="2">2. Node in a selected strain</Label>
 
-            <Label GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="single-label">2</Label>
-            <Label GridPane.columnIndex="1" GridPane.rowIndex="3">2. Number of underlying nodes</Label>
-
-
-            <Label GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="resistance-label">3</Label>
-            <Label GridPane.columnIndex="1" GridPane.rowIndex="4">3. Number of drug resistance causing mutations</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="single-label">3</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="3">3. Number of underlying nodes</Label>
 
 
-            <Label GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="coding-sequences-label">4</Label>
-            <Label GridPane.columnIndex="1" GridPane.rowIndex="5">4. Number of coding sequences</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="resistance-label">4</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="4">4. Number of drug resistance causing mutations</Label>
+
+
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="coding-sequences-label">5</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="5">5. Number of coding sequences</Label>
 
 
         </GridPane>
