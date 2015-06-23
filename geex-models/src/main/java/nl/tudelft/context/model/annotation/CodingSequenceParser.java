@@ -16,6 +16,52 @@ import java.util.Scanner;
 public class CodingSequenceParser extends Parser<CodingSequenceMap> {
 
     /**
+     * Set offset for iterating through array.
+     */
+    public static final int SEQ_ID_INDEX = 0;
+
+    /**
+     * The index of the group that holds the drugName.
+     */
+    public static final int SOURCE_INDEX = 1;
+
+    /**
+     * The index of the group that holds the drugName.
+     */
+    public static final int TYPE_INDEX = 2;
+
+    /**
+     * The index of the group that holds the drugName.
+     */
+    public static final int START_INDEX = 3;
+
+    /**
+     * The index of the group that holds the drugName.
+     */
+    public static final int END_INDEX = 4;
+
+    /**
+     * The index of the group that holds the drugName.
+     */
+    public static final int SCORE_INDEX = 5;
+
+    /**
+     * The index of the group that holds the drugName.
+     */
+    public static final int STRAND_INDEX = 6;
+
+    /**
+     * The index of the group that holds the drugName.
+     */
+    public static final int PHASE_INDEX = 7;
+
+    /**
+     * The index of the group that holds the drugName.
+     */
+    public static final int ATTRIBUTES_INDEX = 8;
+
+
+    /**
      * Parse the file into an CodingSequenceMap.
      *
      * @param readerList Reader to read.
@@ -44,18 +90,16 @@ public class CodingSequenceParser extends Parser<CodingSequenceMap> {
      * @return CodingSequence
      * @throws NumberFormatException when the data isn't correct
      */
-    public final CodingSequence getCodingSequence(final String[] splitLine)
-            throws NumberFormatException {
-        int index = 0;
-        String seqId = splitLine[index];
-        String source = splitLine[++index];
-        String type = splitLine[++index];
-        int start = Integer.parseInt(splitLine[++index]);
-        int end = Integer.parseInt(splitLine[++index]);
-        float score = Float.parseFloat(splitLine[++index]);
-        char strand = splitLine[++index].charAt(0);
-        char phase = splitLine[++index].charAt(0);
-        String attributes = splitLine[++index];
+    public final CodingSequence getCodingSequence(final String[] splitLine) {
+        String seqId = splitLine[SEQ_ID_INDEX];
+        String source = splitLine[SOURCE_INDEX];
+        String type = splitLine[TYPE_INDEX];
+        int start = Integer.parseInt(splitLine[START_INDEX]);
+        int end = Integer.parseInt(splitLine[END_INDEX]);
+        float score = Float.parseFloat(splitLine[SCORE_INDEX]);
+        char strand = splitLine[STRAND_INDEX].charAt(0);
+        char phase = splitLine[PHASE_INDEX].charAt(0);
+        String attributes = splitLine[ATTRIBUTES_INDEX];
 
         return new CodingSequence(seqId, source, type, start, end, score, strand, phase, attributes);
     }

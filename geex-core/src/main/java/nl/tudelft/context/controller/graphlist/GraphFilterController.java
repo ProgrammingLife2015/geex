@@ -56,29 +56,32 @@ public class GraphFilterController implements InvalidationListener {
     public GraphFilterController(final Pane graphs) {
         graphList = FXCollections.observableArrayList();
 
+
         filterList = new VBox();
-
-        graphList.addListener((ListChangeListener<GraphFilterLabel>) c -> {
-            while (c.next()) {
-                if (!c.wasPermutated() && !c.wasUpdated()) {
-                    for (GraphFilterLabel remitem : c.getRemoved()) {
-                        remitem.removeListener(this);
-                    }
-                    for (GraphFilterLabel additem : c.getAddedSubList()) {
-                        additem.addListener(this);
-                    }
-                }
-            }
-
-            filterList.getChildren().setAll(graphList);
-
-            activeGraph.set(createGraphFromFilter(graphList, baseGraph));
-        });
-
+        graphList.addListener(onGraphListChange(graphs));
         graphs.getChildren().addAll(
                 new ScrollPane(filterList),
                 createNewFilter(),
                 new TrashCan());
+    }
+
+    /**
+     * Add and remove listeners, update the graphs list when the graph list changes.
+     *
+     * @param graphs List of graphs to put the list in.
+     * @return ChangeListener, to use when graphList updates.
+     */
+    private ListChangeListener<GraphFilterLabel> onGraphListChange(final Pane graphs) {
+        return c -> {
+            while (c.next()) {
+                if (!c.wasPermutated() && !c.wasUpdated()) {
+                    c.getRemoved().forEach(graphFilterLabel -> graphFilterLabel.removeListener(this));
+                    c.getAddedSubList().forEach(graphFilterLabel -> graphFilterLabel.addListener(this));
+                }
+            }
+            filterList.getChildren().setAll(graphList);
+            activeGraph.set(createGraphFromFilter(graphList, baseGraph));
+        };
     }
 
     private HBox createNewFilter() {
@@ -99,7 +102,6 @@ public class GraphFilterController implements InvalidationListener {
         });
 
         newFilter.getChildren().addAll(newFilterList, createNewFilter);
-
         return newFilter;
     }
 

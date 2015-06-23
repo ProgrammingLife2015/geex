@@ -61,7 +61,7 @@ public class GraphFilterLabel extends Label implements Observable, Destroyable {
      *
      * @return The event handler, associated with it.
      */
-    private EventHandler<? super DragEvent> dragOver() {
+    private EventHandler<DragEvent> dragOver() {
         return event -> {
             event.acceptTransferModes(TransferMode.MOVE);
             event.consume();
@@ -70,7 +70,7 @@ public class GraphFilterLabel extends Label implements Observable, Destroyable {
 
     /**
      * EventHandler for dragDropped.
-     * <p/>
+     *
      * Will move the active element to the right position in the list.
      *
      * @param graphList List containing all the items.
@@ -95,7 +95,7 @@ public class GraphFilterLabel extends Label implements Observable, Destroyable {
 
     /**
      * An eventHandler for dragDetected.
-     * <p/>
+     *
      * Will init a new drag and drop.
      *
      * @return EventHandler used for dragDetected.

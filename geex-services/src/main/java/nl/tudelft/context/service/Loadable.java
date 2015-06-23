@@ -33,5 +33,5 @@ public interface Loadable<T> {
     /**
      * Set the state of this Loadable to cancelled.
      */
-    void cancelled();
+    void cancel();
 }
