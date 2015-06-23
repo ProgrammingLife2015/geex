@@ -58,6 +58,11 @@ public class LocatorController {
     int minRefPosition = Integer.MAX_VALUE, maxRefPosition = Integer.MIN_VALUE;
 
     /**
+     * Current min and max of ref positions displayed.
+     */
+    int min = 0, max = 0;
+
+    /**
      * Init the locator controller that shows the current position on the reference genome.
      *
      * @param locator          The locator pane
@@ -76,10 +81,14 @@ public class LocatorController {
         initIndicator();
 
         labelMapProperty.addListener((observable, oldValue, newValue) -> {
+            int oldRefPosition = (max + min) / 2;
             initIndicator();
             initLabelMap(newValue);
             initResistances(newValue);
             setPosition();
+            if (!oldValue.isEmpty()) {
+                goToRefPosition(oldRefPosition, graphController);
+            }
         });
 
         positionProperty.addListener(event -> setPosition());
@@ -112,8 +121,12 @@ public class LocatorController {
      */
     private void initInteraction(final AbstractGraphController graphController) {
 
-        locator.setOnMouseClicked(event -> optionalTotalMap.ifPresent(totalMap -> {
-            int refPosition = (int) (event.getX() / getScale());
+        locator.setOnMouseClicked(event -> goToRefPosition((int) (event.getX() / getScale()), graphController));
+
+    }
+
+    private void goToRefPosition(int refPosition, AbstractGraphController graphController) {
+        optionalTotalMap.ifPresent(totalMap -> {
             int column = totalMap.entrySet().stream()
                     .reduce((a, b) -> {
                         if (getRefDeviation(a, refPosition) < getRefDeviation(b, refPosition)) {
@@ -123,8 +136,7 @@ public class LocatorController {
                         }
                     }).get().getKey();
             graphController.setPosition(column);
-        }));
-
+        });
     }
 
     /**
@@ -226,11 +238,11 @@ public class LocatorController {
                     .collect(Collectors.toList());
 
             if (!list.isEmpty()) {
-                int min = list.stream()
+                min = list.stream()
                         .mapToInt(x -> x.get(0))
                         .min().getAsInt() - minRefPosition;
 
-                int max = list.stream()
+                max = list.stream()
                         .mapToInt(x -> x.get(1))
                         .max().getAsInt();
 
