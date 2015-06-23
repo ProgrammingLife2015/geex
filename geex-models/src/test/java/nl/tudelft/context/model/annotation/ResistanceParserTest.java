@@ -83,23 +83,22 @@ public class ResistanceParserTest {
     @Test
     public void testParserCanceled() throws FileNotFoundException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(resistanceFile));
-        resistanceParser.cancelled();
+        resistanceParser.cancel();
         ResistanceMap map = resistanceParser.parse(bufferedReader);
         assertEquals(0, map.annotationsByStart.size());
     }
 
     @Test
     public void testGetDrugName() {
-        assertEquals(resistanceParser.getDrugName('R'), "rifampicin");
-        assertEquals(resistanceParser.getDrugName('T'), "ethionomide");
-        assertEquals(resistanceParser.getDrugName('M'), "ethionomide");
-        assertEquals(resistanceParser.getDrugName('I'), "isoniazid");
-        assertEquals(resistanceParser.getDrugName('O'), "ofloxacin");
-        assertEquals(resistanceParser.getDrugName('S'), "streptomycin");
-        assertEquals(resistanceParser.getDrugName('K'), "kanamycin");
-        assertEquals(resistanceParser.getDrugName('P'), "pyrazinamide");
-        assertEquals(resistanceParser.getDrugName('E'), "ethambutol");
-        assertEquals(resistanceParser.getDrugName('Q'), "none");
+        assertEquals(resistanceParser.getDrugName("R"), "rifampicin");
+        assertEquals(resistanceParser.getDrugName("T"), "ethionomide");
+        assertEquals(resistanceParser.getDrugName("M"), "ethionomide");
+        assertEquals(resistanceParser.getDrugName("I"), "isoniazid");
+        assertEquals(resistanceParser.getDrugName("O"), "ofloxacin");
+        assertEquals(resistanceParser.getDrugName("S"), "streptomycin");
+        assertEquals(resistanceParser.getDrugName("K"), "kanamycin");
+        assertEquals(resistanceParser.getDrugName("P"), "pyrazinamide");
+        assertEquals(resistanceParser.getDrugName("E"), "ethambutol");
     }
 
 }

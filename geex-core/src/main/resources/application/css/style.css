@@ -25,7 +25,7 @@
 
 /* Used in the base view */
 .base-margin-top {
-    -fx-padding: 30px 210px 50px;
+    -fx-padding: 30px 273px 50px;
 }
 
 /* Overlay */
@@ -422,6 +422,7 @@
     -fx-min-height: 45px;
     -fx-min-width: 100%;
     -fx-background-color: #595959;
+    -fx-cursor: hand;
 }
 
 #locator Rectangle {
@@ -437,7 +438,9 @@
 
 /* Graph list */
 .graphs-holder {
-    -fx-pref-width: 180px;
+    -fx-min-width: 243px;
+    -fx-max-width: 243px;
+    -fx-pref-width: 243px;
     -fx-background-color: #222;
     -fx-border-width: 0 1px 0 0;
     -fx-border-color: #848484;
@@ -459,15 +462,52 @@
     -fx-border-width: 0 0 1px;
     -fx-border-color: #848484;
     -fx-cursor: hand;
+
+    -fx-background-image: url('../images/move-drag.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+    -fx-text-fill: #fff;
+    -fx-padding: 10px;
 }
 
 #graphs .graph-item.active {
     -fx-background-color: #494949;
 }
 
-#graphs .graph-item {
-    -fx-text-fill: #fff;
-    -fx-padding: 10px;
+#graphs .trashcan {
+    -fx-background-image: url('../images/trashclosed.png');
+}
+
+.createNewFilter {
+    -fx-min-width: 205px; /* 243 - 37 - 1, graphs holder width - my-button - border */
+    -fx-max-width: 205px;
+    -fx-pref-width: 205px;
+}
+
+#graphs ComboBox {
+    -fx-background-color: #3c3f41;
+    -fx-background-radius: 0;
+    -fx-border-width: 2px;
+    -fx-border-color: #646464;
+    -fx-pref-width: inherit;
+    -fx-min-width: inherit;
+    -fx-max-width: inherit;
+    -fx-prompt-text-fill: #58a5c8;
+}
+
+.combo-box-popup .list-view .list-cell:selected {
+    -fx-text-fill: #323232;
+}
+
+.combo-box-base   {
+
+    -fx-prompt-text-fill: #100fe4;
+    -fx-text-fill: #100fe4;
+    -fx-border-color: #100fe4;
+}
+
+#graphs .arrow {
+    -fx-background-color: #58a5c8;
 }
 
 /* Search */
@@ -481,20 +521,32 @@
     -fx-border-width: 2px;
 }
 
-.my-button {
+.my-button,
+.searchbox {
     -fx-background-color: #3c3f41;
     -fx-border-width: 2px;
     -fx-border-color: #646464;
     -fx-text-fill: #58a5c8;
+    -fx-min-width: 37px;
+    -fx-pref-width: 37px;
+    -fx-max-width: 37px;
 }
 
-.my-button:hover {
+.my-button:hover,
+.searchbox:hover {
     -fx-background-color: #5b5d5f;
     -fx-border-color: #7a8084;
 }
 
-.my-button:armed {
+.my-button:armed,
+.searchbox:armed {
     -fx-background-color: #555a5c;
+}
+
+.searchbox {
+    -fx-min-width: 200px;
+    -fx-pref-width: 200px;
+    -fx-max-width: 200px;
 }
 
 /* previous workspace list*/

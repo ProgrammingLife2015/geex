@@ -6,13 +6,11 @@ import javafx.scene.control.MenuItem;
 import nl.tudelft.context.controller.search.NewickSearchController;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableNewick;
-import nl.tudelft.context.drawable.NewickLabel;
 import nl.tudelft.context.model.newick.Newick;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 /**
  * @author René Vennik
@@ -70,15 +68,8 @@ public class SelectNewickController extends AbstractNewickController {
         subNewick.getNewick().getRoot().getSourcesProperty().addListener(event -> graphController
                 .updateSelectedSources(subNewick.getNewick().getRoot().getSources()));
 
-        // Bind edges
-        List<DrawableEdge> edgeList = subNewick.edgeSet().stream()
-                .map(edge -> new DrawableEdge(subNewick, edge))
-                .collect(Collectors.toList());
-
-        // Bind nodes
-        List<Label> nodeList = subNewick.vertexSet().stream()
-                .map(NewickLabel::new)
-                .collect(Collectors.toList());
+        List<DrawableEdge> edgeList = createDrawableEdges(subNewick);
+        List<Label> nodeList = createNewickLabels(subNewick);
 
         newickContainer.getChildren().addAll(edgeList);
         newickContainer.getChildren().addAll(nodeList);

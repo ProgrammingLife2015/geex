@@ -28,15 +28,15 @@ public class Database {
     SqlJetDb db;
 
     /**
+     * Static instance, for the singleton.
+     */
+    private static volatile Database instance;
+
+    /**
      * Create a new Database.
      */
     Database() {
     }
-
-    /**
-     * Static instance, for the singleton.
-     */
-    private static volatile Database instance;
 
     /**
      * Get or Create the database.

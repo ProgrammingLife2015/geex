@@ -48,7 +48,7 @@ public class LoadService<T> extends Service<T> {
 
             @Override
             protected void cancelled() {
-                parser.cancelled();
+                parser.cancel();
             }
         };
     }

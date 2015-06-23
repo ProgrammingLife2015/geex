@@ -3,18 +3,16 @@ package nl.tudelft.context.controller;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import nl.tudelft.context.logger.Log;
-import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.controller.search.NewickSearchController;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.DrawableNewick;
-import nl.tudelft.context.drawable.NewickLabel;
+import nl.tudelft.context.logger.Log;
+import nl.tudelft.context.logger.message.Message;
 import nl.tudelft.context.model.newick.Newick;
 import nl.tudelft.context.model.newick.selection.None;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author René Vennik
@@ -57,15 +55,8 @@ public final class NewickController extends AbstractNewickController {
     protected void showTree(final Newick newick) {
         DrawableNewick drawableNewick = new DrawableNewick(newick);
 
-        // Bind edges
-        List<DrawableEdge> edgeList = drawableNewick.edgeSet().stream()
-                .map(edge -> new DrawableEdge(drawableNewick, edge))
-                .collect(Collectors.toList());
-
-        // Bind nodes
-        List<Label> nodeList = drawableNewick.vertexSet().stream()
-                .map(NewickLabel::new)
-                .collect(Collectors.toList());
+        List<DrawableEdge> edgeList = createDrawableEdges(drawableNewick);
+        List<Label> nodeList = createNewickLabels(drawableNewick);
 
         newickContainer.getChildren().addAll(edgeList);
         newickContainer.getChildren().addAll(nodeList);

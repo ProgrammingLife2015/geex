@@ -2,12 +2,12 @@ package nl.tudelft.context.controller.locator;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.Cursor;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import nl.tudelft.context.controller.AbstractGraphController;
 import nl.tudelft.context.drawable.DrawableEdge;
 import nl.tudelft.context.drawable.graph.AbstractDrawableNode;
+import nl.tudelft.context.model.annotation.Resistance;
 import nl.tudelft.context.model.graph.DefaultNode;
 
 import java.util.Arrays;
@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -72,7 +73,7 @@ public class LocatorController {
         this.locator = locator;
         this.positionProperty = positionProperty;
 
-        locator.setCursor(Cursor.HAND);
+        initIndicator();
 
         labelMapProperty.addListener((observable, oldValue, newValue) -> {
             initIndicator();
@@ -82,7 +83,10 @@ public class LocatorController {
         });
 
         positionProperty.addListener(event -> setPosition());
-        locator.widthProperty().addListener(event -> setPosition());
+        locator.widthProperty().addListener(event -> {
+            initResistances(labelMapProperty.get());
+            setPosition();
+        });
 
         initInteraction(graphController);
 
@@ -167,28 +171,38 @@ public class LocatorController {
      * @param labelMap Map containing all the nodes with possible resistances
      */
     private void initResistances(final Map<Integer, List<AbstractDrawableNode>> labelMap) {
+        final Function<Resistance, Rectangle> resistanceRectangleFunction = createResistanceRectangle(getScale());
 
-        final double scale = getScale();
-
+        locator.getChildren().removeIf(node -> !node.getStyleClass().contains("indicator"));
         locator.getChildren().addAll(labelMap.values().stream()
                 .flatMap(Collection::stream)
                 .map(AbstractDrawableNode::getNode)
                 .map(DefaultNode::getResistances)
                 .flatMap(Collection::stream)
-                .map(resistance -> {
-                    final Rectangle rectangle = new Rectangle();
-                    double start = resistance.getStart() * scale;
-                    double end = resistance.getEnd() * scale;
-                    rectangle.setTranslateY(1);
-                    rectangle.setHeight(LOCATOR_HEIGHT);
-                    rectangle.setWidth(Math.max(DrawableEdge.MINIMUM_LINE_WIDTH, end - start));
-                    rectangle.setTranslateX(start);
-                    return rectangle;
-                })
+                .map(resistanceRectangleFunction)
                 .collect(Collectors.toList()));
 
         locatorIndicator.toFront();
 
+    }
+
+    /**
+     * Create a rectangle for a resistance in the locator bar.
+     *
+     * @param scale Scale of the rectangle.
+     * @return A function mapping Resistance to Rectangle.
+     */
+    private Function<Resistance, Rectangle> createResistanceRectangle(final double scale) {
+        return resistance -> {
+            final Rectangle rectangle = new Rectangle();
+            double start = resistance.getStart() * scale;
+            double end = resistance.getEnd() * scale;
+            rectangle.setTranslateY(1);
+            rectangle.setHeight(LOCATOR_HEIGHT);
+            rectangle.setWidth(Math.max(DrawableEdge.MINIMUM_LINE_WIDTH, end - start));
+            rectangle.setTranslateX(start);
+            return rectangle;
+        };
     }
 
     /**

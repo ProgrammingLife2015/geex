@@ -107,9 +107,4 @@ public class InsertDeleteGraph extends StackGraph {
 
     }
 
-    @Override
-    public String getName() {
-        return "Insertions / Deletions";
-    }
-
 }

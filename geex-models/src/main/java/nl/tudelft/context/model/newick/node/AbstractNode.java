@@ -49,6 +49,16 @@ public abstract class AbstractNode {
     SimpleObjectProperty<Set<String>> sources = new SimpleObjectProperty<>(new HashSet<>());
 
     /**
+     * Translation in the direction of the X axis.
+     */
+    SimpleDoubleProperty translateX = new SimpleDoubleProperty(0);
+
+    /**
+     * Translation in the direction of the Y axis.
+     */
+    SimpleDoubleProperty translateY = new SimpleDoubleProperty(0);
+
+    /**
      * Builds a new node with the corresponding name and weight.
      *
      * @param name   the name of the node
@@ -237,16 +247,6 @@ public abstract class AbstractNode {
     public String toString() {
         return "Node<" + name + "," + weight + ">";
     }
-
-    /**
-     * Translation in the direction of the X axis.
-     */
-    SimpleDoubleProperty translateX = new SimpleDoubleProperty(0);
-
-    /**
-     * Translation in the direction of the Y axis.
-     */
-    SimpleDoubleProperty translateY = new SimpleDoubleProperty(0);
 
     /**
      * @return translateX property
