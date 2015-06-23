@@ -68,6 +68,7 @@ public class WelcomeController extends ViewController<GridPane> {
         this.mainController = mainController;
         this.selectRecentWorkspace = selectRecentWorkspace;
 
+        welcomeMenuItem.setDisable(false);
         welcomeMenuItem.setOnAction(event -> selectWorkspace(mainController.getRoot().getScene().getWindow()));
 
         loadFXML("/application/welcome.fxml");

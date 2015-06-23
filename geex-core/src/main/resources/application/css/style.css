@@ -34,7 +34,7 @@
 }
 
 .overlay {
-    -fx-padding: 20px;
+    -fx-padding: 20px 40px;
     -fx-opacity: 0.9;
     -fx-border-width: 10px;
     -fx-border-color: rgba(0, 0, 0, .5);
@@ -44,13 +44,19 @@
 }
 
 .overlay .h2 {
-    -fx-padding: 20px 10px 10px;
+    -fx-padding: 20px 0 10px;
     -fx-text-fill: #fff;
 }
 
 .overlay Label {
     -fx-text-fill: #fff;
-    -fx-padding: 5px 10px;
+    -fx-padding: 5px 0;
+    -fx-font: 0.4cm 'Arial';
+}
+
+.overlay Text {
+    -fx-fill: #fff;
+    -fx-padding: 5px 0;
     -fx-font: 0.4cm 'Arial';
 }
 
