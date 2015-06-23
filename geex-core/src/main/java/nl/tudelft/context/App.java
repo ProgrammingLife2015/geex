@@ -21,6 +21,9 @@ public class App extends Application {
      * @param args arguments
      */
     public static void main(final String... args) {
+        if (Boolean.getBoolean("debug")) {
+            Log.instance().addLogger(new StdOutLogger());
+        }
 
         launch(args);
 
@@ -38,11 +41,7 @@ public class App extends Application {
      */
     @Override
     public final void start(final Stage stage) {
-        if (Boolean.getBoolean("debug")) {
-            new StdOutLogger(Log.instance());
-
-            Log.debug(Message.DEBUGGER_READY);
-        }
+        Log.debug(Message.APPLICATION_STARTING);
 
         MainController controller = new MainController();
         new Window("Geex", controller.getRoot());

@@ -33,6 +33,6 @@ public final class DrawableNodeFactory {
             return new DrawableNode((Node) node);
         }
 
-        throw new RuntimeException("Could not create DrawableNode of type: " + node.getClass());
+        throw new DrawableNodeException("Could not create DrawableNode of type: " + node.getClass());
     }
 }

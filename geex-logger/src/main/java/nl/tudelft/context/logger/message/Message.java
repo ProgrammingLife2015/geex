@@ -77,24 +77,24 @@ public enum Message {
     /**
      * Message used to show debugging is enabled.
      */
-    DEBUGGER_READY("Debug logger enabled.");
+    APPLICATION_STARTING("Application starting.");
 
     /**
      * Message string in this message.
      */
-    private String message;
+    private String text;
 
     /**
      * Create a new Message.
      *
-     * @param message Message string
+     * @param text Message string
      */
-    Message(final String message) {
-        this.message = message;
+    Message(final String text) {
+        this.text = text;
     }
 
     @Override
     public String toString() {
-        return message;
+        return text;
     }
 }

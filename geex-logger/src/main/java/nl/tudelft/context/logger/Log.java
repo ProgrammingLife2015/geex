@@ -20,6 +20,18 @@ public final class Log implements ObservableLog {
     private static volatile Log instance;
 
     /**
+     * The current loggers to log to.
+     */
+    List<Logger> listeners;
+
+    /**
+     * Create a new Log.
+     */
+    private Log() {
+        listeners = new ArrayList<>();
+    }
+
+    /**
      * Get or Create the logger.
      *
      * @return The logger for this application.
@@ -33,38 +45,6 @@ public final class Log implements ObservableLog {
             }
         }
         return instance;
-    }
-
-    /**
-     * Create a new Log.
-     */
-    private Log() {
-        listeners = new ArrayList<>();
-    }
-
-    /**
-     * The current loggers to log to.
-     */
-    List<Logger> listeners;
-
-    /**
-     * Register a new logger.
-     *
-     * @param listener logger to register.
-     */
-    @Override
-    public void addLogger(final Logger listener) {
-        listeners.add(listener);
-    }
-
-    /**
-     * Remove an existing logger.
-     *
-     * @param listener logger to remove.
-     */
-    @Override
-    public void removeLogger(final Logger listener) {
-        listeners.remove(listener);
     }
 
     /**
@@ -123,5 +103,25 @@ public final class Log implements ObservableLog {
         listeners.stream()
                 .filter(logger -> logger.getLevel().getLevel() <= type.getLevel())
                 .forEach(logger -> logger.log(message, type));
+    }
+
+    /**
+     * Register a new logger.
+     *
+     * @param listener logger to register.
+     */
+    @Override
+    public void addLogger(final Logger listener) {
+        listeners.add(listener);
+    }
+
+    /**
+     * Remove an existing logger.
+     *
+     * @param listener logger to remove.
+     */
+    @Override
+    public void removeLogger(final Logger listener) {
+        listeners.remove(listener);
     }
 }

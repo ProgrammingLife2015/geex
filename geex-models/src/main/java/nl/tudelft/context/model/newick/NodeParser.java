@@ -18,7 +18,7 @@ public final class NodeParser {
      * @return A Newick node.
      */
     public AbstractNode getNode(final TreeNode node) {
-        if (node.getName().equals("")) {
+        if ("".equals(node.getName())) {
             return new AncestorNode(node.getWeight());
         } else {
             return new StrandNode(node.getName(), node.getWeight());

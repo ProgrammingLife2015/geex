@@ -23,7 +23,7 @@ public class StdOutLoggerTest {
 
     @Test
     public void testGetStream() throws Exception {
-        StdOutLogger logger = new StdOutLogger(mock(ObservableLog.class));
+        StdOutLogger logger = new StdOutLogger();
 
         assertEquals(System.out, logger.getStream(MessageType.DEBUG));
         assertEquals(System.out, logger.getStream(MessageType.INFO));
@@ -32,7 +32,7 @@ public class StdOutLoggerTest {
 
     @Test
     public void testDebugLog() throws Exception {
-        Logger logger = new StdOutLogger(mock(ObservableLog.class));
+        Logger logger = new StdOutLogger();
 
         logger.log(Message.MESSAGE_READY.toString(), MessageType.DEBUG);
 
@@ -41,7 +41,7 @@ public class StdOutLoggerTest {
 
     @Test
     public void testWarningLog() throws Exception {
-        Logger logger = new StdOutLogger(mock(ObservableLog.class));
+        Logger logger = new StdOutLogger();
 
         logger.log(Message.MESSAGE_READY.toString(), MessageType.WARNING);
 
@@ -50,7 +50,7 @@ public class StdOutLoggerTest {
 
     @Test
     public void testLevel() throws Exception {
-        Logger logger = new StdOutLogger(mock(ObservableLog.class));
+        Logger logger = new StdOutLogger();
         assertEquals(MessageType.DEBUG, logger.getLevel());
     }
 

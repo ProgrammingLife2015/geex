@@ -8,6 +8,7 @@ import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.controller.ViewController;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -51,18 +52,7 @@ public final class Breadcrumb extends HBox {
 
         List<HBox> items = viewList.stream()
                 .filter(ViewController::getShowInBreadcrumb)
-                .map(viewController -> {
-                    final Label label = new Label(viewController.getBreadcrumbName());
-                    label.setOnMouseClicked(event -> mainController.toView(viewController));
-                    viewController.getVisibilityProperty().addListener((observable, oldValue, newValue) -> {
-                        if (newValue) {
-                            label.getStyleClass().remove("inactive");
-                        } else {
-                            label.getStyleClass().add("inactive");
-                        }
-                    });
-                    return new HBox(label);
-                })
+                .map(createBreadcrumbItem())
                 .collect(Collectors.toList());
 
         if (!items.isEmpty()) {
@@ -70,6 +60,26 @@ public final class Breadcrumb extends HBox {
         }
         getChildren().setAll(items);
 
+    }
+
+    /**
+     * Create a Breadcrumb HBox for each ViewController.
+     *
+     * @return A function, mapping ViewController to HBox.
+     */
+    private Function<ViewController, HBox> createBreadcrumbItem() {
+        return viewController -> {
+            final Label label = new Label(viewController.getBreadcrumbName());
+            label.setOnMouseClicked(event -> mainController.toView(viewController));
+            viewController.getVisibilityProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue) {
+                    label.getStyleClass().remove("inactive");
+                } else {
+                    label.getStyleClass().add("inactive");
+                }
+            });
+            return new HBox(label);
+        };
     }
 
 }

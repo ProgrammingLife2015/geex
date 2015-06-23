@@ -1,6 +1,7 @@
 package nl.tudelft.context.controller.graphlist;
 
 import nl.tudelft.context.model.graph.CodingSequenceGraph;
+import nl.tudelft.context.model.graph.BaseLengthGraph;
 import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.InsertDeleteGraph;
 import nl.tudelft.context.model.graph.ResistanceCausingMutationGraph;
@@ -39,7 +40,11 @@ public enum GraphFilter {
     /**
      * Class for hiding nodes that don't contain resistance causing mutations.
      */
-    RESISTANCE_CAUSING(ResistanceCausingMutationGraph.class, "Drug resistance");
+    RESISTANCE_CAUSING(ResistanceCausingMutationGraph.class, "Drug resistance"),
+    /**
+     * Class for hiding nodes which are too short.
+     */
+    BASE_LENGTH(BaseLengthGraph.class, "Base length (" + BaseLengthGraph.THRESHOLD + ")");
 
     /**
      * Class with filter.
@@ -51,7 +56,19 @@ public enum GraphFilter {
     private final String name;
 
     /**
+     * Create a new GraphFilterEnum, this enum is used for creating filters on the graph.
+     *
+     * @param graph Class of the filter.
+     * @param name  Name of the filter.
+     */
+    GraphFilter(final Class<? extends StackGraph> graph, final String name) {
+        this.graph = graph;
+        this.name = name;
+    }
+
+    /**
      * Get the filter for this enum.
+     *
      * @return The filter
      */
     public final Class<? extends StackGraph> getGraph() {
@@ -61,16 +78,5 @@ public enum GraphFilter {
     @Override
     public final String toString() {
         return name;
-    }
-
-    /**
-     * Create a new GraphFilterEnum, this enum is used for creating filters on the graph.
-     *
-     * @param graph Class of the filter.
-     * @param name Name of the filter.
-     */
-    GraphFilter(final Class<? extends StackGraph> graph, final String name) {
-        this.graph = graph;
-        this.name = name;
     }
 }
