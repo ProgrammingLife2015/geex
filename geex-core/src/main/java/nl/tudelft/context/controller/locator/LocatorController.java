@@ -58,6 +58,11 @@ public class LocatorController {
     int minRefPosition = Integer.MAX_VALUE, maxRefPosition = Integer.MIN_VALUE;
 
     /**
+     * Current min and max of ref positions displayed.
+     */
+    int min = 0, max = 0;
+
+    /**
      * Init the locator controller that shows the current position on the reference genome.
      *
      * @param locator          The locator pane
@@ -76,10 +81,14 @@ public class LocatorController {
         initIndicator();
 
         labelMapProperty.addListener((observable, oldValue, newValue) -> {
+            int oldRefPosition = (max + min) / 2;
             initIndicator();
             initLabelMap(newValue);
             initResistances(newValue);
             setPosition();
+            if (!oldValue.isEmpty()) {
+                goToRefPosition(oldRefPosition, graphController);
+            }
         });
 
         positionProperty.addListener(event -> setPosition());
@@ -112,8 +121,18 @@ public class LocatorController {
      */
     private void initInteraction(final AbstractGraphController graphController) {
 
-        locator.setOnMouseClicked(event -> optionalTotalMap.ifPresent(totalMap -> {
-            int refPosition = (int) (event.getX() / getScale());
+        locator.setOnMouseClicked(event -> goToRefPosition((int) (event.getX() / getScale()), graphController));
+
+    }
+
+    /**
+     * Let a graph go to a certain ref position.
+     *
+     * @param refPosition     Ref position to go to
+     * @param graphController Graph to move
+     */
+    private void goToRefPosition(final int refPosition, final AbstractGraphController graphController) {
+        optionalTotalMap.ifPresent(totalMap -> {
             int column = totalMap.entrySet().stream()
                     .reduce((a, b) -> {
                         if (getRefDeviation(a, refPosition) < getRefDeviation(b, refPosition)) {
@@ -123,8 +142,7 @@ public class LocatorController {
                         }
                     }).get().getKey();
             graphController.setPosition(column);
-        }));
-
+        });
     }
 
     /**
@@ -149,11 +167,11 @@ public class LocatorController {
 
         Map<Integer, List<Integer>> totalMap = new HashMap<>();
         labelMap.forEach((column, labels) -> {
-            int min = labels.stream()
+            min = labels.stream()
                     .map(AbstractDrawableNode::getNode)
                     .mapToInt(DefaultNode::getRefStartPosition)
                     .min().getAsInt();
-            int max = labels.stream()
+            max = labels.stream()
                     .map(AbstractDrawableNode::getNode)
                     .mapToInt(DefaultNode::getRefEndPosition)
                     .max().getAsInt();
@@ -226,11 +244,11 @@ public class LocatorController {
                     .collect(Collectors.toList());
 
             if (!list.isEmpty()) {
-                int min = list.stream()
+                min = list.stream()
                         .mapToInt(x -> x.get(0))
                         .min().getAsInt() - minRefPosition;
 
-                int max = list.stream()
+                max = list.stream()
                         .mapToInt(x -> x.get(1))
                         .max().getAsInt();
 
