@@ -1,6 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
+import nl.tudelft.context.model.graph.filter.UnknownGraph;
 import nl.tudelft.context.model.graph.parser.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
@@ -34,7 +35,7 @@ public class UnknownGraphTest {
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
-    UnknownGraph unknownGraph;
+    StackGraph unknownGraph;
 
     /**
      * Set up the graphs and node map.
@@ -55,7 +56,7 @@ public class UnknownGraphTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        unknownGraph = new UnknownGraph(graph);
+        unknownGraph = new UnknownGraph(graph).getFilterGraph();
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),

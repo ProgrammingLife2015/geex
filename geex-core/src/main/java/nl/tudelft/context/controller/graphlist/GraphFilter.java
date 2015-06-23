@@ -1,13 +1,13 @@
 package nl.tudelft.context.controller.graphlist;
 
-import nl.tudelft.context.model.graph.CodingSequenceGraph;
-import nl.tudelft.context.model.graph.BaseLengthGraph;
-import nl.tudelft.context.model.graph.CollapseGraph;
-import nl.tudelft.context.model.graph.InsertDeleteGraph;
-import nl.tudelft.context.model.graph.ResistanceCausingMutationGraph;
-import nl.tudelft.context.model.graph.SinglePointGraph;
-import nl.tudelft.context.model.graph.StackGraph;
-import nl.tudelft.context.model.graph.UnknownGraph;
+import nl.tudelft.context.model.graph.filter.CodingSequenceGraph;
+import nl.tudelft.context.model.graph.filter.ResistanceCausingMutationGraph;
+import nl.tudelft.context.model.graph.filter.BaseLengthGraph;
+import nl.tudelft.context.model.graph.filter.CollapseGraph;
+import nl.tudelft.context.model.graph.filter.InsertDeleteGraph;
+import nl.tudelft.context.model.graph.filter.SinglePointGraph;
+import nl.tudelft.context.model.graph.filter.StackGraphFilter;
+import nl.tudelft.context.model.graph.filter.UnknownGraph;
 
 /**
  * List the available graph filters.
@@ -49,7 +49,7 @@ public enum GraphFilter {
     /**
      * Class with filter.
      */
-    private final Class<? extends StackGraph> graph;
+    private final Class<? extends StackGraphFilter> graph;
     /**
      * Name of this filter.
      */
@@ -61,7 +61,7 @@ public enum GraphFilter {
      * @param graph Class of the filter.
      * @param name  Name of the filter.
      */
-    GraphFilter(final Class<? extends StackGraph> graph, final String name) {
+    GraphFilter(final Class<? extends StackGraphFilter> graph, final String name) {
         this.graph = graph;
         this.name = name;
     }
@@ -71,7 +71,7 @@ public enum GraphFilter {
      *
      * @return The filter
      */
-    public final Class<? extends StackGraph> getGraph() {
+    public final Class<? extends StackGraphFilter> getGraph() {
         return graph;
     }
 

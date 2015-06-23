@@ -1,4 +1,8 @@
-package nl.tudelft.context.model.graph;
+package nl.tudelft.context.model.graph.filter;
+
+import nl.tudelft.context.model.graph.DefaultNode;
+import nl.tudelft.context.model.graph.GraphNode;
+import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,7 +15,7 @@ import java.util.Set;
  * @version 1.0
  * @since 11-6-2015
  */
-public class CollapseGraph extends StackGraph {
+public class CollapseGraph implements StackGraphFilter {
 
     /**
      * Parts of a collapse.
@@ -24,24 +28,28 @@ public class CollapseGraph extends StackGraph {
     Map<DefaultNode, DefaultNode> collapse = new HashMap<>();
 
     /**
-     * Clean graph.
+     * Clean previous.
      */
-    StackGraph graph;
+    StackGraph previous;
+    StackGraph filtered;
 
     /**
-     * Create a graph with collapses based on an other graph.
+     * Create a previous with collapses based on an other previous.
      *
      * @param graph Graph to calculate collapses on
      */
     public CollapseGraph(final StackGraph graph) {
+        this.filtered = graph.deepClone();
+        this.previous = graph;
+    }
 
-        setGraph(graph);
-        this.graph = graph;
-
+    @Override
+    public StackGraph getFilterGraph() {
         markCollapses();
         filterCollapses();
         replaceCollapses();
 
+        return filtered;
     }
 
     /**
@@ -49,8 +57,8 @@ public class CollapseGraph extends StackGraph {
      */
     private void markCollapses() {
 
-        vertexSet().stream()
-                .filter(node -> outDegreeOf(node) == 1)
+        filtered.vertexSet().stream()
+                .filter(node -> filtered.outDegreeOf(node) == 1)
                 .forEach(start -> getEnd(start).ifPresent(end -> collapse.put(start, end)));
 
     }
@@ -63,8 +71,8 @@ public class CollapseGraph extends StackGraph {
      */
     private Optional<DefaultNode> getEnd(final DefaultNode start) {
 
-        return getTargets(start).stream()
-                .filter(node -> inDegreeOf(node) == 1)
+        return filtered.getTargets(start).stream()
+                .filter(node -> filtered.inDegreeOf(node) == 1)
                 .findFirst();
 
     }
@@ -95,23 +103,22 @@ public class CollapseGraph extends StackGraph {
     }
 
     /**
-     * Replace all single parts with a graph node.
+     * Replace all single parts with a previous node.
      */
     private void replaceCollapses() {
 
-        collapsePart.forEach(this::removeVertex);
+        collapsePart.forEach(filtered::removeVertex);
         collapse.forEach((start, end) -> {
-            getTargets(end).stream()
-                    .forEach(node -> setEdgeWeight(
-                            addEdge(start, node),
-                            getEdgeWeight(getEdge(end, node))
+            filtered.getTargets(end).stream()
+                    .forEach(node -> filtered.setEdgeWeight(
+                            filtered.addEdge(start, node),
+                            filtered.getEdgeWeight(filtered.getEdge(end, node))
                     ));
-            removeVertex(end);
-            GraphNode graphNode = new GraphNode(graph, start, end, "collapse");
+            filtered.removeVertex(end);
+            GraphNode graphNode = new GraphNode(previous, start, end, "collapse");
             graphNode.addNode(end);
-            replace(start, graphNode);
+            filtered.replace(start, graphNode);
         });
 
     }
-
 }

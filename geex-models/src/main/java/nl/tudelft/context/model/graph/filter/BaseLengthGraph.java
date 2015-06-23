@@ -1,4 +1,7 @@
-package nl.tudelft.context.model.graph;
+package nl.tudelft.context.model.graph.filter;
+
+import nl.tudelft.context.model.graph.DefaultNode;
+import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.function.Predicate;
 

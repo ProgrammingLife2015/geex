@@ -1,6 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
+import nl.tudelft.context.model.graph.filter.InsertDeleteGraph;
 import nl.tudelft.context.model.graph.parser.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
@@ -37,7 +38,7 @@ public class InsertDeleteGraphTest {
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
-    InsertDeleteGraph insertDeleteGraph;
+    StackGraph insertDeleteGraph;
 
     /**
      * Set up the graphs and node map.
@@ -58,7 +59,7 @@ public class InsertDeleteGraphTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        insertDeleteGraph = new InsertDeleteGraph(graph);
+        insertDeleteGraph = new InsertDeleteGraph(graph).getFilterGraph();
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),

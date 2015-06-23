@@ -1,6 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
+import nl.tudelft.context.model.graph.filter.SinglePointGraph;
 import nl.tudelft.context.model.graph.parser.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
@@ -37,7 +38,7 @@ public class SinglePointGraphTest {
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
-    SinglePointGraph singlePointGraph;
+    StackGraph singlePointGraph;
 
     /**
      * Set up the graphs and node map.
@@ -58,7 +59,7 @@ public class SinglePointGraphTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        singlePointGraph = new SinglePointGraph(graph);
+        singlePointGraph = new SinglePointGraph(graph).getFilterGraph();
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),

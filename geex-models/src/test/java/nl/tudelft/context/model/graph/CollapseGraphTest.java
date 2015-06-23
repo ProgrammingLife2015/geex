@@ -1,6 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
+import nl.tudelft.context.model.graph.filter.CollapseGraph;
 import nl.tudelft.context.model.graph.parser.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
@@ -35,7 +36,7 @@ public class CollapseGraphTest {
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
-    CollapseGraph collapseGraph;
+    StackGraph collapseGraph;
 
     /**
      * Set up the graphs and node map.
@@ -56,7 +57,7 @@ public class CollapseGraphTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        collapseGraph = new CollapseGraph(graph);
+        collapseGraph = new CollapseGraph(graph).getFilterGraph();
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),
