@@ -8,7 +8,7 @@ import nl.tudelft.context.model.graph.StackGraph;
  * @version 1.0
  * @since 21-6-2015
  */
-public class CodingSequenceGraph implements StackGraphFilter {
+public class CodingSequenceFilter implements StackGraphFilter {
 
     private final StackGraph filtered;
     private final StackGraph previous;
@@ -18,7 +18,7 @@ public class CodingSequenceGraph implements StackGraphFilter {
      *
      * @param graph Graph to remove not coding sequences from
      */
-    public CodingSequenceGraph(final StackGraph graph) {
+    public CodingSequenceFilter(final StackGraph graph) {
         this.previous = graph;
         this.filtered = new Graph();
     }

@@ -1,6 +1,6 @@
 package nl.tudelft.context.controller.graphlist;
 
-import nl.tudelft.context.model.graph.filter.CodingSequenceGraph;
+import nl.tudelft.context.model.graph.filter.CodingSequenceFilter;
 import nl.tudelft.context.model.graph.filter.ResistanceCausingMutationGraph;
 import nl.tudelft.context.model.graph.filter.BaseLengthFilter;
 import nl.tudelft.context.model.graph.filter.StraightFilter;
@@ -36,7 +36,7 @@ public enum GraphFilter {
     /**
      * Class for hiding nodes that don't contain coding sequences.
      */
-    CODING_SEQUENCE(CodingSequenceGraph.class, "Coding sequences"),
+    CODING_SEQUENCE(CodingSequenceFilter.class, "Coding sequences"),
     /**
      * Class for hiding nodes that don't contain resistance causing mutations.
      */
