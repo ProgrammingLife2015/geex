@@ -1,5 +1,6 @@
 package nl.tudelft.context.controller.graphlist;
 
+import nl.tudelft.context.model.graph.BaseLengthGraph;
 import nl.tudelft.context.model.graph.CollapseGraph;
 import nl.tudelft.context.model.graph.InsertDeleteGraph;
 import nl.tudelft.context.model.graph.SinglePointGraph;
@@ -29,7 +30,11 @@ public enum GraphFilter {
     /**
      * Class for hiding nodes with too many unknowns.
      */
-    UNKNOWN(UnknownGraph.class, "Unknown bases (" + (UnknownGraph.REMOVE_RATIO * 100) + "%)");
+    UNKNOWN(UnknownGraph.class, "Unknown bases (" + (UnknownGraph.REMOVE_RATIO * 100) + "%)"),
+    /**
+     * Class for hiding nodes which are too short.
+     */
+    BASE_LENGTH(BaseLengthGraph.class, "Base length (" + BaseLengthGraph.THRESHOLD + ")");
 
     /**
      * Class with filter.
