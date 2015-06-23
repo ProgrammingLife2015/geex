@@ -24,7 +24,7 @@ public class BaseLengthGraph extends FilterGraph {
 
     @Override
     protected Predicate<DefaultNode> filter() {
-        return defaultNode -> defaultNode.getContent().length() <= THRESHOLD;
+        return defaultNode -> defaultNode instanceof Node && defaultNode.getContent().length() <= THRESHOLD;
     }
 
 }

@@ -13,7 +13,7 @@
 <fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
 
     <ScrollPane fx:id="scroll" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="45"
-                AnchorPane.leftAnchor="181" fitToHeight="true" fitToWidth="true">
+                AnchorPane.leftAnchor="243" fitToHeight="true" fitToWidth="true">
         <StackPane>
             <StackPane styleClass="margin">
                 <Group fx:id="sequences"/>
@@ -54,7 +54,7 @@
     </VBox>
 
 
-    <Label styleClass="header-text" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="180" AnchorPane.leftAnchor="180">
+    <Label styleClass="header-text" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="243" AnchorPane.leftAnchor="243">
         Inspect and filter the genome
     </Label>
 
