@@ -486,7 +486,7 @@
 
 #graphs ComboBox {
     -fx-background-color: #3c3f41;
-    -fx-background-radius: 0px;
+    -fx-background-radius: 0;
     -fx-border-width: 2px;
     -fx-border-color: #646464;
     -fx-pref-width: inherit;

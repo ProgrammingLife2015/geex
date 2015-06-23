@@ -58,7 +58,7 @@ public class GraphFilterController implements InvalidationListener {
 
 
         filterList = new VBox();
-        graphList.addListener(onGraphListChange(graphs));
+        graphList.addListener(onGraphListChange());
         graphs.getChildren().addAll(
                 new ScrollPane(filterList),
                 createNewFilter(),
@@ -68,10 +68,9 @@ public class GraphFilterController implements InvalidationListener {
     /**
      * Add and remove listeners, update the graphs list when the graph list changes.
      *
-     * @param graphs List of graphs to put the list in.
      * @return ChangeListener, to use when graphList updates.
      */
-    private ListChangeListener<GraphFilterLabel> onGraphListChange(final Pane graphs) {
+    private ListChangeListener<GraphFilterLabel> onGraphListChange() {
         return c -> {
             while (c.next()) {
                 if (!c.wasPermutated() && !c.wasUpdated()) {
@@ -79,7 +78,7 @@ public class GraphFilterController implements InvalidationListener {
                     c.getAddedSubList().forEach(graphFilterLabel -> graphFilterLabel.addListener(this));
                 }
             }
-            graphList.forEach(GraphFilterLabel::deactivate);
+            graphList.forEach(GraphFilterLabel::activate);
             filterList.getChildren().setAll(graphList);
             activeGraph.set(createGraphFromFilter(graphList, baseGraph));
         };
