@@ -8,7 +8,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.model.graph.StackGraph;
 
@@ -40,7 +45,7 @@ public class GraphFilterController implements InvalidationListener {
     /**
      * Pane containing the javafx labels.
      */
-    private Pane graphs;
+    private Pane filterList;
 
 
     /**
@@ -49,19 +54,23 @@ public class GraphFilterController implements InvalidationListener {
      * @param graphs FXML Pane to add graphs labels to.
      */
     public GraphFilterController(final Pane graphs) {
-        this.graphs = graphs;
         graphList = FXCollections.observableArrayList();
 
-        graphList.addListener(onGraphListChange(graphs));
+
+        filterList = new VBox();
+        graphList.addListener(onGraphListChange());
+        graphs.getChildren().addAll(
+                new ScrollPane(filterList),
+                createNewFilter(),
+                new TrashCan());
     }
 
     /**
      * Add and remove listeners, update the graphs list when the graph list changes.
      *
-     * @param graphs List of graphs to put the list in.
      * @return ChangeListener, to use when graphList updates.
      */
-    private ListChangeListener<GraphFilterLabel> onGraphListChange(final Pane graphs) {
+    private ListChangeListener<GraphFilterLabel> onGraphListChange() {
         return c -> {
             while (c.next()) {
                 if (!c.wasPermutated() && !c.wasUpdated()) {
@@ -69,11 +78,35 @@ public class GraphFilterController implements InvalidationListener {
                     c.getAddedSubList().forEach(graphFilterLabel -> graphFilterLabel.addListener(this));
                 }
             }
-
-            graphs.getChildren().setAll(graphList);
-
+            graphList.forEach(GraphFilterLabel::activate);
+            filterList.getChildren().setAll(graphList);
             activeGraph.set(createGraphFromFilter(graphList, baseGraph));
         };
+    }
+
+    /**
+     * Create a new filter dialog.
+     *
+     * @return HBox for new filter
+     */
+    private HBox createNewFilter() {
+        HBox newFilter = new HBox();
+        newFilter.getStyleClass().add("createNewFilter");
+
+        ObservableList<GraphFilter> filters = FXCollections.observableArrayList(GraphFilter.values());
+
+        ComboBox<GraphFilter> newFilterList = new ComboBox<>(filters);
+        Button createNewFilter = new Button("+");
+        createNewFilter.getStyleClass().add("my-button");
+
+        createNewFilter.setOnMouseClicked(event -> {
+            if (newFilterList.getSelectionModel().getSelectedItem() != null) {
+                graphList.add(new GraphFilterLabel(newFilterList.getSelectionModel().getSelectedItem(), graphList));
+            }
+        });
+
+        newFilter.getChildren().addAll(newFilterList, createNewFilter);
+        return newFilter;
     }
 
     /**
@@ -150,7 +183,7 @@ public class GraphFilterController implements InvalidationListener {
 
     @Override
     public void invalidated(final Observable observable) {
-        graphs.getChildren().setAll(graphList);
+        filterList.getChildren().setAll(graphList);
 
         activeGraph.set(createGraphFromFilter(graphList, baseGraph));
     }
