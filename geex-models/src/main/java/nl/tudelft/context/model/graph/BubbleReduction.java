@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
  */
 public class BubbleReduction {
 
-    Set<DefaultNode> remove;
-
     /**
      * Graph to reduce.
      */
@@ -24,6 +22,11 @@ public class BubbleReduction {
      * Graph to fill.
      */
     StackGraph graph;
+
+    /**
+     * Default edge weight for bubble reduction graphs.
+     */
+    private static final double DEFAULT_WEIGHT = 0.25d;
 
     /**
      * Init a bubble reduction filter.
@@ -43,7 +46,7 @@ public class BubbleReduction {
                 .forEach(edge -> graph.setEdgeWeight(graph.addEdge(
                         stackGraph.getEdgeSource(edge),
                         stackGraph.getEdgeTarget(edge)
-                ), stackGraph.getEdgeWeight(edge)));
+                ), DEFAULT_WEIGHT));
 
     }
 
@@ -54,30 +57,23 @@ public class BubbleReduction {
      */
     public void markBubbles(final Predicate<DefaultNode> filterFunction) {
 
-        try {
+        Set<DefaultNode> remove = stackGraph.vertexSet().stream()
+                .filter(filterFunction)
+                .collect(Collectors.toSet());
 
-            remove = stackGraph.vertexSet().stream()
-                    .filter(filterFunction)
-                    .collect(Collectors.toSet());
+        remove.stream()
+                .forEach(node -> {
 
-            remove.stream()
-                    .forEach(node -> {
+                    graph.getSources(node).stream().forEach(source ->
+                            graph.getTargets(node).stream().forEach(target -> {
+                                DefaultWeightedEdge edge = graph.addEdge(source, target);
+                                if (edge != null) {
+                                    graph.setEdgeWeight(edge, DEFAULT_WEIGHT);
+                                }
+                            }));
+                    graph.removeVertex(node);
 
-                        graph.getSources(node).stream().forEach(source ->
-                                graph.getTargets(node).stream().forEach(target -> {
-                                    DefaultWeightedEdge edge = graph.addEdge(source, target);
-                                    if (edge != null) {
-                                        graph.setEdgeWeight(edge, .5d);
-                                    }
-                                }));
-                        graph.removeVertex(node);
-
-                    });
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                });
 
     }
 
