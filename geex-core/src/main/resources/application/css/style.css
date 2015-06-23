@@ -54,6 +54,12 @@
     -fx-font: 0.4cm 'Arial';
 }
 
+.overlay Text {
+    -fx-fill: #fff;
+    -fx-padding: 5px 0;
+    -fx-font: 0.4cm 'Arial';
+}
+
 /* Control */
 #control {
     -fx-background-color: #848484;
