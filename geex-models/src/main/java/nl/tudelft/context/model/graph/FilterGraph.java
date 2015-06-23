@@ -17,7 +17,7 @@ public abstract class FilterGraph extends StackGraph {
     /**
      * Unknown nodes (75% or more).
      */
-    Set<DefaultNode> filtered;
+    transient Set<DefaultNode> filtered;
 
     /**
      * Clean graph.
