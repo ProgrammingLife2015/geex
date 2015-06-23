@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.model.graph.filter.BaseLengthGraph;
+import nl.tudelft.context.model.graph.filter.BaseLengthFilter;
 import nl.tudelft.context.model.graph.parser.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
@@ -28,10 +28,10 @@ import static org.junit.Assert.*;
  * @since 18-6-2015
  */
 @RunWith(JfxRunner.class)
-public class BaseLengthGraphTest {
+public class BaseLengthFilterTest {
 
-    File nodeFile = new File(BaseLengthGraphTest.class.getResource("/graph/base-length-graph.node.graph").getPath());
-    File edgeFile = new File(BaseLengthGraphTest.class.getResource("/graph/base-length-graph.edge.graph").getPath());
+    File nodeFile = new File(BaseLengthFilterTest.class.getResource("/graph/base-length-graph.node.graph").getPath());
+    File edgeFile = new File(BaseLengthFilterTest.class.getResource("/graph/base-length-graph.edge.graph").getPath());
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
@@ -56,7 +56,7 @@ public class BaseLengthGraphTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        baseLengthGraph = new BaseLengthGraph(graph).getFilterGraph();
+        baseLengthGraph = new BaseLengthFilter(graph).getFilterGraph();
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),

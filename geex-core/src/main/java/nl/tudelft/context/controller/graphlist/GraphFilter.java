@@ -2,7 +2,7 @@ package nl.tudelft.context.controller.graphlist;
 
 import nl.tudelft.context.model.graph.filter.CodingSequenceGraph;
 import nl.tudelft.context.model.graph.filter.ResistanceCausingMutationGraph;
-import nl.tudelft.context.model.graph.filter.BaseLengthGraph;
+import nl.tudelft.context.model.graph.filter.BaseLengthFilter;
 import nl.tudelft.context.model.graph.filter.CollapseGraph;
 import nl.tudelft.context.model.graph.filter.InsertDeleteGraph;
 import nl.tudelft.context.model.graph.filter.SinglePointGraph;
@@ -44,7 +44,7 @@ public enum GraphFilter {
     /**
      * Class for hiding nodes which are too short.
      */
-    BASE_LENGTH(BaseLengthGraph.class, "Base length (" + BaseLengthGraph.THRESHOLD + ")");
+    BASE_LENGTH(BaseLengthFilter.class, "Base length (" + BaseLengthFilter.THRESHOLD + ")");
 
     /**
      * Class with filter.
