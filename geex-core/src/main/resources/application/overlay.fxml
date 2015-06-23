@@ -2,13 +2,10 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.Group?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.*?>
 <fx:root type="javafx.scene.layout.StackPane" xmlns:fx="http://javafx.com/fxml" mouseTransparent="true">
-    <HBox styleClass="overlay">
-        <GridPane hgap="10">
+    <HBox styleClass="overlay" spacing="40">
+        <GridPane hgap="30">
             <Label styleClass="h2"
                    GridPane.rowIndex="0" GridPane.columnSpan="2">
                 Shortcuts &amp; Help
@@ -39,38 +36,44 @@
             <Label GridPane.columnIndex="1" GridPane.rowIndex="10">Shift+Click on a node</Label>
         </GridPane>
 
-        <GridPane vgap="10">
+        <GridPane vgap="10" hgap="30">
             <Label GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="h2">Legend</Label>
 
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label styleClass="info-label">1</Label>
+                <HBox>
+                    <Rectangle styleClass="node-label-A" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-T" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-C" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-G" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-N" height="5" width="12"/>
+                </HBox>
+            </VBox>
 
-                <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
-                    <Label styleClass="info-label">1</Label>
-                    <HBox>
-                        <Rectangle styleClass="node-label-A" height="5" width="12"/>
-                        <Rectangle styleClass="node-label-T" height="5" width="12"/>
-                        <Rectangle styleClass="node-label-C" height="5" width="12"/>
-                        <Rectangle styleClass="node-label-G" height="5" width="12"/>
-                        <Rectangle styleClass="node-label-N" height="5" width="12"/>
-                    </HBox>
-                </VBox>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="1">1. Number of bases</Label>
 
-                    <Label GridPane.columnIndex="1" GridPane.rowIndex="1">1. Number of bases</Label>
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="selected-label">
+                <Label styleClass="info-label">1</Label>
+                <HBox>
+                    <Rectangle styleClass="node-label-A" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-T" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-C" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-G" height="5" width="12"/>
+                    <Rectangle styleClass="node-label-N" height="5" width="12"/>
+                </HBox>
+            </VBox>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="2">5. Node in a selected strain</Label>
 
-
-
-
-                <Label GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="single-label">2</Label>
-                <Label GridPane.columnIndex="1" GridPane.rowIndex="2">2. Number of underlying nodes</Label>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="single-label">2</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="3">2. Number of underlying nodes</Label>
 
 
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="resistance-label">3</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="4">3. Number of drug resistance causing mutations</Label>
 
-                <Label GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="resistance-label">3</Label>
-                <Label GridPane.columnIndex="1" GridPane.rowIndex="3">3. Number of drug resistance causing mutations</Label>
 
-
-                <Label GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="coding-sequences-label">4</Label>
-                <Label GridPane.columnIndex="1" GridPane.rowIndex="4">4. Number of coding sequences</Label>
-
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="coding-sequences-label">4</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="5">4. Number of coding sequences</Label>
 
 
         </GridPane>
