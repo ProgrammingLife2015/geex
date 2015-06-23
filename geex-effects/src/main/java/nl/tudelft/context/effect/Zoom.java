@@ -84,6 +84,11 @@ public class Zoom {
 
     /**
      * Calculate the bounds.
+     *
+     * @param boundSize The size of the bound
+     * @param scrollSize The size of the scroll
+     * @param scrollScalar The scale of the scroll
+     * @return Returns the calculated bounds.
      */
     public double getBound(final double boundSize, final double scrollSize, final double scrollScalar) {
         return (boundSize - scrollSize) * scrollScalar;
@@ -91,6 +96,8 @@ public class Zoom {
 
     /**
      * ChangeListener to tell the labels to apply this effect whenever the mouse moves or enters the scroll panel.
+     *
+     * @return Returns the new listener
      */
     public ChangeListener<List<Region>> setEvents() {
         return (observable, oldValue, newValue) -> {
