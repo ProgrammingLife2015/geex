@@ -1,7 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
-import nl.tudelft.context.model.graph.filter.CollapseGraph;
+import nl.tudelft.context.model.graph.filter.StraightFilter;
 import nl.tudelft.context.model.graph.parser.GraphParser;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
@@ -29,10 +29,10 @@ import static org.junit.Assert.*;
  * @since 18-6-2015
  */
 @RunWith(JfxRunner.class)
-public class CollapseGraphTest {
+public class StraightFilterTest {
 
-    File nodeFile = new File(CollapseGraphTest.class.getResource("/graph/collapse-graph.node.graph").getPath());
-    File edgeFile = new File(CollapseGraphTest.class.getResource("/graph/collapse-graph.edge.graph").getPath());
+    File nodeFile = new File(StraightFilterTest.class.getResource("/graph/collapse-graph.node.graph").getPath());
+    File edgeFile = new File(StraightFilterTest.class.getResource("/graph/collapse-graph.edge.graph").getPath());
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
@@ -57,7 +57,7 @@ public class CollapseGraphTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        collapseGraph = new CollapseGraph(graph).getFilterGraph();
+        collapseGraph = new StraightFilter(graph).getFilterGraph();
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),

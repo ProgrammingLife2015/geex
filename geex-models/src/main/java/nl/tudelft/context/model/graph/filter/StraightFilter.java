@@ -15,7 +15,7 @@ import java.util.Set;
  * @version 1.0
  * @since 11-6-2015
  */
-public class CollapseGraph implements StackGraphFilter {
+public class StraightFilter implements StackGraphFilter {
 
     /**
      * Parts of a collapse.
@@ -38,7 +38,7 @@ public class CollapseGraph implements StackGraphFilter {
      *
      * @param graph Graph to calculate collapses on
      */
-    public CollapseGraph(final StackGraph graph) {
+    public StraightFilter(final StackGraph graph) {
         this.filtered = graph.deepClone();
         this.previous = graph;
     }

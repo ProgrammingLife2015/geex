@@ -3,7 +3,7 @@ package nl.tudelft.context.controller.graphlist;
 import nl.tudelft.context.model.graph.filter.CodingSequenceGraph;
 import nl.tudelft.context.model.graph.filter.ResistanceCausingMutationGraph;
 import nl.tudelft.context.model.graph.filter.BaseLengthFilter;
-import nl.tudelft.context.model.graph.filter.CollapseGraph;
+import nl.tudelft.context.model.graph.filter.StraightFilter;
 import nl.tudelft.context.model.graph.filter.InsertDeleteFilter;
 import nl.tudelft.context.model.graph.filter.SinglePointFilter;
 import nl.tudelft.context.model.graph.filter.StackGraphFilter;
@@ -28,7 +28,7 @@ public enum GraphFilter {
     /**
      * Class for collapsing straight lines.
      */
-    COLLAPSE(CollapseGraph.class, "Straight sequences"),
+    COLLAPSE(StraightFilter.class, "Straight sequences"),
     /**
      * Class for hiding nodes with too many unknowns.
      */
