@@ -154,10 +154,12 @@ public class WelcomeController extends ViewController<GridPane> {
             Log.info(Message.SUCCESS_LOAD_WORKSPACE);
         } catch (FileNotFoundException | SqlJetException ex) {
             Log.warning(Message.FAIL_LOAD_WORKSPACE);
+            Log.debug(ex);
             try {
                 Database.instance().remove("workspace", directory.getAbsolutePath());
             } catch (SqlJetException | NullPointerException ignored) {
                 Log.warning(Message.FAIL_LOAD_RECENTWORKSPACE);
+                Log.debug(ignored);
             }
         }
         reloadListView();

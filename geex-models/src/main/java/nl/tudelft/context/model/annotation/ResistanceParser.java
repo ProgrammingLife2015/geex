@@ -67,7 +67,8 @@ public class ResistanceParser extends Parser<ResistanceMap> {
             try {
                 resistances.add(getResistance(line));
             } catch (ResistanceFormatException e) {
-                Log.debug(e.toString()); //For sending to logger.
+                Log.debug(e.toString());
+                Log.debug(e);
             }
         }
 
