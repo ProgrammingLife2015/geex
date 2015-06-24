@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +15,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author Gerben Oolbekkink
@@ -49,7 +46,7 @@ public class NewickSearchControllerTest {
 
         scrollPane.setContent(contents);
 
-        nwc = new NewickSearchController(labels, new HBox(), scrollPane);
+        nwc = new NewickSearchController(labels, scrollPane);
 
     }
 

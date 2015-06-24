@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 12-6-2015
  */
-public class NewickSearchController {
+public class NewickSearchController extends HBox {
     /**
      * Classname for buttons.
      */
@@ -66,11 +66,10 @@ public class NewickSearchController {
     /**
      * Create a new NewickSearchController.
      *
-     * @param labels          Nodes to search in.
-     * @param searchContainer Container for the search bar.
-     * @param scrollPane      Scroller containing the Labels in labels.
+     * @param labels     Nodes to search in.
+     * @param scrollPane Scroller containing the Labels in labels.
      */
-    public NewickSearchController(final List<Label> labels, final HBox searchContainer, final ScrollPane scrollPane) {
+    public NewickSearchController(final List<Label> labels, final ScrollPane scrollPane) {
         this.labels = labels;
         this.scrollPane = scrollPane;
 
@@ -83,7 +82,7 @@ public class NewickSearchController {
         searchPrev.getStyleClass().add(buttonClass);
         searchNext.getStyleClass().add(buttonClass);
 
-        searchContainer.getChildren().setAll(searchField, searchNext, searchPrev);
+        getChildren().setAll(searchField, searchNext, searchPrev);
 
         searchField.setOnAction(event1 -> searchNext.fire());
         searchField.setOnKeyReleased(searchFieldEventHandler());
