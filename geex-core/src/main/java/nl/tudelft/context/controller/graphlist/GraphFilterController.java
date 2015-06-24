@@ -152,6 +152,7 @@ public class GraphFilterController implements InvalidationListener {
             } catch (ReflectiveOperationException e) {
                 // Something went VERY wrong.
                 Log.debug(e.getMessage());
+                Log.debug(e);
                 // Bailing!
                 return newGraph;
             }

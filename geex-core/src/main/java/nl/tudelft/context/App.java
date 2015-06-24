@@ -6,7 +6,7 @@ import nl.tudelft.context.controller.MainController;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.logger.StdOutLogger;
 import nl.tudelft.context.logger.message.Message;
-import nl.tudelft.context.window.Window;
+import nl.tudelft.context.window.WindowFactory;
 
 /**
  * Entry point of the App.
@@ -44,9 +44,7 @@ public class App extends Application {
         Log.debug(Message.APPLICATION_STARTING);
 
         MainController controller = new MainController();
-
-        Window window = new Window("Geex", controller.getRoot());
-        window.show();
+        WindowFactory.create("Geex", controller.getRoot());
 
     }
 

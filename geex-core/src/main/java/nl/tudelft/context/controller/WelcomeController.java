@@ -101,6 +101,7 @@ public class WelcomeController extends ViewController<GridPane> {
             }
         } catch (SqlJetException e) {
             Log.warning(Message.FAIL_LOAD_PREVIOUS);
+            Log.debug(e);
             // Continue, this doesn't break the software.
         }
     }
@@ -154,10 +155,12 @@ public class WelcomeController extends ViewController<GridPane> {
             Log.info(Message.SUCCESS_LOAD_WORKSPACE);
         } catch (FileNotFoundException | SqlJetException ex) {
             Log.warning(Message.FAIL_LOAD_WORKSPACE);
+            Log.debug(ex);
             try {
                 Database.instance().remove("workspace", directory.getAbsolutePath());
             } catch (SqlJetException | NullPointerException ignored) {
                 Log.warning(Message.FAIL_LOAD_RECENTWORKSPACE);
+                Log.debug(ignored);
             }
         }
         reloadListView();

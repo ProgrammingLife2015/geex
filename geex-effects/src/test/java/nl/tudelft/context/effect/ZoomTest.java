@@ -50,7 +50,7 @@ public class ZoomTest {
         labels.add(label);
         labelProperty = new SimpleObjectProperty<>(labels);
 
-        zoom = new Zoom(scroll, sequences, labelProperty);
+        zoom = ZoomFactory.create(scroll, sequences, labelProperty);
     }
 
     @Test

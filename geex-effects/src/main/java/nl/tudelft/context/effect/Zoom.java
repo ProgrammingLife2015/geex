@@ -1,6 +1,5 @@
 package nl.tudelft.context.effect;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -59,10 +58,8 @@ public class Zoom {
      *
      * @param scroll             The scroll panel
      * @param sequences          The graph
-     * @param zoomLabelsProperty Property with the labels that need zoom
      */
-    public Zoom(final ScrollPane scroll, final Group sequences,
-                final ObjectProperty<List<Region>> zoomLabelsProperty) {
+    public Zoom(final ScrollPane scroll, final Group sequences) {
 
         this.scroll = scroll;
         this.sequences = sequences;
@@ -70,8 +67,6 @@ public class Zoom {
         scroll.widthProperty().addListener(event -> calculateBounds());
         scroll.hvalueProperty().addListener(event -> calculateBounds());
         scroll.vvalueProperty().addListener(event -> calculateBounds());
-
-        zoomLabelsProperty.addListener(setEvents());
     }
 
     /**

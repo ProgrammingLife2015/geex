@@ -4,6 +4,7 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +26,7 @@ public class WindowTest {
 
     private static final String TEST_TITLE = "My test title";
 
-    Window window;
+    Stage window;
     Parent content;
 
     /**
@@ -35,7 +36,7 @@ public class WindowTest {
     public void setUp() {
 
         content = new Pane();
-        Platform.runLater(() -> window = new Window(TEST_TITLE, content));
+        Platform.runLater(() -> window = WindowFactory.create(TEST_TITLE, content));
 
     }
 
