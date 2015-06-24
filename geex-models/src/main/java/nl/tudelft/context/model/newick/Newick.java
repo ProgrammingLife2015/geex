@@ -29,15 +29,6 @@ public class Newick extends DefaultDirectedGraph<AbstractNode, DefaultEdge> {
     }
 
     /**
-     * Sets a node as the root of the tree.
-     *
-     * @param n the root
-     */
-    public void setRoot(final AbstractNode n) {
-        root = n;
-    }
-
-    /**
      * Gets the root of the tree.
      *
      * @return the root
@@ -47,9 +38,18 @@ public class Newick extends DefaultDirectedGraph<AbstractNode, DefaultEdge> {
     }
 
     /**
+     * Sets a node as the root of the tree.
+     *
+     * @param n the root
+     */
+    public void setRoot(final AbstractNode n) {
+        root = n;
+    }
+
+    /**
      * Gets a copy of the newick, containing only the previously selected nodes.
      *
-     * @return           A copy of the tree, containing the selected nodes
+     * @return A copy of the tree, containing the selected nodes
      */
     public Newick getSelectedSubGraph() {
         Newick subNewick = new Newick();

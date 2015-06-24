@@ -120,8 +120,9 @@ public class GraphFilterLabel extends Label implements Observable, Destroyable {
 
     /**
      * EventHandler for mouseClicked.
-     * <p/>
+     * <p>
      * Will activate the item and make the listener reload.
+     * </p>
      *
      * @param graphList List of items to change.
      * @return An eventHandler.

@@ -2,6 +2,7 @@ package nl.tudelft.context.model.annotation;
 
 /**
  * This enum contains all possible DrugNames a bacteria can be resistant to.
+ *
  * @author Gerben Oolbekkink
  * @version 1.0
  * @since 22-6-2015

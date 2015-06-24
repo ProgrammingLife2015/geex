@@ -28,8 +28,8 @@ import static org.junit.Assert.assertTrue;
 @RunWith(JfxRunner.class)
 public class StackGraphTest {
 
-    File nodeFile = new File(CollapseGraphTest.class.getResource("/graph/collapse-graph.node.graph").getPath());
-    File edgeFile = new File(CollapseGraphTest.class.getResource("/graph/collapse-graph.edge.graph").getPath());
+    File nodeFile = new File(StraightFilterTest.class.getResource("/graph/collapse-graph.node.graph").getPath());
+    File edgeFile = new File(StraightFilterTest.class.getResource("/graph/collapse-graph.edge.graph").getPath());
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
