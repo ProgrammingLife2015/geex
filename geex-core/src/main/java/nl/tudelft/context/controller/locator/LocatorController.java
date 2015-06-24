@@ -244,13 +244,8 @@ public class LocatorController {
                     .collect(Collectors.toList());
 
             if (!list.isEmpty()) {
-                min = list.stream()
-                        .mapToInt(x -> x.get(0))
-                        .min().getAsInt() - minRefPosition;
-
-                max = list.stream()
-                        .mapToInt(x -> x.get(1))
-                        .max().getAsInt();
+                min = list.stream().mapToInt(x -> x.get(0)).min().getAsInt() - minRefPosition;
+                max = list.stream().mapToInt(x -> x.get(1)).max().getAsInt();
 
                 double scale = getScale();
 
