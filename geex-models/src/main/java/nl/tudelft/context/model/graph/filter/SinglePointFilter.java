@@ -58,9 +58,7 @@ public class SinglePointFilter implements StackGraphFilter {
 
         filtered.vertexSet().stream()
                 .forEach(startNode -> {
-
                     List<DefaultNode> targets = filtered.getTargets(startNode);
-
                     if (targets.size() == 1 || targets.stream().anyMatch(t -> t.getContent().length() != 1)) {
                         return;
                     }
@@ -77,7 +75,6 @@ public class SinglePointFilter implements StackGraphFilter {
                                     single.put(startNode, endNode);
                                 });
                     }
-
                 });
 
     }

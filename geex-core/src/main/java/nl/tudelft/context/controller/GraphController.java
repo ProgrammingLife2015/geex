@@ -105,7 +105,8 @@ public class GraphController extends AbstractGraphController {
         super.initialize(location, resources);
 
         graphFilterController = new GraphFilterController(graphs);
-        new LocatorController(locator, nodeMapProperty, positionProperty, this);
+        LocatorController locatorController = new LocatorController(locator, nodeMapProperty, this);
+        positionProperty.addListener((observable, oldValue, newValue) -> locatorController.updatePosition(newValue));
 
         initProperties();
         initMenu();

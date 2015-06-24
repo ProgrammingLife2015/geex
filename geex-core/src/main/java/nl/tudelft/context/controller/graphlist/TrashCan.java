@@ -35,7 +35,7 @@ public class TrashCan extends Label {
      *
      * @return EventHandler for dragDropped.
      */
-    private EventHandler<? super DragEvent> removeItem() {
+    private EventHandler<DragEvent> removeItem() {
         return event -> {
             Destroyable label = (Destroyable) event.getGestureSource();
 
@@ -48,7 +48,7 @@ public class TrashCan extends Label {
      *
      * @return EventHandler for dragOver
      */
-    private EventHandler<? super DragEvent> acceptDrag() {
+    private EventHandler<DragEvent> acceptDrag() {
         return event -> {
             if (event.getGestureSource() instanceof Destroyable) {
                 event.acceptTransferModes(TransferMode.MOVE);

@@ -69,7 +69,7 @@ public final class NewickController extends AbstractNewickController {
 
         Log.info(Message.SUCCESS_LOAD_TREE);
 
-        new NewickSearchController(nodeList, search, newickScroller);
+        search.getChildren().setAll(new NewickSearchController(nodeList, newickScroller));
     }
 
     /**

@@ -74,7 +74,7 @@ public class SelectNewickController extends AbstractNewickController {
         newickContainer.getChildren().addAll(edgeList);
         newickContainer.getChildren().addAll(nodeList);
 
-        new NewickSearchController(nodeList, search, newickScroller);
+        search.getChildren().setAll(new NewickSearchController(nodeList, newickScroller));
 
     }
 

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 12-6-2015
  */
-public class NewickSearchController {
+public class NewickSearchController extends HBox {
     /**
      * Classname for buttons.
      */
@@ -57,7 +57,7 @@ public class NewickSearchController {
     /**
      * List of currently found labels.
      */
-    private List<Label> selectedLabels;
+    private List<Label> selectedLabels = new ArrayList<>();
     /**
      * Index of the active found node.
      */
@@ -66,11 +66,10 @@ public class NewickSearchController {
     /**
      * Create a new NewickSearchController.
      *
-     * @param labels          Nodes to search in.
-     * @param searchContainer Container for the search bar.
-     * @param scrollPane      Scroller containing the Labels in labels.
+     * @param labels     Nodes to search in.
+     * @param scrollPane Scroller containing the Labels in labels.
      */
-    public NewickSearchController(final List<Label> labels, final HBox searchContainer, final ScrollPane scrollPane) {
+    public NewickSearchController(final List<Label> labels, final ScrollPane scrollPane) {
         this.labels = labels;
         this.scrollPane = scrollPane;
 
@@ -78,16 +77,12 @@ public class NewickSearchController {
         searchPrev = new Button("\u25b2");
         searchNext = new Button("\u25bc");
 
-
         searchField.setPromptText("Search strains...");
         searchField.getStyleClass().add("searchbox");
         searchPrev.getStyleClass().add(buttonClass);
         searchNext.getStyleClass().add(buttonClass);
 
-
-        searchContainer.getChildren().setAll(searchField, searchNext, searchPrev);
-
-        selectedLabels = new ArrayList<>();
+        getChildren().setAll(searchField, searchNext, searchPrev);
 
         searchField.setOnAction(event1 -> searchNext.fire());
         searchField.setOnKeyReleased(searchFieldEventHandler());
