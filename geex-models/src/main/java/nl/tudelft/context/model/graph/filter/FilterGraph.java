@@ -19,7 +19,7 @@ public abstract class FilterGraph implements StackGraphFilter {
     /**
      * Filtered and input graph.
      */
-    private final StackGraph previous, filtered;
+    private final StackGraph filtered;
     /**
      * Nodes which are candidate for removal.
      */
@@ -32,7 +32,6 @@ public abstract class FilterGraph implements StackGraphFilter {
      */
     public FilterGraph(final StackGraph graph) {
         this.filtered = graph.deepClone();
-        this.previous = graph;
     }
 
     @Override

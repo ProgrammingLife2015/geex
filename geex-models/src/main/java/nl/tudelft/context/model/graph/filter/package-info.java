@@ -1,7 +1,8 @@
 /**
  * This package contains all filters for the main graph view.
- * <p/>
+ * <p>
  * Any filter must implement the StackGraphFilter interface.
+ * </p>
  *
  * @author Gerben Oolbekkink
  * @version 1.0
