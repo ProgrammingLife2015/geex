@@ -2,6 +2,7 @@ package nl.tudelft.context.workspace;
 
 import org.junit.After;
 import org.junit.Test;
+import org.tmatesoft.sqljet.core.table.SqlJetDb;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Gerben Oolbekkink
@@ -105,5 +107,14 @@ public class DatabaseTest {
 
         assertArrayEquals(data.get(0), result.get(0));
         assertArrayEquals(data.get(2), result.get(1));
+    }
+
+    @Test
+    public void testReopenDb() throws Exception {
+        Database db = Database.instance();
+        assertNotNull(db.db.getSchema().getTable("workspace"));
+        Database.close();
+        db = Database.instance();
+        assertNotNull(db.db.getSchema().getTable("workspace"));
     }
 }
