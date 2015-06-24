@@ -1,7 +1,6 @@
 package nl.tudelft.context.controller.locator;
 
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import nl.tudelft.context.controller.AbstractGraphController;
@@ -48,11 +47,6 @@ public class LocatorController {
     Optional<Map<Integer, List<Integer>>> optionalTotalMap = Optional.empty();
 
     /**
-     * Location currently shown (columns).
-     */
-    ObjectProperty<List<Integer>> positionProperty = new SimpleObjectProperty<>();
-
-    /**
      * Minimum and maximum of ref positions.
      */
     int minRefPosition = Integer.MAX_VALUE, maxRefPosition = Integer.MIN_VALUE;
@@ -63,20 +57,22 @@ public class LocatorController {
     int min = 0, max = 0;
 
     /**
+     * Current position of the graph by columns.
+     */
+    private List<Integer> position;
+
+    /**
      * Init the locator controller that shows the current position on the reference genome.
      *
      * @param locator          The locator pane
      * @param labelMapProperty Currently active nodes
-     * @param positionProperty Location currently shown (columns)
      * @param graphController  Graph controller to update the position
      */
     public LocatorController(final Pane locator,
                              final ObjectProperty<Map<Integer, List<AbstractDrawableNode>>> labelMapProperty,
-                             final ObjectProperty<List<Integer>> positionProperty,
                              final AbstractGraphController graphController) {
 
         this.locator = locator;
-        this.positionProperty = positionProperty;
 
         initIndicator();
 
@@ -91,7 +87,6 @@ public class LocatorController {
             }
         });
 
-        positionProperty.addListener(event -> setPosition());
         locator.widthProperty().addListener(event -> {
             initResistances(labelMapProperty.get());
             setPosition();
@@ -233,12 +228,24 @@ public class LocatorController {
     }
 
     /**
+     * Updates the position of the indicator.
+     *
+     * @param newPosition The position by columns.
+     */
+    public void updatePosition(final List<Integer> newPosition) {
+
+        position = newPosition;
+        setPosition();
+
+    }
+
+    /**
      * Sets the position of the indicator.
      */
-    private void setPosition() {
+    public void setPosition() {
 
         optionalTotalMap.ifPresent(totalMap -> {
-            List<List<Integer>> list = positionProperty.get().stream()
+            List<List<Integer>> list = position.stream()
                     .map(totalMap::get)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
