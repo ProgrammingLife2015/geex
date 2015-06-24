@@ -59,11 +59,12 @@ public class BreadcrumbTest {
     }
 
     /**
-     * Test empty update of the breadcrumb.
+     * Test empty update of the breadcrumb. First adds a ViewController to trigger a change in the viewList.
      */
     @Test
     public void testEmptyUpdate() {
 
+        viewList.setAll(new BaseController(new NodeParser().getNode(new Scanner(">0 | Cat,Dog | 5 | 7\nA\n"))));
         viewList.setAll();
         assertTrue(breadcrumb.getChildren().isEmpty());
 
