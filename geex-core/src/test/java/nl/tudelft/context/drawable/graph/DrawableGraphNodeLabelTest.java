@@ -16,6 +16,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Scanner;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -109,6 +111,22 @@ public class DrawableGraphNodeLabelTest {
 
         assertThat(drawableGraphNodeLabel1.getChildren().get(1), instanceOf(HBox.class));
 
+
+    }
+
+    /**
+     * Test update sources.
+     */
+    @Test
+    public void testUpdateSources() {
+
+        assertFalse(drawableGraphNodeLabel2.getStyleClass().contains("selected-label"));
+
+        drawableGraphNodeLabel2.updateSources(new HashSet<>(Collections.singletonList("Dog")));
+        assertTrue(drawableGraphNodeLabel2.getStyleClass().contains("selected-label"));
+
+        drawableGraphNodeLabel2.updateSources(new HashSet<>());
+        assertFalse(drawableGraphNodeLabel2.getStyleClass().contains("selected-label"));
 
     }
 
