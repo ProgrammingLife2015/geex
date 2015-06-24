@@ -43,6 +43,7 @@ public class LocatorControllerTest {
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
+        labelMapProperty.set(new HashMap<>());
 
         locatorController = new LocatorController(
                 new Pane(),

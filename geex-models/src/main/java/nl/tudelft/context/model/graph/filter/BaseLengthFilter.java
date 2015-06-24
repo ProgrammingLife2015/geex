@@ -13,14 +13,14 @@ import java.util.function.Predicate;
  */
 public final class BaseLengthFilter extends FilterGraph {
     /**
-     * Minimum unknown ratio to remove.
+     * Minimum base length to keep.
      */
-    public static final double THRESHOLD = 30;
+    public static final int THRESHOLD = 30;
 
     /**
-     * Create a graph with filtered unknown on an other graph.
+     * Create a graph with filtered small base lengths on an other graph.
      *
-     * @param graph Graph to remove unkowns form.
+     * @param graph Graph to remove small base length nodes from
      */
     public BaseLengthFilter(final StackGraph graph) {
         super(graph);
