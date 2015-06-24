@@ -29,7 +29,6 @@ public class ResistanceCausingMutationFilter implements StackGraphFilter {
     public StackGraph getFilterGraph() {
         BubbleReduction bubbleReduction = new BubbleReduction(previous, filtered);
         bubbleReduction.markBubbles(defaultNode -> defaultNode.getResistances().size() == 0);
-//        bubbleReduction.fillGraph(this, "resistance");
 
         return filtered;
     }
