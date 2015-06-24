@@ -26,7 +26,7 @@ public class BubbleReduction {
     /**
      * Default edge weight for bubble reduction graphs.
      */
-    private static final double DEFAULT_WEIGHT = 0.25d;
+    private static final double DEFAULT_WEIGHT = 0.125d;
 
     /**
      * Init a bubble reduction filter.

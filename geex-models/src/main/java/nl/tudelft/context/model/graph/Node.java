@@ -98,9 +98,7 @@ public class Node extends DefaultNode {
 
     @Override
     public void setCodingSequences(final CodingSequenceMap codingSequenceMap) {
-        if (sources.contains("TKK_REF")) {
-            codingSequences = codingSequenceMap.annotationsBetween(refStartPosition, refEndPosition);
-        }
+        codingSequences = codingSequenceMap.annotationsBetween(refStartPosition, refEndPosition);
     }
 
     @Override
@@ -140,7 +138,7 @@ public class Node extends DefaultNode {
      * Retrieve the text for the annotations in order.
      *
      * @param annotations The annotations to turn into text.
-     * @return            String representation of the annotations.
+     * @return String representation of the annotations.
      */
     public String getAnnotationsText(final List<? extends Annotation> annotations) {
         List<String> annotationList = annotations.stream()
