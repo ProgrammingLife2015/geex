@@ -57,7 +57,7 @@ public class NewickSearchController {
     /**
      * List of currently found labels.
      */
-    private List<Label> selectedLabels;
+    private List<Label> selectedLabels = new ArrayList<>();
     /**
      * Index of the active found node.
      */
@@ -84,8 +84,6 @@ public class NewickSearchController {
         searchNext.getStyleClass().add(buttonClass);
 
         searchContainer.getChildren().setAll(searchField, searchNext, searchPrev);
-
-        selectedLabels = new ArrayList<>();
 
         searchField.setOnAction(event1 -> searchNext.fire());
         searchField.setOnKeyReleased(searchFieldEventHandler());
