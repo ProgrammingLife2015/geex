@@ -1,4 +1,8 @@
-package nl.tudelft.context.model.graph;
+package nl.tudelft.context.model.graph.filter;
+
+import nl.tudelft.context.model.graph.DefaultNode;
+import nl.tudelft.context.model.graph.GraphNode;
+import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,48 +15,52 @@ import java.util.Set;
  * @version 1.0
  * @since 11-6-2015
  */
-public class InsertDeleteGraph extends StackGraph {
+public class InsertDeleteFilter implements StackGraphFilter {
 
     /**
      * Parts of a insert deletion.
      */
-    Set<DefaultNode> inDelPart = new HashSet<>();
+    private Set<DefaultNode> inDelPart = new HashSet<>();
 
     /**
      * Map with start and end of insert deletions.
      */
-    Map<DefaultNode, DefaultNode> inDel = new HashMap<>();
+    private Map<DefaultNode, DefaultNode> inDel = new HashMap<>();
 
     /**
-     * Clean graph.
+     * Filtered and input graph.
      */
-    StackGraph graph;
+    private StackGraph filtered, previous;
 
     /**
      * Create a graph with insert deletes single point mutations based on an other graph.
      *
      * @param graph Graph to calculate insert deletes on
      */
-    public InsertDeleteGraph(final StackGraph graph) {
+    public InsertDeleteFilter(final StackGraph graph) {
+        this.previous = graph;
+        this.filtered = graph.deepClone();
+    }
 
-        this.graph = graph;
-        setGraph(graph);
-
+    @Override
+    public StackGraph getFilterGraph() {
         markInDel();
         shift();
         replaceInsertDeletes();
 
+        return filtered;
     }
+
 
     /**
      * Mark the insert deletes.
      */
     private void markInDel() {
 
-        vertexSet().stream()
+        filtered.vertexSet().stream()
                 .forEach(startNode -> {
 
-                    List<DefaultNode> targets = getTargets(startNode);
+                    List<DefaultNode> targets = filtered.getTargets(startNode);
 
                     if (targets.size() != 2) {
                         return;
@@ -73,22 +81,21 @@ public class InsertDeleteGraph extends StackGraph {
      * @param part  Possible node between start and end
      */
     public void isInsertDelete(final DefaultNode start, final DefaultNode end, final DefaultNode part) {
-
-        List<DefaultNode> ends = getTargets(part);
-        if (ends.size() == 1 && ends.get(0).equals(end) && inDegreeOf(part) == 1 && inDegreeOf(end) == 2) {
+        List<DefaultNode> ends = filtered.getTargets(part);
+        if (ends.size() == 1
+                && ends.get(0).equals(end)
+                && filtered.inDegreeOf(part) == 1
+                && filtered.inDegreeOf(end) == 2) {
             inDelPart.add(part);
             inDel.put(start, end);
         }
-
     }
 
     /**
      * Shift in del parts parts.
      */
     private void shift() {
-
         inDelPart.stream().forEach(DefaultNode::shift);
-
     }
 
     /**
@@ -96,15 +103,14 @@ public class InsertDeleteGraph extends StackGraph {
      */
     private void replaceInsertDeletes() {
 
-        inDelPart.forEach(this::removeVertex);
+        inDelPart.forEach(filtered::removeVertex);
         inDel.forEach((start, end) -> {
-            setEdgeWeight(
-                    getEdge(start, getTargets(start).get(0)),
-                    graph.outgoingEdgesOf(end).stream().mapToDouble(graph::getEdgeWeight).sum()
+            filtered.setEdgeWeight(
+                    filtered.getEdge(start, filtered.getTargets(start).get(0)),
+                    previous.outgoingEdgesOf(end).stream().mapToDouble(previous::getEdgeWeight).sum()
             );
-            replace(start, new GraphNode(graph, start, end, "insert-delete"));
+            filtered.replace(start, new GraphNode(previous, start, end, "insert-delete"));
         });
 
     }
-
 }

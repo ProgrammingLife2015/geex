@@ -181,11 +181,6 @@ public class GraphNode extends DefaultNode {
     }
 
     @Override
-    public void setCodingSequences(final CodingSequenceMap codingSequenceMap) {
-        // do nothing
-    }
-
-    @Override
     public List<CodingSequence> getCodingSequences() {
         return nodes.stream()
                 .map(DefaultNode::getCodingSequences)
@@ -195,7 +190,7 @@ public class GraphNode extends DefaultNode {
     }
 
     @Override
-    public void setResistances(final ResistanceMap resistanceMap) {
+    public void setCodingSequences(final CodingSequenceMap codingSequenceMap) {
         // do nothing
     }
 
@@ -206,6 +201,11 @@ public class GraphNode extends DefaultNode {
                 .flatMap(Collection::stream)
                 .distinct()
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void setResistances(final ResistanceMap resistanceMap) {
+        // do nothing
     }
 
 }

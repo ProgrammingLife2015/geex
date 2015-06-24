@@ -1,5 +1,7 @@
-package nl.tudelft.context.model.graph;
+package nl.tudelft.context.model.graph.filter;
 
+import nl.tudelft.context.model.graph.DefaultNode;
+import nl.tudelft.context.model.graph.StackGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
 import java.util.Set;
@@ -17,7 +19,6 @@ public class BubbleReduction {
      * Graph to reduce.
      */
     StackGraph stackGraph;
-
     /**
      * Graph to fill.
      */

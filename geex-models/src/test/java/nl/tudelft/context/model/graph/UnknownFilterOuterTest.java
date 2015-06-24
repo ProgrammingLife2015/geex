@@ -1,6 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
+import nl.tudelft.context.model.graph.filter.UnknownFilter;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +12,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -27,14 +27,14 @@ import static org.junit.Assert.*;
  * @since 18-6-2015
  */
 @RunWith(JfxRunner.class)
-public class CollapseGraphTest {
+public class UnknownFilterOuterTest {
 
-    File nodeFile = new File(CollapseGraphTest.class.getResource("/graph/collapse-graph.node.graph").getPath());
-    File edgeFile = new File(CollapseGraphTest.class.getResource("/graph/collapse-graph.edge.graph").getPath());
+    File nodeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/unknown-graph-outer.node.graph").getPath());
+    File edgeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/unknown-graph-outer.edge.graph").getPath());
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
-    CollapseGraph collapseGraph;
+    StackGraph unknownGraph;
 
     /**
      * Set up the graphs and node map.
@@ -55,7 +55,7 @@ public class CollapseGraphTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        collapseGraph = new CollapseGraph(graph);
+        unknownGraph = new UnknownFilter(graph).getFilterGraph();
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),
@@ -65,40 +65,30 @@ public class CollapseGraphTest {
     }
 
     /**
-     * Test that the collapsed graph doesn't contain the nodes that are collapsed but contains the other nodes.
+     * Test that the insert delete graph doesn't contain the nodes that are collapsed but contains the other nodes.
      */
     @Test
     public void testCollapsed() {
 
-        assertTrue(collapseGraph.containsVertex(nodeMap.get(1)));
-        assertTrue(collapseGraph.containsVertex(nodeMap.get(2)));
-
-        assertFalse(collapseGraph.containsVertex(nodeMap.get(3))); // Collapsed node
-        assertFalse(collapseGraph.containsVertex(nodeMap.get(4))); // Collapsed node
-        assertFalse(collapseGraph.containsVertex(nodeMap.get(5))); // Collapsed node
-
-        assertTrue(collapseGraph.containsVertex(nodeMap.get(6)));
-        assertTrue(collapseGraph.containsVertex(nodeMap.get(7)));
+        assertFalse(unknownGraph.containsVertex(nodeMap.get(0))); // Deleted node
+        assertTrue(unknownGraph.containsVertex(nodeMap.get(1)));
+        assertTrue(unknownGraph.containsVertex(nodeMap.get(2)));
+        assertFalse(unknownGraph.containsVertex(nodeMap.get(3))); // Deleted node
 
     }
 
     /**
-     * Test if the graph node contains the collapsed nodes.
+     * Test that there is no graph node created.
      */
     @Test
-    public void testGraphNode() {
+    public void testNoGraphNode() {
 
-        List<GraphNode> graphNodes = collapseGraph.vertexSet().stream()
+        List<GraphNode> graphNodes = unknownGraph.vertexSet().stream()
                 .filter(node -> node instanceof GraphNode)
                 .map(node -> (GraphNode) node)
                 .collect(Collectors.toList());
 
-        assertEquals(1, graphNodes.size());
-
-        Set<DefaultNode> expectedNodes = new HashSet<>(Arrays.asList(nodeMap.get(3), nodeMap.get(4), nodeMap.get(5)));
-
-        assertEquals(expectedNodes, graphNodes.get(0).nodes);
+        assertEquals(0, graphNodes.size());
 
     }
-
 }

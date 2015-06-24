@@ -78,13 +78,6 @@ public abstract class DefaultNode {
     public abstract int getRefEndPosition();
 
     /**
-     * Sets the codingSequences that belong to this node.
-     *
-     * @param codingSequenceMap The list of all codingSequences
-     */
-    public abstract void setCodingSequences(final CodingSequenceMap codingSequenceMap);
-
-    /**
      * Get the list of codingSequences that are present in this node.
      *
      * @return The list of codingSequences present in this node
@@ -92,11 +85,11 @@ public abstract class DefaultNode {
     public abstract List<CodingSequence> getCodingSequences();
 
     /**
-     * Sets the resistance mutations that belong to this node.
+     * Sets the codingSequences that belong to this node.
      *
-     * @param resistanceMap The list of all resistance mutations
+     * @param codingSequenceMap The list of all codingSequences
      */
-    public abstract void setResistances(final ResistanceMap resistanceMap);
+    public abstract void setCodingSequences(final CodingSequenceMap codingSequenceMap);
 
     /**
      * Get the list of resistance mutations that are present in this node.
@@ -104,6 +97,13 @@ public abstract class DefaultNode {
      * @return The list of resistance mutations present in this node
      */
     public abstract List<Resistance> getResistances();
+
+    /**
+     * Sets the resistance mutations that belong to this node.
+     *
+     * @param resistanceMap The list of all resistance mutations
+     */
+    public abstract void setResistances(final ResistanceMap resistanceMap);
 
     /**
      * Shift the node.

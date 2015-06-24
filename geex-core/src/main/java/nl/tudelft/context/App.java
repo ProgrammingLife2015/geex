@@ -44,7 +44,9 @@ public class App extends Application {
         Log.debug(Message.APPLICATION_STARTING);
 
         MainController controller = new MainController();
-        new Window("Geex", controller.getRoot());
+
+        Window window = new Window("Geex", controller.getRoot());
+        window.show();
 
     }
 

@@ -41,7 +41,7 @@ public final class Breadcrumb extends HBox {
 
         getStyleClass().add("breadcrumb");
 
-        this.viewList.addListener((ListChangeListener<ViewController>) c -> update());
+        this.viewList.addListener((ListChangeListener<ViewController>) listChangeListener -> update());
 
     }
 

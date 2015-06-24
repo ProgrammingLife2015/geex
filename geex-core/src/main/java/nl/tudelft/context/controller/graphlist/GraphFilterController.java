@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import nl.tudelft.context.logger.Log;
 import nl.tudelft.context.model.graph.StackGraph;
+import nl.tudelft.context.model.graph.filter.StackGraphFilter;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -142,14 +143,20 @@ public class GraphFilterController implements InvalidationListener {
             if (!gli.isActive()) {
                 continue;
             }
+
+            StackGraphFilter filter;
             try {
-                Class<? extends StackGraph> clazz = gli.getFilter().getGraph();
-                Constructor<? extends StackGraph> constructor = clazz.getDeclaredConstructor(StackGraph.class);
-                newGraph = constructor.newInstance(newGraph);
+                Class<? extends StackGraphFilter> clazz = gli.getFilter().getGraph();
+                Constructor<? extends StackGraphFilter> constructor = clazz.getDeclaredConstructor(StackGraph.class);
+                filter = constructor.newInstance(newGraph);
             } catch (ReflectiveOperationException e) {
                 // Something went VERY wrong.
                 Log.debug(e.getMessage());
+                // Bailing!
+                return newGraph;
             }
+
+            newGraph = filter.getFilterGraph();
         }
 
         return newGraph;

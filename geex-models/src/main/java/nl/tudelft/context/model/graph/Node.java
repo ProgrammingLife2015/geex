@@ -97,23 +97,23 @@ public class Node extends DefaultNode {
     }
 
     @Override
-    public void setCodingSequences(final CodingSequenceMap codingSequenceMap) {
-        codingSequences = codingSequenceMap.annotationsBetween(refStartPosition, refEndPosition);
-    }
-
-    @Override
     public List<CodingSequence> getCodingSequences() {
         return codingSequences;
     }
 
     @Override
-    public void setResistances(final ResistanceMap resistanceMap) {
-        resistance = resistanceMap.annotationsBetween(refStartPosition, refEndPosition);
+    public void setCodingSequences(final CodingSequenceMap codingSequenceMap) {
+        codingSequences = codingSequenceMap.annotationsBetween(refStartPosition, refEndPosition);
     }
 
     @Override
     public List<Resistance> getResistances() {
         return resistance;
+    }
+
+    @Override
+    public void setResistances(final ResistanceMap resistanceMap) {
+        resistance = resistanceMap.annotationsBetween(refStartPosition, refEndPosition);
     }
 
     /**
