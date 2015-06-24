@@ -79,7 +79,11 @@ public final class BaseController extends ViewController<ScrollPane> {
     public void initialize(final URL location,
                            final ResourceBundle resources) {
 
-        codingSequences.setText(node.getCodingSequenceText());
+        if (node.getSources().contains("TKK_REF")) {
+            codingSequences.setText(node.getCodingSequenceText());
+        } else {
+            codingSequences.setText("None");
+        }
         resistances.setText(node.getResistancesText());
         percentages.setText(node.getBaseCounter().toString());
         bases.setText(node.getContent());
