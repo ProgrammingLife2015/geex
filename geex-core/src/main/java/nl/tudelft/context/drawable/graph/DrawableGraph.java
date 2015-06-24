@@ -119,9 +119,8 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
      * @return If this node is shifted
      */
     private boolean isShifted(final List<AbstractDrawableNode> nodes, final boolean prevShifted) {
-        boolean shifted = false;
         if (nodes.size() == 1) {
-            shifted = nodes.stream().map(node -> {
+            return nodes.stream().map(node -> {
                 final boolean single = hasEdges(getSources(node), this::outDegreeOf)
                         && hasEdges(getTargets(node), this::inDegreeOf);
                 final boolean drawShift = inDegreeOf(node) == 1 && outDegreeOf(node) >= 1 && single;
@@ -136,7 +135,7 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
                 return false;
             }).findFirst().get();
         }
-        return shifted;
+        return false;
     }
 
     /**
