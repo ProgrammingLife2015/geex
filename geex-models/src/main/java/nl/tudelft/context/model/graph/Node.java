@@ -103,9 +103,7 @@ public class Node extends DefaultNode {
 
     @Override
     public void setCodingSequences(final CodingSequenceMap codingSequenceMap) {
-        if (sources.contains("TKK_REF")) {
-            codingSequences = codingSequenceMap.annotationsBetween(refStartPosition, refEndPosition);
-        }
+        codingSequences = codingSequenceMap.annotationsBetween(refStartPosition, refEndPosition);
     }
 
     @Override

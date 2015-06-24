@@ -47,7 +47,17 @@ public class GraphFilterController implements InvalidationListener {
      * Pane containing the javafx labels.
      */
     private Pane filterList;
-
+    /**
+     * Default filters on init.
+     */
+    private static final GraphFilter[] DEFAULT_FILTERS = new GraphFilter[]{
+            GraphFilter.SINGLE_POINT,
+            GraphFilter.INSERT_DELETE,
+            GraphFilter.COLLAPSE,
+            GraphFilter.UNKNOWN,
+            GraphFilter.CODING_SEQUENCE,
+            GraphFilter.RESISTANCE_CAUSING
+    };
 
     /**
      * Create a graph list controller.
@@ -174,7 +184,7 @@ public class GraphFilterController implements InvalidationListener {
      * Reset the view.
      */
     public void reset() {
-        addAll(GraphFilter.values());
+        addAll(DEFAULT_FILTERS);
     }
 
     /**

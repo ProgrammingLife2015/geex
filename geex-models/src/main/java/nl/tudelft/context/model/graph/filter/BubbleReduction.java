@@ -16,10 +16,6 @@ import java.util.stream.Collectors;
 public class BubbleReduction {
 
     /**
-     * Default edge weight for bubble reduction graphs.
-     */
-    private static final double DEFAULT_WEIGHT = 0.25d;
-    /**
      * Graph to reduce.
      */
     StackGraph stackGraph;
@@ -27,6 +23,11 @@ public class BubbleReduction {
      * Graph to fill.
      */
     StackGraph graph;
+
+    /**
+     * Default edge weight for bubble reduction graphs.
+     */
+    private static final double DEFAULT_WEIGHT = 0.125d;
 
     /**
      * Init a bubble reduction filter.
