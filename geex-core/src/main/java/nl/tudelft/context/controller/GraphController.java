@@ -107,6 +107,16 @@ public class GraphController extends AbstractGraphController {
         graphFilterController = new GraphFilterController(graphs);
         new LocatorController(locator, nodeMapProperty, positionProperty, this);
 
+        initProperties();
+        initMenu();
+
+    }
+
+    /**
+     * Bind the properties from the workspace to handles.
+     */
+    private void initProperties() {
+
         ObjectProperty<GraphMap> graphMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<CodingSequenceMap> codingSequenceMapProperty = new SimpleObjectProperty<>();
         ObjectProperty<ResistanceMap> resistanceMapProperty = new SimpleObjectProperty<>();
@@ -125,8 +135,6 @@ public class GraphController extends AbstractGraphController {
         resistanceMapProperty.bind(resistanceMapIn);
 
         progressIndicator.visibleProperty().bind(graphMapProperty.isNull());
-
-        initMenu();
 
     }
 
