@@ -107,41 +107,51 @@ public class DrawableGraph extends DefaultGraph<AbstractDrawableNode> {
             row++;
         }
 
-        if (nodes.size() == 1) {
-            final AbstractDrawableNode node = nodes.get(0);
-
-            final boolean sourcesSingle = countEdges(getSources(node), this::outDegreeOf) > 0;
-            final boolean targetSingle = countEdges(getTargets(node), this::inDegreeOf) > 0;
-            final boolean drawShift = inDegreeOf(node) == 1 && outDegreeOf(node) >= 1 && sourcesSingle && targetSingle;
-
-            if (node.getNode().isShift() || drawShift) {
-                if (prevShifted) {
-                    node.setTranslateY(0);
-                } else {
-                    node.setTranslateY(-LABEL_SPACING);
-                }
-                return !prevShifted;
-            }
-        }
-
-        return false;
+        return isShifted(nodes, prevShifted);
 
     }
 
     /**
-     * Count the nodes with more then 1 incoming or outgoing edges.
+     * Check if the node should be shifted.
+     *
+     * @param nodes       Nodes to possible shift if only 1 node
+     * @param prevShifted If the previous node was shifted
+     * @return If this node is shifted
+     */
+    private boolean isShifted(final List<AbstractDrawableNode> nodes, final boolean prevShifted) {
+        boolean shifted = false;
+        if (nodes.size() == 1) {
+            shifted = nodes.stream().map(node -> {
+                final boolean single = hasEdges(getSources(node), this::outDegreeOf)
+                        && hasEdges(getTargets(node), this::inDegreeOf);
+                final boolean drawShift = inDegreeOf(node) == 1 && outDegreeOf(node) >= 1 && single;
+                if (node.getNode().isShift() || drawShift) {
+                    if (prevShifted) {
+                        node.setTranslateY(0);
+                    } else {
+                        node.setTranslateY(-LABEL_SPACING);
+                    }
+                    return !prevShifted;
+                }
+                return false;
+            }).findFirst().get();
+        }
+        return shifted;
+    }
+
+    /**
+     * Check if there are nodes with more then 1 incoming or outgoing edges.
      *
      * @param nodes       Nodes to count from
      * @param degreeCount Function that returns the degree of edges
-     * @return Amount of nodes with a higher than 1 edge degree
+     * @return If there are nodes with a higher than 1 edge degree
      */
-    private long countEdges(final List<AbstractDrawableNode> nodes,
-                            final ToIntFunction<AbstractDrawableNode> degreeCount) {
+    private boolean hasEdges(final List<AbstractDrawableNode> nodes,
+                             final ToIntFunction<AbstractDrawableNode> degreeCount) {
 
         return nodes.stream()
                 .mapToInt(degreeCount)
-                .filter(source -> source > 1)
-                .count();
+                .anyMatch(source -> source > 1);
 
     }
 
