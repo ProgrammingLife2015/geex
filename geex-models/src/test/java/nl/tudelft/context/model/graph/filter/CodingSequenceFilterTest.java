@@ -59,7 +59,7 @@ public class CodingSequenceFilterTest {
     public void setUp() throws InterruptedException, ExecutionException, TimeoutException {
 
         codingSequence = new CodingSequence("seqId", "source", "type", 8, 11, 0f, 'A', 'B', "attributes");
-        resistance = new Resistance("lorem", "ipsum", "Q264P", "dolor", 5, "set");
+        resistance = new Resistance("lorem", "ipsum", "Q264P", "dolor", 8, "set");
 
         LoadService<GraphMap> loadGraphService = new LoadService<>(GraphParser.class, nodeFile, edgeFile);
         CompletableFuture<GraphMap> graphMap = new CompletableFuture<>();
