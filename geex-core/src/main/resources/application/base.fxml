@@ -27,8 +27,7 @@
             <Label styleClass="h2">Bases</Label>
             <TextFlow>
                 <Text fx:id="percentages"/>
-            </TextFlow>
-            <TextFlow>
+                <Text text="&#10;&#10;"/>
                 <Text fx:id="bases"/>
             </TextFlow>
         </VBox>

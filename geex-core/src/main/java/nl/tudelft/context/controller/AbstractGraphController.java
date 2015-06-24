@@ -3,8 +3,10 @@ package nl.tudelft.context.controller;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -152,8 +154,9 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
         scroll.hvalueProperty().addListener(event -> updatePosition());
 
         currentLabelsProperty.addListener((observable, oldValue, newValue) -> {
-            sequences.getChildren().removeAll(oldValue);
-            sequences.getChildren().addAll(newValue);
+            ObservableList<Node> children = sequences.getChildren();
+            children.removeAll(oldValue);
+            children.addAll(newValue);
         });
 
         positionProperty.addListener(event -> showCurrentLabels());
@@ -167,8 +170,8 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      */
     public void setPosition(final int column) {
 
-        double width = scroll.getContent().layoutBoundsProperty().get().getWidth() - scroll.getWidth();
-        double left = column * DrawableGraph.LABEL_SPACING;
+        final double width = scroll.getContent().layoutBoundsProperty().get().getWidth() - scroll.getWidth();
+        final double left = column * DrawableGraph.LABEL_SPACING;
         scroll.setHvalue(left / width);
 
     }
@@ -178,10 +181,10 @@ public abstract class AbstractGraphController extends ViewController<AnchorPane>
      */
     private void updatePosition() {
 
-        double width = scroll.getWidth();
-        double left = (scroll.getContent().layoutBoundsProperty().get().getWidth() - width) * scroll.getHvalue();
-        int from = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
-        int to = from + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
+        final double width = scroll.getWidth();
+        final double left = (scroll.getContent().layoutBoundsProperty().get().getWidth() - width) * scroll.getHvalue();
+        final int from = (int) Math.floor(left / DrawableGraph.LABEL_SPACING) - 1;
+        final int to = from + (int) Math.ceil(width / DrawableGraph.LABEL_SPACING) + 1;
 
         positionProperty.set(IntStream.rangeClosed(from, to)
                 .boxed()

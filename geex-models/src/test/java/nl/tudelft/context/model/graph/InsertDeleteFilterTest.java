@@ -1,6 +1,7 @@
 package nl.tudelft.context.model.graph;
 
 import de.saxsys.javafx.test.JfxRunner;
+import nl.tudelft.context.model.graph.filter.InsertDeleteFilter;
 import nl.tudelft.context.service.LoadService;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -18,7 +20,9 @@ import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author René Vennik
@@ -26,14 +30,14 @@ import static org.junit.Assert.*;
  * @since 18-6-2015
  */
 @RunWith(JfxRunner.class)
-public class BaseLengthGraphTest {
+public class InsertDeleteFilterTest {
 
-    File nodeFile = new File(BaseLengthGraphTest.class.getResource("/graph/base-length-graph.node.graph").getPath());
-    File edgeFile = new File(BaseLengthGraphTest.class.getResource("/graph/base-length-graph.edge.graph").getPath());
+    File nodeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/insert-delete-graph.node.graph").getPath());
+    File edgeFile = new File(InsertDeleteFilterTest.class.getResource("/graph/insert-delete-graph.edge.graph").getPath());
 
     StackGraph graph;
     Map<Integer, DefaultNode> nodeMap;
-    BaseLengthGraph baseLengthGraph;
+    StackGraph insertDeleteGraph;
 
     /**
      * Set up the graphs and node map.
@@ -54,7 +58,7 @@ public class BaseLengthGraphTest {
         loadGraphService.start();
 
         graph = graphMap.get(5, TimeUnit.SECONDS).flat(new HashSet<>(Arrays.asList("Dog", "Cat")));
-        baseLengthGraph = new BaseLengthGraph(graph);
+        insertDeleteGraph = new InsertDeleteFilter(graph).getFilterGraph();
 
         nodeMap = graph.vertexSet().stream().collect(Collectors.toMap(
                 node -> ((Node) node).getId(),
@@ -69,28 +73,34 @@ public class BaseLengthGraphTest {
     @Test
     public void testCollapsed() {
 
-        assertTrue(baseLengthGraph.containsVertex(nodeMap.get(0)));
-        assertTrue(baseLengthGraph.containsVertex(nodeMap.get(1)));
-        assertTrue(baseLengthGraph.containsVertex(nodeMap.get(2)));
-        assertTrue(baseLengthGraph.containsVertex(nodeMap.get(3)));
-        assertTrue(baseLengthGraph.containsVertex(nodeMap.get(4)));
-        assertTrue(baseLengthGraph.containsVertex(nodeMap.get(5)));
-        assertFalse(baseLengthGraph.containsVertex(nodeMap.get(6)));
+        assertTrue(insertDeleteGraph.containsVertex(nodeMap.get(0)));
+        assertTrue(insertDeleteGraph.containsVertex(nodeMap.get(1)));
+        assertTrue(insertDeleteGraph.containsVertex(nodeMap.get(2)));
+
+        assertFalse(insertDeleteGraph.containsVertex(nodeMap.get(3))); // Collapsed node
+        assertFalse(insertDeleteGraph.containsVertex(nodeMap.get(4))); // Collapsed node
+
+        assertTrue(insertDeleteGraph.containsVertex(nodeMap.get(5)));
+        assertTrue(insertDeleteGraph.containsVertex(nodeMap.get(6)));
 
     }
 
     /**
-     * Test that there is no graph node created.
+     * Test if the graph node contains the collapsed nodes.
      */
     @Test
-    public void testNoGraphNode() {
+    public void testGraphNode() {
 
-        List<GraphNode> graphNodes = baseLengthGraph.vertexSet().stream()
+        List<GraphNode> graphNodes = insertDeleteGraph.vertexSet().stream()
                 .filter(node -> node instanceof GraphNode)
                 .map(node -> (GraphNode) node)
                 .collect(Collectors.toList());
 
-        assertEquals(0, graphNodes.size());
+        assertEquals(1, graphNodes.size());
+
+        Set<DefaultNode> expectedNodes = new HashSet<>(Arrays.asList(nodeMap.get(3), nodeMap.get(4)));
+
+        assertEquals(expectedNodes, graphNodes.get(0).nodes);
 
     }
 

@@ -77,12 +77,17 @@ public final class Log implements ObservableLog {
     /**
      * Log a message of type {@link MessageType}.DEBUG.
      *
-     * @param message Massage to log.
+     * @param message Message to log.
      */
     public static void debug(final String message) {
         instance().message(message, MessageType.DEBUG);
     }
 
+    /**
+     * Log a exception of type {@link MessageType}.DEBUG.
+     *
+     * @param e Exception to log.
+     */
     public static void debug(final Exception e) {
         instance().message(e.getMessage(), MessageType.DEBUG);
     }

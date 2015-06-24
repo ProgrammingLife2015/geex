@@ -5,8 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import nl.tudelft.context.breadcrumb.Breadcrumb;
@@ -73,11 +71,6 @@ public class MainController extends AbstractController<StackPane> {
     Optional<ViewController> previousTopView = Optional.empty();
 
     /**
-     * If shift key is down.
-     */
-    boolean shift;
-
-    /**
      * Init a controller at main.fxml.
      */
     public MainController() {
@@ -109,17 +102,6 @@ public class MainController extends AbstractController<StackPane> {
         setBaseView(new WelcomeController(this,
                 menuController.getSelectWorkspace(),
                 menuController.getSelectRecentWorkspace()));
-
-        root.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.SHIFT) {
-                shift = true;
-            }
-        });
-        root.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            if (event.getCode() == KeyCode.SHIFT) {
-                shift = false;
-            }
-        });
     }
 
     /**
@@ -157,15 +139,26 @@ public class MainController extends AbstractController<StackPane> {
      *
      * @param on             Controller to stack this view on
      * @param viewController Controller containing JavaFX root
+     * @param newWindow      True to force a new window
      */
-    public void setView(final ViewController on, final ViewController viewController) {
+    public void setView(final ViewController on, final ViewController viewController, final boolean newWindow) {
         hideOverlay();
 
-        if (shift || viewList.indexOf(on) == -1) {
+        if (newWindow || viewList.indexOf(on) == -1) {
             openWindow(viewController);
         } else {
             setLocalView(on, viewController);
         }
+    }
+
+    /**
+     * Set a new main view and push it on the view stack.
+     *
+     * @param on             Controller to stack this view on
+     * @param viewController Controller containing JavaFX root
+     */
+    public void setView(final ViewController on, final ViewController viewController) {
+        setView(on, viewController, false);
     }
 
     /**
@@ -175,14 +168,12 @@ public class MainController extends AbstractController<StackPane> {
      */
     private void openWindow(final ViewController viewController) {
         WindowFactory.create(viewController.getBreadcrumbName(), viewController.getRoot());
-        // When creating a new window our control over the keyboard is lost
-        // and the state of the shift key is stuck.
-        shift = false;
     }
 
     /**
      * Navigate to a new view.
-     * @param on Previous view
+     *
+     * @param on             Previous view
      * @param viewController Next view
      */
     private void setLocalView(final ViewController on, final ViewController viewController) {

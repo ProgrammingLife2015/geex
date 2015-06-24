@@ -28,6 +28,25 @@ public abstract class StackGraph extends DefaultGraph<DefaultNode> {
     }
 
     /**
+     * Create a deep copy of the graph.
+     *
+     * @return A clone.
+     */
+    public StackGraph deepClone() {
+        StackGraph newStackGraph = new Graph();
+
+        vertexSet().stream().forEach(newStackGraph::addVertex);
+
+        edgeSet().stream()
+                .forEach(edge -> newStackGraph.setEdgeWeight(newStackGraph.addEdge(
+                        getEdgeSource(edge),
+                        getEdgeTarget(edge)
+                ), getEdgeWeight(edge)));
+
+        return newStackGraph;
+    }
+
+    /**
      * Create a sub graph of this graph.
      *
      * @param nodes Nodes the sub graph will contain

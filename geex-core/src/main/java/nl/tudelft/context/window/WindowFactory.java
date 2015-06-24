@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
  * @version 1.0
  * @since 23-06-2015
  */
-public class WindowFactory {
+public final class WindowFactory {
 
     /**
      * Minimum width in pixels of window.

@@ -1,4 +1,8 @@
-package nl.tudelft.context.model.graph;
+package nl.tudelft.context.model.graph.filter;
+
+import nl.tudelft.context.model.graph.DefaultNode;
+import nl.tudelft.context.model.graph.Node;
+import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.function.Predicate;
 
@@ -7,7 +11,7 @@ import java.util.function.Predicate;
  * @version 1.0
  * @since 23-06-2015
  */
-public class BaseLengthGraph extends FilterGraph {
+public final class BaseLengthFilter extends FilterGraph {
     /**
      * Minimum unknown ratio to remove.
      */
@@ -18,7 +22,7 @@ public class BaseLengthGraph extends FilterGraph {
      *
      * @param graph Graph to remove unkowns form.
      */
-    public BaseLengthGraph(final StackGraph graph) {
+    public BaseLengthFilter(final StackGraph graph) {
         super(graph);
     }
 

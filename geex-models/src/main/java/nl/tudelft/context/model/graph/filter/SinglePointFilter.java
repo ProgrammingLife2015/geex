@@ -1,4 +1,8 @@
-package nl.tudelft.context.model.graph;
+package nl.tudelft.context.model.graph.filter;
+
+import nl.tudelft.context.model.graph.DefaultNode;
+import nl.tudelft.context.model.graph.GraphNode;
+import nl.tudelft.context.model.graph.StackGraph;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,37 +17,38 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 1-6-2015
  */
-public class SinglePointGraph extends StackGraph {
+public class SinglePointFilter implements StackGraphFilter {
 
+    /**
+     * Filtered and input graph.
+     */
+    private final StackGraph previous, filtered;
     /**
      * Parts of a single base mutation.
      */
-    transient Set<DefaultNode> singlePart = new HashSet<>();
-
+    private Set<DefaultNode> singlePart = new HashSet<>();
     /**
      * Map with start and end of single mutation.
      */
-    transient Map<DefaultNode, DefaultNode> single = new HashMap<>();
-
-    /**
-     * Clean graph.
-     */
-    StackGraph graph;
+    private Map<DefaultNode, DefaultNode> single = new HashMap<>();
 
     /**
      * Create a graph with single point mutations based on an other graph.
      *
      * @param graph Graph to calculate single point mutations on
      */
-    public SinglePointGraph(final StackGraph graph) {
+    public SinglePointFilter(final StackGraph graph) {
+        this.filtered = graph.deepClone();
+        this.previous = graph;
+    }
 
-        this.graph = graph;
-        setGraph(graph);
-
+    @Override
+    public StackGraph getFilterGraph() {
         markSingle();
         filterSingle();
         replaceSingle();
 
+        return filtered;
     }
 
     /**
@@ -51,22 +56,22 @@ public class SinglePointGraph extends StackGraph {
      */
     private void markSingle() {
 
-        vertexSet().stream()
+        filtered.vertexSet().stream()
                 .forEach(startNode -> {
 
-                    List<DefaultNode> targets = getTargets(startNode);
+                    List<DefaultNode> targets = filtered.getTargets(startNode);
 
                     if (targets.size() == 1 || targets.stream().anyMatch(t -> t.getContent().length() != 1)) {
                         return;
                     }
 
                     Set<DefaultNode> end = targets.stream()
-                            .map(this::getTargets)
+                            .map(filtered::getTargets)
                             .flatMap(Collection::stream)
                             .collect(Collectors.toSet());
 
                     if (end.size() == 1) {
-                        end.stream().filter(endNode -> inDegreeOf(endNode) == targets.size())
+                        end.stream().filter(endNode -> filtered.inDegreeOf(endNode) == targets.size())
                                 .forEach(endNode -> {
                                     targets.stream().forEach(singlePart::add);
                                     single.put(startNode, endNode);
@@ -107,15 +112,14 @@ public class SinglePointGraph extends StackGraph {
      */
     private void replaceSingle() {
 
-        singlePart.forEach(this::removeVertex);
+        singlePart.forEach(filtered::removeVertex);
         single.forEach((start, end) -> {
-            setEdgeWeight(
-                    addEdge(start, end),
-                    graph.outgoingEdgesOf(end).stream().mapToDouble(graph::getEdgeWeight).sum()
+            filtered.setEdgeWeight(
+                    filtered.addEdge(start, end),
+                    previous.outgoingEdgesOf(end).stream().mapToDouble(previous::getEdgeWeight).sum()
             );
-            replace(start, new GraphNode(graph, start, end, "single"));
+            filtered.replace(start, new GraphNode(previous, start, end, "single"));
         });
 
     }
-
 }

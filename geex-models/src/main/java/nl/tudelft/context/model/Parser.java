@@ -62,6 +62,7 @@ public abstract class Parser<T> implements Loadable<T> {
 
     /**
      * Check the state of the Parser.
+     *
      * @return If the parser is cancelled
      */
     protected boolean isCancelled() {

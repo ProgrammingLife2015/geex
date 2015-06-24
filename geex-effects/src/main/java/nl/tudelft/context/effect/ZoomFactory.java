@@ -12,7 +12,7 @@ import java.util.List;
  * @version 1.0
  * @since 23-06-2015
  */
-public class ZoomFactory {
+public final class ZoomFactory {
     /**
      * Private constructor to force static use.
      */
@@ -26,6 +26,7 @@ public class ZoomFactory {
      * @param scroll             The scroll panel
      * @param sequences          The graph
      * @param zoomLabelsProperty Property with the labels that need zoom
+     * @return                   A new Zoom effect
      */
     public static Zoom create(final ScrollPane scroll, final Group sequences,
                 final ObjectProperty<List<Region>> zoomLabelsProperty) {

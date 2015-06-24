@@ -85,21 +85,21 @@ public abstract class AbstractNode {
     public abstract List<AbstractNode> getChildren();
 
     /**
-     * Sets the parent of the node.
-     *
-     * @param parent the parent.
-     */
-    public void setParent(final AbstractNode parent) {
-        this.parent = Optional.of(parent);
-    }
-
-    /**
      * Gets the parent of the node.
      *
      * @return the parent of the node.
      */
     public AbstractNode getParent() {
         return parent.get();
+    }
+
+    /**
+     * Sets the parent of the node.
+     *
+     * @param parent the parent.
+     */
+    public void setParent(final AbstractNode parent) {
+        this.parent = Optional.of(parent);
     }
 
     /**
@@ -153,17 +153,6 @@ public abstract class AbstractNode {
     }
 
     /**
-     * Sets the new selection of the node. It recursively sets the selection of its children also.
-     *
-     * @param selection The new selection of the node and its children.
-     */
-    public void setSelection(final Selection selection) {
-        this.selection.set(selection);
-        getChildren().forEach(node -> node.setSelection(selection));
-        updateSources();
-    }
-
-    /**
      * Gets the selection property of the node.
      *
      * @return the selection property.
@@ -182,13 +171,26 @@ public abstract class AbstractNode {
     }
 
     /**
-     * Sets the selection of the node, based on the selection of its children;
+     * Sets the new selection of the node. It recursively sets the selection of its children also.
      *
+     * @param selection The new selection of the node and its children.
+     */
+    public void setSelection(final Selection selection) {
+        this.selection.set(selection);
+        getChildren().forEach(node -> node.setSelection(selection));
+        updateSources();
+    }
+
+    /**
+     * Sets the selection of the node, based on the selection of its children;
+     * <p>
      * All the children's selection is ALL: ALL
      * All the children's selection is NONE: NONE
      * Otherwise: PARTIAL
-     *
+     * </p>
+     * <p>
      * If the node has a parent, it also calls this method on its parent.
+     * </p>
      */
     public void updateSelection() {
         selection.setValue(getChildren().stream()
