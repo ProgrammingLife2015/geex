@@ -67,7 +67,7 @@ public abstract class AbstractLabel extends VBox {
             annotationsHolder.getChildren().add(resistancesLabel);
         }
 
-        if (codingSequencesAmount > 0) {
+        if (codingSequencesAmount > 0 && node.getSources().contains("TKK_REF")) {
             final Label codingSequencesLabel = new Label(Integer.toString(codingSequencesAmount));
             codingSequencesLabel.getStyleClass().add("coding-sequences-label");
             annotationsHolder.getChildren().add(codingSequencesLabel);
