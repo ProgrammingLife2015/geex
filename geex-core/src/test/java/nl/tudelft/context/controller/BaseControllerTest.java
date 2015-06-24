@@ -27,6 +27,7 @@ public class BaseControllerTest {
     protected static Graph graph;
 
     protected static final Node node1 = new Node(0, new HashSet<>(Arrays.asList("Cat", "Dog")), 5, 7, "A");
+    protected static final Node node2 = new Node(0, new HashSet<>(Arrays.asList("Cat", "TKK_REF")), 5, 7, "A");
 
     /**
      * Setup Base Controller.
@@ -39,8 +40,6 @@ public class BaseControllerTest {
 
         graph = new GraphParser().setFiles(nodeFile, edgeFile).load().flat(new HashSet<>(Arrays.asList("Cat", "Dog")));
 
-        baseController = new BaseController(node1);
-
     }
 
     /**
@@ -49,17 +48,32 @@ public class BaseControllerTest {
     @Test(expected = RuntimeException.class)
     public void testWrongFXMLFile() {
 
+        baseController = new BaseController(node1);
         baseController.loadFXML("");
 
     }
 
     /**
-     * Test if base content is correct.
+     * Test if base content and text are correct.
      */
     @Test
     public void testBaseContent() {
 
+        baseController = new BaseController(node1);
         assertEquals("A", baseController.bases.getText());
+        assertEquals("None", baseController.codingSequences.getText());
+
+    }
+
+    /**
+     * Test if base content and text are correct, containing TKK_REF.
+     */
+    @Test
+    public void testTkkRefBaseContent() {
+
+        baseController = new BaseController(node2);
+        assertEquals("A", baseController.bases.getText());
+        assertEquals(node2.getCodingSequenceText(), baseController.codingSequences.getText());
 
     }
 
