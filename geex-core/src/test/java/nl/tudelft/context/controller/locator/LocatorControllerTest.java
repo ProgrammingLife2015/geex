@@ -47,7 +47,6 @@ public class LocatorControllerTest {
         locatorController = new LocatorController(
                 new Pane(),
                 labelMapProperty,
-                positionProperty,
                 mock(GraphController.class));
         locatorController.locatorIndicator = spy(new Rectangle());
 
@@ -65,7 +64,7 @@ public class LocatorControllerTest {
                 getNode(325, 800)
         ));
         labelMapProperty.set(map);
-        positionProperty.set(Arrays.asList(0, 1));
+        locatorController.updatePosition(Arrays.asList(0, 1));
 
     }
 
@@ -75,15 +74,13 @@ public class LocatorControllerTest {
     @Test
     public void testLocationNotUpdated() {
 
-        ObjectProperty<List<Integer>> pp = new SimpleObjectProperty<>();
         LocatorController lc = new LocatorController(
                 new Pane(),
                 new SimpleObjectProperty<>(),
-                pp,
                 mock(GraphController.class));
 
         lc.locatorIndicator = mock(Rectangle.class);
-        pp.set(new ArrayList<>());
+        lc.updatePosition(new ArrayList<>());
         verifyZeroInteractions(lc.locatorIndicator);
 
     }
