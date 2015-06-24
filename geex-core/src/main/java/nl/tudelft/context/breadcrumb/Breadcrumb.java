@@ -55,6 +55,7 @@ public final class Breadcrumb extends HBox {
                 .map(createBreadcrumbItem())
                 .collect(Collectors.toList());
 
+        System.out.println("!items.isEmpty() = " + !items.isEmpty());
         if (!items.isEmpty()) {
             items.get(items.size() - 1).getStyleClass().add("last");
         }
