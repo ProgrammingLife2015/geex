@@ -49,7 +49,7 @@ public class GraphFilterController implements InvalidationListener {
     /**
      * Default filters on init.
      */
-    private static final GraphFilter[] defaultFilters = new GraphFilter[]{
+    private static final GraphFilter[] DEFAULT_FILTERS = new GraphFilter[]{
             GraphFilter.SINGLE_POINT,
             GraphFilter.INSERT_DELETE,
             GraphFilter.COLLAPSE,
@@ -177,7 +177,7 @@ public class GraphFilterController implements InvalidationListener {
      * Reset the view.
      */
     public void reset() {
-        addAll(defaultFilters);
+        addAll(DEFAULT_FILTERS);
     }
 
     /**
