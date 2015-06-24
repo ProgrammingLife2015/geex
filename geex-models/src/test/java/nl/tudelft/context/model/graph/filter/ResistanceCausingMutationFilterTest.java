@@ -65,9 +65,9 @@ public class ResistanceCausingMutationFilterTest {
         CompletableFuture<GraphMap> graphMap = new CompletableFuture<>();
 
         loadGraphService.valueProperty().addListener((observable, oldValue, newValue) -> {
-            graphMap.complete(newValue);
             newValue.setCodingSequence(new CodingSequenceMap(Collections.singletonList(codingSequence)));
             newValue.setResistance(new ResistanceMap(Collections.singletonList(resistance)));
+            graphMap.complete(newValue);
         });
         loadGraphService.start();
 
