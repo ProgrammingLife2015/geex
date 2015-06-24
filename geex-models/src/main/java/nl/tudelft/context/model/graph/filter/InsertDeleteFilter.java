@@ -20,12 +20,12 @@ public class InsertDeleteFilter implements StackGraphFilter {
     /**
      * Parts of a insert deletion.
      */
-    private transient Set<DefaultNode> inDelPart = new HashSet<>();
+    private Set<DefaultNode> inDelPart = new HashSet<>();
 
     /**
      * Map with start and end of insert deletions.
      */
-    private transient Map<DefaultNode, DefaultNode> inDel = new HashMap<>();
+    private Map<DefaultNode, DefaultNode> inDel = new HashMap<>();
 
     /**
      * Filtered and input graph.
