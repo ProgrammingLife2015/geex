@@ -16,7 +16,7 @@
     <packaging>pom</packaging>
 
     <name>Geex</name>
-    <url>http://github.com/Vennik/contextproject</url>
+    <url>http://github.com/AbeelLab/geex</url>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -82,19 +82,19 @@
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/Vennik/contextproject/issues</url>
+        <url>https://github.com/AbeelLab/geex/issues</url>
     </issueManagement>
 
     <scm>
-        <connection>scm:git:git@github.com:Vennik/contextproject.git</connection>
-        <developerConnection>scm:git:git@github.com:Vennik/contextproject.git</developerConnection>
+        <connection>scm:git:git@github.com:AbeelLab/geex.git</connection>
+        <developerConnection>scm:git:git@github.com:AbeelLab/geex.git</developerConnection>
         <tag>HEAD</tag>
-        <url>https://github.com/Vennik/contextproject</url>
+        <url>https://github.com/AbeelLab/geex</url>
     </scm>
 
     <ciManagement>
         <system>travis-ci</system>
-        <url>https://travis-ci.org/Vennik/contextproject</url>
+        <url>https://travis-ci.org/AbeelLab/geex</url>
         <notifiers/>
     </ciManagement>
 
