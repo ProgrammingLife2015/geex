@@ -1,12 +1,12 @@
-[![Build Status](https://travis-ci.org/Vennik/contextproject.svg?branch=master)](https://travis-ci.org/Vennik/contextproject)
+[![Build Status](https://travis-ci.org/AbeelLab/geex.svg?branch=master)](https://travis-ci.org/AbeelLab/geex)
 
 ![Geex](SE%20deliverables/logo.png)
 
 ## Programming Life (group 2)
-For more details about this project, the team and the application, visit the [Wiki pages](https://github.com/Vennik/contextproject/wiki).
+For more details about this project, the team and the application, visit the [Wiki pages](https://github.com/AbeelLab/geex/wiki).
 
 ## Sites
-* [Maven Site](http://geex.hup.blue/) (Updated hourly)
+* [Maven Site](http://geex.hup.blue/) (Updated manually)
 * [Sonarqube](http://sonar.hup.blue/) (Updated manually)
 
 ## Maven
